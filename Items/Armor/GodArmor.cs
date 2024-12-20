@@ -16,7 +16,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Kamite Breastplate");
-			base.Tooltip.SetDefault("'Blessed with Oysus' power, this breastplate holds overwhelming energy...'");
+			base.Tooltip.SetDefault("'Blessed with Oysus' power, this breastplate holds overwhelming energy...'\n50% increased damage (Melee/Ranged/Magic/Minion/Thrown)\n16% increased critical strike chance (Melee/Ranged/Magic/Minion/Thrown)\n50% damage reduction\n+500 max life");
 		}
 
 		public override void SetDefaults()

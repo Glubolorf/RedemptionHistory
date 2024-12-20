@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -9,21 +10,6 @@ namespace Redemption
 {
 	public class RedePlayer : ModPlayer
 	{
-		public int FrontDefence
-		{
-			get
-			{
-				return this.frontDefence;
-			}
-			set
-			{
-				if (value > this.frontDefence)
-				{
-					this.frontDefence = value;
-				}
-			}
-		}
-
 		public override void UpdateBiomes()
 		{
 			this.ZoneXeno = (RedeWorld.xenoBiome > 75);
@@ -71,6 +57,14 @@ namespace Redemption
 			}
 		}
 
+		public override void SetupStartInventory(IList<Item> items)
+		{
+			Item item = new Item();
+			item.SetDefaults(base.mod.ItemType("DruidNote"), false);
+			item.stack = 1;
+			items.Add(item);
+		}
+
 		public override void ResetEffects()
 		{
 			this.chickenMinion = false;
@@ -83,34 +77,30 @@ namespace Redemption
 			this.darkSoulMinion = false;
 			this.xenoHatchlingMinion = false;
 			this.heartEmblem = false;
-			this.frontDefence = 0;
-		}
-
-		private void ShieldPreHurt(int damage, bool crit, int hitDirection)
-		{
-			if (base.player.direction != hitDirection && this.FrontDefence > 0)
-			{
-				base.player.statDefense += this.FrontDefence;
-			}
+			this.moreSeeds = false;
+			this.fasterStaves = false;
+			this.fasterSeedbags = false;
+			this.fasterSpirits = false;
+			this.moreSpirits = false;
 		}
 
 		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
 		{
 			if (base.player.FindBuffIndex(base.mod.BuffType("XenomiteDebuff")) != -1)
 			{
-				damageSource = PlayerDeathReason.ByCustomReason(" got infected");
+				damageSource = PlayerDeathReason.ByCustomReason("You got infected");
 			}
 			if (base.player.FindBuffIndex(base.mod.BuffType("XenomiteDebuff2")) != -1)
 			{
-				damageSource = PlayerDeathReason.ByCustomReason(" got heavily infected");
+				damageSource = PlayerDeathReason.ByCustomReason("You got heavily infected");
 			}
 			if (base.player.FindBuffIndex(base.mod.BuffType("EmpoweredBuff")) != -1)
 			{
-				damageSource = PlayerDeathReason.ByCustomReason(" got too empowered");
+				damageSource = PlayerDeathReason.ByCustomReason("You got too empowered");
 			}
 			if (base.player.FindBuffIndex(base.mod.BuffType("RadioactiveFalloutDebuff")) != -1)
 			{
-				damageSource = PlayerDeathReason.ByCustomReason(" forgot to wear a gas mask");
+				damageSource = PlayerDeathReason.ByCustomReason("You forgot to wear a gas mask");
 			}
 			return true;
 		}
@@ -128,8 +118,6 @@ namespace Redemption
 		}
 
 		private const int saveVersion = 0;
-
-		private int frontDefence;
 
 		public bool examplePet;
 
@@ -152,5 +140,15 @@ namespace Redemption
 		public bool ZoneXeno;
 
 		public bool heartEmblem;
+
+		public bool moreSeeds;
+
+		public bool fasterStaves;
+
+		public bool fasterSeedbags;
+
+		public bool fasterSpirits;
+
+		public bool moreSpirits;
 	}
 }

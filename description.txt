@@ -3,12 +3,13 @@
 Please remember to update the mod when necessary.
 
 Adds:
-- 19 Buffs
+- 27 Buffs
 - 6 Walls
-- 79 Tiles
-- 110 NPCs (Including bosses)
+- 82 Tiles
+- 117 NPCs (Including bosses & minibosses)
 - 6 Bosses
-- 340 Items
+- 2 Minibosses
+- 433 Items
 
 Main Features (So far):
 - Living Wood Equipment
@@ -37,3 +38,5 @@ Main Features (So far):
 - Dirt Swords!
 - Wasteland Biome (After Infected Eye boss)
 - Vlitch Overlord bosses (2/4 for now)
+- Druid Class! (NOT DONE!!! >:O)
+- Epic Weapons (1/1000 Chance of dropping from certain enemies in Hardmode)

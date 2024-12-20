@@ -38,8 +38,7 @@ namespace Redemption.Items.Armor
 
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "Increases your max number of minions, Immune to poison";
-			player.maxMinions++;
+			player.setBonus = "Immune to poison";
 			player.buffImmune[20] = true;
 		}
 

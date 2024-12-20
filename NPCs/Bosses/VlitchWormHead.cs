@@ -71,6 +71,7 @@ namespace Redemption.NPCs.Bosses
 				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CorruptedRocketLauncher"), 1, false, 0, false, false);
 			}
 			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CorruptedXenomite"), Main.rand.Next(18, 28), false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("VlitchScale"), Main.rand.Next(25, 35), false, 0, false, false);
 			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("VlitchBattery"), Main.rand.Next(2, 4), false, 0, false, false);
 		}
 

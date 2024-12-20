@@ -12,19 +12,19 @@ namespace Redemption.NPCs.Bosses
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("The Keeper");
-			Main.npcFrameCount[base.npc.type] = 3;
+			Main.npcFrameCount[base.npc.type] = 12;
 		}
 
 		public override void SetDefaults()
 		{
 			base.npc.aiStyle = -1;
-			base.npc.lifeMax = 2500;
+			base.npc.lifeMax = 2250;
 			base.npc.damage = 30;
-			base.npc.defense = 20;
+			base.npc.defense = 0;
 			base.npc.knockBackResist = 0f;
 			base.npc.width = 150;
 			base.npc.height = 182;
-			base.npc.value = (float)Item.buyPrice(0, 2, 50, 0);
+			base.npc.value = (float)Item.buyPrice(0, 1, 50, 0);
 			base.npc.npcSlots = 1f;
 			base.npc.boss = true;
 			base.npc.lavaImmune = true;
@@ -107,17 +107,91 @@ namespace Redemption.NPCs.Bosses
 			{
 				Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 5, 0f, 0f, 0, default(Color), 1f);
 			}
-			if (base.npc.life > 0 && Main.rand.Next(400) == 0)
+			if (base.npc.life > 1200 && Main.rand.Next(600) == 0)
 			{
-				NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul"), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
 			}
-			if (!Main.expertMode && base.npc.life < 1200 && Main.rand.Next(250) == 0)
+			if (!Main.expertMode && base.npc.life < 1200)
 			{
-				NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 160, base.mod.NPCType("SkeletonMinion"), 0, 0f, 0f, 0f, 0f, 255);
+				this.timer++;
+				if (this.timer == 20)
+				{
+					string text = "*Shrieks of pain echo through the night*";
+					Color rarityPurple = Colors.RarityPurple;
+					byte r = rarityPurple.R;
+					Color rarityPurple2 = Colors.RarityPurple;
+					byte g = rarityPurple2.G;
+					Color rarityPurple3 = Colors.RarityPurple;
+					Main.NewText(text, r, g, rarityPurple3.B, false);
+					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Shriek").WithVolume(0.9f).WithPitchVariance(0.1f), -1, -1);
+				}
+				if (this.timer == 40)
+				{
+					NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+				}
+				if (this.timer == 45)
+				{
+					NPC.NewNPC((int)base.npc.position.X + 60, (int)base.npc.position.Y + 80, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+				}
+				if (this.timer == 50)
+				{
+					NPC.NewNPC((int)base.npc.position.X + 80, (int)base.npc.position.Y + 75, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+				}
+				if (this.timer == 55)
+				{
+					NPC.NewNPC((int)base.npc.position.X + 50, (int)base.npc.position.Y + 60, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)base.npc.position.X + 85, (int)base.npc.position.Y + 50, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+				}
+				if (this.timer == 60)
+				{
+					NPC.NewNPC((int)base.npc.position.X + 65, (int)base.npc.position.Y + 65, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)base.npc.position.X + 45, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+				}
+				if (Main.rand.Next(250) == 0)
+				{
+					NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 160, base.mod.NPCType("SkeletonMinion"), 0, 0f, 0f, 0f, 0f, 255);
+				}
 			}
-			if (Main.expertMode && base.npc.life < 1200 && Main.rand.Next(350) == 0)
+			if (Main.expertMode && base.npc.life < 1200)
 			{
-				NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 160, base.mod.NPCType("BoneWormHead"), 0, 0f, 0f, 0f, 0f, 255);
+				this.timer++;
+				if (this.timer == 20)
+				{
+					string text2 = "*Shrieks of pain echo through the night*";
+					Color rarityPurple4 = Colors.RarityPurple;
+					byte r2 = rarityPurple4.R;
+					Color rarityPurple5 = Colors.RarityPurple;
+					byte g2 = rarityPurple5.G;
+					Color rarityPurple6 = Colors.RarityPurple;
+					Main.NewText(text2, r2, g2, rarityPurple6.B, false);
+					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Shriek").WithVolume(0.9f).WithPitchVariance(0.1f), -1, -1);
+				}
+				if (this.timer == 40)
+				{
+					NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+				}
+				if (this.timer == 45)
+				{
+					NPC.NewNPC((int)base.npc.position.X + 60, (int)base.npc.position.Y + 80, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+				}
+				if (this.timer == 50)
+				{
+					NPC.NewNPC((int)base.npc.position.X + 80, (int)base.npc.position.Y + 75, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+				}
+				if (this.timer == 55)
+				{
+					NPC.NewNPC((int)base.npc.position.X + 50, (int)base.npc.position.Y + 60, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)base.npc.position.X + 85, (int)base.npc.position.Y + 50, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+				}
+				if (this.timer == 60)
+				{
+					NPC.NewNPC((int)base.npc.position.X + 65, (int)base.npc.position.Y + 65, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)base.npc.position.X + 45, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+				}
+				if (Main.rand.Next(400) == 0)
+				{
+					NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 160, base.mod.NPCType("BoneWormHead"), 0, 0f, 0f, 0f, 0f, 255);
+				}
 			}
 		}
 
@@ -192,18 +266,6 @@ namespace Redemption.NPCs.Bosses
 			return (float)Math.Sqrt((double)(mag.X * mag.X + mag.Y * mag.Y));
 		}
 
-		public override void FindFrame(int frameHeight)
-		{
-			base.npc.frameCounter += 1.0;
-			base.npc.frameCounter %= 20.0;
-			int num = (int)(base.npc.frameCounter / 2.0);
-			if (num >= Main.npcFrameCount[base.npc.type])
-			{
-				num = 0;
-			}
-			base.npc.frame.Y = num * frameHeight;
-		}
-
 		public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
 		{
 			scale = 1.5f;
@@ -213,5 +275,7 @@ namespace Redemption.NPCs.Bosses
 		private Player player;
 
 		private float speed;
+
+		public int timer;
 	}
 }

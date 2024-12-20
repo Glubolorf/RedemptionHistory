@@ -6,6 +6,7 @@ using Redemption.Items.Placeable;
 using Redemption.Items.Weapons;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.NPCs
@@ -56,6 +57,43 @@ namespace Redemption.NPCs
 			this.animationType = 22;
 		}
 
+		public override void HitEffect(int hitDirection, double damage)
+		{
+			if (base.npc.life <= 0)
+			{
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/FallenGore1"), 1f);
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/FallenGore2"), 1f);
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/FallenGore3"), 1f);
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/FallenGore4"), 1f);
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/FallenGore5"), 1f);
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/FallenGore6"), 1f);
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/FallenGore7"), 1f);
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/FallenGore8"), 1f);
+				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
+				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
+				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
+				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
+				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
+				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
+				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
+				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
+				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
+				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
+				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
+				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
+				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
+				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
+				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
+				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
+			}
+			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
+			if (Main.netMode != 1 && base.npc.life <= 0)
+			{
+				NPC.NewNPC((int)base.npc.position.X + 20, (int)base.npc.position.Y + 20, base.mod.NPCType("AAAA"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Shriek").WithVolume(0.9f).WithPitchVariance(0.1f), -1, -1);
+			}
+		}
+
 		public override bool CanTownNPCSpawn(int numTownNPCs, int money)
 		{
 			return RedeWorld.downedTheKeeper;
@@ -80,7 +118,7 @@ namespace Redemption.NPCs
 
 		public override string GetChat()
 		{
-			switch (Main.rand.Next(7))
+			switch (Main.rand.Next(8))
 			{
 			case 0:
 				return "Hey there.";
@@ -94,6 +132,8 @@ namespace Redemption.NPCs
 				return "What are Lost Souls used for? No idea.";
 			case 5:
 				return "Y'know, planting saplings on Ancient Dirt will make Ancient Trees grow! It's like magic!";
+			case 6:
+				return "I always feel restless... Maybe it's just an Undead thing.";
 			default:
 				return "Greetings.";
 			}
@@ -101,7 +141,7 @@ namespace Redemption.NPCs
 
 		public override void SetChatButtons(ref string button, ref string button2)
 		{
-			button = Lang.inter[28].Value;
+			button = Language.GetTextValue("LegacyInterface.28");
 		}
 
 		public override void OnChatButtonClicked(bool firstButton, ref bool shop)

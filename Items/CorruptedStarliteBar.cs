@@ -8,7 +8,7 @@ namespace Redemption.Items
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Corrupted Starlite Bar");
-			base.Tooltip.SetDefault("The star's life has ended...");
+			base.Tooltip.SetDefault("'The star's life has ended...'");
 		}
 
 		public override void SetDefaults()

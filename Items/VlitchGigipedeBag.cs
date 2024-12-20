@@ -30,6 +30,12 @@ namespace Redemption.Items
 
 		public override void OpenBossBag(Player player)
 		{
+			if (Main.rand.Next(20) == 0)
+			{
+				player.QuickSpawnItem(base.mod.ItemType("IntruderMask"), 1);
+				player.QuickSpawnItem(base.mod.ItemType("IntruderArmour"), 1);
+				player.QuickSpawnItem(base.mod.ItemType("IntruderPants"), 1);
+			}
 			if (Main.rand.Next(14) == 0)
 			{
 				player.QuickSpawnItem(base.mod.ItemType("GirusMask"), 1);
@@ -39,6 +45,7 @@ namespace Redemption.Items
 				player.QuickSpawnItem(base.mod.ItemType("CorruptedRocketLauncher"), 1);
 			}
 			player.QuickSpawnItem(base.mod.ItemType("CorruptedXenomite"), Main.rand.Next(18, 28));
+			player.QuickSpawnItem(base.mod.ItemType("VlitchScale"), Main.rand.Next(25, 35));
 			player.QuickSpawnItem(base.mod.ItemType("VlitchBattery"), Main.rand.Next(2, 4));
 		}
 	}

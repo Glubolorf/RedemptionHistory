@@ -16,7 +16,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Kamite Greaves");
-			base.Tooltip.SetDefault("'Blessed with Oysus' power, this greaves hold overwhelming energy...'");
+			base.Tooltip.SetDefault("'Blessed with Oysus' power, this greaves hold overwhelming energy...'\nSlightly increased max fall speed\nGreatly increased movement speed\nIncreased jump height\n+500 max life");
 		}
 
 		public override void SetDefaults()
@@ -31,7 +31,7 @@ namespace Redemption.Items.Armor
 		public override void UpdateEquip(Player player)
 		{
 			player.maxFallSpeed += 2f;
-			player.moveSpeed *= 50f;
+			player.moveSpeed *= 100f;
 			player.jumpBoost = true;
 			player.statLifeMax2 += 500;
 		}

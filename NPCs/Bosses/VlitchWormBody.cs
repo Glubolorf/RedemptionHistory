@@ -87,6 +87,31 @@ namespace Redemption.NPCs.Bosses
 			return false;
 		}
 
+		public override void AI()
+		{
+			Player player = Main.player[base.npc.target];
+			if (base.npc.target < 0 || base.npc.target == 255 || Main.player[base.npc.target].dead || !Main.player[base.npc.target].active)
+			{
+				base.npc.TargetClosest(true);
+			}
+			base.npc.netUpdate = true;
+			if (base.npc.lifeMax < 25000)
+			{
+				base.npc.ai[4] += 1f;
+				if (base.npc.ai[4] >= 280f)
+				{
+					float num = 14f;
+					Vector2 vector;
+					vector..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
+					int num2 = 70;
+					int num3 = base.mod.ProjectileType("VlitchLaser");
+					float num4 = (float)Math.Atan2((double)(vector.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector.X - (player.position.X + (float)player.width * 0.5f)));
+					Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num4) * (double)num * -1.0), (float)(Math.Sin((double)num4) * (double)num * -1.0), num3, num2, 0f, 0, 0f, 0f);
+					base.npc.ai[4] = 0f;
+				}
+			}
+		}
+
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Texture2D texture2D = Main.npcTexture[base.npc.type];

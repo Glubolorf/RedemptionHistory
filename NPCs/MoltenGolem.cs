@@ -16,16 +16,16 @@ namespace Redemption.NPCs
 
 		public override void SetDefaults()
 		{
-			base.npc.width = 48;
-			base.npc.height = 56;
-			base.npc.damage = 35;
+			base.npc.width = 58;
+			base.npc.height = 70;
+			base.npc.damage = 40;
 			base.npc.friendly = false;
-			base.npc.defense = 16;
-			base.npc.lifeMax = 75;
+			base.npc.defense = 18;
+			base.npc.lifeMax = 225;
 			base.npc.HitSound = SoundID.NPCHit3;
 			base.npc.DeathSound = SoundID.NPCDeath3;
 			base.npc.value = 0f;
-			base.npc.knockBackResist = 0.2f;
+			base.npc.knockBackResist = 0.05f;
 			base.npc.aiStyle = 3;
 			base.npc.lavaImmune = true;
 			this.aiType = 482;
@@ -43,7 +43,6 @@ namespace Redemption.NPCs
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/MoltenGolemGore3"), 1f);
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/MoltenGolemGore3"), 1f);
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/MoltenGolemGore4"), 1f);
-				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/MoltenGolemGore4"), 1f);
 				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 6, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
 				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 6, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
 				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 6, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
@@ -56,7 +55,7 @@ namespace Redemption.NPCs
 
 		public override void AI()
 		{
-			if (Main.rand.Next(1) == 0)
+			if (Main.rand.Next(4) == 0)
 			{
 				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 6, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
 			}

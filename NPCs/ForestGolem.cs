@@ -11,13 +11,13 @@ namespace Redemption.NPCs
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Forest Golem");
-			Main.npcFrameCount[base.npc.type] = 20;
+			Main.npcFrameCount[base.npc.type] = 21;
 		}
 
 		public override void SetDefaults()
 		{
-			base.npc.width = 48;
-			base.npc.height = 56;
+			base.npc.width = 40;
+			base.npc.height = 62;
 			base.npc.damage = 10;
 			base.npc.friendly = false;
 			base.npc.defense = 5;

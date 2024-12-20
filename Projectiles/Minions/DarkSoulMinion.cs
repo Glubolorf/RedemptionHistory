@@ -21,21 +21,20 @@ namespace Redemption.Projectiles.Minions
 			base.projectile.timeLeft = 18000;
 			base.projectile.ignoreWater = true;
 			base.projectile.tileCollide = false;
+			ProjectileID.Sets.MinionTargettingFeature[base.projectile.type] = true;
 		}
 
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Dark Soul");
-			Main.projPet[base.projectile.type] = true;
-			ProjectileID.Sets.MinionSacrificable[base.projectile.type] = true;
-			ProjectileID.Sets.Homing[base.projectile.type] = true;
-			ProjectileID.Sets.MinionTargettingFeature[base.projectile.type] = true;
 		}
 
 		public override void AI()
 		{
-			int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y + 2f), base.projectile.width + 2, base.projectile.height + 2, base.mod.DustType("VoidFlame"), base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 2.9f);
-			Main.dust[num].noGravity = true;
+			if (Main.rand.Next(1) == 0)
+			{
+				Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, base.mod.DustType("VoidFlame"), 0f, 0f, 0, default(Color), 1f);
+			}
 		}
 
 		public override bool OnTileCollide(Vector2 oldVelocity)
@@ -54,12 +53,12 @@ namespace Redemption.Projectiles.Minions
 		public override void CheckActive()
 		{
 			Player player = Main.player[base.projectile.owner];
-			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>(base.mod);
+			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
 			if (player.dead)
 			{
-				modPlayer.darkSoulMinion = false;
+				redePlayer.darkSoulMinion = false;
 			}
-			if (modPlayer.darkSoulMinion)
+			if (redePlayer.darkSoulMinion)
 			{
 				base.projectile.timeLeft = 2;
 			}

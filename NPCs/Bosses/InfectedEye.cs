@@ -157,7 +157,7 @@ namespace Redemption.NPCs.Bosses
 				int num6 = 30;
 				for (int i = 1; i <= num6; i++)
 				{
-					int num7 = Dust.NewDust(base.npc.position, rectangle.Width, rectangle.Height, 6, 0f, 0f, 100, color, 2.5f);
+					int num7 = Dust.NewDust(base.npc.position, rectangle.Width, rectangle.Height, 107, 0f, 0f, 100, color, 2.5f);
 					Main.dust[num7].noGravity = false;
 				}
 				return;
@@ -188,7 +188,7 @@ namespace Redemption.NPCs.Bosses
 				int num9 = 30;
 				for (int j = 1; j <= num9; j++)
 				{
-					int num10 = Dust.NewDust(base.npc.position, rectangle2.Width, rectangle2.Height, 6, 0f, 0f, 100, color2, 2.5f);
+					int num10 = Dust.NewDust(base.npc.position, rectangle2.Width, rectangle2.Height, 107, 0f, 0f, 100, color2, 2.5f);
 					Main.dust[num10].noGravity = false;
 				}
 				return;
@@ -219,7 +219,7 @@ namespace Redemption.NPCs.Bosses
 				int num12 = 30;
 				for (int k = 1; k <= num12; k++)
 				{
-					int num13 = Dust.NewDust(base.npc.position, rectangle3.Width, rectangle3.Height, 6, 0f, 0f, 100, color3, 2.5f);
+					int num13 = Dust.NewDust(base.npc.position, rectangle3.Width, rectangle3.Height, 107, 0f, 0f, 100, color3, 2.5f);
 					Main.dust[num13].noGravity = false;
 				}
 				return;
@@ -250,7 +250,7 @@ namespace Redemption.NPCs.Bosses
 				int num15 = 30;
 				for (int l = 1; l <= num15; l++)
 				{
-					int num16 = Dust.NewDust(base.npc.position, rectangle4.Width, rectangle4.Height, 6, 0f, 0f, 100, color4, 2.5f);
+					int num16 = Dust.NewDust(base.npc.position, rectangle4.Width, rectangle4.Height, 107, 0f, 0f, 100, color4, 2.5f);
 					Main.dust[num16].noGravity = false;
 				}
 				return;
@@ -281,7 +281,7 @@ namespace Redemption.NPCs.Bosses
 				int num18 = 50;
 				for (int m = 1; m <= num18; m++)
 				{
-					int num19 = Dust.NewDust(base.npc.position, rectangle5.Width, rectangle5.Height, 6, 0f, 0f, 100, color5, 2.5f);
+					int num19 = Dust.NewDust(base.npc.position, rectangle5.Width, rectangle5.Height, 107, 0f, 0f, 100, color5, 2.5f);
 					Main.dust[num19].noGravity = false;
 				}
 			}

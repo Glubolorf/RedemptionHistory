@@ -36,6 +36,31 @@ namespace Redemption
 			}
 		}
 
+		public override void PostWorldGen()
+		{
+			int[] array = new int[]
+			{
+				base.mod.ItemType("DonjonStave")
+			};
+			int num = 0;
+			for (int i = 0; i < 1000; i++)
+			{
+				Chest chest = Main.chest[i];
+				if (chest != null && Main.tile[chest.x, chest.y].type == 21 && Main.tile[chest.x, chest.y].frameX == 72 && Main.rand.Next(4) == 1)
+				{
+					for (int j = 0; j < 40; j++)
+					{
+						if (chest.item[j].type == 0)
+						{
+							chest.item[j].SetDefaults(array[num], false);
+							num = (num + 1) % array.Length;
+							break;
+						}
+					}
+				}
+			}
+		}
+
 		public override TagCompound Save()
 		{
 			List<string> list = new List<string>();
@@ -67,6 +92,10 @@ namespace Redemption
 			{
 				list.Add("VlitchWormHead");
 			}
+			if (RedeWorld.downedDarkSlime)
+			{
+				list.Add("DarkSlime");
+			}
 			TagCompound tagCompound = new TagCompound();
 			tagCompound.Add("downed", list);
 			return tagCompound;
@@ -82,6 +111,7 @@ namespace Redemption
 			RedeWorld.downedStrangePortal = list.Contains("StrangePortal");
 			RedeWorld.downedVlitch1 = list.Contains("VlitchCleaver");
 			RedeWorld.downedVlitch2 = list.Contains("VlitchWormHead");
+			RedeWorld.downedDarkSlime = list.Contains("DarkSlime");
 		}
 
 		private const int saveVersion = 0;
@@ -103,5 +133,7 @@ namespace Redemption
 		public static bool downedVlitch1;
 
 		public static bool downedVlitch2;
+
+		public static bool downedDarkSlime;
 	}
 }

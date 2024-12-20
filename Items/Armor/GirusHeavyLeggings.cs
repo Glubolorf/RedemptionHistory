@@ -35,6 +35,7 @@ namespace Redemption.Items.Armor
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
 			modRecipe.AddIngredient(null, "CorruptedXenomiteLeggings", 1);
+			modRecipe.AddIngredient(null, "VlitchScale", 15);
 			modRecipe.AddIngredient(null, "GirusChip", 1);
 			modRecipe.AddTile(null, "XenoForgeTile");
 			modRecipe.SetResult(this, 1);

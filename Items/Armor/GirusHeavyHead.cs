@@ -45,10 +45,10 @@ namespace Redemption.Items.Armor
 
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "Enemies are more likely to target you, reduced movement speed and 6% damage reduction.";
+			player.setBonus = "Enemies are more likely to target you, reduced movement speed and 8% damage reduction.";
 			player.AddBuff(11, 2, true);
-			player.moveSpeed -= 0.05f;
-			player.endurance += 0.06f;
+			player.moveSpeed -= 0.02f;
+			player.endurance += 0.08f;
 			player.aggro += 10;
 		}
 
@@ -61,6 +61,7 @@ namespace Redemption.Items.Armor
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
 			modRecipe.AddIngredient(null, "CorruptedXenomiteHead", 1);
+			modRecipe.AddIngredient(null, "VlitchScale", 10);
 			modRecipe.AddIngredient(null, "GirusChip", 1);
 			modRecipe.AddTile(null, "XenoForgeTile");
 			modRecipe.SetResult(this, 1);

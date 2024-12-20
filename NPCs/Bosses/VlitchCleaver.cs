@@ -28,7 +28,7 @@ namespace Redemption.NPCs.Bosses
 			base.npc.value = 600f;
 			base.npc.boss = true;
 			base.npc.knockBackResist = 0f;
-			base.npc.aiStyle = 0;
+			base.npc.aiStyle = -1;
 			this.animationType = 83;
 			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossVlitch1");
 			this.bossBag = base.mod.ItemType("VlitchCleaverBag");
@@ -152,6 +152,37 @@ namespace Redemption.NPCs.Bosses
 				Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num8) * (double)num5 * -1.0), (float)(Math.Sin((double)num8) * (double)num5 * -1.0), num7, num6, 0f, 0, 0f, 0f);
 				base.npc.ai[3] = 0f;
 			}
+			if (base.npc.life <= 20500)
+			{
+				this.timer++;
+				if (this.timer == 1)
+				{
+					Main.NewText("Guess its time to take action...", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
+				}
+				this.timer2++;
+				if (this.timer2 <= 120)
+				{
+					NPC npc = base.npc;
+					npc.velocity.Y = npc.velocity.Y * 0.2f;
+				}
+				if (this.timer2 >= 120)
+				{
+					NPC npc2 = base.npc;
+					npc2.velocity.Y = npc2.velocity.Y * -0.2f;
+					if (this.timer2 == 240)
+					{
+						this.timer2 = 0;
+					}
+				}
+				base.npc.aiStyle = 5;
+				this.aiType = 205;
+				base.npc.noGravity = true;
+				base.npc.noTileCollide = true;
+			}
 		}
+
+		public int timer;
+
+		public int timer2;
 	}
 }

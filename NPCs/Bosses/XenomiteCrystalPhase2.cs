@@ -88,6 +88,10 @@ namespace Redemption.NPCs.Bosses
 			{
 				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("XenomiteYoyo"), 1, false, 0, false, false);
 			}
+			if (Main.rand.Next(3) == 0)
+			{
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("XenoCanister"), 1, false, 0, false, false);
+			}
 			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("XenomiteShard"), Main.rand.Next(12, 22), false, 0, false, false);
 		}
 

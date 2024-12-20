@@ -41,6 +41,10 @@ namespace Redemption.Items.Weapons
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
+			if (type == 14)
+			{
+				type = 242;
+			}
 			float num = 2f;
 			float num2 = MathHelper.ToRadians(3f);
 			position += Vector2.Normalize(new Vector2(speedX, speedY)) * 45f;

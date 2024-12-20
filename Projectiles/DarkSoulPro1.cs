@@ -27,6 +27,7 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
+			base.projectile.rotation = (float)Math.Atan2((double)base.projectile.velocity.Y, (double)base.projectile.velocity.X) + 1.57f;
 			if (base.projectile.alpha > 70)
 			{
 				base.projectile.alpha -= 15;

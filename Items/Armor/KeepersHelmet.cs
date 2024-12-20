@@ -39,7 +39,7 @@ namespace Redemption.Items.Armor
 		public override void UpdateArmorSet(Player player)
 		{
 			player.setBonus = "6% increased melee speed";
-			player.meleeSpeed *= 0.06f;
+			player.meleeSpeed *= 1.06f;
 		}
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)

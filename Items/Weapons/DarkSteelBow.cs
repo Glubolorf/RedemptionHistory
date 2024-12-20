@@ -13,12 +13,12 @@ namespace Redemption.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Daerel's Dark-Steel Bow");
-			base.Tooltip.SetDefault("'A mighty bow made of Ancient Wood & Dark Steel'\n40% chance not to consume ammo\n[c/aa00ff:Epic]");
+			base.Tooltip.SetDefault("'A mighty bow made of Ancient Wood & Dark Steel'\nReplaces Wooden Arrows with Dark-Steel Arrows\n40% chance not to consume ammo\n[c/aa00ff:Epic]");
 		}
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 47;
+			base.item.damage = 130;
 			base.item.ranged = true;
 			base.item.width = 30;
 			base.item.height = 46;
@@ -26,8 +26,8 @@ namespace Redemption.Items.Weapons
 			base.item.useAnimation = 11;
 			base.item.useStyle = 5;
 			base.item.noMelee = true;
-			base.item.knockBack = 1f;
-			base.item.value = Item.buyPrice(0, 10, 0, 0);
+			base.item.knockBack = 5f;
+			base.item.value = Item.sellPrice(0, 20, 0, 0);
 			base.item.rare = 11;
 			base.item.UseSound = SoundID.Item5;
 			base.item.autoReuse = true;
@@ -43,6 +43,10 @@ namespace Redemption.Items.Weapons
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
+			if (type == 1)
+			{
+				type = base.mod.ProjectileType("DarkSteelArrow");
+			}
 			float num = (float)(2 + Main.rand.Next(1));
 			float num2 = MathHelper.ToRadians(1f);
 			position += Vector2.Normalize(new Vector2(speedX, speedY)) * 45f;

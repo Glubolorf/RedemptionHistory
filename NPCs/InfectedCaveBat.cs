@@ -28,7 +28,7 @@ namespace Redemption.NPCs
 			this.aiType = 49;
 			this.animationType = 49;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("InfectedCaveBatBanner");
+			this.bannerItem = base.mod.ItemType("InfectedBatBanner");
 		}
 
 		public override void HitEffect(int hitDirection, double damage)

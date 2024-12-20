@@ -9,19 +9,19 @@ namespace Redemption.Buffs
 		public override void SetDefaults()
 		{
 			base.DisplayName.SetDefault("Dark Soul");
-			base.Description.SetDefault("\"A Dark Soul to fight for you!\"");
+			base.Description.SetDefault("A Dark Soul to fight for you");
 			Main.buffNoSave[base.Type] = true;
 			Main.buffNoTimeDisplay[base.Type] = true;
 		}
 
 		public override void Update(Player player, ref int buffIndex)
 		{
-			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>(base.mod);
+			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
 			if (player.ownedProjectileCounts[base.mod.ProjectileType("DarkSoulMinion")] > 0)
 			{
-				modPlayer.darkSoulMinion = true;
+				redePlayer.darkSoulMinion = true;
 			}
-			if (!modPlayer.darkSoulMinion)
+			if (!redePlayer.darkSoulMinion)
 			{
 				player.DelBuff(buffIndex);
 				buffIndex--;

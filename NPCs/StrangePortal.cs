@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.NPCs
 {
+	[AutoloadBossHead]
 	public class StrangePortal : ModNPC
 	{
 		public override void SetStaticDefaults()

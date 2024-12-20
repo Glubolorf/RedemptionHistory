@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items.Weapons;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption.NPCs
@@ -52,6 +53,27 @@ namespace Redemption.NPCs
 			base.npc.DeathSound = SoundID.NPCDeath1;
 			base.npc.knockBackResist = 0.4f;
 			this.animationType = 22;
+		}
+
+		public override void HitEffect(int hitDirection, double damage)
+		{
+			if (base.npc.life <= 0)
+			{
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/SquireGore1"), 1f);
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/SquireGore2"), 1f);
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/SquireGore3"), 1f);
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/SquireGore4"), 1f);
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/SquireGore5"), 1f);
+				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
+				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
+				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
+				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
+				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
+				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
+				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
+				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
+			}
+			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
 		}
 
 		public override bool CanTownNPCSpawn(int numTownNPCs, int money)
@@ -175,12 +197,12 @@ namespace Redemption.NPCs
 			{
 				return Main.npc[num12].GivenName + "'s equipment is witch craft...";
 			}
-			switch (Main.rand.Next(4))
+			switch (Main.rand.Next(5))
 			{
 			case 0:
 				return "Hey, I have some pretty cool things, you can have them if you got the money.";
 			case 1:
-				return "You maybe thinking, 'Forest Golems should appear more frequently at daytime, right?' But, that is true, they are just shy in daytime and murderous at nightime.";
+				return "Have you seen a robot-lookin' person anywhere? I want revenge. He's got a red visor and wears black armour... No? Okay.";
 			case 2:
 				return "So, how are you?";
 			case 3:
@@ -192,7 +214,7 @@ namespace Redemption.NPCs
 
 		public override void SetChatButtons(ref string button, ref string button2)
 		{
-			button = Lang.inter[28].Value;
+			button = Language.GetTextValue("LegacyInterface.28");
 			button2 = "Sharpen";
 		}
 
@@ -204,7 +226,7 @@ namespace Redemption.NPCs
 				return;
 			}
 			Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 37, 1f, 0f);
-			Main.LocalPlayer.AddBuff(159, 40000, true);
+			Main.LocalPlayer.AddBuff(159, 36000, true);
 		}
 
 		public override void SetupShop(Chest shop, ref int nextSlot)
@@ -212,6 +234,8 @@ namespace Redemption.NPCs
 			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LivingWood"), false);
 			nextSlot++;
 			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LivingLeaf"), false);
+			nextSlot++;
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LeatherPouch"), false);
 			nextSlot++;
 			shop.item[nextSlot].SetDefaults(base.mod.ItemType("WoodenBuckler"), false);
 			nextSlot++;

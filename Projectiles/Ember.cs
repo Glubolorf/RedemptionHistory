@@ -22,24 +22,20 @@ namespace Redemption.Projectiles
 			base.projectile.friendly = true;
 			base.projectile.tileCollide = true;
 			base.projectile.ignoreWater = false;
-			base.projectile.alpha = 50;
+			base.projectile.alpha = 100;
 			base.projectile.timeLeft = 200;
 		}
 
 		public override void AI()
 		{
+			base.projectile.rotation += 0.09f;
 			if (base.projectile.localAI[0] == 0f)
 			{
 				Main.PlaySound(2, (int)base.projectile.position.X, (int)base.projectile.position.Y, 20, 1f, 0f);
 				base.projectile.localAI[0] = 1f;
 			}
-			int num = 8;
-			int num2 = Dust.NewDust(new Vector2(base.projectile.position.X + (float)num + 6f, base.projectile.position.Y + (float)num), base.projectile.width - num * 2, base.projectile.height - num * 2, 66, 0f, 0f, 0, new Color(255, 116, 0), 1.5f);
-			Main.dust[num2].velocity *= 0.5f;
-			Main.dust[num2].velocity += base.projectile.velocity * 0.5f;
-			Main.dust[num2].noGravity = true;
-			Main.dust[num2].noLight = false;
-			Main.dust[num2].scale = 2f;
+			int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y + 2f), base.projectile.width + 2, base.projectile.height + 2, 6, base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 2.9f);
+			Main.dust[num].noGravity = true;
 		}
 	}
 }

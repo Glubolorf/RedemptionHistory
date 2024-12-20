@@ -228,6 +228,7 @@ namespace Redemption
 			this.staveQuadShot = false;
 			this.lifeSteal1 = false;
 			this.plasmaShield = false;
+			this.eldritchRoot = false;
 		}
 
 		public override void UpdateDead()
@@ -433,6 +434,10 @@ namespace Redemption
 				base.player.statLife++;
 				base.player.HealEffect(1, true);
 			}
+			if (this.eldritchRoot && target.life <= 0)
+			{
+				base.player.AddBuff(base.mod.BuffType("EldritchRootBuff"), 180, true);
+			}
 		}
 
 		public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
@@ -453,6 +458,10 @@ namespace Redemption
 			{
 				base.player.statLife++;
 				base.player.HealEffect(1, true);
+			}
+			if (this.eldritchRoot && target.life <= 0)
+			{
+				base.player.AddBuff(base.mod.BuffType("EldritchRootBuff"), 180, true);
 			}
 		}
 
@@ -834,5 +843,7 @@ namespace Redemption
 		public bool lifeSteal1;
 
 		public bool plasmaShield;
+
+		public bool eldritchRoot;
 	}
 }

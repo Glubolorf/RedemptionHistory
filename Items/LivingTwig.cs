@@ -20,17 +20,5 @@ namespace Redemption.Items
 			base.item.value = Item.sellPrice(0, 0, 1, 0);
 			base.item.rare = 0;
 		}
-
-		public override void AddRecipes()
-		{
-			ModRecipe modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "LivingLeaf", 1);
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "LivingWood", 1);
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
-		}
 	}
 }

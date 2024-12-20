@@ -38,10 +38,13 @@ namespace Redemption.Items.DruidDamageClass
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).wanderingSoulSet)
 			{
 				base.item.damage = 21;
+				base.item.autoReuse = true;
+				base.item.shootSpeed = 16f;
 			}
 			else
 			{
 				base.item.damage = 11;
+				base.item.autoReuse = false;
 			}
 			return player.ownedProjectileCounts[base.item.shoot] < 1;
 		}

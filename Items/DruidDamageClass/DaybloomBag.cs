@@ -16,7 +16,7 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override void SafeSetDefaults()
 		{
-			base.item.damage = 3;
+			base.item.damage = 4;
 			base.item.width = 22;
 			base.item.height = 26;
 			base.item.useTime = 36;
@@ -38,11 +38,11 @@ namespace Redemption.Items.DruidDamageClass
 		{
 			if (Main.dayTime)
 			{
-				base.item.damage = 6;
+				base.item.damage = 7;
 			}
 			else
 			{
-				base.item.damage = 3;
+				base.item.damage = 4;
 			}
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterSeedbags)
 			{

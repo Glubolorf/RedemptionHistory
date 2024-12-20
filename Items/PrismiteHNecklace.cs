@@ -25,7 +25,7 @@ namespace Redemption.Items
 				Main.glowMaskTexture = array;
 			}
 			base.DisplayName.SetDefault("Prismite Heart Necklace");
-			base.Tooltip.SetDefault("+600 max health\nDecreases defence by 999");
+			base.Tooltip.SetDefault("+400 max health\nSets defense to 0");
 		}
 
 		public override void SetDefaults()

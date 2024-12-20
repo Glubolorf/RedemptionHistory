@@ -34,7 +34,7 @@ namespace Redemption.Projectiles
 			base.projectile.localAI[0] += 1f;
 			base.projectile.alpha = (int)base.projectile.localAI[0] * 3;
 			base.projectile.rotation += 0.07f;
-			if (base.projectile.localAI[0] >= 60f)
+			if (base.projectile.localAI[0] >= 90f)
 			{
 				base.projectile.Kill();
 			}

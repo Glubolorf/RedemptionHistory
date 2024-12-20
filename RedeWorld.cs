@@ -1024,6 +1024,7 @@ namespace Redemption
 			RedeWorld.downedSlayer = false;
 			RedeWorld.spawnSapphironOre = false;
 			RedeWorld.spawnScarlionOre = false;
+			RedeWorld.spawnDragonOre = false;
 			RedeWorld.deathBySlayer = false;
 			RedeWorld.foundNewb = false;
 			RedeWorld.downedVlitch3 = false;
@@ -1074,6 +1075,7 @@ namespace Redemption
 			bool flag17 = false;
 			bool flag18 = false;
 			bool flag19 = false;
+			bool flag20 = false;
 			if (RedeWorld.downedKingChicken)
 			{
 				list.Add("KingChicken");
@@ -1118,13 +1120,17 @@ namespace Redemption
 			{
 				flag2 = true;
 			}
-			if (RedeWorld.deathBySlayer)
+			if (RedeWorld.spawnDragonOre)
 			{
 				flag3 = true;
 			}
-			if (RedeWorld.foundNewb)
+			if (RedeWorld.deathBySlayer)
 			{
 				flag4 = true;
+			}
+			if (RedeWorld.foundNewb)
+			{
+				flag5 = true;
 			}
 			if (RedeWorld.downedVlitch3)
 			{
@@ -1140,27 +1146,27 @@ namespace Redemption
 			}
 			if (RedeWorld.spawnXenoBiome)
 			{
-				flag5 = true;
+				flag6 = true;
 			}
 			if (RedeWorld.girusTalk1)
 			{
-				flag6 = true;
+				flag7 = true;
 			}
 			if (RedeWorld.girusTalk2)
 			{
-				flag7 = true;
+				flag8 = true;
 			}
 			if (RedeWorld.girusTalk3)
 			{
-				flag8 = true;
+				flag9 = true;
 			}
 			if (RedeWorld.labSafe)
 			{
-				flag9 = true;
+				flag10 = true;
 			}
 			if (RedeWorld.infectionBegin)
 			{
-				flag10 = true;
+				flag11 = true;
 			}
 			if (RedeWorld.downedBlisterface)
 			{
@@ -1176,39 +1182,39 @@ namespace Redemption
 			}
 			if (RedeWorld.labAccess1)
 			{
-				flag11 = true;
+				flag12 = true;
 			}
 			if (RedeWorld.labAccess2)
 			{
-				flag12 = true;
+				flag13 = true;
 			}
 			if (RedeWorld.labAccess3)
 			{
-				flag13 = true;
+				flag14 = true;
 			}
 			if (RedeWorld.labAccess4)
 			{
-				flag14 = true;
+				flag15 = true;
 			}
 			if (RedeWorld.labAccess5)
 			{
-				flag15 = true;
+				flag16 = true;
 			}
 			if (RedeWorld.labAccess6)
 			{
-				flag16 = true;
+				flag17 = true;
 			}
 			if (RedeWorld.labAccess7)
 			{
-				flag17 = true;
+				flag18 = true;
 			}
 			if (RedeWorld.keeperSaved)
 			{
-				flag18 = true;
+				flag19 = true;
 			}
 			if (RedeWorld.tbotLabAccess)
 			{
-				flag19 = true;
+				flag20 = true;
 			}
 			if (RedeWorld.downedIBehemoth)
 			{
@@ -1226,23 +1232,24 @@ namespace Redemption
 			tagCompound.Add("downed", list);
 			tagCompound.Add("sapphiron", flag);
 			tagCompound.Add("scarlion", flag2);
-			tagCompound.Add("deathSlayer", flag3);
-			tagCompound.Add("newbFound", flag4);
-			tagCompound.Add("wasteland", flag5);
-			tagCompound.Add("girTalk1", flag6);
-			tagCompound.Add("girTalk2", flag7);
-			tagCompound.Add("girTalk3", flag8);
-			tagCompound.Add("labSafe1", flag9);
-			tagCompound.Add("infection1", flag10);
-			tagCompound.Add("labA1", flag11);
-			tagCompound.Add("labA2", flag12);
-			tagCompound.Add("labA3", flag13);
-			tagCompound.Add("labA4", flag14);
-			tagCompound.Add("labA5", flag15);
-			tagCompound.Add("labA6", flag16);
-			tagCompound.Add("labA7", flag17);
-			tagCompound.Add("tbotLabLasers", flag19);
-			tagCompound.Add("keeperS", flag18);
+			tagCompound.Add("dragore", flag3);
+			tagCompound.Add("deathSlayer", flag4);
+			tagCompound.Add("newbFound", flag5);
+			tagCompound.Add("wasteland", flag6);
+			tagCompound.Add("girTalk1", flag7);
+			tagCompound.Add("girTalk2", flag8);
+			tagCompound.Add("girTalk3", flag9);
+			tagCompound.Add("labSafe1", flag10);
+			tagCompound.Add("infection1", flag11);
+			tagCompound.Add("labA1", flag12);
+			tagCompound.Add("labA2", flag13);
+			tagCompound.Add("labA3", flag14);
+			tagCompound.Add("labA4", flag15);
+			tagCompound.Add("labA5", flag16);
+			tagCompound.Add("labA6", flag17);
+			tagCompound.Add("labA7", flag18);
+			tagCompound.Add("tbotLabLasers", flag20);
+			tagCompound.Add("keeperS", flag19);
 			return tagCompound;
 		}
 
@@ -1260,6 +1267,7 @@ namespace Redemption
 			RedeWorld.downedSlayer = list.Contains("KSEntrance");
 			RedeWorld.spawnSapphironOre = tag.GetBool("sapphiron");
 			RedeWorld.spawnScarlionOre = tag.GetBool("scarlion");
+			RedeWorld.spawnDragonOre = tag.GetBool("dragore");
 			RedeWorld.deathBySlayer = tag.GetBool("deathSlayer");
 			RedeWorld.foundNewb = tag.GetBool("newbFound");
 			RedeWorld.downedVlitch3 = list.Contains("OmegaOblitDamaged");

@@ -20,13 +20,13 @@ namespace Redemption.Buffs
 			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
 			player.lifeRegen += 5;
 			player.manaRegen += 5;
-			player.statDefense += 2;
-			player.magicDamage *= 1.04f;
-			player.meleeDamage *= 1.04f;
-			player.minionDamage *= 1.04f;
-			player.rangedDamage *= 1.04f;
-			player.thrownDamage *= 1.04f;
-			druidDamagePlayer.druidDamage *= 1.04f;
+			player.statDefense += 4;
+			player.magicDamage *= 1.05f;
+			player.meleeDamage *= 1.05f;
+			player.minionDamage *= 1.05f;
+			player.rangedDamage *= 1.05f;
+			player.thrownDamage *= 1.05f;
+			druidDamagePlayer.druidDamage *= 1.05f;
 		}
 	}
 }

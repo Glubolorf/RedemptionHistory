@@ -24,7 +24,7 @@ namespace Redemption.Projectiles
 			base.projectile.ignoreWater = true;
 			base.projectile.tileCollide = false;
 			base.projectile.alpha = 0;
-			base.projectile.timeLeft = 200;
+			base.projectile.timeLeft = 400;
 		}
 
 		public override void AI()

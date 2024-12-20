@@ -1931,6 +1931,10 @@ namespace Redemption.NPCs
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("Crowbar"), 1, false, 0, false, false);
 			}
+			if ((npc.type == 6 || npc.type == -11 || npc.type == -12 || npc.type == 57 || npc.type == 7 || npc.type == 94 || npc.type == 81 || npc.type == -1 || npc.type == -2 || npc.type == 239 || npc.type == 465 || npc.type == 181 || npc.type == 173 || npc.type == -23 || npc.type == -22 || npc.type == 174 || npc.type == 183 || npc.type == -25 || npc.type == -24 || npc.type == 241 || npc.type == 242) && Main.rand.Next(500) == 0)
+			{
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("EldritchRoot"), 1, false, 0, false, false);
+			}
 		}
 	}
 }

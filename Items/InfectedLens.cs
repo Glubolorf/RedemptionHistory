@@ -9,7 +9,7 @@ namespace Redemption.Items
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Infected Lens");
-			base.Tooltip.SetDefault("'Will NOT improve your eyesight!'");
+			base.Tooltip.SetDefault("'Will NOT improve your eyesight!'\nDropped by Infected Demon Eyes in Hardmode");
 		}
 
 		public override void SetDefaults()

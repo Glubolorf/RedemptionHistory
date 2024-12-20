@@ -1,5 +1,6 @@
 ﻿using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace Redemption.Items
@@ -10,12 +11,13 @@ namespace Redemption.Items
 		{
 			base.DisplayName.SetDefault("Xenomite Shard");
 			base.Tooltip.SetDefault("'Holding this may infect you...'");
+			Main.RegisterItemAnimation(base.item.type, new DrawAnimationVertical(4, 5));
 		}
 
 		public override void SetDefaults()
 		{
-			base.item.width = 12;
-			base.item.height = 12;
+			base.item.width = 14;
+			base.item.height = 14;
 			base.item.maxStack = 999;
 			base.item.value = Item.sellPrice(0, 0, 0, 75);
 			base.item.rare = 2;

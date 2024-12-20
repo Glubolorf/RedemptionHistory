@@ -60,7 +60,9 @@ namespace Redemption
 				base.ItemType("EyeStalkBag"),
 				base.ItemType("MartianTreeBag"),
 				base.ItemType("TitaniumBloomBag"),
-				base.ItemType("AdamantiteLilyBag")
+				base.ItemType("AdamantiteLilyBag"),
+				base.ItemType("CreationRoseBag"),
+				base.ItemType("DeathsGraspBag")
 			});
 			RecipeGroup.RegisterGroup("Redemption:Seedbag", recipeGroup2);
 			RecipeGroup recipeGroup3 = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Phasesaber", new int[]

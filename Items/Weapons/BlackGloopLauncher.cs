@@ -11,7 +11,7 @@ namespace Redemption.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Gloop Launcher");
-			base.Tooltip.SetDefault("Shoots black gloop that explodes into smaller pieces of gloop");
+			base.Tooltip.SetDefault("Shoots gloop that explodes into smaller pieces of gloop");
 		}
 
 		public override void SetDefaults()

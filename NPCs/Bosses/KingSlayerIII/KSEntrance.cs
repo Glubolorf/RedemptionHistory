@@ -222,6 +222,7 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 			{
 				this.idle1 = true;
 				this.start = true;
+				base.npc.netUpdate = true;
 			}
 			if (RedeWorld.downedSlayer)
 			{
@@ -256,14 +257,17 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 					Main.NewText(text3, r3, g3, rarityCyan9.B, false);
 					this.idle1 = false;
 					this.blinkGun = true;
+					base.npc.netUpdate = true;
 				}
 				if (this.aiCounter == 418)
 				{
 					this.blinkGun = false;
 					this.idle2 = true;
+					base.npc.netUpdate = true;
 				}
 				if (this.aiCounter == 500)
 				{
+					base.npc.netUpdate = true;
 					this.fightBegin = true;
 					this.attackMode = 1;
 					base.npc.dontTakeDamage = false;
@@ -292,6 +296,11 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 					return;
 				}
 			}
+			if (this.aiCounter == 0 && !this.shieldUp)
+			{
+				base.npc.dontTakeDamage = false;
+				base.npc.netUpdate = true;
+			}
 			if (!RedeWorld.downedSlayer)
 			{
 				if (RedeWorld.deathBySlayer)
@@ -308,6 +317,7 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 					}
 					if (this.aiCounter == 180)
 					{
+						base.npc.netUpdate = true;
 						this.idle1 = false;
 						this.blinkGun = true;
 					}
@@ -315,9 +325,11 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 					{
 						this.blinkGun = false;
 						this.idle2 = true;
+						base.npc.netUpdate = true;
 					}
 					if (this.aiCounter == 300)
 					{
+						base.npc.netUpdate = true;
 						this.fightBegin = true;
 						this.attackMode = 1;
 						base.npc.dontTakeDamage = false;
@@ -389,14 +401,17 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						Main.NewText(text8, r8, g8, rarityCyan24.B, false);
 						this.idle1 = false;
 						this.blinkGun = true;
+						base.npc.netUpdate = true;
 					}
 					if (this.aiCounter == 698)
 					{
 						this.blinkGun = false;
 						this.idle2 = true;
+						base.npc.netUpdate = true;
 					}
 					if (this.aiCounter == 900)
 					{
+						base.npc.netUpdate = true;
 						this.fightBegin = true;
 						RedeWorld.deathBySlayer = true;
 						this.attackMode = 1;
@@ -438,6 +453,7 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 			}
 			if (this.attackMode == 1)
 			{
+				base.npc.netUpdate = true;
 				base.npc.aiStyle = 3;
 				this.aiType = 425;
 				this.timer1++;
@@ -607,12 +623,14 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 			}
 			if (base.npc.life <= 38000 && !this.shieldEvent1)
 			{
+				base.npc.netUpdate = true;
 				this.attackMode = 2;
 				this.shieldTimer1++;
 				if (this.shieldTimer1 <= 300)
 				{
 					this.shieldUp = true;
 					this.idle2 = false;
+					base.npc.netUpdate = true;
 					base.npc.dontTakeDamage = true;
 					if (this.shieldTimer1 == 60)
 					{
@@ -633,10 +651,12 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 					this.attackMode = 1;
 					this.shieldUp = false;
 					this.idle2 = true;
+					base.npc.netUpdate = true;
 				}
 			}
 			if (base.npc.life <= 30000 && !this.shieldEvent2)
 			{
+				base.npc.netUpdate = true;
 				this.attackMode = 2;
 				this.shieldTimer2++;
 				if (this.shieldTimer2 == 1)
@@ -654,6 +674,7 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 					this.shieldUp = true;
 					this.idle2 = false;
 					base.npc.dontTakeDamage = true;
+					base.npc.netUpdate = true;
 				}
 				if (this.shieldTimer2 >= 120 && this.shieldTimer2 < 570)
 				{
@@ -681,17 +702,20 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 					this.timer1 = 0;
 					this.attackMode = 1;
 					this.shieldUp = false;
+					base.npc.netUpdate = true;
 					this.idle2 = true;
 				}
 			}
 			if (base.npc.life <= 24000 && !this.shieldEvent3)
 			{
+				base.npc.netUpdate = true;
 				this.attackMode = 2;
 				this.shieldTimer3++;
 				if (this.shieldTimer3 < 480)
 				{
 					this.shieldUp = true;
 					this.idle2 = false;
+					base.npc.netUpdate = true;
 					base.npc.dontTakeDamage = true;
 					if (this.shieldTimer3 == 30)
 					{
@@ -740,6 +764,7 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 					this.attackMode = 1;
 					this.shieldUp = false;
 					this.idle2 = true;
+					base.npc.netUpdate = true;
 				}
 			}
 			if (base.npc.life <= 22000 && !this.rocketEvent1)
@@ -1005,17 +1030,33 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 			}
 			if (this.fightBegin)
 			{
+				if (base.npc.velocity.X == 0f && base.npc.velocity.Y == 0f)
+				{
+					this.noMoveTimer++;
+					if (this.noMoveTimer >= 60)
+					{
+						this.teleport = true;
+						base.npc.netUpdate = true;
+					}
+				}
+				else
+				{
+					this.noMoveTimer = 0;
+				}
 				if (base.npc.life <= 10000 && Main.rand.Next(500) == 0)
 				{
 					this.teleport = true;
+					base.npc.netUpdate = true;
 				}
 				if (base.npc.life > 10000 && Main.rand.Next(750) == 0)
 				{
 					this.teleport = true;
+					base.npc.netUpdate = true;
 				}
 			}
 			if (this.teleport)
 			{
+				base.npc.netUpdate = true;
 				this.teleportTimer++;
 				if (this.teleportTimer == 2)
 				{
@@ -1052,6 +1093,7 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 					}
 					this.teleport = false;
 					this.teleportTimer = 0;
+					base.npc.netUpdate = true;
 				}
 			}
 		}
@@ -1210,6 +1252,8 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 		public bool rocketEvent4;
 
 		public bool rocketEvent5;
+
+		public int noMoveTimer;
 
 		private int idle1Counter;
 

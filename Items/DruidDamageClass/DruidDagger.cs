@@ -39,16 +39,16 @@ namespace Redemption.Items.DruidDamageClass
 		public override void AddRecipes()
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddRecipeGroup("Redemption:Plant", 5);
+			modRecipe.AddRecipeGroup("Redemption:Plant", 2);
 			modRecipe.AddIngredient(19, 1);
 			modRecipe.AddTile(null, "DruidicAltarTile");
-			modRecipe.SetResult(this, 100);
+			modRecipe.SetResult(this, 200);
 			modRecipe.AddRecipe();
 			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddRecipeGroup("Redemption:Plant", 5);
+			modRecipe.AddRecipeGroup("Redemption:Plant", 2);
 			modRecipe.AddIngredient(706, 1);
 			modRecipe.AddTile(null, "DruidicAltarTile");
-			modRecipe.SetResult(this, 100);
+			modRecipe.SetResult(this, 200);
 			modRecipe.AddRecipe();
 		}
 	}

@@ -34,7 +34,7 @@ namespace Redemption.Projectiles
 			{
 				base.projectile.velocity.Y = 9f;
 			}
-			if (base.projectile.localAI[0] > 30f)
+			if (base.projectile.localAI[0] > 200f)
 			{
 				base.projectile.Kill();
 			}

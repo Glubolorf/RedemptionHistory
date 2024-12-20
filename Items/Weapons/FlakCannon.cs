@@ -16,7 +16,7 @@ namespace Redemption.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 59;
+			base.item.damage = 44;
 			base.item.ranged = true;
 			base.item.width = 74;
 			base.item.height = 46;
@@ -43,7 +43,7 @@ namespace Redemption.Items.Weapons
 		{
 			if (player.altFunctionUse == 2)
 			{
-				base.item.damage = 59;
+				base.item.damage = 44;
 				base.item.useTime = 70;
 				base.item.useAnimation = 70;
 				base.item.shootSpeed = 10f;
@@ -53,7 +53,7 @@ namespace Redemption.Items.Weapons
 			}
 			else
 			{
-				base.item.damage = 59;
+				base.item.damage = 44;
 				base.item.useTime = 20;
 				base.item.UseSound = SoundID.Item36;
 				base.item.useAnimation = 20;
@@ -72,7 +72,7 @@ namespace Redemption.Items.Weapons
 			}
 			if (player.altFunctionUse == 2)
 			{
-				Projectile.NewProjectile(position.X, position.Y, speedX, speedY, base.mod.ProjectileType("FlakPro"), 300, 9f, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(position.X, position.Y, speedX, speedY, base.mod.ProjectileType("FlakPro"), 200, 9f, player.whoAmI, 0f, 0f);
 				int num = 5;
 				for (int i = 0; i < num; i++)
 				{

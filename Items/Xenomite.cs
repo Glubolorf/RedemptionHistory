@@ -11,13 +11,13 @@ namespace Redemption.Items
 		{
 			base.DisplayName.SetDefault("Xenomite");
 			base.Tooltip.SetDefault("'Infects living things...'");
-			Main.RegisterItemAnimation(base.item.type, new DrawAnimationVertical(4, 10));
+			Main.RegisterItemAnimation(base.item.type, new DrawAnimationVertical(4, 7));
 		}
 
 		public override void SetDefaults()
 		{
-			base.item.width = 18;
-			base.item.height = 28;
+			base.item.width = 14;
+			base.item.height = 24;
 			base.item.maxStack = 999;
 			base.item.value = Item.sellPrice(0, 0, 5, 0);
 			base.item.rare = 7;

@@ -43,6 +43,7 @@ namespace Redemption.Items.Weapons
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
 			modRecipe.AddIngredient(null, "CyberPlating", 8);
+			modRecipe.AddIngredient(null, "Mk2Capacitator", 1);
 			modRecipe.AddIngredient(null, "KingCore", 1);
 			modRecipe.AddTile(134);
 			modRecipe.SetResult(this, 1);

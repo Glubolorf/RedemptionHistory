@@ -10,10 +10,15 @@ namespace Redemption.NPCs
 	{
 		public override void SetupShop(int type, Chest shop, ref int nextSlot)
 		{
-			if (type == 20 && Main.bloodMoon)
+			if (type == 20)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType<CorpseFlowerBag>(), false);
+				shop.item[nextSlot].SetDefaults(3093, false);
 				nextSlot++;
+				if (Main.bloodMoon)
+				{
+					shop.item[nextSlot].SetDefaults(base.mod.ItemType<CorpseFlowerBag>(), false);
+					nextSlot++;
+				}
 			}
 		}
 
@@ -792,10 +797,8 @@ namespace Redemption.NPCs
 			}
 			if (npc.type == base.mod.NPCType("ForestNymph"))
 			{
-				if (Main.rand.Next(1) == 0)
-				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 3102, 1, false, 0, false, false);
-				}
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 3102, 1, false, 0, false, false);
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 3093, Main.rand.Next(1, 2), false, 0, false, false);
 				if (Main.rand.Next(4) == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 313, Main.rand.Next(1, 3), false, 0, false, false);

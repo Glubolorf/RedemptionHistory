@@ -58,14 +58,6 @@ namespace Redemption
 			}
 		}
 
-		public override void SetupStartInventory(IList<Item> items)
-		{
-			Item item = new Item();
-			item.SetDefaults(base.mod.ItemType("DruidNote"), false);
-			item.stack = 1;
-			items.Add(item);
-		}
-
 		public override void ResetEffects()
 		{
 			this.chickenMinion = false;
@@ -101,6 +93,7 @@ namespace Redemption
 			this.skeletonCan = false;
 			this.enjoyment = false;
 			this.ultraFlames = false;
+			RedePlayer.reflectProjs = false;
 		}
 
 		public override void UpdateDead()
@@ -129,6 +122,14 @@ namespace Redemption
 				base.player.lifeRegenTime = 0;
 				base.player.lifeRegen -= 40;
 			}
+		}
+
+		public override void SetupStartInventory(IList<Item> items)
+		{
+			Item item = new Item();
+			item.SetDefaults(base.mod.ItemType("EmptyCore"), false);
+			item.stack = 1;
+			items.Add(item);
 		}
 
 		public override void DrawEffects(PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
@@ -326,5 +327,7 @@ namespace Redemption
 		public bool enjoyment;
 
 		public bool ultraFlames;
+
+		public static bool reflectProjs;
 	}
 }

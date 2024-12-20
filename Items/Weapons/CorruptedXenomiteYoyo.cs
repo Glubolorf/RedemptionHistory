@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,12 +10,24 @@ namespace Redemption.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				CorruptedXenomiteYoyo.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
+			base.item.glowMask = CorruptedXenomiteYoyo.customGlowMask;
 			base.DisplayName.SetDefault("Corrupted Xenomite Yoyo");
 		}
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 110;
+			base.item.damage = 98;
 			base.item.melee = true;
 			base.item.useTime = 14;
 			base.item.useAnimation = 14;
@@ -28,6 +41,7 @@ namespace Redemption.Items.Weapons
 			base.item.noUseGraphic = true;
 			base.item.noMelee = true;
 			base.item.UseSound = SoundID.Item1;
+			base.item.glowMask = CorruptedXenomiteYoyo.customGlowMask;
 		}
 
 		public override void AddRecipes()
@@ -39,5 +53,7 @@ namespace Redemption.Items.Weapons
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
 		}
+
+		public static short customGlowMask;
 	}
 }

@@ -94,6 +94,15 @@ namespace Redemption
 				base.AddEquipTexture(new OmegaHead(), null, 0, "OmegaHead", "Redemption/Items/Cores/OmegaCore_Head", "", "");
 				base.AddEquipTexture(new OmegaBody(), null, 1, "OmegaBody", "Redemption/Items/Cores/OmegaCore_Body", "Redemption/Items/Cores/OmegaCore_FemaleBody", "Redemption/Items/Cores/OmegaCore_Arms");
 				base.AddEquipTexture(new OmegaLegs(), null, 2, "OmegaLegs", "Redemption/Items/Cores/OmegaCore_Legs", "", "");
+				base.AddEquipTexture(new ChickenHead(), null, 0, "ChickenHead", "Redemption/Items/CrownOfTheKing_Head", "", "");
+				base.AddEquipTexture(new ChickenBody(), null, 1, "ChickenBody", "Redemption/Items/CrownOfTheKing_Body", "Redemption/Items/CrownOfTheKing_Arms", "");
+				base.AddEquipTexture(new ChickenLegs(), null, 2, "ChickenLegs", "Redemption/Items/CrownOfTheKing_Legs", "", "");
+				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/XenoCaves"), base.ItemType("WastelandBox"), base.TileType("WastelandBoxTile"), 0);
+				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/BossXeno1"), base.ItemType("XenomiteCrystalBox"), base.TileType("XenomiteCrystalBoxTile"), 0);
+				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/BossXeno2"), base.ItemType("InfectedEyeBox"), base.TileType("InfectedEyeBoxTile"), 0);
+				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/BossSlayer"), base.ItemType("KSBox"), base.TileType("KSBoxTile"), 0);
+				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/BossVlitch1"), base.ItemType("VlitchBox"), base.TileType("VlitchBoxTile"), 0);
+				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/BossKeeper"), base.ItemType("KeeperBox"), base.TileType("KeeperBoxTile"), 0);
 			}
 			Redemption.FaceCustomCurrencyID = CustomCurrencyManager.RegisterCurrency(new CustomCurrency(base.ItemType<AncientGoldCoin>(), 999L));
 		}
@@ -148,7 +157,7 @@ namespace Redemption
 				array5[1] = "Infected Eye";
 				array5[2] = 6.25f;
 				array5[3] = new Func<bool>(() => RedeWorld.downedInfectedEye);
-				array5[4] = "Use a [i:" + base.ItemType<XenoEye>() + "] at night";
+				array5[4] = "Use a [i:" + base.ItemType<XenoEye>() + "] at night, requires the Xenomite Crystal to be defeated";
 				mod6.Call(array5);
 				Mod mod7 = mod;
 				object[] array6 = new object[5];
@@ -156,12 +165,12 @@ namespace Redemption
 				array6[1] = "King Slayer III";
 				array6[2] = 9.999f;
 				array6[3] = new Func<bool>(() => RedeWorld.downedSlayer);
-				array6[4] = "Use a [i:" + base.ItemType<KingSummon>() + "] at day";
+				array6[4] = "Use a [i:" + base.ItemType<KingSummon>() + "] at day. (Although I would recommend fighting at a later point in the game)";
 				mod7.Call(array6);
 				Mod mod8 = mod;
 				object[] array7 = new object[5];
 				array7[0] = "AddBossWithInfo";
-				array7[1] = "Vlitch Cleaver";
+				array7[1] = "1st Vlitch Overlord";
 				array7[2] = 11.5f;
 				array7[3] = new Func<bool>(() => RedeWorld.downedVlitch1);
 				array7[4] = "Use a [i:" + base.ItemType<CorruptedHeroSword>() + "] at night";
@@ -169,11 +178,19 @@ namespace Redemption
 				Mod mod9 = mod;
 				object[] array8 = new object[5];
 				array8[0] = "AddBossWithInfo";
-				array8[1] = "Vlitch Gigipede";
+				array8[1] = "2nd Vlitch Overlord";
 				array8[2] = 13.5f;
 				array8[3] = new Func<bool>(() => RedeWorld.downedVlitch2);
 				array8[4] = "Use a [i:" + base.ItemType<CorruptedWormMedallion>() + "] at night";
 				mod9.Call(array8);
+				Mod mod10 = mod;
+				object[] array9 = new object[5];
+				array9[0] = "AddBossWithInfo";
+				array9[1] = "3rd Vlitch Overlord";
+				array9[2] = 15f;
+				array9[3] = new Func<bool>(() => RedeWorld.downedVlitch3);
+				array9[4] = "Use an [i:" + base.ItemType<OmegaRadar>() + "] at night";
+				mod10.Call(array9);
 			}
 		}
 
@@ -209,6 +226,18 @@ namespace Redemption
 			modRecipe.AddIngredient(null, "TreeBugShell", 1);
 			modRecipe.AddTile(228);
 			modRecipe.SetResult(1011, 1);
+			modRecipe.AddRecipe();
+			modRecipe = new ModRecipe(this);
+			modRecipe.AddIngredient(23, 40);
+			modRecipe.AddIngredient(null, "BlankGoldCrown", 1);
+			modRecipe.AddTile(26);
+			modRecipe.SetResult(560, 1);
+			modRecipe.AddRecipe();
+			modRecipe = new ModRecipe(this);
+			modRecipe.AddIngredient(23, 40);
+			modRecipe.AddIngredient(null, "BlankPlatCrown", 1);
+			modRecipe.AddTile(26);
+			modRecipe.SetResult(560, 1);
 			modRecipe.AddRecipe();
 		}
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,13 +11,25 @@ namespace Redemption.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				PlasmaJawser.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
+			base.item.glowMask = PlasmaJawser.customGlowMask;
 			base.DisplayName.SetDefault("Plasma Jawser");
 			base.Tooltip.SetDefault("\nFires an Omega Laser\nRight-clicking fires 3 Omega Plasma Balls");
 		}
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 100;
+			base.item.damage = 180;
 			base.item.useTime = 20;
 			base.item.useAnimation = 20;
 			base.item.channel = true;
@@ -33,6 +46,7 @@ namespace Redemption.Items.Weapons
 			base.item.knockBack = 3f;
 			base.item.value = Item.sellPrice(0, 20, 0, 0);
 			base.item.rare = 10;
+			base.item.glowMask = PlasmaJawser.customGlowMask;
 		}
 
 		public override bool AltFunctionUse(Player player)
@@ -45,9 +59,9 @@ namespace Redemption.Items.Weapons
 			if (player.altFunctionUse == 2)
 			{
 				base.item.damage = 250;
-				base.item.useTime = 23;
+				base.item.useTime = 50;
 				base.item.UseSound = SoundID.Item125;
-				base.item.useAnimation = 23;
+				base.item.useAnimation = 50;
 				base.item.channel = false;
 				base.item.autoReuse = true;
 				base.item.shoot = base.mod.ProjectileType("OmegaPlasmaBall2");
@@ -55,7 +69,7 @@ namespace Redemption.Items.Weapons
 			}
 			else
 			{
-				base.item.damage = 100;
+				base.item.damage = 180;
 				base.item.useTime = 20;
 				base.item.useAnimation = 20;
 				base.item.channel = true;
@@ -90,5 +104,19 @@ namespace Redemption.Items.Weapons
 		{
 			return new Vector2?(new Vector2(-8f, 0f));
 		}
+
+		public override void AddRecipes()
+		{
+			ModRecipe modRecipe = new ModRecipe(base.mod);
+			modRecipe.AddIngredient(null, "OblitBrain", 1);
+			modRecipe.AddIngredient(null, "CorruptedXenomite", 8);
+			modRecipe.AddIngredient(null, "VlitchScale", 22);
+			modRecipe.AddIngredient(null, "VlitchBattery", 2);
+			modRecipe.AddTile(412);
+			modRecipe.SetResult(this, 1);
+			modRecipe.AddRecipe();
+		}
+
+		public static short customGlowMask;
 	}
 }

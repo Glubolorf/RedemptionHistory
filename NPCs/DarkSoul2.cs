@@ -46,6 +46,14 @@ namespace Redemption.NPCs
 			{
 				Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, base.mod.DustType("VoidFlame"), 0f, 0f, 0, default(Color), 1f);
 			}
+			this.deathTimer++;
+			if (this.deathTimer >= 300)
+			{
+				Main.PlaySound(SoundID.NPCDeath6, (int)base.npc.position.X, (int)base.npc.position.Y);
+				base.npc.active = false;
+			}
 		}
+
+		private int deathTimer;
 	}
 }

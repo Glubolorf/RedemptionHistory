@@ -42,14 +42,26 @@ namespace Redemption.Items
 		public override void AddRecipes()
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "ChickenEgg", 20);
+			modRecipe.AddIngredient(null, "ChickenEgg", 10);
 			modRecipe.AddIngredient(264, 1);
 			modRecipe.AddTile(26);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
 			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "ChickenEgg", 20);
+			modRecipe.AddIngredient(null, "ChickenEgg", 10);
 			modRecipe.AddIngredient(715, 1);
+			modRecipe.AddTile(26);
+			modRecipe.SetResult(this, 1);
+			modRecipe.AddRecipe();
+			modRecipe = new ModRecipe(base.mod);
+			modRecipe.AddIngredient(null, "ChickenEgg", 20);
+			modRecipe.AddIngredient(null, "BlankGoldCrown", 1);
+			modRecipe.AddTile(26);
+			modRecipe.SetResult(this, 1);
+			modRecipe.AddRecipe();
+			modRecipe = new ModRecipe(base.mod);
+			modRecipe.AddIngredient(null, "ChickenEgg", 20);
+			modRecipe.AddIngredient(null, "BlankPlatCrown", 1);
 			modRecipe.AddTile(26);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();

@@ -33,7 +33,7 @@ namespace Redemption.Projectiles
 		public override void AI()
 		{
 			base.projectile.rotation = (float)Math.Atan2((double)base.projectile.velocity.Y, (double)base.projectile.velocity.X) + 1.57f;
-			Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 280, 0f, 0f, 100, default(Color), 1.2f);
+			Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 57, 0f, 0f, 100, default(Color), 1.2f);
 		}
 
 		public override bool OnTileCollide(Vector2 oldVelocity)
@@ -47,7 +47,7 @@ namespace Redemption.Projectiles
 		{
 			for (int i = 0; i < 10; i++)
 			{
-				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 280, 0f, 0f, 100, default(Color), 1.2f);
+				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 57, 0f, 0f, 100, default(Color), 1.2f);
 				Main.dust[num].velocity *= 1.4f;
 			}
 			Projectile.NewProjectile(base.projectile.position.X + 10f, base.projectile.position.Y + 24f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 90, 10, 1f, base.projectile.owner, 0f, 1f);

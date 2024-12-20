@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,6 +11,18 @@ namespace Redemption.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				GirusDagger.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
+			base.item.glowMask = GirusDagger.customGlowMask;
 			base.DisplayName.SetDefault("Girus' Dagger");
 		}
 
@@ -31,6 +44,7 @@ namespace Redemption.Items.Weapons
 			base.item.useTurn = true;
 			base.item.shootSpeed = 85f;
 			base.item.shoot = base.mod.ProjectileType("GirusDaggerPro");
+			base.item.glowMask = GirusDagger.customGlowMask;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -47,5 +61,16 @@ namespace Redemption.Items.Weapons
 			}
 			return false;
 		}
+
+		public override void AddRecipes()
+		{
+			ModRecipe modRecipe = new ModRecipe(base.mod);
+			modRecipe.AddIngredient(null, "GirusDaggerThrown", 1);
+			modRecipe.AddTile(114);
+			modRecipe.SetResult(this, 1);
+			modRecipe.AddRecipe();
+		}
+
+		public static short customGlowMask;
 	}
 }

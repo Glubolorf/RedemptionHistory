@@ -24,9 +24,11 @@ namespace Redemption.Projectiles
 		public override void AI()
 		{
 			base.projectile.rotation = (float)Math.Atan2((double)base.projectile.velocity.Y, (double)base.projectile.velocity.X) + 1.57f;
-			Projectile projectile = base.projectile;
-			projectile.velocity.Y = projectile.velocity.Y + 0.3f;
-			Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 15, base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 0, default(Color), 1f);
+			int num = Dust.NewDust(new Vector2(base.projectile.Center.X - 4f, base.projectile.Center.Y), 1, 1, 15, 0f, 0f, 0, default(Color), 1f);
+			Main.dust[num].noGravity = true;
+			Dust dust = Main.dust[num];
+			dust.velocity.X = 0f;
+			dust.velocity.Y = 0f;
 		}
 
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
@@ -68,6 +70,18 @@ namespace Redemption.Projectiles
 				dust.velocity *= 0.5f;
 				dust.noGravity = true;
 				vector -= vector2 * 8f;
+			}
+		}
+
+		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+		{
+			Player player = Main.player[base.projectile.owner];
+			int crit2 = player.HeldItem.crit;
+			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref crit2);
+			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref crit2);
+			if (crit2 >= 100 || Main.rand.Next(1, 101) <= crit2)
+			{
+				crit = true;
 			}
 		}
 	}

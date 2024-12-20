@@ -36,6 +36,9 @@ namespace Redemption.Projectiles
 					base.projectile.frame = 0;
 				}
 			}
+			Lighting.AddLight(base.projectile.Center, (float)(255 - base.projectile.alpha) * 1f / 255f, (float)(255 - base.projectile.alpha) * 1f / 255f, (float)(255 - base.projectile.alpha) * 1f / 255f);
+			int num = Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, 235, 0f, 0f, 0, default(Color), 1f);
+			Main.dust[num].noGravity = true;
 			base.projectile.rotation = (float)Math.Atan2((double)base.projectile.velocity.Y, (double)base.projectile.velocity.X) + 1.57f;
 			if (base.projectile.localAI[0] == 0f)
 			{
@@ -43,18 +46,18 @@ namespace Redemption.Projectiles
 				base.projectile.localAI[0] = 1f;
 			}
 			Vector2 vector = Vector2.Zero;
-			float num = 600f;
+			float num2 = 600f;
 			bool flag = false;
 			for (int i = 0; i < 200; i++)
 			{
 				if (Main.player[i].active)
 				{
 					Vector2 vector2 = Main.player[i].Center - base.projectile.Center;
-					float num2 = (float)Math.Sqrt((double)(vector2.X * vector2.X + vector2.Y * vector2.Y));
-					if (num2 < num)
+					float num3 = (float)Math.Sqrt((double)(vector2.X * vector2.X + vector2.Y * vector2.Y));
+					if (num3 < num2)
 					{
 						vector = vector2;
-						num = num2;
+						num2 = num3;
 						flag = true;
 					}
 				}
@@ -72,7 +75,7 @@ namespace Redemption.Projectiles
 			float num = (float)Math.Sqrt((double)(vector.X * vector.X + vector.Y * vector.Y));
 			if (num > 6f)
 			{
-				vector *= 12f / num;
+				vector *= 10f / num;
 			}
 		}
 

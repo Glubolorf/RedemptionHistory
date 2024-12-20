@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -9,6 +10,17 @@ namespace Redemption.Projectiles
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
+				SpectreScythe.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
 			base.DisplayName.SetDefault("Spectral Scythe");
 		}
 
@@ -19,6 +31,7 @@ namespace Redemption.Projectiles
 			base.projectile.alpha = 50;
 			base.projectile.tileCollide = false;
 			base.projectile.timeLeft = 80;
+			base.projectile.glowMask = SpectreScythe.customGlowMask;
 		}
 
 		public override void AI()
@@ -48,5 +61,7 @@ namespace Redemption.Projectiles
 				damage *= 2;
 			}
 		}
+
+		public static short customGlowMask;
 	}
 }

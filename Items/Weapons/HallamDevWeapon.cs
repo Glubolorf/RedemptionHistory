@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,6 +11,18 @@ namespace Redemption.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				HallamDevWeapon.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
+			base.item.glowMask = HallamDevWeapon.customGlowMask;
 			base.DisplayName.SetDefault("Hallam's Legendary Staff");
 			base.Tooltip.SetDefault("'Godly'\nSummons a Legendary Rainbow Cat at cursor point\nShoots Rainbow Bolts that move in the direction of your cursor\nCan only be used if Moonlord is defeated");
 			Item.staff[base.item.type] = true;
@@ -34,6 +47,7 @@ namespace Redemption.Items.Weapons
 			base.item.autoReuse = false;
 			base.item.shoot = base.mod.ProjectileType("RainbowCatPro");
 			base.item.shootSpeed = 0f;
+			base.item.glowMask = HallamDevWeapon.customGlowMask;
 		}
 
 		public override bool CanUseItem(Player player)
@@ -46,5 +60,7 @@ namespace Redemption.Items.Weapons
 			position = Main.MouseWorld;
 			return true;
 		}
+
+		public static short customGlowMask;
 	}
 }

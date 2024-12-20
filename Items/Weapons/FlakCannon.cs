@@ -16,10 +16,11 @@ namespace Redemption.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 44;
+			base.item.damage = 24;
 			base.item.ranged = true;
 			base.item.width = 74;
 			base.item.height = 46;
+			base.item.crit = -4;
 			base.item.useTime = 30;
 			base.item.useAnimation = 30;
 			base.item.useStyle = 5;
@@ -43,7 +44,7 @@ namespace Redemption.Items.Weapons
 		{
 			if (player.altFunctionUse == 2)
 			{
-				base.item.damage = 44;
+				base.item.damage = 24;
 				base.item.useTime = 70;
 				base.item.useAnimation = 70;
 				base.item.shootSpeed = 10f;
@@ -53,7 +54,7 @@ namespace Redemption.Items.Weapons
 			}
 			else
 			{
-				base.item.damage = 44;
+				base.item.damage = 24;
 				base.item.useTime = 20;
 				base.item.UseSound = SoundID.Item36;
 				base.item.useAnimation = 20;
@@ -102,6 +103,7 @@ namespace Redemption.Items.Weapons
 			modRecipe.AddIngredient(534, 1);
 			modRecipe.AddIngredient(219, 1);
 			modRecipe.AddIngredient(175, 25);
+			modRecipe.AddIngredient(1225, 10);
 			modRecipe.AddIngredient(1347, 15);
 			modRecipe.AddIngredient(324, 1);
 			modRecipe.AddTile(77);

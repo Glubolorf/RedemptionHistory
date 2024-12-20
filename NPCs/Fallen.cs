@@ -162,6 +162,10 @@ namespace Redemption.NPCs
 			shop.item[nextSlot].shopCustomPrice = new int?(25);
 			shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 			nextSlot++;
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType<BronzeStaff>(), false);
+			shop.item[nextSlot].shopCustomPrice = new int?(30);
+			shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
+			nextSlot++;
 			shop.item[nextSlot].SetDefaults(base.mod.ItemType<AncientDirt>(), false);
 			shop.item[nextSlot].shopCustomPrice = new int?(2);
 			shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;

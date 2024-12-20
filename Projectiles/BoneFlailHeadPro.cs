@@ -10,6 +10,17 @@ namespace Redemption.Projectiles
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
+				BoneFlailHeadPro.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
 			base.DisplayName.SetDefault("Bone Leviathan Flail");
 		}
 
@@ -20,6 +31,7 @@ namespace Redemption.Projectiles
 			base.projectile.friendly = true;
 			base.projectile.penetrate = -1;
 			base.projectile.melee = true;
+			base.projectile.glowMask = BoneFlailHeadPro.customGlowMask;
 			base.projectile.aiStyle = 15;
 		}
 
@@ -73,10 +85,12 @@ namespace Redemption.Projectiles
 					vector3 = mountedCenter - vector;
 					Color color = Lighting.GetColor((int)vector.X / 16, (int)((double)vector.Y / 16.0));
 					color = base.projectile.GetAlpha(color);
-					Main.spriteBatch.Draw(texture, vector - Main.screenPosition, rectangle, color, num2, vector2, 1.35f, 0, 0f);
+					Main.spriteBatch.Draw(texture, vector - Main.screenPosition, rectangle, color, num2, vector2, 1f, 0, 0f);
 				}
 			}
 			return true;
 		}
+
+		public static short customGlowMask;
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,6 +10,17 @@ namespace Redemption.Items.DruidDamageClass
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/DruidDamageClass/" + base.GetType().Name + "_Glow");
+				CreationHamaxe.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
 			base.DisplayName.SetDefault("Creation Hamaxe");
 			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]");
 		}
@@ -29,6 +41,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.rare = 10;
 			base.item.UseSound = SoundID.Item1;
 			base.item.autoReuse = true;
+			base.item.glowMask = CreationHamaxe.customGlowMask;
 		}
 
 		public override void AddRecipes()
@@ -40,5 +53,7 @@ namespace Redemption.Items.DruidDamageClass
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
 		}
+
+		public static short customGlowMask;
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,6 +11,17 @@ namespace Redemption.Items.DruidDamageClass
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/DruidDamageClass/" + base.GetType().Name + "_Glow");
+				MoonflareStave.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
 			base.DisplayName.SetDefault("Moonflare Stave");
 			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nShoots Moonflare Sparkles");
 		}
@@ -31,6 +43,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.useTurn = true;
 			base.item.shoot = base.mod.ProjectileType("MoonflareSpark");
 			base.item.shootSpeed = 11f;
+			base.item.glowMask = MoonflareStave.customGlowMask;
 		}
 
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
@@ -72,10 +85,12 @@ namespace Redemption.Items.DruidDamageClass
 		public override void AddRecipes()
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "MoonflareFragment", 12);
+			modRecipe.AddIngredient(null, "MoonflareFragment", 7);
 			modRecipe.AddTile(null, "DruidicAltarTile");
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
 		}
+
+		public static short customGlowMask;
 	}
 }

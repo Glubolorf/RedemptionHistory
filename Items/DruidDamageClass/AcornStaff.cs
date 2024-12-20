@@ -9,7 +9,7 @@ namespace Redemption.Items.DruidDamageClass
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Acorn Staff");
+			base.DisplayName.SetDefault("Acorn Stave");
 			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]");
 		}
 

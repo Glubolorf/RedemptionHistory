@@ -3,31 +3,31 @@
 Please remember to update the mod when necessary.
 
 Adds:
-- 42 Buffs
-- 8 Walls
-- 101 Tiles
-- 134 NPCs (Including bosses & minibosses)
+- 45 Buffs
+- 9 Walls
+- 108 Tiles
+- 147 NPCs (Including bosses & minibosses)
 - 7 Bosses
 - 2 Minibosses
-- 617 Items
+- 676 Items
 
 Latest Update:
-- Druid Seedbags now work on platforms!
-- Mysterious Tablet is crafted with Small Lost Souls instead of Ancient Stone
-- New weapons
-- Pirate Cook in Pirate Invasion
-- Fried E G G
-- Resprites of Xenomite Crystal and Infected Eye and their drops
-- Molten Golem will have a new attack
-- Coldblooded Druid armour will give extra mobility on ice
-- Shade/Ebondruid armour gives thorns effect
-- A Jolly Madman now has a special attack
+- Nerfed Flak Cannon and requires Hallowed Bars now
+- Music Boxes!
+- Minibosses
+- Laboratory tiles and walls
+- Nerfed Corrupted and Vlitch weapons
+- Fixed crit on Druid projectiles
+- Removed the Empowered Buff
+- Added a bunch of weapons
+- 3rd Vlitch Overlord!
+- Nerfed King Slayer III's damage... A little.
 For more, look at the mod's homepage
 
 Main Features (So far):
 - Space Boss (King Slayer III)
 - Druid Class!
-- Vlitch Overlord bosses (2/4 for now)
+- Vlitch Overlord bosses (3/4 for now)
 - Rare Weapons (1/500 Chance of dropping from certain enemies)
 - Epic Weapons (1/1000 Chance of dropping from certain enemies in Hardmode)
 - Wasteland Biome (After Infected Eye boss)

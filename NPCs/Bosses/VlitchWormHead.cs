@@ -76,6 +76,7 @@ namespace Redemption.NPCs.Bosses
 				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CorruptedDoubleRifle"), 1, false, 0, false, false);
 			}
 			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CorruptedXenomite"), Main.rand.Next(18, 28), false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CorruptedStarlite"), Main.rand.Next(15, 20), false, 0, false, false);
 			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("VlitchScale"), Main.rand.Next(25, 35), false, 0, false, false);
 			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("VlitchBattery"), Main.rand.Next(2, 4), false, 0, false, false);
 		}
@@ -85,6 +86,10 @@ namespace Redemption.NPCs.Bosses
 			potionType = 499;
 			RedeWorld.downedVlitch2 = true;
 			Main.NewText("You feel a stinging pain of energy flowing through you as one of Vlitch's Overlords has been defeated...", Color.OrangeRed.R, Color.OrangeRed.G, Color.OrangeRed.B, false);
+			if (!Main.dedServ)
+			{
+				Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/DistortedRoar").WithVolume(0.7f).WithPitchVariance(0.1f), -1, -1);
+			}
 		}
 
 		public override bool PreAI()

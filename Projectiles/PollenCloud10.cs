@@ -79,6 +79,14 @@ namespace Redemption.Projectiles
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
+			Player player = Main.player[base.projectile.owner];
+			int crit2 = player.HeldItem.crit;
+			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref crit2);
+			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref crit2);
+			if (crit2 >= 100 || Main.rand.Next(1, 101) <= crit2)
+			{
+				crit = true;
+			}
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).frostburnSeedbag)
 			{
 				target.AddBuff(44, 160, false);

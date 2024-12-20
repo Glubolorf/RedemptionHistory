@@ -462,7 +462,7 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 					this.lightningOrbTimer++;
 					if (this.lightningOrbTimer == 120)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 0f), 465, 40, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 0f), 465, 30, 3f, 255, 0f, 0f);
 					}
 				}
 				if (this.timer1 >= 300 && this.timer1 < 700)
@@ -475,12 +475,12 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						if (base.npc.direction == -1)
 						{
 							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 462, 50, 3f, 255, 0f, 0f);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 462, 35, 3f, 255, 0f, 0f);
 						}
 						else
 						{
 							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 462, 50, 3f, 255, 0f, 0f);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 462, 35, 3f, 255, 0f, 0f);
 						}
 						this.pewPew1Timer = 0;
 					}
@@ -489,12 +489,12 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						if (base.npc.direction == -1)
 						{
 							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 462, 50, 3f, 255, 0f, 0f);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 462, 35, 3f, 255, 0f, 0f);
 						}
 						else
 						{
 							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 462, 50, 3f, 255, 0f, 0f);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 462, 35, 3f, 255, 0f, 0f);
 						}
 						this.pewPew1Timer = 0;
 					}
@@ -503,12 +503,12 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						if (base.npc.direction == -1)
 						{
 							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 462, 50, 3f, 255, 0f, 0f);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 462, 35, 3f, 255, 0f, 0f);
 						}
 						else
 						{
 							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 462, 50, 3f, 255, 0f, 0f);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 462, 35, 3f, 255, 0f, 0f);
 						}
 						this.pewPew1Timer = 0;
 					}
@@ -517,16 +517,16 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						if (base.npc.direction == -1)
 						{
 							Main.PlaySound(SoundID.Item91, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-8f, 4f), 435, 40, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 435, 40, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-8f, -4f), 435, 40, 3f, 255, 0f, 0f);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-8f, 4f), 435, 30, 3f, 255, 0f, 0f);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 435, 30, 3f, 255, 0f, 0f);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-8f, -4f), 435, 30, 3f, 255, 0f, 0f);
 						}
 						else
 						{
 							Main.PlaySound(SoundID.Item91, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(8f, 4f), 435, 40, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 435, 40, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(8f, -4f), 435, 40, 3f, 255, 0f, 0f);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(8f, 4f), 435, 30, 3f, 255, 0f, 0f);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 435, 30, 3f, 255, 0f, 0f);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(8f, -4f), 435, 30, 3f, 255, 0f, 0f);
 						}
 						this.pewPew2Timer = 0;
 					}
@@ -535,20 +535,20 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						if (base.npc.direction == -1)
 						{
 							Main.PlaySound(SoundID.Item91, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-8f, 4f), 435, 40, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-9f, 2f), 435, 40, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 435, 40, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-9f, -2f), 435, 40, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-8f, -4f), 435, 40, 3f, 255, 0f, 0f);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-8f, 4f), 435, 30, 3f, 255, 0f, 0f);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-9f, 2f), 435, 30, 3f, 255, 0f, 0f);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 435, 30, 3f, 255, 0f, 0f);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-9f, -2f), 435, 30, 3f, 255, 0f, 0f);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-8f, -4f), 435, 30, 3f, 255, 0f, 0f);
 						}
 						else
 						{
 							Main.PlaySound(SoundID.Item91, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(8f, 4f), 435, 40, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(9f, 2f), 435, 40, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 435, 40, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(9f, -2f), 435, 40, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(8f, -4f), 435, 40, 3f, 255, 0f, 0f);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(8f, 4f), 435, 30, 3f, 255, 0f, 0f);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(9f, 2f), 435, 30, 3f, 255, 0f, 0f);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 435, 30, 3f, 255, 0f, 0f);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(9f, -2f), 435, 30, 3f, 255, 0f, 0f);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(8f, -4f), 435, 30, 3f, 255, 0f, 0f);
 						}
 						this.pewPew2Timer = 0;
 					}
@@ -557,16 +557,16 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						if (base.npc.direction == -1)
 						{
 							Main.PlaySound(SoundID.Item91, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-8f, 4f), 435, 40, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 435, 40, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-8f, -4f), 435, 40, 3f, 255, 0f, 0f);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-8f, 4f), 435, 30, 3f, 255, 0f, 0f);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 435, 30, 3f, 255, 0f, 0f);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-8f, -4f), 435, 30, 3f, 255, 0f, 0f);
 						}
 						else
 						{
 							Main.PlaySound(SoundID.Item91, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(8f, 4f), 435, 40, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 435, 40, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(8f, -4f), 435, 40, 3f, 255, 0f, 0f);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(8f, 4f), 435, 30, 3f, 255, 0f, 0f);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 435, 30, 3f, 255, 0f, 0f);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(8f, -4f), 435, 30, 3f, 255, 0f, 0f);
 						}
 						this.pewPew2Timer = 0;
 					}
@@ -580,12 +580,12 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 							if (base.npc.direction == -1)
 							{
 								Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 462, 50, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 462, 35, 3f, 255, 0f, 0f);
 							}
 							else
 							{
 								Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 462, 50, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 462, 35, 3f, 255, 0f, 0f);
 							}
 							this.pewPew1Timer = 0;
 						}
@@ -601,12 +601,12 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 							if (base.npc.direction == -1)
 							{
 								Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 462, 50, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 462, 35, 3f, 255, 0f, 0f);
 							}
 							else
 							{
 								Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 462, 50, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 462, 35, 3f, 255, 0f, 0f);
 							}
 							this.pewPew1Timer = 0;
 						}
@@ -634,13 +634,13 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 					base.npc.dontTakeDamage = true;
 					if (this.shieldTimer1 == 60)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 465, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 465, 40, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 465, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 465, 30, 3f, 255, 0f, 0f);
 					}
 					if (this.shieldTimer1 == 120)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 465, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 465, 40, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 465, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 465, 30, 3f, 255, 0f, 0f);
 					}
 				}
 				if (this.shieldTimer1 >= 300)
@@ -680,19 +680,19 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 				{
 					if (this.shieldTimer2 == 180)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 465, 40, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 465, 30, 3f, 255, 0f, 0f);
 					}
 					if (this.shieldTimer2 == 240)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 465, 40, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 465, 30, 3f, 255, 0f, 0f);
 					}
 					if (this.shieldTimer2 == 300)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 465, 40, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 465, 30, 3f, 255, 0f, 0f);
 					}
 					if (this.shieldTimer2 == 360)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 465, 40, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 465, 30, 3f, 255, 0f, 0f);
 					}
 				}
 				if (this.shieldTimer2 >= 570)
@@ -719,41 +719,41 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 					base.npc.dontTakeDamage = true;
 					if (this.shieldTimer3 == 30)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, -6f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 6f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-6f, 0f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(6f, 0f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 435, 40, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, -6f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 6f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-6f, 0f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(6f, 0f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 435, 30, 3f, 255, 0f, 0f);
 					}
 					if (this.shieldTimer3 == 150)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, -6f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 6f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-6f, 0f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(6f, 0f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 435, 40, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, -6f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 6f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-6f, 0f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(6f, 0f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 435, 30, 3f, 255, 0f, 0f);
 					}
 					if (this.shieldTimer3 == 60)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 465, 40, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 465, 30, 3f, 255, 0f, 0f);
 					}
 					if (this.shieldTimer3 == 120)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 465, 40, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 465, 30, 3f, 255, 0f, 0f);
 					}
 					if (this.shieldTimer3 == 180)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 465, 40, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 465, 30, 3f, 255, 0f, 0f);
 					}
 					if (this.shieldTimer3 == 240)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 465, 40, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 465, 30, 3f, 255, 0f, 0f);
 					}
 				}
 				if (this.shieldTimer3 >= 480)
@@ -778,12 +778,12 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 					if (base.npc.direction == -1)
 					{
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(-10f, 0f), base.mod.ProjectileType("KSFist"), 60, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(-10f, 0f), base.mod.ProjectileType("KSFist"), 50, 3f, 255, 0f, 0f);
 					}
 					else
 					{
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(10f, 0f), base.mod.ProjectileType("KSFist"), 60, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(10f, 0f), base.mod.ProjectileType("KSFist"), 50, 3f, 255, 0f, 0f);
 					}
 				}
 				if (this.fistTimer >= 39 && this.fistTimer < 51)
@@ -812,12 +812,12 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 					if (base.npc.direction == -1)
 					{
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(-10f, 0f), base.mod.ProjectileType("KSFist"), 60, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(-10f, 0f), base.mod.ProjectileType("KSFist"), 50, 3f, 255, 0f, 0f);
 					}
 					else
 					{
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(10f, 0f), base.mod.ProjectileType("KSFist"), 60, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(10f, 0f), base.mod.ProjectileType("KSFist"), 50, 3f, 255, 0f, 0f);
 					}
 				}
 				if (this.fistTimer >= 39 && this.fistTimer < 51)
@@ -846,12 +846,12 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 					if (base.npc.direction == -1)
 					{
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(-10f, 0f), base.mod.ProjectileType("KSFist"), 60, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(-10f, 0f), base.mod.ProjectileType("KSFist"), 50, 3f, 255, 0f, 0f);
 					}
 					else
 					{
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(10f, 0f), base.mod.ProjectileType("KSFist"), 60, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(10f, 0f), base.mod.ProjectileType("KSFist"), 50, 3f, 255, 0f, 0f);
 					}
 				}
 				if (this.fistTimer >= 39 && this.fistTimer < 51)
@@ -880,12 +880,12 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 					if (base.npc.direction == -1)
 					{
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(-10f, 0f), base.mod.ProjectileType("KSFist"), 60, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(-10f, 0f), base.mod.ProjectileType("KSFist"), 50, 3f, 255, 0f, 0f);
 					}
 					else
 					{
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(10f, 0f), base.mod.ProjectileType("KSFist"), 60, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(10f, 0f), base.mod.ProjectileType("KSFist"), 50, 3f, 255, 0f, 0f);
 					}
 				}
 				if (this.fistTimer >= 39 && this.fistTimer < 51)
@@ -914,12 +914,12 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 					if (base.npc.direction == -1)
 					{
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(-10f, 0f), base.mod.ProjectileType("KSFist"), 60, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(-10f, 0f), base.mod.ProjectileType("KSFist"), 50, 3f, 255, 0f, 0f);
 					}
 					else
 					{
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(10f, 0f), base.mod.ProjectileType("KSFist"), 60, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(10f, 0f), base.mod.ProjectileType("KSFist"), 50, 3f, 255, 0f, 0f);
 					}
 				}
 				if (this.fistTimer >= 39 && this.fistTimer < 51)
@@ -948,74 +948,74 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 					base.npc.dontTakeDamage = true;
 					if (this.shieldTimer4 == 30)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, -6f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 6f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-6f, 0f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(6f, 0f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 435, 40, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, -6f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 6f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-6f, 0f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(6f, 0f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 435, 30, 3f, 255, 0f, 0f);
 					}
 					if (this.shieldTimer4 == 60)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, -6f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 6f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-6f, 0f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(6f, 0f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 435, 40, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, -6f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 6f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-6f, 0f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(6f, 0f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 435, 30, 3f, 255, 0f, 0f);
 					}
 					if (this.shieldTimer4 == 90)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, -6f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 6f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-6f, 0f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(6f, 0f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 435, 40, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, -6f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 6f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-6f, 0f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(6f, 0f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 435, 30, 3f, 255, 0f, 0f);
 					}
 					if (this.shieldTimer4 == 120)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, -6f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 6f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-6f, 0f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(6f, 0f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 435, 40, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, -6f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 6f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-6f, 0f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(6f, 0f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 435, 30, 3f, 255, 0f, 0f);
 					}
 					if (this.shieldTimer4 == 150)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, -6f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 6f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-6f, 0f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(6f, 0f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 435, 40, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 435, 40, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, -6f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 6f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-6f, 0f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(6f, 0f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 435, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 435, 30, 3f, 255, 0f, 0f);
 					}
 					if (this.shieldTimer4 == 60)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 465, 40, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 465, 30, 3f, 255, 0f, 0f);
 					}
 					if (this.shieldTimer4 == 120)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 465, 40, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 465, 30, 3f, 255, 0f, 0f);
 					}
 					if (this.shieldTimer4 == 180)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 465, 40, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 465, 30, 3f, 255, 0f, 0f);
 					}
 					if (this.shieldTimer4 == 240)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 465, 40, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 465, 30, 3f, 255, 0f, 0f);
 					}
 				}
 				if (this.shieldTimer4 >= 480)

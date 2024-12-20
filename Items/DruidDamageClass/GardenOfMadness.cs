@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,6 +10,17 @@ namespace Redemption.Items.DruidDamageClass
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/DruidDamageClass/" + base.GetType().Name + "_Glow");
+				GardenOfMadness.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
 			base.DisplayName.SetDefault("Garden of Madness");
 			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Breathe, with the blood of the fallen'\nRight-Clicks counters with powerful slashes");
 		}
@@ -24,7 +36,6 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.knockBack = 3f;
 			base.item.useStyle = 1;
 			base.item.crit = 4;
-			base.item.knockBack = 3f;
 			base.item.value = Item.sellPrice(0, 12, 0, 0);
 			base.item.rare = 10;
 			base.item.UseSound = SoundID.Item1;
@@ -33,6 +44,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.noMelee = true;
 			base.item.noUseGraphic = true;
 			base.item.shoot = base.mod.ProjectileType("MadnessSlash");
+			base.item.glowMask = GardenOfMadness.customGlowMask;
 		}
 
 		public override bool AltFunctionUse(Player player)
@@ -76,5 +88,7 @@ namespace Redemption.Items.DruidDamageClass
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
 		}
+
+		public static short customGlowMask;
 	}
 }

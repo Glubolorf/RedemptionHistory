@@ -11,6 +11,17 @@ namespace Redemption.Projectiles
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
+				NestorisViolinPro.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
 			base.DisplayName.SetDefault("Nestori's Violin");
 		}
 
@@ -30,6 +41,7 @@ namespace Redemption.Projectiles
 			base.projectile.extraUpdates = 1;
 			ProjectileID.Sets.TrailCacheLength[base.projectile.type] = 3;
 			ProjectileID.Sets.TrailingMode[base.projectile.type] = 0;
+			base.projectile.glowMask = NestorisViolinPro.customGlowMask;
 		}
 
 		public override void AI()
@@ -37,13 +49,6 @@ namespace Redemption.Projectiles
 			int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y + 2f), base.projectile.width + 2, base.projectile.height + 2, 21, base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 1f);
 			Main.dust[num].noGravity = true;
 			base.projectile.localAI[0] += 1f;
-			if (base.projectile.localAI[0] == 1f)
-			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 32f, base.projectile.position.Y + 36f), new Vector2(base.projectile.velocity.X + 0f, base.projectile.velocity.Y + 5f), base.mod.ProjectileType("EtherealStar"), 200, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 32f, base.projectile.position.Y + 36f), new Vector2(base.projectile.velocity.X + 5f, base.projectile.velocity.Y + 0f), base.mod.ProjectileType("EtherealStar"), 200, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 32f, base.projectile.position.Y + 36f), new Vector2(base.projectile.velocity.X + 0f, base.projectile.velocity.Y - 5f), base.mod.ProjectileType("EtherealStar"), 200, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 32f, base.projectile.position.Y + 36f), new Vector2(base.projectile.velocity.X - 5f, base.projectile.velocity.Y + 0f), base.mod.ProjectileType("EtherealStar"), 200, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
-			}
 			if (Main.rand.Next(80) == 0)
 			{
 				Projectile.NewProjectile(base.projectile.Center, base.projectile.velocity, base.mod.ProjectileType("TheTrueViolin"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
@@ -62,5 +67,7 @@ namespace Redemption.Projectiles
 			}
 			return true;
 		}
+
+		public static short customGlowMask;
 	}
 }

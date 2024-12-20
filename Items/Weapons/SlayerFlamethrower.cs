@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,6 +11,18 @@ namespace Redemption.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				SlayerFlamethrower.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
+			base.item.glowMask = SlayerFlamethrower.customGlowMask;
 			base.DisplayName.SetDefault("Ultra-Heated Flamethrower");
 			base.Tooltip.SetDefault("'Light 'em up!'\nMelts all enemies in the flame's path");
 		}
@@ -32,6 +45,7 @@ namespace Redemption.Items.Weapons
 			base.item.shoot = base.mod.ProjectileType("BlueFlames");
 			base.item.shootSpeed = 7.5f;
 			base.item.useAmmo = 23;
+			base.item.glowMask = SlayerFlamethrower.customGlowMask;
 		}
 
 		public override Vector2? HoldoutOffset()
@@ -49,5 +63,7 @@ namespace Redemption.Items.Weapons
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
 		}
+
+		public static short customGlowMask;
 	}
 }

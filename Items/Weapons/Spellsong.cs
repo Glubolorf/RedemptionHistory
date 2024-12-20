@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,6 +13,18 @@ namespace Redemption.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				Spellsong.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
+			base.item.glowMask = Spellsong.customGlowMask;
 			base.DisplayName.SetDefault("Spellsong, Core of the West");
 			base.Tooltip.SetDefault("'A magic sword once wielded by Estz, King of Jerzal...'\nOnly usable after Plantera has been defeated\n[c/aa00ff:Epic]");
 		}
@@ -33,6 +46,7 @@ namespace Redemption.Items.Weapons
 			base.item.autoReuse = true;
 			base.item.shoot = base.mod.ProjectileType("SpellsongPro1");
 			base.item.shootSpeed = 10f;
+			base.item.glowMask = Spellsong.customGlowMask;
 		}
 
 		public override bool CanUseItem(Player player)
@@ -64,5 +78,7 @@ namespace Redemption.Items.Weapons
 			}
 			return false;
 		}
+
+		public static short customGlowMask;
 	}
 }

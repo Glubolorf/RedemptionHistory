@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -11,13 +12,25 @@ namespace Redemption.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				NestorisViolin.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
+			base.item.glowMask = NestorisViolin.customGlowMask;
 			base.DisplayName.SetDefault("Nestori's Violin");
 			base.Tooltip.SetDefault("'The violin's design is quite mysterious, it makes a sound similar to a violins, but it's missing the sound hole...'\nOnly usable after Moonlord has been defeated\n[c/ffc300:Legendary]");
 		}
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 520;
+			base.item.damage = 300;
 			base.item.melee = true;
 			base.item.width = 66;
 			base.item.height = 70;
@@ -31,6 +44,7 @@ namespace Redemption.Items.Weapons
 			base.item.autoReuse = true;
 			base.item.shoot = base.mod.ProjectileType("NestorisViolinPro");
 			base.item.shootSpeed = 50f;
+			base.item.glowMask = NestorisViolin.customGlowMask;
 		}
 
 		public override bool CanUseItem(Player player)
@@ -81,5 +95,7 @@ namespace Redemption.Items.Weapons
 				tooltipLine.overrideColor = new Color?(new Color(255, 195, 0));
 			}
 		}
+
+		public static short customGlowMask;
 	}
 }

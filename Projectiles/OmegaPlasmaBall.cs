@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles
@@ -23,11 +24,14 @@ namespace Redemption.Projectiles
 			base.projectile.penetrate = -1;
 			base.projectile.tileCollide = false;
 			base.projectile.alpha = 100;
-			base.projectile.timeLeft = 260;
+			base.projectile.timeLeft = 120;
 		}
 
 		public override void AI()
 		{
+			Lighting.AddLight(base.projectile.Center, (float)(255 - base.projectile.alpha) * 1f / 255f, (float)(255 - base.projectile.alpha) * 1f / 255f, (float)(255 - base.projectile.alpha) * 1f / 255f);
+			int num = Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, 235, 0f, 0f, 0, default(Color), 1f);
+			Main.dust[num].noGravity = true;
 			if (++base.projectile.frameCounter >= 3)
 			{
 				base.projectile.frameCounter = 0;
@@ -36,24 +40,38 @@ namespace Redemption.Projectiles
 					base.projectile.frame = 0;
 				}
 			}
+			base.projectile.localAI[0] += 1f;
+			if (base.projectile.localAI[0] >= 60f)
+			{
+				Main.PlaySound(SoundID.Item33, (int)base.projectile.position.X, (int)base.projectile.position.Y);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 25f, base.projectile.position.Y + 24f), new Vector2(0f, -8f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 25f, base.projectile.position.Y + 24f), new Vector2(0f, 8f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 25f, base.projectile.position.Y + 24f), new Vector2(-8f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 25f, base.projectile.position.Y + 24f), new Vector2(8f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 25f, base.projectile.position.Y + 24f), new Vector2(6f, 6f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 25f, base.projectile.position.Y + 24f), new Vector2(6f, -6f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 25f, base.projectile.position.Y + 24f), new Vector2(-6f, 6f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 25f, base.projectile.position.Y + 24f), new Vector2(-6f, -6f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+				base.projectile.localAI[0] = 0f;
+			}
 			if (base.projectile.localAI[0] == 0f)
 			{
 				this.AdjustMagnitude(ref base.projectile.velocity);
 				base.projectile.localAI[0] = 1f;
 			}
 			Vector2 vector = Vector2.Zero;
-			float num = 200f;
+			float num2 = 50f;
 			bool flag = false;
 			for (int i = 0; i < 200; i++)
 			{
 				if (Main.player[i].active)
 				{
 					Vector2 vector2 = Main.player[i].Center - base.projectile.Center;
-					float num2 = (float)Math.Sqrt((double)(vector2.X * vector2.X + vector2.Y * vector2.Y));
-					if (num2 < num)
+					float num3 = (float)Math.Sqrt((double)(vector2.X * vector2.X + vector2.Y * vector2.Y));
+					if (num3 < num2)
 					{
 						vector = vector2;
-						num = num2;
+						num2 = num3;
 						flag = true;
 					}
 				}

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 namespace Redemption.Items.DruidDamageClass
@@ -8,6 +9,17 @@ namespace Redemption.Items.DruidDamageClass
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/DruidDamageClass/" + base.GetType().Name + "_Glow");
+				LihzWorldStave.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
 			base.DisplayName.SetDefault("Lihzahrd World Stave");
 			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Holds the power of the sun'\nSummon a Golem Statue\nThe statue emits a great aura that increases player's attack and life regen when near\nAlso deals damage to enemies and burns them\nCan only place one at a time");
 			Item.staff[base.item.type] = true;
@@ -33,6 +45,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.shootSpeed = 0f;
 			base.item.buffType = base.mod.BuffType("WorldStaveCooldownDebuff");
 			base.item.buffTime = 1000;
+			base.item.glowMask = LihzWorldStave.customGlowMask;
 		}
 
 		public override bool CanUseItem(Player player)
@@ -45,5 +58,7 @@ namespace Redemption.Items.DruidDamageClass
 			position = Main.MouseWorld;
 			return true;
 		}
+
+		public static short customGlowMask;
 	}
 }

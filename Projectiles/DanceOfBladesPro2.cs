@@ -11,6 +11,17 @@ namespace Redemption.Projectiles
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
+				DanceOfBladesPro2.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
 			base.DisplayName.SetDefault("Dancing Blade");
 		}
 
@@ -23,6 +34,7 @@ namespace Redemption.Projectiles
 			base.projectile.extraUpdates = 1;
 			ProjectileID.Sets.TrailCacheLength[base.projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[base.projectile.type] = 0;
+			base.projectile.glowMask = DanceOfBladesPro2.customGlowMask;
 		}
 
 		public override void AI()
@@ -55,5 +67,7 @@ namespace Redemption.Projectiles
 			}
 			return true;
 		}
+
+		public static short customGlowMask;
 	}
 }

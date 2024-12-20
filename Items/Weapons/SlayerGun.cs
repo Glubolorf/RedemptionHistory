@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,6 +11,18 @@ namespace Redemption.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				SlayerGun.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
+			base.item.glowMask = SlayerGun.customGlowMask;
 			base.DisplayName.SetDefault("Hyper-Tech Blaster");
 			base.Tooltip.SetDefault("'Pewpewpewpewpewpewpew'\nReplaces normal bullets with Luminite Bullets\nRight-clicking fires 5 bullets in an arc");
 		}
@@ -32,6 +45,7 @@ namespace Redemption.Items.Weapons
 			base.item.shoot = 10;
 			base.item.shootSpeed = 90f;
 			base.item.useAmmo = AmmoID.Bullet;
+			base.item.glowMask = SlayerGun.customGlowMask;
 		}
 
 		public override bool AltFunctionUse(Player player)
@@ -98,5 +112,7 @@ namespace Redemption.Items.Weapons
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
 		}
+
+		public static short customGlowMask;
 	}
 }

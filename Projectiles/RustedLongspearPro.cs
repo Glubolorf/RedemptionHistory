@@ -14,8 +14,8 @@ namespace Redemption.Projectiles
 
 		public override void SetDefaults()
 		{
-			base.projectile.width = 48;
-			base.projectile.height = 48;
+			base.projectile.width = 18;
+			base.projectile.height = 18;
 			base.projectile.aiStyle = 19;
 			base.projectile.friendly = true;
 			base.projectile.penetrate = -1;

@@ -44,6 +44,7 @@ namespace Redemption.Items.Armor
 			player.setBonus = "Spirit summoning weapons will summon 2 extra spirits";
 			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
 			redePlayer.moreSpirits = true;
+			redePlayer.lostSoulSet = true;
 		}
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)

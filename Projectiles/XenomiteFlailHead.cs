@@ -57,7 +57,7 @@ namespace Redemption.Projectiles
 					vector3 = mountedCenter - vector;
 					Color color = Lighting.GetColor((int)vector.X / 16, (int)((double)vector.Y / 16.0));
 					color = base.projectile.GetAlpha(color);
-					Main.spriteBatch.Draw(texture, vector - Main.screenPosition, rectangle, color, num2, vector2, 1.35f, 0, 0f);
+					Main.spriteBatch.Draw(texture, vector - Main.screenPosition, rectangle, color, num2, vector2, 1f, 0, 0f);
 				}
 			}
 			return true;

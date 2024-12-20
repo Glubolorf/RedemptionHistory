@@ -11,12 +11,12 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Angelic Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Born from ashes of the undead'\nShoots a holy javalin that unleashes Angelic Arrows");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Born from ashes of the undead'\nShoots a holy javalin that unleashes Angelic Darts");
 		}
 
 		public override void SafeSetDefaults()
 		{
-			base.item.damage = 56;
+			base.item.damage = 62;
 			base.item.width = 58;
 			base.item.height = 58;
 			base.item.useTime = 18;

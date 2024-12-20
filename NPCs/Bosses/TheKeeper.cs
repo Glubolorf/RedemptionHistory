@@ -13,7 +13,7 @@ namespace Redemption.NPCs.Bosses
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("The Keeper");
-			Main.npcFrameCount[base.npc.type] = 12;
+			Main.npcFrameCount[base.npc.type] = 8;
 		}
 
 		public override void SetDefaults()
@@ -31,11 +31,22 @@ namespace Redemption.NPCs.Bosses
 			base.npc.lavaImmune = true;
 			base.npc.noGravity = true;
 			base.npc.noTileCollide = true;
-			base.npc.HitSound = SoundID.NPCHit5;
-			base.npc.DeathSound = SoundID.NPCDeath60;
-			this.animationType = 4;
+			base.npc.HitSound = SoundID.NPCHit13;
+			base.npc.DeathSound = SoundID.NPCDeath19;
 			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossKeeper");
 			this.bossBag = base.mod.ItemType("TheKeeperBag");
+		}
+
+		public override void HitEffect(int hitDirection, double damage)
+		{
+			if (base.npc.life <= 0)
+			{
+				for (int i = 0; i < 100; i++)
+				{
+					int num = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, 0f, 0f, 100, default(Color), 2.5f);
+					Main.dust[num].velocity *= 2.6f;
+				}
+			}
 		}
 
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
@@ -96,10 +107,35 @@ namespace Redemption.NPCs.Bosses
 
 		public override void AI()
 		{
+			base.npc.frameCounter += 1.0;
+			if (base.npc.frameCounter >= 5.0)
+			{
+				base.npc.frameCounter = 0.0;
+				NPC npc = base.npc;
+				npc.frame.Y = npc.frame.Y + 184;
+				if (base.npc.frame.Y > 1288)
+				{
+					base.npc.frameCounter = 0.0;
+					base.npc.frame.Y = 0;
+				}
+			}
+			if (this.shriekStart)
+			{
+				this.shriekCounter++;
+				if (this.shriekCounter > 10)
+				{
+					this.shriekFrame++;
+					this.shriekCounter = 0;
+				}
+				if (this.shriekFrame >= 3)
+				{
+					this.shriekFrame = 1;
+				}
+			}
 			if (Main.dayTime)
 			{
-				NPC npc = base.npc;
-				npc.position.Y = npc.position.Y - 300f;
+				NPC npc2 = base.npc;
+				npc2.position.Y = npc2.position.Y - 300f;
 			}
 			this.Target();
 			this.DespawnHandler();
@@ -122,6 +158,7 @@ namespace Redemption.NPCs.Bosses
 				this.timer++;
 				if (this.timer == 20)
 				{
+					this.shriekStart = true;
 					string text = "*Shrieks of pain echo through the night*";
 					Color rarityPurple = Colors.RarityPurple;
 					byte r = rarityPurple.R;
@@ -129,6 +166,10 @@ namespace Redemption.NPCs.Bosses
 					byte g = rarityPurple2.G;
 					Color rarityPurple3 = Colors.RarityPurple;
 					Main.NewText(text, r, g, rarityPurple3.B, false);
+					if (!Main.dedServ)
+					{
+						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Shriek").WithVolume(0.7f).WithPitchVariance(0.1f), -1, -1);
+					}
 				}
 				if (this.timer == 40)
 				{
@@ -151,6 +192,10 @@ namespace Redemption.NPCs.Bosses
 				{
 					NPC.NewNPC((int)base.npc.position.X + 65, (int)base.npc.position.Y + 65, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
 					NPC.NewNPC((int)base.npc.position.X + 45, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+				}
+				if (this.timer >= 220)
+				{
+					this.shriekStart = false;
 				}
 				if (Main.rand.Next(250) == 0)
 				{
@@ -162,6 +207,7 @@ namespace Redemption.NPCs.Bosses
 				this.timer++;
 				if (this.timer == 20)
 				{
+					this.shriekStart = true;
 					string text2 = "*Shrieks of pain echo through the night*";
 					Color rarityPurple4 = Colors.RarityPurple;
 					byte r2 = rarityPurple4.R;
@@ -169,6 +215,10 @@ namespace Redemption.NPCs.Bosses
 					byte g2 = rarityPurple5.G;
 					Color rarityPurple6 = Colors.RarityPurple;
 					Main.NewText(text2, r2, g2, rarityPurple6.B, false);
+					if (!Main.dedServ)
+					{
+						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Shriek").WithVolume(0.7f).WithPitchVariance(0.1f), -1, -1);
+					}
 				}
 				if (this.timer == 40)
 				{
@@ -191,6 +241,10 @@ namespace Redemption.NPCs.Bosses
 				{
 					NPC.NewNPC((int)base.npc.position.X + 65, (int)base.npc.position.Y + 65, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
 					NPC.NewNPC((int)base.npc.position.X + 45, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+				}
+				if (this.timer >= 220)
+				{
+					this.shriekStart = false;
 				}
 				if (Main.rand.Next(400) == 0)
 				{
@@ -221,7 +275,7 @@ namespace Redemption.NPCs.Bosses
 			{
 				vector2 *= this.speed / num;
 			}
-			float num2 = 35f;
+			float num2 = 25f;
 			vector2 = (base.npc.velocity * num2 + vector2) / (num2 + 1f);
 			num = this.Magnitude(vector2);
 			if (num > this.speed)
@@ -276,14 +330,28 @@ namespace Redemption.NPCs.Bosses
 			return null;
 		}
 
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			SpriteEffects spriteEffects = 0;
-			if (base.npc.spriteDirection == 1)
+			Texture2D texture2D = Main.npcTexture[base.npc.type];
+			Texture2D texture = base.mod.GetTexture("NPCs/Bosses/TheKeeper_Glow");
+			Texture2D texture2 = base.mod.GetTexture("NPCs/Bosses/TheKeeperShriek");
+			Texture2D texture3 = base.mod.GetTexture("NPCs/Bosses/TheKeeperShriek_Glow");
+			SpriteEffects spriteEffects = (base.npc.spriteDirection == -1) ? 0 : 1;
+			if (!this.shriekStart)
 			{
-				spriteEffects = 1;
+				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, spriteEffects, 0f);
 			}
-			spriteBatch.Draw(base.mod.GetTexture("NPCs/Bosses/TheKeeper_Glow"), new Vector2(base.npc.Center.X - Main.screenPosition.X, base.npc.Center.Y - Main.screenPosition.Y), new Rectangle?(base.npc.frame), Color.White, base.npc.rotation, new Vector2((float)base.npc.width * 0.5f, (float)base.npc.height * 0.5f), 1f, spriteEffects, 0f);
+			if (this.shriekStart)
+			{
+				Vector2 vector;
+				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
+				int num = texture2.Height / 3;
+				int num2 = num * this.shriekFrame;
+				Main.spriteBatch.Draw(texture2, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture2.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture2.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Main.spriteBatch.Draw(texture3, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture2.Width, num)), base.npc.GetAlpha(Color.White), base.npc.rotation, new Vector2((float)texture2.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? 0 : 1, 0f);
+			}
+			return false;
 		}
 
 		private Player player;
@@ -291,5 +359,11 @@ namespace Redemption.NPCs.Bosses
 		private float speed;
 
 		public int timer;
+
+		private bool shriekStart;
+
+		private int shriekFrame;
+
+		private int shriekCounter;
 	}
 }

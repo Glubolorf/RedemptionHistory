@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 
@@ -9,6 +10,17 @@ namespace Redemption.Items.DruidDamageClass
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/DruidDamageClass/" + base.GetType().Name + "_Glow");
+				XenoCanister.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
 			base.DisplayName.SetDefault("Xenomite Canister");
 			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nThrow a seed that grows a Xenomite Shard");
 		}
@@ -31,6 +43,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.autoReuse = true;
 			base.item.shoot = base.mod.ProjectileType("Seed12");
 			base.item.shootSpeed = 12f;
+			base.item.glowMask = XenoCanister.customGlowMask;
 		}
 
 		public override bool CanUseItem(Player player)
@@ -76,5 +89,7 @@ namespace Redemption.Items.DruidDamageClass
 			}
 			return true;
 		}
+
+		public static short customGlowMask;
 	}
 }

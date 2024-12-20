@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -9,6 +10,17 @@ namespace Redemption.Projectiles
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
+				BelrosePro2.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
 			base.DisplayName.SetDefault("Belrose Boomerang");
 		}
 
@@ -23,6 +35,7 @@ namespace Redemption.Projectiles
 			base.projectile.friendly = true;
 			base.projectile.ignoreWater = true;
 			base.projectile.timeLeft = 200;
+			base.projectile.glowMask = BelrosePro2.customGlowMask;
 		}
 
 		public override void AI()
@@ -35,7 +48,17 @@ namespace Redemption.Projectiles
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
+			Player player = Main.player[base.projectile.owner];
+			int crit2 = player.HeldItem.crit;
+			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref crit2);
+			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref crit2);
+			if (crit2 >= 100 || Main.rand.Next(1, 101) <= crit2)
+			{
+				crit = true;
+			}
 			target.AddBuff(69, 300, false);
 		}
+
+		public static short customGlowMask;
 	}
 }

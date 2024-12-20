@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -8,13 +9,25 @@ namespace Redemption.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				GirusLance.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
+			base.item.glowMask = GirusLance.customGlowMask;
 			base.DisplayName.SetDefault("Girus Lance");
 			base.Tooltip.SetDefault("Spins the lance like a glaive\nRight-click to throw the lance");
 		}
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 75;
+			base.item.damage = 65;
 			base.item.melee = true;
 			base.item.width = 102;
 			base.item.height = 100;
@@ -28,6 +41,7 @@ namespace Redemption.Items.Weapons
 			base.item.shoot = base.mod.ProjectileType("GirusLancePro1");
 			base.item.noUseGraphic = true;
 			base.item.noMelee = true;
+			base.item.glowMask = GirusLance.customGlowMask;
 		}
 
 		public override bool AltFunctionUse(Player player)
@@ -47,7 +61,7 @@ namespace Redemption.Items.Weapons
 			}
 			else
 			{
-				base.item.damage = 75;
+				base.item.damage = 65;
 				base.item.useStyle = 100;
 				base.item.shoot = base.mod.ProjectileType("GirusLancePro1");
 				base.item.shootSpeed = 0f;
@@ -61,5 +75,7 @@ namespace Redemption.Items.Weapons
 			player.bodyFrame.Y = 3 * player.bodyFrame.Height;
 			return true;
 		}
+
+		public static short customGlowMask;
 	}
 }

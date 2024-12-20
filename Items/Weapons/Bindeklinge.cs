@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,6 +11,18 @@ namespace Redemption.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				Bindeklinge.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
+			base.item.glowMask = Bindeklinge.customGlowMask;
 			base.DisplayName.SetDefault("Bindeklinge");
 			base.Tooltip.SetDefault("'For those we must protect, onward!'\nCasts a pillar of rising flames upon hitting an enemy\nRight-clicking casts flames at cursor position occasionally");
 		}
@@ -31,6 +44,7 @@ namespace Redemption.Items.Weapons
 			base.item.useTurn = true;
 			base.item.shoot = 0;
 			base.item.shootSpeed = 0f;
+			base.item.glowMask = Bindeklinge.customGlowMask;
 		}
 
 		public override bool AltFunctionUse(Player player)
@@ -85,5 +99,7 @@ namespace Redemption.Items.Weapons
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
 		}
+
+		public static short customGlowMask;
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -8,6 +9,17 @@ namespace Redemption.Items
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/" + base.GetType().Name + "_Glow");
+				TheKeeperBag.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
 			base.DisplayName.SetDefault("Treasure Bag");
 			base.Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
 		}
@@ -21,6 +33,7 @@ namespace Redemption.Items
 			base.item.rare = 9;
 			base.item.expert = true;
 			this.bossBagNPC = base.mod.NPCType("TheKeeper");
+			base.item.glowMask = TheKeeperBag.customGlowMask;
 		}
 
 		public override bool CanRightClick()
@@ -62,5 +75,7 @@ namespace Redemption.Items
 			player.QuickSpawnItem(base.mod.ItemType("DarkShard"), Main.rand.Next(3, 4));
 			player.QuickSpawnItem(base.mod.ItemType("HeartEmblem"), 1);
 		}
+
+		public static short customGlowMask;
 	}
 }

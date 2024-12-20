@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -9,6 +10,17 @@ namespace Redemption.Projectiles
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
+				BonfireDaggerPro.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
 			base.DisplayName.SetDefault("Bonfire Dagger");
 		}
 
@@ -20,6 +32,7 @@ namespace Redemption.Projectiles
 			base.projectile.friendly = true;
 			base.projectile.melee = true;
 			base.projectile.penetrate = 1;
+			base.projectile.glowMask = BonfireDaggerPro.customGlowMask;
 		}
 
 		public override void AI()
@@ -54,6 +67,14 @@ namespace Redemption.Projectiles
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
+			Player player = Main.player[base.projectile.owner];
+			int crit2 = player.HeldItem.crit;
+			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref crit2);
+			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref crit2);
+			if (crit2 >= 100 || Main.rand.Next(1, 101) <= crit2)
+			{
+				crit = true;
+			}
 			Projectile.NewProjectile(new Vector2(base.projectile.position.X + 14f, base.projectile.position.Y + 26f), base.projectile.velocity, base.mod.ProjectileType("PollenCloud9"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 		}
 
@@ -82,5 +103,7 @@ namespace Redemption.Projectiles
 				vector -= vector2 * 8f;
 			}
 		}
+
+		public static short customGlowMask;
 	}
 }

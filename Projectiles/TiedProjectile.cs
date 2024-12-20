@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles
@@ -10,6 +11,7 @@ namespace Redemption.Projectiles
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Xeno Blast");
+			Main.projFrames[base.projectile.type] = 4;
 		}
 
 		public override void SetDefaults()
@@ -18,7 +20,6 @@ namespace Redemption.Projectiles
 			base.projectile.height = 22;
 			base.projectile.friendly = true;
 			base.projectile.penetrate = -1;
-			Main.projFrames[base.projectile.type] = 4;
 			base.projectile.hostile = false;
 			base.projectile.magic = true;
 			base.projectile.tileCollide = true;
@@ -43,6 +44,16 @@ namespace Redemption.Projectiles
 				{
 					base.projectile.frame = 0;
 				}
+			}
+		}
+
+		public override void Kill(int timeLeft)
+		{
+			Main.PlaySound(SoundID.Item14, base.projectile.position);
+			for (int i = 0; i < 25; i++)
+			{
+				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, base.mod.DustType("XenoDust"), 0f, 0f, 100, default(Color), 1.2f);
+				Main.dust[num].velocity *= 1.9f;
 			}
 		}
 

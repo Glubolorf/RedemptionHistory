@@ -40,6 +40,10 @@ namespace Redemption.Projectiles
 			{
 				base.projectile.penetrate = 6;
 			}
+			if ((double)Math.Abs(base.projectile.velocity.X) > 0.2)
+			{
+				base.projectile.spriteDirection = -base.projectile.direction;
+			}
 			int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y + 2f), base.projectile.width + 2, base.projectile.height + 2, 68, base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 1f);
 			Main.dust[num].noGravity = true;
 			base.projectile.localAI[0] += 1f;
@@ -88,6 +92,18 @@ namespace Redemption.Projectiles
 			if (num > 6f)
 			{
 				vector *= 11f / num;
+			}
+		}
+
+		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+		{
+			Player player = Main.player[base.projectile.owner];
+			int crit2 = player.HeldItem.crit;
+			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref crit2);
+			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref crit2);
+			if (crit2 >= 100 || Main.rand.Next(1, 101) <= crit2)
+			{
+				crit = true;
 			}
 		}
 	}

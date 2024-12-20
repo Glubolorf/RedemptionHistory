@@ -76,7 +76,7 @@ namespace Redemption
 			for (int i = 0; i < 1000; i++)
 			{
 				Chest chest = Main.chest[i];
-				if (chest != null && Main.tile[chest.x, chest.y].type == 21 && Main.tile[chest.x, chest.y].frameX == 72 && Main.rand.Next(4) == 1)
+				if (chest != null && Main.tile[chest.x, chest.y].type == 21 && Main.tile[chest.x, chest.y].frameX == 72 && Main.rand.Next(3) == 0)
 				{
 					for (int j = 0; j < 40; j++)
 					{
@@ -84,6 +84,48 @@ namespace Redemption
 						{
 							chest.item[j].SetDefaults(array[num], false);
 							num = (num + 1) % array.Length;
+							break;
+						}
+					}
+				}
+			}
+			int[] array2 = new int[]
+			{
+				base.mod.ItemType("GildedSeaAxe")
+			};
+			int num2 = 0;
+			for (int k = 0; k < 1000; k++)
+			{
+				Chest chest2 = Main.chest[k];
+				if (chest2 != null && Main.tile[chest2.x, chest2.y].type == 21 && Main.tile[chest2.x, chest2.y].frameX == 612 && Main.rand.Next(5) == 0)
+				{
+					for (int l = 0; l < 40; l++)
+					{
+						if (chest2.item[l].type == 0)
+						{
+							chest2.item[l].SetDefaults(array2[num2], false);
+							num2 = (num2 + 1) % array2.Length;
+							break;
+						}
+					}
+				}
+			}
+			int[] array3 = new int[]
+			{
+				base.mod.ItemType("SeaNote")
+			};
+			int num3 = 0;
+			for (int m = 0; m < 1000; m++)
+			{
+				Chest chest3 = Main.chest[m];
+				if (chest3 != null && Main.tile[chest3.x, chest3.y].type == 21 && Main.tile[chest3.x, chest3.y].frameX == 612 && Main.rand.Next(10) == 0)
+				{
+					for (int n = 0; n < 40; n++)
+					{
+						if (chest3.item[n].type == 0)
+						{
+							chest3.item[n].SetDefaults(array3[num3], false);
+							num3 = (num3 + 1) % array3.Length;
 							break;
 						}
 					}
@@ -105,6 +147,10 @@ namespace Redemption
 			RedeWorld.spawnSapphironOre = false;
 			RedeWorld.spawnScarlionOre = false;
 			RedeWorld.deathBySlayer = false;
+			RedeWorld.foundNewb = false;
+			RedeWorld.downedVlitch3 = false;
+			RedeWorld.downedSkullDigger = false;
+			RedeWorld.downedSunkenCaptain = false;
 		}
 
 		public override TagCompound Save()
@@ -113,6 +159,7 @@ namespace Redemption
 			bool flag = false;
 			bool flag2 = false;
 			bool flag3 = false;
+			bool flag4 = false;
 			if (RedeWorld.downedKingChicken)
 			{
 				list.Add("KingChicken");
@@ -161,11 +208,28 @@ namespace Redemption
 			{
 				flag3 = true;
 			}
+			if (RedeWorld.foundNewb)
+			{
+				flag4 = true;
+			}
+			if (RedeWorld.downedVlitch3)
+			{
+				list.Add("OmegaOblitIdle");
+			}
+			if (RedeWorld.downedSkullDigger)
+			{
+				list.Add("SkullDigger");
+			}
+			if (RedeWorld.downedSunkenCaptain)
+			{
+				list.Add("SunkenCaptain");
+			}
 			TagCompound tagCompound = new TagCompound();
 			tagCompound.Add("downed", list);
 			tagCompound.Add("sapphiron", flag);
 			tagCompound.Add("scarlion", flag2);
 			tagCompound.Add("deathSlayer", flag3);
+			tagCompound.Add("newbFound", flag4);
 			return tagCompound;
 		}
 
@@ -184,6 +248,10 @@ namespace Redemption
 			RedeWorld.spawnSapphironOre = tag.GetBool("sapphiron");
 			RedeWorld.spawnScarlionOre = tag.GetBool("scarlion");
 			RedeWorld.deathBySlayer = tag.GetBool("deathSlayer");
+			RedeWorld.foundNewb = tag.GetBool("newbFound");
+			RedeWorld.downedVlitch3 = list.Contains("OmegaOblitIdle");
+			RedeWorld.downedSkullDigger = list.Contains("SkullDigger");
+			RedeWorld.downedSunkenCaptain = list.Contains("SunkenCaptain");
 		}
 
 		public override void NetSend(BinaryWriter writer)
@@ -198,7 +266,11 @@ namespace Redemption
 			bitsByte[6] = RedeWorld.downedVlitch2;
 			bitsByte[7] = RedeWorld.downedDarkSlime;
 			writer.Write(bitsByte);
-			default(BitsByte)[0] = RedeWorld.downedSlayer;
+			BitsByte bitsByte2 = default(BitsByte);
+			bitsByte2[0] = RedeWorld.downedSlayer;
+			bitsByte2[1] = RedeWorld.downedVlitch3;
+			bitsByte2[2] = RedeWorld.downedSkullDigger;
+			bitsByte2[3] = RedeWorld.downedSunkenCaptain;
 		}
 
 		public override void NetReceive(BinaryReader reader)
@@ -212,7 +284,11 @@ namespace Redemption
 			RedeWorld.downedVlitch1 = bitsByte[5];
 			RedeWorld.downedVlitch2 = bitsByte[6];
 			RedeWorld.downedDarkSlime = bitsByte[7];
-			default(BitsByte)[0] = RedeWorld.downedSlayer;
+			BitsByte bitsByte2 = default(BitsByte);
+			RedeWorld.downedSlayer = bitsByte2[0];
+			RedeWorld.downedVlitch3 = bitsByte2[1];
+			RedeWorld.downedSkullDigger = bitsByte2[2];
+			RedeWorld.downedSunkenCaptain = bitsByte2[3];
 		}
 
 		private const int saveVersion = 0;
@@ -246,5 +322,13 @@ namespace Redemption
 		public static bool downedSlayer;
 
 		public static bool deathBySlayer;
+
+		public static bool foundNewb;
+
+		public static bool downedVlitch3;
+
+		public static bool downedSkullDigger;
+
+		public static bool downedSunkenCaptain;
 	}
 }

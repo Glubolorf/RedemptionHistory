@@ -38,7 +38,7 @@ namespace Redemption.Tiles.Banners
 			if (closer)
 			{
 				Player localPlayer = Main.LocalPlayer;
-				localPlayer.NPCBannerBuff[base.mod.NPCType("PirateCook")] = true;
+				localPlayer.NPCBannerBuff[base.mod.NPCType("FatPirate")] = true;
 				localPlayer.hasBanner = true;
 			}
 		}

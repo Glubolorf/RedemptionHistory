@@ -57,16 +57,22 @@ namespace Redemption.Projectiles
 			Main.PlaySound(SoundID.Item25, base.projectile.position);
 		}
 
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
-		{
-			fallThrough = false;
-			return true;
-		}
-
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			base.projectile.ai[0] += 0.1f;
 			base.projectile.velocity *= 0.75f;
+		}
+
+		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+		{
+			Player player = Main.player[base.projectile.owner];
+			int crit2 = player.HeldItem.crit;
+			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref crit2);
+			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref crit2);
+			if (crit2 >= 100 || Main.rand.Next(1, 101) <= crit2)
+			{
+				crit = true;
+			}
 		}
 	}
 }

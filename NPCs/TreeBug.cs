@@ -49,7 +49,7 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.OverworldDayGrassCritter.Chance * 1.7f;
+			return SpawnCondition.OverworldDayGrassCritter.Chance * ((Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == 2) ? 1.7f : 0f);
 		}
 
 		public override bool CanHitPlayer(Player target, ref int cooldownSlot)

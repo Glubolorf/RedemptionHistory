@@ -35,6 +35,7 @@ namespace Redemption.NPCs
 
 		public override void BossLoot(ref string name, ref int potionType)
 		{
+			name = "A Strange Portal";
 			potionType = 58;
 			RedeWorld.downedStrangePortal = true;
 		}

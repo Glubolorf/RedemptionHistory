@@ -10,6 +10,17 @@ namespace Redemption.Projectiles
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
+				XenomiteGlaivePro.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
 			base.DisplayName.SetDefault("Xenomite Glaive");
 		}
 
@@ -22,6 +33,7 @@ namespace Redemption.Projectiles
 			base.projectile.tileCollide = false;
 			base.projectile.ignoreWater = true;
 			base.projectile.melee = true;
+			base.projectile.glowMask = XenomiteGlaivePro.customGlowMask;
 		}
 
 		public override void AI()
@@ -65,5 +77,7 @@ namespace Redemption.Projectiles
 			spriteBatch.Draw(texture2D, base.projectile.Center - Main.screenPosition, null, Color.White, base.projectile.rotation, new Vector2((float)(texture2D.Width / 2), (float)(texture2D.Height / 2)), 1f, (base.projectile.spriteDirection == 1) ? 0 : 1, 0f);
 			return false;
 		}
+
+		public static short customGlowMask;
 	}
 }

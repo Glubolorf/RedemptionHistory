@@ -1,7 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
@@ -9,6 +11,17 @@ namespace Redemption.Items.DruidDamageClass
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/DruidDamageClass/" + base.GetType().Name + "_Glow");
+				GloopContainer.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
 			base.DisplayName.SetDefault("Gloop Container");
 			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nThrow a container filled with gloop");
 		}
@@ -32,6 +45,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.autoReuse = true;
 			base.item.shoot = base.mod.ProjectileType("GloopContainerPro");
 			base.item.shootSpeed = 12f;
+			base.item.glowMask = GloopContainer.customGlowMask;
 		}
 
 		public override bool CanUseItem(Player player)
@@ -77,5 +91,19 @@ namespace Redemption.Items.DruidDamageClass
 			}
 			return true;
 		}
+
+		public override void AddRecipes()
+		{
+			ModRecipe modRecipe = new ModRecipe(base.mod);
+			modRecipe.AddIngredient(null, "OblitBrain", 1);
+			modRecipe.AddIngredient(null, "CorruptedXenomite", 16);
+			modRecipe.AddIngredient(null, "VlitchScale", 14);
+			modRecipe.AddIngredient(null, "VlitchBattery", 2);
+			modRecipe.AddTile(412);
+			modRecipe.SetResult(this, 1);
+			modRecipe.AddRecipe();
+		}
+
+		public static short customGlowMask;
 	}
 }

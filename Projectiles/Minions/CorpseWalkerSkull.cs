@@ -8,7 +8,7 @@ namespace Redemption.Projectiles.Minions
 	{
 		public override void SetStaticDefaults()
 		{
-			Main.projFrames[base.projectile.type] = 3;
+			Main.projFrames[base.projectile.type] = 4;
 			Main.projPet[base.projectile.type] = true;
 			ProjectileID.Sets.MinionSacrificable[base.projectile.type] = true;
 			ProjectileID.Sets.Homing[base.projectile.type] = true;

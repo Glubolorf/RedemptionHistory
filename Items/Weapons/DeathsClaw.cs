@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,6 +13,18 @@ namespace Redemption.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				DeathsClaw.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
+			base.item.glowMask = DeathsClaw.customGlowMask;
 			base.DisplayName.SetDefault("Death's Claw");
 			base.Tooltip.SetDefault("'A burning scythe created in the underworld...'\n[c/1c4dff:Rare]");
 		}
@@ -30,6 +43,7 @@ namespace Redemption.Items.Weapons
 			base.item.rare = 9;
 			base.item.UseSound = SoundID.Item71;
 			base.item.autoReuse = true;
+			base.item.glowMask = DeathsClaw.customGlowMask;
 		}
 
 		public override void MeleeEffects(Player player, Rectangle hitbox)
@@ -54,5 +68,7 @@ namespace Redemption.Items.Weapons
 				tooltipLine.overrideColor = new Color?(new Color(0, 120, 255));
 			}
 		}
+
+		public static short customGlowMask;
 	}
 }

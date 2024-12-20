@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -9,6 +10,17 @@ namespace Redemption.Projectiles
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
+				GirusLancePro2.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
 			base.DisplayName.SetDefault("Girus Lance");
 		}
 
@@ -20,6 +32,7 @@ namespace Redemption.Projectiles
 			base.projectile.friendly = true;
 			base.projectile.melee = true;
 			base.projectile.penetrate = -1;
+			base.projectile.glowMask = GirusLancePro2.customGlowMask;
 		}
 
 		public override void AI()
@@ -60,5 +73,7 @@ namespace Redemption.Projectiles
 				vector -= vector2 * 8f;
 			}
 		}
+
+		public static short customGlowMask;
 	}
 }

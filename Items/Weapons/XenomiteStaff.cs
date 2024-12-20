@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,6 +11,18 @@ namespace Redemption.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				XenomiteStaff.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
+			base.item.glowMask = XenomiteStaff.customGlowMask;
 			base.DisplayName.SetDefault("Xenomite Staff");
 			base.Tooltip.SetDefault("Summons a friendly Xenomite Eye to fight for you");
 		}
@@ -33,6 +46,7 @@ namespace Redemption.Items.Weapons
 			base.item.shootSpeed = 7f;
 			base.item.buffType = base.mod.BuffType("XenoEyeSBuff");
 			base.item.buffTime = 3600;
+			base.item.glowMask = XenomiteStaff.customGlowMask;
 		}
 
 		public override bool AltFunctionUse(Player player)
@@ -53,5 +67,7 @@ namespace Redemption.Items.Weapons
 			}
 			return base.UseItem(player);
 		}
+
+		public static short customGlowMask;
 	}
 }

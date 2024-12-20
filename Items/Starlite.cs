@@ -26,13 +26,13 @@ namespace Redemption.Items
 			modRecipe.AddIngredient(1106, 2);
 			modRecipe.AddIngredient(182, 1);
 			modRecipe.AddTile(null, "XenoForgeTile");
-			modRecipe.SetResult(this, 1);
+			modRecipe.SetResult(this, 10);
 			modRecipe.AddRecipe();
 			modRecipe = new ModRecipe(base.mod);
 			modRecipe.AddIngredient(366, 2);
 			modRecipe.AddIngredient(182, 1);
 			modRecipe.AddTile(null, "XenoForgeTile");
-			modRecipe.SetResult(this, 1);
+			modRecipe.SetResult(this, 10);
 			modRecipe.AddRecipe();
 		}
 	}

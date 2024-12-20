@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,6 +11,17 @@ namespace Redemption.Items.DruidDamageClass
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/DruidDamageClass/" + base.GetType().Name + "_Glow");
+				Belrose2.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
 			base.DisplayName.SetDefault("The Belrose");
 			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Shifting from flesh to blood'\nRight Clicks throws 3 Belroses out like boomerangs");
 		}
@@ -31,6 +43,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.useTurn = true;
 			base.item.shoot = base.mod.ProjectileType("BelrosePro2");
 			base.item.shootSpeed = 22f;
+			base.item.glowMask = Belrose2.customGlowMask;
 		}
 
 		public override bool AltFunctionUse(Player player)
@@ -91,5 +104,7 @@ namespace Redemption.Items.DruidDamageClass
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
 		}
+
+		public static short customGlowMask;
 	}
 }

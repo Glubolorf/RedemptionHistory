@@ -44,6 +44,10 @@ namespace Redemption.NPCs
 				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
 			}
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
+			if (Main.netMode != 1 && base.npc.life <= 0 && Main.rand.Next(2) == 0)
+			{
+				NPC.NewNPC((int)base.npc.position.X + 20, (int)base.npc.position.Y + 30, base.mod.NPCType("LostSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+			}
 		}
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)

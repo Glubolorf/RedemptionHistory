@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,6 +10,18 @@ namespace Redemption.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				XenomiteScepter.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
+			base.item.glowMask = XenomiteScepter.customGlowMask;
 			base.DisplayName.SetDefault("Xenomite Scepter");
 			base.Tooltip.SetDefault("Shoots a volley of green lasers");
 			Item.staff[base.item.type] = true;
@@ -33,6 +46,7 @@ namespace Redemption.Items.Weapons
 			base.item.autoReuse = true;
 			base.item.shoot = base.mod.ProjectileType("XenomiteLaser");
 			base.item.shootSpeed = 30f;
+			base.item.glowMask = XenomiteScepter.customGlowMask;
 		}
 
 		public override void AddRecipes()
@@ -49,5 +63,7 @@ namespace Redemption.Items.Weapons
 		{
 			player.AddBuff(base.mod.BuffType("XenomiteDebuff"), Main.rand.Next(10, 20), true);
 		}
+
+		public static short customGlowMask;
 	}
 }

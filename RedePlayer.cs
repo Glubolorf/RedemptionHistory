@@ -4,6 +4,7 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs;
+using Redemption.Items;
 using Redemption.Items.Cores;
 using Terraria;
 using Terraria.DataStructures;
@@ -100,6 +101,11 @@ namespace Redemption
 			this.druidBane = false;
 			this.omegaAccessoryPrevious = this.omegaAccessory;
 			this.omegaAccessory = (this.omegaHideVanity = (this.omegaForceVanity = (this.omegaPower = false)));
+			this.chickenAccessoryPrevious = this.chickenAccessory;
+			this.chickenAccessory = (this.chickenHideVanity = (this.chickenForceVanity = (this.chickenPower = false)));
+			this.bloomingLuck = false;
+			this.lostSoulSet = false;
+			this.wanderingSoulSet = false;
 		}
 
 		public override void UpdateDead()
@@ -159,6 +165,15 @@ namespace Redemption
 					this.omegaForceVanity = true;
 				}
 			}
+			for (int j = 13; j < 18 + base.player.extraAccessorySlots; j++)
+			{
+				Item item2 = base.player.armor[j];
+				if (item2.type == base.mod.ItemType<CrownOfTheKing>())
+				{
+					this.chickenHideVanity = false;
+					this.chickenForceVanity = true;
+				}
+			}
 		}
 
 		public override void UpdateEquips(ref bool wallSpeedBuff, ref bool tileSpeedBuff, ref bool tileRangeBuff)
@@ -166,6 +181,10 @@ namespace Redemption
 			if (this.omegaAccessory)
 			{
 				base.player.AddBuff(base.mod.BuffType<Omega>(), 60, true);
+			}
+			if (this.chickenAccessory)
+			{
+				base.player.AddBuff(base.mod.BuffType<ChickenCrownBuff>(), 60, true);
 			}
 		}
 
@@ -176,6 +195,12 @@ namespace Redemption
 				base.player.legs = base.mod.GetEquipSlot("OmegaLegs", 2);
 				base.player.body = base.mod.GetEquipSlot("OmegaBody", 1);
 				base.player.head = base.mod.GetEquipSlot("OmegaHead", 0);
+			}
+			if ((this.chickenPower || this.chickenForceVanity) && !this.chickenHideVanity)
+			{
+				base.player.legs = base.mod.GetEquipSlot("ChickenLegs", 2);
+				base.player.body = base.mod.GetEquipSlot("ChickenBody", 1);
+				base.player.head = base.mod.GetEquipSlot("ChickenHead", 0);
 			}
 		}
 
@@ -235,10 +260,6 @@ namespace Redemption
 			if (base.player.FindBuffIndex(base.mod.BuffType("XenomiteDebuff2")) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
 			{
 				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got heavily infected");
-			}
-			if (base.player.FindBuffIndex(base.mod.BuffType("EmpoweredBuff")) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-			{
-				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got too empowered");
 			}
 			if (base.player.FindBuffIndex(base.mod.BuffType("RadioactiveFalloutDebuff")) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
 			{
@@ -423,5 +444,21 @@ namespace Redemption
 		public bool omegaPower;
 
 		public bool druidBane;
+
+		public bool chickenAccessoryPrevious;
+
+		public bool chickenAccessory;
+
+		public bool chickenHideVanity;
+
+		public bool chickenForceVanity;
+
+		public bool chickenPower;
+
+		public bool bloomingLuck;
+
+		public bool lostSoulSet;
+
+		public bool wanderingSoulSet;
 	}
 }

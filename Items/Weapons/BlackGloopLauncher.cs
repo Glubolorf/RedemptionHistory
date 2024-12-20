@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,13 +11,25 @@ namespace Redemption.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				BlackGloopLauncher.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
+			base.item.glowMask = BlackGloopLauncher.customGlowMask;
 			base.DisplayName.SetDefault("Gloop Launcher");
 			base.Tooltip.SetDefault("Shoots gloop that explodes into smaller pieces of gloop");
 		}
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 140;
+			base.item.damage = 100;
 			base.item.ranged = true;
 			base.item.width = 58;
 			base.item.height = 58;
@@ -31,6 +44,7 @@ namespace Redemption.Items.Weapons
 			base.item.shootSpeed = 20f;
 			base.item.autoReuse = true;
 			base.item.noMelee = true;
+			base.item.glowMask = BlackGloopLauncher.customGlowMask;
 		}
 
 		public override void AddRecipes()
@@ -46,5 +60,7 @@ namespace Redemption.Items.Weapons
 		{
 			return new Vector2?(new Vector2(-12f, 0f));
 		}
+
+		public static short customGlowMask;
 	}
 }

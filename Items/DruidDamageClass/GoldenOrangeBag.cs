@@ -9,7 +9,7 @@ namespace Redemption.Items.DruidDamageClass
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Golden Orange Tree Seedbag");
+			base.DisplayName.SetDefault("Golden Orange Tree Seed bag");
 			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nThrows a seed that grows into a Golden Orange Tree");
 		}
 

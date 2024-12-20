@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -12,6 +13,17 @@ namespace Redemption.Items
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/" + base.GetType().Name + "_Glow");
+				PrismiteHNecklace.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
 			base.DisplayName.SetDefault("Prismite Heart Necklace");
 			base.Tooltip.SetDefault("+600 max health\nDecreases defence by 999");
 		}
@@ -23,6 +35,7 @@ namespace Redemption.Items
 			base.item.value = Item.buyPrice(0, 4, 0, 0);
 			base.item.rare = 5;
 			base.item.accessory = true;
+			base.item.glowMask = PrismiteHNecklace.customGlowMask;
 		}
 
 		public override void AddRecipes()
@@ -41,5 +54,7 @@ namespace Redemption.Items
 			player.statDefense -= 999;
 			player.statLifeMax2 += 600;
 		}
+
+		public static short customGlowMask;
 	}
 }

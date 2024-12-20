@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,6 +13,18 @@ namespace Redemption.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				OldXenomiteBlade.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
+			base.item.glowMask = OldXenomiteBlade.customGlowMask;
 			base.DisplayName.SetDefault("Old Xenomite Blade");
 			base.Tooltip.SetDefault("'Where did this come from?'\nOnly usable in Hardmode\n[c/aa00ff:Epic]");
 		}
@@ -31,6 +44,7 @@ namespace Redemption.Items.Weapons
 			base.item.UseSound = SoundID.Item15;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
+			base.item.glowMask = OldXenomiteBlade.customGlowMask;
 		}
 
 		public override bool CanUseItem(Player player)
@@ -60,5 +74,7 @@ namespace Redemption.Items.Weapons
 		{
 			player.AddBuff(base.mod.BuffType("XenomiteDebuff"), Main.rand.Next(100, 200), true);
 		}
+
+		public static short customGlowMask;
 	}
 }

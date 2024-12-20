@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,6 +11,17 @@ namespace Redemption.Items.DruidDamageClass
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/DruidDamageClass/" + base.GetType().Name + "_Glow");
+				XenomiteStave.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
 			base.DisplayName.SetDefault("Xenomite Stave");
 			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nCasts 3 Xenomite Bolts in an arc");
 		}
@@ -31,6 +43,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.useTurn = true;
 			base.item.shoot = base.mod.ProjectileType("XenoBolt");
 			base.item.shootSpeed = 22f;
+			base.item.glowMask = XenomiteStave.customGlowMask;
 		}
 
 		public override void AddRecipes()
@@ -57,5 +70,7 @@ namespace Redemption.Items.DruidDamageClass
 			}
 			return false;
 		}
+
+		public static short customGlowMask;
 	}
 }

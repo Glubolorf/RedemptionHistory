@@ -45,7 +45,7 @@ namespace Redemption.Items.Armor
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
 			modRecipe.AddIngredient(181, 5);
-			modRecipe.AddIngredient(2860, 25);
+			modRecipe.AddIngredient(null, "UltraVioletPlating", 8);
 			modRecipe.AddTile(null, "DruidicAltarTile");
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();

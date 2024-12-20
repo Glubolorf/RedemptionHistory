@@ -13,7 +13,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Girus Heavy Headgear");
-			base.Tooltip.SetDefault("6% increased melee and ranged damage\n6% increased ranged crit");
+			base.Tooltip.SetDefault("6% increased melee\n6% increased melee crit");
 		}
 
 		public override void SetDefaults()
@@ -22,14 +22,13 @@ namespace Redemption.Items.Armor
 			base.item.height = 24;
 			base.item.value = Item.sellPrice(0, 40, 0, 0);
 			base.item.rare = 10;
-			base.item.defense = 24;
+			base.item.defense = 22;
 		}
 
 		public override void UpdateEquip(Player player)
 		{
 			player.meleeDamage *= 1.06f;
-			player.rangedDamage *= 1.06f;
-			player.rangedCrit += 6;
+			player.meleeCrit += 6;
 		}
 
 		public override void ArmorSetShadows(Player player)

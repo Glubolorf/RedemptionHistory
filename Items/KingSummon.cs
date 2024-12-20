@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -34,6 +35,7 @@ namespace Redemption.Items
 
 		public override bool UseItem(Player player)
 		{
+			Main.NewText("King Slayer III emerges!", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B, false);
 			int num = NPC.NewNPC((int)(player.position.X + (float)Main.rand.Next(100, 200)), (int)(player.position.Y - 0f), base.mod.NPCType("KSEntrance"), 0, 0f, 0f, 0f, 0f, 255);
 			if (Main.netMode == 2 && num < 200)
 			{

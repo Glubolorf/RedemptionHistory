@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,6 +11,18 @@ namespace Redemption.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				LunarShot.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
+			base.item.glowMask = LunarShot.customGlowMask;
 			base.DisplayName.SetDefault("Lunar Shot");
 			base.Tooltip.SetDefault("Replaces Wooden Arrows with Lunar Bolts");
 		}
@@ -32,6 +45,7 @@ namespace Redemption.Items.Weapons
 			base.item.shoot = 10;
 			base.item.shootSpeed = 45f;
 			base.item.useAmmo = AmmoID.Arrow;
+			base.item.glowMask = LunarShot.customGlowMask;
 		}
 
 		public override Vector2? HoldoutOffset()
@@ -51,10 +65,12 @@ namespace Redemption.Items.Weapons
 		public override void AddRecipes()
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "MoonflareFragment", 12);
+			modRecipe.AddIngredient(null, "MoonflareFragment", 5);
 			modRecipe.AddTile(16);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
 		}
+
+		public static short customGlowMask;
 	}
 }

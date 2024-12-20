@@ -13,7 +13,6 @@ namespace Redemption.Projectiles
 		{
 			base.projectile.width = 15;
 			base.projectile.height = 15;
-			base.projectile.friendly = true;
 			base.projectile.penetrate = -1;
 			base.projectile.timeLeft = 300;
 			this.drawOffsetX = 5;

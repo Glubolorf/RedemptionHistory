@@ -45,6 +45,7 @@ namespace Redemption.Items.Armor
 			player.setBonus = "Spirit summoning weapons will summon 2 extra spirits\nYou emit an aura of light";
 			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
 			redePlayer.moreSpirits = true;
+			redePlayer.wanderingSoulSet = true;
 			player.AddBuff(11, 2, true);
 		}
 

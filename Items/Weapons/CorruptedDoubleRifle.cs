@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,13 +11,25 @@ namespace Redemption.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				CorruptedDoubleRifle.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
+			base.item.glowMask = CorruptedDoubleRifle.customGlowMask;
 			base.DisplayName.SetDefault("Vlitch Double Rifle");
 			base.Tooltip.SetDefault("33% chance not to consume ammo");
 		}
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 265;
+			base.item.damage = 135;
 			base.item.ranged = true;
 			base.item.width = 58;
 			base.item.height = 42;
@@ -32,6 +45,7 @@ namespace Redemption.Items.Weapons
 			base.item.shoot = 10;
 			base.item.shootSpeed = 90f;
 			base.item.useAmmo = AmmoID.Bullet;
+			base.item.glowMask = CorruptedDoubleRifle.customGlowMask;
 		}
 
 		public override bool ConsumeAmmo(Player player)
@@ -63,9 +77,6 @@ namespace Redemption.Items.Weapons
 			return new Vector2?(new Vector2(-5f, 0f));
 		}
 
-		public override void HoldItem(Player player)
-		{
-			player.AddBuff(base.mod.BuffType("EmpoweredBuff"), Main.rand.Next(50, 60), true);
-		}
+		public static short customGlowMask;
 	}
 }

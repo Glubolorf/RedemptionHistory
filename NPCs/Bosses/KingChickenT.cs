@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -80,6 +81,35 @@ namespace Redemption.NPCs.Bosses
 
 		public override void AI()
 		{
+			if (this.peckPeck)
+			{
+				this.peckCounter++;
+				if (this.peckCounter > 5)
+				{
+					this.peckFrame++;
+					this.peckCounter = 0;
+				}
+				if (this.peckFrame >= 6)
+				{
+					this.peckFrame = 0;
+				}
+			}
+			if (Main.rand.Next(500) == 0 && !this.peckPeck)
+			{
+				this.peckPeck = true;
+			}
+			if (this.peckPeck)
+			{
+				base.npc.velocity.X = 0f;
+				this.peckTimer++;
+				if (this.peckTimer >= 30)
+				{
+					this.peckPeck = false;
+					this.peckCounter = 0;
+					this.peckFrame = 0;
+					this.peckTimer = 0;
+				}
+			}
 			this.timer++;
 			if (this.timer == 40)
 			{
@@ -170,8 +200,29 @@ namespace Redemption.NPCs.Bosses
 				byte g9 = rarityOrange26.G;
 				Color rarityOrange27 = Colors.RarityOrange;
 				Main.NewText(text9, r9, g9, rarityOrange27.B, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 264, 1, false, 0, false, false);
 				base.npc.active = false;
 			}
+		}
+
+		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+		{
+			Texture2D texture2D = Main.npcTexture[base.npc.type];
+			Texture2D texture = base.mod.GetTexture("NPCs/Bosses/KingChickenPeck");
+			int spriteDirection = base.npc.spriteDirection;
+			if (!this.peckPeck)
+			{
+				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+			}
+			if (this.peckPeck)
+			{
+				Vector2 vector;
+				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
+				int num = texture.Height / 6;
+				int num2 = num * this.peckFrame;
+				Main.spriteBatch.Draw(texture, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+			}
+			return false;
 		}
 
 		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
@@ -180,5 +231,13 @@ namespace Redemption.NPCs.Bosses
 		}
 
 		public int timer;
+
+		private bool peckPeck;
+
+		private int peckFrame;
+
+		private int peckCounter;
+
+		private int peckTimer;
 	}
 }

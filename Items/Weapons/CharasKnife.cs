@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,6 +10,18 @@ namespace Redemption.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				CharasKnife.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
+			base.item.glowMask = CharasKnife.customGlowMask;
 			base.DisplayName.SetDefault("Chara's Knife");
 			base.Tooltip.SetDefault("True Knife\n'What? An Undertale reference?'");
 		}
@@ -27,6 +40,7 @@ namespace Redemption.Items.Weapons
 			base.item.rare = 10;
 			base.item.UseSound = SoundID.Item1;
 			base.item.autoReuse = true;
+			base.item.glowMask = CharasKnife.customGlowMask;
 		}
 
 		public override void AddRecipes()
@@ -38,5 +52,7 @@ namespace Redemption.Items.Weapons
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
 		}
+
+		public static short customGlowMask;
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,6 +10,18 @@ namespace Redemption.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
+			if (Main.netMode != 2)
+			{
+				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
+				{
+					array[i] = Main.glowMaskTexture[i];
+				}
+				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				CorruptedXenomiteScepter.customGlowMask = (short)(array.Length - 1);
+				Main.glowMaskTexture = array;
+			}
+			base.item.glowMask = CorruptedXenomiteScepter.customGlowMask;
 			base.DisplayName.SetDefault("Corrupted Xenomite Scepter");
 			base.Tooltip.SetDefault("Shoots a volley of red lasers");
 			Item.staff[base.item.type] = true;
@@ -16,7 +29,7 @@ namespace Redemption.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 105;
+			base.item.damage = 75;
 			base.item.magic = true;
 			base.item.mana = 8;
 			base.item.width = 60;
@@ -33,6 +46,7 @@ namespace Redemption.Items.Weapons
 			base.item.autoReuse = true;
 			base.item.shoot = base.mod.ProjectileType("CorruptedXenomiteLaser");
 			base.item.shootSpeed = 32f;
+			base.item.glowMask = CorruptedXenomiteScepter.customGlowMask;
 		}
 
 		public override void AddRecipes()
@@ -45,5 +59,7 @@ namespace Redemption.Items.Weapons
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
 		}
+
+		public static short customGlowMask;
 	}
 }

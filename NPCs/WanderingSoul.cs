@@ -35,6 +35,14 @@ namespace Redemption.NPCs
 			this.bannerItem = base.mod.ItemType("WanderingSoulBanner");
 		}
 
+		public override void HitEffect(int hitDirection, double damage)
+		{
+			if (Main.netMode != 1 && base.npc.life <= 0)
+			{
+				NPC.NewNPC((int)base.npc.position.X + 38, (int)base.npc.position.Y + 32, base.mod.NPCType("LostSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+			}
+		}
+
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
 			return SpawnCondition.Cavern.Chance * (RedeWorld.downedTheKeeper ? 0.006f : 0f);

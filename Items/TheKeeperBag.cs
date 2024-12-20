@@ -38,8 +38,29 @@ namespace Redemption.Items
 			{
 				player.QuickSpawnItem(base.mod.ItemType("OldGathicWaraxe"), 1);
 			}
-			player.QuickSpawnItem(base.mod.ItemType("DarkShard"), 1);
-			player.QuickSpawnItem(base.mod.ItemType("TheKeepersCrown"), 1);
+			int num = Main.rand.Next(5);
+			if (num == 0)
+			{
+				player.QuickSpawnItem(base.mod.ItemType("KeepersBow"), 1);
+			}
+			if (num == 1)
+			{
+				player.QuickSpawnItem(base.mod.ItemType("KeepersStaff"), 1);
+			}
+			if (num == 2)
+			{
+				player.QuickSpawnItem(base.mod.ItemType("KeepersClaw"), 1);
+			}
+			if (num == 3)
+			{
+				player.QuickSpawnItem(base.mod.ItemType("KeepersKnife"), 1);
+			}
+			if (num == 4)
+			{
+				player.QuickSpawnItem(base.mod.ItemType("KeepersSummon"), 1);
+			}
+			player.QuickSpawnItem(base.mod.ItemType("DarkShard"), Main.rand.Next(3, 4));
+			player.QuickSpawnItem(base.mod.ItemType("HeartEmblem"), 1);
 		}
 	}
 }

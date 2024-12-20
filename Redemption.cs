@@ -44,11 +44,19 @@ namespace Redemption
 			{
 				Mod mod2 = mod;
 				object[] array = new object[5];
-				array[0] = "AddBossWithInfo";
-				array[1] = "The Keeper";
-				array[2] = 3.25f;
-				array[3] = new Func<bool>(() => RedeWorld.downedTheKeeper);
-				array[4] = string.Concat(new object[]
+				array[0] = "AddMiniBossWithInfo";
+				array[1] = "The Mighty King Chicken";
+				array[2] = 0f;
+				array[3] = new Func<bool>(() => RedeWorld.downedKingChicken);
+				array[4] = "Use an [i:" + base.ItemType<EggCrown>() + "] at day";
+				mod2.Call(array);
+				Mod mod3 = mod;
+				object[] array2 = new object[5];
+				array2[0] = "AddBossWithInfo";
+				array2[1] = "The Keeper";
+				array2[2] = 2.75f;
+				array2[3] = new Func<bool>(() => RedeWorld.downedTheKeeper);
+				array2[4] = string.Concat(new object[]
 				{
 					"Use a [i:",
 					base.ItemType<MysteriousTabletCorrupt>(),
@@ -56,30 +64,47 @@ namespace Redemption
 					base.ItemType<MysteriousTabletCrimson>(),
 					"] at night"
 				});
-				mod2.Call(array);
-				Mod mod3 = mod;
-				object[] array2 = new object[5];
-				array2[0] = "AddBossWithInfo";
-				array2[1] = "Xenomite Crystal";
-				array2[2] = 3.5f;
-				array2[3] = new Func<bool>(() => RedeWorld.downedXenomiteCrystal);
-				array2[4] = string.Concat(new object[]
-				{
-					"Kill a Strange Portal by using an [i:",
-					base.ItemType<UnstableCrystal>(),
-					"], then use a [i:",
-					base.ItemType<GeigerCounter>(),
-					"]"
-				});
 				mod3.Call(array2);
 				Mod mod4 = mod;
 				object[] array3 = new object[5];
-				array3[0] = "AddBossWithInfo";
-				array3[1] = "Infected Eye";
-				array3[2] = 6.25f;
-				array3[3] = new Func<bool>(() => RedeWorld.downedInfectedEye);
-				array3[4] = "Use a [i:" + base.ItemType<XenoEye>() + "] at night";
+				array3[0] = "AddMiniBossWithInfo";
+				array3[1] = "Strange Portal";
+				array3[2] = 3.49f;
+				array3[3] = new Func<bool>(() => RedeWorld.downedStrangePortal);
+				array3[4] = "Use an [i:" + base.ItemType<UnstableCrystal>() + "]";
 				mod4.Call(array3);
+				Mod mod5 = mod;
+				object[] array4 = new object[5];
+				array4[0] = "AddBossWithInfo";
+				array4[1] = "Xenomite Crystal";
+				array4[2] = 3.5f;
+				array4[3] = new Func<bool>(() => RedeWorld.downedXenomiteCrystal);
+				array4[4] = "Use a [i:" + base.ItemType<GeigerCounter>() + "], dropped by the Strange Portal";
+				mod5.Call(array4);
+				Mod mod6 = mod;
+				object[] array5 = new object[5];
+				array5[0] = "AddBossWithInfo";
+				array5[1] = "Infected Eye";
+				array5[2] = 6.25f;
+				array5[3] = new Func<bool>(() => RedeWorld.downedInfectedEye);
+				array5[4] = "Use a [i:" + base.ItemType<XenoEye>() + "] at night";
+				mod6.Call(array5);
+				Mod mod7 = mod;
+				object[] array6 = new object[5];
+				array6[0] = "AddBossWithInfo";
+				array6[1] = "Vlitch Cleaver";
+				array6[2] = 11.5f;
+				array6[3] = new Func<bool>(() => RedeWorld.downedVlitch1);
+				array6[4] = "Use a [i:" + base.ItemType<CorruptedHeroSword>() + "] at night";
+				mod7.Call(array6);
+				Mod mod8 = mod;
+				object[] array7 = new object[5];
+				array7[0] = "AddBossWithInfo";
+				array7[1] = "Vlitch Gigipede";
+				array7[2] = 13.5f;
+				array7[3] = new Func<bool>(() => RedeWorld.downedVlitch2);
+				array7[4] = "Use a [i:" + base.ItemType<CorruptedWormMedallion>() + "] at night";
+				mod8.Call(array7);
 			}
 		}
 
@@ -102,6 +127,20 @@ namespace Redemption
 				backgroundColor.G = (byte)num3;
 				backgroundColor.B = (byte)num4;
 			}
+		}
+
+		public override void AddRecipes()
+		{
+			ModRecipe modRecipe = new ModRecipe(this);
+			modRecipe.AddIngredient(null, "CoastScarabShell", 1);
+			modRecipe.AddTile(228);
+			modRecipe.SetResult(1044, 1);
+			modRecipe.AddRecipe();
+			modRecipe = new ModRecipe(this);
+			modRecipe.AddIngredient(null, "TreeBugShell", 1);
+			modRecipe.AddTile(228);
+			modRecipe.SetResult(1011, 1);
+			modRecipe.AddRecipe();
 		}
 
 		public static int FaceCustomCurrencyID;

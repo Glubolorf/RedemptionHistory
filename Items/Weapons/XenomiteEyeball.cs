@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons
@@ -16,7 +15,7 @@ namespace Redemption.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 12;
+			base.item.damage = 14;
 			base.item.magic = true;
 			base.item.mana = 3;
 			base.item.width = 32;
@@ -29,7 +28,7 @@ namespace Redemption.Items.Weapons
 			base.item.knockBack = 1f;
 			base.item.value = Item.buyPrice(0, 1, 0, 0);
 			base.item.rare = 3;
-			base.item.UseSound = SoundID.Item11;
+			base.item.UseSound = base.mod.GetLegacySoundSlot(2, "Sounds/Item/XenoEyeLaser1");
 			base.item.autoReuse = true;
 			base.item.shoot = 20;
 			base.item.shootSpeed = 5f;

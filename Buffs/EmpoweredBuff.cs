@@ -9,7 +9,7 @@ namespace Redemption.Buffs
 		public override void SetDefaults()
 		{
 			base.DisplayName.SetDefault("Empowered");
-			base.Description.SetDefault("The feeling of wielding such a mighty weapon empowers you...");
+			base.Description.SetDefault("\"The feeling of wielding such a mighty weapon empowers you...\"");
 			Main.buffNoTimeDisplay[base.Type] = true;
 		}
 

@@ -9,7 +9,7 @@ namespace Redemption.Buffs
 		public override void SetDefaults()
 		{
 			base.DisplayName.SetDefault("Xenomite Eye");
-			base.Description.SetDefault("You have a Xenomite Eye to fight for you!");
+			base.Description.SetDefault("\"You have a Xenomite Eye to fight for you!\"");
 			Main.buffNoSave[base.Type] = true;
 			Main.buffNoTimeDisplay[base.Type] = true;
 		}

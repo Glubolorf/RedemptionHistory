@@ -221,14 +221,17 @@ namespace Redemption.NPCs
 			nextSlot++;
 			shop.item[nextSlot].SetDefaults(base.mod.ItemType("NoblesSwordLead"), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("NoblesSwordSilver"), false);
-			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("NoblesSwordTungsten"), false);
-			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("NoblesSwordGold"), false);
-			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("NoblesSwordPlatinum"), false);
-			nextSlot++;
+			if (NPC.downedSlimeKing)
+			{
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("NoblesSwordSilver"), false);
+				nextSlot++;
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("NoblesSwordTungsten"), false);
+				nextSlot++;
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("NoblesSwordGold"), false);
+				nextSlot++;
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("NoblesSwordPlatinum"), false);
+				nextSlot++;
+			}
 			shop.item[nextSlot].SetDefaults(base.mod.ItemType("IronfurAmulet"), false);
 			nextSlot++;
 			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Archcloth"), false);

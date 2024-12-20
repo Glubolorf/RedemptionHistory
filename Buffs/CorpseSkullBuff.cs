@@ -9,7 +9,7 @@ namespace Redemption.Buffs
 		public override void SetDefaults()
 		{
 			base.DisplayName.SetDefault("Corpse-Walker Skull");
-			base.Description.SetDefault("A dried skull to fight for you!");
+			base.Description.SetDefault("\"A dried skull to fight for you!\"");
 			Main.buffNoSave[base.Type] = true;
 			Main.buffNoTimeDisplay[base.Type] = true;
 		}

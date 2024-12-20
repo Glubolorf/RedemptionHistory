@@ -50,7 +50,7 @@ namespace Redemption.NPCs
 			{
 				base.npc.realLife = base.npc.whoAmI;
 				int num = base.npc.whoAmI;
-				int num2 = Main.rand.Next(2, 4);
+				int num2 = Main.rand.Next(2, 3);
 				for (int i = 0; i < num2; i++)
 				{
 					num = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("CorruptedWormBody"), base.npc.whoAmI, 0f, (float)num, 0f, 0f, 255);

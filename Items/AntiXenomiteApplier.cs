@@ -21,8 +21,8 @@ namespace Redemption.Items
 			base.item.useTime = 17;
 			base.item.maxStack = 30;
 			base.item.consumable = true;
-			base.item.width = 34;
-			base.item.height = 34;
+			base.item.width = 12;
+			base.item.height = 38;
 			base.item.value = 100;
 			base.item.rare = 7;
 			base.item.buffType = base.mod.BuffType("AntiXenomiteBuff");

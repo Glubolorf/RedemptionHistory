@@ -16,8 +16,8 @@ namespace Redemption.NPCs.Bosses
 
 		public override void SetDefaults()
 		{
-			base.npc.width = 50;
-			base.npc.height = 102;
+			base.npc.width = 122;
+			base.npc.height = 92;
 			base.npc.damage = 140;
 			base.npc.defense = 250;
 			base.npc.lifeMax = 1;
@@ -40,12 +40,16 @@ namespace Redemption.NPCs.Bosses
 		{
 			if (base.npc.life <= 0)
 			{
-				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/VlitchCleaverGore11"), 1f);
+				Gore.NewGore(base.npc.Center, base.npc.velocity, base.mod.GetGoreSlot("Gores/VlitchCleaverGore11"), 1f);
 			}
 		}
 
 		public override void AI()
 		{
+			if (base.npc.ai[0] % 500f == 3f)
+			{
+				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("CorruptedWormHead"), 0, 0f, 0f, 0f, 0f, 255);
+			}
 			float[] ai = base.npc.ai;
 			int num = 0;
 			float num2;

@@ -22,7 +22,7 @@ namespace Redemption.Items.Armor
 			base.item.height = 22;
 			base.item.value = Item.sellPrice(0, 10, 0, 0);
 			base.item.rare = 7;
-			base.item.defense = 20;
+			base.item.defense = 10;
 		}
 
 		public override void UpdateEquip(Player player)
@@ -43,9 +43,11 @@ namespace Redemption.Items.Armor
 
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "You can no longer become heavily infected.";
+			player.setBonus = "You are immune to the Xenomite Infection and Radioactive Fallout\nThe armour emits light";
 			player.AddBuff(11, 2, true);
+			player.buffImmune[base.mod.BuffType("XenomiteDebuff")] = true;
 			player.buffImmune[base.mod.BuffType("XenomiteDebuff2")] = true;
+			player.buffImmune[base.mod.BuffType("RadioactiveFalloutDebuff")] = true;
 		}
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)

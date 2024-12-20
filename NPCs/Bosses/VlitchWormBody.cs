@@ -16,8 +16,8 @@ namespace Redemption.NPCs.Bosses
 
 		public override void SetDefaults()
 		{
-			base.npc.width = 50;
-			base.npc.height = 92;
+			base.npc.width = 122;
+			base.npc.height = 152;
 			base.npc.damage = 100;
 			base.npc.defense = 75;
 			base.npc.lifeMax = 1;
@@ -40,7 +40,7 @@ namespace Redemption.NPCs.Bosses
 		{
 			if (base.npc.life <= 0)
 			{
-				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/VlitchCleaverGore11"), 1f);
+				Gore.NewGore(base.npc.Center, base.npc.velocity, base.mod.GetGoreSlot("Gores/VlitchCleaverGore11"), 1f);
 			}
 		}
 

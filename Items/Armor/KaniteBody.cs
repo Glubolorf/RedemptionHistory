@@ -17,8 +17,8 @@ namespace Redemption.Items.Armor
 
 		public override void SetDefaults()
 		{
-			base.item.width = 30;
-			base.item.height = 20;
+			base.item.width = 34;
+			base.item.height = 22;
 			base.item.value = Item.sellPrice(0, 0, 7, 50);
 			base.item.rare = 0;
 			base.item.defense = 3;

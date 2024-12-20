@@ -55,6 +55,18 @@ namespace Redemption
 			{
 				list.Add("InfectedEye");
 			}
+			if (RedeWorld.downedStrangePortal)
+			{
+				list.Add("StrangePortal");
+			}
+			if (RedeWorld.downedVlitch1)
+			{
+				list.Add("VlitchCleaver");
+			}
+			if (RedeWorld.downedVlitch2)
+			{
+				list.Add("VlitchWormHead");
+			}
 			TagCompound tagCompound = new TagCompound();
 			tagCompound.Add("downed", list);
 			return tagCompound;
@@ -67,6 +79,9 @@ namespace Redemption
 			RedeWorld.downedTheKeeper = list.Contains("TheKeeper");
 			RedeWorld.downedXenomiteCrystal = list.Contains("XenomiteCrystalPhase2");
 			RedeWorld.downedInfectedEye = list.Contains("InfectedEye");
+			RedeWorld.downedStrangePortal = list.Contains("StrangePortal");
+			RedeWorld.downedVlitch1 = list.Contains("VlitchCleaver");
+			RedeWorld.downedVlitch2 = list.Contains("VlitchWormHead");
 		}
 
 		private const int saveVersion = 0;
@@ -82,5 +97,11 @@ namespace Redemption
 		public static bool downedXenomiteCrystal;
 
 		public static bool downedInfectedEye;
+
+		public static bool downedStrangePortal;
+
+		public static bool downedVlitch1;
+
+		public static bool downedVlitch2;
 	}
 }

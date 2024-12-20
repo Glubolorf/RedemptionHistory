@@ -17,8 +17,8 @@ namespace Redemption.NPCs.Bosses
 
 		public override void SetDefaults()
 		{
-			base.npc.width = 246;
-			base.npc.height = 360;
+			base.npc.width = 98;
+			base.npc.height = 304;
 			base.npc.friendly = false;
 			base.npc.damage = 250;
 			base.npc.defense = 60;
@@ -31,6 +31,7 @@ namespace Redemption.NPCs.Bosses
 			base.npc.aiStyle = 0;
 			this.animationType = 83;
 			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossVlitch1");
+			this.bossBag = base.mod.ItemType("VlitchCleaverBag");
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -54,9 +55,33 @@ namespace Redemption.NPCs.Bosses
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 266, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
 		}
 
+		public override void NPCLoot()
+		{
+			if (Main.rand.Next(10) == 0)
+			{
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("VlitchTrophy"), 1, false, 0, false, false);
+			}
+			if (Main.expertMode)
+			{
+				base.npc.DropBossBags();
+				return;
+			}
+			if (Main.rand.Next(14) == 0)
+			{
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("GirusMask"), 1, false, 0, false, false);
+			}
+			if (Main.rand.Next(3) == 0)
+			{
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CorruptedDoubleRifle"), 1, false, 0, false, false);
+			}
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CorruptedXenomite"), Main.rand.Next(12, 24), false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("VlitchBattery"), Main.rand.Next(1, 3), false, 0, false, false);
+		}
+
 		public override void BossLoot(ref string name, ref int potionType)
 		{
 			potionType = 499;
+			RedeWorld.downedVlitch1 = true;
 			Main.NewText("You feel a great wave of energy flowing through you as one of Vlitch's Overlords has been defeated...", Color.OrangeRed.R, Color.OrangeRed.G, Color.OrangeRed.B, false);
 		}
 
@@ -89,7 +114,7 @@ namespace Redemption.NPCs.Bosses
 			}
 			if (base.npc.ai[1] % 200f == 80f)
 			{
-				NPC.NewNPC((int)base.npc.position.X + 130, (int)base.npc.position.Y + 120, base.mod.NPCType("CorruptedProbe"), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 120, base.mod.NPCType("CorruptedProbe"), 0, 0f, 0f, 0f, 0f, 255);
 			}
 			if (base.npc.life <= 20000)
 			{
@@ -109,7 +134,7 @@ namespace Redemption.NPCs.Bosses
 			}
 			if (base.npc.ai[2] % 200f == 80f)
 			{
-				NPC.NewNPC((int)base.npc.position.X + 130, (int)base.npc.position.Y + 120, base.mod.NPCType("CorruptedBlade"), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 120, base.mod.NPCType("CorruptedBlade"), 0, 0f, 0f, 0f, 0f, 255);
 			}
 			if (base.npc.life <= 2000)
 			{

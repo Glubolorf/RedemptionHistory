@@ -13,22 +13,22 @@ namespace Redemption.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Daerel's Dark-Steel Bow");
-			base.Tooltip.SetDefault("'A mighty bow made of Ancient Wood & Dark Steel'\n40% chance not to consume ammo\n[c/1c4dff:Rare]");
+			base.Tooltip.SetDefault("'A mighty bow made of Ancient Wood & Dark Steel'\n40% chance not to consume ammo\n[c/aa00ff:Epic]");
 		}
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 17;
+			base.item.damage = 47;
 			base.item.ranged = true;
 			base.item.width = 30;
 			base.item.height = 46;
-			base.item.useTime = 17;
-			base.item.useAnimation = 17;
+			base.item.useTime = 11;
+			base.item.useAnimation = 11;
 			base.item.useStyle = 5;
 			base.item.noMelee = true;
 			base.item.knockBack = 1f;
 			base.item.value = Item.buyPrice(0, 10, 0, 0);
-			base.item.rare = 9;
+			base.item.rare = 11;
 			base.item.UseSound = SoundID.Item5;
 			base.item.autoReuse = true;
 			base.item.shoot = 10;
@@ -62,7 +62,7 @@ namespace Redemption.Items.Weapons
 			if (base.item.modItem != null && base.item.modItem.mod == ModLoader.GetMod("Redemption"))
 			{
 				TooltipLine tooltipLine = Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName"));
-				tooltipLine.overrideColor = new Color?(new Color(0, 120, 255));
+				tooltipLine.overrideColor = new Color?(new Color(170, 0, 255));
 			}
 		}
 	}

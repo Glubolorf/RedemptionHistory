@@ -10,6 +10,7 @@ namespace Redemption.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
+			base.DisplayName.SetDefault("Corpse-Walker Staff");
 			base.Tooltip.SetDefault("Summons a Corpse-Walker Skull to fight for you.");
 		}
 

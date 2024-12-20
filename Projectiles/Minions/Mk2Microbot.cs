@@ -18,8 +18,8 @@ namespace Redemption.Projectiles.Minions
 		public override void SetDefaults()
 		{
 			base.projectile.netImportant = true;
-			base.projectile.width = 44;
-			base.projectile.height = 36;
+			base.projectile.width = 36;
+			base.projectile.height = 38;
 			base.projectile.friendly = true;
 			base.projectile.minion = true;
 			base.projectile.minionSlots = 1f;

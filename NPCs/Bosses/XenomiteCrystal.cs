@@ -32,7 +32,7 @@ namespace Redemption.NPCs.Bosses
 			base.npc.buffImmune[31] = true;
 			base.npc.buffImmune[39] = true;
 			base.npc.buffImmune[24] = true;
-			this.music = 5;
+			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossXeno1");
 			base.npc.alpha = 50;
 			base.npc.noGravity = true;
 			base.npc.noTileCollide = true;

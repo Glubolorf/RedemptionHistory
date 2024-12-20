@@ -9,7 +9,7 @@ namespace Redemption.Buffs
 		public override void SetDefaults()
 		{
 			base.DisplayName.SetDefault("Blessed");
-			base.Description.SetDefault("You are blessed with Icar's Divine Protection...");
+			base.Description.SetDefault("\"You are blessed with Icar's Divine Protection...\"");
 			Main.buffNoTimeDisplay[base.Type] = true;
 		}
 

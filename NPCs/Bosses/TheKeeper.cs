@@ -33,13 +33,13 @@ namespace Redemption.NPCs.Bosses
 			base.npc.HitSound = SoundID.NPCHit5;
 			base.npc.DeathSound = SoundID.NPCDeath60;
 			this.animationType = 4;
-			this.music = 5;
+			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossKeeper");
 			this.bossBag = base.mod.ItemType("TheKeeperBag");
 		}
 
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			base.npc.lifeMax = (int)((float)base.npc.lifeMax * 0.625f * bossLifeScale);
+			base.npc.lifeMax = (int)((float)base.npc.lifeMax * 0.6f * bossLifeScale);
 			base.npc.damage = (int)((float)base.npc.damage * 0.2f);
 			base.npc.defense = base.npc.defense + numPlayers;
 		}
@@ -63,13 +63,34 @@ namespace Redemption.NPCs.Bosses
 			}
 			if (Main.rand.Next(3) == 0)
 			{
-				this.player.QuickSpawnItem(base.mod.ItemType("OldGathicWaraxe"), 1);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("OldGathicWaraxe"), 1, false, 0, false, false);
 			}
 			if (Main.rand.Next(7) == 0)
 			{
 				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("TheKeeperMask"), 1, false, 0, false, false);
 			}
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("DarkShard"), 1, false, 0, false, false);
+			int num = Main.rand.Next(5);
+			if (num == 0)
+			{
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("KeepersBow"), 1, false, 0, false, false);
+			}
+			if (num == 1)
+			{
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("KeepersStaff"), 1, false, 0, false, false);
+			}
+			if (num == 2)
+			{
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("KeepersClaw"), 1, false, 0, false, false);
+			}
+			if (num == 3)
+			{
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("KeepersKnife"), 1, false, 0, false, false);
+			}
+			if (num == 4)
+			{
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("KeepersSummon"), 1, false, 0, false, false);
+			}
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("DarkShard"), Main.rand.Next(2, 3), false, 0, false, false);
 		}
 
 		public override void AI()
@@ -86,7 +107,7 @@ namespace Redemption.NPCs.Bosses
 			{
 				Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 5, 0f, 0f, 0, default(Color), 1f);
 			}
-			if (base.npc.life > 0 && Main.rand.Next(300) == 0)
+			if (base.npc.life > 0 && Main.rand.Next(400) == 0)
 			{
 				NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul"), 0, 0f, 0f, 0f, 0f, 255);
 			}
@@ -94,7 +115,7 @@ namespace Redemption.NPCs.Bosses
 			{
 				NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 160, base.mod.NPCType("SkeletonMinion"), 0, 0f, 0f, 0f, 0f, 255);
 			}
-			if (Main.expertMode && base.npc.life < 1200 && Main.rand.Next(250) == 0)
+			if (Main.expertMode && base.npc.life < 1200 && Main.rand.Next(350) == 0)
 			{
 				NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 160, base.mod.NPCType("BoneWormHead"), 0, 0f, 0f, 0f, 0f, 255);
 			}

@@ -38,5 +38,15 @@ namespace Redemption.Items
 			Main.NewText("Let's see how long you last...", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
 			return true;
 		}
+
+		public override void AddRecipes()
+		{
+			ModRecipe modRecipe = new ModRecipe(base.mod);
+			modRecipe.AddIngredient(1570, 1);
+			modRecipe.AddIngredient(null, "GirusChip", 1);
+			modRecipe.AddTile(null, "XenoForgeTile");
+			modRecipe.SetResult(this, 1);
+			modRecipe.AddRecipe();
+		}
 	}
 }

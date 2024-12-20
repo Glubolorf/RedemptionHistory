@@ -32,7 +32,7 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.OverworldDay.Chance * (RedeWorld.downedKingChicken ? 0.06f : 0f);
+			return SpawnCondition.OverworldDay.Chance * (RedeWorld.downedKingChicken ? 0.04f : 0f);
 		}
 
 		public override void HitEffect(int hitDirection, double damage)

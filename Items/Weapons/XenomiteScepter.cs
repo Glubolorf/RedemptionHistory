@@ -5,11 +5,11 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.Weapons
 {
-	public class XenomiteSepter : ModItem
+	public class XenomiteScepter : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Xenomite Septer");
+			base.DisplayName.SetDefault("Xenomite Scepter");
 			base.Tooltip.SetDefault("Shoots a volley of green lasers");
 			Item.staff[base.item.type] = true;
 		}

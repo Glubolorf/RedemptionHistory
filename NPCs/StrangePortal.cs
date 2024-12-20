@@ -11,25 +11,29 @@ namespace Redemption.NPCs
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Strange Portal");
-			Main.npcFrameCount[base.npc.type] = 4;
 		}
 
 		public override void SetDefaults()
 		{
-			base.npc.width = 64;
-			base.npc.height = 64;
+			base.npc.width = 42;
+			base.npc.height = 42;
 			base.npc.friendly = false;
 			base.npc.damage = 25;
-			base.npc.defense = -100;
-			base.npc.lifeMax = 500;
+			base.npc.defense = 0;
+			base.npc.lifeMax = 750;
 			base.npc.HitSound = SoundID.NPCHit3;
 			base.npc.DeathSound = SoundID.NPCDeath6;
 			base.npc.value = 0f;
-			base.npc.knockBackResist = 0.3f;
+			base.npc.knockBackResist = 0.1f;
 			base.npc.aiStyle = 2;
 			this.aiType = 34;
-			this.animationType = 34;
 			base.npc.boss = true;
+		}
+
+		public override void BossLoot(ref string name, ref int potionType)
+		{
+			potionType = 58;
+			RedeWorld.downedStrangePortal = true;
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -55,6 +59,7 @@ namespace Redemption.NPCs
 
 		public override void AI()
 		{
+			base.npc.rotation += 0.09f;
 			if (Main.rand.Next(1) == 0)
 			{
 				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 242, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);

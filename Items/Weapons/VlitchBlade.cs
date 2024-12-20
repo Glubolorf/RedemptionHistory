@@ -36,6 +36,7 @@ namespace Redemption.Items.Weapons
 			ModRecipe modRecipe = new ModRecipe(base.mod);
 			modRecipe.AddIngredient(null, "CorruptedXenomite", 20);
 			modRecipe.AddIngredient(null, "CorruptedStarliteBar", 10);
+			modRecipe.AddIngredient(null, "VlitchBattery", 2);
 			modRecipe.AddTile(null, "XenoForgeTile");
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();

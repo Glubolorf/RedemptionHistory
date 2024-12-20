@@ -16,8 +16,8 @@ namespace Redemption.NPCs
 
 		public override void SetDefaults()
 		{
-			base.npc.width = 20;
-			base.npc.height = 20;
+			base.npc.width = 44;
+			base.npc.height = 54;
 			base.npc.damage = 50;
 			base.npc.defense = 45;
 			base.npc.lifeMax = 1;

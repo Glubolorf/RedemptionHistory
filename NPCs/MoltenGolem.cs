@@ -59,11 +59,15 @@ namespace Redemption.NPCs
 			{
 				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 6, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
 			}
+			if (Main.rand.Next(50) == 0)
+			{
+				Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 188, 35, 3f, 255, 0f, 0f);
+			}
 		}
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.Underworld.Chance * (NPC.downedBoss3 ? 0.2f : 0f);
+			return SpawnCondition.Underworld.Chance * (NPC.downedBoss3 ? 0.1f : 0f);
 		}
 
 		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)

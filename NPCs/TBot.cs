@@ -82,12 +82,12 @@ namespace Redemption.NPCs
 			{
 				return Main.npc[num].GivenName + " is very interested in finding out the material my skeleton is made out of. Too bad taking the plates off could damage me. Even I am not sure what I am made out of.";
 			}
-			int num2 = NPC.FindFirstNPC(22);
+			int num2 = NPC.FindFirstNPC(17);
 			if (num2 >= 0 && Main.rand.Next(9) == 0)
 			{
 				return Main.npc[num2].GivenName + " keeps trying to sell his stuff to me. I don't even have any money! I smelted all of it to bars. Not sure why.";
 			}
-			int num3 = NPC.FindFirstNPC(22);
+			int num3 = NPC.FindFirstNPC(20);
 			if (num3 >= 0 && Main.rand.Next(9) == 0)
 			{
 				return "Apparently " + Main.npc[num3].GivenName + " told me about the Corruption. I have compared the differences between The Corruption and The Girus Corruption. They are quite similar, but your corruption affects living matter, but mine only affects robotics.";
@@ -97,7 +97,7 @@ namespace Redemption.NPCs
 			{
 				return "No, " + Main.npc[num4].GivenName + ", I don't need healing, I am a robot. You don't know how I work.";
 			}
-			int num5 = NPC.FindFirstNPC(22);
+			int num5 = NPC.FindFirstNPC(19);
 			if (num5 >= 0 && Main.rand.Next(9) == 0)
 			{
 				return Main.npc[num5].GivenName + "'s weapons are useless to me. I haven't been programmed to fight against anything, as it would break the Laws of Robotics.";
@@ -119,7 +119,19 @@ namespace Redemption.NPCs
 			{
 				return "You destroyed a thing that shouldn't even be able to be killed, as Cthulhu is an entity you humans cannot overwhelm. Neither can I, it'd crash my system... Oh wait, that was Cthulhu's brother.";
 			}
-			switch (Main.rand.Next(5))
+			if (RedeWorld.downedVlitch1 || (RedeWorld.downedVlitch2 && Main.rand.Next(9) == 0))
+			{
+				return "You defeated a Vlitch Overlord?! Oh this can't be good...";
+			}
+			if (RedeWorld.downedVlitch1 || (RedeWorld.downedVlitch2 && Main.rand.Next(9) == 0))
+			{
+				return "Why am i concerned about the Overlords? Well, let's say I've had a close encounter with their leader. Not someone you'd like to mess with.";
+			}
+			if (RedeWorld.downedSlayer && Main.rand.Next(9) == 0)
+			{
+				return "Oh King Slayer? He's bit of... well...";
+			}
+			switch (Main.rand.Next(9))
 			{
 			case 0:
 				return "Have you seen a boy with glasses? I've lost him, and i need to find him.";
@@ -129,6 +141,14 @@ namespace Redemption.NPCs
 				return "Why am I here?";
 			case 3:
 				return "Why do I have a limitless supply of robot parts? I dunno, maybe I craft them using the coins I've smelted?";
+			case 4:
+				return "I once painted a painting. Some guy from the corner of the room said 'Oh my god...' to himself.";
+			case 5:
+				return "The wasteland? It used to be a good place to live, but someone pressed the nuke button and initiated Mutual Nuclear Destruction. Only us androids survived the nuclear annihilation. That's where I'm from, too.";
+			case 6:
+				return "Oh this powercell in my chest? It's quite the marvel of technology, uses pure Xenomite. Sadly I can't explain how it works, I wasn't designed to be a factory machine.";
+			case 7:
+				return "You're interested in what the green crystals do? They technically aren't crystals, but sure. Its called Xenomite, and they're kind of like fungi, they consume flesh and ooze this green gloop that crystallizes overtime. Not sure of its origin, though. They do have high levels of Radium and some other radioactive materials, though.";
 			default:
 				return "Hey, why are you giving me a glare? Never seen a T-Bot before?";
 			}
@@ -163,7 +183,7 @@ namespace Redemption.NPCs
 			nextSlot++;
 			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Mk1Plating"), false);
 			nextSlot++;
-			if (RedeWorld.downedInfectedEye && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
+			if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
 			{
 				shop.item[nextSlot].SetDefaults(base.mod.ItemType("Mk2Capacitator"), false);
 				nextSlot++;

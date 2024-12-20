@@ -493,6 +493,18 @@ namespace Redemption.NPCs
 				}
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("XenomiteShard"), Main.rand.Next(1, 2), false, 0, false, false);
 			}
+			if (npc.type == base.mod.NPCType("InfectedGiantBat"))
+			{
+				if (Main.rand.Next(100) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 893, 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(100) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 18, 1, false, 0, false, false);
+				}
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("XenomiteShard"), Main.rand.Next(4, 8), false, 0, false, false);
+			}
 			if (npc.type == base.mod.NPCType("InfectedGiantWormHead"))
 			{
 				if (Main.rand.Next(50) == 0)
@@ -500,6 +512,14 @@ namespace Redemption.NPCs
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 215, 1, false, 0, false, false);
 				}
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("XenomiteShard"), Main.rand.Next(3, 6), false, 0, false, false);
+			}
+			if (npc.type == base.mod.NPCType("InfectedDiggerHead"))
+			{
+				if (Main.rand.Next(50) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 215, 1, false, 0, false, false);
+				}
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("XenomiteShard"), Main.rand.Next(8, 18), false, 0, false, false);
 			}
 			if (npc.type == base.mod.NPCType("InfectedDemonEye"))
 			{
@@ -1041,6 +1061,106 @@ namespace Redemption.NPCs
 				if (Main.rand.Next(500) == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("Falcon"), 1, false, 0, false, false);
+				}
+			}
+			if (npc.type == base.mod.NPCType("FatPirate"))
+			{
+				if (Main.rand.Next(4) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("GoldenOrangeBag"), 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(12) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("FriedEgg"), Main.rand.Next(2, 4), false, 0, false, false);
+				}
+				int num13 = Main.rand.Next(5);
+				if (num13 == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("BlueSpice"), Main.rand.Next(1, 7), false, 0, false, false);
+				}
+				if (num13 == 1)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("GreenSpice"), Main.rand.Next(1, 6), false, 0, false, false);
+				}
+				if (num13 == 2)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("OrangeSpice"), Main.rand.Next(1, 5), false, 0, false, false);
+				}
+				if (num13 == 3)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("RedSpice"), Main.rand.Next(1, 4), false, 0, false, false);
+				}
+				if (num13 == 4)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("WhiteSpice"), Main.rand.Next(1, 3), false, 0, false, false);
+				}
+				if (Main.rand.Next(12) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 2425, Main.rand.Next(1, 2), false, 0, false, false);
+				}
+				if (Main.rand.Next(12) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 2426, Main.rand.Next(1, 2), false, 0, false, false);
+				}
+				if (Main.rand.Next(12) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 357, 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(12) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 3195, 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(8000) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 905, 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(4000) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 855, 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(2000) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 854, 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(2000) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 2584, 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(200) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 672, 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(500) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 1277, 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(500) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 1279, 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(500) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 1280, 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(500) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 1278, 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(1000) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 3033, 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(500) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 3263, 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(500) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 3264, 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(500) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 3265, 1, false, 0, false, false);
 				}
 			}
 		}

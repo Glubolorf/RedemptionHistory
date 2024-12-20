@@ -331,7 +331,7 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.Cavern.Chance * (RedeWorld.downedXenomiteCrystal ? 0.01f : 0f);
+			return SpawnCondition.Cavern.Chance * ((RedeWorld.downedXenomiteCrystal && !Main.hardMode) ? 0.01f : 0f);
 		}
 
 		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)

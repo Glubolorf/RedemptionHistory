@@ -197,8 +197,8 @@ namespace Redemption
 			bitsByte[5] = RedeWorld.downedVlitch1;
 			bitsByte[6] = RedeWorld.downedVlitch2;
 			bitsByte[7] = RedeWorld.downedDarkSlime;
-			bitsByte[8] = RedeWorld.downedSlayer;
 			writer.Write(bitsByte);
+			default(BitsByte)[0] = RedeWorld.downedSlayer;
 		}
 
 		public override void NetReceive(BinaryReader reader)
@@ -212,7 +212,7 @@ namespace Redemption
 			RedeWorld.downedVlitch1 = bitsByte[5];
 			RedeWorld.downedVlitch2 = bitsByte[6];
 			RedeWorld.downedDarkSlime = bitsByte[7];
-			RedeWorld.downedSlayer = bitsByte[8];
+			default(BitsByte)[0] = RedeWorld.downedSlayer;
 		}
 
 		private const int saveVersion = 0;

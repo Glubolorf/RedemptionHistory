@@ -40,9 +40,10 @@ namespace Redemption.Items.Armor
 
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "Throws seedbags faster";
+			player.setBonus = "Throws seedbags faster & Thorns effect";
 			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
 			redePlayer.fasterSeedbags = true;
+			player.thorns = 1f;
 		}
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)

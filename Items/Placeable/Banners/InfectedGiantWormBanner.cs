@@ -8,7 +8,7 @@ namespace Redemption.Items.Placeable.Banners
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Infected Giant Worm Banner");
+			base.DisplayName.SetDefault("Infected Worm Banner");
 		}
 
 		public override void SetDefaults()

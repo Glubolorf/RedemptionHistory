@@ -10,7 +10,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Martian Tree Seed Bag");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nThrows a seed that grows into a otherworldly Martian Tree");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nThrows a seed that grows into an otherworldly Martian Tree");
 		}
 
 		public override void SafeSetDefaults()

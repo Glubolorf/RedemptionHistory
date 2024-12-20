@@ -14,8 +14,8 @@ namespace Redemption.Projectiles
 
 		public override void SetDefaults()
 		{
-			base.projectile.width = 32;
-			base.projectile.height = 32;
+			base.projectile.width = 38;
+			base.projectile.height = 38;
 			base.projectile.penetrate = -1;
 			base.projectile.hostile = false;
 			base.projectile.friendly = true;
@@ -38,6 +38,12 @@ namespace Redemption.Projectiles
 			{
 				base.projectile.Kill();
 			}
+		}
+
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		{
+			fallThrough = false;
+			return true;
 		}
 
 		public override bool OnTileCollide(Vector2 oldVelocity)

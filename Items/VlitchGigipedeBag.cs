@@ -44,6 +44,10 @@ namespace Redemption.Items
 			{
 				player.QuickSpawnItem(base.mod.ItemType("CorruptedRocketLauncher"), 1);
 			}
+			if (Main.rand.Next(3) == 0)
+			{
+				player.QuickSpawnItem(base.mod.ItemType("CorruptedDoubleRifle"), 1);
+			}
 			player.QuickSpawnItem(base.mod.ItemType("CorruptedXenomite"), Main.rand.Next(18, 28));
 			player.QuickSpawnItem(base.mod.ItemType("VlitchScale"), Main.rand.Next(25, 35));
 			player.QuickSpawnItem(base.mod.ItemType("VlitchBattery"), Main.rand.Next(2, 4));

@@ -19,6 +19,7 @@ namespace Redemption.NPCs
 		{
 			this.enjoyment = false;
 			this.ultraFlames = false;
+			this.druidBane = false;
 		}
 
 		public override void UpdateLifeRegen(NPC npc, ref int damage)
@@ -46,6 +47,19 @@ namespace Redemption.NPCs
 				{
 					damage = 10;
 				}
+			}
+			if (this.druidBane)
+			{
+				if (npc.lifeRegen > 0)
+				{
+					npc.lifeRegen = 0;
+				}
+				npc.lifeRegen -= 200;
+				if (damage < 10)
+				{
+					damage = 10;
+				}
+				npc.defense -= 10;
 			}
 		}
 
@@ -77,10 +91,25 @@ namespace Redemption.NPCs
 					Main.dust[num2].scale *= 0.5f;
 				}
 			}
+			if (this.druidBane && Main.rand.Next(3) < 3)
+			{
+				int num3 = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, 163, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default(Color), 1.5f);
+				Main.dust[num3].noGravity = true;
+				Main.dust[num3].velocity *= 1.8f;
+				Dust dust3 = Main.dust[num3];
+				dust3.velocity.Y = dust3.velocity.Y - 0.5f;
+				if (Main.rand.Next(4) == 0)
+				{
+					Main.dust[num3].noGravity = false;
+					Main.dust[num3].scale *= 0.5f;
+				}
+			}
 		}
 
 		public bool enjoyment;
 
 		public bool ultraFlames;
+
+		public bool druidBane;
 	}
 }

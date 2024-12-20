@@ -18,7 +18,7 @@ namespace Redemption.Items.Weapons
 			base.item.damage = 80;
 			base.item.magic = true;
 			base.item.width = 44;
-			base.item.height = 34;
+			base.item.height = 30;
 			base.item.useTime = 18;
 			base.item.useAnimation = 18;
 			base.item.useStyle = 5;

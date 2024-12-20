@@ -73,7 +73,11 @@ namespace Redemption.NPCs.Bosses
 			}
 			if (Main.rand.Next(3) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CorruptedDoubleRifle"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("GirusDagger"), 1, false, 0, false, false);
+			}
+			if (Main.rand.Next(3) == 0)
+			{
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("GirusLance"), 1, false, 0, false, false);
 			}
 			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CorruptedXenomite"), Main.rand.Next(12, 24), false, 0, false, false);
 			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("VlitchBattery"), Main.rand.Next(1, 3), false, 0, false, false);

@@ -40,9 +40,10 @@ namespace Redemption.Items.Armor
 
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "Seedbags inflict frostburn";
+			player.setBonus = "Seedbags inflict frostburn & extra mobility on ice";
 			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
 			redePlayer.frostburnSeedbag = true;
+			player.iceSkate = true;
 		}
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)

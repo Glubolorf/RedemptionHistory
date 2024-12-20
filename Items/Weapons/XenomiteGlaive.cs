@@ -26,6 +26,7 @@ namespace Redemption.Items.Weapons
 			base.item.rare = 3;
 			base.item.shoot = base.mod.ProjectileType("XenomiteGlaivePro");
 			base.item.noUseGraphic = true;
+			base.item.noMelee = true;
 		}
 
 		public override bool UseItemFrame(Player player)

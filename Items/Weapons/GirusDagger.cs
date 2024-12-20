@@ -47,16 +47,5 @@ namespace Redemption.Items.Weapons
 			}
 			return false;
 		}
-
-		public override void AddRecipes()
-		{
-			ModRecipe modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "CorruptedXenomite", 10);
-			modRecipe.AddIngredient(null, "CorruptedStarliteBar", 5);
-			modRecipe.AddIngredient(null, "VlitchBattery", 1);
-			modRecipe.AddTile(null, "XenoForgeTile");
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
-		}
 	}
 }

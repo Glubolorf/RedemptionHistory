@@ -46,7 +46,7 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.Cavern.Chance * 0.0002f;
+			return SpawnCondition.Cavern.Chance * 0.0003f;
 		}
 	}
 }

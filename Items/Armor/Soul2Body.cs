@@ -23,7 +23,7 @@ namespace Redemption.Items.Armor
 			base.item.height = 26;
 			base.item.value = 750;
 			base.item.rare = 4;
-			base.item.defense = 6;
+			base.item.defense = 9;
 		}
 
 		public override void UpdateEquip(Player player)

@@ -41,7 +41,7 @@ namespace Redemption.Items
 		public override void AddRecipes()
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "AncientStone", 4);
+			modRecipe.AddIngredient(null, "SmallLostSoul", 4);
 			modRecipe.AddIngredient(1257, 6);
 			modRecipe.AddTile(26);
 			modRecipe.SetResult(this, 1);

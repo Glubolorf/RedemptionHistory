@@ -40,6 +40,12 @@ namespace Redemption.Projectiles
 			}
 		}
 
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		{
+			fallThrough = false;
+			return true;
+		}
+
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
 			Projectile.NewProjectile(base.projectile.Top, base.projectile.velocity, base.mod.ProjectileType("ScarletBush"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);

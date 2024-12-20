@@ -58,6 +58,12 @@ namespace Redemption.Projectiles
 			}
 		}
 
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		{
+			fallThrough = false;
+			return true;
+		}
+
 		public override void Kill(int timeLeft)
 		{
 			for (int i = 0; i < 35; i++)

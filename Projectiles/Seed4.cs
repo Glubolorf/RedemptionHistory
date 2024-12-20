@@ -40,6 +40,12 @@ namespace Redemption.Projectiles
 			}
 		}
 
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		{
+			fallThrough = false;
+			return true;
+		}
+
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
 			Collision.HitTiles(base.projectile.position, oldVelocity, base.projectile.width, base.projectile.height);

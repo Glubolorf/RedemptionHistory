@@ -3,18 +3,25 @@
 Please remember to update the mod when necessary.
 
 Adds:
-- 38 Buffs
+- 42 Buffs
 - 8 Walls
-- 100 Tiles
-- 127 NPCs (Including bosses & minibosses)
+- 101 Tiles
+- 134 NPCs (Including bosses & minibosses)
 - 7 Bosses
 - 2 Minibosses
-- 582 Items
+- 617 Items
 
 Latest Update:
-- More Druid stuff (Should be viable to play now!)
-- New boss! King Slayer III!
-- Glowmasks on some enemies.
+- Druid Seedbags now work on platforms!
+- Mysterious Tablet is crafted with Small Lost Souls instead of Ancient Stone
+- New weapons
+- Pirate Cook in Pirate Invasion
+- Fried E G G
+- Resprites of Xenomite Crystal and Infected Eye and their drops
+- Molten Golem will have a new attack
+- Coldblooded Druid armour will give extra mobility on ice
+- Shade/Ebondruid armour gives thorns effect
+- A Jolly Madman now has a special attack
 For more, look at the mod's homepage
 
 Main Features (So far):

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
+using Redemption.Items.Cores;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -94,12 +96,17 @@ namespace Redemption
 			this.enjoyment = false;
 			this.ultraFlames = false;
 			RedePlayer.reflectProjs = false;
+			this.creationBonus = false;
+			this.druidBane = false;
+			this.omegaAccessoryPrevious = this.omegaAccessory;
+			this.omegaAccessory = (this.omegaHideVanity = (this.omegaForceVanity = (this.omegaPower = false)));
 		}
 
 		public override void UpdateDead()
 		{
 			this.enjoyment = false;
 			this.ultraFlames = false;
+			this.druidBane = false;
 		}
 
 		public override void UpdateBadLifeRegen()
@@ -122,6 +129,15 @@ namespace Redemption
 				base.player.lifeRegenTime = 0;
 				base.player.lifeRegen -= 40;
 			}
+			if (this.druidBane)
+			{
+				if (base.player.lifeRegen > 0)
+				{
+					base.player.lifeRegen = 0;
+				}
+				base.player.lifeRegenTime = 0;
+				base.player.lifeRegen -= 20;
+			}
 		}
 
 		public override void SetupStartInventory(IList<Item> items)
@@ -130,6 +146,37 @@ namespace Redemption
 			item.SetDefaults(base.mod.ItemType("EmptyCore"), false);
 			item.stack = 1;
 			items.Add(item);
+		}
+
+		public override void UpdateVanityAccessories()
+		{
+			for (int i = 13; i < 18 + base.player.extraAccessorySlots; i++)
+			{
+				Item item = base.player.armor[i];
+				if (item.type == base.mod.ItemType<OmegaCore>())
+				{
+					this.omegaHideVanity = false;
+					this.omegaForceVanity = true;
+				}
+			}
+		}
+
+		public override void UpdateEquips(ref bool wallSpeedBuff, ref bool tileSpeedBuff, ref bool tileRangeBuff)
+		{
+			if (this.omegaAccessory)
+			{
+				base.player.AddBuff(base.mod.BuffType<Omega>(), 60, true);
+			}
+		}
+
+		public override void FrameEffects()
+		{
+			if ((this.omegaPower || this.omegaForceVanity) && !this.omegaHideVanity)
+			{
+				base.player.legs = base.mod.GetEquipSlot("OmegaLegs", 2);
+				base.player.body = base.mod.GetEquipSlot("OmegaBody", 1);
+				base.player.head = base.mod.GetEquipSlot("OmegaHead", 0);
+			}
 		}
 
 		public override void DrawEffects(PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
@@ -152,6 +199,15 @@ namespace Redemption
 				dust2.velocity.Y = dust2.velocity.Y - 0.5f;
 				Main.playerDrawDust.Add(num2);
 			}
+			if (this.druidBane && Main.rand.Next(2) == 0 && drawInfo.shadow == 0f)
+			{
+				int num3 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 163, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
+				Main.dust[num3].noGravity = true;
+				Main.dust[num3].velocity *= 1.8f;
+				Dust dust3 = Main.dust[num3];
+				dust3.velocity.Y = dust3.velocity.Y - 0.5f;
+				Main.playerDrawDust.Add(num3);
+			}
 		}
 
 		public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
@@ -172,21 +228,41 @@ namespace Redemption
 
 		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
 		{
-			if (base.player.FindBuffIndex(base.mod.BuffType("XenomiteDebuff")) != -1)
+			if (base.player.FindBuffIndex(base.mod.BuffType("XenomiteDebuff")) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
 			{
 				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got infected");
 			}
-			if (base.player.FindBuffIndex(base.mod.BuffType("XenomiteDebuff2")) != -1)
+			if (base.player.FindBuffIndex(base.mod.BuffType("XenomiteDebuff2")) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
 			{
 				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got heavily infected");
 			}
-			if (base.player.FindBuffIndex(base.mod.BuffType("EmpoweredBuff")) != -1)
+			if (base.player.FindBuffIndex(base.mod.BuffType("EmpoweredBuff")) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
 			{
 				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got too empowered");
 			}
-			if (base.player.FindBuffIndex(base.mod.BuffType("RadioactiveFalloutDebuff")) != -1)
+			if (base.player.FindBuffIndex(base.mod.BuffType("RadioactiveFalloutDebuff")) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
 			{
 				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " forgot to wear a gas mask");
+			}
+			if (base.player.FindBuffIndex(base.mod.BuffType("DisgustingDebuff")) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+			{
+				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got diddily darn egg'd");
+			}
+			if (base.player.FindBuffIndex(base.mod.BuffType("DruidsBane")) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+			{
+				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " was baned by the druids");
+			}
+			if (base.player.FindBuffIndex(base.mod.BuffType("EnjoymentDebuff")) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+			{
+				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " finally discovered happiness");
+			}
+			if (base.player.FindBuffIndex(base.mod.BuffType("GloomShroomDebuff")) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+			{
+				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got gloomed");
+			}
+			if (base.player.FindBuffIndex(base.mod.BuffType("UltraFlameDebuff")) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+			{
+				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got melted to the bone");
 			}
 			return true;
 		}
@@ -205,6 +281,10 @@ namespace Redemption
 
 		public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
 		{
+			if (this.omegaAccessory)
+			{
+				Dust.NewDust(new Vector2(base.player.position.X - base.player.velocity.X * 2f, base.player.position.Y - 2f - base.player.velocity.Y * 2f), base.player.width, base.player.height, 226, 0f, 0f, 100, default(Color), 2f);
+			}
 			if (this.seedHit && Main.rand.Next(3) == 0)
 			{
 				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 483, 60, 1f, Main.myPlayer, 0f, 0f);
@@ -328,6 +408,20 @@ namespace Redemption
 
 		public bool ultraFlames;
 
+		public bool creationBonus;
+
 		public static bool reflectProjs;
+
+		public bool omegaAccessoryPrevious;
+
+		public bool omegaAccessory;
+
+		public bool omegaHideVanity;
+
+		public bool omegaForceVanity;
+
+		public bool omegaPower;
+
+		public bool druidBane;
 	}
 }

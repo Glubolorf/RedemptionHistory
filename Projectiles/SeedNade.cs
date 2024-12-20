@@ -20,6 +20,12 @@ namespace Redemption.Projectiles
 			base.projectile.timeLeft = 200;
 		}
 
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		{
+			fallThrough = false;
+			return true;
+		}
+
 		public override void Kill(int timeLeft)
 		{
 			Main.PlaySound(SoundID.Item14, base.projectile.position);

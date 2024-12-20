@@ -15,14 +15,20 @@ namespace Redemption.Projectiles
 
 		public override void SetDefaults()
 		{
-			base.projectile.width = 6;
-			base.projectile.height = 52;
+			base.projectile.width = 44;
+			base.projectile.height = 66;
 			base.projectile.penetrate = -1;
 			base.projectile.hostile = false;
 			base.projectile.friendly = false;
 			base.projectile.tileCollide = true;
 			base.projectile.ignoreWater = true;
 			base.projectile.timeLeft = 200;
+		}
+
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		{
+			fallThrough = false;
+			return true;
 		}
 
 		public override void AI()

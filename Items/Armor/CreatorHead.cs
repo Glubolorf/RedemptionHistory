@@ -61,9 +61,13 @@ namespace Redemption.Items.Armor
 
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "Has a chance to unleash an explosive seed upon getting hit";
+			player.setBonus = "You are surrounded by an aura of Nature, buffing any player within it and debuffing enemies.";
 			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.seedHit = true;
+			redePlayer.creationBonus = true;
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).creationBonus && player.ownedProjectileCounts[base.mod.ProjectileType("NatureRing")] == 0)
+			{
+				Projectile.NewProjectile(player.position, Vector2.Zero, base.mod.ProjectileType("NatureRing"), 100, 0f, player.whoAmI, 0f, 0f);
+			}
 		}
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)

@@ -26,6 +26,12 @@ namespace Redemption.Projectiles
 			base.projectile.timeLeft = 200;
 		}
 
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		{
+			fallThrough = false;
+			return true;
+		}
+
 		public override void AI()
 		{
 			if (++base.projectile.frameCounter >= 4)

@@ -39,6 +39,7 @@ namespace Redemption.Tiles.Banners
 			{
 				Player localPlayer = Main.LocalPlayer;
 				localPlayer.NPCBannerBuff[base.mod.NPCType("InfectedGiantWormHead")] = true;
+				localPlayer.NPCBannerBuff[base.mod.NPCType("InfectedDiggerHead")] = true;
 				localPlayer.hasBanner = true;
 			}
 		}

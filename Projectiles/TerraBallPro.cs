@@ -57,6 +57,12 @@ namespace Redemption.Projectiles
 			Main.PlaySound(SoundID.Item25, base.projectile.position);
 		}
 
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		{
+			fallThrough = false;
+			return true;
+		}
+
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			base.projectile.ai[0] += 0.1f;

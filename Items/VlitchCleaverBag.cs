@@ -42,7 +42,11 @@ namespace Redemption.Items
 			}
 			if (Main.rand.Next(3) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("CorruptedDoubleRifle"), 1);
+				player.QuickSpawnItem(base.mod.ItemType("GirusDagger"), 1);
+			}
+			if (Main.rand.Next(3) == 0)
+			{
+				player.QuickSpawnItem(base.mod.ItemType("GirusLance"), 1);
 			}
 			player.QuickSpawnItem(base.mod.ItemType("CorruptedXenomite"), Main.rand.Next(12, 24));
 			player.QuickSpawnItem(base.mod.ItemType("VlitchBattery"), Main.rand.Next(1, 3));

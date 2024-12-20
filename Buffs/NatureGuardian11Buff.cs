@@ -17,16 +17,18 @@ namespace Redemption.Buffs
 		public override void Update(Player player, ref int buffIndex)
 		{
 			DruidDamagePlayer.ModPlayer(player);
-			player.GetModPlayer<RedePlayer>();
-			player.statDefense += 4;
+			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
+			player.statDefense += 8;
 			player.thorns = 0.5f;
 			player.statManaMax2 += 25;
-			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>(base.mod);
+			player.manaRegen += 10;
+			modPlayer.staveScatterShot = true;
+			RedePlayer modPlayer2 = player.GetModPlayer<RedePlayer>(base.mod);
 			if (player.ownedProjectileCounts[base.mod.ProjectileType("NatureGuardian11")] > 0)
 			{
-				modPlayer.natureGuardian11 = true;
+				modPlayer2.natureGuardian11 = true;
 			}
-			if (!modPlayer.natureGuardian11)
+			if (!modPlayer2.natureGuardian11)
 			{
 				player.DelBuff(buffIndex);
 				buffIndex--;

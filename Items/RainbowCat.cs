@@ -11,7 +11,7 @@ namespace Redemption.Items
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("The Legendary Rainbow Cat");
-			base.Tooltip.SetDefault("Summons Hallam... If he feels like it\nOnly usable at day");
+			base.Tooltip.SetDefault("'A recolour!? How have I still not resprited this yet?'\nSummons Hallam... If he feels like it\nOnly usable at day");
 		}
 
 		public override void SetDefaults()

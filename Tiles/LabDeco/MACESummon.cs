@@ -41,7 +41,7 @@ namespace Redemption.Tiles.LabDeco
 			{
 				if (Main.tile[i, j].frameY >= 18)
 				{
-					if (!NPC.AnyNPCs(base.mod.NPCType("MACEProjectJaw")) && !NPC.AnyNPCs(base.mod.NPCType("MACEProjectHead")) && RedeWorld.downedStage2Scientist && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface)
+					if (!NPC.AnyNPCs(base.mod.NPCType("MACEProjectJaw")) && !NPC.AnyNPCs(base.mod.NPCType("MACEProjectHead")) && RedeWorld.downedStage2Scientist && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface && !RedeWorld.labAccess6)
 					{
 						Player localPlayer = Main.LocalPlayer;
 						Main.tile[i, j];
@@ -55,7 +55,7 @@ namespace Redemption.Tiles.LabDeco
 						}
 					}
 				}
-				else if (!NPC.AnyNPCs(base.mod.NPCType("MACEProjectJaw")) && !NPC.AnyNPCs(base.mod.NPCType("MACEProjectHead")) && RedeWorld.downedStage2Scientist && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface)
+				else if (!NPC.AnyNPCs(base.mod.NPCType("MACEProjectJaw")) && !NPC.AnyNPCs(base.mod.NPCType("MACEProjectHead")) && RedeWorld.downedStage2Scientist && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface && !RedeWorld.labAccess6)
 				{
 					Player localPlayer2 = Main.LocalPlayer;
 					Main.tile[i, j];

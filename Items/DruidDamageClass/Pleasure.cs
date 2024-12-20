@@ -39,19 +39,24 @@ namespace Redemption.Items.DruidDamageClass
 			target.AddBuff(base.mod.BuffType("EnjoymentDebuff"), 18000, false);
 		}
 
-		public override bool CanUseItem(Player player)
+		public override float UseTimeMultiplier(Player player)
 		{
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterStaves)
 			{
-				base.item.useTime = 28;
-				base.item.useAnimation = 28;
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				{
+					return 1.45f;
+				}
+				return 1.15f;
 			}
 			else
 			{
-				base.item.useTime = 32;
-				base.item.useAnimation = 32;
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				{
+					return 1.35f;
+				}
+				return 1f;
 			}
-			return true;
 		}
 
 		public override void AddRecipes()

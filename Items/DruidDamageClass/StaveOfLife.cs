@@ -23,7 +23,7 @@ namespace Redemption.Items.DruidDamageClass
 				Main.glowMaskTexture = array;
 			}
 			base.DisplayName.SetDefault("Stave of Life");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'This has less damage, why would I pick this!' - an Angory person'\nRapidly shoots barrages of ancient herbs\nRight-clicking will summon a Tree of Creation [c/94c2ff:(Requires 400 Mana)]\n[c/71ee8d:-Guardian Info-]\n[c/a0db98:Type:] Special\n[c/98dbc3:Special Ability:] Scatter-Shot/Creation Burst\n[c/98c1db:Buffs:] Defence Enhancement+, Mobility Enhancement+, Life & Mana Enhancement+");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nRapidly shoots barrages of ancient herbs\nRight-clicking will summon a Tree of Creation [c/94c2ff:(Requires 400 Mana)]\n[c/71ee8d:-Guardian Info-]\n[c/a0db98:Type:] Mystic\n[c/98dbc3:Special Ability:] Scatter-Shot/Quad-Shot/Swift-Swing/Creation's Embrace\n[c/98c1db:Effects:] Staves that shoot a single projectile will instead shoot a cluster,\nStaves that shoot a single projectile will shoot 4 more in an arc, Staves swing a lot faster,\nDefence Enhancement+/Mobility Enhancement+/Life & Mana Enhancement++");
 			Item.staff[base.item.type] = true;
 		}
 
@@ -74,32 +74,55 @@ namespace Redemption.Items.DruidDamageClass
 				base.item.buffType = base.mod.BuffType("NatureGuardian18Buff");
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).longerGuardians)
 				{
-					base.item.buffTime = 3600;
+					base.item.buffTime = 1200;
 				}
 				else
 				{
-					base.item.buffTime = 1800;
+					base.item.buffTime = 600;
 				}
 				base.item.shoot = base.mod.ProjectileType("NatureGuardian18");
 				base.item.shootSpeed = 0f;
-				return !player.HasBuff(base.mod.BuffType("NatureGuardian2Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardianBuff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian3Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian4Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian5Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian6Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian7Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian8Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian9Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian10Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian11Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian12Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian13Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian14Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian15Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian16Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian17Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian18Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian19Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian20Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian21Buff"));
+				return !player.HasBuff(base.mod.BuffType("GuardianCooldownDebuff")) && player.statManaMax2 >= 200;
 			}
 			base.item.mana = 0;
 			base.item.buffType = 0;
 			base.item.buffTime = 0;
 			base.item.shoot = base.mod.ProjectileType("HerbOfLifePro");
 			base.item.shootSpeed = 18f;
+			return true;
+		}
+
+		public override void UseStyle(Player player)
+		{
+			if (player.altFunctionUse == 2)
+			{
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				{
+					player.AddBuff(base.mod.BuffType("GuardianCooldownDebuff"), 2700, true);
+					return;
+				}
+				player.AddBuff(base.mod.BuffType("GuardianCooldownDebuff"), 3600, true);
+			}
+		}
+
+		public override float UseTimeMultiplier(Player player)
+		{
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterStaves)
 			{
-				base.item.useTime = 4;
-				base.item.useAnimation = 4;
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				{
+					return 1.45f;
+				}
+				return 1.15f;
 			}
 			else
 			{
-				base.item.useTime = 6;
-				base.item.useAnimation = 6;
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				{
+					return 1.35f;
+				}
+				return 1f;
 			}
-			return true;
 		}
 
 		public override void AddRecipes()

@@ -288,6 +288,46 @@ namespace Redemption
 				array11[4] = "Use a lunar pickaxe to mine the hardened sludge in the Abandoned Lab to explore further. Beware what awaits beyond.";
 				mod12.Call(array11);
 			}
+			Mod mod13 = ModLoader.GetMod("Census");
+			if (mod13 != null)
+			{
+				mod13.Call(new object[]
+				{
+					"TownNPCCondition",
+					base.NPCType("Squire"),
+					"Have a suitable house"
+				});
+				mod13.Call(new object[]
+				{
+					"TownNPCCondition",
+					base.NPCType("Fallen"),
+					"Defeat the Keeper and have a suitable house"
+				});
+				mod13.Call(new object[]
+				{
+					"TownNPCCondition",
+					base.NPCType("Newb"),
+					"Find the Suspicious Dirt Pile in the caverns"
+				});
+				mod13.Call(new object[]
+				{
+					"TownNPCCondition",
+					base.NPCType("TBot"),
+					"Defeat the Infected Eye and have a suitable house"
+				});
+				mod13.Call(new object[]
+				{
+					"TownNPCCondition",
+					base.NPCType("Slicer"),
+					"Defeat the Dark Slime miniboss, which spawns very rarely on the surface after all mech bosses are defeated"
+				});
+				mod13.Call(new object[]
+				{
+					"TownNPCCondition",
+					base.NPCType("DHunter"),
+					"Defeat the Dark Slime and Plantera, and have a suitable house"
+				});
+			}
 		}
 
 		public override void ModifySunLightColor(ref Color tileColor, ref Color backgroundColor)

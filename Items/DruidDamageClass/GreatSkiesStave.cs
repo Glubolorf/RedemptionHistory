@@ -47,19 +47,24 @@ namespace Redemption.Items.DruidDamageClass
 			}
 		}
 
-		public override bool CanUseItem(Player player)
+		public override float UseTimeMultiplier(Player player)
 		{
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterStaves)
 			{
-				base.item.useTime = 34;
-				base.item.useAnimation = 34;
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				{
+					return 1.45f;
+				}
+				return 1.15f;
 			}
 			else
 			{
-				base.item.useTime = 38;
-				base.item.useAnimation = 38;
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				{
+					return 1.35f;
+				}
+				return 1f;
 			}
-			return true;
 		}
 
 		public override void AddRecipes()

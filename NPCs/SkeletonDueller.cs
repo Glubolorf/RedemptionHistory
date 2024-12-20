@@ -35,6 +35,26 @@ namespace Redemption.NPCs
 
 		public override void AI()
 		{
+			if (!this.change)
+			{
+				int num = Main.rand.Next(500);
+				if (num == 0)
+				{
+					if (RedeWorld.downedTheKeeper)
+					{
+						base.npc.SetDefaults(base.mod.NPCType("Vepdor"), -1f);
+						this.change = true;
+					}
+					else
+					{
+						this.change = true;
+					}
+				}
+				if (num >= 1)
+				{
+					this.change = true;
+				}
+			}
 			if (this.specialAttack)
 			{
 				this.attackCounter++;
@@ -48,8 +68,8 @@ namespace Redemption.NPCs
 					this.attackFrame = 0;
 				}
 			}
-			float num = base.npc.Distance(Main.player[base.npc.target].Center);
-			if (num <= 80f && !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).skeletonFriendly && Main.rand.Next(20) == 0 && !this.specialAttack)
+			float num2 = base.npc.Distance(Main.player[base.npc.target].Center);
+			if (num2 <= 80f && !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).skeletonFriendly && Main.rand.Next(20) == 0 && !this.specialAttack)
 			{
 				this.specialAttack = true;
 			}
@@ -157,5 +177,7 @@ namespace Redemption.NPCs
 		private int attackCounter;
 
 		private int attackTimer;
+
+		private bool change;
 	}
 }

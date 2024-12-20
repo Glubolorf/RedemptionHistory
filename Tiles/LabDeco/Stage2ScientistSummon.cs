@@ -37,7 +37,7 @@ namespace Redemption.Tiles.LabDeco
 
 		public override void RightClick(int i, int j)
 		{
-			if (Main.netMode != 1 && !NPC.AnyNPCs(base.mod.NPCType("Stage2ScientistBoss")))
+			if (Main.netMode != 1 && !NPC.AnyNPCs(base.mod.NPCType("Stage2ScientistBoss")) && !RedeWorld.labAccess1)
 			{
 				Player localPlayer = Main.LocalPlayer;
 				Main.tile[i, j];

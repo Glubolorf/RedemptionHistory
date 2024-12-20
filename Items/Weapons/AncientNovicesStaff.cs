@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,8 +31,19 @@ namespace Redemption.Items.Weapons
 			base.item.rare = 0;
 			base.item.UseSound = SoundID.Item20;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("Ember");
+			base.item.shoot = 258;
 			base.item.shootSpeed = 16f;
+		}
+
+		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		{
+			int num = Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, 0f, 0f);
+			Main.projectile[num].magic = true;
+			Main.projectile[num].hostile = false;
+			Main.projectile[num].friendly = true;
+			Main.projectile[num].penetrate = 1;
+			Main.projectile[num].timeLeft = 120;
+			return false;
 		}
 	}
 }

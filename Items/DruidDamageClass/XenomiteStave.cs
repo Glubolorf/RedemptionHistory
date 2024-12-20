@@ -56,6 +56,26 @@ namespace Redemption.Items.DruidDamageClass
 			modRecipe.AddRecipe();
 		}
 
+		public override float UseTimeMultiplier(Player player)
+		{
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterStaves)
+			{
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				{
+					return 1.45f;
+				}
+				return 1.15f;
+			}
+			else
+			{
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				{
+					return 1.35f;
+				}
+				return 1f;
+			}
+		}
+
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
 			float num = (float)(3 + Main.rand.Next(1));
@@ -67,6 +87,11 @@ namespace Redemption.Items.DruidDamageClass
 				Vector2 vector = Utils.RotatedBy(new Vector2(speedX, speedY), (double)MathHelper.Lerp(-num2, num2, (float)num3 / (num - 1f)), default(Vector2)) * 0.2f;
 				Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
 				num3++;
+			}
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).staveStreamShot && Main.rand.Next(5) == 0)
+			{
+				Projectile.NewProjectile(position.X, position.Y, speedX * 1.25f, speedY * 1.25f, type, damage, knockBack, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(position.X, position.Y, speedX * 0.75f, speedY * 0.75f, type, damage, knockBack, player.whoAmI, 0f, 0f);
 			}
 			return false;
 		}

@@ -63,6 +63,26 @@ namespace Redemption.Items.DruidDamageClass
 			return NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3;
 		}
 
+		public override float UseTimeMultiplier(Player player)
+		{
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterStaves)
+			{
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				{
+					return 1.45f;
+				}
+				return 1.15f;
+			}
+			else
+			{
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				{
+					return 1.35f;
+				}
+				return 1f;
+			}
+		}
+
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
 			if (player.altFunctionUse == 2)

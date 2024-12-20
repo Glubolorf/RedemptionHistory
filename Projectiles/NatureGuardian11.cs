@@ -70,36 +70,33 @@ namespace Redemption.Projectiles
 			Lighting.AddLight(base.projectile.Center, (float)(255 - base.projectile.alpha) * 0.3f / 255f, (float)(255 - base.projectile.alpha) * 1f / 255f, (float)(255 - base.projectile.alpha) * 0.3f / 255f);
 			base.projectile.position.X = player.Center.X - 28f;
 			base.projectile.position.Y = player.Center.Y - 114f;
-			if ((float)player.statLife <= (float)player.statLifeMax2 * 0.5f)
+			this.shootTimer++;
+			if (this.shootTimer >= 160)
 			{
-				this.shootTimer++;
-				if (this.shootTimer >= 160)
+				if (Main.rand.Next(10) == 0)
 				{
-					if (Main.rand.Next(10) == 0)
-					{
-						if (base.projectile.spriteDirection == -1)
-						{
-							Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 32f), new Vector2((float)(-6 + Main.rand.Next(-6, 0)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("MudGloopPro"), 20, 3f, Main.myPlayer, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 32f), new Vector2((float)(-6 + Main.rand.Next(-6, 0)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("MudGloopPro"), 20, 3f, Main.myPlayer, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 32f), new Vector2((float)(-6 + Main.rand.Next(-6, 0)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("MudGloopPro"), 20, 3f, Main.myPlayer, 0f, 0f);
-						}
-						else
-						{
-							Projectile.NewProjectile(new Vector2(base.projectile.position.X + 32f, base.projectile.position.Y + 32f), new Vector2((float)(6 + Main.rand.Next(0, 6)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("MudGloopPro"), 20, 3f, Main.myPlayer, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.projectile.position.X + 32f, base.projectile.position.Y + 32f), new Vector2((float)(6 + Main.rand.Next(0, 6)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("MudGloopPro"), 20, 3f, Main.myPlayer, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.projectile.position.X + 32f, base.projectile.position.Y + 32f), new Vector2((float)(6 + Main.rand.Next(0, 6)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("MudGloopPro"), 20, 3f, Main.myPlayer, 0f, 0f);
-						}
-					}
 					if (base.projectile.spriteDirection == -1)
 					{
-						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 32f), new Vector2(-10f, 0f), base.mod.ProjectileType("MudGloopPro"), 20, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 32f), new Vector2((float)(-6 + Main.rand.Next(-6, 0)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("MudGloopPro"), 20, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 32f), new Vector2((float)(-6 + Main.rand.Next(-6, 0)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("MudGloopPro"), 20, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 32f), new Vector2((float)(-6 + Main.rand.Next(-6, 0)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("MudGloopPro"), 20, 3f, Main.myPlayer, 0f, 0f);
 					}
 					else
 					{
-						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 32f, base.projectile.position.Y + 32f), new Vector2(10f, 0f), base.mod.ProjectileType("MudGloopPro"), 20, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 32f, base.projectile.position.Y + 32f), new Vector2((float)(6 + Main.rand.Next(0, 6)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("MudGloopPro"), 20, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 32f, base.projectile.position.Y + 32f), new Vector2((float)(6 + Main.rand.Next(0, 6)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("MudGloopPro"), 20, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 32f, base.projectile.position.Y + 32f), new Vector2((float)(6 + Main.rand.Next(0, 6)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("MudGloopPro"), 20, 3f, Main.myPlayer, 0f, 0f);
 					}
-					this.shootTimer = 0;
 				}
+				if (base.projectile.spriteDirection == -1)
+				{
+					Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 32f), new Vector2(-10f, 0f), base.mod.ProjectileType("MudGloopPro"), 20, 3f, Main.myPlayer, 0f, 0f);
+				}
+				else
+				{
+					Projectile.NewProjectile(new Vector2(base.projectile.position.X + 32f, base.projectile.position.Y + 32f), new Vector2(10f, 0f), base.mod.ProjectileType("MudGloopPro"), 20, 3f, Main.myPlayer, 0f, 0f);
+				}
+				this.shootTimer = 0;
 			}
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>(base.mod);
 			if (player.dead)

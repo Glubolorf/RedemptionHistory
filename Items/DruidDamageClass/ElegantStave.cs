@@ -9,7 +9,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Elegant Marble Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Medusa won't like this...'\nWhile holding this, you are immune to Petrification\nRight-clicking will summon a Marble King Piece [c/94c2ff:(Requires 200 Mana)]\n[c/71ee8d:-Guardian Info-]\n[c/a0db98:Type:] Defensive/Healer\n[c/98dbc3:Special Ability:] Marble Aura\n[c/98c1db:Buffs:] Defence Enhancement, Life & Mana Enhancement, Petrification Immunity");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Medusa won't like this...'\nWhile holding this, you are immune to Petrification\nRight-clicking will summon a Marble King Piece [c/94c2ff:(Requires 200 Mana)]\n[c/71ee8d:-Guardian Info-]\n[c/a0db98:Type:] Other\n[c/98dbc3:Special Ability:] Marble Aura\n[c/98c1db:Effects:] Defence Enhancement+, Life & Mana Enhancement, Petrification Immunity");
 		}
 
 		public override void SafeSetDefaults()
@@ -42,32 +42,55 @@ namespace Redemption.Items.DruidDamageClass
 				base.item.buffType = base.mod.BuffType("NatureGuardian13Buff");
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).longerGuardians)
 				{
-					base.item.buffTime = 3600;
+					base.item.buffTime = 1200;
 				}
 				else
 				{
-					base.item.buffTime = 1800;
+					base.item.buffTime = 600;
 				}
 				base.item.shoot = base.mod.ProjectileType("NatureGuardian13");
 				base.item.shootSpeed = 0f;
-				return !player.HasBuff(base.mod.BuffType("NatureGuardian2Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardianBuff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian3Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian4Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian5Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian6Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian7Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian8Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian9Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian10Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian11Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian12Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian13Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian14Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian15Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian16Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian17Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian18Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian19Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian20Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian21Buff"));
+				return !player.HasBuff(base.mod.BuffType("GuardianCooldownDebuff")) && player.statManaMax2 >= 200;
 			}
 			base.item.mana = 0;
 			base.item.buffType = 0;
 			base.item.buffTime = 0;
 			base.item.shoot = 0;
 			base.item.shootSpeed = 0f;
+			return true;
+		}
+
+		public override void UseStyle(Player player)
+		{
+			if (player.altFunctionUse == 2)
+			{
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				{
+					player.AddBuff(base.mod.BuffType("GuardianCooldownDebuff"), 2700, true);
+					return;
+				}
+				player.AddBuff(base.mod.BuffType("GuardianCooldownDebuff"), 3600, true);
+			}
+		}
+
+		public override float UseTimeMultiplier(Player player)
+		{
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterStaves)
 			{
-				base.item.useTime = 20;
-				base.item.useAnimation = 20;
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				{
+					return 1.45f;
+				}
+				return 1.15f;
 			}
 			else
 			{
-				base.item.useTime = 24;
-				base.item.useAnimation = 24;
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				{
+					return 1.35f;
+				}
+				return 1f;
 			}
-			return true;
 		}
 
 		public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)

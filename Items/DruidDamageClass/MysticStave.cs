@@ -41,19 +41,24 @@ namespace Redemption.Items.DruidDamageClass
 			}
 		}
 
-		public override bool CanUseItem(Player player)
+		public override float UseTimeMultiplier(Player player)
 		{
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterStaves)
 			{
-				base.item.useTime = 40;
-				base.item.useAnimation = 40;
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				{
+					return 1.45f;
+				}
+				return 1.15f;
 			}
 			else
 			{
-				base.item.useTime = 44;
-				base.item.useAnimation = 44;
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				{
+					return 1.35f;
+				}
+				return 1f;
 			}
-			return true;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -65,6 +70,11 @@ namespace Redemption.Items.DruidDamageClass
 				float num2 = 1f - Utils.NextFloat(Main.rand) * 0.3f;
 				vector *= num2;
 				Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
+			}
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).staveStreamShot && Main.rand.Next(5) == 0)
+			{
+				Projectile.NewProjectile(position.X, position.Y, speedX * 1.25f, speedY * 1.25f, type, damage, knockBack, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(position.X, position.Y, speedX * 0.75f, speedY * 0.75f, type, damage, knockBack, player.whoAmI, 0f, 0f);
 			}
 			return false;
 		}

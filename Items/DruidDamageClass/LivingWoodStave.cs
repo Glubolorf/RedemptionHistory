@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,7 +11,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Living Wood Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nShoots a leaf\nRight-clicking will summon a Nature Pixie [c/94c2ff:(Requires 200 Mana)]\n[c/71ee8d:-Guardian Info-]\n[c/a0db98:Type:] Normal\n[c/98dbc3:Special Ability:] Triple-Shot\n[c/98c1db:Buffs:] Druidic Enhancement");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nShoots a leaf\nRight-clicking will summon a Nature Pixie [c/94c2ff:(Requires 200 Mana)]\n[c/71ee8d:-Guardian Info-]\n[c/a0db98:Type:] Pixie\n[c/98dbc3:Special Ability:] Swift-Swing\n[c/98c1db:Effects:] Staves swing a lot faster");
 		}
 
 		public override void SafeSetDefaults()
@@ -45,30 +46,107 @@ namespace Redemption.Items.DruidDamageClass
 				base.item.buffType = base.mod.BuffType("NatureGuardianBuff");
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).longerGuardians)
 				{
-					base.item.buffTime = 3600;
+					base.item.buffTime = 1200;
 				}
 				else
 				{
-					base.item.buffTime = 1800;
+					base.item.buffTime = 600;
 				}
 				base.item.shoot = base.mod.ProjectileType("NatureGuardian1");
 				base.item.shootSpeed = 0f;
-				return !player.HasBuff(base.mod.BuffType("NatureGuardian2Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardianBuff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian3Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian4Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian5Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian6Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian7Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian8Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian9Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian10Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian11Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian12Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian13Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian14Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian15Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian16Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian17Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian18Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian19Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian20Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian21Buff"));
+				return !player.HasBuff(base.mod.BuffType("GuardianCooldownDebuff")) && player.statManaMax2 >= 200;
 			}
 			base.item.mana = 0;
 			base.item.buffType = 0;
 			base.item.buffTime = 0;
 			base.item.shoot = 206;
 			base.item.shootSpeed = 7f;
+			return true;
+		}
+
+		public override void UseStyle(Player player)
+		{
+			if (player.altFunctionUse == 2)
+			{
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				{
+					player.AddBuff(base.mod.BuffType("GuardianCooldownDebuff"), 2700, true);
+					return;
+				}
+				player.AddBuff(base.mod.BuffType("GuardianCooldownDebuff"), 3600, true);
+			}
+		}
+
+		public override float UseTimeMultiplier(Player player)
+		{
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterStaves)
 			{
-				base.item.useTime = 22;
-				base.item.useAnimation = 22;
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				{
+					return 1.45f;
+				}
+				return 1.15f;
 			}
 			else
 			{
-				base.item.useTime = 26;
-				base.item.useAnimation = 26;
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				{
+					return 1.35f;
+				}
+				return 1f;
+			}
+		}
+
+		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		{
+			if (player.altFunctionUse == 2)
+			{
+				return true;
+			}
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).staveStreamShot && Main.rand.Next(5) == 0)
+			{
+				Projectile.NewProjectile(position.X, position.Y, speedX * 1.25f, speedY * 1.25f, type, damage, knockBack, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(position.X, position.Y, speedX * 0.75f, speedY * 0.75f, type, damage, knockBack, player.whoAmI, 0f, 0f);
+			}
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).staveTripleShot)
+			{
+				float num = 3f;
+				float num2 = MathHelper.ToRadians(15f);
+				position += Vector2.Normalize(new Vector2(speedX, speedY)) * 45f;
+				int num3 = 0;
+				while ((float)num3 < num)
+				{
+					Vector2 vector = Utils.RotatedBy(new Vector2(speedX, speedY), (double)MathHelper.Lerp(-num2, num2, (float)num3 / (num - 1f)), default(Vector2)) * 0.8f;
+					Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
+					num3++;
+				}
+				return false;
+			}
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).staveScatterShot && Main.rand.Next(5) == 0)
+			{
+				int num4 = 2 + Main.rand.Next(2);
+				for (int i = 0; i < num4; i++)
+				{
+					Vector2 vector2 = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(10f));
+					float num5 = 1f - Utils.NextFloat(Main.rand) * 0.3f;
+					vector2 *= num5;
+					Projectile.NewProjectile(position.X, position.Y, vector2.X, vector2.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
+				}
+				return false;
+			}
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).staveQuadShot)
+			{
+				float num6 = 5f;
+				float num7 = MathHelper.ToRadians(15f);
+				position += Vector2.Normalize(new Vector2(speedX, speedY)) * 45f;
+				int num8 = 0;
+				while ((float)num8 < num6)
+				{
+					Vector2 vector3 = Utils.RotatedBy(new Vector2(speedX, speedY), (double)MathHelper.Lerp(-num7, num7, (float)num8 / (num6 - 1f)), default(Vector2)) * 0.8f;
+					Projectile.NewProjectile(position.X, position.Y, vector3.X, vector3.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
+					num8++;
+				}
+				return false;
 			}
 			return true;
 		}

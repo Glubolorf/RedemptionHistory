@@ -62,6 +62,26 @@ namespace Redemption.NPCs
 
 		public override void AI()
 		{
+			if (!this.change)
+			{
+				int num = Main.rand.Next(4);
+				if (num == 0)
+				{
+					if (NPC.downedBoss1)
+					{
+						base.npc.SetDefaults(base.mod.NPCType("SkeletonWanderer2"), -1f);
+						this.change = true;
+					}
+					else
+					{
+						this.change = true;
+					}
+				}
+				if (num >= 1)
+				{
+					this.change = true;
+				}
+			}
 			if (this.thrustAttack)
 			{
 				this.thrustCounter++;
@@ -75,8 +95,8 @@ namespace Redemption.NPCs
 					this.thrustFrame = 0;
 				}
 			}
-			float num = base.npc.Distance(Main.player[base.npc.target].Center);
-			if (num <= 80f && !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).skeletonFriendly && Main.rand.Next(20) == 0 && !this.thrustAttack)
+			float num2 = base.npc.Distance(Main.player[base.npc.target].Center);
+			if (num2 <= 80f && !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).skeletonFriendly && Main.rand.Next(20) == 0 && !this.thrustAttack)
 			{
 				this.thrustAttack = true;
 			}
@@ -144,5 +164,7 @@ namespace Redemption.NPCs
 		private int thrustCounter;
 
 		private int thrustTimer;
+
+		private bool change;
 	}
 }

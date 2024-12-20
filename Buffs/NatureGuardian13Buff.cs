@@ -18,11 +18,11 @@ namespace Redemption.Buffs
 		{
 			DruidDamagePlayer.ModPlayer(player);
 			player.GetModPlayer<RedePlayer>();
-			player.statDefense += 8;
+			player.statDefense += 18;
 			player.buffImmune[156] = true;
-			player.manaRegen += 4;
-			player.statManaMax2 += 20;
-			player.statLifeMax2 += 20;
+			player.manaRegen += 10;
+			player.statManaMax2 += 40;
+			player.statLifeMax2 += 40;
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>(base.mod);
 			if (player.ownedProjectileCounts[base.mod.ProjectileType("NatureGuardian13")] > 0)
 			{

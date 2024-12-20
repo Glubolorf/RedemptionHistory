@@ -292,7 +292,7 @@ namespace Redemption.NPCs.Bosses
 				}
 				if (base.npc.life > 1200 && Main.rand.Next(600) == 0)
 				{
-					NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
 				}
 				if (!Main.expertMode && base.npc.life < 1200)
 				{
@@ -314,25 +314,25 @@ namespace Redemption.NPCs.Bosses
 					}
 					if (this.timer == 40)
 					{
-						NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+						NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
 					}
 					if (this.timer == 45)
 					{
-						NPC.NewNPC((int)base.npc.position.X + 60, (int)base.npc.position.Y + 80, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+						NPC.NewNPC((int)base.npc.position.X + 60, (int)base.npc.position.Y + 80, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
 					}
 					if (this.timer == 50)
 					{
-						NPC.NewNPC((int)base.npc.position.X + 80, (int)base.npc.position.Y + 75, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+						NPC.NewNPC((int)base.npc.position.X + 80, (int)base.npc.position.Y + 75, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
 					}
 					if (this.timer == 55)
 					{
-						NPC.NewNPC((int)base.npc.position.X + 50, (int)base.npc.position.Y + 60, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
-						NPC.NewNPC((int)base.npc.position.X + 85, (int)base.npc.position.Y + 50, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+						NPC.NewNPC((int)base.npc.position.X + 50, (int)base.npc.position.Y + 60, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
+						NPC.NewNPC((int)base.npc.position.X + 85, (int)base.npc.position.Y + 50, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
 					}
 					if (this.timer == 60)
 					{
-						NPC.NewNPC((int)base.npc.position.X + 65, (int)base.npc.position.Y + 65, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
-						NPC.NewNPC((int)base.npc.position.X + 45, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+						NPC.NewNPC((int)base.npc.position.X + 65, (int)base.npc.position.Y + 65, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
+						NPC.NewNPC((int)base.npc.position.X + 45, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
 					}
 					if (this.timer >= 220)
 					{
@@ -363,25 +363,25 @@ namespace Redemption.NPCs.Bosses
 					}
 					if (this.timer == 40)
 					{
-						NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+						NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
 					}
 					if (this.timer == 45)
 					{
-						NPC.NewNPC((int)base.npc.position.X + 60, (int)base.npc.position.Y + 80, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+						NPC.NewNPC((int)base.npc.position.X + 60, (int)base.npc.position.Y + 80, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
 					}
 					if (this.timer == 50)
 					{
-						NPC.NewNPC((int)base.npc.position.X + 80, (int)base.npc.position.Y + 75, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+						NPC.NewNPC((int)base.npc.position.X + 80, (int)base.npc.position.Y + 75, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
 					}
 					if (this.timer == 55)
 					{
-						NPC.NewNPC((int)base.npc.position.X + 50, (int)base.npc.position.Y + 60, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
-						NPC.NewNPC((int)base.npc.position.X + 85, (int)base.npc.position.Y + 50, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+						NPC.NewNPC((int)base.npc.position.X + 50, (int)base.npc.position.Y + 60, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
+						NPC.NewNPC((int)base.npc.position.X + 85, (int)base.npc.position.Y + 50, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
 					}
 					if (this.timer == 60)
 					{
-						NPC.NewNPC((int)base.npc.position.X + 65, (int)base.npc.position.Y + 65, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
-						NPC.NewNPC((int)base.npc.position.X + 45, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+						NPC.NewNPC((int)base.npc.position.X + 65, (int)base.npc.position.Y + 65, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
+						NPC.NewNPC((int)base.npc.position.X + 45, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
 					}
 					if (this.timer >= 220)
 					{

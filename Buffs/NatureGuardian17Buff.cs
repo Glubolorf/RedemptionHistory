@@ -17,25 +17,29 @@ namespace Redemption.Buffs
 		public override void Update(Player player, ref int buffIndex)
 		{
 			DruidDamagePlayer.ModPlayer(player);
-			player.GetModPlayer<RedePlayer>();
+			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
+			modPlayer.staveStreamShot = true;
+			modPlayer.staveTripleShot = true;
 			player.nightVision = true;
-			player.statDefense += 18;
-			player.endurance *= 0.12f;
+			player.dangerSense = true;
+			player.detectCreature = true;
+			player.statDefense += 32;
+			player.endurance += 0.12f;
 			player.noFallDmg = true;
 			player.noKnockback = true;
-			player.lifeRegen += 5;
+			player.lifeRegen += 10;
 			player.statLifeMax2 += 50;
 			if (Main.dayTime)
 			{
 				player.moveSpeed += 20f;
 				player.jumpBoost = true;
 			}
-			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>(base.mod);
+			RedePlayer modPlayer2 = player.GetModPlayer<RedePlayer>(base.mod);
 			if (player.ownedProjectileCounts[base.mod.ProjectileType("NatureGuardian17")] > 0)
 			{
-				modPlayer.natureGuardian17 = true;
+				modPlayer2.natureGuardian17 = true;
 			}
-			if (!modPlayer.natureGuardian17)
+			if (!modPlayer2.natureGuardian17)
 			{
 				player.DelBuff(buffIndex);
 				buffIndex--;

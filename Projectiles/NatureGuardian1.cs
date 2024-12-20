@@ -72,19 +72,6 @@ namespace Redemption.Projectiles
 			this.shootTimer++;
 			if (this.shootTimer >= 60)
 			{
-				if (Main.rand.Next(10) == 0)
-				{
-					if (base.projectile.spriteDirection == -1)
-					{
-						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 12f, base.projectile.position.Y + 10f), new Vector2(-8f, 4f), base.mod.ProjectileType("PixieSpark"), 5, 3f, Main.myPlayer, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 12f, base.projectile.position.Y + 10f), new Vector2(-8f, -4f), base.mod.ProjectileType("PixieSpark"), 5, 3f, Main.myPlayer, 0f, 0f);
-					}
-					else
-					{
-						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 12f, base.projectile.position.Y + 10f), new Vector2(8f, 4f), base.mod.ProjectileType("PixieSpark"), 5, 3f, Main.myPlayer, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 12f, base.projectile.position.Y + 10f), new Vector2(8f, -4f), base.mod.ProjectileType("PixieSpark"), 5, 3f, Main.myPlayer, 0f, 0f);
-					}
-				}
 				if (base.projectile.spriteDirection == -1)
 				{
 					Projectile.NewProjectile(new Vector2(base.projectile.position.X + 12f, base.projectile.position.Y + 10f), new Vector2(-10f, 0f), base.mod.ProjectileType("PixieSpark"), 5, 3f, Main.myPlayer, 0f, 0f);

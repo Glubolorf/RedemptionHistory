@@ -10,7 +10,7 @@ namespace Redemption.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Ophiucus");
-			base.Tooltip.SetDefault("\nSends out a stellar snake that spews poisonous vapor clouds from its maw");
+			base.Tooltip.SetDefault("Sends out a stellar snake that spews poisonous vapor clouds from its maw");
 			Item.staff[base.item.type] = true;
 		}
 

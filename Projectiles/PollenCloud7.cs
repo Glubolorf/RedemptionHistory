@@ -74,7 +74,8 @@ namespace Redemption.Projectiles
 			{
 				crit = true;
 			}
-			Projectile.NewProjectile(new Vector2(base.projectile.position.X + 14f, base.projectile.position.Y + 26f), base.projectile.velocity, 305, base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+			player.statLife++;
+			player.HealEffect(1, true);
 		}
 
 		private void AdjustMagnitude(ref Vector2 vector)

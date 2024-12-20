@@ -47,7 +47,7 @@ namespace Redemption.Tiles
 
 		public override bool CanKillTile(int i, int j, ref bool blockDamaged)
 		{
-			return false;
+			return RedeWorld.downedPatientZero;
 		}
 
 		public override bool Slope(int i, int j)

@@ -70,48 +70,45 @@ namespace Redemption.Projectiles
 			Lighting.AddLight(base.projectile.Center, (float)(255 - base.projectile.alpha) * 0.3f / 255f, (float)(255 - base.projectile.alpha) * 1f / 255f, (float)(255 - base.projectile.alpha) * 0.3f / 255f);
 			base.projectile.position.X = player.Center.X - 25f;
 			base.projectile.position.Y = player.Center.Y - 74f;
-			if ((float)player.statLife <= (float)player.statLifeMax2 * 0.15f)
+			this.shootTimer++;
+			if (this.shootTimer >= 30)
 			{
-				this.shootTimer++;
-				if (this.shootTimer >= 30)
+				if (Main.rand.Next(10) == 0)
 				{
-					if (Main.rand.Next(10) == 0)
-					{
-						if (base.projectile.spriteDirection == -1)
-						{
-							Main.PlaySound(SoundID.Item105, (int)base.projectile.position.X, (int)base.projectile.position.Y);
-							Projectile.NewProjectile(new Vector2(base.projectile.position.X + 16f, base.projectile.position.Y + 31f), new Vector2(0f, -12f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.projectile.position.X + 16f, base.projectile.position.Y + 31f), new Vector2(0f, 12f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.projectile.position.X + 16f, base.projectile.position.Y + 31f), new Vector2(-12f, 0f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.projectile.position.X + 16f, base.projectile.position.Y + 31f), new Vector2(12f, 0f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.projectile.position.X + 16f, base.projectile.position.Y + 31f), new Vector2(8f, 8f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.projectile.position.X + 16f, base.projectile.position.Y + 31f), new Vector2(8f, -8f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.projectile.position.X + 16f, base.projectile.position.Y + 31f), new Vector2(-8f, 8f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.projectile.position.X + 16f, base.projectile.position.Y + 31f), new Vector2(-8f, -8f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
-						}
-						else
-						{
-							Main.PlaySound(SoundID.Item105, (int)base.projectile.position.X, (int)base.projectile.position.Y);
-							Projectile.NewProjectile(new Vector2(base.projectile.position.X + 33f, base.projectile.position.Y + 31f), new Vector2(0f, -12f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.projectile.position.X + 33f, base.projectile.position.Y + 31f), new Vector2(0f, 12f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.projectile.position.X + 33f, base.projectile.position.Y + 31f), new Vector2(-12f, 0f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.projectile.position.X + 33f, base.projectile.position.Y + 31f), new Vector2(12f, 0f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.projectile.position.X + 33f, base.projectile.position.Y + 31f), new Vector2(8f, 8f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.projectile.position.X + 33f, base.projectile.position.Y + 31f), new Vector2(8f, -8f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.projectile.position.X + 33f, base.projectile.position.Y + 31f), new Vector2(-8f, 8f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.projectile.position.X + 33f, base.projectile.position.Y + 31f), new Vector2(-8f, -8f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
-						}
-					}
 					if (base.projectile.spriteDirection == -1)
 					{
-						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 16f, base.projectile.position.Y + 31f), new Vector2(-8f, 0f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
+						Main.PlaySound(SoundID.Item105, (int)base.projectile.position.X, (int)base.projectile.position.Y);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 16f, base.projectile.position.Y + 31f), new Vector2(0f, -12f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 16f, base.projectile.position.Y + 31f), new Vector2(0f, 12f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 16f, base.projectile.position.Y + 31f), new Vector2(-12f, 0f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 16f, base.projectile.position.Y + 31f), new Vector2(12f, 0f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 16f, base.projectile.position.Y + 31f), new Vector2(8f, 8f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 16f, base.projectile.position.Y + 31f), new Vector2(8f, -8f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 16f, base.projectile.position.Y + 31f), new Vector2(-8f, 8f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 16f, base.projectile.position.Y + 31f), new Vector2(-8f, -8f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
 					}
 					else
 					{
-						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 33f, base.projectile.position.Y + 31f), new Vector2(8f, 0f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
+						Main.PlaySound(SoundID.Item105, (int)base.projectile.position.X, (int)base.projectile.position.Y);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 33f, base.projectile.position.Y + 31f), new Vector2(0f, -12f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 33f, base.projectile.position.Y + 31f), new Vector2(0f, 12f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 33f, base.projectile.position.Y + 31f), new Vector2(-12f, 0f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 33f, base.projectile.position.Y + 31f), new Vector2(12f, 0f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 33f, base.projectile.position.Y + 31f), new Vector2(8f, 8f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 33f, base.projectile.position.Y + 31f), new Vector2(8f, -8f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 33f, base.projectile.position.Y + 31f), new Vector2(-8f, 8f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 33f, base.projectile.position.Y + 31f), new Vector2(-8f, -8f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
 					}
-					this.shootTimer = 0;
 				}
+				if (base.projectile.spriteDirection == -1)
+				{
+					Projectile.NewProjectile(new Vector2(base.projectile.position.X + 16f, base.projectile.position.Y + 31f), new Vector2(-8f, 0f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
+				}
+				else
+				{
+					Projectile.NewProjectile(new Vector2(base.projectile.position.X + 33f, base.projectile.position.Y + 31f), new Vector2(8f, 0f), base.mod.ProjectileType("LastRPro5"), 30, 3f, Main.myPlayer, 0f, 0f);
+				}
+				this.shootTimer = 0;
 			}
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>(base.mod);
 			if (player.dead)

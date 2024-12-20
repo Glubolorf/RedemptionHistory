@@ -330,7 +330,7 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.Crimson.Chance * 0.015f;
+			return SpawnCondition.Crimson.Chance * ((!Main.hardMode) ? 0.015f : 0f);
 		}
 	}
 }

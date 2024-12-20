@@ -35,6 +35,26 @@ namespace Redemption.NPCs
 
 		public override void AI()
 		{
+			if (!this.change)
+			{
+				int num = Main.rand.Next(75);
+				if (num == 0)
+				{
+					if (RedeWorld.downedVlitch1 || RedeWorld.downedVlitch2 || RedeWorld.downedVlitch3)
+					{
+						base.npc.SetDefaults(base.mod.NPCType("SkeletonAssassin2"), -1f);
+						this.change = true;
+					}
+					else
+					{
+						this.change = true;
+					}
+				}
+				if (num >= 1)
+				{
+					this.change = true;
+				}
+			}
 			if (this.stabAttack)
 			{
 				this.stabCounter++;
@@ -48,8 +68,8 @@ namespace Redemption.NPCs
 					this.stabFrame = 0;
 				}
 			}
-			float num = base.npc.Distance(Main.player[base.npc.target].Center);
-			if (num <= 80f && !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).skeletonFriendly && Main.rand.Next(20) == 0 && !this.stabAttack)
+			float num2 = base.npc.Distance(Main.player[base.npc.target].Center);
+			if (num2 <= 80f && !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).skeletonFriendly && Main.rand.Next(20) == 0 && !this.stabAttack)
 			{
 				this.stabAttack = true;
 			}
@@ -145,5 +165,7 @@ namespace Redemption.NPCs
 		private int stabCounter;
 
 		private int stabTimer;
+
+		private bool change;
 	}
 }

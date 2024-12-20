@@ -46,6 +46,10 @@ namespace Redemption.Items.Weapons
 				{
 					Main.NewText("<Loreholder> The weakest unit in King Slayer III's army. They are constructed with heavy plating, giving them high defence.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
+				if (target.type == base.mod.NPCType("Apidroid"))
+				{
+					Main.NewText("<Loreholder> A special type of Android, constructed with strange pink plating. These have insane defence.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+				}
 				if (target.type == base.mod.NPCType("Blobble"))
 				{
 					Main.NewText("<Loreholder> An exceptionally rare slime native to Ithon. It may look harmless, but the acid it is composed of can dissolve iron in less than a minute", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
@@ -62,9 +66,13 @@ namespace Redemption.Items.Weapons
 				{
 					Main.NewText("<Loreholder> Serpent amalgamations of bones, constructed by the Keeper in an attempt to kill you.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
-				if (target.type == base.mod.NPCType("Chicken"))
+				if (target.type == base.mod.NPCType("Chicken") || target.type == base.mod.NPCType("LeghornChicken") || target.type == base.mod.NPCType("RedChicken"))
 				{
 					Main.NewText("<Loreholder> Once famous livestock of sentient races, these majestic creatures are now free to roam the world, free from their shackles and their slaughter. Not like they would care though, since they’re chickens.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+				}
+				if (target.type == base.mod.NPCType("VlitchChicken"))
+				{
+					Main.NewText("<Loreholder> WAIT THAT'S NOT A CHICKEN! THAT'S A ROBOT!", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
 				if (target.type == base.mod.NPCType("ChickenCultist"))
 				{
@@ -134,7 +142,7 @@ namespace Redemption.Items.Weapons
 				{
 					Main.NewText("<Loreholder> A golem of living wood and leaves. Occassionally, they find a shallow pond, and hibernate in the centre. The water from the pond feeds the golem while hibernating.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
-				if (target.type == base.mod.NPCType("ForestNymph"))
+				if (target.type == base.mod.NPCType("ForestNymph") || target.type == base.mod.NPCType("EbonNymph") || target.type == base.mod.NPCType("ShadeNymph") || target.type == base.mod.NPCType("HallowNymph"))
 				{
 					Main.NewText("<Loreholder> They usually live deep within forests, in hollowed-out trees. They can learn basic magic, like growing flora, controlling the roots of trees, and healing.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
@@ -258,25 +266,29 @@ namespace Redemption.Items.Weapons
 				{
 					Main.NewText("<Loreholder> A dapper skeledude that wears a ye olde hat.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
-				if (target.type == base.mod.NPCType("SkeletonAssassin"))
+				if (target.type == base.mod.NPCType("SkeletonAssassin") || target.type == base.mod.NPCType("SkeletonAssassin2"))
 				{
-					Main.NewText("<Loreholder> A short skeleton with a green bandana and a worn dagger. When they die, their soul will either disperse or fly out of their body.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+					Main.NewText("<Loreholder> A short skeleton with a bandana and a worn dagger. When they die, their soul will either disperse or fly out of their body.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
 				if (target.type == base.mod.NPCType("SkeletonDueller"))
 				{
 					Main.NewText("<Loreholder> A skeleton with a worn red cape and an old rapier. When they die, their soul will either disperse or fly out of their body.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
+				if (target.type == base.mod.NPCType("Vepdor"))
+				{
+					Main.NewText("<Loreholder> A skeleton with a worn purple tuxedo and a shining silver rapier. A chunk of metal conceals his mouth. Once he lived in Ithon, and was the founder of the Edgeblade party, but was slain by one of his members; Elgas.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+				}
 				if (target.type == base.mod.NPCType("SkeletonMinion"))
 				{
 					Main.NewText("<Loreholder> A simple skeleton. Nothing more to say.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
-				if (target.type == base.mod.NPCType("SkeletonNoble"))
+				if (target.type == base.mod.NPCType("SkeletonNoble") || target.type == base.mod.NPCType("SkeletonNobleArmoured") || target.type == base.mod.NPCType("SkeletonNobleArmoured2") || target.type == base.mod.NPCType("SkeletonNobleArmoured3"))
 				{
 					Main.NewText("<Loreholder> A skeleton that once was a noble knight. They will slash you with their rusted noble's sword.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
-				if (target.type == base.mod.NPCType("SkeletonWanderer"))
+				if (target.type == base.mod.NPCType("SkeletonWanderer") || target.type == base.mod.NPCType("SkeletonWanderer2"))
 				{
-					Main.NewText("<Loreholder> A naked skeleton wielding a rusted longspear. When they die, their soul will either disperse or fly out of their body.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+					Main.NewText("<Loreholder> A skeleton wielding a rusted longspear. When they die, their soul will either disperse or fly out of their body.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
 				if (target.type == base.mod.NPCType("SkeletonWarden"))
 				{

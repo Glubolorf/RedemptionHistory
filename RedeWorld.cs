@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameContent.Generation;
@@ -325,7 +324,6 @@ namespace Redemption
 		{
 			int num = tasks.FindIndex((GenPass genpass) => genpass.Name.Equals("Shinies"));
 			int num2 = tasks.FindIndex((GenPass genpass) => genpass.Name.Equals("Final Cleanup"));
-			int num3 = tasks.FindIndex((GenPass genpass) => genpass.Name.Equals("Expand World"));
 			if (num != -1)
 			{
 				tasks.Insert(num + 1, new PassLegacy("Redemption Mod Ores", delegate(GenerationProgress progress)
@@ -345,26 +343,6 @@ namespace Redemption
 			{
 				this.AncientHouseFurn();
 			}));
-			if (Enumerable.Contains<string>(ModLoader.GetLoadedMods(), "CalamityMod"))
-			{
-				tasks.Insert(num3 + 4, new PassLegacy("Clearing Space for Lab", delegate(GenerationProgress progress)
-				{
-					this.LabClear();
-				}));
-				tasks.Insert(num3 + 5, new PassLegacy("Clearing Liquids for Lab", delegate(GenerationProgress progress)
-				{
-					this.PreLab();
-				}));
-				tasks.Insert(num3 + 6, new PassLegacy("Abandoned Lab", delegate(GenerationProgress progress)
-				{
-					this.Lab();
-				}));
-				tasks.Insert(num3 + 7, new PassLegacy("Furnishing Lab", delegate(GenerationProgress progress)
-				{
-					this.LabChests();
-				}));
-				return;
-			}
 			tasks.Insert(num2 + 3, new PassLegacy("Clearing Space for Lab", delegate(GenerationProgress progress)
 			{
 				this.LabClear();

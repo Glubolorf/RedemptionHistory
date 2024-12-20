@@ -16,14 +16,13 @@ namespace Redemption.Buffs
 
 		public override void Update(Player player, ref int buffIndex)
 		{
-			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
+			DruidDamagePlayer.ModPlayer(player);
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
-			druidDamagePlayer.druidDamage += 0.1f;
-			druidDamagePlayer.druidCrit += 8;
-			modPlayer.fasterStaves = true;
-			modPlayer.fasterSpirits = true;
-			modPlayer.fasterSeedbags = true;
+			modPlayer.rapidStave = true;
+			modPlayer.staveQuadShot = true;
 			player.nightVision = true;
+			player.detectCreature = true;
+			player.dangerSense = true;
 			player.manaCost *= 0.5f;
 			if (!Main.dayTime)
 			{

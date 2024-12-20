@@ -215,6 +215,14 @@ namespace Redemption
 			this.longerGuardians = false;
 			this.blightedShield = false;
 			this.holoMinion = false;
+			this.rapidStave = false;
+			this.guardianCooldownReduce = false;
+			this.staveStreamShot = false;
+			this.staveTripleShot = false;
+			this.staveScatterShot = false;
+			this.moltenEruption = false;
+			this.staveQuadShot = false;
+			this.lifeSteal1 = false;
 		}
 
 		public override void UpdateDead()
@@ -255,7 +263,7 @@ namespace Redemption
 				base.player.lifeRegenTime = 0;
 				base.player.lifeRegen -= 20;
 			}
-			if (this.ZoneLab && base.player.wet && !this.hazmatPower && !this.labWaterImmune)
+			if (this.ZoneLab && base.player.wet && !this.hazmatPower && !this.labWaterImmune && !base.player.lavaWet && !base.player.honeyWet)
 			{
 				if (base.player.lifeRegen > 10)
 				{
@@ -411,6 +419,15 @@ namespace Redemption
 			{
 				target.AddBuff(72, 300, false);
 			}
+			if (this.moltenEruption && Main.rand.Next(3) == 0)
+			{
+				Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, -3f, 85, 40, 0f, Main.myPlayer, 0f, 0f);
+			}
+			if (this.lifeSteal1 && Main.rand.Next(2) == 0)
+			{
+				base.player.statLife++;
+				base.player.HealEffect(1, true);
+			}
 		}
 
 		public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
@@ -422,6 +439,15 @@ namespace Redemption
 			if (this.charisma)
 			{
 				target.AddBuff(72, 300, false);
+			}
+			if (this.moltenEruption && Main.rand.Next(3) == 0)
+			{
+				Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, -3f, 85, 40, 0f, Main.myPlayer, 0f, 0f);
+			}
+			if (this.lifeSteal1 && Main.rand.Next(2) == 0)
+			{
+				base.player.statLife++;
+				base.player.HealEffect(1, true);
 			}
 		}
 
@@ -765,5 +791,21 @@ namespace Redemption
 		public bool blightedShield;
 
 		public bool holoMinion;
+
+		public bool rapidStave;
+
+		public bool guardianCooldownReduce;
+
+		public bool staveStreamShot;
+
+		public bool staveTripleShot;
+
+		public bool staveScatterShot;
+
+		public bool moltenEruption;
+
+		public bool staveQuadShot;
+
+		public bool lifeSteal1;
 	}
 }

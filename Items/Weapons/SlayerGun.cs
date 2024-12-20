@@ -24,7 +24,7 @@ namespace Redemption.Items.Weapons
 			}
 			base.item.glowMask = SlayerGun.customGlowMask;
 			base.DisplayName.SetDefault("Hyper-Tech Blaster");
-			base.Tooltip.SetDefault("'Pewpewpewpewpewpewpew'\nReplaces normal bullets with Luminite Bullets\nRight-clicking fires 5 bullets in an arc");
+			base.Tooltip.SetDefault("'Pewpewpewpewpewpewpew'\nReplaces normal bullets with Phantasmal Bolts\nRight-clicking fires 5 bolts in an arc");
 		}
 
 		public override void SetDefaults()
@@ -76,10 +76,6 @@ namespace Redemption.Items.Weapons
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			if (type == 14)
-			{
-				type = 638;
-			}
 			if (player.altFunctionUse == 2)
 			{
 				float num = 5f;
@@ -89,12 +85,23 @@ namespace Redemption.Items.Weapons
 				while ((float)num3 < num)
 				{
 					Vector2 vector = Utils.RotatedBy(new Vector2(speedX, speedY), (double)MathHelper.Lerp(-num2, num2, (float)num3 / (num - 1f)), default(Vector2)) * 0.2f;
-					Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
+					int num4 = Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, 462, damage, knockBack, player.whoAmI, 0f, 0f);
+					Main.projectile[num4].ranged = true;
+					Main.projectile[num4].hostile = false;
+					Main.projectile[num4].friendly = true;
+					Main.projectile[num4].tileCollide = true;
 					num3++;
 				}
-				return false;
 			}
-			return true;
+			else
+			{
+				int num5 = Projectile.NewProjectile(position.X, position.Y, speedX, speedY, 462, damage, knockBack, player.whoAmI, 0f, 0f);
+				Main.projectile[num5].ranged = true;
+				Main.projectile[num5].hostile = false;
+				Main.projectile[num5].friendly = true;
+				Main.projectile[num5].tileCollide = true;
+			}
+			return false;
 		}
 
 		public override Vector2? HoldoutOffset()

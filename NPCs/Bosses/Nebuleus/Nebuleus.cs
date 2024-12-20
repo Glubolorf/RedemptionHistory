@@ -1702,7 +1702,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 			{
 				this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossStarGod2");
 			}
-			if (base.npc.life <= (int)((float)base.npc.lifeMax * 0.07f))
+			if (Main.expertMode && base.npc.life <= (int)((float)base.npc.lifeMax * 0.07f))
 			{
 				base.npc.immortal = true;
 			}

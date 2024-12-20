@@ -181,12 +181,19 @@ namespace Redemption
 				base.ItemType("XeniumDrone12")
 			});
 			RecipeGroup.RegisterGroup("Redemption:XeniumTurret", recipeGroup7);
+			RecipeGroup recipeGroup8 = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Chicken", new int[]
+			{
+				base.ItemType("ChickenItem"),
+				base.ItemType("ChickenLeghornItem"),
+				base.ItemType("ChickenRedItem")
+			});
+			RecipeGroup.RegisterGroup("Redemption:Chicken", recipeGroup8);
 			if (RecipeGroup.recipeGroupIDs.ContainsKey("Wood"))
 			{
 				int key = RecipeGroup.recipeGroupIDs["Wood"];
-				RecipeGroup recipeGroup8 = RecipeGroup.recipeGroups[key];
-				recipeGroup8.ValidItems.Add(base.ItemType("DeadWood"));
-				recipeGroup8.ValidItems.Add(base.ItemType("AncientWood"));
+				RecipeGroup recipeGroup9 = RecipeGroup.recipeGroups[key];
+				recipeGroup9.ValidItems.Add(base.ItemType("DeadWood"));
+				recipeGroup9.ValidItems.Add(base.ItemType("AncientWood"));
 			}
 		}
 

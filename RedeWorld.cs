@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Redemption.NPCs;
 using Redemption.NPCs.v08;
@@ -255,7 +254,6 @@ namespace Redemption
 		{
 			int num = tasks.FindIndex((GenPass genpass) => genpass.Name.Equals("Shinies"));
 			int num2 = tasks.FindIndex((GenPass genpass) => genpass.Name.Equals("Final Cleanup"));
-			int num3 = tasks.FindIndex((GenPass genpass) => genpass.Name.Equals("SunkenSea"));
 			if (num != -1)
 			{
 				tasks.Insert(num + 1, new PassLegacy("Redemption Mod Ores", delegate(GenerationProgress progress)
@@ -273,22 +271,22 @@ namespace Redemption
 					{
 						int maxTilesX = Main.maxTilesX;
 						int maxTilesY = Main.maxTilesY;
-						int num4 = WorldGen.genRand.Next(0, maxTilesX);
-						int num5 = WorldGen.genRand.Next((int)((float)maxTilesY * 0.05f), (int)((double)maxTilesY * 0.3));
-						if (Main.tile[num4, num5].type == 0)
+						int num3 = WorldGen.genRand.Next(0, maxTilesX);
+						int num4 = WorldGen.genRand.Next((int)((float)maxTilesY * 0.05f), (int)((double)maxTilesY * 0.3));
+						if (Main.tile[num3, num4].type == 0)
 						{
-							WorldGen.OreRunner(num4, num5, (double)WorldGen.genRand.Next(3, 5), WorldGen.genRand.Next(4, 6), (ushort)base.mod.TileType("PlantMatterTile"));
+							WorldGen.OreRunner(num3, num4, (double)WorldGen.genRand.Next(3, 5), WorldGen.genRand.Next(4, 6), (ushort)base.mod.TileType("PlantMatterTile"));
 						}
 					}
 					for (int j = 0; j < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 7E-05); j++)
 					{
 						int maxTilesX2 = Main.maxTilesX;
 						int maxTilesY2 = Main.maxTilesY;
-						int num6 = WorldGen.genRand.Next(0, maxTilesX2);
-						int num7 = WorldGen.genRand.Next((int)((float)maxTilesY2 * 0.05f), (int)((double)maxTilesY2 * 0.5));
-						if (Main.tile[num6, num7].type == 59)
+						int num5 = WorldGen.genRand.Next(0, maxTilesX2);
+						int num6 = WorldGen.genRand.Next((int)((float)maxTilesY2 * 0.05f), (int)((double)maxTilesY2 * 0.5));
+						if (Main.tile[num5, num6].type == 59)
 						{
-							WorldGen.OreRunner(num6, num7, (double)WorldGen.genRand.Next(3, 5), WorldGen.genRand.Next(4, 8), (ushort)base.mod.TileType("PlantMatterTile"));
+							WorldGen.OreRunner(num5, num6, (double)WorldGen.genRand.Next(3, 5), WorldGen.genRand.Next(4, 8), (ushort)base.mod.TileType("PlantMatterTile"));
 						}
 					}
 				}));
@@ -301,38 +299,6 @@ namespace Redemption
 			{
 				this.AncientHouseFurn();
 			}));
-			if (Enumerable.Contains<string>(ModLoader.GetLoadedMods(), "CalamityMod"))
-			{
-				tasks.Insert(num3 + 5, new PassLegacy("Clearing Space for ???", delegate(GenerationProgress progress)
-				{
-					this.HeroHallClear();
-				}));
-				tasks.Insert(num3 + 6, new PassLegacy("???", delegate(GenerationProgress progress)
-				{
-					this.HeroHall();
-				}));
-				tasks.Insert(num3 + 7, new PassLegacy("??? Furniture", delegate(GenerationProgress progress)
-				{
-					this.HeroHallStuff();
-				}));
-				tasks.Insert(num3 + 8, new PassLegacy("Clearing Space for Lab", delegate(GenerationProgress progress)
-				{
-					this.LabClear();
-				}));
-				tasks.Insert(num3 + 9, new PassLegacy("Clearing Liquids for Lab", delegate(GenerationProgress progress)
-				{
-					this.PreLab();
-				}));
-				tasks.Insert(num3 + 10, new PassLegacy("Abandoned Lab", delegate(GenerationProgress progress)
-				{
-					this.Lab();
-				}));
-				tasks.Insert(num3 + 11, new PassLegacy("Furnishing Lab", delegate(GenerationProgress progress)
-				{
-					this.LabChests();
-				}));
-				return;
-			}
 			tasks.Insert(num2 + 4, new PassLegacy("Clearing Space for ???", delegate(GenerationProgress progress)
 			{
 				this.HeroHallClear();

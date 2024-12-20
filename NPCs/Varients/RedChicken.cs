@@ -31,6 +31,7 @@ namespace Redemption.NPCs.Varients
 			base.npc.dontTakeDamageFromHostiles = false;
 			this.banner = base.npc.type;
 			this.bannerItem = base.mod.ItemType("ChickenBanner");
+			base.npc.catchItem = (short)base.mod.ItemType("ChickenRedItem");
 		}
 
 		public override void HitEffect(int hitDirection, double damage)

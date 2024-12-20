@@ -31,7 +31,7 @@ namespace Redemption.Items.Placeable
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
 			modRecipe.anyWood = true;
-			modRecipe.AddIngredient(null, "ChickenItem", 2);
+			modRecipe.AddRecipeGroup("Redemption:Chicken", 2);
 			modRecipe.AddIngredient(9, 30);
 			modRecipe.AddIngredient(1727, 10);
 			modRecipe.AddTile(106);

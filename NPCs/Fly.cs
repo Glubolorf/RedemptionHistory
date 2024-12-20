@@ -23,6 +23,7 @@ namespace Redemption.NPCs
 			base.npc.HitSound = SoundID.NPCHit1;
 			base.npc.DeathSound = SoundID.NPCDeath1;
 			base.npc.knockBackResist = 0f;
+			base.npc.npcSlots = 0f;
 			base.npc.aiStyle = 24;
 			this.aiType = 74;
 			this.animationType = 355;

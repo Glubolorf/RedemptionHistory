@@ -29,7 +29,7 @@ namespace Redemption.NPCs
 			base.npc.behindTiles = true;
 			base.npc.DeathSound = SoundID.NPCDeath1;
 			base.npc.value = (float)Item.buyPrice(0, 0, 0, 0);
-			base.npc.npcSlots = 1f;
+			base.npc.npcSlots = 0f;
 			base.npc.netAlways = true;
 		}
 

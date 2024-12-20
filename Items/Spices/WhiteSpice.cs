@@ -26,7 +26,7 @@ namespace Redemption.Items.Spices
 			base.item.height = 26;
 			base.item.value = Item.sellPrice(0, 0, 15, 50);
 			base.item.rare = 5;
-			base.item.buffType = 114;
+			base.item.buffType = base.mod.BuffType("SpiceWhiteBuff");
 			base.item.buffTime = 3600;
 		}
 	}

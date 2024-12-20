@@ -26,7 +26,7 @@ namespace Redemption.Items
 			base.item.value = 100;
 			base.item.rare = 1;
 			base.item.buffType = 26;
-			base.item.buffTime = 1800;
+			base.item.buffTime = 3600;
 		}
 
 		public override void AddRecipes()

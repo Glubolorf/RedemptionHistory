@@ -24,6 +24,7 @@ namespace Redemption.NPCs
 			base.npc.HitSound = SoundID.NPCHit1;
 			base.npc.DeathSound = SoundID.NPCDeath1;
 			base.npc.knockBackResist = 0.5f;
+			base.npc.npcSlots = 0f;
 			base.npc.aiStyle = 7;
 			this.aiType = 46;
 			this.animationType = 46;
@@ -77,11 +78,11 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if ((double)spawnInfo.spawnTileY >= Main.worldSurface || !Main.dayTime)
+			if (RedeWorld.downedKingChicken)
 			{
-				return 0f;
+				return SpawnCondition.OverworldDayGrassCritter.Chance * ((Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == 2) ? 1.8f : 0f);
 			}
-			return 0.4f;
+			return SpawnCondition.OverworldDayGrassCritter.Chance * ((Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == 2) ? 3.2f : 0f);
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)

@@ -34,7 +34,11 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.Cavern.Chance * 0.3f;
+			if (Main.hardMode)
+			{
+				return SpawnCondition.Cavern.Chance * 0.1f;
+			}
+			return SpawnCondition.Cavern.Chance * 0.2f;
 		}
 
 		public override void HitEffect(int hitDirection, double damage)

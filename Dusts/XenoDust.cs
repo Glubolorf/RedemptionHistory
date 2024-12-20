@@ -13,7 +13,7 @@ namespace Redemption.Dusts
 			dust.noLight = true;
 			dust.velocity *= 0.4f;
 			dust.scale = 1.7f;
-			dust.color = new Color(120, 255, 90);
+			dust.color = new Color(0, 255, 0);
 			dust.alpha = 1;
 		}
 

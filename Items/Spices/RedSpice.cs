@@ -10,7 +10,7 @@ namespace Redemption.Items.Spices
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Red Spices");
-			base.Tooltip.SetDefault("'Tastes very spicy, probably chili'\nYou ignite near enemies");
+			base.Tooltip.SetDefault("'Tastes very spicy, probably chili'\nYou ignite nearby enemies");
 		}
 
 		public override void SetDefaults()
@@ -26,7 +26,7 @@ namespace Redemption.Items.Spices
 			base.item.height = 26;
 			base.item.value = Item.sellPrice(0, 0, 10, 0);
 			base.item.rare = 4;
-			base.item.buffType = 116;
+			base.item.buffType = base.mod.BuffType("SpiceRedBuff");
 			base.item.buffTime = 3600;
 		}
 	}

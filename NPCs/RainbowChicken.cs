@@ -26,6 +26,7 @@ namespace Redemption.NPCs
 			base.npc.knockBackResist = 0.5f;
 			base.npc.aiStyle = 7;
 			this.aiType = 46;
+			base.npc.npcSlots = 0f;
 			this.animationType = 46;
 			this.banner = base.npc.type;
 			this.bannerItem = base.mod.ItemType("ChickenBanner");

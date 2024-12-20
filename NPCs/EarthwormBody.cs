@@ -22,6 +22,7 @@ namespace Redemption.NPCs
 			base.npc.lifeMax = 1;
 			base.npc.knockBackResist = 0f;
 			base.npc.behindTiles = true;
+			base.npc.npcSlots = 0f;
 			base.npc.noTileCollide = true;
 			base.npc.netAlways = true;
 			base.npc.noGravity = true;

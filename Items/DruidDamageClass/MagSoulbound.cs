@@ -10,14 +10,14 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Magnetic Soulbound");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nThrows a Soulbound Soul\nReleases a Lost Soul when hitting a target\n[c/d9eeed:-While Lost Soul set is equipped-]\nReleases an extra Lost Soul\n[c/d8f5dc:-While Wandering Soul set is equipped-]\nBuffed damage and releases 3 extra Lost Souls");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nRelease a bond of souls\nGets buffed from soul-related armoury");
 		}
 
 		public override void SafeSetDefaults()
 		{
 			base.item.shootSpeed = 11f;
 			base.item.crit = 4;
-			base.item.damage = 9;
+			base.item.damage = 10;
 			base.item.knockBack = 0f;
 			base.item.useStyle = 1;
 			base.item.useAnimation = 24;
@@ -27,7 +27,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.rare = 1;
 			base.item.noUseGraphic = true;
 			base.item.noMelee = true;
-			base.item.autoReuse = true;
+			base.item.autoReuse = false;
 			base.item.UseSound = SoundID.Item1;
 			base.item.value = Item.sellPrice(0, 0, 90, 50);
 			base.item.shoot = base.mod.ProjectileType("MagSoulboundPro");

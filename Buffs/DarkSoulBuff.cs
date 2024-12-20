@@ -27,7 +27,7 @@ namespace Redemption.Buffs
 				buffIndex--;
 				return;
 			}
-			player.buffTime[buffIndex] = 18000;
+			player.buffTime[buffIndex] = 300;
 		}
 	}
 }

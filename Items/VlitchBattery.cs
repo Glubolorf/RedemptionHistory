@@ -16,7 +16,7 @@ namespace Redemption.Items
 		public override void SetDefaults()
 		{
 			base.item.width = 18;
-			base.item.height = 46;
+			base.item.height = 40;
 			base.item.maxStack = 999;
 			base.item.value = Item.sellPrice(0, 0, 20, 0);
 			base.item.rare = 10;

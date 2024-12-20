@@ -11,7 +11,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Hallowed Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nShoots a golden bolt");
 		}
 
 		public override void SafeSetDefaults()
@@ -29,6 +29,8 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.UseSound = SoundID.Item1;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
+			base.item.shoot = 597;
+			base.item.shootSpeed = 12f;
 		}
 
 		public override bool CanUseItem(Player player)

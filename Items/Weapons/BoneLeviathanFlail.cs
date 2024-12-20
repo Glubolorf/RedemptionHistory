@@ -23,7 +23,7 @@ namespace Redemption.Items.Weapons
 			base.item.useAnimation = 40;
 			base.item.useTime = 40;
 			base.item.knockBack = 7.5f;
-			base.item.damage = 60;
+			base.item.damage = 120;
 			base.item.scale = 2f;
 			base.item.noUseGraphic = true;
 			base.item.shoot = base.mod.ProjectileType("BoneFlailHeadPro");

@@ -185,6 +185,8 @@ namespace Redemption.NPCs
 				shop.item[nextSlot].SetDefaults(base.mod.ItemType("XenoSolution"), false);
 				nextSlot++;
 			}
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("AntiXenoSolution"), false);
+			nextSlot++;
 			shop.item[nextSlot].SetDefaults(base.mod.ItemType("GasMask"), false);
 			nextSlot++;
 			if (RedeWorld.downedXenomiteCrystal)

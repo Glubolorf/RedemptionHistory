@@ -29,7 +29,7 @@ namespace Redemption.Items.Weapons
 			base.item.knockBack = 2f;
 			base.item.value = 5500;
 			base.item.rare = 4;
-			base.item.UseSound = SoundID.Item20;
+			base.item.UseSound = SoundID.Item27;
 			base.item.autoReuse = true;
 			base.item.shoot = base.mod.ProjectileType("SnowyBall");
 			base.item.shootSpeed = 18f;

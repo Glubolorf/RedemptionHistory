@@ -9,19 +9,10 @@ namespace Redemption.NPCs
 	{
 		public override void SetupShop(int type, Chest shop, ref int nextSlot)
 		{
-			if (type == 20)
+			if (type == 20 && Main.bloodMoon)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType<BunnySpiritBottle>(), false);
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType<CorpseFlowerBag>(), false);
 				nextSlot++;
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType<AcornStaff>(), false);
-				nextSlot++;
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType<Seedbag>(), false);
-				nextSlot++;
-				if (Main.bloodMoon)
-				{
-					shop.item[nextSlot].SetDefaults(base.mod.ItemType<CorpseFlowerBag>(), false);
-					nextSlot++;
-				}
 			}
 		}
 
@@ -113,6 +104,10 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("AkisClaws"), 1, false, 0, false, false);
 				}
+				if (Main.rand.Next(1000) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("SuspEgg"), 1, false, 0, false, false);
+				}
 			}
 			if (npc.type == base.mod.NPCType("ChickenGold"))
 			{
@@ -122,20 +117,28 @@ namespace Redemption.NPCs
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("AkisClaws"), 1, false, 0, false, false);
 				}
 			}
-			if (npc.type == base.mod.NPCType("RainbowChicken") && Main.rand.Next(100) == 0)
+			if (npc.type == base.mod.NPCType("RainbowChicken"))
 			{
-				int num2 = Main.rand.Next(3);
-				if (num2 == 0)
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("SuspEgg"), 1, false, 0, false, false);
+				if (Main.rand.Next(100) == 0)
 				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("HallamHoodie"), 1, false, 0, false, false);
+					int num2 = Main.rand.Next(3);
+					if (num2 == 0)
+					{
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("HallamHoodie"), 1, false, 0, false, false);
+					}
+					if (num2 == 1)
+					{
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("HallamLeggings"), 1, false, 0, false, false);
+					}
+					if (num2 == 2)
+					{
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("HallamRobes"), 1, false, 0, false, false);
+					}
 				}
-				if (num2 == 1)
+				if (Main.rand.Next(100) == 0)
 				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("HallamLeggings"), 1, false, 0, false, false);
-				}
-				if (num2 == 2)
-				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("HallamRobes"), 1, false, 0, false, false);
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("HallamDevWeapon"), 1, false, 0, false, false);
 				}
 			}
 			if (npc.type == base.mod.NPCType("ForestGolem"))
@@ -958,6 +961,29 @@ namespace Redemption.NPCs
 			if (npc.type == 4 && Main.rand.Next(3) == 0)
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("EyeStalkBag"), 1, false, 0, false, false);
+			}
+			if (npc.type == base.mod.NPCType("MartianScamArtist"))
+			{
+				if (Main.rand.Next(8) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 2860, Main.rand.Next(8, 20), false, 0, false, false);
+				}
+				if (Main.rand.Next(20) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 2806, 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(20) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 2807, 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(20) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 2808, 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(4) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("MartianTreeBag"), 1, false, 0, false, false);
+				}
 			}
 		}
 	}

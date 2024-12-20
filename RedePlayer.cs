@@ -89,6 +89,8 @@ namespace Redemption
 			this.extraSeed = false;
 			this.spiritPierce = false;
 			this.frostburnSeedbag = false;
+			this.skeleMinion1 = false;
+			this.spiritSkull1 = false;
 		}
 
 		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
@@ -140,6 +142,10 @@ namespace Redemption
 			{
 				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("SpiritChickenPro"), 9, 1f, Main.myPlayer, 0f, 0f);
 			}
+			if (this.spiritSkull1)
+			{
+				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("SpiritSkullPro"), 12, 1f, Main.myPlayer, 0f, 0f);
+			}
 		}
 
 		private const int saveVersion = 0;
@@ -189,5 +195,9 @@ namespace Redemption
 		public bool spiritPierce;
 
 		public bool frostburnSeedbag;
+
+		public bool skeleMinion1;
+
+		public bool spiritSkull1;
 	}
 }

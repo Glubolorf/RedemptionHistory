@@ -31,7 +31,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.noUseGraphic = true;
 			base.item.noMelee = true;
 			base.item.autoReuse = true;
-			base.item.UseSound = SoundID.Item1;
+			base.item.UseSound = SoundID.Item9;
 			base.item.value = Item.sellPrice(0, 0, 1, 5);
 			base.item.shoot = base.mod.ProjectileType<CrystalDaggerPro>();
 		}

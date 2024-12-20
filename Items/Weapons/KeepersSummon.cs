@@ -11,7 +11,7 @@ namespace Redemption.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("The Keeper's Staff");
-			base.Tooltip.SetDefault("Summons a Dark Soul to fight for you.");
+			base.Tooltip.SetDefault("Summons a temporary Dark Soul to fight for you.\nAfter 5 seconds, it will explode into tiny homing Dark Souls\nIf all minion slots are used up, the staff will summon 2-4 tiny Dark Souls instead");
 		}
 
 		public override void SetDefaults()
@@ -32,7 +32,7 @@ namespace Redemption.Items.Weapons
 			base.item.shoot = base.mod.ProjectileType("DarkSoulMinion");
 			base.item.shootSpeed = 8f;
 			base.item.buffType = base.mod.BuffType("DarkSoulBuff");
-			base.item.buffTime = 3600;
+			base.item.buffTime = 300;
 		}
 
 		public override void AddRecipes()

@@ -27,7 +27,7 @@ namespace Redemption.Items.Weapons
 			base.item.crit = 19;
 			base.item.value = Item.buyPrice(0, 0, 1, 0);
 			base.item.rare = 1;
-			base.item.UseSound = SoundID.Item1;
+			base.item.UseSound = SoundID.Item19;
 			base.item.autoReuse = true;
 		}
 

@@ -11,7 +11,7 @@ namespace Redemption.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Xenomite Blade");
-			base.Tooltip.SetDefault("'Holding will infected you...'");
+			base.Tooltip.SetDefault("'Holding this will infect you...'");
 		}
 
 		public override void SetDefaults()

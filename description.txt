@@ -1,36 +1,37 @@
-'Mod of Redemption' is a remastered version of 'Mod of Randomness', never heard of that mod? I'm not surprised, it no longer works.
+'Mod of Redemption' is a remastered version of 'Mod of Randomness', never heard of that mod? I'm not surprised, because it no longer works.
 
 Please remember to update the mod when necessary.
 
 Adds:
-- 32 Buffs
+- 35 Buffs
 - 7 Walls
-- 88 Tiles
-- 122 NPCs (Including bosses & minibosses)
+- 89 Tiles
+- 124 NPCs (Including bosses & minibosses)
 - 6 Bosses
 - 2 Minibosses
-- 488 Items
+- 516 Items
 
 Latest Update:
-- Bunch of moist resprites
-- New Vlitch Gigipede AI
-- More Druid Class stuff (Still not a viable class yet! Need to add more)
+- More Druid stuff (Mostly for early Hardmode)
+- The Keeper's Staff is getting a rework
+- Fixed the Keeper despawning in multiplayer when reaching 2nd phase.
 For more, look at the mod's homepage
 
 Main Features (So far):
+- Druid Class! (NOT DONE!!! >:O)
+- Rare Weapons (1/500 Chance of dropping from certain enemies)
+- Epic Weapons (1/1000 Chance of dropping from certain enemies in Hardmode)
+- Wasteland Biome (After Infected Eye boss)
 - Living Wood Equipment
 - Ancient Stone Blocks
 - Many Fantasy Weapons (Old Rapier, Noble's Swords, Warden's Bows)
 - King Chicken Boss!!
-- Pet Chicken!
-- Chicken Minions!
-- Many Useless Items
+- Chicken Stuff!
 - Lots of types of Skeletons (Assassin, Dueller, Noble)
 - Varients of Golems (Forest, Stone, Molten)
 - Squire NPC
 - Pure-Iron & Ancient Brass Equipment
 - Pre-Hardmode Boss (Sprite by Zoomo, edited a bit)
-- Rare Weapons (1/500 Chance of dropping from certain enemies)
 - Kanite Ore (Very early ore, around iron)
 - Ancient Trees (Place acorns on Ancient Dirt to grow them)
 - Ancient Wood Furniture
@@ -42,7 +43,4 @@ Main Features (So far):
 - Infected Enemies
 - Stuff
 - Dirt Swords!
-- Wasteland Biome (After Infected Eye boss)
 - Vlitch Overlord bosses (2/4 for now)
-- Druid Class! (NOT DONE!!! >:O)
-- Epic Weapons (1/1000 Chance of dropping from certain enemies in Hardmode)

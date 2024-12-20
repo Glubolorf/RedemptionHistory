@@ -37,13 +37,13 @@ namespace Redemption.Items.DruidDamageClass
 		{
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterStaves)
 			{
-				base.item.useTime = 24;
-				base.item.useAnimation = 24;
+				base.item.useTime = 40;
+				base.item.useAnimation = 40;
 			}
 			else
 			{
-				base.item.useTime = 28;
-				base.item.useAnimation = 28;
+				base.item.useTime = 44;
+				base.item.useAnimation = 44;
 			}
 			return true;
 		}

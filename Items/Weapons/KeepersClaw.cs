@@ -24,7 +24,7 @@ namespace Redemption.Items.Weapons
 			base.item.knockBack = 7f;
 			base.item.value = Item.buyPrice(0, 2, 0, 0);
 			base.item.rare = 3;
-			base.item.UseSound = SoundID.Item1;
+			base.item.UseSound = SoundID.Item7;
 			base.item.autoReuse = false;
 			base.item.useTurn = false;
 		}

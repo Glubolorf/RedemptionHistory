@@ -41,7 +41,6 @@ namespace Redemption.Items.DruidDamageClass
 			ModRecipe modRecipe = new ModRecipe(base.mod);
 			modRecipe.AddIngredient(null, "DruidDagger", 100);
 			modRecipe.AddIngredient(174, 5);
-			modRecipe.AddRecipeGroup("Redemption:Plant", 10);
 			modRecipe.AddTile(null, "DruidicAltarTile");
 			modRecipe.SetResult(this, 100);
 			modRecipe.AddRecipe();

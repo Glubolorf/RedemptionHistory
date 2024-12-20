@@ -44,7 +44,7 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.OverworldDaySlime.Chance * 0.005f;
+			return SpawnCondition.OverworldDaySlime.Chance * 0.0025f;
 		}
 	}
 }

@@ -97,7 +97,6 @@ namespace Redemption.NPCs.Bosses
 		{
 			if (Main.dayTime)
 			{
-				base.npc.timeLeft = 0;
 				NPC npc = base.npc;
 				npc.position.Y = npc.position.Y - 300f;
 			}
@@ -129,7 +128,6 @@ namespace Redemption.NPCs.Bosses
 					byte g = rarityPurple2.G;
 					Color rarityPurple3 = Colors.RarityPurple;
 					Main.NewText(text, r, g, rarityPurple3.B, false);
-					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Shriek").WithVolume(0.9f).WithPitchVariance(0.1f), -1, -1);
 				}
 				if (this.timer == 40)
 				{
@@ -170,7 +168,6 @@ namespace Redemption.NPCs.Bosses
 					byte g2 = rarityPurple5.G;
 					Color rarityPurple6 = Colors.RarityPurple;
 					Main.NewText(text2, r2, g2, rarityPurple6.B, false);
-					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Shriek").WithVolume(0.9f).WithPitchVariance(0.1f), -1, -1);
 				}
 				if (this.timer == 40)
 				{

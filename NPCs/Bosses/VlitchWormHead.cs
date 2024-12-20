@@ -81,7 +81,6 @@ namespace Redemption.NPCs.Bosses
 			potionType = 499;
 			RedeWorld.downedVlitch2 = true;
 			Main.NewText("You feel a stinging pain of energy flowing through you as one of Vlitch's Overlords has been defeated...", Color.OrangeRed.R, Color.OrangeRed.G, Color.OrangeRed.B, false);
-			Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/DistortedRoar").WithVolume(0.9f).WithPitchVariance(0.1f), -1, -1);
 		}
 
 		public override bool PreAI()
@@ -296,7 +295,7 @@ namespace Redemption.NPCs.Bosses
 						num17 = 20f;
 					}
 					base.npc.soundDelay = (int)num17;
-					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Quake1").WithVolume(0.9f).WithPitchVariance(0.05f), -1, -1);
+					Main.PlaySound(15, (int)base.npc.position.X, (int)base.npc.position.Y, 1, 1f, 0f);
 				}
 				float num18 = Math.Abs(num14);
 				float num19 = Math.Abs(num15);

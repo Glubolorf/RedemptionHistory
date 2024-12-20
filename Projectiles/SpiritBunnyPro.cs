@@ -87,7 +87,7 @@ namespace Redemption.Projectiles
 			float num = (float)Math.Sqrt((double)(vector.X * vector.X + vector.Y * vector.Y));
 			if (num > 6f)
 			{
-				vector *= 6f / num;
+				vector *= 11f / num;
 			}
 		}
 	}

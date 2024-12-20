@@ -10,7 +10,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Forest Druid's Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nShoots a leaf");
 		}
 
 		public override void SafeSetDefaults()
@@ -26,6 +26,8 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.value = Item.sellPrice(0, 2, 35, 0);
 			base.item.rare = 4;
 			base.item.UseSound = SoundID.Item1;
+			base.item.shoot = 206;
+			base.item.shootSpeed = 12f;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
 		}

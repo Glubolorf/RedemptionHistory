@@ -26,7 +26,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.knockBack = 7f;
 			base.item.value = Item.sellPrice(0, 0, 54, 30);
 			base.item.rare = 3;
-			base.item.UseSound = SoundID.Item1;
+			base.item.UseSound = SoundID.Item19;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
 		}

@@ -40,6 +40,7 @@ namespace Redemption.Items
 			}
 			player.QuickSpawnItem(base.mod.ItemType("SpiritOfLife"), 1);
 			player.QuickSpawnItem(base.mod.ItemType("Grain"), 1);
+			player.QuickSpawnItem(264, 1);
 		}
 	}
 }

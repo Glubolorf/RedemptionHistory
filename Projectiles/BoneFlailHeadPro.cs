@@ -23,6 +23,22 @@ namespace Redemption.Projectiles
 			base.projectile.aiStyle = 15;
 		}
 
+		public override void AI()
+		{
+			if (Main.rand.Next(50) == 0)
+			{
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 15, base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
+			}
+			if (Main.rand.Next(50) == 0)
+			{
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 34, base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
+			}
+			if (Main.rand.Next(25) == 0)
+			{
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 402, base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
+			}
+		}
+
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
 			Texture2D texture = ModLoader.GetTexture("Redemption/Projectiles/BoneFlailChainPro");

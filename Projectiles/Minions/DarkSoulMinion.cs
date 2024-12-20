@@ -18,7 +18,7 @@ namespace Redemption.Projectiles.Minions
 			base.projectile.minion = true;
 			base.projectile.minionSlots = 1f;
 			base.projectile.penetrate = -1;
-			base.projectile.timeLeft = 18000;
+			base.projectile.timeLeft = 300;
 			base.projectile.ignoreWater = true;
 			base.projectile.tileCollide = false;
 			ProjectileID.Sets.MinionTargettingFeature[base.projectile.type] = true;
@@ -27,6 +27,21 @@ namespace Redemption.Projectiles.Minions
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Dark Soul");
+		}
+
+		public override void Kill(int timeLeft)
+		{
+			Main.PlaySound(SoundID.NPCDeath6, base.projectile.position);
+			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("MiniDarkSoulPro"), 5, 2f, Main.myPlayer, 0f, 0f);
+			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("MiniDarkSoulPro"), 5, 2f, Main.myPlayer, 0f, 0f);
+			if (Main.rand.Next(2) == 0)
+			{
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("MiniDarkSoulPro"), 5, 2f, Main.myPlayer, 0f, 0f);
+			}
+			if (Main.rand.Next(2) == 0)
+			{
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("MiniDarkSoulPro"), 5, 2f, Main.myPlayer, 0f, 0f);
+			}
 		}
 
 		public override void AI()

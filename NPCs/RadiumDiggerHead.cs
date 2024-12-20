@@ -18,7 +18,7 @@ namespace Redemption.NPCs
 		public override void SetDefaults()
 		{
 			base.npc.lifeMax = 4800;
-			base.npc.damage = 340;
+			base.npc.damage = 120;
 			base.npc.defense = 50;
 			base.npc.knockBackResist = 0f;
 			base.npc.width = 50;

@@ -483,6 +483,7 @@ namespace Redemption
 			WorldGen.PlaceObject((int)((float)Main.maxTilesX * 0.4f) + 43, (int)((float)Main.maxTilesY * 0.45f) + 13, (int)((ushort)base.mod.TileType("ArchclothBannerTile")), false, 0, 0, -1, -1);
 			WorldGen.PlaceObject((int)((float)Main.maxTilesX * 0.4f) + 14, (int)((float)Main.maxTilesY * 0.45f) + 13, (int)((ushort)base.mod.TileType("ArchclothBannerTile")), false, 0, 0, -1, -1);
 			WorldGen.PlaceObject((int)((float)Main.maxTilesX * 0.4f) + 33, (int)((float)Main.maxTilesY * 0.45f) + 13, (int)((ushort)base.mod.TileType("ArchclothBannerTile")), false, 0, 0, -1, -1);
+			WorldGen.PlaceObject((int)((float)Main.maxTilesX * 0.4f) + 24, (int)((float)Main.maxTilesY * 0.45f) + 27, (int)((ushort)base.mod.TileType("AncientAltarTile")), false, 0, 0, -1, -1);
 			NetMessage.SendObjectPlacment(-1, (int)((float)Main.maxTilesX * 0.4f) + 17, (int)((float)Main.maxTilesY * 0.45f) + 11, (int)((ushort)base.mod.TileType("HKStatueTile")), 0, 0, -1, -1);
 			NetMessage.SendObjectPlacment(-1, (int)((float)Main.maxTilesX * 0.4f) + 25, (int)((float)Main.maxTilesY * 0.45f) + 16, (int)((ushort)base.mod.TileType("JStatueTile")), 0, 0, -1, -1);
 			NetMessage.SendObjectPlacment(-1, (int)((float)Main.maxTilesX * 0.4f) + 6, (int)((float)Main.maxTilesY * 0.45f) + 16, (int)((ushort)base.mod.TileType("KSStatueTile")), 0, 0, -1, -1);
@@ -491,6 +492,7 @@ namespace Redemption
 			NetMessage.SendObjectPlacment(-1, (int)((float)Main.maxTilesX * 0.4f) + 43, (int)((float)Main.maxTilesY * 0.45f) + 13, (int)((ushort)base.mod.TileType("ArchclothBannerTile")), 0, 0, -1, -1);
 			NetMessage.SendObjectPlacment(-1, (int)((float)Main.maxTilesX * 0.4f) + 14, (int)((float)Main.maxTilesY * 0.45f) + 13, (int)((ushort)base.mod.TileType("ArchclothBannerTile")), 0, 0, -1, -1);
 			NetMessage.SendObjectPlacment(-1, (int)((float)Main.maxTilesX * 0.4f) + 33, (int)((float)Main.maxTilesY * 0.45f) + 13, (int)((ushort)base.mod.TileType("ArchclothBannerTile")), 0, 0, -1, -1);
+			NetMessage.SendObjectPlacment(-1, (int)((float)Main.maxTilesX * 0.4f) + 24, (int)((float)Main.maxTilesY * 0.45f) + 27, (int)((ushort)base.mod.TileType("AncientAltarTile")), 0, 0, -1, -1);
 		}
 
 		public void LabClear()

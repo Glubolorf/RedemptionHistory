@@ -10,7 +10,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Portable Martian Shield Generator");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nConstructs a Martian Shield Generator at your cursor point\nThe generator emits a forcefield that greatly increases player's defence and endurance when near\nCan only place one at a time");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nConstructs a Martian Shield Generator at your cursor point\nThe generator emits a forcefield that reflects any projectiles\nCan only place one at a time");
 			Main.RegisterItemAnimation(base.item.type, new DrawAnimationVertical(5, 2));
 		}
 

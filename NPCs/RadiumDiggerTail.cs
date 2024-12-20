@@ -18,7 +18,7 @@ namespace Redemption.NPCs
 		{
 			base.npc.width = 50;
 			base.npc.height = 40;
-			base.npc.damage = 180;
+			base.npc.damage = 95;
 			base.npc.defense = 75;
 			base.npc.lifeMax = 1;
 			base.npc.knockBackResist = 0f;

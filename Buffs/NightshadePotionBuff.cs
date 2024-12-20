@@ -8,18 +8,16 @@ namespace Redemption.Buffs
 	{
 		public override void SetDefaults()
 		{
-			base.DisplayName.SetDefault("Nightshade");
-			base.Description.SetDefault("\"Gain stealth and increased damage reduction at night. Does nothing at day\"");
+			base.DisplayName.SetDefault("Vendetta");
+			base.Description.SetDefault("\"Attackers also take damage, and get inflicted by poison\"");
 			Main.buffNoTimeDisplay[base.Type] = false;
 		}
 
 		public override void Update(Player player, ref int buffIndex)
 		{
-			if (!Main.dayTime)
-			{
-				player.endurance += 0.08f;
-				player.shroomiteStealth = true;
-			}
+			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
+			redePlayer.vendetta = true;
+			player.thorns += 0.4f;
 		}
 	}
 }

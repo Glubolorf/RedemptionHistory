@@ -48,9 +48,13 @@ namespace Redemption.NPCs
 
 		public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			if (Main.rand.Next(5) == 0)
+			if (Main.rand.Next(5) == 0 && !projectile.minion)
 			{
-				projectile.damage = damage;
+				if (projectile.penetrate == 1)
+				{
+					projectile.penetrate = 2;
+				}
+				projectile.damage = damage / 4;
 				projectile.velocity.X = -projectile.velocity.X;
 				projectile.velocity.Y = -projectile.velocity.Y;
 				projectile.friendly = false;

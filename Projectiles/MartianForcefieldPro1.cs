@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -29,9 +31,18 @@ namespace Redemption.Projectiles
 			base.projectile.velocity.Y = 0f;
 			base.projectile.velocity.X = 0f;
 			base.projectile.rotation += 0.04f;
-			if (base.projectile.localAI[0] >= 900f)
+			if (base.projectile.localAI[0] >= 600f)
 			{
 				base.projectile.Kill();
+			}
+			IEnumerable<Projectile> enumerable = Enumerable.Where<Projectile>(Main.projectile, (Projectile x) => x.Hitbox.Intersects(base.projectile.Hitbox));
+			foreach (Projectile projectile in enumerable)
+			{
+				if (base.projectile != projectile && !projectile.friendly && !projectile.minion && projectile.velocity.X != 0f && projectile.velocity.Y != 0f)
+				{
+					projectile.velocity.X = -projectile.velocity.X;
+					projectile.velocity.Y = -projectile.velocity.Y;
+				}
 			}
 			if (Main.myPlayer == base.projectile.owner)
 			{

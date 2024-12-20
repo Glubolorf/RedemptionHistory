@@ -33,19 +33,12 @@ namespace Redemption.Items
 		public override void AddRecipes()
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
+			modRecipe.alchemy = true;
 			modRecipe.AddIngredient(2308, 1);
 			modRecipe.AddIngredient(null, "Nightshade", 1);
 			modRecipe.AddIngredient(315, 1);
 			modRecipe.AddIngredient(126, 1);
 			modRecipe.AddTile(13);
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(2308, 1);
-			modRecipe.AddIngredient(null, "Nightshade", 1);
-			modRecipe.AddIngredient(315, 1);
-			modRecipe.AddIngredient(126, 1);
-			modRecipe.AddTile(355);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
 		}

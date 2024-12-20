@@ -20,7 +20,7 @@ namespace Redemption.Projectiles.v08
 			base.projectile.height = 22;
 			base.projectile.friendly = true;
 			base.projectile.timeLeft = 180;
-			base.projectile.penetrate = 1;
+			base.projectile.penetrate = 2;
 		}
 
 		public override bool PreAI()
@@ -73,6 +73,10 @@ namespace Redemption.Projectiles.v08
 			if (crit2 >= 100 || Main.rand.Next(1, 101) <= crit2)
 			{
 				crit = true;
+			}
+			if (!Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).spiritPierce)
+			{
+				base.projectile.Kill();
 			}
 		}
 

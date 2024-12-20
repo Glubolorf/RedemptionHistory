@@ -9,8 +9,8 @@ namespace Redemption.Items
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Nightshade Potion");
-			base.Tooltip.SetDefault("Gain stealth and increased damage reduction at night\nDoes nothing at day");
+			base.DisplayName.SetDefault("Vendetta Potion");
+			base.Tooltip.SetDefault("Attackers also take damage, and get inflicted by poison");
 		}
 
 		public override void SetDefaults()
@@ -33,24 +33,18 @@ namespace Redemption.Items
 		public override void AddRecipes()
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
+			modRecipe.alchemy = true;
 			modRecipe.AddIngredient(null, "Nightshade", 2);
-			modRecipe.AddIngredient(315, 1);
-			modRecipe.AddIngredient(2303, 1);
+			modRecipe.AddIngredient(209, 1);
+			modRecipe.AddIngredient(69, 1);
+			modRecipe.AddIngredient(276, 1);
 			modRecipe.AddIngredient(126, 1);
 			modRecipe.AddTile(13);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
 			modRecipe = new ModRecipe(base.mod);
 			modRecipe.AddIngredient(null, "Nightshade", 2);
-			modRecipe.AddIngredient(315, 1);
-			modRecipe.AddIngredient(2303, 1);
-			modRecipe.AddIngredient(126, 1);
-			modRecipe.AddTile(355);
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "Nightshade", 2);
-			modRecipe.AddIngredient(2346, 1);
+			modRecipe.AddIngredient(301, 1);
 			modRecipe.AddTile(355);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();

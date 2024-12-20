@@ -21,7 +21,7 @@ namespace Redemption.Projectiles.v08
 			base.projectile.aiStyle = 0;
 			base.projectile.tileCollide = false;
 			base.projectile.timeLeft = 350;
-			base.projectile.penetrate = 1;
+			base.projectile.penetrate = 2;
 			base.projectile.alpha = 60;
 			base.projectile.friendly = true;
 		}
@@ -138,6 +138,10 @@ namespace Redemption.Projectiles.v08
 			if (crit2 >= 100 || Main.rand.Next(1, 101) <= crit2)
 			{
 				crit = true;
+			}
+			if (!Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).spiritPierce)
+			{
+				base.projectile.Kill();
 			}
 		}
 	}

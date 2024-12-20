@@ -16,7 +16,7 @@ namespace Redemption.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 250;
+			base.item.damage = 175;
 			base.item.useTime = 12;
 			base.item.useAnimation = 12;
 			base.item.autoReuse = true;

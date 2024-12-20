@@ -16,8 +16,6 @@ namespace Redemption.Buffs
 
 		public override void Update(Player player, ref int buffIndex)
 		{
-			player.statDefense += 12;
-			player.endurance += 0.12f;
 		}
 	}
 }

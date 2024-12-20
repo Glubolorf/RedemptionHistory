@@ -30,6 +30,18 @@ namespace Redemption.Items.Weapons
 			base.item.autoReuse = false;
 		}
 
+		public override void AddRecipes()
+		{
+			ModRecipe modRecipe = new ModRecipe(base.mod);
+			modRecipe.AddIngredient(null, "CursedGem", 1);
+			modRecipe.AddIngredient(null, "ForgottenSword", 1);
+			modRecipe.AddIngredient(520, 5);
+			modRecipe.AddIngredient(521, 5);
+			modRecipe.AddTile(26);
+			modRecipe.SetResult(this, 1);
+			modRecipe.AddRecipe();
+		}
+
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
 		{
 			if (target.life <= 0)

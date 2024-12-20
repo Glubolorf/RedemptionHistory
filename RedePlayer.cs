@@ -194,6 +194,7 @@ namespace Redemption
 			this.natureGuardian23 = false;
 			this.natureGuardian24 = false;
 			this.natureGuardian25 = false;
+			this.natureGuardian26 = false;
 			this.hazmatAccessoryPrevious = this.hazmatAccessory;
 			this.hazmatAccessory = (this.hazmatHideVanity = (this.hazmatForceVanity = (this.hazmatPower = false)));
 			this.skeletonFriendly = false;
@@ -229,6 +230,9 @@ namespace Redemption
 			this.lifeSteal1 = false;
 			this.plasmaShield = false;
 			this.eldritchRoot = false;
+			this.sleepPowder = false;
+			this.vendetta = false;
+			this.iceShield = false;
 		}
 
 		public override void UpdateDead()
@@ -238,6 +242,7 @@ namespace Redemption
 			this.druidBane = false;
 			this.holyFire = false;
 			this.bInfection = false;
+			this.sleepPowder = false;
 		}
 
 		public override void UpdateBadLifeRegen()
@@ -295,6 +300,14 @@ namespace Redemption
 				}
 				base.player.lifeRegenTime = 0;
 				base.player.lifeRegen -= 15;
+			}
+			if (this.sleepPowder)
+			{
+				Player player = base.player;
+				player.velocity.X = player.velocity.X * 0.4f;
+				Player player2 = base.player;
+				player2.velocity.Y = player2.velocity.Y * 0.4f;
+				base.player.statDefense -= 25;
 			}
 		}
 
@@ -413,6 +426,19 @@ namespace Redemption
 				dust4.velocity.Y = dust4.velocity.Y - 0.5f;
 				Main.playerDrawDust.Add(num4);
 			}
+		}
+
+		public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
+		{
+			if (this.vendetta)
+			{
+				npc.AddBuff(20, 300, false);
+			}
+		}
+
+		public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+		{
+			return !this.iceShield;
 		}
 
 		public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
@@ -766,6 +792,8 @@ namespace Redemption
 
 		public bool natureGuardian25;
 
+		public bool natureGuardian26;
+
 		public bool ZoneLab;
 
 		public bool hazmatAccessoryPrevious;
@@ -845,5 +873,11 @@ namespace Redemption
 		public bool plasmaShield;
 
 		public bool eldritchRoot;
+
+		public bool sleepPowder;
+
+		public bool vendetta;
+
+		public bool iceShield;
 	}
 }

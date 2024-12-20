@@ -24,6 +24,8 @@ namespace Redemption.NPCs
 			this.holyFire = false;
 			this.bInfection = false;
 			this.needleStab = false;
+			this.sleepPowder = false;
+			this.vendetta = false;
 		}
 
 		public override void UpdateLifeRegen(NPC npc, ref int damage)
@@ -110,6 +112,23 @@ namespace Redemption.NPCs
 					damage = num * 10;
 				}
 			}
+			if (this.sleepPowder)
+			{
+				if (!npc.boss)
+				{
+					npc.velocity.X = npc.velocity.X * 0.4f;
+					npc.velocity.Y = npc.velocity.Y * 0.4f;
+				}
+				npc.defense -= 25;
+			}
+		}
+
+		public override void ModifyHitPlayer(NPC npc, Player target, ref int damage, ref bool crit)
+		{
+			if (this.vendetta)
+			{
+				npc.AddBuff(20, 200, false);
+			}
 		}
 
 		public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot)
@@ -184,5 +203,9 @@ namespace Redemption.NPCs
 		public bool bInfection;
 
 		public bool needleStab;
+
+		public bool sleepPowder;
+
+		public bool vendetta;
 	}
 }

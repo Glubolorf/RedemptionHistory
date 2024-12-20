@@ -90,7 +90,7 @@ namespace Redemption.NPCs
 			if (!RedeWorld.keeperSaved && Main.netMode != 1 && base.npc.life <= 0)
 			{
 				NPC.NewNPC((int)base.npc.position.X + 20, (int)base.npc.position.Y + 20, base.mod.NPCType("AAAA"), 0, 0f, 0f, 0f, 0f, 255);
-				Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Shriek").WithVolume(0.9f).WithPitchVariance(0.1f), -1, -1);
+				Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Shriek").WithVolume(0.4f).WithPitchVariance(0.1f), -1, -1);
 			}
 		}
 
@@ -219,6 +219,13 @@ namespace Redemption.NPCs
 			{
 				shop.item[nextSlot].SetDefaults(base.mod.ItemType<LargeLostSoul>(), false);
 				shop.item[nextSlot].shopCustomPrice = new int?(16);
+				shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
+				nextSlot++;
+			}
+			if (Main.hardMode && RedeWorld.downedPatientZero)
+			{
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType<SmallShadesoul>(), false);
+				shop.item[nextSlot].shopCustomPrice = new int?(12);
 				shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 				nextSlot++;
 			}

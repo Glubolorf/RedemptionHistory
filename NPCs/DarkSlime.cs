@@ -192,6 +192,13 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
+			for (int i = 0; i < 200; i++)
+			{
+				if (Main.npc[i].boss)
+				{
+					return 0f;
+				}
+			}
 			return SpawnCondition.OverworldDay.Chance * ((Main.hardMode && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && !RedeWorld.downedDarkSlime && !NPC.AnyNPCs(base.mod.NPCType("DarkSlime"))) ? 0.003f : 0f);
 		}
 

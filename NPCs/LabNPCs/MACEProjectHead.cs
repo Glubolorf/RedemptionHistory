@@ -372,6 +372,12 @@ namespace Redemption.NPCs.LabNPCs
 			}
 		}
 
+		public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+		{
+			damage *= 0.7;
+			return true;
+		}
+
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
 			base.npc.lifeMax = (int)((float)base.npc.lifeMax * 0.6f * bossLifeScale);

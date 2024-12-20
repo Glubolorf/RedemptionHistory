@@ -46,9 +46,23 @@ namespace Redemption.NPCs
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/AJollyMadmanGore5"), 1f);
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/AJollyMadmanGore5"), 1f);
 			}
-			if (Main.netMode != 1 && base.npc.life <= 0)
+			if (RedeWorld.downedPatientZero)
+			{
+				if (Main.netMode != 1 && base.npc.life <= 0)
+				{
+					NPC.NewNPC((int)base.npc.position.X + 22, (int)base.npc.position.Y + 55, base.mod.NPCType("DarkSoul"), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)base.npc.Center.X + 12, (int)base.npc.Center.Y + 8, base.mod.NPCType("ShadesoulNPC"), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y + 10, base.mod.NPCType("SmallShadesoulNPC"), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)base.npc.Center.X - 8, (int)base.npc.Center.Y - 4, base.mod.NPCType("SmallShadesoulNPC"), 0, 0f, 0f, 0f, 0f, 255);
+					return;
+				}
+			}
+			else if (Main.netMode != 1 && base.npc.life <= 0)
 			{
 				NPC.NewNPC((int)base.npc.position.X + 22, (int)base.npc.position.Y + 55, base.mod.NPCType("DarkSoul"), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.Center.X + 12, (int)base.npc.Center.Y + 8, base.mod.NPCType("LostSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y + 10, base.mod.NPCType("LostSoul1"), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.Center.X - 8, (int)base.npc.Center.Y - 4, base.mod.NPCType("LostSoul1"), 0, 0f, 0f, 0f, 0f, 255);
 			}
 		}
 

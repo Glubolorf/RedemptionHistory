@@ -5,13 +5,13 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Redemption.NPCs
+namespace Redemption.NPCs.Varients
 {
-	public class RainbowChicken : ModNPC
+	public class LongChicken : ModNPC
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Rainbow Chicken");
+			base.DisplayName.SetDefault("L o n g  Chicken");
 			Main.npcFrameCount[base.npc.type] = 7;
 		}
 
@@ -24,29 +24,24 @@ namespace Redemption.NPCs
 			base.npc.HitSound = SoundID.NPCHit1;
 			base.npc.DeathSound = SoundID.NPCDeath1;
 			base.npc.knockBackResist = 0.5f;
+			base.npc.npcSlots = 0f;
 			base.npc.aiStyle = 7;
 			this.aiType = 46;
-			base.npc.npcSlots = 0f;
 			this.animationType = 46;
 			base.npc.dontTakeDamageFromHostiles = false;
 			this.banner = base.npc.type;
 			this.bannerItem = base.mod.ItemType("ChickenBanner");
+			base.npc.catchItem = (short)base.mod.ItemType("ChickenItem");
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
 		{
 			if (base.npc.life <= 0)
 			{
-				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 66, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
-				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 66, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
-				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 66, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
-				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 66, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
-				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 66, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
-				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 66, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
-				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 66, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
-				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 66, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
-				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 66, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
-				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 66, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/ChickenGore1"), 1f);
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/ChickenGore2"), 1f);
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/ChickenGore3"), 1f);
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/ChickenGore3"), 1f);
 				if (base.npc.FindBuffIndex(24) != -1)
 				{
 					Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("FriedChicken"), 1, false, 0, false, false);
@@ -89,12 +84,41 @@ namespace Redemption.NPCs
 					this.peckTimer = 0;
 				}
 			}
+			if (Main.rand.Next(500) == 0 && !this.cluckCluck)
+			{
+				this.cluckCluck = true;
+			}
+			if (this.cluckCluck)
+			{
+				this.cluckTimer++;
+				if (this.cluckTimer == 1)
+				{
+					int num = Main.rand.Next(3);
+					if (num == 0 && !Main.dedServ)
+					{
+						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck1").WithVolume(0.5f).WithPitchVariance(0.1f), base.npc.position);
+					}
+					if (num == 1 && !Main.dedServ)
+					{
+						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck2").WithVolume(0.5f).WithPitchVariance(0.1f), base.npc.position);
+					}
+					if (num == 2 && !Main.dedServ)
+					{
+						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck3").WithVolume(0.5f).WithPitchVariance(0.1f), base.npc.position);
+					}
+				}
+				if (this.cluckTimer >= 2)
+				{
+					this.cluckCluck = false;
+					this.cluckTimer = 0;
+				}
+			}
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/RainbowChickenPeck");
+			Texture2D texture = base.mod.GetTexture("NPCs/Varients/LongChickenPeck");
 			int spriteDirection = base.npc.spriteDirection;
 			if (!this.peckPeck)
 			{
@@ -123,5 +147,11 @@ namespace Redemption.NPCs
 		private int peckCounter;
 
 		private int peckTimer;
+
+		private bool cluckCluck;
+
+		private int cluckTimer;
+
+		private bool change;
 	}
 }

@@ -159,6 +159,13 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
+			for (int i = 0; i < 200; i++)
+			{
+				if (Main.npc[i].boss)
+				{
+					return 0f;
+				}
+			}
 			return SpawnCondition.Ocean.Chance * ((!RedeWorld.downedSunkenCaptain && !NPC.AnyNPCs(base.mod.NPCType("SunkenCaptain")) && Main.moonPhase == 0 && !Main.dayTime) ? 0.3f : 0f);
 		}
 

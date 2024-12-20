@@ -238,6 +238,7 @@ namespace Redemption
 				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/BossStarGod1"), base.ItemType("NebBox"), base.TileType("NebBoxTile"), 0);
 				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/BossStarGod2"), base.ItemType("NebBox2"), base.TileType("NebBox2Tile"), 0);
 				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/BossForest1"), base.ItemType("ForestBossBox"), base.TileType("ForestBossBoxTile"), 0);
+				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/ChickenInvasion1"), base.ItemType("ChickenInvasionBox"), base.TileType("ChickenInvasionBoxTile"), 0);
 				Redemption.PremultiplyTexture(base.GetTexture("Backgrounds/fog"));
 				Filters.Scene["Redemption:Nebuleus"] = new Filter(new StarGodSkyData("FilterMiniTower").UseColor(0.3f, 0f, 0.4f).UseOpacity(0.5f), 4);
 				SkyManager.Instance["Redemption:Nebuleus"] = new StarGodSky();
@@ -366,7 +367,7 @@ namespace Redemption
 					int num4 = (int)(46f * num2);
 					Rectangle rectangle = Utils.CenteredRectangle(new Vector2((float)(Main.screenWidth - 20) - 100f, (float)(Main.screenHeight - 20) - 23f), new Vector2((float)num3, (float)num4));
 					Utils.DrawInvBG(spriteBatch, rectangle, new Color(63, 65, 151, 255) * 0.785f);
-					float num5 = (float)ChickWorld.ChickPoints2 / 180f;
+					float num5 = (float)ChickWorld.ChickPoints2 / 200f;
 					string text = "Cleared " + Math.Round((double)(100f * num5)) + "%";
 					Utils.DrawBorderString(spriteBatch, text, new Vector2((float)(rectangle.X + rectangle.Width / 2), (float)(rectangle.Y + 5)), Color.White, num2 * 0.8f, 0.5f, -0.1f, -1);
 					Rectangle rectangle2 = Utils.CenteredRectangle(new Vector2((float)rectangle.X + (float)rectangle.Width * 0.5f, (float)rectangle.Y + (float)rectangle.Height * 0.75f), new Vector2((float)colorBarTexture2.Width, (float)colorBarTexture2.Height));
@@ -401,7 +402,7 @@ namespace Redemption
 				int num10 = (int)(46f * num8);
 				Rectangle rectangle6 = Utils.CenteredRectangle(new Vector2((float)(Main.screenWidth - 20) - 100f, (float)(Main.screenHeight - 20) - 23f), new Vector2((float)num9, (float)num10));
 				Utils.DrawInvBG(spriteBatch, rectangle6, new Color(63, 65, 151, 255) * 0.785f);
-				float num11 = (float)ChickWorld.ChickPoints2 / 80f;
+				float num11 = (float)ChickWorld.ChickPoints2 / 100f;
 				string text2 = "Cleared " + Math.Round((double)(100f * num11)) + "%";
 				Utils.DrawBorderString(spriteBatch, text2, new Vector2((float)(rectangle6.X + rectangle6.Width / 2), (float)(rectangle6.Y + 5)), Color.White, num8 * 0.8f, 0.5f, -0.1f, -1);
 				Rectangle rectangle7 = Utils.CenteredRectangle(new Vector2((float)rectangle6.X + (float)rectangle6.Width * 0.5f, (float)rectangle6.Y + (float)rectangle6.Height * 0.75f), new Vector2((float)colorBarTexture4.Width, (float)colorBarTexture4.Height));

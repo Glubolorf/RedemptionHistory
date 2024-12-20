@@ -11,7 +11,7 @@ namespace Redemption.Items.Cores
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Forest Nymph's Core");
-			base.Tooltip.SetDefault("'Become one with nature'\n[c/64ff64:-Strengths-]\n5% increased druidic damage\nYou will photosynesis at day, increasing life regen and max life\nGreatly increased life regen while in water\nAll stats are increased while it's raining\n[c/ff6464:-Weaknesses-]\nYou are weaker at night, decreasing damage and defence\nYou can't regen life when in the corruption/crimson");
+			base.Tooltip.SetDefault("'Become one with nature'\n[c/64ff64:-Strengths-]\n5% increased druidic damage\nYou will photosynesis at day, increasing life regen and max life\nGreatly increased life regen while in water\nForest Nymphs, Forest Golems, Living Blooms, and Forest Spiders become friendly\nAll stats are increased while it's raining\n[c/ff6464:-Weaknesses-]\nYou are weaker at night, decreasing damage and defence\nYou can't regen life when in the corruption/crimson");
 			Main.RegisterItemAnimation(base.item.type, new DrawAnimationVertical(5, 7));
 		}
 
@@ -70,6 +70,8 @@ namespace Redemption.Items.Cores
 			{
 				player.bleed = true;
 			}
+			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
+			modPlayer.forestFriendly = true;
 		}
 
 		public override void AddRecipes()

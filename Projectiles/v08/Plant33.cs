@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.v08
@@ -11,6 +13,7 @@ namespace Redemption.Projectiles.v08
 		{
 			base.DisplayName.SetDefault("Thorn Brambles");
 			Main.projFrames[base.projectile.type] = 9;
+			ProjectileID.Sets.DontAttachHideToAlpha[base.projectile.type] = true;
 		}
 
 		public override void SetDefaults()
@@ -21,8 +24,14 @@ namespace Redemption.Projectiles.v08
 			base.projectile.hostile = false;
 			base.projectile.friendly = true;
 			base.projectile.tileCollide = true;
+			base.projectile.hide = true;
 			base.projectile.ignoreWater = true;
 			base.projectile.timeLeft = 180;
+		}
+
+		public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
+		{
+			drawCacheProjsBehindNPCsAndTiles.Add(index);
 		}
 
 		public override void AI()

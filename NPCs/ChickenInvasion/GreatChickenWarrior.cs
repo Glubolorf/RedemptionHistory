@@ -55,6 +55,10 @@ namespace Redemption.NPCs.ChickenInvasion
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/GreaterChickmanGore1"), 1f);
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/GreaterChickmanGore2"), 1f);
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/GreaterChickmanGore3"), 1f);
+				if (base.npc.FindBuffIndex(24) != -1)
+				{
+					Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("FriedChicken"), Main.rand.Next(2, 5), false, 0, false, false);
+				}
 				if (ChickWorld.chickArmy)
 				{
 					ChickWorld.ChickPoints2 += 2;

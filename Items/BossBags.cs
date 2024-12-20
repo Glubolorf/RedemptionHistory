@@ -22,7 +22,7 @@ namespace Redemption.Items
 			}
 			if (context == "bossBag" && arg == 3328)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("SoulOfBloom"), Main.rand.Next(30, 40));
+				player.QuickSpawnItem(base.mod.ItemType("SoulOfBloom"), Main.rand.Next(120, 180));
 				if (Main.rand.Next(7) == 0)
 				{
 					int num = Main.rand.Next(2);

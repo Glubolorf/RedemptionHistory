@@ -165,6 +165,14 @@ namespace Redemption.NPCs.Bosses
 					this.oldFrame = 0;
 				}
 			}
+			if (NPC.AnyNPCs(base.mod.NPCType("CleaverDagger")))
+			{
+				base.npc.dontTakeDamage = true;
+			}
+			else
+			{
+				base.npc.dontTakeDamage = false;
+			}
 			if (Main.dayTime)
 			{
 				base.npc.timeLeft = 0;

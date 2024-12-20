@@ -213,6 +213,13 @@ namespace Redemption.NPCs.v08
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
+			for (int i = 0; i < 200; i++)
+			{
+				if (Main.npc[i].boss)
+				{
+					return 0f;
+				}
+			}
 			return SpawnCondition.OverworldNightMonster.Chance * ((Main.hardMode && NPC.downedMoonlord && RedeWorld.downedVlitch3 && RedeWorld.downedPatientZero && !NPC.AnyNPCs(base.mod.NPCType("CorruptedDrone1")) && !NPC.AnyNPCs(base.mod.NPCType("CorruptedCopter1"))) ? 0.009f : 0f);
 		}
 

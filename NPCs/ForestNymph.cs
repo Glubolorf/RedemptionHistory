@@ -73,7 +73,7 @@ namespace Redemption.NPCs
 					}
 				}
 				float num = base.npc.Distance(Main.player[base.npc.target].Center);
-				if (num <= 160f && Main.rand.Next(150) == 0 && !this.slashAttack)
+				if (num <= 160f && !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).forestFriendly && Main.rand.Next(150) == 0 && !this.slashAttack)
 				{
 					this.slashAttack = true;
 				}
@@ -200,6 +200,11 @@ namespace Redemption.NPCs
 				Main.spriteBatch.Draw(texture2, vector2 - Main.screenPosition, new Rectangle?(new Rectangle(0, num4, texture2.Width, num3)), drawColor, base.npc.rotation, new Vector2((float)texture2.Width / 2f, (float)num3 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
 			}
 			return false;
+		}
+
+		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+		{
+			return !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).forestFriendly;
 		}
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)

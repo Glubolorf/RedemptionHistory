@@ -31,7 +31,7 @@ namespace Redemption.NPCs.v08
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.Cavern.Chance * (RedeWorld.downedPatientZero ? 0.04f : 0f);
+			return SpawnCondition.Cavern.Chance * (RedeWorld.downedPatientZero ? 0.05f : 0f);
 		}
 
 		public override void NPCLoot()

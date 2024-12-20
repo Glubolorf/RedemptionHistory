@@ -16,7 +16,7 @@ namespace Redemption.ChickenArmy
 		{
 			if (RedeWorld.downedPatientZero)
 			{
-				if (ChickWorld.ChickPoints2 >= 180 || ChickWorld.ChickPoints >= 180)
+				if (ChickWorld.ChickPoints2 >= 200 || ChickWorld.ChickPoints >= 200)
 				{
 					RedeWorld.downedChickenInv = true;
 					RedeWorld.downedChickenInvPZ = true;
@@ -30,7 +30,7 @@ namespace Redemption.ChickenArmy
 					ChickWorld.chickArmy = false;
 				}
 			}
-			else if (ChickWorld.ChickPoints2 >= 80 || ChickWorld.ChickPoints >= 80)
+			else if (ChickWorld.ChickPoints2 >= 100 || ChickWorld.ChickPoints >= 100)
 			{
 				RedeWorld.downedChickenInv = true;
 				if (Main.netMode == 2)

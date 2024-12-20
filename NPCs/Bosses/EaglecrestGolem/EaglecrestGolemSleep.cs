@@ -39,6 +39,13 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
+			for (int i = 0; i < 200; i++)
+			{
+				if (Main.npc[i].boss)
+				{
+					return 0f;
+				}
+			}
 			return SpawnCondition.OverworldDay.Chance * ((NPC.downedBoss2 && !RedeWorld.downedEaglecrestGolem && !NPC.AnyNPCs(base.mod.NPCType("EaglecrestGolem")) && !NPC.AnyNPCs(base.mod.NPCType("EaglecrestGolemSleep"))) ? 0.01f : 0f);
 		}
 	}

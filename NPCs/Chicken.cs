@@ -42,6 +42,10 @@ namespace Redemption.NPCs
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/ChickenGore2"), 1f);
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/ChickenGore3"), 1f);
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/ChickenGore3"), 1f);
+				if (base.npc.FindBuffIndex(24) != -1)
+				{
+					Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("FriedChicken"), 1, false, 0, false, false);
+				}
 			}
 		}
 
@@ -49,18 +53,23 @@ namespace Redemption.NPCs
 		{
 			if (!this.change)
 			{
-				int num = Main.rand.Next(250);
+				int num = Main.rand.Next(1000);
 				if (num == 0)
+				{
+					base.npc.SetDefaults(base.mod.NPCType("LongChicken"), -1f);
+					this.change = true;
+				}
+				if (num >= 1 && num < 4)
 				{
 					base.npc.SetDefaults(base.mod.NPCType("ChickenGold"), -1f);
 					this.change = true;
 				}
-				if (num == 1)
+				if (num >= 4 && num < 8)
 				{
 					base.npc.SetDefaults(base.mod.NPCType("VlitchChicken"), -1f);
 					this.change = true;
 				}
-				if (num >= 2)
+				if (num >= 8)
 				{
 					int num2 = Main.rand.Next(5);
 					if (num2 == 0)

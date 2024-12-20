@@ -7,9 +7,11 @@ using Redemption.Buffs;
 using Redemption.Items;
 using Redemption.Items.Armor.Costumes;
 using Redemption.Items.Cores;
+using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Events;
+using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.Utilities;
@@ -99,6 +101,70 @@ namespace Redemption
 			if (Main.raining && this.ZoneXeno && (base.player.ZoneOverworldHeight || base.player.ZoneSkyHeight))
 			{
 				base.player.AddBuff(base.mod.BuffType("HeavyRadiationDebuff"), 2, true);
+			}
+			if (base.player.pulley)
+			{
+				this.ModDashMovement();
+			}
+			else if (base.player.grappling[0] == -1 && !base.player.tongued)
+			{
+				this.ModHorizontalMovement();
+				this.ModDashMovement();
+			}
+			if (Main.hasFocus)
+			{
+				for (int i = 0; i < this.modDoubleTapCardinalTimer.Length; i++)
+				{
+					this.modDoubleTapCardinalTimer[i]--;
+					if (this.modDoubleTapCardinalTimer[i] < 0)
+					{
+						this.modDoubleTapCardinalTimer[i] = 0;
+					}
+				}
+				for (int j = 0; j < 4; j++)
+				{
+					bool flag = false;
+					bool flag2 = false;
+					switch (j)
+					{
+					case 0:
+						flag = (base.player.controlDown && base.player.releaseDown);
+						flag2 = base.player.controlDown;
+						break;
+					case 1:
+						flag = (base.player.controlUp && base.player.releaseUp);
+						flag2 = base.player.controlUp;
+						break;
+					case 2:
+						flag = (base.player.controlRight && base.player.releaseRight);
+						flag2 = base.player.controlRight;
+						break;
+					case 3:
+						flag = (base.player.controlLeft && base.player.releaseLeft);
+						flag2 = base.player.controlLeft;
+						break;
+					}
+					if (flag)
+					{
+						if (this.modDoubleTapCardinalTimer[j] > 0)
+						{
+							this.ModKeyDoubleTap(j);
+						}
+						else
+						{
+							this.modDoubleTapCardinalTimer[j] = 15;
+						}
+					}
+					if (flag2)
+					{
+						this.modHoldDownCardinalTimer[j]++;
+						base.player.KeyHoldDown(j, this.modHoldDownCardinalTimer[j]);
+					}
+					else
+					{
+						this.modHoldDownCardinalTimer[j] = 0;
+					}
+				}
 			}
 		}
 
@@ -294,6 +360,303 @@ namespace Redemption
 			this.cursedShinkiteSet = false;
 			this.smallShadeSet = false;
 			this.shadeSet = false;
+			this.forestFriendly = false;
+			this.infectedThornshield = false;
+			this.dashMod = 0;
+		}
+
+		public void ModDashMovement()
+		{
+			if (this.dashMod == 1 && this.dashDelayMod < 0 && base.player.whoAmI == Main.myPlayer)
+			{
+				Rectangle rectangle;
+				rectangle..ctor((int)((double)base.player.position.X + (double)base.player.velocity.X * 0.5 - 4.0), (int)((double)base.player.position.Y + (double)base.player.velocity.Y * 0.5 - 4.0), base.player.width + 8, base.player.height + 8);
+				for (int i = 0; i < 200; i++)
+				{
+					if (Main.npc[i].active && !Main.npc[i].dontTakeDamage && !Main.npc[i].friendly && Main.npc[i].immune[base.player.whoAmI] <= 0)
+					{
+						NPC npc = Main.npc[i];
+						Rectangle rect = npc.getRect();
+						DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(base.player);
+						if (rectangle.Intersects(rect) && (npc.noTileCollide || base.player.CanHit(npc)))
+						{
+							float num = 40f;
+							float num2 = 8f;
+							bool flag = false;
+							if (base.player.kbGlove)
+							{
+								num2 *= 2f;
+							}
+							if (base.player.kbBuff)
+							{
+								num2 *= 1.5f;
+							}
+							if (Main.rand.Next(100) < druidDamagePlayer.druidCrit)
+							{
+								flag = true;
+							}
+							int num3 = base.player.direction;
+							if (base.player.velocity.X < 0f)
+							{
+								num3 = -1;
+							}
+							if (base.player.velocity.X > 0f)
+							{
+								num3 = 1;
+							}
+							if (base.player.whoAmI == Main.myPlayer)
+							{
+								base.player.ApplyDamageToNPC(npc, (int)num, num2, num3, flag);
+								npc.AddBuff(39, 300, false);
+							}
+							npc.immune[base.player.whoAmI] = 6;
+							base.player.immune = true;
+							base.player.immuneNoBlink = true;
+							base.player.immuneTime = 4;
+						}
+					}
+				}
+			}
+			if (this.dashDelayMod > 0)
+			{
+				if (base.player.eocDash > 0)
+				{
+					base.player.eocDash--;
+				}
+				if (base.player.eocDash == 0)
+				{
+					base.player.eocHit = -1;
+				}
+				this.dashDelayMod--;
+				return;
+			}
+			if (this.dashDelayMod < 0)
+			{
+				float num4 = 12f;
+				float num5 = 0.992f;
+				float num6 = Math.Max(base.player.accRunSpeed, base.player.maxRunSpeed);
+				float num7 = 0.96f;
+				int num8 = 20;
+				if (this.dashMod == 1)
+				{
+					for (int j = 0; j < 2; j++)
+					{
+						int num9;
+						if (base.player.velocity.Y == 0f)
+						{
+							num9 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y + (float)base.player.height - 4f), base.player.width, 8, 74, 0f, 0f, 100, default(Color), 1.4f);
+						}
+						else
+						{
+							num9 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y + (float)(base.player.height / 2) - 8f), base.player.width, 16, 74, 0f, 0f, 100, default(Color), 1.4f);
+						}
+						Main.dust[num9].velocity *= 0.1f;
+						Main.dust[num9].scale *= 1f + (float)Main.rand.Next(20) * 0.01f;
+						Main.dust[num9].shader = GameShaders.Armor.GetSecondaryShader(base.player.cShoe, base.player);
+					}
+				}
+				if (this.dashMod > 0)
+				{
+					base.player.vortexStealthActive = false;
+					if (base.player.velocity.X > num4 || base.player.velocity.X < -num4)
+					{
+						base.player.velocity.X = base.player.velocity.X * num5;
+						return;
+					}
+					if (base.player.velocity.X > num6 || base.player.velocity.X < -num6)
+					{
+						base.player.velocity.X = base.player.velocity.X * num7;
+						return;
+					}
+					this.dashDelayMod = num8;
+					if (base.player.velocity.X < 0f)
+					{
+						base.player.velocity.X = -num6;
+						return;
+					}
+					if (base.player.velocity.X > 0f)
+					{
+						base.player.velocity.X = num6;
+						return;
+					}
+				}
+			}
+			else if (this.dashMod > 0 && !base.player.mount.Active && this.dashMod == 1)
+			{
+				int num10 = 0;
+				bool flag2 = false;
+				if (this.dashTimeMod > 0)
+				{
+					this.dashTimeMod--;
+				}
+				if (this.dashTimeMod < 0)
+				{
+					this.dashTimeMod++;
+				}
+				if (base.player.controlRight && base.player.releaseRight)
+				{
+					if (this.dashTimeMod > 0)
+					{
+						num10 = 1;
+						flag2 = true;
+						this.dashTimeMod = 0;
+					}
+					else
+					{
+						this.dashTimeMod = 15;
+					}
+				}
+				else if (base.player.controlLeft && base.player.releaseLeft)
+				{
+					if (this.dashTimeMod < 0)
+					{
+						num10 = -1;
+						flag2 = true;
+						this.dashTimeMod = 0;
+					}
+					else
+					{
+						this.dashTimeMod = -15;
+					}
+				}
+				if (flag2)
+				{
+					base.player.velocity.X = 16.9f * (float)num10;
+					Point point = Utils.ToTileCoordinates(base.player.Center + new Vector2((float)(num10 * base.player.width / 2 + 2), base.player.gravDir * -(float)base.player.height / 2f + base.player.gravDir * 2f));
+					Point point2 = Utils.ToTileCoordinates(base.player.Center + new Vector2((float)(num10 * base.player.width / 2 + 2), 0f));
+					if (WorldGen.SolidOrSlopedTile(point.X, point.Y) || WorldGen.SolidOrSlopedTile(point2.X, point2.Y))
+					{
+						base.player.velocity.X = base.player.velocity.X / 2f;
+					}
+					this.dashDelayMod = -1;
+					for (int k = 0; k < 20; k++)
+					{
+						int num11 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y), base.player.width, base.player.height, 74, 0f, 0f, 100, default(Color), 2f);
+						Dust dust = Main.dust[num11];
+						dust.position.X = dust.position.X + (float)Main.rand.Next(-5, 6);
+						Dust dust2 = Main.dust[num11];
+						dust2.position.Y = dust2.position.Y + (float)Main.rand.Next(-5, 6);
+						Main.dust[num11].velocity *= 0.2f;
+						Main.dust[num11].scale *= 1f + (float)Main.rand.Next(20) * 0.01f;
+						Main.dust[num11].shader = GameShaders.Armor.GetSecondaryShader(base.player.cShoe, base.player);
+					}
+				}
+			}
+		}
+
+		public void ModHorizontalMovement()
+		{
+			float num = (base.player.accRunSpeed + base.player.maxRunSpeed) / 2f;
+			if (base.player.controlLeft && base.player.velocity.X > -base.player.accRunSpeed && this.dashDelayMod >= 0)
+			{
+				if (base.player.mount.Active && base.player.mount.Cart)
+				{
+					if (base.player.velocity.X < 0f)
+					{
+						base.player.direction = -1;
+					}
+				}
+				else if ((base.player.itemAnimation == 0 || base.player.inventory[base.player.selectedItem].useTurn) && base.player.mount.AllowDirectionChange)
+				{
+					base.player.direction = -1;
+				}
+				if (base.player.velocity.Y == 0f || base.player.wingsLogic > 0 || base.player.mount.CanFly)
+				{
+					if (base.player.velocity.X > base.player.runSlowdown)
+					{
+						base.player.velocity.X = base.player.velocity.X - base.player.runSlowdown;
+					}
+					base.player.velocity.X = base.player.velocity.X - base.player.runAcceleration * 0.2f;
+					if (base.player.wingsLogic > 0)
+					{
+						base.player.velocity.X = base.player.velocity.X - base.player.runAcceleration * 0.2f;
+					}
+				}
+				if (base.player.onWrongGround)
+				{
+					if (base.player.velocity.X < base.player.runSlowdown)
+					{
+						base.player.velocity.X = base.player.velocity.X + base.player.runSlowdown;
+					}
+					else
+					{
+						base.player.velocity.X = 0f;
+					}
+				}
+				if (base.player.velocity.X < -num && base.player.velocity.Y == 0f && !base.player.mount.Active)
+				{
+					int num2 = 0;
+					if (base.player.gravDir == -1f)
+					{
+						num2 -= base.player.height;
+					}
+					if (this.dashMod == 1)
+					{
+						int num3 = Dust.NewDust(new Vector2(base.player.position.X - 4f, base.player.position.Y + (float)base.player.height + (float)num2), base.player.width + 8, 4, 74, -base.player.velocity.X * 0.5f, base.player.velocity.Y * 0.5f, 50, default(Color), 1.5f);
+						Main.dust[num3].velocity.X = Main.dust[num3].velocity.X * 0.2f;
+						Main.dust[num3].velocity.Y = Main.dust[num3].velocity.Y * 0.2f;
+						Main.dust[num3].shader = GameShaders.Armor.GetSecondaryShader(base.player.cShoe, base.player);
+						return;
+					}
+				}
+			}
+			else if (base.player.controlRight && base.player.velocity.X < base.player.accRunSpeed && this.dashDelayMod >= 0)
+			{
+				if (base.player.mount.Active && base.player.mount.Cart)
+				{
+					if (base.player.velocity.X > 0f)
+					{
+						base.player.direction = -1;
+					}
+				}
+				else if ((base.player.itemAnimation == 0 || base.player.inventory[base.player.selectedItem].useTurn) && base.player.mount.AllowDirectionChange)
+				{
+					base.player.direction = 1;
+				}
+				if (base.player.velocity.Y == 0f || base.player.wingsLogic > 0 || base.player.mount.CanFly)
+				{
+					if (base.player.velocity.X < -base.player.runSlowdown)
+					{
+						base.player.velocity.X = base.player.velocity.X + base.player.runSlowdown;
+					}
+					base.player.velocity.X = base.player.velocity.X + base.player.runAcceleration * 0.2f;
+					if (base.player.wingsLogic > 0)
+					{
+						base.player.velocity.X = base.player.velocity.X + base.player.runAcceleration * 0.2f;
+					}
+				}
+				if (base.player.onWrongGround)
+				{
+					if (base.player.velocity.X > base.player.runSlowdown)
+					{
+						base.player.velocity.X = base.player.velocity.X - base.player.runSlowdown;
+					}
+					else
+					{
+						base.player.velocity.X = 0f;
+					}
+				}
+				if (base.player.velocity.X > num && base.player.velocity.Y == 0f && !base.player.mount.Active)
+				{
+					int num4 = 0;
+					if (base.player.gravDir == -1f)
+					{
+						num4 -= base.player.height;
+					}
+					if (this.dashMod == 1)
+					{
+						int num5 = Dust.NewDust(new Vector2(base.player.position.X - 4f, base.player.position.Y + (float)base.player.height + (float)num4), base.player.width + 8, 4, 74, -base.player.velocity.X * 0.5f, base.player.velocity.Y * 0.5f, 50, default(Color), 1.5f);
+						Main.dust[num5].velocity.X = Main.dust[num5].velocity.X * 0.2f;
+						Main.dust[num5].velocity.Y = Main.dust[num5].velocity.Y * 0.2f;
+						Main.dust[num5].shader = GameShaders.Armor.GetSecondaryShader(base.player.cShoe, base.player);
+					}
+				}
+			}
+		}
+
+		public void ModKeyDoubleTap(int keyDir)
+		{
+			bool reversedUpDownArmorSetBonuses = Main.ReversedUpDownArmorSetBonuses;
 		}
 
 		public override void UpdateDead()
@@ -1229,5 +1592,19 @@ namespace Redemption
 		public bool smallShadeSet;
 
 		public bool shadeSet;
+
+		public bool forestFriendly;
+
+		public bool infectedThornshield;
+
+		public int dashMod;
+
+		public int dashTimeMod;
+
+		public int dashDelayMod;
+
+		public int[] modDoubleTapCardinalTimer = new int[4];
+
+		public int[] modHoldDownCardinalTimer = new int[4];
 	}
 }

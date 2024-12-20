@@ -267,6 +267,13 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
+			for (int i = 0; i < 200; i++)
+			{
+				if (Main.npc[i].boss)
+				{
+					return 0f;
+				}
+			}
 			return SpawnCondition.Cavern.Chance * ((RedeWorld.downedTheKeeper && !RedeWorld.downedSkullDigger && !NPC.AnyNPCs(base.mod.NPCType("SkullDigger"))) ? 0.002f : 0f);
 		}
 

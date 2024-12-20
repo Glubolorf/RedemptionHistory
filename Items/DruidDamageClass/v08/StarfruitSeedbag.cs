@@ -82,16 +82,5 @@ namespace Redemption.Items.DruidDamageClass.v08
 			}
 			return true;
 		}
-
-		public override void AddRecipes()
-		{
-			ModRecipe modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "DaybloomBag", 1);
-			modRecipe.AddIngredient(null, "MoonglowBag", 1);
-			modRecipe.AddIngredient(null, "SoulOfBloom", 15);
-			modRecipe.AddTile(null, "BotanistStationTile");
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
-		}
 	}
 }

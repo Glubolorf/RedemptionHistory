@@ -52,7 +52,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 			{
 				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ThornMask"), 1, false, 0, false, false);
 			}
-			int num = Main.rand.Next(3);
+			int num = Main.rand.Next(4);
 			if (num == 0)
 			{
 				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CursedGrassSword"), 1, false, 0, false, false);
@@ -64,6 +64,10 @@ namespace Redemption.NPCs.Bosses.Thorn
 			if (num == 2)
 			{
 				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("RootTendril"), 1, false, 0, false, false);
+			}
+			if (num == 3)
+			{
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ThornSeedBag"), 1, false, 0, false, false);
 			}
 		}
 

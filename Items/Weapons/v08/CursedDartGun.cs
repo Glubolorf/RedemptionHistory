@@ -12,7 +12,6 @@ namespace Redemption.Items.Weapons.v08
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Cursed Dart Pistol");
-			base.Tooltip.SetDefault("Replaces normal bullets with High Velocity Bullets\n33% chance not to consume ammo");
 		}
 
 		public override void SetDefaults()

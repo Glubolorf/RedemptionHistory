@@ -34,7 +34,7 @@ namespace Redemption.Items
 			{
 				player.QuickSpawnItem(base.mod.ItemType("ThornMask"), 1);
 			}
-			int num = Main.rand.Next(3);
+			int num = Main.rand.Next(4);
 			if (num == 0)
 			{
 				player.QuickSpawnItem(base.mod.ItemType("CursedGrassSword"), 1);
@@ -46,6 +46,10 @@ namespace Redemption.Items
 			if (num == 2)
 			{
 				player.QuickSpawnItem(base.mod.ItemType("RootTendril"), 1);
+			}
+			if (num == 3)
+			{
+				player.QuickSpawnItem(base.mod.ItemType("ThornSeedBag"), 1);
 			}
 		}
 	}

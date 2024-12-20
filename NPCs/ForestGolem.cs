@@ -96,6 +96,11 @@ namespace Redemption.NPCs
 			}
 		}
 
+		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+		{
+			return !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).forestFriendly;
+		}
+
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
 			return SpawnCondition.OverworldNight.Chance * ((Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == 2 && !RedeWorld.downedPatientZero) ? 0.04f : 0f);

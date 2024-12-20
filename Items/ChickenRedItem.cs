@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.NPCs.Varients;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -22,16 +23,7 @@ namespace Redemption.Items
 			base.item.useTime = 30;
 			base.item.useStyle = 4;
 			base.item.consumable = true;
-		}
-
-		public override bool UseItem(Player player)
-		{
-			int num = NPC.NewNPC((int)(player.position.X + (float)Main.rand.Next(-20, 20)), (int)(player.position.Y - 0f), base.mod.NPCType("RedChicken"), 0, 0f, 0f, 0f, 0f, 255);
-			if (Main.netMode == 2 && num < 200)
-			{
-				NetMessage.SendData(23, -1, -1, null, num, 0f, 0f, 0f, 0, 0, 0);
-			}
-			return true;
+			base.item.makeNPC = (short)base.mod.NPCType<RedChicken>();
 		}
 	}
 }

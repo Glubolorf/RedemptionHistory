@@ -663,15 +663,12 @@ namespace Redemption
 
 		public override void Initialize()
 		{
-			if (!Redemption.cachedata)
-			{
-				RedeWorld.downedTheKeeper = false;
-				RedeWorld.redemptionPoints = 0;
-				RedeWorld.downedTheWarden = false;
-				RedeWorld.downedMansionWraith = false;
-				RedeWorld.wardenSaved = false;
-				RedeWorld.keeperSaved = false;
-			}
+			RedeWorld.downedTheKeeper = false;
+			RedeWorld.redemptionPoints = 0;
+			RedeWorld.downedTheWarden = false;
+			RedeWorld.downedMansionWraith = false;
+			RedeWorld.wardenSaved = false;
+			RedeWorld.keeperSaved = false;
 			RedeWorld.slayerRep = 0;
 			RedeWorld.downedJanitor = false;
 			RedeWorld.downedVolt = false;
@@ -688,7 +685,6 @@ namespace Redemption
 			RedeWorld.downedSkullDigger = false;
 			RedeWorld.downedSunkenCaptain = false;
 			RedeWorld.downedBlisterface = false;
-			RedeWorld.downedStage2Scientist = false;
 			RedeWorld.downedStage3Scientist = false;
 			RedeWorld.labAccess1 = false;
 			RedeWorld.labAccess2 = false;
@@ -721,7 +717,6 @@ namespace Redemption
 			RedeWorld.girusTalk2 = false;
 			RedeWorld.girusTalk3 = false;
 			RedeWorld.infectionBegin = false;
-			RedeWorld.tbotLabAccess = false;
 			RedeWorld.deathByNeb = false;
 			RedeWorld.girusCloaked = false;
 			RedeWorld.girusCloakTimer = 0;
@@ -733,7 +728,6 @@ namespace Redemption
 			RedeWorld.spawnKeeper = false;
 			RedeWorld.oblitDeath = 0;
 			RedeWorld.messageKingSlayer = false;
-			Redemption.cachedata = false;
 		}
 
 		public override TagCompound Save()
@@ -839,10 +833,6 @@ namespace Redemption
 			{
 				downed.Add("Blisterface");
 			}
-			if (RedeWorld.downedStage2Scientist)
-			{
-				downed.Add("Stage2ScientistBoss");
-			}
 			if (RedeWorld.downedStage3Scientist)
 			{
 				downed.Add("Stage3Scientist");
@@ -886,10 +876,6 @@ namespace Redemption
 			if (RedeWorld.wardenSaved)
 			{
 				downed.Add("wardenS");
-			}
-			if (RedeWorld.tbotLabAccess)
-			{
-				downed.Add("tbotLabLasers");
 			}
 			if (RedeWorld.downedIBehemoth)
 			{
@@ -1010,7 +996,6 @@ namespace Redemption
 			RedeWorld.labSafe = list.Contains("labSafe1");
 			RedeWorld.infectionBegin = list.Contains("infection1");
 			RedeWorld.downedBlisterface = list.Contains("Blisterface");
-			RedeWorld.downedStage2Scientist = list.Contains("Stage2ScientistBoss");
 			RedeWorld.downedStage3Scientist = list.Contains("Stage3Scientist");
 			RedeWorld.labAccess1 = list.Contains("labA1");
 			RedeWorld.labAccess2 = list.Contains("labA2");
@@ -1021,7 +1006,6 @@ namespace Redemption
 			RedeWorld.labAccess7 = list.Contains("labA7");
 			RedeWorld.patientZeroMessages = list.Contains("pzMessage");
 			RedeWorld.keeperSaved = list.Contains("keeperS");
-			RedeWorld.tbotLabAccess = list.Contains("tbotLabLasers");
 			RedeWorld.downedIBehemoth = list.Contains("IrradiatedBehemoth");
 			RedeWorld.downedMACE = list.Contains("MACEProjectHead");
 			RedeWorld.downedPatientZero = list.Contains("PatientZero");
@@ -1069,58 +1053,56 @@ namespace Redemption
 			flags2[2] = RedeWorld.downedSkullDigger;
 			flags2[3] = RedeWorld.downedSunkenCaptain;
 			flags2[4] = RedeWorld.downedBlisterface;
-			flags2[5] = RedeWorld.downedStage2Scientist;
-			flags2[6] = RedeWorld.downedStage3Scientist;
-			flags2[7] = RedeWorld.downedIBehemoth;
+			flags2[5] = RedeWorld.downedStage3Scientist;
+			flags2[6] = RedeWorld.downedIBehemoth;
+			flags2[7] = RedeWorld.downedMACE;
 			writer.Write(flags2);
 			BitsByte flags3 = default(BitsByte);
-			flags3[0] = RedeWorld.downedMACE;
-			flags3[1] = RedeWorld.downedPatientZero;
-			flags3[2] = RedeWorld.labSafe;
-			flags3[3] = RedeWorld.deathBySlayer;
-			flags3[4] = RedeWorld.girusTalk1;
-			flags3[5] = RedeWorld.girusTalk2;
-			flags3[6] = RedeWorld.girusTalk3;
-			flags3[7] = RedeWorld.keeperSaved;
+			flags3[0] = RedeWorld.downedPatientZero;
+			flags3[1] = RedeWorld.labSafe;
+			flags3[2] = RedeWorld.deathBySlayer;
+			flags3[3] = RedeWorld.girusTalk1;
+			flags3[4] = RedeWorld.girusTalk2;
+			flags3[5] = RedeWorld.girusTalk3;
+			flags3[6] = RedeWorld.keeperSaved;
+			flags3[7] = RedeWorld.downedPatientZero;
 			writer.Write(flags3);
 			BitsByte flags4 = default(BitsByte);
-			flags4[0] = RedeWorld.tbotLabAccess;
-			flags4[1] = RedeWorld.downedPatientZero;
-			flags4[2] = RedeWorld.labSafe;
-			flags4[3] = RedeWorld.deathBySlayer;
-			flags4[4] = RedeWorld.labAccess1;
-			flags4[5] = RedeWorld.labAccess2;
-			flags4[6] = RedeWorld.labAccess3;
-			flags4[7] = RedeWorld.labAccess4;
+			flags4[0] = RedeWorld.labSafe;
+			flags4[1] = RedeWorld.deathBySlayer;
+			flags4[2] = RedeWorld.labAccess1;
+			flags4[3] = RedeWorld.labAccess2;
+			flags4[4] = RedeWorld.labAccess3;
+			flags4[5] = RedeWorld.labAccess4;
+			flags4[6] = RedeWorld.labAccess5;
+			flags4[7] = RedeWorld.labAccess6;
 			writer.Write(flags4);
 			BitsByte flags5 = default(BitsByte);
-			flags5[0] = RedeWorld.labAccess5;
-			flags5[1] = RedeWorld.labAccess6;
-			flags5[2] = RedeWorld.labAccess7;
-			flags5[3] = RedeWorld.infectionBegin;
-			flags5[4] = RedeWorld.patientZeroMessages;
-			flags5[5] = RedeWorld.downedNebuleus;
-			flags5[6] = RedeWorld.deathByNeb;
-			flags5[7] = RedeWorld.downedEaglecrestGolem;
+			flags5[0] = RedeWorld.labAccess7;
+			flags5[1] = RedeWorld.infectionBegin;
+			flags5[2] = RedeWorld.patientZeroMessages;
+			flags5[3] = RedeWorld.downedNebuleus;
+			flags5[4] = RedeWorld.deathByNeb;
+			flags5[5] = RedeWorld.downedEaglecrestGolem;
+			flags5[6] = RedeWorld.downedChickenInv;
+			flags5[7] = RedeWorld.downedChickenInvPZ;
 			writer.Write(flags5);
 			BitsByte flags6 = default(BitsByte);
-			flags6[0] = RedeWorld.downedChickenInv;
-			flags6[1] = RedeWorld.downedChickenInvPZ;
-			flags6[2] = RedeWorld.downedEaglecrestGolemPZ;
-			flags6[3] = RedeWorld.downedThorn;
-			flags6[4] = RedeWorld.downedThornPZ;
-			flags6[5] = RedeWorld.downedJanitor;
-			flags6[6] = RedeWorld.downedVolt;
-			flags6[7] = RedeWorld.voltBegin;
+			flags6[0] = RedeWorld.downedEaglecrestGolemPZ;
+			flags6[1] = RedeWorld.downedThorn;
+			flags6[2] = RedeWorld.downedThornPZ;
+			flags6[3] = RedeWorld.downedJanitor;
+			flags6[4] = RedeWorld.downedVolt;
+			flags6[5] = RedeWorld.voltBegin;
+			flags6[6] = RedeWorld.pzUS;
+			flags6[7] = RedeWorld.maceUS;
 			writer.Write(flags6);
 			BitsByte flags7 = default(BitsByte);
-			flags7[0] = RedeWorld.pzUS;
-			flags7[1] = RedeWorld.maceUS;
-			flags7[2] = RedeWorld.downedMossyGoliath;
-			flags7[3] = RedeWorld.downedTheWarden;
-			flags7[4] = RedeWorld.wardenSaved;
-			flags7[5] = RedeWorld.spawnXenoBiome;
-			flags7[6] = RedeWorld.downedMansionWraith;
+			flags7[0] = RedeWorld.downedMossyGoliath;
+			flags7[1] = RedeWorld.downedTheWarden;
+			flags7[2] = RedeWorld.wardenSaved;
+			flags7[3] = RedeWorld.spawnXenoBiome;
+			flags7[4] = RedeWorld.downedMansionWraith;
 			writer.Write(flags7);
 			writer.Write(RedeWorld.redemptionPoints);
 			writer.Write(RedeWorld.girusCloakTimer);
@@ -1148,53 +1130,51 @@ namespace Redemption
 			RedeWorld.downedSkullDigger = flags2[2];
 			RedeWorld.downedSunkenCaptain = flags2[3];
 			RedeWorld.downedBlisterface = flags2[4];
-			RedeWorld.downedStage2Scientist = flags2[5];
-			RedeWorld.downedStage3Scientist = flags2[6];
-			RedeWorld.downedIBehemoth = flags2[7];
+			RedeWorld.downedStage3Scientist = flags2[5];
+			RedeWorld.downedIBehemoth = flags2[6];
+			RedeWorld.downedMACE = flags2[7];
 			BitsByte flags3 = reader.ReadByte();
-			RedeWorld.downedMACE = flags3[0];
-			RedeWorld.downedPatientZero = flags3[1];
-			RedeWorld.labSafe = flags3[2];
-			RedeWorld.deathBySlayer = flags3[3];
-			RedeWorld.girusTalk1 = flags3[4];
-			RedeWorld.girusTalk2 = flags3[5];
-			RedeWorld.girusTalk3 = flags3[6];
-			RedeWorld.keeperSaved = flags3[7];
+			RedeWorld.downedPatientZero = flags3[0];
+			RedeWorld.labSafe = flags3[1];
+			RedeWorld.deathBySlayer = flags3[2];
+			RedeWorld.girusTalk1 = flags3[3];
+			RedeWorld.girusTalk2 = flags3[4];
+			RedeWorld.girusTalk3 = flags3[5];
+			RedeWorld.keeperSaved = flags3[6];
+			RedeWorld.downedPatientZero = flags3[7];
 			BitsByte flags4 = reader.ReadByte();
-			RedeWorld.tbotLabAccess = flags4[0];
-			RedeWorld.downedPatientZero = flags4[1];
-			RedeWorld.labSafe = flags4[2];
-			RedeWorld.deathBySlayer = flags4[3];
-			RedeWorld.labAccess1 = flags4[4];
-			RedeWorld.labAccess2 = flags4[5];
-			RedeWorld.labAccess3 = flags4[6];
-			RedeWorld.labAccess4 = flags4[7];
+			RedeWorld.labSafe = flags4[0];
+			RedeWorld.deathBySlayer = flags4[1];
+			RedeWorld.labAccess1 = flags4[2];
+			RedeWorld.labAccess2 = flags4[3];
+			RedeWorld.labAccess3 = flags4[4];
+			RedeWorld.labAccess4 = flags4[5];
+			RedeWorld.labAccess5 = flags4[6];
+			RedeWorld.labAccess6 = flags4[7];
 			BitsByte flags5 = reader.ReadByte();
-			RedeWorld.labAccess5 = flags5[0];
-			RedeWorld.labAccess6 = flags5[1];
-			RedeWorld.labAccess7 = flags5[2];
-			RedeWorld.infectionBegin = flags5[3];
-			RedeWorld.patientZeroMessages = flags5[4];
-			RedeWorld.downedNebuleus = flags5[5];
-			RedeWorld.deathByNeb = flags5[6];
-			RedeWorld.downedEaglecrestGolem = flags5[7];
+			RedeWorld.labAccess7 = flags5[0];
+			RedeWorld.infectionBegin = flags5[1];
+			RedeWorld.patientZeroMessages = flags5[2];
+			RedeWorld.downedNebuleus = flags5[3];
+			RedeWorld.deathByNeb = flags5[4];
+			RedeWorld.downedEaglecrestGolem = flags5[5];
+			RedeWorld.downedChickenInv = flags5[6];
+			RedeWorld.downedChickenInvPZ = flags5[7];
 			BitsByte flags6 = reader.ReadByte();
-			RedeWorld.downedChickenInv = flags6[0];
-			RedeWorld.downedChickenInvPZ = flags6[1];
-			RedeWorld.downedEaglecrestGolemPZ = flags6[2];
-			RedeWorld.downedThorn = flags6[3];
-			RedeWorld.downedThornPZ = flags6[4];
-			RedeWorld.downedJanitor = flags6[5];
-			RedeWorld.downedVolt = flags6[6];
-			RedeWorld.voltBegin = flags6[7];
+			RedeWorld.downedEaglecrestGolemPZ = flags6[0];
+			RedeWorld.downedThorn = flags6[1];
+			RedeWorld.downedThornPZ = flags6[2];
+			RedeWorld.downedJanitor = flags6[3];
+			RedeWorld.downedVolt = flags6[4];
+			RedeWorld.voltBegin = flags6[5];
+			RedeWorld.pzUS = flags6[6];
+			RedeWorld.maceUS = flags6[7];
 			BitsByte flags7 = reader.ReadByte();
-			RedeWorld.pzUS = flags7[0];
-			RedeWorld.maceUS = flags7[1];
-			RedeWorld.downedMossyGoliath = flags7[2];
-			RedeWorld.downedTheWarden = flags7[3];
-			RedeWorld.wardenSaved = flags7[4];
-			RedeWorld.spawnXenoBiome = flags7[5];
-			RedeWorld.downedMansionWraith = flags7[6];
+			RedeWorld.downedMossyGoliath = flags7[0];
+			RedeWorld.downedTheWarden = flags7[1];
+			RedeWorld.wardenSaved = flags7[2];
+			RedeWorld.spawnXenoBiome = flags7[3];
+			RedeWorld.downedMansionWraith = flags7[4];
 			RedeWorld.redemptionPoints = reader.ReadInt32();
 			RedeWorld.girusCloakTimer = reader.ReadInt32();
 			RedeWorld.slayerRep = reader.ReadInt32();
@@ -1310,8 +1290,6 @@ namespace Redemption
 
 		public static bool downedBlisterface;
 
-		public static bool downedStage2Scientist;
-
 		public static bool downedStage3Scientist;
 
 		public static bool keeperSaved;
@@ -1319,8 +1297,6 @@ namespace Redemption
 		public static bool downedIBehemoth;
 
 		public static bool downedMACE;
-
-		public static bool tbotLabAccess;
 
 		public static bool downedPatientZero;
 

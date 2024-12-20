@@ -267,6 +267,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					}
 					if (this.customAI[0] == 700f)
 					{
+						Redemption.ShowTitle(base.npc, 2);
 						this.beginFight = true;
 						base.npc.netUpdate = true;
 					}

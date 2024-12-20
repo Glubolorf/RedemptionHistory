@@ -1,5 +1,4 @@
 ﻿using System;
-using Redemption.Items.Armor.Costumes;
 using Redemption.Items.LabThings;
 using Terraria;
 using Terraria.ID;
@@ -34,7 +33,7 @@ namespace Redemption.NPCs.LabNPCs.New
 		public override void AI()
 		{
 			Player player = Main.player[base.npc.target];
-			float num = base.npc.Distance(Main.player[base.npc.target].Center);
+			float distance = base.npc.Distance(Main.player[base.npc.target].Center);
 			if (player.Center.X > base.npc.Center.X)
 			{
 				base.npc.spriteDirection = 1;
@@ -76,13 +75,13 @@ namespace Redemption.NPCs.LabNPCs.New
 			{
 				base.npc.TargetClosest(true);
 			}
-			if (num <= 200f && player.Center.X < base.npc.Center.X)
+			if (distance <= 200f && player.Center.X < base.npc.Center.X)
 			{
 				base.npc.ai[0] = 1f;
 			}
 			if (base.npc.ai[0] == 1f)
 			{
-				if (((BasePlayer.HasChestplate(player, ModContent.ItemType<TBotVanityChestplate>(), true) && BasePlayer.HasLeggings(player, ModContent.ItemType<TBotVanityLegs>(), true)) || (BasePlayer.HasChestplate(player, ModContent.ItemType<AndroidArmour>(), true) && BasePlayer.HasLeggings(player, ModContent.ItemType<AndroidPants>(), true)) || (BasePlayer.HasChestplate(player, ModContent.ItemType<JanitorOutfit>(), true) && BasePlayer.HasLeggings(player, ModContent.ItemType<JanitorPants>(), true))) && (BasePlayer.HasHelmet(player, ModContent.ItemType<TBotEyes_Femi>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotEyes_Masc>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotVanityEyes>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotGoggles_Femi>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotGoggles_Masc>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotVanityGoggles>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<AdamHead>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<OperatorHead>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<VoltHead>(), true)))
+				if (player.IsFullTBot())
 				{
 					base.npc.ai[1] += 1f;
 					if (base.npc.ai[1] >= 30f)

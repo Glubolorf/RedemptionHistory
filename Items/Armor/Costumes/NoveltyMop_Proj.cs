@@ -37,7 +37,7 @@ namespace Redemption.Items.Armor.Costumes
 				projectile2.frame = num;
 				if (num >= 4)
 				{
-					base.projectile.Kill();
+					base.projectile.frame = 0;
 				}
 			}
 			Player projOwner = Main.player[base.projectile.owner];

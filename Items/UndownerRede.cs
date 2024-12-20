@@ -41,7 +41,6 @@ namespace Redemption.Items
 			RedeWorld.downedPatientZero = false;
 			RedeWorld.downedSkullDigger = false;
 			RedeWorld.downedSlayer = false;
-			RedeWorld.downedStage2Scientist = false;
 			RedeWorld.downedStage3Scientist = false;
 			RedeWorld.downedStrangePortal = false;
 			RedeWorld.downedSunkenCaptain = false;

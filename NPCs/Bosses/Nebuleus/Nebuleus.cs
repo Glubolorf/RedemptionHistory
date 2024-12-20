@@ -224,7 +224,10 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 		{
 			if (!this.title)
 			{
-				Redemption.ShowTitle(base.npc, 1);
+				if (RedeConfigClient.Instance.NoBossText)
+				{
+					Redemption.ShowTitle(base.npc, 1);
+				}
 				this.title = true;
 			}
 			this.Target();
@@ -300,6 +303,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					}
 					if (this.customAI[0] == 180f)
 					{
+						Redemption.ShowTitle(base.npc, 1);
 						this.beginFight = true;
 						this.customAI[0] = 1400f;
 						base.npc.netUpdate = true;
@@ -333,6 +337,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					}
 					if (this.customAI[0] == 1400f)
 					{
+						Redemption.ShowTitle(base.npc, 1);
 						CombatText.NewText(base.npc.getRect(), Color.DeepPink, "Go my pet! I will back you up.", true, false);
 						this.beginFight = true;
 						NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<StarWyvernHead>(), 0, 0f, 0f, 0f, 0f, 255);
@@ -799,7 +804,6 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 							}
 							if (base.npc.ai[3] > 1090f)
 							{
-								Redemption.ShowTitle(base.npc, 2);
 								base.npc.SetDefaults(ModContent.NPCType<BigNebuleus>(), -1f);
 								base.npc.netUpdate = true;
 							}

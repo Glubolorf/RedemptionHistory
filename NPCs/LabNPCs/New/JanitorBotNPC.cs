@@ -244,7 +244,7 @@ namespace Redemption.NPCs.LabNPCs.New
 			nextSlot++;
 			shop.item[nextSlot].SetDefaults(ModContent.ItemType<LabCeilingLamp>(), false);
 			nextSlot++;
-			if (BasePlayer.HasHelmet(player, ModContent.ItemType<TBotEyes_Femi>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotEyes_Masc>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotVanityEyes>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotGoggles_Femi>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotGoggles_Masc>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotVanityGoggles>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<AdamHead>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<OperatorHead>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<VoltHead>(), true))
+			if (player.IsTBotHead())
 			{
 				shop.item[nextSlot].SetDefaults(ModContent.ItemType<OperatorHead>(), false);
 				nextSlot++;

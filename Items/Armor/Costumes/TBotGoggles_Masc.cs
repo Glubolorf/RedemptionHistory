@@ -13,7 +13,7 @@ namespace Redemption.Items.Armor.Costumes
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("T-Bot Head");
-			base.Tooltip.SetDefault("Goggles\nFeminine");
+			base.Tooltip.SetDefault("Goggles\nMasculine");
 		}
 
 		public override void SetDefaults()

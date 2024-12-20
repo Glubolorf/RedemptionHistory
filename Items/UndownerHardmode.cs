@@ -59,7 +59,6 @@ namespace Redemption.Items
 			RedeWorld.downedNebuleus = false;
 			RedeWorld.downedPatientZero = false;
 			RedeWorld.downedSlayer = false;
-			RedeWorld.downedStage2Scientist = false;
 			RedeWorld.downedStage3Scientist = false;
 			RedeWorld.downedVlitch1 = false;
 			RedeWorld.downedVlitch2 = false;

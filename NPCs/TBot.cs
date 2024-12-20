@@ -140,7 +140,7 @@ namespace Redemption.NPCs
 			{
 				chat.Add("King Slayer? I know him, though he's a bit of... Well... I'm sure you know what I'm implying.", 1.0);
 			}
-			if (RedeWorld.tbotLabAccess)
+			if (RedeWorld.downedVolt)
 			{
 				chat.Add("Hello. I'm aware you've somehow gained access to our birthplace, the Teochrome Research laboratory. It was once full of life with all the personnel. Meanwhile you were gone, I went to look around my stash of gear and found some, that I think would be good fit for your needs. I must warn you, the other bots may be quite nice to you, but they were most likely ordered by our 'mother' to not disintegrate you upon sight.", 1.0);
 			}
@@ -509,12 +509,12 @@ namespace Redemption.NPCs
 				shop.item[nextSlot].SetDefaults(ModContent.ItemType<TeslaCannon>(), false);
 				nextSlot++;
 			}
-			if (BasePlayer.HasHelmet(player, ModContent.ItemType<TBotEyes_Femi>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotEyes_Masc>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotVanityEyes>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotGoggles_Femi>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotGoggles_Masc>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotVanityGoggles>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<AdamHead>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<OperatorHead>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<VoltHead>(), true))
+			if (player.IsTBotHead())
 			{
 				shop.item[nextSlot].SetDefaults(ModContent.ItemType<AdamHead>(), false);
 				nextSlot++;
 			}
-			if ((RedeWorld.downedStage2Scientist || RedeWorld.downedJanitor) && !RedeWorld.labAccess1)
+			if (RedeWorld.downedJanitor && !RedeWorld.labAccess1)
 			{
 				shop.item[nextSlot].SetDefaults(ModContent.ItemType<ZoneAccessPanel1A>(), false);
 				nextSlot++;
@@ -534,7 +534,7 @@ namespace Redemption.NPCs
 				shop.item[nextSlot].SetDefaults(ModContent.ItemType<ZoneAccessPanel4A>(), false);
 				nextSlot++;
 			}
-			if (RedeWorld.tbotLabAccess && !RedeWorld.labAccess5)
+			if (RedeWorld.downedVolt && !RedeWorld.labAccess5)
 			{
 				shop.item[nextSlot].SetDefaults(ModContent.ItemType<ZoneAccessPanel5A>(), false);
 				nextSlot++;

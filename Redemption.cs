@@ -851,6 +851,31 @@ namespace Redemption
 					break;
 				}
 				break;
+			case 4:
+				BossName = "";
+				textColor = Color.DarkGray;
+				shakeAmount = 2f;
+				alpha = 150f;
+				switch (TextID)
+				{
+				case 0:
+					shakeAmount = 2f;
+					BossText = "Octavia...";
+					break;
+				case 1:
+					shakeAmount = 4f;
+					BossText = "... Why must you remind me...";
+					break;
+				case 2:
+					shakeAmount = 1f;
+					BossText = "... You've returned to me...";
+					break;
+				case 3:
+					shakeAmount = 2f;
+					BossText = "... Return to me...";
+					break;
+				}
+				break;
 			}
 			Vector2 textSize = Main.fontDeathText.MeasureString(BossName) * 3f;
 			Vector2 textSize2 = Main.fontDeathText.MeasureString(BossText) * 0.8f;

@@ -61,6 +61,10 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 				}
 				player.GetModPlayer<ShakeScreen>().shakeSubtle = true;
 			}
+			if (base.projectile.timeLeft == 180)
+			{
+				Redemption.ShowText(base.projectile, 4, 0, 180);
+			}
 		}
 
 		public override void Kill(int timeleft)

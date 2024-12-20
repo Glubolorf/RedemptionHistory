@@ -69,7 +69,6 @@ namespace Redemption.Items
 			RedeWorld.downedPatientZero = false;
 			RedeWorld.downedSkullDigger = false;
 			RedeWorld.downedSlayer = false;
-			RedeWorld.downedStage2Scientist = false;
 			RedeWorld.downedStage3Scientist = false;
 			RedeWorld.downedStrangePortal = false;
 			RedeWorld.downedSunkenCaptain = false;
@@ -88,6 +87,7 @@ namespace Redemption.Items
 			RedeWorld.downedVolt = false;
 			RedeWorld.KSRajahInteraction = false;
 			RedeWorld.voltBegin = false;
+			RedeWorld.oblitDeath = 0;
 			return true;
 		}
 	}

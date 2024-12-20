@@ -1,10 +1,11 @@
 ﻿using System;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass.v08
 {
-	public class ArchmagesEnchantment : DruidDamageItem
+	public class ArchmagesEnchantment : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -14,12 +15,13 @@ namespace Redemption.Items.DruidDamageClass.v08
 			ItemID.Sets.ItemNoGravity[base.item.type] = true;
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 54;
 			base.item.height = 34;
 			base.item.value = Item.sellPrice(0, 10, 0, 0);
 			base.item.accessory = true;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}
 

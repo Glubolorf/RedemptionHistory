@@ -19,5 +19,11 @@ namespace Redemption.Buffs
 			player.velocity.X = player.velocity.X * 0f;
 			player.velocity.Y = player.velocity.Y * 0f;
 		}
+
+		public override void Update(NPC npc, ref int buffIndex)
+		{
+			npc.velocity.X = npc.velocity.X * 0f;
+			npc.velocity.Y = npc.velocity.Y * 0f;
+		}
 	}
 }

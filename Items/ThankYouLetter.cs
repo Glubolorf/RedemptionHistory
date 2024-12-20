@@ -1,5 +1,4 @@
 ﻿using System;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items
@@ -19,14 +18,6 @@ namespace Redemption.Items
 			base.item.maxStack = 30;
 			base.item.value = 0;
 			base.item.rare = 1;
-			base.item.useStyle = 4;
-			base.item.useTime = 30;
-			base.item.useAnimation = 30;
-			base.item.reuseDelay = 10;
-			base.item.noMelee = true;
-			base.item.consumable = true;
-			base.item.autoReuse = false;
-			base.item.UseSound = SoundID.Item43;
 		}
 	}
 }

@@ -9,7 +9,7 @@ namespace Redemption.Items.Armor
 	{
 		0
 	})]
-	public class DragonLeadHelm : DruidDamageItem
+	public class DragonLeadHelm : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -17,13 +17,14 @@ namespace Redemption.Items.Armor
 			base.Tooltip.SetDefault("4% increased ranged damage and crit\n7% increased druidic damage and crit");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 24;
 			base.item.height = 28;
 			base.item.value = Item.sellPrice(0, 8, 50, 0);
 			base.item.rare = 4;
 			base.item.defense = 4;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void UpdateEquip(Player player)

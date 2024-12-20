@@ -9,7 +9,7 @@ namespace Redemption.Items.Armor
 	{
 		0
 	})]
-	public class DruidHood : DruidDamageItem
+	public class DruidHood : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -17,13 +17,14 @@ namespace Redemption.Items.Armor
 			base.Tooltip.SetDefault("6% increased druidic damage\nSpirits shoot faster");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 30;
 			base.item.height = 26;
 			base.item.value = 10000;
 			base.item.rare = 4;
 			base.item.defense = 8;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void UpdateEquip(Player player)

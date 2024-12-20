@@ -16,7 +16,7 @@ namespace Redemption.Items.Weapons.v08
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 4000;
+			base.item.damage = 3600;
 			base.item.melee = true;
 			base.item.width = 66;
 			base.item.height = 66;
@@ -39,7 +39,7 @@ namespace Redemption.Items.Weapons.v08
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			player.AddBuff(59, 30, true);
+			player.AddBuff(59, 10, true);
 			Vector2 MyVelocity = Utils.SafeNormalize(Main.MouseWorld - player.Center, -Vector2.UnitY) * 30f;
 			player.velocity += MyVelocity;
 			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, 0f, 0f);

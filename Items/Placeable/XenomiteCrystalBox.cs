@@ -7,7 +7,7 @@ namespace Redemption.Items.Placeable
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Music Box (Xenomite Crystal)");
+			base.DisplayName.SetDefault("Music Box (Seed of Infection)");
 			base.Tooltip.SetDefault("Nick 'Shadowblaze' Nuwe - Dusk District");
 		}
 

@@ -19,7 +19,9 @@ namespace Redemption.Tiles.Wasteland
 			this.minPick = 180;
 			this.mineResist = 3.5f;
 			this.soundType = 21;
-			base.AddMapEntry(new Color(30, 65, 25), null);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Starlite");
+			base.AddMapEntry(new Color(30, 65, 25), name);
 		}
 
 		public override void NearbyEffects(int i, int j, bool closer)

@@ -9,7 +9,7 @@ namespace Redemption.Items
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Gathic Cryo-Crystal");
-			base.Tooltip.SetDefault("'A freezing cold crystal Ragnos discovered, might come in handy...'\nMakes the player Chilled when held\nSold by Ragnos after Skeletron is defeated");
+			base.Tooltip.SetDefault("'A freezing cold crystal'\nMakes the player Chilled when held\nSold by Zephos or Daerel after Skeletron is defeated");
 		}
 
 		public override void SetDefaults()

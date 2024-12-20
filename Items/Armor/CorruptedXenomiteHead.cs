@@ -44,11 +44,11 @@ namespace Redemption.Items.Armor
 
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "+50 max mana, greatly increased movement speed, and increased mana regen.";
+			player.setBonus = "+50 max mana, greatly increased movement speed\nCritical strikes release a Phantom Dagger aimed at your cursor";
 			player.AddBuff(11, 2, true);
 			player.statManaMax2 += 50;
 			player.moveSpeed += 8f;
-			player.manaRegen += 10;
+			player.GetModPlayer<RedePlayer>().corruptedXenomiteSet = true;
 		}
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)

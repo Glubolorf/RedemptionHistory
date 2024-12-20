@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class DruidEssence : DruidDamageItem
+	public class DruidEssence : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -13,7 +13,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.Tooltip.SetDefault("5% increased druidic damage and critical strike chance");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.UseSound = SoundID.Item3;
 			base.item.useStyle = 2;
@@ -28,6 +28,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.rare = 1;
 			base.item.buffType = base.mod.BuffType("DruidEssenceBuff");
 			base.item.buffTime = 10800;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void AddRecipes()

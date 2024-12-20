@@ -9,7 +9,7 @@ namespace Redemption.Items.Armor.Garlands
 	{
 		0
 	})]
-	public class Garland1 : DruidDamageItem
+	public class Garland1 : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -17,13 +17,14 @@ namespace Redemption.Items.Armor.Garlands
 			base.Tooltip.SetDefault("10% increased druidic damage\n6% increased druidic critical strike chance");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 20;
 			base.item.height = 14;
 			base.item.value = Item.sellPrice(0, 1, 50, 0);
 			base.item.rare = 4;
 			base.item.defense = 3;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void UpdateEquip(Player player)
@@ -45,7 +46,7 @@ namespace Redemption.Items.Armor.Garlands
 
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "Staves swing faster";
+			player.setBonus = "Staves cast faster";
 			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).staveSpeed += 0.05f;
 		}
 

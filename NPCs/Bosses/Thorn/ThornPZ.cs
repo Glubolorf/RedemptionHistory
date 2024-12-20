@@ -85,7 +85,6 @@ namespace Redemption.NPCs.Bosses.Thorn
 		public override void BossLoot(ref string name, ref int potionType)
 		{
 			potionType = 3544;
-			RedeWorld.downedThornPZ = true;
 			if (Main.netMode == 2)
 			{
 				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
@@ -197,103 +196,101 @@ namespace Redemption.NPCs.Bosses.Thorn
 			{
 				base.npc.spriteDirection = -1;
 			}
-			if (base.npc.life <= (int)((float)base.npc.lifeMax * 0.5f) || RedeUkkoAkka.begin)
+			if ((base.npc.life <= (int)((float)base.npc.lifeMax * 0.5f) || RedeUkkoAkka.begin) && NPC.AnyNPCs(base.mod.NPCType("EaglecrestGolemPZ")) && this.transformTimer == 0)
 			{
-				if (NPC.AnyNPCs(base.mod.NPCType("EaglecrestGolemPZ")))
+				this.transformTimer = 1;
+			}
+			if (this.transformTimer >= 1)
+			{
+				this.transformCounter++;
+				if (this.transformCounter > 30)
 				{
-					this.transformCounter++;
-					if (this.transformCounter > 30)
+					this.transformFrame++;
+					this.transformCounter = 0;
+				}
+				if (this.transformFrame >= 11)
+				{
+					this.transformFrame = 10;
+				}
+				RedeUkkoAkka.begin = true;
+				this.attacking = false;
+				this.appearing = false;
+				this.disappearing = false;
+				base.npc.noTileCollide = true;
+				base.npc.noGravity = true;
+				for (int i = 0; i < 2; i++)
+				{
+					int dustIndex = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 1f);
+					Main.dust[dustIndex].velocity *= 1.2f;
+				}
+				if (base.npc.life < base.npc.lifeMax - 500)
+				{
+					base.npc.life += 500;
+				}
+				if (!RedeConfigClient.Instance.NoBossText)
+				{
+					this.transformTimer2++;
+					if (this.transformTimer2 == 10)
 					{
-						this.transformFrame++;
-						this.transformCounter = 0;
+						int p = Projectile.NewProjectile(player.Center.X - 60f, player.Center.Y + 300f, 0f, 0f, base.mod.ProjectileType("Text1"), 0, 0f, Main.myPlayer, 0f, 0f);
+						Main.projectile[p].netUpdate = true;
 					}
-					if (this.transformFrame >= 11)
+					if (this.transformTimer2 == 110)
 					{
-						this.transformFrame = 10;
+						int p2 = Projectile.NewProjectile(player.Center.X + 60f, player.Center.Y + 200f, 0f, 0f, base.mod.ProjectileType("Text2"), 0, 0f, Main.myPlayer, 0f, 0f);
+						Main.projectile[p2].netUpdate = true;
 					}
-					RedeUkkoAkka.begin = true;
-					this.attacking = false;
-					this.appearing = false;
-					this.disappearing = false;
-					base.npc.noTileCollide = true;
-					base.npc.noGravity = true;
-					for (int i = 0; i < 2; i++)
+					if (this.transformTimer2 == 210)
 					{
-						int dustIndex = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 1f);
-						Main.dust[dustIndex].velocity *= 1.2f;
-					}
-					if (base.npc.life < base.npc.lifeMax - 500)
-					{
-						base.npc.life += 500;
-					}
-					if (!RedeConfigClient.Instance.NoBossText)
-					{
-						this.transformTimer2++;
-						if (this.transformTimer2 == 10)
-						{
-							int p = Projectile.NewProjectile(player.Center.X - 60f, player.Center.Y + 300f, 0f, 0f, base.mod.ProjectileType("Text1"), 0, 0f, Main.myPlayer, 0f, 0f);
-							Main.projectile[p].netUpdate = true;
-						}
-						if (this.transformTimer2 == 110)
-						{
-							int p2 = Projectile.NewProjectile(player.Center.X + 60f, player.Center.Y + 200f, 0f, 0f, base.mod.ProjectileType("Text2"), 0, 0f, Main.myPlayer, 0f, 0f);
-							Main.projectile[p2].netUpdate = true;
-						}
-						if (this.transformTimer2 == 210)
-						{
-							int p3 = Projectile.NewProjectile(player.Center.X, player.Center.Y + 100f, 0f, 0f, base.mod.ProjectileType("Text3"), 0, 0f, Main.myPlayer, 0f, 0f);
-							Main.projectile[p3].netUpdate = true;
-						}
+						int p3 = Projectile.NewProjectile(player.Center.X, player.Center.Y + 100f, 0f, 0f, base.mod.ProjectileType("Text3"), 0, 0f, Main.myPlayer, 0f, 0f);
+						Main.projectile[p3].netUpdate = true;
 					}
 				}
-				if (this.transformTimer == 0)
+			}
+			if (this.transformTimer == 1)
+			{
+				base.npc.velocity.Y = 0f;
+				base.npc.velocity.X = 0f;
+				base.npc.alpha += 10;
+				if (base.npc.alpha >= 255)
 				{
-					if (NPC.AnyNPCs(base.mod.NPCType("EaglecrestGolemPZ")))
+					if (Main.netMode != 1)
 					{
-						base.npc.velocity.Y = 0f;
-						base.npc.velocity.X = 0f;
-						base.npc.alpha += 10;
-						if (base.npc.alpha >= 255)
-						{
-							if (Main.netMode != 1)
-							{
-								Vector2 newPos = new Vector2(300f, 20f);
-								base.npc.Center = Main.player[base.npc.target].Center + newPos;
-								base.npc.netUpdate = true;
-							}
-							this.transformTimer++;
-							return;
-						}
+						Vector2 newPos = new Vector2(300f, 20f);
+						base.npc.Center = Main.player[base.npc.target].Center + newPos;
+						base.npc.netUpdate = true;
 					}
+					this.transformTimer = 2;
+					return;
 				}
-				else
+			}
+			else if (this.transformTimer >= 2)
+			{
+				if (base.npc.velocity.Y <= -0.6f)
 				{
-					if (base.npc.velocity.Y <= -0.6f)
+					base.npc.velocity.Y = -0.6f;
+				}
+				NPC npc2 = base.npc;
+				npc2.velocity.Y = npc2.velocity.Y - 0.1f;
+				base.npc.alpha -= 10;
+				this.transformTimer++;
+				if (this.transformTimer == 355)
+				{
+					int p4 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("TransitionUkko"), 0, 1f, Main.myPlayer, 0f, 0f);
+					Main.projectile[p4].netUpdate = true;
+				}
+				if (this.transformTimer >= 380)
+				{
+					for (int j = 0; j < 30; j++)
 					{
-						base.npc.velocity.Y = -0.6f;
+						int dustIndex2 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 3f);
+						Main.dust[dustIndex2].velocity *= 5.2f;
 					}
-					NPC npc2 = base.npc;
-					npc2.velocity.Y = npc2.velocity.Y - 0.1f;
-					base.npc.alpha -= 10;
-					this.transformTimer++;
-					if (this.transformTimer == 355)
-					{
-						int p4 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("TransitionUkko"), 0, 1f, Main.myPlayer, 0f, 0f);
-						Main.projectile[p4].netUpdate = true;
-					}
-					if (this.transformTimer >= 380)
-					{
-						for (int j = 0; j < 30; j++)
-						{
-							int dustIndex2 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 3f);
-							Main.dust[dustIndex2].velocity *= 5.2f;
-						}
-						base.npc.velocity.Y = 0f;
-						base.npc.velocity.X = 0f;
-						Main.NewText("Akka, Ancient God of Nature has awoken...", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B, false);
-						base.npc.SetDefaults(base.mod.NPCType("Akka"), -1f);
-						return;
-					}
+					base.npc.velocity.Y = 0f;
+					base.npc.velocity.X = 0f;
+					Main.NewText("Akka, Ancient Goddess of Nature has awoken...", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B, false);
+					base.npc.SetDefaults(base.mod.NPCType("Akka"), -1f);
+					return;
 				}
 			}
 			else
@@ -617,6 +614,12 @@ namespace Redemption.NPCs.Bosses.Thorn
 			return true;
 		}
 
+		public override bool CheckActive()
+		{
+			this.player = Main.player[base.npc.target];
+			return !this.player.active || this.player.dead;
+		}
+
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Texture2D texture = Main.npcTexture[base.npc.type];
@@ -625,32 +628,32 @@ namespace Redemption.NPCs.Bosses.Thorn
 			Texture2D disappearAni = base.mod.GetTexture("NPCs/Bosses/Thorn/ThornDisappear");
 			Texture2D transformAni = base.mod.GetTexture("NPCs/Bosses/Thorn/Thorn_Transform");
 			int spriteDirection = base.npc.spriteDirection;
-			if (!this.attacking && !this.appearing && !this.disappearing)
+			if (!this.attacking && !this.appearing && !this.disappearing && !RedeUkkoAkka.begin)
 			{
 				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
-			if (this.attacking && !this.appearing && !this.disappearing)
+			if (this.attacking && !this.appearing && !this.disappearing && !RedeUkkoAkka.begin)
 			{
 				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 				int num214 = attackAni.Height / 4;
 				int y6 = num214 * this.attackFrame;
 				Main.spriteBatch.Draw(attackAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, attackAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)attackAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
-			if (this.appearing && !this.disappearing)
+			if (this.appearing && !this.disappearing && !RedeUkkoAkka.begin)
 			{
 				Vector2 drawCenter2 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 				int num215 = appearAni.Height / 12;
 				int y7 = num215 * this.appearFrame;
 				Main.spriteBatch.Draw(appearAni, drawCenter2 - Main.screenPosition, new Rectangle?(new Rectangle(0, y7, appearAni.Width, num215)), drawColor, base.npc.rotation, new Vector2((float)appearAni.Width / 2f, (float)num215 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
-			if (!this.appearing && this.disappearing)
+			if (!this.appearing && this.disappearing && !RedeUkkoAkka.begin)
 			{
 				Vector2 drawCenter3 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 				int num216 = disappearAni.Height / 11;
 				int y8 = num216 * this.disappearFrame;
 				Main.spriteBatch.Draw(disappearAni, drawCenter3 - Main.screenPosition, new Rectangle?(new Rectangle(0, y8, disappearAni.Width, num216)), drawColor, base.npc.rotation, new Vector2((float)disappearAni.Width / 2f, (float)num216 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
-			if (RedeUkkoAkka.begin)
+			if (RedeUkkoAkka.begin && this.transformTimer >= 1)
 			{
 				Vector2 drawCenter4 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 				int num217 = transformAni.Height / 11;

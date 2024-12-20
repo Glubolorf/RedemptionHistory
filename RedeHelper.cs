@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Redemption
@@ -10,6 +11,21 @@ namespace Redemption
 		public static Vector2 PolarVector(float radius, float theta)
 		{
 			return new Vector2((float)Math.Cos((double)theta), (float)Math.Sin((double)theta)) * radius;
+		}
+
+		public static Item MakeItemFromID(int type)
+		{
+			if (type <= 0)
+			{
+				return null;
+			}
+			if (type >= 3930)
+			{
+				return ItemLoader.GetItem(type).item;
+			}
+			Item item = new Item();
+			item.SetDefaults(type, true);
+			return item;
 		}
 
 		public static bool ClosestNPC(ref NPC target, float maxDistance, Vector2 position, bool ignoreTiles = false, int overrideTarget = -1)

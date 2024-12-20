@@ -9,20 +9,21 @@ namespace Redemption.Items.Armor
 	{
 		1
 	})]
-	public class CreatorBody : DruidDamageItem
+	public class CreatorBody : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Creation Druid's Leaf Plating");
-			base.Tooltip.SetDefault("17% increased druidic damage\n17% increased druidic critical strike chance\nStaves swing faster\nThrows seedbags faster\nSpirits shoot faster");
+			base.Tooltip.SetDefault("17% increased druidic damage\n17% increased druidic critical strike chance\nStaves cast faster\nThrows seedbags faster\nSpirits shoot faster");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 38;
 			base.item.height = 30;
 			base.item.rare = 10;
 			base.item.defense = 20;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void UpdateEquip(Player player)

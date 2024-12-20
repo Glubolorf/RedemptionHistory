@@ -9,7 +9,7 @@ namespace Redemption.Items.DruidDamageClass
 	{
 		10
 	})]
-	public class InfectionShield : DruidDamageItem
+	public class InfectionShield : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -17,7 +17,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.Tooltip.SetDefault("\n-2 defense\nDouble tap a direction to dash\n14% increased druidic critical strike chance\nInflicts Infection upon dashing into an enemy\nReleases acid-like sparks as you move");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 30;
 			base.item.height = 32;
@@ -28,6 +28,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.crit = 4;
 			base.item.knockBack = 6f;
 			base.item.expert = true;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void AddRecipes()

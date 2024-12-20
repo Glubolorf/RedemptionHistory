@@ -21,7 +21,7 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 			base.npc.aiStyle = -1;
 			base.npc.lifeMax = 3500;
 			base.npc.damage = 30;
-			base.npc.defense = 0;
+			base.npc.defense = 10;
 			base.npc.knockBackResist = 0f;
 			base.npc.width = 106;
 			base.npc.height = 140;
@@ -443,6 +443,7 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 				base.npc.velocity *= 0f;
 				base.npc.ai[0] = 3f;
 				base.npc.ai[3] = 1f;
+				base.npc.netUpdate = true;
 				if (!Main.dedServ)
 				{
 					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Shriek").WithVolume(0.5f).WithPitchVariance(0.1f), -1, -1);
@@ -459,9 +460,11 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 					{
 						Projectile.NewProjectile(base.npc.Center, 14f * Utils.RotatedBy(Vector2.UnitX, 0.19634954084936207 * (double)i3, default(Vector2)), base.mod.ProjectileType("ShriekWave"), 0, 0f, 0, (float)base.npc.whoAmI, 0f);
 					}
+					base.npc.netUpdate = true;
 				}
 				if (base.npc.ai[2] > 220f)
 				{
+					base.npc.netUpdate = true;
 					this.unveiled = true;
 					base.npc.ai[3] = 0f;
 					base.npc.ai[0] = 1f;
@@ -643,7 +646,7 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 
 		public void MoveToVector2(Vector2 p)
 		{
-			float moveSpeed = (base.npc.ai[1] == 3f || base.npc.ai[1] == 5f) ? 2f : 6f;
+			float moveSpeed = (base.npc.ai[1] == 3f || base.npc.ai[1] == 5f) ? 2f : (this.unveiled ? 12f : 6f);
 			float velMultiplier = 1f;
 			Vector2 dist = p - base.npc.Center;
 			float length = (dist == Vector2.Zero) ? 0f : dist.Length();
@@ -728,6 +731,8 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 		public Player player;
 
 		public Vector2 MoveVector2;
+
+		private Vector2 vector;
 
 		public int shriekFrame;
 

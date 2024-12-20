@@ -9,7 +9,7 @@ namespace Redemption.Items.Armor
 	{
 		2
 	})]
-	public class CreatorLegs : DruidDamageItem
+	public class CreatorLegs : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -17,12 +17,13 @@ namespace Redemption.Items.Armor
 			base.Tooltip.SetDefault("10% increased druidic damage\n10% increased druidic critical strike chance\nIncreases maximum life by 60");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 18;
 			base.item.rare = 10;
 			base.item.defense = 16;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void UpdateEquip(Player player)

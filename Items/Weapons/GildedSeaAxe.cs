@@ -32,7 +32,7 @@ namespace Redemption.Items.Weapons
 
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
 		{
-			target.AddBuff(72, 10, false);
+			target.AddBuff(72, 120, false);
 		}
 	}
 }

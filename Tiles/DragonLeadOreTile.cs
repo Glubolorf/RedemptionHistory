@@ -19,8 +19,9 @@ namespace Redemption.Tiles
 			this.minPick = 100;
 			this.mineResist = 1.4f;
 			this.soundType = 21;
-			base.CreateMapEntryName(null).SetDefault("Dragon-Lead Chuck");
-			base.AddMapEntry(new Color(251, 177, 81), null);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Dragon-Lead Chuck");
+			base.AddMapEntry(new Color(251, 177, 81), name);
 		}
 
 		public override void NearbyEffects(int i, int j, bool closer)

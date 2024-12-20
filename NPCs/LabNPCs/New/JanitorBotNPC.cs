@@ -33,7 +33,7 @@ namespace Redemption.NPCs.LabNPCs.New
 			base.npc.noGravity = false;
 			base.npc.damage = 0;
 			base.npc.defense = 0;
-			base.npc.lifeMax = 1;
+			base.npc.lifeMax = 999;
 			base.npc.knockBackResist = 0f;
 			base.npc.aiStyle = -1;
 			base.npc.npcSlots = 0f;
@@ -244,6 +244,11 @@ namespace Redemption.NPCs.LabNPCs.New
 				shop.item[nextSlot].SetDefaults(base.mod.ItemType("BotHanger"), false);
 				nextSlot++;
 				shop.item[nextSlot].SetDefaults(base.mod.ItemType("BotHangerOccupied"), false);
+				nextSlot++;
+			}
+			if (RedeWorld.downedBlisterface)
+			{
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("NanoAxe"), false);
 				nextSlot++;
 			}
 		}

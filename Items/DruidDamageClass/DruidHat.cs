@@ -8,7 +8,7 @@ namespace Redemption.Items.DruidDamageClass
 	{
 		0
 	})]
-	public class DruidHat : DruidDamageItem
+	public class DruidHat : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -16,13 +16,14 @@ namespace Redemption.Items.DruidDamageClass
 			base.Tooltip.SetDefault("15% increased druidic damage");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 34;
 			base.item.value = Item.sellPrice(0, 0, 10, 0);
 			base.item.height = 24;
 			base.item.rare = 2;
 			base.item.defense = 2;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void UpdateEquip(Player player)

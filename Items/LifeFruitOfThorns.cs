@@ -1,5 +1,6 @@
 ﻿using System;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items
@@ -9,7 +10,7 @@ namespace Redemption.Items
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Fruit of Thorns");
-			base.Tooltip.SetDefault("'Useless without a source of energy'");
+			base.Tooltip.SetDefault("Summons an empowered Thorn, Bane of the Forest\nOnly usable at day\nRequires Thorn, Bane of the Forest to be defeated\nNot consumable");
 		}
 
 		public override void SetDefaults()
@@ -18,7 +19,24 @@ namespace Redemption.Items
 			base.item.height = 46;
 			base.item.maxStack = 1;
 			base.item.value = Item.sellPrice(0, 10, 0, 0);
+			base.item.useAnimation = 45;
+			base.item.useTime = 45;
+			base.item.useStyle = 4;
+			base.item.UseSound = SoundID.Item44;
+			base.item.consumable = false;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
+		}
+
+		public override bool CanUseItem(Player player)
+		{
+			return Main.dayTime && RedeWorld.downedThorn && !NPC.AnyNPCs(base.mod.NPCType("Thorn")) && !NPC.AnyNPCs(base.mod.NPCType("ThornPZ")) && !NPC.AnyNPCs(base.mod.NPCType("Akka"));
+		}
+
+		public override bool UseItem(Player player)
+		{
+			NPC.SpawnOnPlayer(player.whoAmI, base.mod.NPCType("ThornPZ"));
+			Main.PlaySound(15, player.position, 0);
+			return true;
 		}
 
 		public override void AddRecipes()

@@ -8,7 +8,7 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 	{
 		2
 	})]
-	public class SapphireLeggings : DruidDamageItem
+	public class SapphireLeggings : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -16,13 +16,14 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 			base.Tooltip.SetDefault("5% increased druidic damage\n5% increased druidic critical strike chance");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 18;
 			base.item.value = Item.sellPrice(0, 3, 60, 0);
 			base.item.rare = 6;
 			base.item.defense = 12;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void UpdateEquip(Player player)

@@ -76,7 +76,7 @@ namespace Redemption.Projectiles.Minions
 			bool projMax = player.ownedProjectileCounts[base.mod.ProjectileType("HiveGrowthFriendly")] <= 5;
 			if (base.projectile.localAI[0] >= 600f)
 			{
-				if (projMax && base.projectile.ai[0] != 1f)
+				if (projMax && base.projectile.ai[0] != 1f && Main.myPlayer == base.projectile.owner)
 				{
 					Projectile.NewProjectile(player.position.X + (float)(player.width / 2), player.position.Y + (float)(player.height / 2), 0f, 0f, base.mod.ProjectileType("HiveGrowthFriendly"), 200, 1f, player.whoAmI, 1f, 0f);
 				}

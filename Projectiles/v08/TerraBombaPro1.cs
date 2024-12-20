@@ -125,32 +125,23 @@ namespace Redemption.Projectiles.v08
 							WorldGen.SquareWallFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1, 0);
 						}
-						if (TileID.Sets.Conversion.Stone[type] || type == 179 || type == 180 || type == 181 || type == 182 || type == 183)
+						if (type == 1 || type == 179 || type == 180 || type == 181 || type == 182 || type == 183)
 						{
-							if (type != 25)
-							{
-								Main.tile[k, l].type = (ushort)base.mod.TileType("DeadRockTile");
-								WorldGen.SquareTileFrame(k, l, true);
-								NetMessage.SendTileSquare(-1, k, l, 1, 0);
-							}
-							else
-							{
-								Main.tile[k, l].type = (ushort)base.mod.TileType("IrradiatedEbonstoneTile");
-								WorldGen.SquareTileFrame(k, l, true);
-								NetMessage.SendTileSquare(-1, k, l, 1, 0);
-							}
-							if (type != 203)
-							{
-								Main.tile[k, l].type = (ushort)base.mod.TileType("DeadRockTile");
-								WorldGen.SquareTileFrame(k, l, true);
-								NetMessage.SendTileSquare(-1, k, l, 1, 0);
-							}
-							else
-							{
-								Main.tile[k, l].type = (ushort)base.mod.TileType("IrradiatedCrimstoneTile");
-								WorldGen.SquareTileFrame(k, l, true);
-								NetMessage.SendTileSquare(-1, k, l, 1, 0);
-							}
+							Main.tile[k, l].type = (ushort)base.mod.TileType("DeadRockTile");
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1, 0);
+						}
+						else if (type == 25)
+						{
+							Main.tile[k, l].type = (ushort)base.mod.TileType("IrradiatedEbonstoneTile");
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1, 0);
+						}
+						else if (type == 203)
+						{
+							Main.tile[k, l].type = (ushort)base.mod.TileType("IrradiatedCrimstoneTile");
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1, 0);
 						}
 						else if (type == 2 || type == 109)
 						{

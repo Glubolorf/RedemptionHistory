@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class GolemWateringCan : DruidDamageItem
+	public class GolemWateringCan : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -12,13 +12,14 @@ namespace Redemption.Items.DruidDamageClass
 			base.Tooltip.SetDefault("Taking damage unleashes a cluster of exploding seeds around you\nHaving a Large Seed Pouch will unleash more seeds");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 50;
 			base.item.height = 30;
 			base.item.value = Item.sellPrice(0, 8, 0, 0);
 			base.item.rare = 7;
 			base.item.accessory = true;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override bool CanEquipAccessory(Player player, int slot)

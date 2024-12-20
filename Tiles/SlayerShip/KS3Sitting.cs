@@ -21,10 +21,11 @@ namespace Redemption.Tiles.SlayerShip
 			base.npc.height = 82;
 			base.npc.damage = 0;
 			base.npc.defense = 0;
-			base.npc.lifeMax = 1;
+			base.npc.lifeMax = 999;
 			base.npc.aiStyle = -1;
 			base.npc.knockBackResist = 0f;
 			base.npc.npcSlots = 0f;
+			base.npc.immortal = true;
 		}
 
 		public override void SetStaticDefaults()
@@ -706,59 +707,66 @@ namespace Redemption.Tiles.SlayerShip
 
 		public override string GetChat()
 		{
+			Player player = Main.player[Main.myPlayer];
 			ModLoader.GetMod("Grealm");
 			ModLoader.GetMod("AAMod");
 			ModLoader.GetMod("Calamity");
 			ModLoader.GetMod("ThoriumMod");
 			WeightedRandom<string> chat = new WeightedRandom<string>();
-			if (RedeWorld.slayerRep >= 2)
+			if (!Main.LocalPlayer.GetModPlayer<RedePlayer>().ZoneSlayer)
 			{
-				chat.Add("Hey, I'm busy... Procrastinating.", 1.0);
-				chat.Add("What is it?", 1.0);
-				chat.Add("Come to help again or what?", 1.0);
-				chat.Add("Leave me alone.", 1.0);
-			}
-			else if (RedeWorld.slayerRep >= 4)
-			{
-				chat.Add("Hey, what's up?", 1.0);
-				chat.Add("Come by to talk or what?", 1.0);
-				chat.Add("You've been a big help, thanks.", 1.0);
+				chat.Add("Wait a second... This isn't my ship. Did you move my chair?", 1.0);
 			}
 			else
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().omegaPower)
+				if (RedeWorld.slayerRep >= 2)
 				{
-					chat.Add("Oh great, the robot is here... What do you want?", 1.0);
+					chat.Add("Hey, I'm busy... Procrastinating.", 1.0);
+					chat.Add("What is it?", 1.0);
+					chat.Add("Come to help again or what?", 1.0);
+					chat.Add("Leave me alone.", 1.0);
+				}
+				else if (RedeWorld.slayerRep >= 4)
+				{
+					chat.Add("Hey, what's up?", 1.0);
+					chat.Add("Come by to talk or what?", 1.0);
+					chat.Add("You've been a big help, thanks.", 1.0);
 				}
 				else
 				{
-					chat.Add("Oh great, the Terrarian is here... What do you want?", 1.0);
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().omegaPower)
+					{
+						chat.Add("Oh great, the robot is here... What do you want?", 1.0);
+					}
+					else
+					{
+						chat.Add("Oh great, the Terrarian is here... What do you want?", 1.0);
+					}
+					chat.Add("Hey, I'm busy, piss off.", 1.0);
+					chat.Add("Did you really feel the need to break into my ship?", 1.0);
+					chat.Add("Fight's over. I'm busy. Get lost.", 1.0);
+					chat.Add("Could you just leave me alone.", 1.0);
 				}
-				chat.Add("Hey, I'm busy, piss off.", 1.0);
-				chat.Add("Did you really feel the need to break into my ship?", 1.0);
-				chat.Add("Fight's over. I'm busy. Get lost.", 1.0);
-				chat.Add("Could you just leave me alone.", 1.0);
-			}
-			if (NPC.downedMoonlord)
-			{
-				chat.Add("I'll be leaving here soon, make it quick.", 1.0);
-			}
-			Player player = Main.player[Main.myPlayer];
-			if (BasePlayer.HasHelmet(player, base.mod.ItemType("KingSlayerMask"), true))
-			{
-				chat.Add("What have you got on your head? Are you trying to cosplay as me or something?", 1.0);
-			}
-			if (BasePlayer.HasHelmet(player, base.mod.ItemType("AndroidHead"), true) || BasePlayer.HasHelmet(player, base.mod.ItemType("PrototypeSilverHead"), true))
-			{
-				chat.Add("I'm not an idiot ya know, I know one of my own minions when I see one.", 1.0);
-			}
-			if (player.HasBuff(26) && RedeWorld.slayerRep < 2)
-			{
-				chat.Add("Look at you all well fed... I'm really tempted to just punch your face in.", 1.0);
-			}
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().chickenPower)
-			{
-				chat.Add("How did a chicken break into my ship?", 1.0);
+				if (NPC.downedMoonlord)
+				{
+					chat.Add("I'll be leaving here soon, make it quick.", 1.0);
+				}
+				if (BasePlayer.HasHelmet(player, base.mod.ItemType("KingSlayerMask"), true))
+				{
+					chat.Add("What have you got on your head? Are you trying to cosplay as me or something?", 1.0);
+				}
+				if (BasePlayer.HasHelmet(player, base.mod.ItemType("AndroidHead"), true) || BasePlayer.HasHelmet(player, base.mod.ItemType("PrototypeSilverHead"), true))
+				{
+					chat.Add("I'm not an idiot ya know, I know one of my own minions when I see one.", 1.0);
+				}
+				if (player.HasBuff(26) && RedeWorld.slayerRep < 2)
+				{
+					chat.Add("Look at you all well fed... I'm really tempted to just punch your face in.", 1.0);
+				}
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().chickenPower)
+				{
+					chat.Add("How did a chicken break into my ship?", 1.0);
+				}
 			}
 			return chat;
 		}

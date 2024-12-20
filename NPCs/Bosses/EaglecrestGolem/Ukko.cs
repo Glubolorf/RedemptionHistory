@@ -895,6 +895,12 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 			return base.npc.ai[1] == 7f;
 		}
 
+		public override bool CheckActive()
+		{
+			this.player = Main.player[base.npc.target];
+			return !this.player.active || this.player.dead;
+		}
+
 		public void MoveToVector2(Vector2 p)
 		{
 			float moveSpeed = 30f;

@@ -106,7 +106,8 @@ namespace Redemption.WorldGeneration
 					mod.ItemType("SlayerBigRevolver"),
 					mod.ItemType("SlayerGravGun"),
 					mod.ItemType("AndroidMinion"),
-					mod.ItemType("SlayersChakram")
+					mod.ItemType("SlayersChakram"),
+					mod.ItemType("MissileDroneCaller")
 				};
 				item0.SetDefaults(Utils.Next<int>(genRand0, array0), false);
 				chest.item[1].SetDefaults(Utils.Next<int>(WorldGen.genRand, HoloChestLoot2), false);

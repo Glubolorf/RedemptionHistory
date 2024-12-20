@@ -3,6 +3,7 @@ using Redemption.Items;
 using Redemption.Items.DruidDamageClass.SeedBags;
 using Redemption.Items.Quest;
 using Redemption.Items.Weapons;
+using Redemption.Items.Weapons.v08;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -40,6 +41,13 @@ namespace Redemption.NPCs
 			if (type == 368 && RedeQuests.ZskullQuest && Main.rand.Next(10) == 0)
 			{
 				shop.item[nextSlot].SetDefaults(ModContent.ItemType<RubySkull2>(), false);
+				nextSlot++;
+			}
+			if (type == 108)
+			{
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<NoidanSauva>(), false);
+				nextSlot++;
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<Pommisauva>(), false);
 				nextSlot++;
 			}
 		}
@@ -405,6 +413,10 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("LivingWoodYoyo"), 1, false, 0, false, false);
 				}
+				if (Main.rand.Next(100) == 0 && !Main.hardMode)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("HeartOfTheThorns"), 1, false, 0, false, false);
+				}
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(400) == 0)
@@ -436,6 +448,10 @@ namespace Redemption.NPCs
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("LivingTwig"), Main.rand.Next(12, 26), false, 0, false, false);
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 27, Main.rand.Next(3, 5), false, 0, false, false);
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 313, 1, false, 0, false, false);
+				if (Main.rand.Next(100) == 0 && !Main.hardMode)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("HeartOfTheThorns"), 1, false, 0, false, false);
+				}
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(400) == 0)
@@ -470,6 +486,10 @@ namespace Redemption.NPCs
 				if (Main.rand.Next(5) == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 3502, 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(100) == 0 && !Main.hardMode)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("HeartOfTheThorns"), 1, false, 0, false, false);
 				}
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
@@ -1221,6 +1241,10 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("AnglonicMysticBlossom"), 1, false, 0, false, false);
 				}
+				if (Main.rand.Next(100) == 0 && !Main.hardMode)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("HeartOfTheThorns"), 1, false, 0, false, false);
+				}
 				if (Main.rand.Next(5) == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 313, 1, false, 0, false, false);
@@ -1633,6 +1657,10 @@ namespace Redemption.NPCs
 				if (Main.rand.Next(2) == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 3102, 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(10) == 0 && !Main.hardMode)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("HeartOfTheThorns"), 1, false, 0, false, false);
 				}
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 3093, Main.rand.Next(1, 2), false, 0, false, false);
 				if (Main.rand.Next(4) == 0)
@@ -2240,9 +2268,16 @@ namespace Redemption.NPCs
 				}
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("GildedStar"), Main.rand.Next(4, 8), false, 0, false, false);
 			}
-			if ((npc.type == 77 || npc.type == 197 || npc.type == 110) && Main.rand.Next(250) == 0)
+			if (npc.type == 77 || npc.type == 197 || npc.type == 110)
 			{
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("NoidanSauva"), 1, false, 0, false, false);
+				if (Main.rand.Next(250) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("NoidanSauva"), 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(250) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("Pommisauva"), 1, false, 0, false, false);
+				}
 			}
 		}
 	}

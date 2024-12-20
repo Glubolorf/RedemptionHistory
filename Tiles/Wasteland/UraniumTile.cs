@@ -20,8 +20,9 @@ namespace Redemption.Tiles.Wasteland
 			this.minPick = 210;
 			this.mineResist = 7f;
 			this.soundType = 21;
-			base.CreateMapEntryName(null);
-			base.AddMapEntry(new Color(77, 240, 107), null);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Uranium");
+			base.AddMapEntry(new Color(77, 240, 107), name);
 		}
 
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

@@ -106,6 +106,9 @@ namespace Redemption.NPCs.Bosses.KingSlayerIIIClone
 			}
 			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CyberPlating"), Main.rand.Next(8, 12), false, 0, false, false);
 			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("KingCore"), 1, false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("SlayerMedal"), 1, false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("Holokey"), 1, false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("StarcruiserRadar"), 1, false, 0, false, false);
 		}
 
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)

@@ -23,6 +23,19 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave
 			base.projectile.GetGlobalProjectile<DruidProjectile>().fromStave = false;
 		}
 
+		public override void AI()
+		{
+			int dustType = 242;
+			int pieCut = 8;
+			for (int i = 0; i < pieCut; i++)
+			{
+				int dustID = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 2f);
+				Main.dust[dustID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)pieCut * 6.28f);
+				Main.dust[dustID].noLight = false;
+				Main.dust[dustID].noGravity = true;
+			}
+		}
+
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
 			Collision.HitTiles(base.projectile.position, oldVelocity, base.projectile.width, base.projectile.height);

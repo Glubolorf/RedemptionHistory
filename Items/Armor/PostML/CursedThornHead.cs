@@ -46,12 +46,21 @@ namespace Redemption.Items.Armor.PostML
 
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "Standing still increases damage reduction by 25% and grants knockback immunity.";
-			if (player.velocity.X == 0f && player.velocity.Y == 0f)
+			player.setBonus = "10% increased damage reduction while above 30% life\n15% increased damage reduction while below 30% life\n8% increased melee and ranged damage\n6% increased melee and ranged critical strike chance\n10% increased melee speed\nCritical strikes will summon a rising thorn at the target";
+			if (player.statLife > (int)((float)player.statLifeMax2 * 0.7f))
 			{
-				player.endurance += 0.25f;
-				player.noKnockback = true;
+				player.endurance += 0.1f;
 			}
+			if (player.statLife < (int)((float)player.statLifeMax2 * 0.3f))
+			{
+				player.endurance += 0.15f;
+			}
+			player.meleeDamage += 0.08f;
+			player.rangedDamage += 0.08f;
+			player.meleeCrit += 6;
+			player.rangedCrit += 6;
+			player.meleeSpeed += 0.1f;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).cursedThornSet = true;
 		}
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)

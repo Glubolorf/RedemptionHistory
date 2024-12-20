@@ -539,6 +539,12 @@ namespace Redemption.NPCs.LabNPCs.New
 			}
 		}
 
+		public override bool CheckDead()
+		{
+			base.npc.life = 1;
+			return false;
+		}
+
 		public Vector2 PosPick()
 		{
 			int PosChoice = Main.rand.Next(10);

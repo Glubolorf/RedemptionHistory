@@ -36,6 +36,11 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 			this.bossBag = base.mod.ItemType("NebBag");
 		}
 
+		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+		{
+			return false;
+		}
+
 		public override void NPCLoot()
 		{
 			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ThankYouLetter"), 1, false, 0, false, false);
@@ -249,7 +254,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 				{
 					if (this.customAI[0] == 80f)
 					{
-						string text4 = "Even if you defeat me, there are many others stronger than myself!";
+						string text4 = "Even with me gone, there are many others stronger than myself!";
 						Color rarityPink = Colors.RarityPink;
 						byte r4 = rarityPink.R;
 						rarityPink = Colors.RarityPink;

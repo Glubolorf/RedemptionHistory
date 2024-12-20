@@ -81,15 +81,24 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 			{
 				if (Main.rand.Next(5) == 0)
 				{
-					Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(15f, Utils.ToRotation(this.target.Center - base.projectile.Center) + 25f), base.mod.ProjectileType("LunarShotPro"), 7, 3f, Main.myPlayer, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(15f, Utils.ToRotation(this.target.Center - base.projectile.Center) - 25f), base.mod.ProjectileType("LunarShotPro"), 7, 3f, Main.myPlayer, 0f, 0f);
+					int p = Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(15f, Utils.ToRotation(this.target.Center - base.projectile.Center) + 25f), base.mod.ProjectileType("LunarShotPro"), 7, 3f, Main.myPlayer, 0f, 0f);
+					p = Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(15f, Utils.ToRotation(this.target.Center - base.projectile.Center) - 25f), base.mod.ProjectileType("LunarShotPro"), 7, 3f, Main.myPlayer, 0f, 0f);
+					Main.projectile[p].ranged = false;
+					Main.projectile[p].GetGlobalProjectile<DruidProjectile>().druidic = true;
+					Main.projectile[p].GetGlobalProjectile<DruidProjectile>().fromStave = true;
 				}
 				if (Main.rand.Next(5) == 0)
 				{
-					Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center)), base.mod.ProjectileType("LunarShotPro"), 7, 3f, Main.myPlayer, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(5f, Utils.ToRotation(this.target.Center - base.projectile.Center)), base.mod.ProjectileType("LunarShotPro"), 7, 3f, Main.myPlayer, 0f, 0f);
+					int p2 = Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center)), base.mod.ProjectileType("LunarShotPro"), 7, 3f, Main.myPlayer, 0f, 0f);
+					p2 = Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(5f, Utils.ToRotation(this.target.Center - base.projectile.Center)), base.mod.ProjectileType("LunarShotPro"), 7, 3f, Main.myPlayer, 0f, 0f);
+					Main.projectile[p2].ranged = false;
+					Main.projectile[p2].GetGlobalProjectile<DruidProjectile>().druidic = true;
+					Main.projectile[p2].GetGlobalProjectile<DruidProjectile>().fromStave = true;
 				}
-				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(15f, Utils.ToRotation(this.target.Center - base.projectile.Center)), base.mod.ProjectileType("LunarShotPro"), 7, 3f, Main.myPlayer, 0f, 0f);
+				int p3 = Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(15f, Utils.ToRotation(this.target.Center - base.projectile.Center)), base.mod.ProjectileType("LunarShotPro"), 7, 3f, Main.myPlayer, 0f, 0f);
+				Main.projectile[p3].ranged = false;
+				Main.projectile[p3].GetGlobalProjectile<DruidProjectile>().druidic = true;
+				Main.projectile[p3].GetGlobalProjectile<DruidProjectile>().fromStave = true;
 			}
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
 			if (player.dead)

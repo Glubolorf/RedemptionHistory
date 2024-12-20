@@ -4,21 +4,22 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class DruidsCharm : DruidDamageItem
+	public class DruidsCharm : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Master Druid's Charm");
-			base.Tooltip.SetDefault("5% increased druidic damage\nNegates fall damage\nGrants immunity to fire blocks\nForms an spirit skull to aid you upon being attacked\nStaves will burn targets\nSeedbags will inflict Frostburn\nSeedbags that throw only one seed will throw 2-3 seeds instead\nStaves swing faster\nThrows seedbags faster\nSpirits shoot faster\nSpirit summoning weapons will summon 2 extra spirits\nSpirits pierce through more targets\nSpirits home in on enemies\n95% decrease to all other damage types");
+			base.Tooltip.SetDefault("5% increased druidic damage\nNegates fall damage\nGrants immunity to fire blocks\nForms an spirit skull to aid you upon being attacked\nStaves will burn targets\nSeedbags will inflict Frostburn\nSeedbags that throw only one seed will throw 2-3 seeds instead\nStaves cast faster\nThrows seedbags faster\nSpirits shoot faster\nSpirit summoning weapons will summon 2 extra spirits\nSpirits pierce through more targets\nSpirits home in on enemies\n95% decrease to all other damage types");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 42;
 			base.item.height = 52;
 			base.item.value = Item.sellPrice(0, 10, 0, 0);
 			base.item.rare = 7;
 			base.item.accessory = true;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override bool CanEquipAccessory(Player player, int slot)

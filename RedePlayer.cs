@@ -12,7 +12,6 @@ using Redemption.Items.LabThings;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Events;
-using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -639,14 +638,15 @@ namespace Redemption
 
 		public override void UpdateBiomeVisuals()
 		{
+			bool useFireC = NPC.AnyNPCs(base.mod.NPCType("NebuleusClone"));
+			bool useFire2C = NPC.AnyNPCs(base.mod.NPCType("BigNebuleusClone"));
 			bool useFire = NPC.AnyNPCs(base.mod.NPCType("Nebuleus"));
-			base.player.ManageSpecialBiomeVisuals("Redemption:Nebuleus", useFire, default(Vector2));
+			base.player.ManageSpecialBiomeVisuals("Redemption:Nebuleus", useFire || useFireC, default(Vector2));
 			bool useFire2 = NPC.AnyNPCs(base.mod.NPCType("BigNebuleus"));
-			base.player.ManageSpecialBiomeVisuals("Redemption:BigNebuleus", useFire2, default(Vector2));
+			base.player.ManageSpecialBiomeVisuals("Redemption:BigNebuleus", useFire2 || useFire2C, default(Vector2));
 			bool useFire3 = NPC.AnyNPCs(base.mod.NPCType("Ukko"));
 			base.player.ManageSpecialBiomeVisuals("Redemption:Ukko", useFire3, default(Vector2));
 			base.player.ManageSpecialBiomeVisuals("Redemption:XenoSky", this.ZoneXeno || this.ZoneEvilXeno, base.player.Center);
-			base.player.ManageSpecialBiomeVisuals("Redemption:SoullessSky", this.ZoneSoulless, base.player.Center);
 			if (!this.ZoneXeno && !this.ZoneEvilXeno)
 			{
 				base.player.HasBuff(base.mod.BuffType("RadiationDebuff"));
@@ -659,13 +659,12 @@ namespace Redemption
 			this.ZoneEvilXeno = (RedeWorld.evilXenoBiome > 50);
 			this.ZoneLab = (RedeWorld.labBiome > 200);
 			this.ZoneSlayer = (RedeWorld.slayerBiome > 75);
-			this.ZoneSoulless = (RedeWorld.soullessBiome > 75);
 		}
 
 		public override bool CustomBiomesMatch(Player other)
 		{
 			RedePlayer modOther = other.GetModPlayer<RedePlayer>();
-			return this.ZoneXeno == modOther.ZoneXeno && this.ZoneEvilXeno == modOther.ZoneEvilXeno && this.ZoneLab == modOther.ZoneLab && this.ZoneSlayer == modOther.ZoneSlayer && this.ZoneSoulless == modOther.ZoneSoulless;
+			return this.ZoneXeno == modOther.ZoneXeno && this.ZoneEvilXeno == modOther.ZoneEvilXeno && this.ZoneLab == modOther.ZoneLab && this.ZoneSlayer == modOther.ZoneSlayer;
 		}
 
 		public override void CopyCustomBiomesTo(Player other)
@@ -675,7 +674,6 @@ namespace Redemption
 			modPlayer.ZoneEvilXeno = this.ZoneEvilXeno;
 			modPlayer.ZoneLab = this.ZoneLab;
 			modPlayer.ZoneSlayer = this.ZoneSlayer;
-			modPlayer.ZoneSoulless = this.ZoneSoulless;
 		}
 
 		public override void SendCustomBiomes(BinaryWriter writer)
@@ -685,7 +683,6 @@ namespace Redemption
 			flags[1] = this.ZoneLab;
 			flags[2] = this.ZoneEvilXeno;
 			flags[3] = this.ZoneSlayer;
-			flags[4] = this.ZoneSoulless;
 			writer.Write(flags);
 		}
 
@@ -709,7 +706,6 @@ namespace Redemption
 			this.ZoneLab = flags[1];
 			this.ZoneEvilXeno = flags[2];
 			this.ZoneSlayer = flags[3];
-			this.ZoneSoulless = flags[4];
 		}
 
 		public override void OnRespawn(Player player)
@@ -874,6 +870,16 @@ namespace Redemption
 			this.spiritGolemCross = false;
 			this.lacerated = false;
 			this.ukkonenMinion = false;
+			this.dreamsong = false;
+			this.cursedThornSet = false;
+			this.shadowBinder = false;
+			this.xenomiteSet = false;
+			this.corruptedXenomiteSet = false;
+			this.seedLifeTime = 1f;
+			this.corruptedCopter = false;
+			this.girusSniperDrone = false;
+			this.shieldDrone = false;
+			this.jellyfishDrone = false;
 		}
 
 		public void ModDashMovement()
@@ -1518,6 +1524,22 @@ namespace Redemption
 			}
 		}
 
+		public override void OnHitByProjectile(Projectile proj, int damage, bool crit)
+		{
+			if (this.powerSurgeSet)
+			{
+				this.powerSurgeCharge += damage;
+			}
+		}
+
+		public override void OnHitByNPC(NPC npc, int damage, bool crit)
+		{
+			if (this.powerSurgeSet)
+			{
+				this.powerSurgeCharge += damage;
+			}
+		}
+
 		public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
 		{
 			if (base.player.HasBuff(base.mod.BuffType("BioweaponFlaskBuff")))
@@ -1655,6 +1677,35 @@ namespace Redemption
 			{
 				base.player.AddBuff(base.mod.BuffType("SoulStaveBuff"), 3600, true);
 			}
+			if (this.cursedThornSet && crit)
+			{
+				Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, 0f, base.mod.ProjectileType("AkkaSeedF"), 400, 3f, Main.myPlayer, 0f, 0f);
+			}
+			if (this.shadowBinder && target.life <= 0 && target.lifeMax >= 5000)
+			{
+				for (int index = 0; index < 10; index++)
+				{
+					Dust dust = Dust.NewDustDirect(new Vector2(target.position.X, target.position.Y), target.width, target.height, 20, 0f, 0f, 100, default(Color), 2f);
+					dust.velocity = -base.player.DirectionTo(dust.position) * 20f;
+					dust.noGravity = true;
+				}
+				if (this.shadowBinderCharge < 1000)
+				{
+					this.shadowBinderCharge++;
+				}
+			}
+			if (this.xenomiteSet && crit && Main.rand.Next(2) == 0)
+			{
+				for (int i = 0; i < 6; i++)
+				{
+					int p = Projectile.NewProjectile(new Vector2(base.player.Center.X, base.player.Center.Y), RedeHelper.PolarVector(15f + Utils.NextFloat(Main.rand, -4f, 4f), Utils.ToRotation(Main.MouseWorld - base.player.Center) + Utils.NextFloat(Main.rand, -0.1f, 0.1f)), base.mod.ProjectileType("XenoYoyoShard"), 30, 3f, Main.myPlayer, 0f, 0f);
+					Main.projectile[p].melee = false;
+				}
+			}
+			if (this.corruptedXenomiteSet && crit)
+			{
+				Projectile.NewProjectile(new Vector2(base.player.Center.X, base.player.Center.Y), RedeHelper.PolarVector(20f, Utils.ToRotation(Main.MouseWorld - base.player.Center)), base.mod.ProjectileType("PhantomDagger"), 140, 3f, Main.myPlayer, 0f, 0f);
+			}
 		}
 
 		public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
@@ -1732,6 +1783,31 @@ namespace Redemption
 			if (this.wispSet && target.life <= 0 && Main.rand.Next(10) == 0 && target.type != 288)
 			{
 				NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, 288, 0, 0f, 0f, 0f, 0f, 255);
+			}
+			if (this.shadowBinder && target.life <= 0 && target.lifeMax >= 5000)
+			{
+				for (int index = 0; index < 10; index++)
+				{
+					Dust dust = Dust.NewDustDirect(new Vector2(target.position.X, target.position.Y), target.width, target.height, 20, 0f, 0f, 100, default(Color), 2f);
+					dust.velocity = -base.player.DirectionTo(dust.position) * 20f;
+					dust.noGravity = true;
+				}
+				if (this.shadowBinderCharge < 1000)
+				{
+					this.shadowBinderCharge++;
+				}
+			}
+			if (this.xenomiteSet && crit && Main.rand.Next(2) == 0)
+			{
+				for (int i = 0; i < 6; i++)
+				{
+					int p = Projectile.NewProjectile(new Vector2(base.player.Center.X, base.player.Center.Y), RedeHelper.PolarVector(15f + Utils.NextFloat(Main.rand, -4f, 4f), Utils.ToRotation(Main.MouseWorld - base.player.Center) + Utils.NextFloat(Main.rand, -0.1f, 0.1f)), base.mod.ProjectileType("XenoYoyoShard"), 30, 3f, Main.myPlayer, 0f, 0f);
+					Main.projectile[p].melee = false;
+				}
+			}
+			if (this.corruptedXenomiteSet && crit)
+			{
+				Projectile.NewProjectile(new Vector2(base.player.Center.X, base.player.Center.Y), RedeHelper.PolarVector(20f, Utils.ToRotation(Main.MouseWorld - base.player.Center)), base.mod.ProjectileType("PhantomDagger"), 140, 3f, Main.myPlayer, 0f, 0f);
 			}
 		}
 
@@ -1927,13 +2003,16 @@ namespace Redemption
 			{
 				RedePlayer.EmitDust();
 			}
-			if (Redemption.soullessBiomeActive && Main.netMode == 2)
+			if (this.powerSurgeCharge >= 300)
 			{
-				if (!Filters.Scene["MoonLordShake"].IsActive())
+				Main.PlaySound(SoundID.Item74, base.player.position);
+				for (int i = 0; i < 25; i++)
 				{
-					Filters.Scene.Activate("MoonLordShake", base.player.position, new object[0]);
+					int dustIndex = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y), base.player.width, base.player.height, 269, 0f, 0f, 100, default(Color), 3f);
+					Main.dust[dustIndex].velocity *= 5.4f;
 				}
-				Filters.Scene["MoonLordShake"].GetShader().UseIntensity(1f);
+				base.player.AddBuff(base.mod.BuffType("PowerSurgeBuff"), 420, true);
+				this.powerSurgeCharge = 0;
 			}
 		}
 
@@ -2524,7 +2603,29 @@ namespace Redemption
 
 		public bool ukkonenMinion;
 
-		public bool ZoneSoulless;
+		public bool dreamsong;
+
+		public bool cursedThornSet;
+
+		public int powerSurgeCharge;
+
+		public bool shadowBinder;
+
+		public int shadowBinderCharge;
+
+		public bool xenomiteSet;
+
+		public bool corruptedXenomiteSet;
+
+		public float seedLifeTime = 1f;
+
+		public bool corruptedCopter;
+
+		public bool girusSniperDrone;
+
+		public bool shieldDrone;
+
+		public bool jellyfishDrone;
 
 		public static readonly PlayerLayer MiscEffectsFront = new PlayerLayer("Redemption", "MiscEffectsFront", PlayerLayer.MiscEffectsFront, delegate(PlayerDrawInfo drawInfo)
 		{

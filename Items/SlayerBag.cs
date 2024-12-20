@@ -63,6 +63,7 @@ namespace Redemption.Items
 			player.QuickSpawnItem(base.mod.ItemType("Holokey"), 1);
 			player.QuickSpawnItem(base.mod.ItemType("CyberPlating"), Main.rand.Next(12, 16));
 			player.QuickSpawnItem(base.mod.ItemType("PocketShieldProjector"), 1);
+			player.QuickSpawnItem(base.mod.ItemType("StarcruiserRadar"), 1);
 		}
 	}
 }

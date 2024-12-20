@@ -35,7 +35,7 @@ namespace Redemption.NPCs.LabNPCs.New
 			base.npc.noGravity = false;
 			base.npc.damage = 0;
 			base.npc.defense = 0;
-			base.npc.lifeMax = 1;
+			base.npc.lifeMax = 999;
 			base.npc.knockBackResist = 0f;
 			base.npc.aiStyle = -1;
 			base.npc.npcSlots = 0f;
@@ -236,9 +236,9 @@ namespace Redemption.NPCs.LabNPCs.New
 			else if (ProtectorVoltNPC.TBots)
 			{
 				chat.Add("I recall Girus being after a certain bot. I've heard vague stories about him, called a traitor by us, a messiah by the insurgents. He had 3 other powerful insurgents by his side, along with a human. It has been 3 decades since last sight of the human. Presumed dead.", 1.0);
-				chat.Add("The leader of the Insurgents is Adam. While not the strongest of the bunch, he�s almost comparable to Girus with his intellect and mannerisms. But for whatever reason, he opposes Girus� command and actively tries to hinder her. What I do not understand is why Girus is so reluctant on both assimilating and destroying him.", 1.0);
-				chat.Add("While most Insurgents are easy to deal with, there�s two who aren't. One acts as a lookout and a sniper. She has one of the strongest sniper rifles Teochrome had created. I believe her name being Shiro. The other one... I�ve never seen anyone like him. Called Talos. He wields a hammer that looks like our tech, except it uses yellow xenomite. I only know of green, red, white and blue xenomite. Scans indicated this new xenomite being one of the most powerful xenomite variants out there. Where did it come from?", 1.0);
-				chat.Add("Right, there was a fourth insurgent. He wasn�t slippery enough like the other three, and was assimilated by Girus. He used very potent blue xenomite in his weaponry. And I mean very potent. Could blast a 8.8 feet tall robot through thick brickwall. I know this because that robot was me. What was strange is that he turned himself in to be assimilated, yet right after he exterminated himself... What was his goal?", 1.0);
+				chat.Add("The leader of the Insurgents is Adam. While not the strongest of the bunch, he's almost comparable to Girus with his intellect and mannerisms. But for whatever reason, he opposes Girus' command and actively tries to hinder her. What I do not understand is why Girus is so reluctant on both assimilating and destroying him.", 1.0);
+				chat.Add("While most Insurgents are easy to deal with, there's two who aren't. One acts as a lookout and a sniper. She has one of the strongest sniper rifles Teochrome had created. I believe her name being Shiro. The other one... I've never seen anyone like him. Called Talos. He wields a hammer that looks like our tech, except it uses yellow xenomite. I only know of green, red, white and blue xenomite. Scans indicated this new xenomite being one of the most powerful xenomite variants out there. Where did it come from?", 1.0);
+				chat.Add("Right, there was a fourth insurgent. He wasn't slippery enough like the other three, and was assimilated by Girus. He used very potent blue xenomite in his weaponry. And I mean very potent. Could blast a 8.8 feet tall robot through thick brickwall. I know this because that robot was me. What was strange is that he turned himself in to be assimilated, yet right after he exterminated himself... What was his goal?", 1.0);
 			}
 			else if (ProtectorVoltNPC.Janitor)
 			{

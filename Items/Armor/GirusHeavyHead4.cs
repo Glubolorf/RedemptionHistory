@@ -44,11 +44,22 @@ namespace Redemption.Items.Armor
 
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "Enemies are more likely to target you, +1 max minions and 8% damage reduction.";
+			player.setBonus = "Enemies are more likely to target you, +1 max minions and 8% damage reduction.\nSummons a tiny Attack Hovercopter to shoot at nearby enemies";
 			player.AddBuff(11, 2, true);
 			player.maxMinions++;
 			player.endurance += 0.08f;
 			player.aggro += 10;
+			if (player.whoAmI == Main.myPlayer)
+			{
+				if (player.FindBuffIndex(base.mod.BuffType("CorruptedCopterBuff")) == -1)
+				{
+					player.AddBuff(base.mod.BuffType("CorruptedCopterBuff"), 3600, true);
+				}
+				if (player.ownedProjectileCounts[base.mod.ProjectileType("CorruptedCopter")] < 1)
+				{
+					Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, -1f, base.mod.ProjectileType("CorruptedCopter"), 20, 2f, Main.myPlayer, 0f, 0f);
+				}
+			}
 		}
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)

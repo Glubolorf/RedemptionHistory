@@ -4,15 +4,15 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class ForestShacklesDawn : DruidDamageItem
+	public class ForestShacklesDawn : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Forest Shackles");
-			base.Tooltip.SetDefault("'Dawn'\n5% increased druidic damage\nStaves swing faster");
+			base.Tooltip.SetDefault("'Dawn'\n5% increased druidic damage\nStaves cast faster");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 40;
 			base.item.height = 46;
@@ -20,6 +20,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.rare = 1;
 			base.item.accessory = true;
 			base.item.defense = 2;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override bool CanEquipAccessory(Player player, int slot)

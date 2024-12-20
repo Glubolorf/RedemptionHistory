@@ -1,9 +1,10 @@
 ﻿using System;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class SkeletonCan : DruidDamageItem
+	public class SkeletonCan : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -11,13 +12,14 @@ namespace Redemption.Items.DruidDamageClass
 			base.Tooltip.SetDefault("Taking damage unleashes a cluster of bone seeds around you\nHaving a Large Seed Pouch will unleash more seeds\n5% increased druidic damage");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 42;
 			base.item.height = 28;
 			base.item.value = Item.sellPrice(0, 0, 50, 0);
 			base.item.rare = 3;
 			base.item.accessory = true;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override bool CanEquipAccessory(Player player, int slot)

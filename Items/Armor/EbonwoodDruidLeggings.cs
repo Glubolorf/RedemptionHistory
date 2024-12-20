@@ -9,7 +9,7 @@ namespace Redemption.Items.Armor
 	{
 		2
 	})]
-	public class EbonwoodDruidLeggings : DruidDamageItem
+	public class EbonwoodDruidLeggings : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -17,13 +17,14 @@ namespace Redemption.Items.Armor
 			base.Tooltip.SetDefault("3% increased druidic damage\n2% increased druidic crit\nMana regen slightly increased");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 18;
 			base.item.value = 1050;
 			base.item.rare = 1;
 			base.item.defense = 3;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void UpdateEquip(Player player)

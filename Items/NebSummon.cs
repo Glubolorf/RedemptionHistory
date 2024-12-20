@@ -33,7 +33,7 @@ namespace Redemption.Items
 
 		public override bool CanUseItem(Player player)
 		{
-			return !Main.dayTime && !NPC.AnyNPCs(base.mod.NPCType("Nebuleus")) && !NPC.AnyNPCs(base.mod.NPCType("BigNebuleus"));
+			return !Main.dayTime && !NPC.AnyNPCs(base.mod.NPCType("Nebuleus")) && !NPC.AnyNPCs(base.mod.NPCType("BigNebuleus")) && !NPC.AnyNPCs(base.mod.NPCType("NebuleusClone")) && !NPC.AnyNPCs(base.mod.NPCType("BigNebuleusClone"));
 		}
 
 		public override bool UseItem(Player player)
@@ -48,9 +48,15 @@ namespace Redemption.Items
 				rarityPink = Colors.RarityPink;
 				Main.NewText(text, r, g, rarityPink.B, false);
 			}
-			else
+			else if (!RedeWorld.downedNebuleus)
 			{
 				Redemption.SpawnBoss(player, "Nebuleus", true, new Vector2(player.position.X + (float)Main.rand.Next(200, 250), player.position.Y - 200f), "Nebuleus", false);
+				Main.PlaySound(15, player.position, 0);
+			}
+			else
+			{
+				Main.NewText("Nebuleus is nowhere to be found...", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B, false);
+				Redemption.SpawnBoss(player, "NebuleusClone", false, new Vector2(player.position.X + (float)Main.rand.Next(200, 250), player.position.Y - 200f), " ", false);
 				Main.PlaySound(15, player.position, 0);
 			}
 			return true;

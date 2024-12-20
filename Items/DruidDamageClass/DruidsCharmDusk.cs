@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class DruidsCharmDusk : DruidDamageItem
+	public class DruidsCharmDusk : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -12,7 +12,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.Tooltip.SetDefault("'Dusk'\n10% increased druidic damage\nNegates fall damage\nGrants immunity to fire blocks\nThrows seedbags faster\nHas a chance to throw an extra seed\n75% decrease to all other damage types");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 30;
 			base.item.height = 52;
@@ -20,6 +20,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.rare = 6;
 			base.item.accessory = true;
 			base.item.defense = 2;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override bool CanEquipAccessory(Player player, int slot)

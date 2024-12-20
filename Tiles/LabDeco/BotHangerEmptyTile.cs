@@ -31,8 +31,8 @@ namespace Redemption.Tiles.LabDeco
 			TileObjectData.newTile.AnchorBottom = default(AnchorData);
 			TileObjectData.addTile((int)base.Type);
 			this.dustType = 226;
-			this.minPick = 300;
-			this.mineResist = 3f;
+			this.minPick = 200;
+			this.mineResist = 5f;
 			this.disableSmartCursor = true;
 			ModTranslation name = base.CreateMapEntryName(null);
 			name.SetDefault("Bot Hanger");

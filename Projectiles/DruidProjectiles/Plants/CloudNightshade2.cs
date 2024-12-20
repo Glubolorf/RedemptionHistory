@@ -48,15 +48,15 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 			base.projectile.rotation += 0.07f;
 			if (Main.rand.Next(100) == 0)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 10f, base.projectile.position.Y + 18f), new Vector2(0f, 0f), base.mod.ProjectileType("CloudNightshadeRain"), 11, 3f, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 10f, base.projectile.position.Y + 18f), new Vector2(0f, 0f), base.mod.ProjectileType("CloudNightshadeRain2"), 11, 3f, base.projectile.owner, 0f, 1f);
 			}
 			if (Main.rand.Next(100) == 0)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 14f, base.projectile.position.Y + 14f), new Vector2(0f, 0f), base.mod.ProjectileType("CloudNightshadeRain"), 11, 3f, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 14f, base.projectile.position.Y + 14f), new Vector2(0f, 0f), base.mod.ProjectileType("CloudNightshadeRain2"), 11, 3f, base.projectile.owner, 0f, 1f);
 			}
 			if (Main.rand.Next(100) == 0)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 20f, base.projectile.position.Y + 20f), new Vector2(0f, 0f), base.mod.ProjectileType("CloudNightshadeRain"), 11, 3f, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 20f, base.projectile.position.Y + 20f), new Vector2(0f, 0f), base.mod.ProjectileType("CloudNightshadeRain2"), 11, 3f, base.projectile.owner, 0f, 1f);
 			}
 		}
 

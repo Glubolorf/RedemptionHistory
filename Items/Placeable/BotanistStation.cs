@@ -1,11 +1,10 @@
 ﻿using System;
-using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable
 {
-	public class BotanistStation : DruidDamageItem
+	public class BotanistStation : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -13,7 +12,7 @@ namespace Redemption.Items.Placeable
 			base.Tooltip.SetDefault("Used to combine Seedbags");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 32;
 			base.item.height = 40;
@@ -27,6 +26,7 @@ namespace Redemption.Items.Placeable
 			base.item.consumable = true;
 			base.item.value = Item.sellPrice(0, 2, 0, 0);
 			base.item.createTile = base.mod.TileType("BotanistStationTile");
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void AddRecipes()

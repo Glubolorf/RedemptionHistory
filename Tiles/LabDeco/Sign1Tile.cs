@@ -28,8 +28,8 @@ namespace Redemption.Tiles.LabDeco
 			TileObjectData.addTile((int)base.Type);
 			this.dustType = 7;
 			this.disableSmartCursor = true;
-			this.minPick = 500;
-			this.mineResist = 3f;
+			this.minPick = 200;
+			this.mineResist = 5f;
 			ModTranslation name = base.CreateMapEntryName(null);
 			name.SetDefault("Danger Sign");
 			base.AddMapEntry(new Color(90, 90, 50), name);

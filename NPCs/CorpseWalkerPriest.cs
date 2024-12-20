@@ -168,7 +168,7 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.DesertCave.Chance * 0.01f;
+			return SpawnCondition.DesertCave.Chance * 0.015f;
 		}
 
 		private bool specialAttack;

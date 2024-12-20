@@ -23,6 +23,7 @@ namespace Redemption.Tiles
 				16,
 				16
 			};
+			TileObjectData.newTile.Direction = 0;
 			TileObjectData.addTile((int)base.Type);
 			ModTranslation name = base.CreateMapEntryName(null);
 			name.SetDefault("Botanist Station");

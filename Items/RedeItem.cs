@@ -39,7 +39,7 @@ namespace Redemption.Items
 			{
 				lifeTimeType = "plant lifetime";
 			}
-			if (this.prefixLifetimeModifier != 1f)
+			if (this.prefixLifetimeModifier != 1f && (item.modItem is DruidSeedBag || item.modItem is DruidStave))
 			{
 				TooltipLine line = new TooltipLine(base.mod, "PrefixLifeTime", string.Concat(new object[]
 				{
@@ -61,6 +61,14 @@ namespace Redemption.Items
 					"% ",
 					lifeTimeType
 				});
+			}
+			if (this.druidTag)
+			{
+				int tooltipLocation = tooltips.FindIndex((TooltipLine TooltipLine) => TooltipLine.Name.Equals("ItemName"));
+				if (tooltipLocation != -1 && !RedeConfigClient.Instance.NoDruidClassTag)
+				{
+					tooltips.Insert(tooltipLocation + 1, new TooltipLine(base.mod, "IsDruid", "[c/91dc16:---Druid Class---]"));
+				}
 			}
 			foreach (TooltipLine line2 in tooltips)
 			{
@@ -172,5 +180,7 @@ namespace Redemption.Items
 		public float prefixLifetimeModifier = 1f;
 
 		public int redeRarity;
+
+		public bool druidTag;
 	}
 }

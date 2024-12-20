@@ -9,7 +9,7 @@ namespace Redemption.Items.Armor
 	{
 		2
 	})]
-	public class DruidLeggings : DruidDamageItem
+	public class DruidLeggings : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -17,13 +17,14 @@ namespace Redemption.Items.Armor
 			base.Tooltip.SetDefault("6% increased druidic damage\nThrows seedbags faster");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 16;
 			base.item.value = 7000;
 			base.item.rare = 4;
 			base.item.defense = 8;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void UpdateEquip(Player player)

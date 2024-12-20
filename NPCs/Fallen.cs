@@ -691,7 +691,7 @@ namespace Redemption.NPCs
 		public static string NoChat()
 		{
 			WeightedRandom<string> weightedRandom = new WeightedRandom<string>();
-			weightedRandom.Add("You don't seem to have any fragments on your possession.", 1.0);
+			weightedRandom.Add("You don't seem to have any fragments on your possession. Either that or the fragments you may own aren't for the same weapon.", 1.0);
 			return weightedRandom;
 		}
 

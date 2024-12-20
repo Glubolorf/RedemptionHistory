@@ -9,21 +9,22 @@ namespace Redemption.Items.Armor
 	{
 		1
 	})]
-	public class ShadewoodDruidBreastplate : DruidDamageItem
+	public class ShadewoodDruidBreastplate : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Shadedruid's Chestplate");
-			base.Tooltip.SetDefault("4% increased druidic damage\n2% increased druidic critical strike chance\nStaves swing faster");
+			base.Tooltip.SetDefault("4% increased druidic damage\n2% increased druidic critical strike chance\nStaves cast faster");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 30;
 			base.item.height = 28;
 			base.item.value = 1075;
 			base.item.rare = 1;
 			base.item.defense = 5;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void UpdateEquip(Player player)

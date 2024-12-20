@@ -66,7 +66,7 @@ namespace Redemption.Items.Weapons.v08
 				base.projectile.Kill();
 			}
 			Vector2 DefaultPos = new Vector2(player.Center.X, player.Center.Y - 80f);
-			if (RedeHelper.ClosestNPC(ref this.target, 900f, base.projectile.Center, false, player.MinionAttackTargetNPC))
+			if (RedeHelper.ClosestNPC(ref this.target, 900f, base.projectile.Center, true, player.MinionAttackTargetNPC))
 			{
 				Vector2 AttackPos = new Vector2(this.target.Center.X, this.target.position.Y - 60f);
 				this.MoveToVector2(AttackPos);

@@ -30,7 +30,7 @@ namespace Redemption.NPCs.LabNPCs.New
 		{
 			if (Main.rand.Next(4) == 0)
 			{
-				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-6 + Main.rand.Next(0, 6)), (float)(-8 + Main.rand.Next(0, 8)), base.mod.ProjectileType("WaterSplash"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-6 + Main.rand.Next(0, 6)), (float)(-8 + Main.rand.Next(0, 8)), base.mod.ProjectileType("WaterSplash"), base.projectile.damage / 2, 0f, base.projectile.owner, 0f, 1f);
 			}
 		}
 

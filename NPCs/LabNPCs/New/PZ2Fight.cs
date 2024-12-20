@@ -970,6 +970,12 @@ namespace Redemption.NPCs.LabNPCs.New
 			base.npc.damage = (int)((float)base.npc.damage * 0.5f);
 		}
 
+		public override bool CheckDead()
+		{
+			base.npc.life = 1;
+			return false;
+		}
+
 		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
 		{
 			return base.npc.ai[0] >= 1f;

@@ -9,7 +9,7 @@ namespace Redemption.Items.Armor
 	{
 		2
 	})]
-	public class UVLeggings : DruidDamageItem
+	public class UVLeggings : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -17,13 +17,14 @@ namespace Redemption.Items.Armor
 			base.Tooltip.SetDefault("11% increased druidic damage\nSpirits shoot faster\n40+ max life\nIncreased movement speed at daytime\nIncreased jump height at nighttime");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 16;
 			base.item.value = 57000;
 			base.item.rare = 8;
 			base.item.defense = 9;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void UpdateEquip(Player player)

@@ -3,10 +3,11 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class SoulOfBloom : DruidDamageItem
+	public class SoulOfBloom : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -18,13 +19,14 @@ namespace Redemption.Items.DruidDamageClass
 			ItemID.Sets.ItemNoGravity[base.item.type] = true;
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 22;
 			base.item.maxStack = 999;
 			base.item.value = Item.buyPrice(0, 0, 85, 0);
 			base.item.rare = 5;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void PostUpdate()

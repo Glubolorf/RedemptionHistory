@@ -428,6 +428,8 @@ namespace Redemption.NPCs
 				nextSlot++;
 				shop.item[nextSlot].SetDefaults(base.mod.ItemType("GeigerMuller"), false);
 				nextSlot++;
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabGeigerCounter"), false);
+				nextSlot++;
 				shop.item[nextSlot].SetDefaults(base.mod.ItemType("RadiationPill"), false);
 				nextSlot++;
 			}

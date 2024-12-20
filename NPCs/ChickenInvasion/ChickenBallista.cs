@@ -41,6 +41,10 @@ namespace Redemption.NPCs.ChickenInvasion
 			{
 				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ChickLauncher"), 1, false, 0, false, false);
 			}
+			if (ChickWorld.chickArmy)
+			{
+				ChickWorld.ChickPoints += 5;
+			}
 		}
 
 		public override void AI()
@@ -146,10 +150,6 @@ namespace Redemption.NPCs.ChickenInvasion
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/TrojanChickenGore7"), 1f);
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/TrojanChickenGore10"), 1f);
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/TrojanChickenGore10"), 1f);
-				if (ChickWorld.chickArmy)
-				{
-					ChickWorld.ChickPoints2 += 3;
-				}
 				for (int g = 0; g < 2; g++)
 				{
 					int goreIndex = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);

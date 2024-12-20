@@ -9,7 +9,7 @@ namespace Redemption.Items.Armor
 	{
 		2
 	})]
-	public class DryadLeggings : DruidDamageItem
+	public class DryadLeggings : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -17,13 +17,14 @@ namespace Redemption.Items.Armor
 			base.Tooltip.SetDefault("2% increased druidic damage\nMana regen slighty increased");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 18;
 			base.item.value = 50;
 			base.item.rare = 1;
 			base.item.defense = 2;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void UpdateEquip(Player player)

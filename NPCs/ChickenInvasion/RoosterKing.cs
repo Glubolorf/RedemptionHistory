@@ -44,6 +44,10 @@ namespace Redemption.NPCs.ChickenInvasion
 			{
 				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("KingRoosterMask"), 1, false, 0, false, false);
 			}
+			if (ChickWorld.chickArmy)
+			{
+				ChickWorld.ChickPoints += 100;
+			}
 		}
 
 		public override void AI()
@@ -174,10 +178,6 @@ namespace Redemption.NPCs.ChickenInvasion
 				if (base.npc.FindBuffIndex(24) != -1)
 				{
 					Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("FriedChicken"), Main.rand.Next(1, 3), false, 0, false, false);
-				}
-				if (ChickWorld.chickArmy)
-				{
-					ChickWorld.ChickPoints2 += 200;
 				}
 			}
 			Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 5, 0f, 0f, 100, default(Color), 1.2f);

@@ -1,10 +1,11 @@
 ﻿using System;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class SpiritOfLife : DruidDamageItem
+	public class SpiritOfLife : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -14,7 +15,7 @@ namespace Redemption.Items.DruidDamageClass
 			ItemID.Sets.ItemNoGravity[base.item.type] = true;
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 46;
 			base.item.height = 42;
@@ -22,6 +23,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.rare = 0;
 			base.item.expert = true;
 			base.item.accessory = true;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void UpdateAccessory(Player player, bool hideVisual)

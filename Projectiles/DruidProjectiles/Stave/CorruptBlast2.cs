@@ -52,7 +52,19 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave
 			}
 			Lighting.AddLight(base.projectile.Center, (float)(255 - base.projectile.alpha) * 0.4f / 255f, (float)(255 - base.projectile.alpha) * 0f / 255f, (float)(255 - base.projectile.alpha) * 0.4f / 255f);
 			base.projectile.rotation = (float)Math.Atan2((double)base.projectile.velocity.Y, (double)base.projectile.velocity.X) + 1.57f;
-			base.projectile.localAI[0] += 1f;
+			if (base.projectile.localAI[0] == 0f)
+			{
+				int dustType = 173;
+				int pieCut = 8;
+				for (int i = 0; i < pieCut; i++)
+				{
+					int dustID = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 2f);
+					Main.dust[dustID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)pieCut * 6.28f);
+					Main.dust[dustID].noLight = false;
+					Main.dust[dustID].noGravity = true;
+				}
+				base.projectile.localAI[0] = 1f;
+			}
 		}
 
 		public override void Kill(int timeLeft)

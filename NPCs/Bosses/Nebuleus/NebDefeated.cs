@@ -55,7 +55,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 			{
 				if (base.projectile.localAI[0] == 60f)
 				{
-					string text = "... Damn.";
+					string text = "It's always the same, isn't it.";
 					Color rarityPink = Colors.RarityPink;
 					byte r = rarityPink.R;
 					rarityPink = Colors.RarityPink;
@@ -66,7 +66,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 				}
 				if (base.projectile.localAI[0] == 160f)
 				{
-					string text2 = "Oh what did I expect... I was only delaying the inevitable.";
+					string text2 = "Even when I try my hardest... I'm still a failure.";
 					Color rarityPink = Colors.RarityPink;
 					byte r2 = rarityPink.R;
 					rarityPink = Colors.RarityPink;
@@ -76,7 +76,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 				}
 				if (base.projectile.localAI[0] == 310f)
 				{
-					string text3 = "You've won this fight. I will leave you.";
+					string text3 = "You've made me realise, I'm not strong enough. I give up. Don't expect me to come back.";
 					Color rarityPink = Colors.RarityPink;
 					byte r3 = rarityPink.R;
 					rarityPink = Colors.RarityPink;
@@ -116,7 +116,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 				}
 				if (base.projectile.localAI[0] == 1200f)
 				{
-					string text7 = "Well, this is a goodbye, Terrarian.";
+					string text7 = "Well, this is goodbye forever, Terrarian.";
 					Color rarityPink = Colors.RarityPink;
 					byte r7 = rarityPink.R;
 					rarityPink = Colors.RarityPink;

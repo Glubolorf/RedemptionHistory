@@ -36,8 +36,8 @@ namespace Redemption.Tiles.LabDeco
 			TileObjectData.newTile.AnchorBottom = default(AnchorData);
 			TileObjectData.addTile((int)base.Type);
 			this.dustType = 226;
-			this.minPick = 300;
-			this.mineResist = 7f;
+			this.minPick = 200;
+			this.mineResist = 6f;
 			this.disableSmartCursor = true;
 			ModTranslation name = base.CreateMapEntryName(null);
 			name.SetDefault("Ceiling Monitor");
@@ -68,7 +68,7 @@ namespace Redemption.Tiles.LabDeco
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 32, 16, base.mod.ItemType("BotHangerOccupied"), 1, false, 0, false, false);
+			Item.NewItem(i * 16, j * 16, 32, 16, base.mod.ItemType("LabCeilingMonitor"), 1, false, 0, false, false);
 		}
 
 		public override bool CanExplode(int i, int j)

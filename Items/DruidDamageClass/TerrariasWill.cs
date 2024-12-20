@@ -9,7 +9,7 @@ namespace Redemption.Items.DruidDamageClass
 	{
 		7
 	})]
-	public class TerrariasWill : DruidDamageItem
+	public class TerrariasWill : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -17,13 +17,14 @@ namespace Redemption.Items.DruidDamageClass
 			base.Tooltip.SetDefault("'With every leaf born, the planet blooms'\nWalking about creates ancient spores that grows into powerful plants that fight for you\n7% increased druid damage\n7% increased druid critical strike chance");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 26;
 			base.item.height = 28;
 			base.item.value = Item.sellPrice(3, 50, 0, 0);
 			base.item.rare = 8;
 			base.item.accessory = true;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void AddRecipes()

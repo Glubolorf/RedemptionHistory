@@ -9,7 +9,7 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 	{
 		0
 	})]
-	public class ScarletGarland : DruidDamageItem
+	public class ScarletGarland : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -17,13 +17,14 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 			base.Tooltip.SetDefault("5% increased druidic damage\n5% increased druidic critical strike chance");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 20;
 			base.item.height = 14;
 			base.item.value = Item.sellPrice(0, 6, 0, 0);
 			base.item.rare = 6;
 			base.item.defense = 8;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void UpdateEquip(Player player)

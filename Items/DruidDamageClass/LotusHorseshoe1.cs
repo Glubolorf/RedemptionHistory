@@ -4,15 +4,15 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class LotusHorseshoe1 : DruidDamageItem
+	public class LotusHorseshoe1 : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Lotus Horseshoe");
-			base.Tooltip.SetDefault("10% increased druidic damage\nNegates fall damage\nGrants immunity to fire blocks\nStaves swing faster");
+			base.Tooltip.SetDefault("10% increased druidic damage\nNegates fall damage\nGrants immunity to fire blocks\nStaves cast faster");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 30;
 			base.item.height = 30;
@@ -20,6 +20,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.rare = 4;
 			base.item.accessory = true;
 			base.item.defense = 2;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override bool CanEquipAccessory(Player player, int slot)

@@ -19,8 +19,9 @@ namespace Redemption.Tiles
 			this.minPick = 0;
 			this.mineResist = 1f;
 			this.soundType = 6;
-			base.CreateMapEntryName(null).SetDefault("Plant Matter");
-			base.AddMapEntry(new Color(60, 200, 60), null);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Plant Matter");
+			base.AddMapEntry(new Color(60, 200, 60), name);
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num)

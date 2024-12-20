@@ -47,7 +47,7 @@ namespace Redemption.Projectiles.DruidProjectiles
 			for (int p2 = 0; p2 < Main.npc.Length; p2++)
 			{
 				this.clearCheck2 = Main.npc[p2];
-				if (!this.clearCheck2.immortal && !this.clearCheck2.dontTakeDamage && Collision.CheckAABBvAABBCollision(base.projectile.position, base.projectile.Size, this.clearCheck2.position, this.clearCheck2.Size))
+				if (!this.clearCheck2.immortal && !this.clearCheck2.dontTakeDamage && !this.clearCheck2.friendly && Collision.CheckAABBvAABBCollision(base.projectile.position, base.projectile.Size, this.clearCheck2.position, this.clearCheck2.Size))
 				{
 					this.clearCheck2.AddBuff(base.mod.BuffType("DruidsBane"), 10, false);
 				}

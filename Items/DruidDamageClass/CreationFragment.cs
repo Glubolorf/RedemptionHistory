@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class CreationFragment : DruidDamageItem
+	public class CreationFragment : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -28,7 +28,7 @@ namespace Redemption.Items.DruidDamageClass
 			ItemID.Sets.ItemIconPulse[base.item.type] = true;
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 24;
@@ -36,6 +36,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.value = Item.sellPrice(0, 0, 20, 0);
 			base.item.rare = 9;
 			base.item.glowMask = CreationFragment.customGlowMask;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void PostUpdate()

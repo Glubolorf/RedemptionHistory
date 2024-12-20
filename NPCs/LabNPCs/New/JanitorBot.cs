@@ -111,7 +111,7 @@ namespace Redemption.NPCs.LabNPCs.New
 						Main.PlaySound(SoundID.Item1, (int)base.npc.position.X, (int)base.npc.position.Y);
 						float Speed = 8f;
 						Vector2 vector8 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
-						int damage = 30;
+						int damage = 16;
 						int type = base.mod.ProjectileType("JanitorMopPro2");
 						float rotation = (float)Math.Atan2((double)(vector8.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector8.X - (this.player.position.X + (float)this.player.width * 0.5f)));
 						int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
@@ -123,7 +123,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					Main.PlaySound(SoundID.Item1, (int)base.npc.position.X, (int)base.npc.position.Y);
 					float Speed2 = 12f;
 					Vector2 vector9 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
-					int damage2 = 30;
+					int damage2 = 16;
 					int type2 = base.mod.ProjectileType("JanitorMopPro1");
 					float rotation2 = (float)Math.Atan2((double)(vector9.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector9.X - (this.player.position.X + (float)this.player.width * 0.5f)));
 					int num55 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0), type2, damage2, 0f, 0, 0f, 0f);
@@ -155,7 +155,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					Main.PlaySound(SoundID.Item1, (int)base.npc.position.X, (int)base.npc.position.Y);
 					float Speed3 = 12f;
 					Vector2 vector10 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
-					int damage3 = 30;
+					int damage3 = 16;
 					int type3 = base.mod.ProjectileType("JanitorBucketPro");
 					float rotation3 = (float)Math.Atan2((double)(vector10.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector10.X - (this.player.position.X + (float)this.player.width * 0.5f)));
 					int num56 = Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)rotation3) * (double)Speed3 * -1.0), (float)(Math.Sin((double)rotation3) * (double)Speed3 * -1.0), type3, damage3, 0f, 0, 0f, 0f);

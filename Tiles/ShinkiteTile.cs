@@ -20,8 +20,9 @@ namespace Redemption.Tiles
 			this.minPick = 300;
 			this.mineResist = 10f;
 			this.soundType = 21;
-			base.CreateMapEntryName(null).SetDefault("Unrefined Shinkite");
-			base.AddMapEntry(new Color(41, 24, 32), null);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Unrefined Shinkite");
+			base.AddMapEntry(new Color(41, 24, 32), name);
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num)

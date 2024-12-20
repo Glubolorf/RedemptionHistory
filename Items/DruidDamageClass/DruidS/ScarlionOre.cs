@@ -1,9 +1,10 @@
 ﻿using System;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass.DruidS
 {
-	public class ScarlionOre : DruidDamageItem
+	public class ScarlionOre : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -11,7 +12,7 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 			base.Tooltip.SetDefault("'Blood Ruby'");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 24;
 			base.item.height = 24;
@@ -25,6 +26,7 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 			base.item.useStyle = 1;
 			base.item.consumable = true;
 			base.item.createTile = base.mod.TileType("ScarlionOreTile");
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 	}
 }

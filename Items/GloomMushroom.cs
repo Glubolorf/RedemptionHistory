@@ -1,10 +1,10 @@
 ﻿using System;
-using Redemption.Items.DruidDamageClass;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace Redemption.Items
 {
-	public class GloomMushroom : DruidDamageItem
+	public class GloomMushroom : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -12,7 +12,7 @@ namespace Redemption.Items
 			base.Tooltip.SetDefault("Used to craft Gloom Druid equipment");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 18;
 			base.item.height = 18;
@@ -26,6 +26,7 @@ namespace Redemption.Items
 			base.item.useStyle = 1;
 			base.item.consumable = true;
 			base.item.createTile = base.mod.TileType("GloomShroomTile");
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 	}
 }

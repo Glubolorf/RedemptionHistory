@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class LargeSeedPouch : DruidDamageItem
+	public class LargeSeedPouch : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -12,13 +12,14 @@ namespace Redemption.Items.DruidDamageClass
 			base.Tooltip.SetDefault("Has a chance to throw an extra seed");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 26;
 			base.item.height = 34;
 			base.item.value = Item.sellPrice(0, 0, 80, 0);
 			base.item.rare = 2;
 			base.item.accessory = true;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override bool CanEquipAccessory(Player player, int slot)

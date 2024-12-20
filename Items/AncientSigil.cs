@@ -1,6 +1,7 @@
 ﻿using System;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items
@@ -10,7 +11,7 @@ namespace Redemption.Items
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Ancient Sigil");
-			base.Tooltip.SetDefault("'A sigil with lost power...'");
+			base.Tooltip.SetDefault("'A sigil with lost power...'\nSummons the empowered Eaglecrest Golem\nOnly usable at day\nNot consumable");
 			Main.RegisterItemAnimation(base.item.type, new DrawAnimationVertical(4, 4));
 		}
 
@@ -20,7 +21,25 @@ namespace Redemption.Items
 			base.item.height = 42;
 			base.item.maxStack = 1;
 			base.item.value = Item.sellPrice(0, 10, 0, 0);
+			base.item.useAnimation = 45;
+			base.item.useTime = 45;
+			base.item.useStyle = 4;
+			base.item.UseSound = SoundID.Item44;
+			base.item.consumable = false;
+			base.item.noUseGraphic = true;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
+		}
+
+		public override bool CanUseItem(Player player)
+		{
+			return Main.dayTime && !NPC.AnyNPCs(base.mod.NPCType("EaglecrestGolemPZ")) && !NPC.AnyNPCs(base.mod.NPCType("EaglecrestGolem")) && !NPC.AnyNPCs(base.mod.NPCType("Ukko"));
+		}
+
+		public override bool UseItem(Player player)
+		{
+			NPC.SpawnOnPlayer(player.whoAmI, base.mod.NPCType("EaglecrestGolemPZ"));
+			Main.PlaySound(15, player.position, 0);
+			return true;
 		}
 
 		public override void AddRecipes()

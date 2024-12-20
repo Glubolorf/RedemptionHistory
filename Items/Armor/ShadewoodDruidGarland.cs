@@ -9,7 +9,7 @@ namespace Redemption.Items.Armor
 	{
 		0
 	})]
-	public class ShadewoodDruidGarland : DruidDamageItem
+	public class ShadewoodDruidGarland : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -17,13 +17,14 @@ namespace Redemption.Items.Armor
 			base.Tooltip.SetDefault("5% increased druidic damage\n4% increased druidic critical strike chance");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 28;
 			base.item.height = 26;
 			base.item.value = 1050;
 			base.item.rare = 1;
 			base.item.defense = 4;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void UpdateEquip(Player player)
@@ -40,9 +41,14 @@ namespace Redemption.Items.Armor
 
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "Throws seedbags faster & Thorns effect";
-			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).fasterSeedbags = true;
+			player.setBonus = "Throws seedbags faster & Thorns effect\nBeing in the crimson increases plant life time by 10%";
+			RedePlayer modPlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
+			modPlayer.fasterSeedbags = true;
 			player.thorns = 1f;
+			if (player.ZoneCrimson)
+			{
+				modPlayer.seedLifeTime += 0.1f;
+			}
 		}
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)

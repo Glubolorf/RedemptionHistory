@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class ForestShacklesDusk : DruidDamageItem
+	public class ForestShacklesDusk : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -12,7 +12,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.Tooltip.SetDefault("'Dusk'\n5% increased druidic damage\nHas a chance to throw an extra seed");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 40;
 			base.item.height = 46;
@@ -20,6 +20,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.rare = 1;
 			base.item.accessory = true;
 			base.item.defense = 2;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override bool CanEquipAccessory(Player player, int slot)

@@ -19,8 +19,9 @@ namespace Redemption.Tiles
 			this.minPick = 200;
 			this.mineResist = 3f;
 			this.soundType = 21;
-			base.CreateMapEntryName(null).SetDefault("Sapphiron Ore");
-			base.AddMapEntry(new Color(50, 50, 100), null);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Sapphiron Ore");
+			base.AddMapEntry(new Color(50, 50, 100), name);
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num)

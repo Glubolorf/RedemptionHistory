@@ -9,7 +9,7 @@ namespace Redemption.Items.Armor
 	{
 		0
 	})]
-	public class BloomDruidHood : DruidDamageItem
+	public class BloomDruidHood : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -17,13 +17,14 @@ namespace Redemption.Items.Armor
 			base.Tooltip.SetDefault("8% increased druidic damage\nIncreases maximum mana by 40\nSpirits shoot faster\nImmune to Poison & Venom");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 26;
 			base.item.height = 28;
 			base.item.value = 100000;
 			base.item.rare = 7;
 			base.item.defense = 15;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void UpdateEquip(Player player)

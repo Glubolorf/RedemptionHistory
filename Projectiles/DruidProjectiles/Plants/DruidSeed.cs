@@ -38,13 +38,14 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
+			Player player = Main.player[base.projectile.owner];
 			Collision.HitTiles(base.projectile.position, oldVelocity, base.projectile.width, base.projectile.height);
 			Main.PlaySound(0, (int)base.projectile.position.X, (int)base.projectile.position.Y, 1, 1f, 0f);
 			if (this.plantID != -1)
 			{
 				Projectile projectile = Main.projectile[Projectile.NewProjectile(base.projectile.Top, base.projectile.velocity, this.plantID, base.projectile.damage, 0f, base.projectile.owner, 0f, 1f)];
 				projectile.GetGlobalProjectile<DruidProjectile>().NativeTerrainIDs = base.projectile.GetGlobalProjectile<DruidProjectile>().NativeTerrainIDs;
-				projectile.timeLeft = (int)((float)projectile.timeLeft * base.projectile.GetGlobalProjectile<DruidProjectile>().seedLifetimeModifier);
+				projectile.timeLeft = (int)((float)projectile.timeLeft * base.projectile.GetGlobalProjectile<DruidProjectile>().seedLifetimeModifier * player.GetModPlayer<RedePlayer>().seedLifeTime);
 			}
 			return true;
 		}

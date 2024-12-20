@@ -9,7 +9,7 @@ namespace Redemption.Items.Armor
 	{
 		1
 	})]
-	public class DryadChestplate : DruidDamageItem
+	public class DryadChestplate : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -17,13 +17,14 @@ namespace Redemption.Items.Armor
 			base.Tooltip.SetDefault("2% increased druidic damage\n2% increased druidic critical strike chance");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 32;
 			base.item.height = 26;
 			base.item.value = 75;
 			base.item.rare = 1;
 			base.item.defense = 4;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void UpdateEquip(Player player)

@@ -44,17 +44,26 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave
 			base.projectile.rotation = (float)Math.Atan2((double)base.projectile.velocity.Y, (double)base.projectile.velocity.X) + 1.57f;
 			if (base.projectile.localAI[0] == 0f)
 			{
+				int dustType = 163;
+				int pieCut = 4;
+				for (int i = 0; i < pieCut; i++)
+				{
+					int dustID = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 1f);
+					Main.dust[dustID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)pieCut * 6.28f);
+					Main.dust[dustID].noLight = false;
+					Main.dust[dustID].noGravity = true;
+				}
 				this.AdjustMagnitude(ref base.projectile.velocity);
 				base.projectile.localAI[0] = 1f;
 			}
 			Vector2 move = Vector2.Zero;
 			float distance = 200f;
 			bool target = false;
-			for (int i = 0; i < 200; i++)
+			for (int j = 0; j < 200; j++)
 			{
-				if (Main.npc[i].active && !Main.npc[i].dontTakeDamage && !Main.npc[i].friendly && Main.npc[i].lifeMax > 5 && !Main.npc[i].immortal)
+				if (Main.npc[j].active && !Main.npc[j].dontTakeDamage && !Main.npc[j].friendly && Main.npc[j].lifeMax > 5 && !Main.npc[j].immortal)
 				{
-					Vector2 newMove = Main.npc[i].Center - base.projectile.Center;
+					Vector2 newMove = Main.npc[j].Center - base.projectile.Center;
 					float distanceTo = (float)Math.Sqrt((double)(newMove.X * newMove.X + newMove.Y * newMove.Y));
 					if (distanceTo < distance)
 					{
@@ -69,6 +78,10 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave
 				this.AdjustMagnitude(ref move);
 				base.projectile.velocity = (10f * base.projectile.velocity + move) / 11f;
 				this.AdjustMagnitude(ref base.projectile.velocity);
+			}
+			if (base.projectile.localAI[0] == 0f)
+			{
+				base.projectile.localAI[0] = 1f;
 			}
 		}
 
@@ -87,6 +100,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave
 			{
 				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 163, 0f, 0f, 100, default(Color), 1.2f);
 				Main.dust[dustIndex].velocity *= 1.4f;
+				Main.dust[dustIndex].noGravity = true;
 			}
 		}
 

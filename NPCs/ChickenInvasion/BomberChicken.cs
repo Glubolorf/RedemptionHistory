@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.ChickenArmy;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -57,6 +58,10 @@ namespace Redemption.NPCs.ChickenInvasion
 			if (Main.rand.Next(1200) == 0)
 			{
 				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ChickLauncher"), 1, false, 0, false, false);
+			}
+			if (ChickWorld.chickArmy)
+			{
+				ChickWorld.ChickPoints++;
 			}
 		}
 

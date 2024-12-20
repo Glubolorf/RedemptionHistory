@@ -1,11 +1,10 @@
 ﻿using System;
-using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable
 {
-	public class DruidicAltar : DruidDamageItem
+	public class DruidicAltar : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -13,7 +12,7 @@ namespace Redemption.Items.Placeable
 			base.Tooltip.SetDefault("Used to make Druid equipment");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 40;
 			base.item.height = 34;
@@ -27,6 +26,7 @@ namespace Redemption.Items.Placeable
 			base.item.consumable = true;
 			base.item.value = Item.sellPrice(0, 0, 60, 50);
 			base.item.createTile = base.mod.TileType("DruidicAltarTile");
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void AddRecipes()

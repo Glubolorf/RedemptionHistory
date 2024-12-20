@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class PouchBelt : DruidDamageItem
+	public class PouchBelt : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -12,13 +12,14 @@ namespace Redemption.Items.DruidDamageClass
 			base.Tooltip.SetDefault("8% increased druidic damage\n2% increased druidic critical strike chance");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 30;
 			base.item.height = 24;
 			base.item.value = Item.sellPrice(0, 0, 15, 0);
 			base.item.rare = 1;
 			base.item.accessory = true;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void AddRecipes()

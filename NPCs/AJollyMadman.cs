@@ -21,7 +21,7 @@ namespace Redemption.NPCs
 			base.npc.height = 58;
 			base.npc.friendly = false;
 			base.npc.damage = 40;
-			base.npc.defense = 25;
+			base.npc.defense = 10;
 			base.npc.lifeMax = 250;
 			base.npc.HitSound = SoundID.NPCHit2;
 			base.npc.DeathSound = SoundID.NPCDeath2;
@@ -73,7 +73,7 @@ namespace Redemption.NPCs
 
 		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
 		{
-			if (Main.rand.Next(2) == 0 || (Main.expertMode && Main.rand.Next(0) == 0))
+			if (Main.rand.Next(2) == 0 || Main.expertMode)
 			{
 				target.AddBuff(30, 1000, true);
 			}
@@ -109,7 +109,7 @@ namespace Redemption.NPCs
 				{
 					int minion = NPC.NewNPC((int)base.npc.position.X + 22, (int)base.npc.position.Y + 55, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[minion].netUpdate = true;
-					Main.PlaySound(SoundID.Item71, (int)base.npc.position.X, (int)base.npc.position.Y);
+					Main.PlaySound(SoundID.Item71.WithVolume(0.5f), (int)base.npc.position.X, (int)base.npc.position.Y);
 				}
 				if (this.attackTimer >= 30)
 				{

@@ -43,12 +43,13 @@ namespace Redemption.Items.Armor
 
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "You are immune to the Xenomite Infection and Radioactive Fallout\nThe armour emits light";
+			player.setBonus = "You are immune to the Xenomite Infection and Radioactive Fallout\nThe armour emits light\nCritical strikes have a chance to release a burst of xenomite shards at your cursor";
 			Lighting.AddLight(player.Center, 0.5f, 1f, 0.5f);
 			player.buffImmune[base.mod.BuffType("XenomiteDebuff")] = true;
 			player.buffImmune[base.mod.BuffType("XenomiteDebuff2")] = true;
 			player.buffImmune[base.mod.BuffType("RadioactiveFalloutDebuff")] = true;
 			player.buffImmune[base.mod.BuffType("HeavyRadiationDebuff")] = true;
+			player.GetModPlayer<RedePlayer>().xenomiteSet = true;
 		}
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)

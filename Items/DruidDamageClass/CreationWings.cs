@@ -23,6 +23,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.value = Item.sellPrice(0, 8, 0, 0);
 			base.item.rare = 10;
 			base.item.accessory = true;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void UpdateAccessory(Player player, bool hideVisual)

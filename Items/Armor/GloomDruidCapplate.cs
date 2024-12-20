@@ -9,7 +9,7 @@ namespace Redemption.Items.Armor
 	{
 		1
 	})]
-	public class GloomDruidCapplate : DruidDamageItem
+	public class GloomDruidCapplate : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -17,13 +17,14 @@ namespace Redemption.Items.Armor
 			base.Tooltip.SetDefault("5% increased druidic damage\n8% increased druidic critical strike chance\nThrows seedbags faster");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 30;
 			base.item.height = 22;
 			base.item.value = 7000;
 			base.item.rare = 2;
 			base.item.defense = 6;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void UpdateEquip(Player player)

@@ -9,7 +9,7 @@ namespace Redemption.Items.LabThings
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("IO-Locator");
-			base.Tooltip.SetDefault("Points toward the Abandoned Lab\nCURRENTLY BROKEN");
+			base.Tooltip.SetDefault("Points toward the Abandoned Lab");
 		}
 
 		public override void SetDefaults()
@@ -24,6 +24,10 @@ namespace Redemption.Items.LabThings
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			player.GetModPlayer<GeigerEffect>().effect = true;
+			if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[base.mod.ProjectileType("LabPointer")] < 1)
+			{
+				Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, -1f, base.mod.ProjectileType("LabPointer"), 0, 0f, Main.myPlayer, 0f, 0f);
+			}
 		}
 	}
 }

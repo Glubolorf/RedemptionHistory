@@ -29,6 +29,7 @@ namespace Redemption.NPCs.v08
 			base.npc.knockBackResist = 0f;
 			base.npc.aiStyle = 0;
 			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/Soulless");
+			this.musicPriority = 4;
 		}
 
 		public override void HitEffect(int hitDirection, double damage)

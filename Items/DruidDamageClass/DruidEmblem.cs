@@ -1,9 +1,10 @@
 ﻿using System;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class DruidEmblem : DruidDamageItem
+	public class DruidEmblem : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -11,13 +12,14 @@ namespace Redemption.Items.DruidDamageClass
 			base.Tooltip.SetDefault("15% increased druidic damage");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 28;
 			base.item.height = 28;
 			base.item.value = Item.sellPrice(0, 2, 0, 0);
 			base.item.rare = 4;
 			base.item.accessory = true;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override bool CanEquipAccessory(Player player, int slot)

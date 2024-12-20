@@ -13,7 +13,7 @@ namespace Redemption.Items.Armor.PostML
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Xenium Cap");
-			base.Tooltip.SetDefault("25% increased minion damage\n+4 max minions\n+50 max life");
+			base.Tooltip.SetDefault("25% increased minion damage\n+1 max minions\n+50 max life");
 		}
 
 		public override void SetDefaults()
@@ -28,7 +28,7 @@ namespace Redemption.Items.Armor.PostML
 		public override void UpdateEquip(Player player)
 		{
 			player.minionDamage *= 1.25f;
-			player.maxMinions += 4;
+			player.maxMinions++;
 			player.statLifeMax2 += 50;
 		}
 
@@ -45,7 +45,7 @@ namespace Redemption.Items.Armor.PostML
 
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "Grants immunity to the Infection, Radioactive Fallout, and infected waters\n50% increased minion damage while above 75% max life\n25% decreased minion damage while below 25% max life";
+			player.setBonus = "Grants immunity to the Infection, Radioactive Fallout, and infected waters\n+3 max minions\n50% increased minion damage while above 75% max life\n25% decreased minion damage while below 25% max life";
 			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
 			if ((float)player.statLife <= (float)player.statLifeMax2 * 0.75f)
 			{
@@ -55,6 +55,7 @@ namespace Redemption.Items.Armor.PostML
 			{
 				player.minionDamage *= 0.75f;
 			}
+			player.maxMinions += 3;
 			player.buffImmune[base.mod.BuffType("XenomiteDebuff")] = true;
 			player.buffImmune[base.mod.BuffType("XenomiteDebuff2")] = true;
 			player.buffImmune[base.mod.BuffType("RadioactiveFalloutDebuff")] = true;

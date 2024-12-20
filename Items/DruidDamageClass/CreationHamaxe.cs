@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class CreationHamaxe : DruidDamageItem
+	public class CreationHamaxe : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -24,9 +24,10 @@ namespace Redemption.Items.DruidDamageClass
 			base.DisplayName.SetDefault("Creation Hamaxe");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.damage = 60;
+			base.item.melee = true;
 			base.item.width = 54;
 			base.item.height = 52;
 			base.item.crit = 4;
@@ -41,6 +42,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.UseSound = SoundID.Item1;
 			base.item.autoReuse = true;
 			base.item.glowMask = CreationHamaxe.customGlowMask;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void AddRecipes()

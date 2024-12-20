@@ -35,6 +35,7 @@ namespace Redemption.Items.Armor.Domain
 			ModRecipe modRecipe = new ModRecipe(base.mod);
 			modRecipe.AddIngredient(null, "KaniteBar", 25);
 			modRecipe.AddIngredient(225, 12);
+			modRecipe.AddIngredient(751, 14);
 			modRecipe.AddTile(16);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();

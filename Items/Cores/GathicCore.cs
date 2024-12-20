@@ -33,7 +33,7 @@ namespace Redemption.Items.Cores
 			player.AddBuff(25, 2, true);
 			player.manaCost += 1f;
 			player.aggro += 50;
-			if ((float)player.statLife <= (float)player.statLifeMax2 * 0.75f)
+			if (player.statLife <= (int)((float)player.statLifeMax2 * 0.75f))
 			{
 				modPlayer.druidDamage *= 1.05f;
 				player.magicDamage *= 1.05f;
@@ -42,7 +42,7 @@ namespace Redemption.Items.Cores
 				player.rangedDamage *= 1.05f;
 				player.thrownDamage *= 1.05f;
 			}
-			if ((float)player.statLife <= (float)player.statLifeMax2 * 0.5f)
+			if (player.statLife <= (int)((float)player.statLifeMax2 * 0.5f))
 			{
 				modPlayer.druidDamage *= 1.05f;
 				player.magicDamage *= 1.05f;
@@ -51,7 +51,7 @@ namespace Redemption.Items.Cores
 				player.rangedDamage *= 1.05f;
 				player.thrownDamage *= 1.05f;
 			}
-			if ((float)player.statLife <= (float)player.statLifeMax2 * 0.25f)
+			if (player.statLife <= (int)((float)player.statLifeMax2 * 0.25f))
 			{
 				modPlayer.druidDamage *= 1.05f;
 				player.magicDamage *= 1.05f;
@@ -60,7 +60,7 @@ namespace Redemption.Items.Cores
 				player.rangedDamage *= 1.05f;
 				player.thrownDamage *= 1.05f;
 			}
-			if ((float)player.statLife <= (float)player.statLifeMax2 * 0.1f)
+			if (player.statLife <= (int)((float)player.statLifeMax2 * 0.1f))
 			{
 				modPlayer.druidDamage *= 1.05f;
 				player.magicDamage *= 1.05f;
@@ -69,7 +69,7 @@ namespace Redemption.Items.Cores
 				player.rangedDamage *= 1.05f;
 				player.thrownDamage *= 1.05f;
 			}
-			if ((float)player.statLife <= (float)player.statLifeMax2 * 0.05f)
+			if (player.statLife <= (int)((float)player.statLifeMax2 * 0.05f))
 			{
 				modPlayer.druidDamage *= 1.1f;
 				player.magicDamage *= 1.1f;

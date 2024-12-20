@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass.DruidS
 {
-	public class BloodyCollar : DruidDamageItem
+	public class BloodyCollar : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -12,7 +12,7 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 			base.Tooltip.SetDefault("'It's shining brightly, reflecting the air through flesh and blood.'\nUpon striking a foe, you have a chance to emit a wave of bloody energy, robbing the life of those around you");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 34;
 			base.item.height = 28;
@@ -20,6 +20,7 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 			base.item.rare = 6;
 			base.item.accessory = true;
 			base.item.defense = 6;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void AddRecipes()

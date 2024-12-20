@@ -28,8 +28,8 @@ namespace Redemption.Items.Weapons.v08
 			base.item.useStyle = 5;
 			base.item.noMelee = true;
 			base.item.knockBack = 4f;
-			base.item.value = Item.sellPrice(0, 0, 75, 0);
-			base.item.rare = 1;
+			base.item.value = Item.buyPrice(0, 6, 75, 0);
+			base.item.rare = 3;
 			base.item.UseSound = SoundID.Item20;
 			base.item.autoReuse = true;
 			base.item.shoot = base.mod.ProjectileType("NoidanNuoli");

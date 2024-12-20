@@ -9,7 +9,7 @@ namespace Redemption.Items.Armor
 	{
 		0
 	})]
-	public class IceDruidGarland : DruidDamageItem
+	public class IceDruidGarland : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -17,13 +17,14 @@ namespace Redemption.Items.Armor
 			base.Tooltip.SetDefault("3% increased druidic damage\n2% increased druidic critical strike chance");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 22;
 			base.item.value = 850;
 			base.item.rare = 1;
 			base.item.defense = 3;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void UpdateEquip(Player player)

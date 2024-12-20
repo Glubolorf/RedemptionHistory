@@ -9,21 +9,22 @@ namespace Redemption.Items.Armor.FlowerCrowns
 	{
 		0
 	})]
-	public class FlowerCrowns8_1 : DruidDamageItem
+	public class FlowerCrowns8_1 : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Dawn Flower Crown");
-			base.Tooltip.SetDefault("'Dawn brings the light back'\nStaves swing faster");
+			base.Tooltip.SetDefault("'Dawn brings the light back'\nStaves cast faster");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 20;
 			base.item.height = 10;
 			base.item.value = 5000;
 			base.item.rare = 1;
 			base.item.defense = 3;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void UpdateEquip(Player player)

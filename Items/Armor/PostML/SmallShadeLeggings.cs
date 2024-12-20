@@ -9,20 +9,21 @@ namespace Redemption.Items.Armor.PostML
 	{
 		2
 	})]
-	public class SmallShadeLeggings : DruidDamageItem
+	public class SmallShadeLeggings : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Small Shade Greaves");
-			base.Tooltip.SetDefault("40% increased movement speed\n10% increased druidic damage\n15% increased druidic critical strike chance\nStaves swing faster");
+			base.Tooltip.SetDefault("40% increased movement speed\n10% increased druidic damage\n15% increased druidic critical strike chance\nStaves cast faster");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 20;
 			base.item.value = Item.sellPrice(0, 20, 0, 0);
 			base.item.defense = 26;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 2;
 		}
 

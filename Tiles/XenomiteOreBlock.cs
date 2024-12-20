@@ -19,8 +19,9 @@ namespace Redemption.Tiles
 			this.minPick = 30;
 			this.mineResist = 1.5f;
 			this.soundType = 21;
-			base.CreateMapEntryName(null).SetDefault("Xenomite Ore");
-			base.AddMapEntry(new Color(120, 100, 255), null);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Xenomite Ore");
+			base.AddMapEntry(new Color(120, 100, 255), name);
 		}
 
 		public override void NearbyEffects(int i, int j, bool closer)

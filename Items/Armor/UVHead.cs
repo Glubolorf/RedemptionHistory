@@ -10,21 +10,22 @@ namespace Redemption.Items.Armor
 	{
 		0
 	})]
-	public class UVHead : DruidDamageItem
+	public class UVHead : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("UV Headgear");
-			base.Tooltip.SetDefault("11% increased druidic damage\nStaves swing faster\n60+ max life");
+			base.Tooltip.SetDefault("11% increased druidic damage\nStaves cast faster\n60+ max life");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 22;
 			base.item.value = 59000;
 			base.item.rare = 8;
 			base.item.defense = 7;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void UpdateEquip(Player player)

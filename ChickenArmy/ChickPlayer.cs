@@ -10,12 +10,11 @@ namespace Redemption.ChickenArmy
 		{
 			if (!ChickWorld.chickArmy)
 			{
-				ChickWorld.ChickPoints2 = 0;
+				ChickWorld.ChickPoints = 0;
 			}
-			ChickWorld.ChickPoints = ChickWorld.ChickPoints2;
 			if (RedeWorld.downedPatientZero)
 			{
-				if (ChickWorld.ChickPoints2 >= 200 || ChickWorld.ChickPoints >= 200)
+				if (ChickWorld.ChickPoints >= 200)
 				{
 					RedeWorld.downedChickenInv = true;
 					RedeWorld.downedChickenInvPZ = true;
@@ -24,12 +23,11 @@ namespace Redemption.ChickenArmy
 						NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 					}
 					Main.NewText("King Chicken's army retreats!", 250, 170, 50, false);
-					ChickWorld.ChickPoints2 = 0;
 					ChickWorld.ChickPoints = 0;
 					ChickWorld.chickArmy = false;
 				}
 			}
-			else if (ChickWorld.ChickPoints2 >= 100 || ChickWorld.ChickPoints >= 100)
+			else if (ChickWorld.ChickPoints >= 100)
 			{
 				RedeWorld.downedChickenInv = true;
 				if (Main.netMode == 2)
@@ -37,13 +35,11 @@ namespace Redemption.ChickenArmy
 					NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 				}
 				Main.NewText("King Chicken's army retreats!", 250, 170, 50, false);
-				ChickWorld.ChickPoints2 = 0;
 				ChickWorld.ChickPoints = 0;
 				ChickWorld.chickArmy = false;
 			}
 			if (!Main.dayTime)
 			{
-				ChickWorld.ChickPoints2 = 0;
 				ChickWorld.ChickPoints = 0;
 				ChickWorld.chickArmy = false;
 			}

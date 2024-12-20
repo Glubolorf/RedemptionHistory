@@ -35,6 +35,11 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 			base.npc.noTileCollide = false;
 		}
 
+		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+		{
+			return false;
+		}
+
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
 			base.npc.lifeMax = (int)((float)base.npc.lifeMax * 0.55f * bossLifeScale);
@@ -277,43 +282,21 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 				}
 				else if (RedeWorld.deathByNeb)
 				{
-					if (RedeWorld.downedNebuleus)
+					if (this.customAI[0] == 60f)
 					{
-						if (this.customAI[0] == 60f)
-						{
-							string text = "You wish to fight me again... ?";
-							Color rarityPink = Colors.RarityPink;
-							byte r = rarityPink.R;
-							rarityPink = Colors.RarityPink;
-							byte g = rarityPink.G;
-							rarityPink = Colors.RarityPink;
-							Main.NewText(text, r, g, rarityPink.B, false);
-						}
-						if (this.customAI[0] == 180f)
-						{
-							this.beginFight = true;
-							this.customAI[0] = 1400f;
-							base.npc.netUpdate = true;
-						}
+						string text = "You... are still alive?";
+						Color rarityPink = Colors.RarityPink;
+						byte r = rarityPink.R;
+						rarityPink = Colors.RarityPink;
+						byte g = rarityPink.G;
+						rarityPink = Colors.RarityPink;
+						Main.NewText(text, r, g, rarityPink.B, false);
 					}
-					else
+					if (this.customAI[0] == 180f)
 					{
-						if (this.customAI[0] == 60f)
-						{
-							string text2 = "You... are still alive?";
-							Color rarityPink = Colors.RarityPink;
-							byte r2 = rarityPink.R;
-							rarityPink = Colors.RarityPink;
-							byte g2 = rarityPink.G;
-							rarityPink = Colors.RarityPink;
-							Main.NewText(text2, r2, g2, rarityPink.B, false);
-						}
-						if (this.customAI[0] == 180f)
-						{
-							this.beginFight = true;
-							this.customAI[0] = 1400f;
-							base.npc.netUpdate = true;
-						}
+						this.beginFight = true;
+						this.customAI[0] = 1400f;
+						base.npc.netUpdate = true;
 					}
 				}
 				else
@@ -322,7 +305,17 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					{
 						if (this.customAI[0] == 60f)
 						{
-							string text3 = player.name + ", I've been observing you from afar, I've seen the calamity you've caused, the power you've gained...";
+							string text2 = player.name + ", I've been observing you from afar, I've seen the calamity you've caused, the power you've gained...";
+							Color rarityPink = Colors.RarityPink;
+							byte r2 = rarityPink.R;
+							rarityPink = Colors.RarityPink;
+							byte g2 = rarityPink.G;
+							rarityPink = Colors.RarityPink;
+							Main.NewText(text2, r2, g2, rarityPink.B, false);
+						}
+						if (this.customAI[0] == 300f)
+						{
+							string text3 = "I fear I may be too late, but your existence has brought a disequilibrium upon this world...";
 							Color rarityPink = Colors.RarityPink;
 							byte r3 = rarityPink.R;
 							rarityPink = Colors.RarityPink;
@@ -330,21 +323,21 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 							rarityPink = Colors.RarityPink;
 							Main.NewText(text3, r3, g3, rarityPink.B, false);
 						}
-						if (this.customAI[0] == 300f)
-						{
-							string text4 = "I fear I may be too late, but your existence has brought a disequilibrium upon this world...";
-							Color rarityPink = Colors.RarityPink;
-							byte r4 = rarityPink.R;
-							rarityPink = Colors.RarityPink;
-							byte g4 = rarityPink.G;
-							rarityPink = Colors.RarityPink;
-							Main.NewText(text4, r4, g4, rarityPink.B, false);
-						}
 						if (this.customAI[0] == 500f)
 						{
 							if (Redemption.AALoaded)
 							{
-								string text5 = "The Keeper, Wall of Flesh, Plantera, Moonlord, Equinox Worms... If I don't stop this now, then who will!?";
+								string text4 = "The Keeper, Wall of Flesh, Plantera, Moonlord, Equinox Worms... If I don't stop this now, then who will!?";
+								Color rarityPink = Colors.RarityPink;
+								byte r4 = rarityPink.R;
+								rarityPink = Colors.RarityPink;
+								byte g4 = rarityPink.G;
+								rarityPink = Colors.RarityPink;
+								Main.NewText(text4, r4, g4, rarityPink.B, false);
+							}
+							else if (Redemption.calamityLoaded)
+							{
+								string text5 = "Slime God, Wall of Flesh, Plantera, Moonlord, Providence... If I don't stop this now, then who will!?";
 								Color rarityPink = Colors.RarityPink;
 								byte r5 = rarityPink.R;
 								rarityPink = Colors.RarityPink;
@@ -352,9 +345,9 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 								rarityPink = Colors.RarityPink;
 								Main.NewText(text5, r5, g5, rarityPink.B, false);
 							}
-							else if (Redemption.calamityLoaded)
+							else if (Redemption.thoriumLoaded)
 							{
-								string text6 = "Slime God, Wall of Flesh, Plantera, Moonlord, Providence... If I don't stop this now, then who will!?";
+								string text6 = "Viscount, Wall of Flesh, Coznix, Plantera, Moonlord... If I don't stop this now, then who will!?";
 								Color rarityPink = Colors.RarityPink;
 								byte r6 = rarityPink.R;
 								rarityPink = Colors.RarityPink;
@@ -362,9 +355,9 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 								rarityPink = Colors.RarityPink;
 								Main.NewText(text6, r6, g6, rarityPink.B, false);
 							}
-							else if (Redemption.thoriumLoaded)
+							else if (Redemption.spiritLoaded)
 							{
-								string text7 = "Viscount, Wall of Flesh, Coznix, Plantera, Moonlord... If I don't stop this now, then who will!?";
+								string text7 = "Wall of Flesh, Atlas, Plantera, Moonlord... If I don't stop this now, then who will!?";
 								Color rarityPink = Colors.RarityPink;
 								byte r7 = rarityPink.R;
 								rarityPink = Colors.RarityPink;
@@ -372,9 +365,9 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 								rarityPink = Colors.RarityPink;
 								Main.NewText(text7, r7, g7, rarityPink.B, false);
 							}
-							else if (Redemption.spiritLoaded)
+							else if (RedeWorld.downedTheKeeper && !Redemption.spiritLoaded && !Redemption.thoriumLoaded && !Redemption.calamityLoaded && !Redemption.AALoaded)
 							{
-								string text8 = "Wall of Flesh, Atlas, Plantera, Moonlord... If I don't stop this now, then who will!?";
+								string text8 = "The Keeper, Wall of Flesh, Plantera, Moonlord... If I don't stop this now, then who will!?";
 								Color rarityPink = Colors.RarityPink;
 								byte r8 = rarityPink.R;
 								rarityPink = Colors.RarityPink;
@@ -382,9 +375,9 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 								rarityPink = Colors.RarityPink;
 								Main.NewText(text8, r8, g8, rarityPink.B, false);
 							}
-							else if (RedeWorld.downedTheKeeper && !Redemption.spiritLoaded && !Redemption.thoriumLoaded && !Redemption.calamityLoaded && !Redemption.AALoaded)
+							else
 							{
-								string text9 = "The Keeper, Wall of Flesh, Plantera, Moonlord... If I don't stop this now, then who will!?";
+								string text9 = "Wall of Flesh, Plantera, Moonlord... If I don't stop this now, then who will!?";
 								Color rarityPink = Colors.RarityPink;
 								byte r9 = rarityPink.R;
 								rarityPink = Colors.RarityPink;
@@ -392,20 +385,20 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 								rarityPink = Colors.RarityPink;
 								Main.NewText(text9, r9, g9, rarityPink.B, false);
 							}
-							else
-							{
-								string text10 = "Wall of Flesh, Plantera, Moonlord... If I don't stop this now, then who will!?";
-								Color rarityPink = Colors.RarityPink;
-								byte r10 = rarityPink.R;
-								rarityPink = Colors.RarityPink;
-								byte g10 = rarityPink.G;
-								rarityPink = Colors.RarityPink;
-								Main.NewText(text10, r10, g10, rarityPink.B, false);
-							}
 						}
 						if (this.customAI[0] == 700f)
 						{
-							string text11 = "Enough chatter, I'm sure you're getting tired of this by now.";
+							string text10 = "Enough chatter, I'm sure you're getting tired of this by now.";
+							Color rarityPink = Colors.RarityPink;
+							byte r10 = rarityPink.R;
+							rarityPink = Colors.RarityPink;
+							byte g10 = rarityPink.G;
+							rarityPink = Colors.RarityPink;
+							Main.NewText(text10, r10, g10, rarityPink.B, false);
+						}
+						if (this.customAI[0] == 1000f)
+						{
+							string text11 = "Just know, " + player.name + ", I am doing this for your sake, if you lose to me... Maybe the Demigod won't notice you.";
 							Color rarityPink = Colors.RarityPink;
 							byte r11 = rarityPink.R;
 							rarityPink = Colors.RarityPink;
@@ -413,9 +406,12 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 							rarityPink = Colors.RarityPink;
 							Main.NewText(text11, r11, g11, rarityPink.B, false);
 						}
-						if (this.customAI[0] == 1000f)
+					}
+					else if (RedeWorld.redemptionPoints > -4 && RedeWorld.redemptionPoints <= 0)
+					{
+						if (this.customAI[0] == 60f)
 						{
-							string text12 = "Just know, " + player.name + ", I am doing this for your sake, if you lose to me... Maybe the Demigod won't notice you.";
+							string text12 = player.name + ", I've been observing you from afar, you've been gaining a lot of power...";
 							Color rarityPink = Colors.RarityPink;
 							byte r12 = rarityPink.R;
 							rarityPink = Colors.RarityPink;
@@ -423,12 +419,9 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 							rarityPink = Colors.RarityPink;
 							Main.NewText(text12, r12, g12, rarityPink.B, false);
 						}
-					}
-					else if (RedeWorld.redemptionPoints > -4 && RedeWorld.redemptionPoints <= 0)
-					{
-						if (this.customAI[0] == 60f)
+						if (this.customAI[0] == 300f)
 						{
-							string text13 = player.name + ", I've been observing you from afar, you've been gaining a lot of power...";
+							string text13 = "I fear I may be too late, but your existence has brought a disequilibrium upon this world...";
 							Color rarityPink = Colors.RarityPink;
 							byte r13 = rarityPink.R;
 							rarityPink = Colors.RarityPink;
@@ -436,9 +429,9 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 							rarityPink = Colors.RarityPink;
 							Main.NewText(text13, r13, g13, rarityPink.B, false);
 						}
-						if (this.customAI[0] == 300f)
+						if (this.customAI[0] == 500f)
 						{
-							string text14 = "I fear I may be too late, but your existence has brought a disequilibrium upon this world...";
+							string text14 = "Many strong being have been slain by you, if they couldn't stop you, then who will?";
 							Color rarityPink = Colors.RarityPink;
 							byte r14 = rarityPink.R;
 							rarityPink = Colors.RarityPink;
@@ -446,9 +439,9 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 							rarityPink = Colors.RarityPink;
 							Main.NewText(text14, r14, g14, rarityPink.B, false);
 						}
-						if (this.customAI[0] == 500f)
+						if (this.customAI[0] == 700f)
 						{
-							string text15 = "Many strong being have been slain by you, if they couldn't stop you, then who will?";
+							string text15 = "Enough chatter, I'm sure you're getting tired of this by now.";
 							Color rarityPink = Colors.RarityPink;
 							byte r15 = rarityPink.R;
 							rarityPink = Colors.RarityPink;
@@ -456,9 +449,9 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 							rarityPink = Colors.RarityPink;
 							Main.NewText(text15, r15, g15, rarityPink.B, false);
 						}
-						if (this.customAI[0] == 700f)
+						if (this.customAI[0] == 1000f)
 						{
-							string text16 = "Enough chatter, I'm sure you're getting tired of this by now.";
+							string text16 = "Just know, " + player.name + ", I am doing this for your sake, if you lose to me... Maybe the Demigod won't notice you.";
 							Color rarityPink = Colors.RarityPink;
 							byte r16 = rarityPink.R;
 							rarityPink = Colors.RarityPink;
@@ -466,9 +459,12 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 							rarityPink = Colors.RarityPink;
 							Main.NewText(text16, r16, g16, rarityPink.B, false);
 						}
-						if (this.customAI[0] == 1000f)
+					}
+					if (RedeWorld.redemptionPoints > 0)
+					{
+						if (this.customAI[0] == 60f)
 						{
-							string text17 = "Just know, " + player.name + ", I am doing this for your sake, if you lose to me... Maybe the Demigod won't notice you.";
+							string text17 = player.name + ", I've been observing you from afar, you've been gaining a lot of power...";
 							Color rarityPink = Colors.RarityPink;
 							byte r17 = rarityPink.R;
 							rarityPink = Colors.RarityPink;
@@ -476,12 +472,9 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 							rarityPink = Colors.RarityPink;
 							Main.NewText(text17, r17, g17, rarityPink.B, false);
 						}
-					}
-					if (RedeWorld.redemptionPoints > 0)
-					{
-						if (this.customAI[0] == 60f)
+						if (this.customAI[0] == 300f)
 						{
-							string text18 = player.name + ", I've been observing you from afar, you've been gaining a lot of power...";
+							string text18 = "I fear I may be too late, but your existence has brought a disequilibrium upon this world...";
 							Color rarityPink = Colors.RarityPink;
 							byte r18 = rarityPink.R;
 							rarityPink = Colors.RarityPink;
@@ -489,9 +482,9 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 							rarityPink = Colors.RarityPink;
 							Main.NewText(text18, r18, g18, rarityPink.B, false);
 						}
-						if (this.customAI[0] == 300f)
+						if (this.customAI[0] == 500f)
 						{
-							string text19 = "I fear I may be too late, but your existence has brought a disequilibrium upon this world...";
+							string text19 = "Yes, one might consider it a good thing all these evil being have been slain, but I see it differently.";
 							Color rarityPink = Colors.RarityPink;
 							byte r19 = rarityPink.R;
 							rarityPink = Colors.RarityPink;
@@ -499,9 +492,9 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 							rarityPink = Colors.RarityPink;
 							Main.NewText(text19, r19, g19, rarityPink.B, false);
 						}
-						if (this.customAI[0] == 500f)
+						if (this.customAI[0] == 700f)
 						{
-							string text20 = "Yes, one might consider it a good thing all these evil being have been slain, but I see it differently.";
+							string text20 = "Enough chatter, I'm sure you're getting tired of this by now.";
 							Color rarityPink = Colors.RarityPink;
 							byte r20 = rarityPink.R;
 							rarityPink = Colors.RarityPink;
@@ -509,9 +502,9 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 							rarityPink = Colors.RarityPink;
 							Main.NewText(text20, r20, g20, rarityPink.B, false);
 						}
-						if (this.customAI[0] == 700f)
+						if (this.customAI[0] == 1000f)
 						{
-							string text21 = "Enough chatter, I'm sure you're getting tired of this by now.";
+							string text21 = "Just know, " + player.name + ", I am only doing this because I fear you might become too strong to handle.";
 							Color rarityPink = Colors.RarityPink;
 							byte r21 = rarityPink.R;
 							rarityPink = Colors.RarityPink;
@@ -519,26 +512,16 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 							rarityPink = Colors.RarityPink;
 							Main.NewText(text21, r21, g21, rarityPink.B, false);
 						}
-						if (this.customAI[0] == 1000f)
-						{
-							string text22 = "Just know, " + player.name + ", I am only doing this because I fear you might become too strong to handle.";
-							Color rarityPink = Colors.RarityPink;
-							byte r22 = rarityPink.R;
-							rarityPink = Colors.RarityPink;
-							byte g22 = rarityPink.G;
-							rarityPink = Colors.RarityPink;
-							Main.NewText(text22, r22, g22, rarityPink.B, false);
-						}
 					}
 					if (this.customAI[0] == 1350f)
 					{
-						string text23 = "Go, my pet! I will back you up.";
+						string text22 = "Go, my pet! I will back you up.";
 						Color rarityPink = Colors.RarityPink;
-						byte r23 = rarityPink.R;
+						byte r22 = rarityPink.R;
 						rarityPink = Colors.RarityPink;
-						byte g23 = rarityPink.G;
+						byte g22 = rarityPink.G;
 						rarityPink = Colors.RarityPink;
-						Main.NewText(text23, r23, g23, rarityPink.B, false);
+						Main.NewText(text22, r22, g22, rarityPink.B, false);
 						this.beginFight = true;
 						NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("StarWyvernHead"), 0, 0f, 0f, 0f, 0f, 255);
 						base.npc.netUpdate = true;
@@ -591,13 +574,13 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					}
 					if (!RedeWorld.deathByNeb && this.customAI[0] == 3100f && !RedeConfigClient.Instance.NoBossText)
 					{
-						string text24 = "My star serpent is slain... And soon, I fear, I will be next.";
+						string text23 = "My star serpent is slain... And soon, I fear, I will be next.";
 						Color rarityPink = Colors.RarityPink;
-						byte r24 = rarityPink.R;
+						byte r23 = rarityPink.R;
 						rarityPink = Colors.RarityPink;
-						byte g24 = rarityPink.G;
+						byte g23 = rarityPink.G;
 						rarityPink = Colors.RarityPink;
-						Main.NewText(text24, r24, g24, rarityPink.B, false);
+						Main.NewText(text23, r23, g23, rarityPink.B, false);
 					}
 					if (this.customAI[0] == 3300f)
 					{
@@ -645,23 +628,23 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 								{
 									if (RedeWorld.downedNebuleus)
 									{
-										string text25 = "Why do you want to fight again?";
+										string text24 = "Why do you want to fight again?";
+										Color rarityPink = Colors.RarityPink;
+										byte r24 = rarityPink.R;
+										rarityPink = Colors.RarityPink;
+										byte g24 = rarityPink.G;
+										rarityPink = Colors.RarityPink;
+										Main.NewText(text24, r24, g24, rarityPink.B, false);
+									}
+									else
+									{
+										string text25 = "ARGH! No! Don't come close!";
 										Color rarityPink = Colors.RarityPink;
 										byte r25 = rarityPink.R;
 										rarityPink = Colors.RarityPink;
 										byte g25 = rarityPink.G;
 										rarityPink = Colors.RarityPink;
 										Main.NewText(text25, r25, g25, rarityPink.B, false);
-									}
-									else
-									{
-										string text26 = "ARGH! No! Don't come close!";
-										Color rarityPink = Colors.RarityPink;
-										byte r26 = rarityPink.R;
-										rarityPink = Colors.RarityPink;
-										byte g26 = rarityPink.G;
-										rarityPink = Colors.RarityPink;
-										Main.NewText(text26, r26, g26, rarityPink.B, false);
 									}
 								}
 							}
@@ -727,23 +710,23 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 								{
 									if (RedeWorld.downedNebuleus)
 									{
-										string text27 = "Do you just like the challenge?";
+										string text26 = "Do you just like the challenge?";
+										Color rarityPink = Colors.RarityPink;
+										byte r26 = rarityPink.R;
+										rarityPink = Colors.RarityPink;
+										byte g26 = rarityPink.G;
+										rarityPink = Colors.RarityPink;
+										Main.NewText(text26, r26, g26, rarityPink.B, false);
+									}
+									else
+									{
+										string text27 = "Please just give this up!";
 										Color rarityPink = Colors.RarityPink;
 										byte r27 = rarityPink.R;
 										rarityPink = Colors.RarityPink;
 										byte g27 = rarityPink.G;
 										rarityPink = Colors.RarityPink;
 										Main.NewText(text27, r27, g27, rarityPink.B, false);
-									}
-									else
-									{
-										string text28 = "Please just give this up!";
-										Color rarityPink = Colors.RarityPink;
-										byte r28 = rarityPink.R;
-										rarityPink = Colors.RarityPink;
-										byte g28 = rarityPink.G;
-										rarityPink = Colors.RarityPink;
-										Main.NewText(text28, r28, g28, rarityPink.B, false);
 									}
 								}
 							}
@@ -819,23 +802,23 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 										{
 											if (RedeWorld.downedNebuleus)
 											{
-												string text29 = "Or do you just want more of my drops?";
+												string text28 = "Or do you just want more of my drops?";
+												Color rarityPink = Colors.RarityPink;
+												byte r28 = rarityPink.R;
+												rarityPink = Colors.RarityPink;
+												byte g28 = rarityPink.G;
+												rarityPink = Colors.RarityPink;
+												Main.NewText(text28, r28, g28, rarityPink.B, false);
+											}
+											else
+											{
+												string text29 = "Don't you realise what you're doing!?";
 												Color rarityPink = Colors.RarityPink;
 												byte r29 = rarityPink.R;
 												rarityPink = Colors.RarityPink;
 												byte g29 = rarityPink.G;
 												rarityPink = Colors.RarityPink;
 												Main.NewText(text29, r29, g29, rarityPink.B, false);
-											}
-											else
-											{
-												string text30 = "Don't you realise what you're doing!?";
-												Color rarityPink = Colors.RarityPink;
-												byte r30 = rarityPink.R;
-												rarityPink = Colors.RarityPink;
-												byte g30 = rarityPink.G;
-												rarityPink = Colors.RarityPink;
-												Main.NewText(text30, r30, g30, rarityPink.B, false);
 											}
 										}
 									}
@@ -911,23 +894,23 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 									{
 										if (RedeWorld.downedNebuleus)
 										{
-											string text31 = "Or do you just want more of my drops?";
+											string text30 = "Or do you just want more of my drops?";
+											Color rarityPink = Colors.RarityPink;
+											byte r30 = rarityPink.R;
+											rarityPink = Colors.RarityPink;
+											byte g30 = rarityPink.G;
+											rarityPink = Colors.RarityPink;
+											Main.NewText(text30, r30, g30, rarityPink.B, false);
+										}
+										else
+										{
+											string text31 = "Don't you realise what you're doing!?";
 											Color rarityPink = Colors.RarityPink;
 											byte r31 = rarityPink.R;
 											rarityPink = Colors.RarityPink;
 											byte g31 = rarityPink.G;
 											rarityPink = Colors.RarityPink;
 											Main.NewText(text31, r31, g31, rarityPink.B, false);
-										}
-										else
-										{
-											string text32 = "Don't you realise what you're doing!?";
-											Color rarityPink = Colors.RarityPink;
-											byte r32 = rarityPink.R;
-											rarityPink = Colors.RarityPink;
-											byte g32 = rarityPink.G;
-											rarityPink = Colors.RarityPink;
-											Main.NewText(text32, r32, g32, rarityPink.B, false);
 										}
 									}
 								}
@@ -995,13 +978,13 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 							Main.PlaySound(SoundID.NPCDeath59, (int)base.npc.position.X, (int)base.npc.position.Y);
 							if (!RedeConfigClient.Instance.NoBossText)
 							{
-								string text33 = "Stop!";
+								string text32 = "Stop!";
 								Color rarityPink = Colors.RarityPink;
-								byte r33 = rarityPink.R;
+								byte r32 = rarityPink.R;
 								rarityPink = Colors.RarityPink;
-								byte g33 = rarityPink.G;
+								byte g32 = rarityPink.G;
 								rarityPink = Colors.RarityPink;
-								Main.NewText(text33, r33, g33, rarityPink.B, false);
+								Main.NewText(text32, r32, g32, rarityPink.B, false);
 							}
 							base.npc.netUpdate = true;
 						}
@@ -1048,13 +1031,13 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 						{
 							if (base.npc.ai[3] == 120f)
 							{
-								string text34 = "Jeez, you really want to go through this again...";
+								string text33 = "Jeez, you really want to go through this again...";
 								Color rarityPink = Colors.RarityPink;
-								byte r34 = rarityPink.R;
+								byte r33 = rarityPink.R;
 								rarityPink = Colors.RarityPink;
-								byte g34 = rarityPink.G;
+								byte g33 = rarityPink.G;
 								rarityPink = Colors.RarityPink;
-								Main.NewText(text34, r34, g34, rarityPink.B, false);
+								Main.NewText(text33, r33, g33, rarityPink.B, false);
 								base.npc.ai[3] = 400f;
 							}
 							if (base.npc.ai[3] >= 400f)
@@ -1068,7 +1051,17 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 							}
 							if (base.npc.ai[3] == 600f)
 							{
-								string text35 = "All this fighting frustrates me.";
+								string text34 = "All this fighting frustrates me.";
+								Color rarityPink = Colors.RarityPink;
+								byte r34 = rarityPink.R;
+								rarityPink = Colors.RarityPink;
+								byte g34 = rarityPink.G;
+								rarityPink = Colors.RarityPink;
+								Main.NewText(text34, r34, g34, rarityPink.B, false);
+							}
+							if (base.npc.ai[3] == 800f)
+							{
+								string text35 = "Before that dumb robot attacked me, I haven't fought in years.";
 								Color rarityPink = Colors.RarityPink;
 								byte r35 = rarityPink.R;
 								rarityPink = Colors.RarityPink;
@@ -1076,25 +1069,15 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 								rarityPink = Colors.RarityPink;
 								Main.NewText(text35, r35, g35, rarityPink.B, false);
 							}
-							if (base.npc.ai[3] == 800f)
+							if (base.npc.ai[3] == 940f)
 							{
-								string text36 = "Before that dumb robot attacked me, I haven't fought in years.";
+								string text36 = "In a way, I guess this is practice...";
 								Color rarityPink = Colors.RarityPink;
 								byte r36 = rarityPink.R;
 								rarityPink = Colors.RarityPink;
 								byte g36 = rarityPink.G;
 								rarityPink = Colors.RarityPink;
 								Main.NewText(text36, r36, g36, rarityPink.B, false);
-							}
-							if (base.npc.ai[3] == 940f)
-							{
-								string text37 = "In a way, I guess this is practice...";
-								Color rarityPink = Colors.RarityPink;
-								byte r37 = rarityPink.R;
-								rarityPink = Colors.RarityPink;
-								byte g37 = rarityPink.G;
-								rarityPink = Colors.RarityPink;
-								Main.NewText(text37, r37, g37, rarityPink.B, false);
 							}
 							if (base.npc.ai[3] == 963f)
 							{
@@ -1116,7 +1099,17 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 						{
 							if (base.npc.ai[3] == 120f)
 							{
-								string text38 = "I can see now, I am too late...";
+								string text37 = "I can see now, I am too late...";
+								Color rarityPink = Colors.RarityPink;
+								byte r37 = rarityPink.R;
+								rarityPink = Colors.RarityPink;
+								byte g37 = rarityPink.G;
+								rarityPink = Colors.RarityPink;
+								Main.NewText(text37, r37, g37, rarityPink.B, false);
+							}
+							if (base.npc.ai[3] == 240f)
+							{
+								string text38 = "It was foolish of me to wait so long...";
 								Color rarityPink = Colors.RarityPink;
 								byte r38 = rarityPink.R;
 								rarityPink = Colors.RarityPink;
@@ -1124,25 +1117,15 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 								rarityPink = Colors.RarityPink;
 								Main.NewText(text38, r38, g38, rarityPink.B, false);
 							}
-							if (base.npc.ai[3] == 240f)
+							if (base.npc.ai[3] == 400f)
 							{
-								string text39 = "I knew you'd win. Even if I kill you, you'll just come back.";
+								string text39 = "...";
 								Color rarityPink = Colors.RarityPink;
 								byte r39 = rarityPink.R;
 								rarityPink = Colors.RarityPink;
 								byte g39 = rarityPink.G;
 								rarityPink = Colors.RarityPink;
 								Main.NewText(text39, r39, g39, rarityPink.B, false);
-							}
-							if (base.npc.ai[3] == 400f)
-							{
-								string text40 = "...";
-								Color rarityPink = Colors.RarityPink;
-								byte r40 = rarityPink.R;
-								rarityPink = Colors.RarityPink;
-								byte g40 = rarityPink.G;
-								rarityPink = Colors.RarityPink;
-								Main.NewText(text40, r40, g40, rarityPink.B, false);
 							}
 							if (base.npc.ai[3] >= 400f)
 							{
@@ -1155,7 +1138,17 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 							}
 							if (base.npc.ai[3] == 600f)
 							{
-								string text41 = "Since I know there's no hope...";
+								string text40 = "No... I refuse to lose to someone like you...";
+								Color rarityPink = Colors.RarityPink;
+								byte r40 = rarityPink.R;
+								rarityPink = Colors.RarityPink;
+								byte g40 = rarityPink.G;
+								rarityPink = Colors.RarityPink;
+								Main.NewText(text40, r40, g40, rarityPink.B, false);
+							}
+							if (base.npc.ai[3] == 800f)
+							{
+								string text41 = "At least let me try...";
 								Color rarityPink = Colors.RarityPink;
 								byte r41 = rarityPink.R;
 								rarityPink = Colors.RarityPink;
@@ -1163,25 +1156,15 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 								rarityPink = Colors.RarityPink;
 								Main.NewText(text41, r41, g41, rarityPink.B, false);
 							}
-							if (base.npc.ai[3] == 800f)
+							if (base.npc.ai[3] == 940f)
 							{
-								string text42 = "I guess it wouldn't hurt...";
+								string text42 = "... To give it all I've got!";
 								Color rarityPink = Colors.RarityPink;
 								byte r42 = rarityPink.R;
 								rarityPink = Colors.RarityPink;
 								byte g42 = rarityPink.G;
 								rarityPink = Colors.RarityPink;
 								Main.NewText(text42, r42, g42, rarityPink.B, false);
-							}
-							if (base.npc.ai[3] == 940f)
-							{
-								string text43 = "To give it all I've got!";
-								Color rarityPink = Colors.RarityPink;
-								byte r43 = rarityPink.R;
-								rarityPink = Colors.RarityPink;
-								byte g43 = rarityPink.G;
-								rarityPink = Colors.RarityPink;
-								Main.NewText(text43, r43, g43, rarityPink.B, false);
 							}
 							if (base.npc.ai[3] == 963f)
 							{

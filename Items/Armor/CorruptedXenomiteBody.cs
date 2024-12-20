@@ -13,7 +13,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Corrupted Xenomite Breastplate");
-			base.Tooltip.SetDefault("18% increased magic and minion damage\n6% increased magic crit");
+			base.Tooltip.SetDefault("12% increased magic and minion damage\n6% increased magic crit");
 		}
 
 		public override void SetDefaults()
@@ -27,8 +27,8 @@ namespace Redemption.Items.Armor
 
 		public override void UpdateEquip(Player player)
 		{
-			player.magicDamage *= 1.18f;
-			player.minionDamage *= 1.18f;
+			player.magicDamage *= 1.12f;
+			player.minionDamage *= 1.12f;
 			player.magicCrit += 6;
 		}
 

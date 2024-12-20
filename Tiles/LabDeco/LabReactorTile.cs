@@ -36,8 +36,8 @@ namespace Redemption.Tiles.LabDeco
 			TileObjectData.addAlternate(1);
 			TileObjectData.addTile((int)base.Type);
 			this.dustType = 226;
-			this.minPick = 500;
-			this.mineResist = 15f;
+			this.minPick = 300;
+			this.mineResist = 30f;
 			this.disableSmartCursor = true;
 			base.CreateMapEntryName(null);
 			base.AddMapEntry(new Color(200, 200, 230), null);

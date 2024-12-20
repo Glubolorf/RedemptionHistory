@@ -44,6 +44,48 @@ namespace Redemption.NPCs.Bosses
 			}
 		}
 
+		public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+		{
+			if (projectile.penetrate != 1)
+			{
+				for (int i = 0; i < 200; i++)
+				{
+					if (Main.npc[i].active && (Main.npc[i].whoAmI == base.npc.realLife || (Main.npc[i].realLife >= 0 && Main.npc[i].realLife == base.npc.realLife)))
+					{
+						Main.npc[i].immune[projectile.owner] = 10;
+					}
+				}
+				damage = (int)((float)damage * 0.44f);
+			}
+			if (projectile.ranged && (projectile.width < 20 || projectile.height < 20) && Main.rand.Next(2) == 0)
+			{
+				if (!Main.dedServ)
+				{
+					if (Main.rand.Next(3) == 0)
+					{
+						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/BulletBounce1").WithVolume(0.4f).WithPitchVariance(0.1f), -1, -1);
+					}
+					else if (Main.rand.Next(3) == 1)
+					{
+						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/BulletBounce2").WithVolume(0.4f).WithPitchVariance(0.1f), -1, -1);
+					}
+					else
+					{
+						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/BulletBounce3").WithVolume(0.4f).WithPitchVariance(0.1f), -1, -1);
+					}
+				}
+				damage = (int)((float)damage * 0.5f);
+				if (projectile.penetrate == 1)
+				{
+					projectile.penetrate = 2;
+				}
+				projectile.velocity.X = -projectile.velocity.X + Utils.NextFloat(Main.rand, -3f, 3f);
+				projectile.velocity.Y = -projectile.velocity.Y + Utils.NextFloat(Main.rand, -3f, 3f);
+				projectile.friendly = false;
+				projectile.hostile = false;
+			}
+		}
+
 		public override void AI()
 		{
 			if (NPC.AnyNPCs(base.mod.NPCType("VlitchCore1")))

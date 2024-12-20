@@ -26,8 +26,6 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 			base.projectile.tileCollide = false;
 			base.projectile.extraUpdates = 4;
 			base.projectile.timeLeft = 120 * (base.projectile.extraUpdates + 1);
-			base.projectile.usesLocalNPCImmunity = true;
-			base.projectile.localNPCHitCooldown = 0;
 			base.projectile.penetrate = -1;
 		}
 

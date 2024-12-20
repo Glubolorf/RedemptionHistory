@@ -21,6 +21,14 @@ namespace Redemption.Items
 			base.item.maxStack = 99;
 			base.item.value = Item.sellPrice(0, 1, 0, 0);
 			base.item.rare = 8;
+			base.item.useTurn = true;
+			base.item.autoReuse = true;
+			base.item.noUseGraphic = true;
+			base.item.useAnimation = 15;
+			base.item.useTime = 10;
+			base.item.useStyle = 1;
+			base.item.consumable = true;
+			base.item.createTile = base.mod.TileType("LightSteelBarTile");
 		}
 
 		public override void AddRecipes()

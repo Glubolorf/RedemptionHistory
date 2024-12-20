@@ -34,7 +34,7 @@ namespace Redemption.Items.DruidDamageClass.SeedBags
 					perturbedSpeed *= scale;
 					Projectile projectile = Main.projectile[Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI, 0f, 0f)];
 					projectile.GetGlobalProjectile<DruidProjectile>().NativeTerrainIDs = this.NativeTerrainIDs;
-					projectile.GetGlobalProjectile<DruidProjectile>().seedLifetimeModifier = base.item.GetGlobalItem<RedeItem>().prefixLifetimeModifier;
+					projectile.GetGlobalProjectile<DruidProjectile>().seedLifetimeModifier = base.item.GetGlobalItem<RedeItem>().prefixLifetimeModifier * player.GetModPlayer<RedePlayer>().seedLifeTime;
 				}
 				return false;
 			}
@@ -48,13 +48,13 @@ namespace Redemption.Items.DruidDamageClass.SeedBags
 					perturbedSpeed2 *= scale2;
 					Projectile projectile2 = Main.projectile[Projectile.NewProjectile(position.X, position.Y, perturbedSpeed2.X, perturbedSpeed2.Y, type, damage, knockBack, player.whoAmI, 0f, 0f)];
 					projectile2.GetGlobalProjectile<DruidProjectile>().NativeTerrainIDs = this.NativeTerrainIDs;
-					projectile2.GetGlobalProjectile<DruidProjectile>().seedLifetimeModifier = base.item.GetGlobalItem<RedeItem>().prefixLifetimeModifier;
+					projectile2.GetGlobalProjectile<DruidProjectile>().seedLifetimeModifier = base.item.GetGlobalItem<RedeItem>().prefixLifetimeModifier * player.GetModPlayer<RedePlayer>().seedLifeTime;
 				}
 				return false;
 			}
 			Projectile projectile3 = Main.projectile[Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, 0f, 0f)];
 			projectile3.GetGlobalProjectile<DruidProjectile>().NativeTerrainIDs = this.NativeTerrainIDs;
-			projectile3.GetGlobalProjectile<DruidProjectile>().seedLifetimeModifier = base.item.GetGlobalItem<RedeItem>().prefixLifetimeModifier;
+			projectile3.GetGlobalProjectile<DruidProjectile>().seedLifetimeModifier = base.item.GetGlobalItem<RedeItem>().prefixLifetimeModifier * player.GetModPlayer<RedePlayer>().seedLifeTime;
 			return false;
 		}
 

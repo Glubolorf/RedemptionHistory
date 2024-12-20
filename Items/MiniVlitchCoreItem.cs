@@ -9,7 +9,7 @@ namespace Redemption.Items
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Mini-Vlitch Core");
-			base.Tooltip.SetDefault("Summons a small Vlitch Core that occasionally shoots lasers at enemies\n20% damage reduction while the core is alive\n60% reduced damage while the core is alive");
+			base.Tooltip.SetDefault("Summons a small Vlitch Core that occasionally shoots lasers at enemies\n20% damage reduction to user while the core is active\n60% reduced damage by user while the core is active");
 		}
 
 		public override void SetDefaults()

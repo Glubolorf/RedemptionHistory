@@ -8,7 +8,7 @@ namespace Redemption.Items.DruidDamageClass
 	{
 		10
 	})]
-	public class BloomingLuck : DruidDamageItem
+	public class BloomingLuck : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -16,7 +16,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.Tooltip.SetDefault("Grants immunity to knockback\n5% increased druidic damage\nSlightly increases the chance of finding Rare and Epic drops");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 26;
 			base.item.height = 30;
@@ -24,6 +24,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.rare = 3;
 			base.item.accessory = true;
 			base.item.defense = 1;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void AddRecipes()

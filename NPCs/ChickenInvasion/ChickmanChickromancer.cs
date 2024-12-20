@@ -43,6 +43,10 @@ namespace Redemption.NPCs.ChickenInvasion
 			{
 				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ChickLauncher"), 1, false, 0, false, false);
 			}
+			if (ChickWorld.chickArmy)
+			{
+				ChickWorld.ChickPoints++;
+			}
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -53,10 +57,6 @@ namespace Redemption.NPCs.ChickenInvasion
 				{
 					int dustIndex = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 256, 0f, 0f, 100, default(Color), 2f);
 					Main.dust[dustIndex].velocity *= 1.4f;
-				}
-				if (ChickWorld.chickArmy)
-				{
-					ChickWorld.ChickPoints2++;
 				}
 			}
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 273, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);

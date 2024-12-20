@@ -10,7 +10,7 @@ namespace Redemption.Items.Armor
 	{
 		0
 	})]
-	public class CreatorHead : DruidDamageItem
+	public class CreatorHead : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -18,12 +18,13 @@ namespace Redemption.Items.Armor
 			base.Tooltip.SetDefault("9% increased druidic damage\nIncreases maximum mana by 60\nIncreased life and mana regen");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 28;
 			base.item.height = 28;
 			base.item.rare = 10;
 			base.item.defense = 16;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void UpdateEquip(Player player)

@@ -17,8 +17,9 @@ namespace Redemption.Tiles
 			this.minPick = 150;
 			this.mineResist = 1.5f;
 			this.soundType = 21;
-			base.CreateMapEntryName(null);
-			base.AddMapEntry(new Color(200, 0, 0), null);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Vlitch Plating");
+			base.AddMapEntry(new Color(200, 0, 0), name);
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num)

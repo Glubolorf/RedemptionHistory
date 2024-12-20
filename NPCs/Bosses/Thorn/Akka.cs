@@ -478,12 +478,18 @@ namespace Redemption.NPCs.Bosses.Thorn
 
 		public Vector2 Pos()
 		{
-			return new Vector2((this.player.Center.X > base.npc.Center.X) ? (this.player.Center.X + (float)Main.rand.Next(-500, -400)) : (this.player.Center.X + (float)Main.rand.Next(400, 500)), this.player.Center.Y + (float)Main.rand.Next(-400, 200));
+			return new Vector2((this.player.Center.X > base.npc.Center.X) ? (this.player.Center.X + (float)Main.rand.Next(-300, -200)) : (this.player.Center.X + (float)Main.rand.Next(200, 300)), this.player.Center.Y + (float)Main.rand.Next(-400, 200));
 		}
 
 		private void Target()
 		{
 			this.player = Main.player[base.npc.target];
+		}
+
+		public override bool CheckActive()
+		{
+			this.player = Main.player[base.npc.target];
+			return !this.player.active || this.player.dead;
 		}
 
 		private void DespawnHandler()

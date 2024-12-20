@@ -42,6 +42,14 @@ namespace Redemption.NPCs.ChickenInvasion
 			base.npc.boss = true;
 		}
 
+		public override void NPCLoot()
+		{
+			if (ChickWorld.chickArmy)
+			{
+				ChickWorld.ChickPoints += 6;
+			}
+		}
+
 		public override void AI()
 		{
 			Entity entity = Main.player[base.npc.target];
@@ -233,10 +241,6 @@ namespace Redemption.NPCs.ChickenInvasion
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/TrojanChickenGore10"), 1f);
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/TrojanChickenGore10"), 1f);
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/TrojanChickenGore10"), 1f);
-				if (ChickWorld.chickArmy)
-				{
-					ChickWorld.ChickPoints2 += 4;
-				}
 				for (int g = 0; g < 2; g++)
 				{
 					int goreIndex = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);

@@ -9,7 +9,7 @@ namespace Redemption.Items.Armor.FlowerCrowns
 	{
 		0
 	})]
-	public class FlowerCrowns8_2 : DruidDamageItem
+	public class FlowerCrowns8_2 : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -17,13 +17,14 @@ namespace Redemption.Items.Armor.FlowerCrowns
 			base.Tooltip.SetDefault("'Purple and orange, dusk shimmers'\nHas a chance to throw an extra seed");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 20;
 			base.item.height = 10;
 			base.item.value = 5000;
 			base.item.rare = 1;
 			base.item.defense = 3;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void UpdateEquip(Player player)

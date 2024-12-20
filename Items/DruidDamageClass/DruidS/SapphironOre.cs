@@ -1,9 +1,10 @@
 ﻿using System;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass.DruidS
 {
-	public class SapphironOre : DruidDamageItem
+	public class SapphironOre : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -11,7 +12,7 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 			base.Tooltip.SetDefault("'Sky Sapphire'");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 20;
 			base.item.height = 22;
@@ -25,6 +26,7 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 			base.item.useStyle = 1;
 			base.item.consumable = true;
 			base.item.createTile = base.mod.TileType("SapphironOreTile");
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 	}
 }

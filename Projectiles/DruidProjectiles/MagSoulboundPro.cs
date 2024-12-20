@@ -47,19 +47,27 @@ namespace Redemption.Projectiles.DruidProjectiles
 			{
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritExtras >= 0)
 				{
-					Projectile.NewProjectile(base.projectile.position.X + Utils.NextFloat(Main.rand, (float)base.projectile.width), base.projectile.position.Y + Utils.NextFloat(Main.rand, (float)base.projectile.height), (float)(-4 + Main.rand.Next(0, 8)), (float)(-4 + Main.rand.Next(0, 8)), 297, base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 1f);
+					int p = Projectile.NewProjectile(base.projectile.position.X + Utils.NextFloat(Main.rand, (float)base.projectile.width), base.projectile.position.Y + Utils.NextFloat(Main.rand, (float)base.projectile.height), (float)(-4 + Main.rand.Next(0, 8)), (float)(-4 + Main.rand.Next(0, 8)), 297, base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 1f);
+					Main.projectile[p].magic = false;
+					Main.projectile[p].GetGlobalProjectile<DruidProjectile>().druidic = true;
 				}
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritExtras >= 1)
 				{
-					Projectile.NewProjectile(base.projectile.position.X + Utils.NextFloat(Main.rand, (float)base.projectile.width), base.projectile.position.Y + Utils.NextFloat(Main.rand, (float)base.projectile.height), (float)(-4 + Main.rand.Next(0, 8)), (float)(-4 + Main.rand.Next(0, 8)), 297, base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 1f);
+					int p2 = Projectile.NewProjectile(base.projectile.position.X + Utils.NextFloat(Main.rand, (float)base.projectile.width), base.projectile.position.Y + Utils.NextFloat(Main.rand, (float)base.projectile.height), (float)(-4 + Main.rand.Next(0, 8)), (float)(-4 + Main.rand.Next(0, 8)), 297, base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 1f);
+					Main.projectile[p2].magic = false;
+					Main.projectile[p2].GetGlobalProjectile<DruidProjectile>().druidic = true;
 				}
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritExtras >= 2)
 				{
-					Projectile.NewProjectile(base.projectile.position.X + Utils.NextFloat(Main.rand, (float)base.projectile.width), base.projectile.position.Y + Utils.NextFloat(Main.rand, (float)base.projectile.height), (float)(-4 + Main.rand.Next(0, 8)), (float)(-4 + Main.rand.Next(0, 8)), 297, base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 1f);
+					int p3 = Projectile.NewProjectile(base.projectile.position.X + Utils.NextFloat(Main.rand, (float)base.projectile.width), base.projectile.position.Y + Utils.NextFloat(Main.rand, (float)base.projectile.height), (float)(-4 + Main.rand.Next(0, 8)), (float)(-4 + Main.rand.Next(0, 8)), 297, base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 1f);
+					Main.projectile[p3].magic = false;
+					Main.projectile[p3].GetGlobalProjectile<DruidProjectile>().druidic = true;
 				}
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritExtras >= 3)
 				{
-					Projectile.NewProjectile(base.projectile.position.X + Utils.NextFloat(Main.rand, (float)base.projectile.width), base.projectile.position.Y + Utils.NextFloat(Main.rand, (float)base.projectile.height), (float)(-4 + Main.rand.Next(0, 8)), (float)(-4 + Main.rand.Next(0, 8)), 297, base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 1f);
+					int p4 = Projectile.NewProjectile(base.projectile.position.X + Utils.NextFloat(Main.rand, (float)base.projectile.width), base.projectile.position.Y + Utils.NextFloat(Main.rand, (float)base.projectile.height), (float)(-4 + Main.rand.Next(0, 8)), (float)(-4 + Main.rand.Next(0, 8)), 297, base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 1f);
+					Main.projectile[p4].magic = false;
+					Main.projectile[p4].GetGlobalProjectile<DruidProjectile>().druidic = true;
 				}
 			}
 		}

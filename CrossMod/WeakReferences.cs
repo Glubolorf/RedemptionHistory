@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Redemption.Items;
 using Redemption.Items.Armor;
 using Redemption.Items.Armor.Costumes;
@@ -29,7 +30,849 @@ namespace Redemption.CrossMod
 		public static void PerformModSupport()
 		{
 			WeakReferences.PerformBossChecklistSupport();
+			WeakReferences.PerformHealthBarSupport();
 			WeakReferences.PerformCencusSupport();
+		}
+
+		private static void PerformHealthBarSupport()
+		{
+			Mod yabhb = ModLoader.GetMod("FKBossHealthBar");
+			if (yabhb != null)
+			{
+				yabhb.Call(new object[]
+				{
+					"hbStart"
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetTexture",
+					Redemption.inst.GetTexture("CrossMod/Healthbars/InfectionBarHead"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/InfectionBarBody"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/InfectionBarTail"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetColours",
+					Color.ForestGreen,
+					Color.OliveDrab,
+					Color.Olive
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetMidBarOffset",
+					-30,
+					10
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetBossHeadCentre",
+					50,
+					32
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetFillDecoOffsetSmall",
+					16
+				});
+				yabhb.Call(new object[]
+				{
+					"hbFinishSingle",
+					Redemption.inst.NPCType("SoI")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbStart"
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetTexture",
+					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarHead"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarBody"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarTail"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetColours",
+					Color.LightGray,
+					Color.Khaki,
+					Color.Sienna
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetMidBarOffset",
+					-30,
+					10
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetBossHeadCentre",
+					50,
+					32
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetFillDecoOffsetSmall",
+					16
+				});
+				yabhb.Call(new object[]
+				{
+					"hbFinishSingle",
+					Redemption.inst.NPCType("JanitorBot")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbStart"
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetTexture",
+					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarHead"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarBody"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarTail"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetColours",
+					Color.LimeGreen,
+					Color.ForestGreen,
+					Color.DarkGreen
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetMidBarOffset",
+					-30,
+					10
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetBossHeadCentre",
+					50,
+					32
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetFillDecoOffsetSmall",
+					16
+				});
+				yabhb.Call(new object[]
+				{
+					"hbFinishSingle",
+					Redemption.inst.NPCType("Stage3Scientist2")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbStart"
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetTexture",
+					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarHead"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarBody"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarTail"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetColours",
+					Color.LimeGreen,
+					Color.ForestGreen,
+					Color.DarkGreen
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetMidBarOffset",
+					-30,
+					10
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetBossHeadCentre",
+					50,
+					32
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetFillDecoOffsetSmall",
+					16
+				});
+				yabhb.Call(new object[]
+				{
+					"hbFinishSingle",
+					Redemption.inst.NPCType("IrradiatedBehemoth2")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbStart"
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetTexture",
+					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarHead"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarBody"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarTail"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetColours",
+					Color.ForestGreen,
+					Color.OliveDrab,
+					Color.Olive
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetMidBarOffset",
+					-30,
+					10
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetBossHeadCentre",
+					50,
+					32
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetFillDecoOffsetSmall",
+					16
+				});
+				yabhb.Call(new object[]
+				{
+					"hbFinishSingle",
+					Redemption.inst.NPCType("Blisterface2")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbStart"
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetTexture",
+					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarHead"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarBody"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarTail"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetColours",
+					Color.LightGray,
+					Color.Khaki,
+					Color.Crimson
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetMidBarOffset",
+					-30,
+					10
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetBossHeadCentre",
+					50,
+					32
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetFillDecoOffsetSmall",
+					16
+				});
+				yabhb.Call(new object[]
+				{
+					"hbFinishSingle",
+					Redemption.inst.NPCType("TbotMiniboss")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbStart"
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetTexture",
+					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarHead"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarBody"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarTail"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetColours",
+					Color.LightGray,
+					Color.Khaki,
+					Color.Crimson
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetMidBarOffset",
+					-30,
+					10
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetBossHeadCentre",
+					50,
+					32
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetFillDecoOffsetSmall",
+					16
+				});
+				yabhb.Call(new object[]
+				{
+					"hbFinishPhases",
+					Redemption.inst.NPCType("MACEProjectJawA"),
+					Redemption.inst.NPCType("MACEProjectHeadA")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbStart"
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetTexture",
+					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarHead"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarBody"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarTail"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetColours",
+					Color.DarkSlateGray,
+					Color.DarkSlateGray,
+					Color.DarkGreen
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetMidBarOffset",
+					-30,
+					10
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetBossHeadCentre",
+					50,
+					32
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetFillDecoOffsetSmall",
+					16
+				});
+				yabhb.Call(new object[]
+				{
+					"hbFinishSingle",
+					Redemption.inst.NPCType("PZ2BodyCover")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbStart"
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetTexture",
+					Redemption.inst.GetTexture("CrossMod/Healthbars/InfectionBarHead"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/InfectionBarBody"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/InfectionBarTail"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetColours",
+					Color.ForestGreen,
+					Color.OliveDrab,
+					Color.Olive
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetMidBarOffset",
+					-30,
+					10
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetBossHeadCentre",
+					50,
+					32
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetFillDecoOffsetSmall",
+					16
+				});
+				yabhb.Call(new object[]
+				{
+					"hbFinishSingle",
+					Redemption.inst.NPCType("InfectedEye")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbStart"
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetTexture",
+					Redemption.inst.GetTexture("CrossMod/Healthbars/InfectionBarHead"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/InfectionBarBody"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/InfectionBarTail"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetColours",
+					Color.DarkSlateGray,
+					Color.DarkSlateGray,
+					Color.DarkGreen
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetMidBarOffset",
+					-30,
+					10
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetBossHeadCentre",
+					50,
+					32
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetFillDecoOffsetSmall",
+					16
+				});
+				yabhb.Call(new object[]
+				{
+					"hbFinishSingle",
+					Redemption.inst.NPCType("PZ2Fight")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbStart"
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetTexture",
+					Redemption.inst.GetTexture("CrossMod/Healthbars/VlitchBarHead"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/VlitchBarBody"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/VlitchBarTail"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetColours",
+					Color.Crimson,
+					Color.Firebrick,
+					Color.DarkRed
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetMidBarOffset",
+					-30,
+					10
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetBossHeadCentre",
+					50,
+					32
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetFillDecoOffsetSmall",
+					16
+				});
+				yabhb.Call(new object[]
+				{
+					"hbFinishSingle",
+					Redemption.inst.NPCType("VlitchCleaver")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbStart"
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetTexture",
+					Redemption.inst.GetTexture("CrossMod/Healthbars/VlitchBarHead"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/VlitchBarBody"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/VlitchBarTail"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetColours",
+					Color.Crimson,
+					Color.Firebrick,
+					Color.DarkRed
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetMidBarOffset",
+					-30,
+					10
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetBossHeadCentre",
+					50,
+					32
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetFillDecoOffsetSmall",
+					16
+				});
+				yabhb.Call(new object[]
+				{
+					"hbFinishMultiple",
+					Redemption.inst.NPCType("VlitchWormHead"),
+					Redemption.inst.NPCType("VlitchWormBody"),
+					Redemption.inst.NPCType("VlitchWormTail")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbStart"
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetTexture",
+					Redemption.inst.GetTexture("CrossMod/Healthbars/VlitchBarHead"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/VlitchBarBody"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/VlitchBarTail"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetColours",
+					Color.Crimson,
+					Color.Firebrick,
+					Color.DarkRed
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetMidBarOffset",
+					-30,
+					10
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetBossHeadCentre",
+					50,
+					32
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetFillDecoOffsetSmall",
+					16
+				});
+				yabhb.Call(new object[]
+				{
+					"hbFinishPhases",
+					Redemption.inst.NPCType("OmegaOblitIdle"),
+					Redemption.inst.NPCType("OmegaOblitDamaged")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbStart"
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetTexture",
+					Redemption.inst.GetTexture("CrossMod/Healthbars/SlayerBarHead"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/SlayerBarBody"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/SlayerBarTail"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetColours",
+					Color.Cyan,
+					Color.Cyan,
+					Color.Red
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetMidBarOffset",
+					-30,
+					10
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetBossHeadCentre",
+					50,
+					32
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetFillDecoOffsetSmall",
+					16
+				});
+				yabhb.Call(new object[]
+				{
+					"hbFinishSingle",
+					Redemption.inst.NPCType("KSEntrance")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbStart"
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetTexture",
+					Redemption.inst.GetTexture("CrossMod/Healthbars/SlayerBarHead"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/SlayerBarBody"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/SlayerBarTail"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetColours",
+					Color.Cyan,
+					Color.Cyan,
+					Color.Red
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetMidBarOffset",
+					-30,
+					10
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetBossHeadCentre",
+					50,
+					32
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetFillDecoOffsetSmall",
+					16
+				});
+				yabhb.Call(new object[]
+				{
+					"hbFinishSingle",
+					Redemption.inst.NPCType("KSEntranceClone")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbStart"
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetTexture",
+					Redemption.inst.GetTexture("CrossMod/Healthbars/NebBarHead"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/NebBarBody"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/NebBarTail"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetColours",
+					Color.HotPink,
+					Color.HotPink,
+					Color.Purple
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetMidBarOffset",
+					-30,
+					10
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetBossHeadCentre",
+					50,
+					32
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetFillDecoOffsetSmall",
+					16
+				});
+				yabhb.Call(new object[]
+				{
+					"hbFinishSingle",
+					Redemption.inst.NPCType("Nebuleus")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbStart"
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetTexture",
+					Redemption.inst.GetTexture("CrossMod/Healthbars/NebBarHead"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/NebBarBody"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/NebBarTail"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetColours",
+					Color.HotPink,
+					Color.HotPink,
+					Color.Purple
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetMidBarOffset",
+					-30,
+					10
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetBossHeadCentre",
+					50,
+					32
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetFillDecoOffsetSmall",
+					16
+				});
+				yabhb.Call(new object[]
+				{
+					"hbFinishSingle",
+					Redemption.inst.NPCType("BigNebuleus")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbStart"
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetTexture",
+					Redemption.inst.GetTexture("CrossMod/Healthbars/NebBarHead"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/NebBarBody"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/NebBarTail"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetColours",
+					Color.HotPink,
+					Color.HotPink,
+					Color.Purple
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetMidBarOffset",
+					-30,
+					10
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetBossHeadCentre",
+					50,
+					32
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetFillDecoOffsetSmall",
+					16
+				});
+				yabhb.Call(new object[]
+				{
+					"hbFinishSingle",
+					Redemption.inst.NPCType("NebuleusClone")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbStart"
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetTexture",
+					Redemption.inst.GetTexture("CrossMod/Healthbars/NebBarHead"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/NebBarBody"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/NebBarTail"),
+					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetColours",
+					Color.HotPink,
+					Color.HotPink,
+					Color.Purple
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetMidBarOffset",
+					-30,
+					10
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetBossHeadCentre",
+					50,
+					32
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetFillDecoOffsetSmall",
+					16
+				});
+				yabhb.Call(new object[]
+				{
+					"hbFinishSingle",
+					Redemption.inst.NPCType("BigNebuleusClone")
+				});
+				yabhb.Call(new object[]
+				{
+					"RegisterHealthBarMini",
+					Redemption.inst.NPCType("SunkenCaptain")
+				});
+				yabhb.Call(new object[]
+				{
+					"RegisterHealthBarMini",
+					Redemption.inst.NPCType("StrangePortal")
+				});
+				yabhb.Call(new object[]
+				{
+					"RegisterHealthBarMini",
+					Redemption.inst.NPCType("EvilJelly")
+				});
+				yabhb.Call(new object[]
+				{
+					"RegisterHealthBarMini",
+					Redemption.inst.NPCType("SkullDigger")
+				});
+				yabhb.Call(new object[]
+				{
+					"RegisterHealthBarMini",
+					Redemption.inst.NPCType("TrojanChicken")
+				});
+				yabhb.Call(new object[]
+				{
+					"RegisterHealthBarMini",
+					Redemption.inst.NPCType("MossyGoliath")
+				});
+				yabhb.Call(new object[]
+				{
+					"RegisterHealthBarMini",
+					Redemption.inst.NPCType("VlitchCore1")
+				});
+				yabhb.Call(new object[]
+				{
+					"RegisterHealthBarMini",
+					Redemption.inst.NPCType("VlitchCore2")
+				});
+				yabhb.Call(new object[]
+				{
+					"RegisterHealthBarMini",
+					Redemption.inst.NPCType("VlitchCore3")
+				});
+				yabhb.Call(new object[]
+				{
+					"RegisterHealthBarMini",
+					Redemption.inst.NPCType("KingChicken")
+				});
+			}
 		}
 
 		private static void PerformBossChecklistSupport()

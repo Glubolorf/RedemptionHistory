@@ -9,7 +9,7 @@ namespace Redemption.Items.Armor.PostML
 	{
 		0
 	})]
-	public class SmallShadeHead : DruidDamageItem
+	public class SmallShadeHead : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -17,12 +17,13 @@ namespace Redemption.Items.Armor.PostML
 			base.Tooltip.SetDefault("10% increased druidic damage\n15% increased druidic critical strike chance\n4% increased damage reduction\nThrows seedbags faster");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 20;
 			base.item.height = 28;
 			base.item.value = Item.sellPrice(0, 25, 0, 0);
 			base.item.defense = 26;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 2;
 		}
 

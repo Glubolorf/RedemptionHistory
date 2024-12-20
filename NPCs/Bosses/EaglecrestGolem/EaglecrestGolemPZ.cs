@@ -35,7 +35,6 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 		public override void BossLoot(ref string name, ref int potionType)
 		{
 			potionType = 3544;
-			RedeWorld.downedEaglecrestGolemPZ = true;
 			if (Main.netMode == 2)
 			{
 				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
@@ -86,103 +85,101 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 			{
 				base.npc.spriteDirection = -1;
 			}
-			if (base.npc.life <= (int)((float)base.npc.lifeMax * 0.5f) || RedeUkkoAkka.begin)
+			if ((base.npc.life <= (int)((float)base.npc.lifeMax * 0.5f) || RedeUkkoAkka.begin) && NPC.AnyNPCs(base.mod.NPCType("ThornPZ")) && base.npc.ai[0] == 0f)
 			{
-				if (NPC.AnyNPCs(base.mod.NPCType("ThornPZ")))
+				base.npc.ai[0] = 1f;
+			}
+			if (base.npc.ai[0] >= 1f)
+			{
+				this.transformCounter++;
+				if (this.transformCounter > 30)
 				{
-					this.transformCounter++;
-					if (this.transformCounter > 30)
+					this.transformFrame++;
+					this.transformCounter = 0;
+				}
+				if (this.transformFrame >= 11)
+				{
+					this.transformFrame = 10;
+				}
+				RedeUkkoAkka.begin = true;
+				this.roll = false;
+				this.slash = false;
+				this.hop = false;
+				base.npc.noTileCollide = true;
+				base.npc.noGravity = true;
+				for (int j = 0; j < 2; j++)
+				{
+					int dustIndex = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 269, 0f, 0f, 100, default(Color), 1.5f);
+					Main.dust[dustIndex].velocity *= 1.2f;
+				}
+				if (base.npc.life < base.npc.lifeMax - 500)
+				{
+					base.npc.life += 500;
+				}
+				if (!RedeConfigClient.Instance.NoBossText)
+				{
+					base.npc.ai[3] += 1f;
+					if (base.npc.ai[3] == 10f)
 					{
-						this.transformFrame++;
-						this.transformCounter = 0;
+						int p = Projectile.NewProjectile(player.Center.X - 60f, player.Center.Y + 300f, 0f, 0f, base.mod.ProjectileType("Text1"), 0, 0f, Main.myPlayer, 0f, 0f);
+						Main.projectile[p].netUpdate = true;
 					}
-					if (this.transformFrame >= 11)
+					if (base.npc.ai[3] == 110f)
 					{
-						this.transformFrame = 10;
+						int p2 = Projectile.NewProjectile(player.Center.X + 60f, player.Center.Y + 200f, 0f, 0f, base.mod.ProjectileType("Text2"), 0, 0f, Main.myPlayer, 0f, 0f);
+						Main.projectile[p2].netUpdate = true;
 					}
-					RedeUkkoAkka.begin = true;
-					this.roll = false;
-					this.slash = false;
-					this.hop = false;
-					base.npc.noTileCollide = true;
-					base.npc.noGravity = true;
-					for (int j = 0; j < 2; j++)
+					if (base.npc.ai[3] == 210f)
 					{
-						int dustIndex = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 269, 0f, 0f, 100, default(Color), 1.5f);
-						Main.dust[dustIndex].velocity *= 1.2f;
-					}
-					if (base.npc.life < base.npc.lifeMax - 500)
-					{
-						base.npc.life += 500;
-					}
-					if (!RedeConfigClient.Instance.NoBossText)
-					{
-						base.npc.ai[3] += 1f;
-						if (base.npc.ai[3] == 10f)
-						{
-							int p = Projectile.NewProjectile(player.Center.X - 60f, player.Center.Y + 300f, 0f, 0f, base.mod.ProjectileType("Text1"), 0, 0f, Main.myPlayer, 0f, 0f);
-							Main.projectile[p].netUpdate = true;
-						}
-						if (base.npc.ai[3] == 110f)
-						{
-							int p2 = Projectile.NewProjectile(player.Center.X + 60f, player.Center.Y + 200f, 0f, 0f, base.mod.ProjectileType("Text2"), 0, 0f, Main.myPlayer, 0f, 0f);
-							Main.projectile[p2].netUpdate = true;
-						}
-						if (base.npc.ai[3] == 210f)
-						{
-							int p3 = Projectile.NewProjectile(player.Center.X, player.Center.Y + 100f, 0f, 0f, base.mod.ProjectileType("Text3"), 0, 0f, Main.myPlayer, 0f, 0f);
-							Main.projectile[p3].netUpdate = true;
-						}
+						int p3 = Projectile.NewProjectile(player.Center.X, player.Center.Y + 100f, 0f, 0f, base.mod.ProjectileType("Text3"), 0, 0f, Main.myPlayer, 0f, 0f);
+						Main.projectile[p3].netUpdate = true;
 					}
 				}
-				if (base.npc.ai[0] == 0f)
+			}
+			if (base.npc.ai[0] == 1f)
+			{
+				base.npc.velocity.Y = 0f;
+				base.npc.velocity.X = 0f;
+				base.npc.alpha += 10;
+				if (base.npc.alpha >= 255)
 				{
-					if (NPC.AnyNPCs(base.mod.NPCType("ThornPZ")))
+					if (Main.netMode != 1)
 					{
-						base.npc.velocity.Y = 0f;
-						base.npc.velocity.X = 0f;
-						base.npc.alpha += 10;
-						if (base.npc.alpha >= 255)
-						{
-							if (Main.netMode != 1)
-							{
-								Vector2 newPos = new Vector2(-300f, 20f);
-								base.npc.Center = Main.player[base.npc.target].Center + newPos;
-								base.npc.netUpdate = true;
-							}
-							base.npc.ai[0] += 1f;
-							return;
-						}
+						Vector2 newPos = new Vector2(-300f, 20f);
+						base.npc.Center = Main.player[base.npc.target].Center + newPos;
+						base.npc.netUpdate = true;
 					}
+					base.npc.ai[0] = 2f;
+					return;
 				}
-				else
+			}
+			else if (base.npc.ai[0] >= 2f)
+			{
+				if (base.npc.velocity.Y <= -0.6f)
 				{
-					if (base.npc.velocity.Y <= -0.6f)
+					base.npc.velocity.Y = -0.6f;
+				}
+				NPC npc = base.npc;
+				npc.velocity.Y = npc.velocity.Y - 0.1f;
+				base.npc.alpha -= 10;
+				base.npc.ai[0] += 1f;
+				if (base.npc.ai[0] == 355f)
+				{
+					int p4 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("TransitionUkko"), 0, 1f, Main.myPlayer, 0f, 0f);
+					Main.projectile[p4].netUpdate = true;
+				}
+				if (base.npc.ai[0] >= 380f)
+				{
+					for (int k = 0; k < 30; k++)
 					{
-						base.npc.velocity.Y = -0.6f;
+						int dustIndex2 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 269, 0f, 0f, 100, default(Color), 3f);
+						Main.dust[dustIndex2].velocity *= 5.2f;
 					}
-					NPC npc = base.npc;
-					npc.velocity.Y = npc.velocity.Y - 0.1f;
-					base.npc.alpha -= 10;
-					base.npc.ai[0] += 1f;
-					if (base.npc.ai[0] == 355f)
-					{
-						int p4 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("TransitionUkko"), 0, 1f, Main.myPlayer, 0f, 0f);
-						Main.projectile[p4].netUpdate = true;
-					}
-					if (base.npc.ai[0] >= 380f)
-					{
-						for (int k = 0; k < 30; k++)
-						{
-							int dustIndex2 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 269, 0f, 0f, 100, default(Color), 3f);
-							Main.dust[dustIndex2].velocity *= 5.2f;
-						}
-						base.npc.velocity.Y = 0f;
-						base.npc.velocity.X = 0f;
-						Main.NewText("Ukko, Ancient God of Weather has awoken...", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B, false);
-						base.npc.SetDefaults(base.mod.NPCType("Ukko"), -1f);
-						return;
-					}
+					base.npc.velocity.Y = 0f;
+					base.npc.velocity.X = 0f;
+					Main.NewText("Ukko, Ancient God of Weather has awoken...", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B, false);
+					base.npc.SetDefaults(base.mod.NPCType("Ukko"), -1f);
+					return;
 				}
 			}
 			else
@@ -482,21 +479,21 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 			{
 				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor * ((float)(255 - base.npc.alpha) / 255f), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, effects, 0f);
 			}
-			if (this.hop && !this.roll && !this.slash)
+			if (this.hop && !this.roll && !this.slash && !RedeUkkoAkka.begin)
 			{
 				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 				int num214 = hopAni.Height / 1;
 				int y6 = num214 * this.hopFrame;
 				Main.spriteBatch.Draw(hopAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, hopAni.Width, num214)), drawColor * ((float)(255 - base.npc.alpha) / 255f), base.npc.rotation, new Vector2((float)hopAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
-			if (this.slash && !this.roll)
+			if (this.slash && !this.roll && !RedeUkkoAkka.begin)
 			{
 				Vector2 drawCenter2 = new Vector2(base.npc.Center.X, base.npc.Center.Y - 13f);
 				int num215 = slashAni.Height / 9;
 				int y7 = num215 * this.slashFrame;
 				Main.spriteBatch.Draw(slashAni, drawCenter2 - Main.screenPosition, new Rectangle?(new Rectangle(0, y7, slashAni.Width, num215)), drawColor * ((float)(255 - base.npc.alpha) / 255f), base.npc.rotation, new Vector2((float)slashAni.Width / 2f, (float)num215 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
-			if (RedeUkkoAkka.begin)
+			if (RedeUkkoAkka.begin && base.npc.ai[0] >= 1f)
 			{
 				Vector2 drawCenter3 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 				int num216 = transformAni.Height / 11;

@@ -9,7 +9,7 @@ namespace Redemption.Items.Armor
 	{
 		1
 	})]
-	public class IceDruidBody : DruidDamageItem
+	public class IceDruidBody : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -17,13 +17,14 @@ namespace Redemption.Items.Armor
 			base.Tooltip.SetDefault("3% increased druidic damage\n2% increased druidic critical strike chance\nThrows seedbags faster");
 		}
 
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
 			base.item.width = 38;
 			base.item.height = 30;
 			base.item.value = 875;
 			base.item.rare = 1;
 			base.item.defense = 4;
+			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
 		public override void UpdateEquip(Player player)

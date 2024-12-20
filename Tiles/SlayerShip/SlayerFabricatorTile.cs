@@ -25,8 +25,6 @@ namespace Redemption.Tiles.SlayerShip
 				16
 			};
 			TileObjectData.newTile.UsesCustomCanPlace = true;
-			TileObjectData.newTile.StyleHorizontal = true;
-			TileObjectData.newTile.Direction = 1;
 			TileObjectData.newTile.CoordinateWidth = 16;
 			TileObjectData.newTile.CoordinatePadding = 2;
 			TileObjectData.newTile.AnchorBottom = new AnchorData(11, TileObjectData.newTile.Width, 0);

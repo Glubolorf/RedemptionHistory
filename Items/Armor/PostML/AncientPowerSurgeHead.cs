@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -47,8 +49,14 @@ namespace Redemption.Items.Armor.PostML
 
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "Dealing damage has a 10% chance to fire out homing energy orbs at enemies.";
+			player.setBonus = "Dealing damage has a 10% chance to fire out homing energy orbs at enemies\n8% increased magic and summon damage when you're not in a power surge\n6% increased magic critical strike chance.\nTaking damage builds up energy within the armour\nReaching a charge of 300 will unleash a Power Surge for 7 seconds\n--During Power Surge--\n25% increased magic and summon damage\nYour magic weapons don't consume mana\nYour immunity frames are extended";
 			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).powerSurgeSet = true;
+			if (!player.HasBuff(base.mod.BuffType("PowerSurgeBuff")))
+			{
+				player.magicDamage += 0.08f;
+				player.minionDamage += 0.08f;
+			}
+			player.magicCrit += 6;
 		}
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
@@ -63,6 +71,17 @@ namespace Redemption.Items.Armor.PostML
 			modRecipe.AddTile(412);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
+		}
+
+		public override void ModifyTooltips(List<TooltipLine> tooltips)
+		{
+			Player player = Main.player[Main.myPlayer];
+			string text = "Charge: " + player.GetModPlayer<RedePlayer>().powerSurgeCharge + "/300";
+			TooltipLine line = new TooltipLine(base.mod, "text1", text)
+			{
+				overrideColor = new Color?(Color.Goldenrod)
+			};
+			tooltips.Insert(2, line);
 		}
 	}
 }

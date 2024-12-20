@@ -57,10 +57,6 @@ namespace Redemption.NPCs.ChickenInvasion
 				{
 					Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("FriedChicken"), 1, false, 0, false, false);
 				}
-				if (ChickWorld.chickArmy)
-				{
-					ChickWorld.ChickPoints2++;
-				}
 			}
 			if (Main.netMode != 1 && base.npc.life <= 0)
 			{
@@ -81,6 +77,10 @@ namespace Redemption.NPCs.ChickenInvasion
 			if (RedeWorld.downedPatientZero && Main.rand.Next(1200) == 0)
 			{
 				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ChickLauncher"), 1, false, 0, false, false);
+			}
+			if (ChickWorld.chickArmy)
+			{
+				ChickWorld.ChickPoints++;
 			}
 		}
 

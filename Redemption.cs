@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using On.Terraria;
 using Redemption.ChickenArmy;
 using Redemption.CrossMod;
 using Redemption.Items;
@@ -11,6 +12,8 @@ using Redemption.Items.Cores;
 using Redemption.NPCs.Bosses.EaglecrestGolem;
 using Redemption.NPCs.Bosses.Nebuleus;
 using Redemption.NPCs.Bosses.SeedOfInfection;
+using Redemption.Tiles;
+using Redemption.Tiles.LabDeco;
 using ReLogic.Graphics;
 using Terraria;
 using Terraria.GameContent.UI;
@@ -62,16 +65,6 @@ namespace Redemption
 				{
 					music = base.GetSoundSlot(51, "Sounds/Music/HallofHeroes");
 					priority = 3;
-				}
-				if (Redemption.emptyHallActive)
-				{
-					music = base.GetSoundSlot(51, "Sounds/Music/Empty");
-					priority = 4;
-				}
-				if (Redemption.soullessBiomeActive)
-				{
-					music = base.GetSoundSlot(51, "Sounds/Music/Soulless");
-					priority = 4;
 				}
 				if (Main.player[Main.myPlayer].active)
 				{
@@ -202,6 +195,22 @@ namespace Redemption
 			}
 		}
 
+		private void Wiring_ActuateForced(Wiring.orig_ActuateForced orig, int i, int j)
+		{
+			Tile tile = Main.tile[i, j];
+			if ((int)tile.type == ModContent.TileType<LabTileUnsafe>() || (int)tile.type == ModContent.TileType<HardenedSludgeTile>() || (int)tile.type == ModContent.TileType<HardenedSludge2Tile>() || (int)tile.type == ModContent.TileType<HardenedSludge3Tile>() || (int)tile.type == ModContent.TileType<OvergrownLabTile>())
+			{
+				return;
+			}
+			orig.Invoke(i, j);
+		}
+
+		private static bool Actuate(Wiring.orig_Actuate orig, int i, int j)
+		{
+			Tile tile = Main.tile[i, j];
+			return (int)tile.type != ModContent.TileType<LabTileUnsafe>() && (int)tile.type != ModContent.TileType<HardenedSludgeTile>() && (int)tile.type != ModContent.TileType<HardenedSludge2Tile>() && (int)tile.type != ModContent.TileType<HardenedSludge3Tile>() && (int)tile.type != ModContent.TileType<OvergrownLabTile>() && orig.Invoke(i, j);
+		}
+
 		public override void Load()
 		{
 			Redemption.inst = this;
@@ -209,6 +218,8 @@ namespace Redemption
 			{
 				Main.rand = new UnifiedRandom();
 			}
+			Wiring.ActuateForced += new Wiring.hook_ActuateForced(this.Wiring_ActuateForced);
+			Wiring.Actuate += new Wiring.hook_Actuate(Redemption.Actuate);
 			if (!Main.dedServ)
 			{
 				base.AddEquipTexture(null, 2, "ArchclothRobe_Legs", "Redemption/Items/Armor/ArchclothRobe_Legs", "", "");
@@ -273,7 +284,6 @@ namespace Redemption
 			}
 			Redemption.FaceCustomCurrencyID = CustomCurrencyManager.RegisterCurrency(new CustomCurrency(ModContent.ItemType<AncientGoldCoin>(), 999L));
 			Filters.Scene["Redemption:XenoSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0.2f, 0f).UseOpacity(0.4f), 3);
-			Filters.Scene["Redemption:SoullessSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0f, 0f).UseOpacity(0.6f), 3);
 			ModTranslation text = base.CreateTranslation("DruidicOre");
 			text.SetDefault("Druidic energy courses through the world's ore...");
 			base.AddTranslation(text);
@@ -321,6 +331,9 @@ namespace Redemption
 			base.AddTranslation(text);
 			text = base.CreateTranslation("GirusHide");
 			text.SetDefault("Thought you could hide from me?");
+			base.AddTranslation(text);
+			text = base.CreateTranslation("KeeperAwoken");
+			text.SetDefault("The Keeper has awoken!");
 			base.AddTranslation(text);
 		}
 
@@ -411,7 +424,7 @@ namespace Redemption
 					int height = (int)(46f * scmp);
 					Rectangle waveBackground = Utils.CenteredRectangle(new Vector2((float)(Main.screenWidth - 20) - 100f, (float)(Main.screenHeight - 20) - 23f), new Vector2((float)width, (float)height));
 					Utils.DrawInvBG(spriteBatch, waveBackground, new Color(63, 65, 151, 255) * 0.785f);
-					float cleared = (float)ChickWorld.ChickPoints2 / 200f;
+					float cleared = (float)ChickWorld.ChickPoints / 200f;
 					string waveText = "Cleared " + Math.Round((double)(100f * cleared)) + "%";
 					Utils.DrawBorderString(spriteBatch, waveText, new Vector2((float)(waveBackground.X + waveBackground.Width / 2), (float)(waveBackground.Y + 5)), Color.White, scmp * 0.8f, 0.5f, -0.1f, -1);
 					Rectangle waveProgressBar = Utils.CenteredRectangle(new Vector2((float)waveBackground.X + (float)waveBackground.Width * 0.5f, (float)waveBackground.Y + (float)waveBackground.Height * 0.75f), new Vector2((float)progressColor.Width, (float)progressColor.Height));
@@ -441,7 +454,7 @@ namespace Redemption
 				int height2 = (int)(46f * scmp2);
 				Rectangle waveBackground2 = Utils.CenteredRectangle(new Vector2((float)(Main.screenWidth - 20) - 100f, (float)(Main.screenHeight - 20) - 23f), new Vector2((float)width2, (float)height2));
 				Utils.DrawInvBG(spriteBatch, waveBackground2, new Color(63, 65, 151, 255) * 0.785f);
-				float cleared2 = (float)ChickWorld.ChickPoints2 / 100f;
+				float cleared2 = (float)ChickWorld.ChickPoints / 100f;
 				string waveText2 = "Cleared " + Math.Round((double)(100f * cleared2)) + "%";
 				Utils.DrawBorderString(spriteBatch, waveText2, new Vector2((float)(waveBackground2.X + waveBackground2.Width / 2), (float)(waveBackground2.Y + 5)), Color.White, scmp2 * 0.8f, 0.5f, -0.1f, -1);
 				Rectangle waveProgressBar2 = Utils.CenteredRectangle(new Vector2((float)waveBackground2.X + (float)waveBackground2.Width * 0.5f, (float)waveBackground2.Y + (float)waveBackground2.Height * 0.75f), new Vector2((float)progressColor2.Width, (float)progressColor2.Height));
@@ -586,6 +599,15 @@ namespace Redemption
 				array12[4] = new Func<bool>(() => RedeWorld.downedNebuleus);
 				array12[5] = 10000000;
 				mod12.Call(array12);
+				Mod mod13 = fargos;
+				object[] array13 = new object[6];
+				array13[0] = "AddEventSummon";
+				array13[1] = 1f;
+				array13[2] = "Redemption";
+				array13[3] = "ChickenContract";
+				array13[4] = new Func<bool>(() => RedeWorld.downedChickenInv);
+				array13[5] = 20000;
+				mod13.Call(array13);
 			}
 			if (Calamity != null)
 			{
@@ -1161,6 +1183,8 @@ namespace Redemption
 
 		public static Texture2D forcefield7;
 
+		public static bool cachedata = false;
+
 		public static int customEvent;
 
 		public static int FaceCustomCurrencyID;
@@ -1170,10 +1194,6 @@ namespace Redemption
 		public static Redemption inst = null;
 
 		public static bool templeOfHeroes;
-
-		public static bool emptyHallActive;
-
-		public static bool soullessBiomeActive;
 
 		public static IDictionary<string, Texture2D> Textures = null;
 

@@ -31,7 +31,7 @@ namespace Redemption.Tiles.LabDeco
 			TileObjectData.addTile((int)base.Type);
 			base.AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 			this.dustType = 7;
-			this.minPick = 300;
+			this.minPick = 200;
 			this.mineResist = 7f;
 			this.disableSmartCursor = true;
 			base.CreateMapEntryName(null);

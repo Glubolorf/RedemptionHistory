@@ -15,14 +15,10 @@ namespace Redemption.Buffs
 
 		public override void Update(Player player, ref int buffIndex)
 		{
-			player.lifeRegen += 15;
-			player.manaRegen += 15;
+			player.lifeRegen += 8;
+			player.manaRegen += 8;
 			player.statDefense += 12;
-			player.magicDamage *= 1.1f;
-			player.meleeDamage *= 1.1f;
-			player.rangedDamage *= 1.1f;
-			player.minionDamage *= 1.1f;
-			player.thrownDamage *= 1.1f;
+			player.allDamage *= 1.1f;
 		}
 	}
 }

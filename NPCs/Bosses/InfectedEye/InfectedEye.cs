@@ -302,7 +302,8 @@ namespace Redemption.NPCs.Bosses.InfectedEye
 		{
 			Texture2D texture = Main.npcTexture[base.npc.type];
 			Texture2D oldAni = base.mod.GetTexture("NPCs/Bosses/InfectedEye/InfectedEye_OLD");
-			int spriteDirection = base.npc.spriteDirection;
+			Texture2D glowMask = base.mod.GetTexture("NPCs/Bosses/InfectedEye/InfectedEye_Glow");
+			SpriteEffects effects = (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 			if (RedeConfigClient.Instance.classicRedeIE)
 			{
 				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
@@ -313,6 +314,7 @@ namespace Redemption.NPCs.Bosses.InfectedEye
 			else
 			{
 				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				spriteBatch.Draw(glowMask, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, effects, 0f);
 			}
 			return false;
 		}

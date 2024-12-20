@@ -16,7 +16,7 @@ namespace Redemption.Buffs
 
 		public override void Update(Player player, ref int buffIndex)
 		{
-			DruidDamagePlayer.ModPlayer(player).druidCrit += 30;
+			DruidDamagePlayer.ModPlayer(player).druidCrit += 20;
 			player.magicCrit -= 40;
 			player.meleeCrit -= 40;
 			player.rangedCrit -= 40;

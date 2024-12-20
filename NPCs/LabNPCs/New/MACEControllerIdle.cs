@@ -67,6 +67,10 @@ namespace Redemption.NPCs.LabNPCs.New
 					}
 				}
 			}
+			if (NPC.CountNPCS(base.mod.NPCType("MACEControllerIdle")) >= 2 && Main.rand.Next(2) == 0)
+			{
+				base.npc.active = false;
+			}
 			Vector2 TheDoor = new Vector2(this.Origin.X + 1840f, this.Origin.Y + 2480f);
 			if (base.npc.ai[0] == 1f)
 			{
@@ -96,6 +100,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					if (!NPC.AnyNPCs(base.mod.NPCType("MACEProjectHeadA")))
 					{
 						base.npc.ai[0] = 8f;
+						base.npc.ai[3] = 0f;
 					}
 					else
 					{
@@ -210,9 +215,13 @@ namespace Redemption.NPCs.LabNPCs.New
 				}
 				if (base.npc.ai[1] >= 3f)
 				{
-					NPC npc2 = base.npc;
-					npc2.position.X = npc2.position.X + 24f;
-					base.npc.ai[0] = 9f;
+					if (base.npc.ai[3] >= 6f)
+					{
+						NPC npc2 = base.npc;
+						npc2.position.X = npc2.position.X + 24f;
+						base.npc.ai[0] = 9f;
+					}
+					base.npc.ai[3] += 1f;
 					base.npc.ai[2] = 0f;
 					base.npc.ai[1] = 0f;
 				}

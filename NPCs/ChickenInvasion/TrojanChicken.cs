@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.NPCs.ChickenInvasion
 {
+	[AutoloadBossHead]
 	public class TrojanChicken : ModNPC
 	{
 		public override void SetStaticDefaults()

@@ -338,6 +338,12 @@ namespace Redemption
 					{
 						WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next((int)WorldGen.worldSurfaceLow, Main.maxTilesY), (double)WorldGen.genRand.Next(6, 10), WorldGen.genRand.Next(2, 4), base.mod.TileType("KaniteOreTile"), false, 0f, 0f, false, true);
 					}
+					for (int j = 0; j < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 4E-05); j++)
+					{
+						int num = WorldGen.genRand.Next(0, Main.maxTilesX);
+						int j2 = WorldGen.genRand.Next((int)((float)Main.maxTilesY * 0.7f), (int)((float)Main.maxTilesY * 0.8f));
+						WorldGen.OreRunner(num, j2, (double)WorldGen.genRand.Next(1, 2), WorldGen.genRand.Next(2, 4), (ushort)base.mod.TileType("UraniumTile"));
+					}
 				}));
 				tasks.Insert(ShiniesIndex + 2, new PassLegacy("Generating P L A N T", delegate(GenerationProgress progress)
 				{
@@ -510,6 +516,28 @@ namespace Redemption
 					}
 				}
 			}
+			int[] itemsToPlaceInWoodChests = new int[]
+			{
+				base.mod.ItemType("AcornBomb")
+			};
+			int itemsToPlaceInWoodChestsChoice = 0;
+			for (int chestIndex3 = 0; chestIndex3 < 1000; chestIndex3++)
+			{
+				Chest chest3 = Main.chest[chestIndex3];
+				if (chest3 != null && Main.tile[chest3.x, chest3.y].type == 21 && Main.tile[chest3.x, chest3.y].frameX == 0 && Main.rand.Next(3) == 0)
+				{
+					for (int inventoryIndex3 = 0; inventoryIndex3 < 40; inventoryIndex3++)
+					{
+						if (chest3.item[inventoryIndex3].type == 0)
+						{
+							chest3.item[inventoryIndex3].SetDefaults(itemsToPlaceInWoodChests[itemsToPlaceInWoodChestsChoice], false);
+							chest3.item[inventoryIndex3].stack = Main.rand.Next(3, 5);
+							itemsToPlaceInWoodChestsChoice = (itemsToPlaceInWoodChestsChoice + 1) % itemsToPlaceInWoodChests.Length;
+							break;
+						}
+					}
+				}
+			}
 			int[] itemsToPlaceInAncientChests = new int[]
 			{
 				base.mod.ItemType("AncientWoodStave"),
@@ -517,17 +545,17 @@ namespace Redemption
 				base.mod.ItemType("AncientWoodBow"),
 				base.mod.ItemType("Falcon")
 			};
-			for (int chestIndex3 = 0; chestIndex3 < 1000; chestIndex3++)
+			for (int chestIndex4 = 0; chestIndex4 < 1000; chestIndex4++)
 			{
-				Chest chest3 = Main.chest[chestIndex3];
-				if (chest3 != null && (int)Main.tile[chest3.x, chest3.y].type == base.mod.TileType("AncientWoodChestTile"))
+				Chest chest4 = Main.chest[chestIndex4];
+				if (chest4 != null && (int)Main.tile[chest4.x, chest4.y].type == base.mod.TileType("AncientWoodChestTile"))
 				{
-					for (int inventoryIndex3 = 0; inventoryIndex3 < 40; inventoryIndex3++)
+					for (int inventoryIndex4 = 0; inventoryIndex4 < 40; inventoryIndex4++)
 					{
-						if (chest3.item[inventoryIndex3].type == 0)
+						if (chest4.item[inventoryIndex4].type == 0)
 						{
 							int itemsToPlaceInAncientChestsChoice = Main.rand.Next(itemsToPlaceInAncientChests.Length);
-							chest3.item[0].SetDefaults(itemsToPlaceInAncientChests[itemsToPlaceInAncientChestsChoice], false);
+							chest4.item[0].SetDefaults(itemsToPlaceInAncientChests[itemsToPlaceInAncientChestsChoice], false);
 							break;
 						}
 					}
@@ -1049,6 +1077,7 @@ namespace Redemption
 			BitsByte flags7 = default(BitsByte);
 			flags7[0] = RedeWorld.pzUS;
 			flags7[1] = RedeWorld.maceUS;
+			writer.Write(flags7);
 			writer.Write(RedeWorld.redemptionPoints);
 			writer.Write(RedeWorld.girusCloakTimer);
 			writer.Write(RedeWorld.slayerRep);

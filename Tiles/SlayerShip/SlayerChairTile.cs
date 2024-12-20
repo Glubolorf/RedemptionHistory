@@ -64,7 +64,7 @@ namespace Redemption.Tiles.SlayerShip
 				else if (!NPC.AnyNPCs(base.mod.NPCType("KS3Sitting")) && RedeWorld.downedSlayer && !RedeWorld.downedVlitch3 && !NPC.AnyNPCs(base.mod.NPCType("KSEntrance")))
 				{
 					ModPacket packet = base.mod.GetPacket(256);
-					packet.Write(15);
+					packet.Write(16);
 					Utils.WriteVector2(packet, new Vector2((float)(i * 16 + 2), (float)(j * 16 + 5)));
 					packet.Send(-1, -1);
 				}

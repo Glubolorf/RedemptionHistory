@@ -13,9 +13,5 @@ namespace Redemption.Buffs
 			Main.buffNoTimeDisplay[base.Type] = true;
 			Main.pvpBuff[base.Type] = true;
 		}
-
-		public override void Update(Player player, ref int buffIndex)
-		{
-		}
 	}
 }

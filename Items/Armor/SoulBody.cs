@@ -14,7 +14,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Lost Soul's Chestplate");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n2% increased druidic damage\n4% increased druidic critical strike chance\n2% damage reduction\nSpirits shoot faster");
+			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n2% increased druidic damage\n4% increased druidic critical strike chance\n2% damage reduction\nSpirits shoot faster\n[c/bdffff:Spirit Level +1]");
 		}
 
 		public override void SetDefaults()
@@ -31,8 +31,10 @@ namespace Redemption.Items.Armor
 			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
 			druidDamagePlayer.druidDamage += 0.02f;
 			druidDamagePlayer.druidCrit += 4;
-			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).fasterSpirits = true;
+			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
+			redePlayer.fasterSpirits = true;
 			player.endurance += 0.02f;
+			redePlayer.spiritLevel++;
 		}
 
 		public override void AddRecipes()

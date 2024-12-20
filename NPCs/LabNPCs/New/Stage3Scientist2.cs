@@ -471,7 +471,7 @@ namespace Redemption.NPCs.LabNPCs.New
 				}
 				if (base.npc.ai[1] == 250f)
 				{
-					float Speed17 = 8f;
+					float Speed17 = 5f;
 					Vector2 vector24 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 					int damage17 = 30;
 					int type17 = base.mod.ProjectileType("XenoShard3");

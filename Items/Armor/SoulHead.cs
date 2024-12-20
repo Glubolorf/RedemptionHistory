@@ -14,7 +14,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Lost Soul's Head");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n2% increased druidic damage\n2% damage reduction\n4% increased druidic critical strike chance");
+			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n2% increased druidic damage\n2% damage reduction\n4% increased druidic critical strike chance\n[c/bdffff:Spirit Level +1]");
 		}
 
 		public override void SetDefaults()
@@ -29,9 +29,11 @@ namespace Redemption.Items.Armor
 		public override void UpdateEquip(Player player)
 		{
 			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
+			RedePlayer modPlayer2 = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
 			druidDamagePlayer.druidDamage += 0.02f;
 			druidDamagePlayer.druidCrit += 4;
 			player.endurance += 0.02f;
+			modPlayer2.spiritLevel++;
 		}
 
 		public override bool IsArmorSet(Item head, Item body, Item legs)
@@ -41,9 +43,9 @@ namespace Redemption.Items.Armor
 
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "Spirit summoning weapons will summon 2 extra spirits";
+			player.setBonus = "Increases spirits summoned by 1";
 			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.moreSpirits = true;
+			redePlayer.spiritExtras++;
 			redePlayer.lostSoulSet = true;
 		}
 

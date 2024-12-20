@@ -20,10 +20,7 @@ namespace Redemption.Buffs
 			{
 				player.lifeRegen = 0;
 			}
-			player.meleeDamage *= 0.75f;
-			player.magicDamage *= 0.75f;
-			player.minionDamage *= 0.75f;
-			player.rangedDamage *= 0.75f;
+			player.allDamage *= 0.75f;
 			player.statDefense -= 12;
 			player.moveSpeed *= 0.7f;
 		}

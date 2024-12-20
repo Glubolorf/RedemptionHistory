@@ -200,7 +200,7 @@ namespace Redemption.Tiles.SlayerShip
 				player.showItemIconText = ((Main.chest[chest].name.Length > 0) ? Main.chest[chest].name : "Holochest");
 				if (player.showItemIconText == "Holochest")
 				{
-					player.showItemIcon2 = base.mod.ItemType("Holokey");
+					player.showItemIcon2 = base.mod.ItemType("Holokey2");
 					player.showItemIconText = "";
 				}
 			}

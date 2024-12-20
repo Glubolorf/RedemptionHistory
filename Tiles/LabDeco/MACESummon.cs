@@ -78,7 +78,7 @@ namespace Redemption.Tiles.LabDeco
 				if (!NPC.AnyNPCs(base.mod.NPCType("MACEProjectJaw")) && !NPC.AnyNPCs(base.mod.NPCType("MACEProjectHead")) && RedeWorld.downedStage2Scientist && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface && !RedeWorld.labAccess6)
 				{
 					ModPacket packet = base.mod.GetPacket(256);
-					packet.Write(9);
+					packet.Write(10);
 					Utils.WriteVector2(packet, new Vector2((float)(i * 16), (float)(j * 16)));
 					packet.Send(-1, -1);
 				}
@@ -86,7 +86,7 @@ namespace Redemption.Tiles.LabDeco
 			else if (!NPC.AnyNPCs(base.mod.NPCType("MACEProjectJaw")) && !NPC.AnyNPCs(base.mod.NPCType("MACEProjectHead")) && RedeWorld.downedStage2Scientist && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface && !RedeWorld.labAccess6)
 			{
 				ModPacket packet2 = base.mod.GetPacket(256);
-				packet2.Write(9);
+				packet2.Write(10);
 				Utils.WriteVector2(packet2, new Vector2((float)(i * 16), (float)(j * 16 + 1)));
 				packet2.Send(-1, -1);
 			}

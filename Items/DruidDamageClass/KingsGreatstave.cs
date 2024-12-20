@@ -53,14 +53,12 @@ namespace Redemption.Items.DruidDamageClass
 					base.item.buffTime = 600;
 				}
 				base.item.shoot = base.mod.ProjectileType("NatureGuardian25");
-				base.item.shootSpeed = 0f;
 				return !player.HasBuff(base.mod.BuffType("GuardianCooldownDebuff"));
 			}
 			base.item.mana = 0;
 			base.item.buffType = 0;
 			base.item.buffTime = 0;
 			base.item.shoot = base.mod.ProjectileType("KingsOakShot" + (Main.rand.Next(5) + 1));
-			base.item.shootSpeed = 12f;
 			return true;
 		}
 

@@ -310,7 +310,7 @@ namespace Redemption.NPCs
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("HallamDevWeapon"), 1, false, 0, false, false);
 				}
 			}
-			if (npc.type == base.mod.NPCType("ForestGolem"))
+			if (npc.type == base.mod.NPCType("ForestGolem") || npc.type == base.mod.NPCType("EbonForestGolem") || npc.type == base.mod.NPCType("ShadeForestGolem"))
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("LivingTwig"), Main.rand.Next(8, 20), false, 0, false, false);
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 27, Main.rand.Next(1, 3), false, 0, false, false);

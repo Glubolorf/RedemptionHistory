@@ -558,6 +558,14 @@ namespace Redemption
 			{
 				this.irradiatedLevel = 5;
 			}
+			if (this.spiritWyvern1 && !base.player.HasBuff(base.mod.BuffType("SpiritWyvernBuff")))
+			{
+				this.spiritWyvern1 = false;
+			}
+			if (this.spiritWyvern2 && !base.player.HasBuff(base.mod.BuffType("SpiritDragonBuff")))
+			{
+				this.spiritWyvern2 = false;
+			}
 			if (base.player.pulley)
 			{
 				this.ModDashMovement();
@@ -844,6 +852,14 @@ namespace Redemption
 			this.thornCrown = false;
 			this.infectedHeart = false;
 			this.StarSerpentMinion = false;
+			this.spiritLevel = 0;
+			this.spiritExtras = 0;
+			this.corruptedTalisman = false;
+			this.bloodedTalisman = false;
+			this.birdMinion = false;
+			this.wispSet = false;
+			this.spiritWyvern1 = false;
+			this.spiritWyvern2 = false;
 		}
 
 		public void ModDashMovement()
@@ -1242,7 +1258,7 @@ namespace Redemption
 				player4.velocity.Y = player4.velocity.Y * 0.4f;
 				base.player.statDefense -= 99;
 			}
-			if (this.ZoneLab && base.player.chaosState)
+			if (this.ZoneLab && base.player.chaosState && !RedeWorld.downedPatientZero)
 			{
 				if (base.player.lifeRegen > 0)
 				{
@@ -1383,8 +1399,8 @@ namespace Redemption
 				int dust = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 243, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
 				Main.dust[dust].noGravity = true;
 				Main.dust[dust].velocity *= 1.8f;
-				Dust dust8 = Main.dust[dust];
-				dust8.velocity.Y = dust8.velocity.Y - 0.5f;
+				Dust dust10 = Main.dust[dust];
+				dust10.velocity.Y = dust10.velocity.Y - 0.5f;
 				Main.playerDrawDust.Add(dust);
 			}
 			if (this.ultraFlames && Main.rand.Next(2) == 0 && drawInfo.shadow == 0f)
@@ -1392,8 +1408,8 @@ namespace Redemption
 				int dust2 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 92, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
 				Main.dust[dust2].noGravity = true;
 				Main.dust[dust2].velocity *= 1.8f;
-				Dust dust9 = Main.dust[dust2];
-				dust9.velocity.Y = dust9.velocity.Y - 0.5f;
+				Dust dust11 = Main.dust[dust2];
+				dust11.velocity.Y = dust11.velocity.Y - 0.5f;
 				Main.playerDrawDust.Add(dust2);
 			}
 			if (this.druidBane && Main.rand.Next(2) == 0 && drawInfo.shadow == 0f)
@@ -1401,8 +1417,8 @@ namespace Redemption
 				int dust3 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 163, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
 				Main.dust[dust3].noGravity = true;
 				Main.dust[dust3].velocity *= 1.8f;
-				Dust dust10 = Main.dust[dust3];
-				dust10.velocity.Y = dust10.velocity.Y - 0.5f;
+				Dust dust12 = Main.dust[dust3];
+				dust12.velocity.Y = dust12.velocity.Y - 0.5f;
 				Main.playerDrawDust.Add(dust3);
 			}
 			if (this.holyFire && Main.rand.Next(2) == 0 && drawInfo.shadow == 0f)
@@ -1410,8 +1426,8 @@ namespace Redemption
 				int dust4 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 64, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 2f);
 				Main.dust[dust4].noGravity = true;
 				Main.dust[dust4].velocity *= 1.8f;
-				Dust dust11 = Main.dust[dust4];
-				dust11.velocity.Y = dust11.velocity.Y - 0.5f;
+				Dust dust13 = Main.dust[dust4];
+				dust13.velocity.Y = dust13.velocity.Y - 0.5f;
 				Main.playerDrawDust.Add(dust4);
 			}
 			if (this.bileDebuff && Main.rand.Next(4) == 0 && drawInfo.shadow == 0f)
@@ -1419,8 +1435,8 @@ namespace Redemption
 				int dust5 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 74, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
 				Main.dust[dust5].noGravity = true;
 				Main.dust[dust5].velocity *= 1.8f;
-				Dust dust12 = Main.dust[dust5];
-				dust12.velocity.Y = dust12.velocity.Y - 0.5f;
+				Dust dust14 = Main.dust[dust5];
+				dust14.velocity.Y = dust14.velocity.Y - 0.5f;
 				Main.playerDrawDust.Add(dust5);
 			}
 			if (this.bioweaponDebuff)
@@ -1430,8 +1446,8 @@ namespace Redemption
 					int dust6 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 74, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
 					Main.dust[dust6].noGravity = true;
 					Main.dust[dust6].velocity *= 1.8f;
-					Dust dust13 = Main.dust[dust6];
-					dust13.velocity.Y = dust13.velocity.Y - 0.5f;
+					Dust dust15 = Main.dust[dust6];
+					dust15.velocity.Y = dust15.velocity.Y - 0.5f;
 					Main.playerDrawDust.Add(dust6);
 				}
 				if (Main.rand.Next(10) == 0 && drawInfo.shadow == 0f)
@@ -1439,10 +1455,28 @@ namespace Redemption
 					int dust7 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 31, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
 					Main.dust[dust7].noGravity = true;
 					Main.dust[dust7].velocity *= 1.8f;
-					Dust dust14 = Main.dust[dust7];
-					dust14.velocity.Y = dust14.velocity.Y - 0.5f;
+					Dust dust16 = Main.dust[dust7];
+					dust16.velocity.Y = dust16.velocity.Y - 0.5f;
 					Main.playerDrawDust.Add(dust7);
 				}
+			}
+			if (base.player.HasBuff(base.mod.BuffType("SoulboundBuff")) && Main.rand.Next(5) == 0 && drawInfo.shadow == 0f)
+			{
+				int dust8 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 20, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
+				Main.dust[dust8].noGravity = true;
+				Main.dust[dust8].velocity *= 1.8f;
+				Dust dust17 = Main.dust[dust8];
+				dust17.velocity.Y = dust17.velocity.Y - 0.5f;
+				Main.playerDrawDust.Add(dust8);
+			}
+			if (base.player.HasBuff(base.mod.BuffType("ShadeboundBuff")) && Main.rand.Next(5) == 0 && drawInfo.shadow == 0f)
+			{
+				int dust9 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, base.mod.DustType("VoidFlame"), base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.8f);
+				Main.dust[dust9].noGravity = true;
+				Main.dust[dust9].velocity *= 1.8f;
+				Dust dust18 = Main.dust[dust9];
+				dust18.velocity.Y = dust18.velocity.Y - 0.5f;
+				Main.playerDrawDust.Add(dust9);
 			}
 		}
 
@@ -1468,7 +1502,7 @@ namespace Redemption
 
 		public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
 		{
-			if (this.bloodyCollar)
+			if (this.bloodyCollar && Main.rand.Next(5) == 0)
 			{
 				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 0f, 0f, base.mod.ProjectileType("BloodPulse"), 50, 0f, base.player.whoAmI, 0f, 0f);
 			}
@@ -1512,38 +1546,88 @@ namespace Redemption
 				if (!base.player.HasBuff(base.mod.BuffType("OblitBuff1")) && !base.player.HasBuff(base.mod.BuffType("OblitBuff2")) && !base.player.HasBuff(base.mod.BuffType("OblitBuff3")) && !base.player.HasBuff(base.mod.BuffType("OblitBuff4")) && !base.player.HasBuff(base.mod.BuffType("OblitBuff5")))
 				{
 					base.player.AddBuff(base.mod.BuffType("OblitBuff1"), 600, true);
-					return;
 				}
-				if (base.player.HasBuff(base.mod.BuffType("OblitBuff1")))
+				else if (base.player.HasBuff(base.mod.BuffType("OblitBuff1")))
 				{
 					base.player.AddBuff(base.mod.BuffType("OblitBuff2"), 600, true);
-					return;
 				}
-				if (base.player.HasBuff(base.mod.BuffType("OblitBuff2")))
+				else if (base.player.HasBuff(base.mod.BuffType("OblitBuff2")))
 				{
 					base.player.AddBuff(base.mod.BuffType("OblitBuff3"), 600, true);
-					return;
 				}
-				if (base.player.HasBuff(base.mod.BuffType("OblitBuff3")))
+				else if (base.player.HasBuff(base.mod.BuffType("OblitBuff3")))
 				{
 					base.player.AddBuff(base.mod.BuffType("OblitBuff4"), 600, true);
-					return;
 				}
-				if (base.player.HasBuff(base.mod.BuffType("OblitBuff4")))
+				else if (base.player.HasBuff(base.mod.BuffType("OblitBuff4")))
 				{
 					base.player.AddBuff(base.mod.BuffType("OblitBuff5"), 600, true);
-					return;
 				}
-				if (base.player.HasBuff(base.mod.BuffType("OblitBuff5")))
+				else if (base.player.HasBuff(base.mod.BuffType("OblitBuff5")))
 				{
 					base.player.AddBuff(base.mod.BuffType("OblitBuff5"), 600, true);
+				}
+			}
+			if (this.wispSet && target.life <= 0 && target.lifeMax > 5 && Main.rand.Next(10) == 0 && target.type != 288 && target.type != base.mod.NPCType("LostSoul1") && target.type != base.mod.NPCType("LostSoul2") && target.type != base.mod.NPCType("LostSoul3") && target.type != base.mod.NPCType("SmallShadesoulNPC") && target.type != base.mod.NPCType("ShadesoulNPC"))
+			{
+				NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, 288, 0, 0f, 0f, 0f, 0f, 255);
+			}
+			if (base.player.HasBuff(base.mod.BuffType("SoulboundBuff")))
+			{
+				if (this.spiritLevel == 0)
+				{
+					if (target.life <= 0 && target.lifeMax > 5 && Main.rand.Next(15) == 0 && target.type != 288 && target.type != base.mod.NPCType("LostSoul1") && target.type != base.mod.NPCType("LostSoul2") && target.type != base.mod.NPCType("LostSoul3") && target.type != base.mod.NPCType("SmallShadesoulNPC") && target.type != base.mod.NPCType("ShadesoulNPC"))
+					{
+						NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, base.mod.NPCType("LostSoul1"), 0, 0f, 0f, 0f, 0f, 255);
+					}
+				}
+				else if (this.spiritLevel == 1)
+				{
+					if (target.life <= 0 && target.lifeMax > 5 && Main.rand.Next(10) == 0 && target.type != 288 && target.type != base.mod.NPCType("LostSoul1") && target.type != base.mod.NPCType("LostSoul2") && target.type != base.mod.NPCType("LostSoul3") && target.type != base.mod.NPCType("SmallShadesoulNPC") && target.type != base.mod.NPCType("ShadesoulNPC"))
+					{
+						NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, base.mod.NPCType("LostSoul1"), 0, 0f, 0f, 0f, 0f, 255);
+					}
+				}
+				else if (this.spiritLevel == 2)
+				{
+					if (target.life <= 0 && target.lifeMax > 5 && Main.rand.Next(6) == 0 && target.type != 288 && target.type != base.mod.NPCType("LostSoul1") && target.type != base.mod.NPCType("LostSoul2") && target.type != base.mod.NPCType("LostSoul3") && target.type != base.mod.NPCType("SmallShadesoulNPC") && target.type != base.mod.NPCType("ShadesoulNPC"))
+					{
+						NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, base.mod.NPCType("LostSoul1"), 0, 0f, 0f, 0f, 0f, 255);
+					}
+				}
+				else if (this.spiritLevel >= 3 && target.life <= 0 && target.lifeMax > 5 && Main.rand.Next(4) == 0 && target.type != 288 && target.type != base.mod.NPCType("LostSoul1") && target.type != base.mod.NPCType("LostSoul2") && target.type != base.mod.NPCType("LostSoul3") && target.type != base.mod.NPCType("SmallShadesoulNPC") && target.type != base.mod.NPCType("ShadesoulNPC"))
+				{
+					NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, base.mod.NPCType("LostSoul1"), 0, 0f, 0f, 0f, 0f, 255);
+				}
+			}
+			if (base.player.HasBuff(base.mod.BuffType("ShadeboundBuff")))
+			{
+				if (this.spiritLevel == 5)
+				{
+					if (target.life <= 0 && target.lifeMax > 5 && Main.rand.Next(10) == 0 && target.type != 288 && target.type != base.mod.NPCType("LostSoul1") && target.type != base.mod.NPCType("LostSoul2") && target.type != base.mod.NPCType("LostSoul3") && target.type != base.mod.NPCType("SmallShadesoulNPC") && target.type != base.mod.NPCType("ShadesoulNPC"))
+					{
+						NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, base.mod.NPCType("SmallShadesoulNPC"), 0, 0f, 0f, 0f, 0f, 255);
+						return;
+					}
+				}
+				else if (this.spiritLevel == 6)
+				{
+					if (target.life <= 0 && target.lifeMax > 5 && Main.rand.Next(6) == 0 && target.type != 288 && target.type != base.mod.NPCType("LostSoul1") && target.type != base.mod.NPCType("LostSoul2") && target.type != base.mod.NPCType("LostSoul3") && target.type != base.mod.NPCType("SmallShadesoulNPC") && target.type != base.mod.NPCType("ShadesoulNPC"))
+					{
+						NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, base.mod.NPCType("SmallShadesoulNPC"), 0, 0f, 0f, 0f, 0f, 255);
+						return;
+					}
+				}
+				else if (this.spiritLevel >= 7 && target.life <= 0 && target.lifeMax > 5 && Main.rand.Next(3) == 0 && target.type != 288 && target.type != base.mod.NPCType("LostSoul1") && target.type != base.mod.NPCType("LostSoul2") && target.type != base.mod.NPCType("LostSoul3") && target.type != base.mod.NPCType("SmallShadesoulNPC") && target.type != base.mod.NPCType("ShadesoulNPC"))
+				{
+					NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, base.mod.NPCType("SmallShadesoulNPC"), 0, 0f, 0f, 0f, 0f, 255);
 				}
 			}
 		}
 
 		public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
 		{
-			if (this.bloodyCollar)
+			if (this.bloodyCollar && Main.rand.Next(5) == 0)
 			{
 				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 0f, 0f, base.mod.ProjectileType("BloodPulse"), 50, 0f, base.player.whoAmI, 0f, 0f);
 			}
@@ -1587,36 +1671,35 @@ namespace Redemption
 				if (!base.player.HasBuff(base.mod.BuffType("OblitBuff1")) && !base.player.HasBuff(base.mod.BuffType("OblitBuff2")) && !base.player.HasBuff(base.mod.BuffType("OblitBuff3")) && !base.player.HasBuff(base.mod.BuffType("OblitBuff4")) && !base.player.HasBuff(base.mod.BuffType("OblitBuff5")))
 				{
 					base.player.AddBuff(base.mod.BuffType("OblitBuff1"), 600, true);
-					return;
 				}
-				if (base.player.HasBuff(base.mod.BuffType("OblitBuff1")))
+				else if (base.player.HasBuff(base.mod.BuffType("OblitBuff1")))
 				{
 					base.player.AddBuff(base.mod.BuffType("OblitBuff2"), 600, true);
 					base.player.DelBuff(base.mod.BuffType("OblitBuff1"));
-					return;
 				}
-				if (base.player.HasBuff(base.mod.BuffType("OblitBuff2")))
+				else if (base.player.HasBuff(base.mod.BuffType("OblitBuff2")))
 				{
 					base.player.AddBuff(base.mod.BuffType("OblitBuff3"), 600, true);
 					base.player.DelBuff(base.mod.BuffType("OblitBuff2"));
-					return;
 				}
-				if (base.player.HasBuff(base.mod.BuffType("OblitBuff3")))
+				else if (base.player.HasBuff(base.mod.BuffType("OblitBuff3")))
 				{
 					base.player.AddBuff(base.mod.BuffType("OblitBuff4"), 600, true);
 					base.player.DelBuff(base.mod.BuffType("OblitBuff3"));
-					return;
 				}
-				if (base.player.HasBuff(base.mod.BuffType("OblitBuff4")))
+				else if (base.player.HasBuff(base.mod.BuffType("OblitBuff4")))
 				{
 					base.player.AddBuff(base.mod.BuffType("OblitBuff5"), 600, true);
 					base.player.DelBuff(base.mod.BuffType("OblitBuff4"));
-					return;
 				}
-				if (base.player.HasBuff(base.mod.BuffType("OblitBuff5")))
+				else if (base.player.HasBuff(base.mod.BuffType("OblitBuff5")))
 				{
 					base.player.AddBuff(base.mod.BuffType("OblitBuff5"), 600, true);
 				}
+			}
+			if (this.wispSet && target.life <= 0 && Main.rand.Next(10) == 0 && target.type != 288)
+			{
+				NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, 288, 0, 0f, 0f, 0f, 0f, 255);
 			}
 		}
 
@@ -2378,5 +2461,21 @@ namespace Redemption
 		public bool infectedHeart;
 
 		public bool StarSerpentMinion;
+
+		public int spiritLevel;
+
+		public int spiritExtras;
+
+		public bool corruptedTalisman;
+
+		public bool bloodedTalisman;
+
+		public bool birdMinion;
+
+		public bool wispSet;
+
+		public bool spiritWyvern1;
+
+		public bool spiritWyvern2;
 	}
 }

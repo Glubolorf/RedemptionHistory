@@ -58,6 +58,10 @@ namespace Redemption.NPCs.LabNPCs.New
 					base.npc.frame.Y = 0;
 				}
 			}
+			if (NPC.CountNPCS(base.mod.NPCType("JanitorBotNPC")) >= 2 && Main.rand.Next(2) == 0)
+			{
+				base.npc.active = false;
+			}
 			base.npc.wet = false;
 			base.npc.lavaWet = false;
 			base.npc.honeyWet = false;
@@ -81,6 +85,7 @@ namespace Redemption.NPCs.LabNPCs.New
 			JanitorBotNPC.MACE = false;
 			JanitorBotNPC.EndLab = false;
 			JanitorBotNPC.AboutGirus = false;
+			JanitorBotNPC.Shop = false;
 		}
 
 		public override void SetChatButtons(ref string button, ref string button2)
@@ -92,6 +97,7 @@ namespace Redemption.NPCs.LabNPCs.New
 			string MACET = "MACE Project?";
 			string EndT = "What's at the bottom of the lab?";
 			string GirusT = "Girus?";
+			string ShopT = "Shop";
 			button = SwitchInfoT;
 			if (JanitorBotNPC.ChatNumber == 0)
 			{
@@ -123,7 +129,13 @@ namespace Redemption.NPCs.LabNPCs.New
 				JanitorBotNPC.AboutGirus = true;
 				return;
 			}
-			if (JanitorBotNPC.ChatNumber == 4 && RedeWorld.downedMACE)
+			if (JanitorBotNPC.ChatNumber == 4)
+			{
+				button2 = ShopT;
+				JanitorBotNPC.Shop = true;
+				return;
+			}
+			if (JanitorBotNPC.ChatNumber == 5 && RedeWorld.downedMACE)
 			{
 				button2 = MACET;
 				JanitorBotNPC.MACE = true;
@@ -142,6 +154,7 @@ namespace Redemption.NPCs.LabNPCs.New
 			JanitorBotNPC.EndLab = false;
 			JanitorBotNPC.AboutGirus = false;
 			JanitorBotNPC.MACE = false;
+			JanitorBotNPC.Shop = false;
 		}
 
 		public override void OnChatButtonClicked(bool firstButton, ref bool shop)
@@ -150,7 +163,7 @@ namespace Redemption.NPCs.LabNPCs.New
 			{
 				this.ResetBools();
 				JanitorBotNPC.ChatNumber++;
-				if (JanitorBotNPC.ChatNumber > 5)
+				if (JanitorBotNPC.ChatNumber > 6)
 				{
 					JanitorBotNPC.ChatNumber = 0;
 					return;
@@ -158,7 +171,80 @@ namespace Redemption.NPCs.LabNPCs.New
 			}
 			else
 			{
+				if (JanitorBotNPC.ChatNumber == 4)
+				{
+					shop = true;
+					return;
+				}
 				Main.npcChatText = JanitorBotNPC.ChitChat();
+			}
+		}
+
+		public override void SetupShop(Chest shop, ref int nextSlot)
+		{
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabPlating"), false);
+			nextSlot++;
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabPlatingWall"), false);
+			nextSlot++;
+			if (NPC.downedMoonlord)
+			{
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("XenoTank"), false);
+				nextSlot++;
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabForge"), false);
+				nextSlot++;
+			}
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Vent3"), false);
+			nextSlot++;
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Vent2"), false);
+			nextSlot++;
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Vent1"), false);
+			nextSlot++;
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("SignElectric"), false);
+			nextSlot++;
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("SignDeath"), false);
+			nextSlot++;
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("SignBoi"), false);
+			nextSlot++;
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("SignRadioactive"), false);
+			nextSlot++;
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabWorkbench"), false);
+			nextSlot++;
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabTestTubes"), false);
+			nextSlot++;
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabTable"), false);
+			nextSlot++;
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabFan"), false);
+			nextSlot++;
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabDoor3"), false);
+			nextSlot++;
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabDoor1"), false);
+			nextSlot++;
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabChest"), false);
+			nextSlot++;
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabChair"), false);
+			nextSlot++;
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabBookshelf"), false);
+			nextSlot++;
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabBed"), false);
+			nextSlot++;
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Intercom"), false);
+			nextSlot++;
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Computer"), false);
+			nextSlot++;
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabReceptionCouch"), false);
+			nextSlot++;
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabCeilingMonitor"), false);
+			nextSlot++;
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabReceptionDesk"), false);
+			nextSlot++;
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabCeilingLamp"), false);
+			nextSlot++;
+			if (RedeWorld.downedVolt)
+			{
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("BotHanger"), false);
+				nextSlot++;
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("BotHangerOccupied"), false);
+				nextSlot++;
 			}
 		}
 
@@ -224,6 +310,8 @@ namespace Redemption.NPCs.LabNPCs.New
 		public static bool EndLab;
 
 		public static bool AboutGirus;
+
+		public static bool Shop;
 
 		public static int ChatNumber;
 	}

@@ -9,7 +9,7 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Bloody Collar");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'It's shining brightly, reflecting the air through flesh and blood.'\nUpon striking a foe, you emit a wave of bloody energy, robbing the life of those around you");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'It's shining brightly, reflecting the air through flesh and blood.'\nUpon striking a foe, you have a chance to emit a wave of bloody energy, robbing the life of those around you");
 		}
 
 		public override void SetDefaults()

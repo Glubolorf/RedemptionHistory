@@ -21,7 +21,7 @@ namespace Redemption.Items.Placeable.LabDeco
 			base.item.useTime = 10;
 			base.item.useStyle = 1;
 			base.item.consumable = true;
-			base.item.value = 500;
+			base.item.value = 5000;
 			base.item.createTile = base.mod.TileType("LabChestTile");
 		}
 

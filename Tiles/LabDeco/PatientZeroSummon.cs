@@ -94,7 +94,7 @@ namespace Redemption.Tiles.LabDeco
 				if (!NPC.AnyNPCs(base.mod.NPCType("PatientZero")) && RedeWorld.downedStage2Scientist && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface && RedeWorld.downedMACE)
 				{
 					ModPacket packet = base.mod.GetPacket(256);
-					packet.Write(12);
+					packet.Write(13);
 					Utils.WriteVector2(packet, new Vector2((float)(i * 16), (float)(j * 16 - 1)));
 					packet.Send(-1, -1);
 				}
@@ -104,7 +104,7 @@ namespace Redemption.Tiles.LabDeco
 				if (!NPC.AnyNPCs(base.mod.NPCType("PatientZero")) && RedeWorld.downedStage2Scientist && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface && RedeWorld.downedMACE)
 				{
 					ModPacket packet2 = base.mod.GetPacket(256);
-					packet2.Write(12);
+					packet2.Write(13);
 					Utils.WriteVector2(packet2, new Vector2((float)(i * 16), (float)(j * 16)));
 					packet2.Send(-1, -1);
 				}
@@ -112,7 +112,7 @@ namespace Redemption.Tiles.LabDeco
 			else if (!NPC.AnyNPCs(base.mod.NPCType("PatientZero")) && RedeWorld.downedStage2Scientist && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface && RedeWorld.downedMACE)
 			{
 				ModPacket packet3 = base.mod.GetPacket(256);
-				packet3.Write(12);
+				packet3.Write(13);
 				Utils.WriteVector2(packet3, new Vector2((float)(i * 16), (float)(j * 16 + 1)));
 				packet3.Send(-1, -1);
 			}

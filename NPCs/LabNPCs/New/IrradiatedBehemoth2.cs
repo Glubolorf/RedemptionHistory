@@ -256,7 +256,7 @@ namespace Redemption.NPCs.LabNPCs.New
 
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			base.npc.lifeMax = (int)((float)base.npc.lifeMax * 0.6f * bossLifeScale);
+			base.npc.lifeMax = (int)((float)base.npc.lifeMax * 0.52f * bossLifeScale);
 			base.npc.damage = (int)((float)base.npc.damage * 0.5f);
 		}
 

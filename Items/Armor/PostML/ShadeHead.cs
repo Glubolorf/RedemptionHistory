@@ -16,7 +16,7 @@ namespace Redemption.Items.Armor.PostML
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Shadehead");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n10% increased druidic damage\n15% increased druidic critical strike chance\n4% increased damage reduction\nSpirits home in on enemies\nSpirits pierce through more targets");
+			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n10% increased druidic damage\n15% increased druidic critical strike chance\n4% increased damage reduction\nSpirits home in on enemies\nSpirits pierce through more targets\n[c/bdffff:Spirit Level +2]");
 		}
 
 		public override void SetDefaults()
@@ -36,6 +36,7 @@ namespace Redemption.Items.Armor.PostML
 			redePlayer.spiritHoming = true;
 			redePlayer.spiritPierce = true;
 			player.endurance *= 0.04f;
+			redePlayer.spiritLevel += 2;
 		}
 
 		public override void ArmorSetShadows(Player player)

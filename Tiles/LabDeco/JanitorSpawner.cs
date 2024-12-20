@@ -64,7 +64,7 @@ namespace Redemption.Tiles.LabDeco
 				else if (!NPC.AnyNPCs(base.mod.NPCType("JanitorBot")) && !NPC.AnyNPCs(base.mod.NPCType("JanitorBotCleaning")) && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && !RedeWorld.downedJanitor && !RedeWorld.labAccess1)
 				{
 					ModPacket packet = base.mod.GetPacket(256);
-					packet.Write(16);
+					packet.Write(17);
 					Utils.WriteVector2(packet, new Vector2((float)(i * 16), (float)(j * 16)));
 					packet.Send(-1, -1);
 				}

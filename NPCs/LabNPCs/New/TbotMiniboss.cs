@@ -529,7 +529,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					Main.dust[dustID4].noGravity = false;
 				}
 			}
-			if (base.npc.life <= (int)((float)base.npc.lifeMax * 0.01f))
+			if (base.npc.life <= (int)((float)base.npc.lifeMax * 0.01f) && Main.netMode == 0)
 			{
 				base.npc.immortal = true;
 				base.npc.dontTakeDamage = true;

@@ -1,4 +1,6 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -36,7 +38,7 @@ namespace Redemption.NPCs.LabNPCs.New
 
 		public override void AI()
 		{
-			if (Main.netMode != 1 && RedeWorld.maceUS)
+			if (RedeWorld.maceUS)
 			{
 				base.npc.SetDefaults(ModContent.NPCType<MACEProjectJawA>(), -1f);
 				return;
@@ -44,6 +46,16 @@ namespace Redemption.NPCs.LabNPCs.New
 			base.npc.timeLeft = 10;
 			base.npc.TargetClosest(true);
 			Player player = Main.player[base.npc.target];
+		}
+
+		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+		{
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D glowMask = base.mod.GetTexture("NPCs/LabNPCs/New/MACEProjectJawA_Glow");
+			SpriteEffects effects = (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+			spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			spriteBatch.Draw(glowMask, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, effects, 0f);
+			return false;
 		}
 
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)

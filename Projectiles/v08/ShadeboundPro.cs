@@ -45,7 +45,7 @@ namespace Redemption.Projectiles.v08
 			{
 				crit = true;
 			}
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().shadeSet)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritExtras >= 3)
 			{
 				Projectile.NewProjectile(base.projectile.position.X + Utils.NextFloat(Main.rand, (float)base.projectile.width), base.projectile.position.Y + Utils.NextFloat(Main.rand, (float)base.projectile.height), (float)(-4 + Main.rand.Next(0, 8)), (float)(-4 + Main.rand.Next(0, 8)), base.mod.ProjectileType("ShadesoulPro1"), base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 1f);
 				Projectile.NewProjectile(base.projectile.position.X + Utils.NextFloat(Main.rand, (float)base.projectile.width), base.projectile.position.Y + Utils.NextFloat(Main.rand, (float)base.projectile.height), (float)(-4 + Main.rand.Next(0, 8)), (float)(-4 + Main.rand.Next(0, 8)), base.mod.ProjectileType("ShadesoulPro1"), base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 1f);
@@ -53,14 +53,14 @@ namespace Redemption.Projectiles.v08
 				Projectile.NewProjectile(base.projectile.position.X + Utils.NextFloat(Main.rand, (float)base.projectile.width), base.projectile.position.Y + Utils.NextFloat(Main.rand, (float)base.projectile.height), (float)(-4 + Main.rand.Next(0, 8)), (float)(-4 + Main.rand.Next(0, 8)), base.mod.ProjectileType("ShadesoulPro1"), base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 1f);
 				Projectile.NewProjectile(base.projectile.position.X + Utils.NextFloat(Main.rand, (float)base.projectile.width), base.projectile.position.Y + Utils.NextFloat(Main.rand, (float)base.projectile.height), (float)(-4 + Main.rand.Next(0, 8)), (float)(-4 + Main.rand.Next(0, 8)), base.mod.ProjectileType("ShadesoulPro1"), base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 1f);
 			}
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().wanderingSoulSet)
+			else if (Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritExtras == 2)
 			{
 				Projectile.NewProjectile(base.projectile.position.X + Utils.NextFloat(Main.rand, (float)base.projectile.width), base.projectile.position.Y + Utils.NextFloat(Main.rand, (float)base.projectile.height), (float)(-4 + Main.rand.Next(0, 8)), (float)(-4 + Main.rand.Next(0, 8)), base.mod.ProjectileType("ShadesoulPro1"), base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 1f);
 				Projectile.NewProjectile(base.projectile.position.X + Utils.NextFloat(Main.rand, (float)base.projectile.width), base.projectile.position.Y + Utils.NextFloat(Main.rand, (float)base.projectile.height), (float)(-4 + Main.rand.Next(0, 8)), (float)(-4 + Main.rand.Next(0, 8)), base.mod.ProjectileType("ShadesoulPro1"), base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 1f);
 				Projectile.NewProjectile(base.projectile.position.X + Utils.NextFloat(Main.rand, (float)base.projectile.width), base.projectile.position.Y + Utils.NextFloat(Main.rand, (float)base.projectile.height), (float)(-4 + Main.rand.Next(0, 8)), (float)(-4 + Main.rand.Next(0, 8)), base.mod.ProjectileType("ShadesoulPro1"), base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 1f);
 				Projectile.NewProjectile(base.projectile.position.X + Utils.NextFloat(Main.rand, (float)base.projectile.width), base.projectile.position.Y + Utils.NextFloat(Main.rand, (float)base.projectile.height), (float)(-4 + Main.rand.Next(0, 8)), (float)(-4 + Main.rand.Next(0, 8)), base.mod.ProjectileType("ShadesoulPro1"), base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 1f);
 			}
-			else if (Main.LocalPlayer.GetModPlayer<RedePlayer>().lostSoulSet)
+			else if (Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritExtras == 1)
 			{
 				Projectile.NewProjectile(base.projectile.position.X + Utils.NextFloat(Main.rand, (float)base.projectile.width), base.projectile.position.Y + Utils.NextFloat(Main.rand, (float)base.projectile.height), (float)(-4 + Main.rand.Next(0, 8)), (float)(-4 + Main.rand.Next(0, 8)), base.mod.ProjectileType("ShadesoulPro1"), base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 1f);
 				Projectile.NewProjectile(base.projectile.position.X + Utils.NextFloat(Main.rand, (float)base.projectile.width), base.projectile.position.Y + Utils.NextFloat(Main.rand, (float)base.projectile.height), (float)(-4 + Main.rand.Next(0, 8)), (float)(-4 + Main.rand.Next(0, 8)), base.mod.ProjectileType("ShadesoulPro1"), base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 1f);

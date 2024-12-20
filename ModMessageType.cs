@@ -13,6 +13,7 @@ namespace Redemption
 		LabBoss4A,
 		LabBoss5,
 		LabBoss5A,
+		LabBoss5B,
 		LabBoss6,
 		LabBoss6A,
 		LabBoss6B,

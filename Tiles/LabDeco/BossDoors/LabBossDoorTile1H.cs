@@ -33,8 +33,21 @@ namespace Redemption.Tiles.LabDeco.BossDoors
 			ModTranslation name = base.CreateMapEntryName(null);
 			name.SetDefault("Reinforced Door");
 			base.AddMapEntry(new Color(80, 100, 80), name);
+			this.minPick = 500;
+			this.mineResist = 10f;
 			this.dustType = 226;
+			this.animationFrameHeight = 18;
 			this.disableSmartCursor = true;
+		}
+
+		public override void AnimateTile(ref int frame, ref int frameCounter)
+		{
+			if (this._activated)
+			{
+				frame = 1;
+				return;
+			}
+			frame = 0;
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -52,46 +65,18 @@ namespace Redemption.Tiles.LabDeco.BossDoors
 			return false;
 		}
 
-		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
+		public override void NearbyEffects(int i, int j, bool closer)
 		{
-			int left = i - (int)(Main.tile[i, j].frameX / 18 % 3);
-			int top = j - (int)(Main.tile[i, j].frameY / 18 % 1);
-			if (!NPC.AnyNPCs(base.mod.NPCType("JanitorBot")) && !NPC.AnyNPCs(base.mod.NPCType("JanitorBotCleaning")))
+			if (!NPC.AnyNPCs(base.mod.NPCType("JanitorBot")) && !NPC.AnyNPCs(base.mod.NPCType("Stage3Scientist2")) && !NPC.AnyNPCs(base.mod.NPCType("IrradiatedBehemoth2")) && !NPC.AnyNPCs(base.mod.NPCType("Blisterface2")) && !NPC.AnyNPCs(base.mod.NPCType("TbotMiniboss")) && !NPC.AnyNPCs(base.mod.NPCType("MACEProjectHeadA")) && !NPC.AnyNPCs(base.mod.NPCType("PZ2Fight")))
 			{
-				if (Main.tile[left, top].frameX == 0)
-				{
-					Main.tileSolid[(int)base.Type] = false;
-				}
-				for (int x = left; x < left + 3; x++)
-				{
-					for (int y = top; y < top + 1; y++)
-					{
-						if (Main.tile[x, y].frameX < 54)
-						{
-							Tile tile = Main.tile[x, y];
-							tile.frameX += 54;
-						}
-					}
-				}
+				Main.tileSolid[(int)base.Type] = false;
+				this._activated = false;
+				return;
 			}
-			else
-			{
-				if (Main.tile[left, top].frameX >= 54)
-				{
-					Main.tileSolid[(int)base.Type] = true;
-				}
-				for (int x2 = left; x2 < left + 3; x2++)
-				{
-					for (int y2 = top; y2 < top + 1; y2++)
-					{
-						if (Main.tile[x2, y2].frameX >= 54)
-						{
-							Main.tile[x2, y2].frameX = 0;
-						}
-					}
-				}
-			}
-			return true;
+			Main.tileSolid[(int)base.Type] = true;
+			this._activated = true;
 		}
+
+		private bool _activated;
 	}
 }

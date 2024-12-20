@@ -230,6 +230,20 @@ namespace Redemption.NPCs
 				shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 				nextSlot++;
 			}
+			if (NPC.downedPlantBoss && !NPC.downedGolemBoss)
+			{
+				shop.item[nextSlot].SetDefaults(1508, false);
+				shop.item[nextSlot].shopCustomPrice = new int?(10);
+				shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
+				nextSlot++;
+			}
+			if (NPC.downedGolemBoss)
+			{
+				shop.item[nextSlot].SetDefaults(1508, false);
+				shop.item[nextSlot].shopCustomPrice = new int?(6);
+				shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
+				nextSlot++;
+			}
 			if (RedeWorld.keeperSaved)
 			{
 				shop.item[nextSlot].SetDefaults(ModContent.ItemType<DarkShard>(), false);

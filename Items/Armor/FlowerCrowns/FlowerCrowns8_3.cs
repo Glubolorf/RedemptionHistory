@@ -33,7 +33,7 @@ namespace Redemption.Items.Armor.FlowerCrowns
 
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
-			return body.type == 83 && legs.type == 79;
+			return body.type == 697 && legs.type == 698;
 		}
 
 		public override void UpdateArmorSet(Player player)

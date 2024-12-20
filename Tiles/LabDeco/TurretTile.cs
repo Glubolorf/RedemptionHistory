@@ -65,7 +65,7 @@ namespace Redemption.Tiles.LabDeco
 				else if (!RedeWorld.labSafe && !NPC.AnyNPCs(base.mod.NPCType("LabSentryTurretLeg")))
 				{
 					ModPacket packet = base.mod.GetPacket(256);
-					packet.Write(19);
+					packet.Write(20);
 					Utils.WriteVector2(packet, new Vector2((float)(i * 16) + 0.5f, (float)(j * 16) + 1.5f));
 					packet.Send(-1, -1);
 				}

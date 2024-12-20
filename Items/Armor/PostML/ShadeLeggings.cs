@@ -16,7 +16,7 @@ namespace Redemption.Items.Armor.PostML
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Shade Greaves");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n40% increased movement speed\n10% increased druidic damage\n15% increased druidic critical strike chance\nDecreased falling speed\nSpirit summoning weapons will summon 2 extra spirits");
+			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n40% increased movement speed\n10% increased druidic damage\n15% increased druidic critical strike chance\nDecreased falling speed\nIncreases spirits summoned by 1\n[c/bdffff:Spirit Level +2]");
 		}
 
 		public override void SetDefaults()
@@ -33,8 +33,10 @@ namespace Redemption.Items.Armor.PostML
 			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
 			druidDamagePlayer.druidDamage += 0.1f;
 			druidDamagePlayer.druidCrit += 15;
-			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).moreSpirits = true;
+			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
+			redePlayer.spiritExtras++;
 			player.slowFall = true;
+			redePlayer.spiritLevel += 2;
 		}
 
 		public override void ModifyTooltips(List<TooltipLine> list)

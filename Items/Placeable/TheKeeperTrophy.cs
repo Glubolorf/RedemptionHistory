@@ -7,8 +7,7 @@ namespace Redemption.Items.Placeable
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("The Keeper's Heart");
-			base.Tooltip.SetDefault("'A tainted heart...'");
+			base.DisplayName.SetDefault("The Keeper Trophy");
 		}
 
 		public override void SetDefaults()

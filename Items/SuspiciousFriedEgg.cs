@@ -24,6 +24,7 @@ namespace Redemption.Items
 			base.item.useTime = 17;
 			base.item.maxStack = 30;
 			base.item.consumable = true;
+			base.item.noUseGraphic = true;
 			base.item.width = 12;
 			base.item.height = 38;
 			base.item.value = 100;

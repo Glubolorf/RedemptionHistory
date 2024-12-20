@@ -16,7 +16,7 @@ namespace Redemption.Items.Armor.PostML
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Shadeplate");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n+50 max life and mana\n10% increased druidic damage\nSpirits shoot faster\n8% increased damage reduction");
+			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n+50 max life and mana\n10% increased druidic damage\nSpirits shoot faster\n8% increased damage reduction\n[c/bdffff:Spirit Level +2]");
 		}
 
 		public override void SetDefaults()
@@ -33,7 +33,9 @@ namespace Redemption.Items.Armor.PostML
 			player.statManaMax2 += 50;
 			player.endurance += 0.08f;
 			DruidDamagePlayer.ModPlayer(player).druidDamage += 0.1f;
-			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).fasterSpirits = true;
+			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
+			redePlayer.fasterSpirits = true;
+			redePlayer.spiritLevel += 2;
 		}
 
 		public override void ModifyTooltips(List<TooltipLine> list)

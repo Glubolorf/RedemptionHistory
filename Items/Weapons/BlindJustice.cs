@@ -12,7 +12,7 @@ namespace Redemption.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Blind Justice, Demon�s Terror");
+			base.DisplayName.SetDefault("Blind Justice, Demon's Terror");
 			base.Tooltip.SetDefault("'Demons fear this weapon, for a good reason too...'\nDeal 2x more damage to Demons\nOnly usable after all Mech Bosses have been defeated\n[c/aa00ff:Epic]");
 		}
 

@@ -22,7 +22,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 		{
 			base.npc.lifeMax = 650000;
 			base.npc.defense = 170;
-			base.npc.damage = 250;
+			base.npc.damage = 200;
 			base.npc.width = 50;
 			base.npc.height = 76;
 			base.npc.aiStyle = -1;
@@ -1581,7 +1581,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					int p30 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout1"), 0, 1f, Main.myPlayer, 0f, 0f);
 					Main.projectile[p30].netUpdate = true;
 				}
-				if (base.npc.ai[3] == 60f || base.npc.ai[3] == 120f || base.npc.ai[3] == 180f || base.npc.ai[3] == 250f)
+				if (base.npc.ai[3] == 60f || base.npc.ai[3] == 80f || base.npc.ai[3] == 140f || base.npc.ai[3] == 160f)
 				{
 					Main.PlaySound(SoundID.Item117, (int)base.npc.position.X, (int)base.npc.position.Y);
 					int pieCut6 = 8;
@@ -1592,7 +1592,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 						Main.projectile[projID10].netUpdate = true;
 					}
 				}
-				if (base.npc.ai[3] == 90f || base.npc.ai[3] == 210f)
+				if (base.npc.ai[3] == 70f || base.npc.ai[3] == 150f)
 				{
 					Main.PlaySound(SoundID.Item117, (int)base.npc.position.X, (int)base.npc.position.Y);
 					int pieCut7 = 8;
@@ -1603,7 +1603,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 						Main.projectile[projID11].netUpdate = true;
 					}
 				}
-				if (base.npc.ai[3] >= 340f)
+				if (base.npc.ai[3] >= 240f)
 				{
 					base.npc.ai[3] = 0f;
 					base.npc.ai[1] = 0f;

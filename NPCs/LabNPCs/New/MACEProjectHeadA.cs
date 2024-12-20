@@ -119,10 +119,7 @@ namespace Redemption.NPCs.LabNPCs.New
 			base.npc.TargetClosest(true);
 			Player player = Main.player[base.npc.target];
 			base.npc.rotation = base.npc.velocity.X * 0.05f;
-			if (Main.netMode != 1)
-			{
-				RedeWorld.maceUS = false;
-			}
+			RedeWorld.maceUS = false;
 			if (!NPC.AnyNPCs(base.mod.NPCType("CraneTrolley")))
 			{
 				int minion = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y + 157, base.mod.NPCType("CraneTrolley"), 0, (float)base.npc.whoAmI, 0f, 0f, 0f, 255);
@@ -140,9 +137,23 @@ namespace Redemption.NPCs.LabNPCs.New
 			if (base.npc.ai[1] == 0f)
 			{
 				base.npc.ai[0] += 1f;
-				if (base.npc.ai[0] == 1f && !Main.dedServ)
+				if (base.npc.ai[0] == 1f)
 				{
-					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/SpookyNoise").WithVolume(0.9f).WithPitchVariance(0f), -1, -1);
+					if (!Main.dedServ)
+					{
+						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/SpookyNoise").WithVolume(0.9f).WithPitchVariance(0f), -1, -1);
+					}
+					if (Main.netMode != 0 && Main.netMode != 1)
+					{
+						Vector2 newPos = new Vector2(250f, -100f);
+						base.npc.Center = base.npc.position + newPos;
+						base.npc.netUpdate = true;
+					}
+				}
+				if (Main.netMode != 0 && base.npc.ai[0] <= 2f && !NPC.AnyNPCs(base.mod.NPCType("MACEProjectJawA")))
+				{
+					int minion2 = NPC.NewNPC((int)base.npc.position.X + 60, (int)base.npc.position.Y + 170, base.mod.NPCType("MACEProjectJawA"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[minion2].netUpdate = true;
 				}
 				if (base.npc.ai[0] > 120f)
 				{
@@ -249,9 +260,9 @@ namespace Redemption.NPCs.LabNPCs.New
 						base.npc.ai[3] += 1f;
 						base.npc.ai[2] = 0f;
 						base.npc.netUpdate = true;
-						goto IL_1EB1;
+						goto IL_1F99;
 					}
-					goto IL_1EB1;
+					goto IL_1F99;
 				case 2:
 					if (base.npc.ai[2] <= 120f)
 					{
@@ -313,7 +324,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					}
 					if (base.npc.ai[2] < 400f)
 					{
-						goto IL_1EB1;
+						goto IL_1F99;
 					}
 					if (Vector2.Distance(base.npc.Center, PosNormal) < 10f)
 					{
@@ -324,11 +335,11 @@ namespace Redemption.NPCs.LabNPCs.New
 						base.npc.netUpdate = true;
 						base.npc.ai[3] += 1f;
 						base.npc.ai[2] = 0f;
-						goto IL_1EB1;
+						goto IL_1F99;
 					}
 					this.MoveToVector2(PosNormal);
 					base.npc.noTileCollide = true;
-					goto IL_1EB1;
+					goto IL_1F99;
 				case 3:
 					base.npc.ai[2] += 1f;
 					if (base.npc.ai[2] % 20f == 0f && base.npc.ai[2] <= 80f)
@@ -399,9 +410,9 @@ namespace Redemption.NPCs.LabNPCs.New
 						base.npc.ai[2] = 0f;
 						base.npc.netUpdate = true;
 						this.crashed = false;
-						goto IL_1EB1;
+						goto IL_1F99;
 					}
-					goto IL_1EB1;
+					goto IL_1F99;
 				case 4:
 					if (base.npc.ai[2] == 0f)
 					{
@@ -435,7 +446,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					}
 					if (base.npc.ai[2] < 1f)
 					{
-						goto IL_1EB1;
+						goto IL_1F99;
 					}
 					if (Vector2.Distance(base.npc.Center, PosNormal) < 10f)
 					{
@@ -445,16 +456,16 @@ namespace Redemption.NPCs.LabNPCs.New
 						base.npc.netUpdate = true;
 						base.npc.ai[3] += 1f;
 						base.npc.ai[2] = 0f;
-						goto IL_1EB1;
+						goto IL_1F99;
 					}
 					this.MoveToVector2(PosNormal);
 					base.npc.noTileCollide = true;
-					goto IL_1EB1;
+					goto IL_1F99;
 				case 5:
 					base.npc.ai[3] = 0f;
 					base.npc.ai[2] = 0f;
 					base.npc.netUpdate = true;
-					goto IL_1EB1;
+					goto IL_1F99;
 				default:
 					base.npc.ai[2] = 0f;
 					break;
@@ -492,7 +503,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					base.npc.netUpdate = true;
 				}
 			}
-			IL_1EB1:
+			IL_1F99:
 			if (base.npc.collideY && base.npc.velocity.Y > 0f)
 			{
 				if (!this.landed)
@@ -537,10 +548,10 @@ namespace Redemption.NPCs.LabNPCs.New
 				this.customAI[1] += 1f;
 				if (this.customAI[1] >= 20f)
 				{
-					int minion2 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("MACEProjectFist1A"), 0, 0f, 0f, 0f, 0f, 255);
-					Main.npc[minion2].netUpdate = true;
-					int minion3 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("MACEProjectFist1B"), 0, 0f, 0f, 0f, 0f, 255);
+					int minion3 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("MACEProjectFist1A"), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[minion3].netUpdate = true;
+					int minion4 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("MACEProjectFist1B"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[minion4].netUpdate = true;
 					base.npc.ai[1] = 1f;
 					this.customAI[0] = 1f;
 					this.customAI[1] = 0f;
@@ -594,8 +605,10 @@ namespace Redemption.NPCs.LabNPCs.New
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Texture2D texture = Main.npcTexture[base.npc.type];
-			int spriteDirection = base.npc.spriteDirection;
+			Texture2D glowMask = base.mod.GetTexture("NPCs/LabNPCs/New/MACEProjectHeadA_Glow");
+			SpriteEffects effects = (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 			spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			spriteBatch.Draw(glowMask, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, effects, 0f);
 			return false;
 		}
 

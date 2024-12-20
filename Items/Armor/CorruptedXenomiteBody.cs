@@ -40,6 +40,13 @@ namespace Redemption.Items.Armor
 			modRecipe.AddTile(null, "XenoForgeTile");
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.AddIngredient(null, "XenomiteBody", 1);
+			modRecipe2.AddIngredient(null, "GirusChip", 2);
+			modRecipe2.AddIngredient(1508, 15);
+			modRecipe2.AddTile(null, "CorruptorTile");
+			modRecipe2.SetResult(this, 1);
+			modRecipe2.AddRecipe();
 		}
 	}
 }

@@ -68,7 +68,7 @@ namespace Redemption.Tiles.LabDeco
 				else if (!NPC.AnyNPCs(base.mod.NPCType("MACEControllerIdle")) && !RedeWorld.downedMACE && RedeWorld.labSafe)
 				{
 					ModPacket packet = base.mod.GetPacket(256);
-					packet.Write(20);
+					packet.Write(21);
 					Utils.WriteVector2(packet, new Vector2((float)(i * 16 + 3), (float)(j * 16 + 2)));
 					packet.Send(-1, -1);
 				}

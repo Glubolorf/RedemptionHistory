@@ -66,6 +66,10 @@ namespace Redemption.NPCs.LabNPCs.New
 			base.npc.velocity.X = 0f;
 			base.npc.dontTakeDamage = true;
 			base.npc.immune[255] = 30;
+			if ((NPC.CountNPCS(base.mod.NPCType("JanitorBotCleaning")) >= 2 && Main.rand.Next(2) == 0) || RedeWorld.downedJanitor)
+			{
+				base.npc.active = false;
+			}
 			if (base.npc.target < 0 || base.npc.target == 255 || Main.player[base.npc.target].dead || !Main.player[base.npc.target].active)
 			{
 				base.npc.TargetClosest(true);

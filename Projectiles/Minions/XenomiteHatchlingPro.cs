@@ -12,7 +12,8 @@ namespace Redemption.Projectiles.Minions
 			base.projectile.CloneDefaults(440);
 			base.projectile.width = 2;
 			base.projectile.height = 16;
-			base.projectile.magic = true;
+			base.projectile.minion = true;
+			base.projectile.magic = false;
 			base.projectile.penetrate = 1;
 			base.projectile.hostile = false;
 			base.projectile.friendly = true;
@@ -45,16 +46,5 @@ namespace Redemption.Projectiles.Minions
 		{
 			target.immune[base.projectile.owner] = 4;
 		}
-
-		private int[] dusts = new int[]
-		{
-			160,
-			600,
-			64,
-			61,
-			50,
-			60,
-			590
-		};
 	}
 }

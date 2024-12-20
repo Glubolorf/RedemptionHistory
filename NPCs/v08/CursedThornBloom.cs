@@ -67,6 +67,10 @@ namespace Redemption.NPCs.v08
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
+			if (Main.raining)
+			{
+				return SpawnCondition.OverworldDaySlime.Chance * ((Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == 2 && RedeWorld.downedPatientZero) ? 0.18f : 0f);
+			}
 			return SpawnCondition.OverworldDaySlime.Chance * ((Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == 2 && RedeWorld.downedPatientZero) ? 0.1f : 0f);
 		}
 	}

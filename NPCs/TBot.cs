@@ -181,6 +181,19 @@ namespace Redemption.NPCs
 		{
 			shop.item[nextSlot].SetDefaults(base.mod.ItemType("DeadRock"), false);
 			nextSlot++;
+			if (Main.bloodMoon)
+			{
+				if (WorldGen.crimson)
+				{
+					shop.item[nextSlot].SetDefaults(base.mod.ItemType("IrradiatedCrimstone"), false);
+					nextSlot++;
+				}
+				else
+				{
+					shop.item[nextSlot].SetDefaults(base.mod.ItemType("IrradiatedEbonstone"), false);
+					nextSlot++;
+				}
+			}
 			shop.item[nextSlot].SetDefaults(base.mod.ItemType("DeadRockWall"), false);
 			nextSlot++;
 			shop.item[nextSlot].SetDefaults(base.mod.ItemType("AntiXenomiteApplier"), false);

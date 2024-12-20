@@ -12,7 +12,8 @@ namespace Redemption.Projectiles.Minions
 			base.projectile.CloneDefaults(440);
 			base.projectile.width = 2;
 			base.projectile.height = 34;
-			base.projectile.magic = true;
+			base.projectile.magic = false;
+			base.projectile.minion = true;
 			base.projectile.penetrate = 4;
 			base.projectile.hostile = false;
 			base.projectile.friendly = true;

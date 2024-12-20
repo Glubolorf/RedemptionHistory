@@ -42,9 +42,29 @@ namespace Redemption.Tiles.LabDeco
 
 		public override bool NewRightClick(int i, int j)
 		{
-			if (!NPC.AnyNPCs(base.mod.NPCType("MACEProjectHeadA")) && !NPC.AnyNPCs(base.mod.NPCType("MACEProjectJawA")) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface && RedeWorld.downedVolt && (!RedeWorld.labAccess6 || RedeWorld.downedPatientZero))
+			if (Main.netMode == 0)
 			{
-				RedeWorld.maceUS = true;
+				if (!NPC.AnyNPCs(base.mod.NPCType("MACEProjectHeadA")) && !NPC.AnyNPCs(base.mod.NPCType("MACEProjectJawA")) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface && RedeWorld.downedVolt && (!RedeWorld.labAccess6 || RedeWorld.downedPatientZero))
+				{
+					RedeWorld.maceUS = true;
+				}
+			}
+			else if (Main.tile[i, j].frameY >= 18)
+			{
+				if (!NPC.AnyNPCs(base.mod.NPCType("MACEProjectHeadA")) && !NPC.AnyNPCs(base.mod.NPCType("MACEProjectJawA")) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface && RedeWorld.downedVolt && (!RedeWorld.labAccess6 || RedeWorld.downedPatientZero))
+				{
+					ModPacket packet = base.mod.GetPacket(256);
+					packet.Write(12);
+					Utils.WriteVector2(packet, new Vector2((float)(i * 16 + 15), (float)(j * 16 - 7)));
+					packet.Send(-1, -1);
+				}
+			}
+			else if (!NPC.AnyNPCs(base.mod.NPCType("MACEProjectHeadA")) && !NPC.AnyNPCs(base.mod.NPCType("MACEProjectJawA")) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface && RedeWorld.downedVolt && (!RedeWorld.labAccess6 || RedeWorld.downedPatientZero))
+			{
+				ModPacket packet2 = base.mod.GetPacket(256);
+				packet2.Write(12);
+				Utils.WriteVector2(packet2, new Vector2((float)(i * 16 + 15), (float)(j * 16 - 6)));
+				packet2.Send(-1, -1);
 			}
 			return true;
 		}
@@ -53,31 +73,17 @@ namespace Redemption.Tiles.LabDeco
 		{
 			Player localPlayer = Main.LocalPlayer;
 			RedePlayer redePlayer = (RedePlayer)localPlayer.GetModPlayer(base.mod, "RedePlayer");
-			if ((int)Vector2.Distance(localPlayer.Center / 16f, new Vector2((float)i, (float)j)) <= 100)
+			if ((int)Vector2.Distance(localPlayer.Center / 16f, new Vector2((float)i, (float)j)) <= 100 && Main.netMode == 0 && !NPC.AnyNPCs(base.mod.NPCType("MACEProjectJawA")) && !NPC.AnyNPCs(base.mod.NPCType("MACEProjectHeadA")) && !NPC.AnyNPCs(base.mod.NPCType("MACEProjectOffA")))
 			{
-				if (Main.netMode == 0)
+				Main.tile[i, j];
+				i += 15;
+				i *= 16;
+				j -= 7;
+				j *= 16;
+				int k = NPC.NewNPC(i + 1, j + 1, base.mod.NPCType("MACEProjectOffA"), 0, 0f, 0f, 0f, 0f, 255);
+				if (Main.netMode == 2)
 				{
-					if (!NPC.AnyNPCs(base.mod.NPCType("MACEProjectJawA")) && !NPC.AnyNPCs(base.mod.NPCType("MACEProjectHeadA")) && !NPC.AnyNPCs(base.mod.NPCType("MACEProjectOffA")))
-					{
-						Main.tile[i, j];
-						i += 15;
-						i *= 16;
-						j -= 7;
-						j *= 16;
-						int k = NPC.NewNPC(i + 1, j + 1, base.mod.NPCType("MACEProjectOffA"), 0, 0f, 0f, 0f, 0f, 255);
-						if (Main.netMode == 2)
-						{
-							NetMessage.SendData(23, -1, -1, null, k, 0f, 0f, 0f, 0, 0, 0);
-							return;
-						}
-					}
-				}
-				else if (!NPC.AnyNPCs(base.mod.NPCType("MACEProjectJawA")) && !NPC.AnyNPCs(base.mod.NPCType("MACEProjectHeadA")) && !NPC.AnyNPCs(base.mod.NPCType("MACEProjectOffA")))
-				{
-					ModPacket packet = base.mod.GetPacket(256);
-					packet.Write(10);
-					Utils.WriteVector2(packet, new Vector2((float)(i * 16 + 15), (float)(j * 16 - 7)));
-					packet.Send(-1, -1);
+					NetMessage.SendData(23, -1, -1, null, k, 0f, 0f, 0f, 0, 0, 0);
 				}
 			}
 		}

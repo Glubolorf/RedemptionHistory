@@ -44,51 +44,52 @@ namespace Redemption.Tiles.LabDeco
 		{
 			Player localPlayer = Main.LocalPlayer;
 			RedePlayer redePlayer = (RedePlayer)localPlayer.GetModPlayer(base.mod, "RedePlayer");
-			if ((int)Vector2.Distance(localPlayer.Center / 16f, new Vector2((float)i, (float)j)) <= 100)
+			if ((int)Vector2.Distance(localPlayer.Center / 16f, new Vector2((float)i, (float)j)) <= 100 && Main.netMode == 0 && !NPC.AnyNPCs(base.mod.NPCType("TbotMinibossStart")) && !NPC.AnyNPCs(base.mod.NPCType("TbotMiniboss")) && !NPC.AnyNPCs(base.mod.NPCType("ProtectorVoltNPC")) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface)
 			{
-				if (Main.netMode == 0)
+				Main.tile[i, j];
+				i -= 36;
+				i *= 16;
+				j *= 16;
+				if (RedeWorld.downedVolt)
 				{
-					if (!NPC.AnyNPCs(base.mod.NPCType("TbotMinibossStart")) && !NPC.AnyNPCs(base.mod.NPCType("TbotMiniboss")) && !NPC.AnyNPCs(base.mod.NPCType("ProtectorVoltNPC")) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface)
+					int k = NPC.NewNPC(i, j, base.mod.NPCType("ProtectorVoltNPC"), 0, 0f, 0f, 0f, 0f, 255);
+					if (Main.netMode == 2)
 					{
-						Main.tile[i, j];
-						i -= 36;
-						i *= 16;
-						j *= 16;
-						if (RedeWorld.downedVolt)
-						{
-							int k = NPC.NewNPC(i, j, base.mod.NPCType("ProtectorVoltNPC"), 0, 0f, 0f, 0f, 0f, 255);
-							if (Main.netMode == 2)
-							{
-								NetMessage.SendData(23, -1, -1, null, k, 0f, 0f, 0f, 0, 0, 0);
-								return;
-							}
-						}
-						else
-						{
-							int l = NPC.NewNPC(i, j, base.mod.NPCType("TbotMinibossStart"), 0, 0f, 0f, 0f, 0f, 255);
-							if (Main.netMode == 2)
-							{
-								NetMessage.SendData(23, -1, -1, null, l, 0f, 0f, 0f, 0, 0, 0);
-								return;
-							}
-						}
-					}
-				}
-				else if (!NPC.AnyNPCs(base.mod.NPCType("TbotMinibossStart")) && !NPC.AnyNPCs(base.mod.NPCType("TbotMiniboss")) && !NPC.AnyNPCs(base.mod.NPCType("ProtectorVoltNPC")) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface)
-				{
-					if (RedeWorld.downedVolt)
-					{
-						ModPacket packet = base.mod.GetPacket(256);
-						packet.Write(18);
-						Utils.WriteVector2(packet, new Vector2((float)(i * 16 - 36), (float)(j * 16)));
-						packet.Send(-1, -1);
+						NetMessage.SendData(23, -1, -1, null, k, 0f, 0f, 0f, 0, 0, 0);
 						return;
 					}
-					ModPacket packet2 = base.mod.GetPacket(256);
-					packet2.Write(8);
-					Utils.WriteVector2(packet2, new Vector2((float)(i * 16 - 36), (float)(j * 16)));
-					packet2.Send(-1, -1);
 				}
+				else
+				{
+					int l = NPC.NewNPC(i, j, base.mod.NPCType("TbotMinibossStart"), 0, 0f, 0f, 0f, 0f, 255);
+					if (Main.netMode == 2)
+					{
+						NetMessage.SendData(23, -1, -1, null, l, 0f, 0f, 0f, 0, 0, 0);
+					}
+				}
+			}
+		}
+
+		public override bool NewRightClick(int i, int j)
+		{
+			if (Main.netMode != 0 && !NPC.AnyNPCs(base.mod.NPCType("TbotMinibossStart")) && !NPC.AnyNPCs(base.mod.NPCType("TbotMiniboss")) && !NPC.AnyNPCs(base.mod.NPCType("ProtectorVoltNPC")) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface)
+			{
+				ModPacket packet = base.mod.GetPacket(256);
+				packet.Write(9);
+				Utils.WriteVector2(packet, new Vector2((float)(i * 16), (float)(j * 16)));
+				packet.Send(-1, -1);
+			}
+			return true;
+		}
+
+		public override void MouseOver(int i, int j)
+		{
+			if (Main.netMode != 0)
+			{
+				Player localPlayer = Main.LocalPlayer;
+				localPlayer.noThrow = 2;
+				localPlayer.showItemIcon = true;
+				localPlayer.showItemIcon2 = base.mod.ItemType("SignDeath");
 			}
 		}
 

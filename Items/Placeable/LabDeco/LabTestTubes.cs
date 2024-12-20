@@ -21,7 +21,7 @@ namespace Redemption.Items.Placeable.LabDeco
 			base.item.useTime = 10;
 			base.item.useStyle = 1;
 			base.item.consumable = true;
-			base.item.value = 100;
+			base.item.value = 500;
 			base.item.rare = 6;
 			base.item.createTile = base.mod.TileType("LabTubesTile");
 			base.item.placeStyle = 0;

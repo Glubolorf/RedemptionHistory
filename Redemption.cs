@@ -926,7 +926,6 @@ namespace Redemption
 			modRecipe26.SetResult(2596, 1);
 			modRecipe26.AddRecipe();
 			ModRecipe modRecipe27 = new ModRecipe(this);
-			modRecipe27.anyIronBar = true;
 			modRecipe27.AddIngredient(null, "LivingTwig", 10);
 			modRecipe27.AddIngredient(704, 3);
 			modRecipe27.AddIngredient(170, 6);
@@ -1001,71 +1000,77 @@ namespace Redemption
 			}
 			case 9:
 			{
+				Vector2 summonAt5B = Utils.ReadVector2(bb);
+				NPC.NewNPC((int)summonAt5B.X, (int)summonAt5B.Y, base.NPCType("TbotMiniboss"), 0, 0f, 0f, 0f, 0f, 255);
+				break;
+			}
+			case 10:
+			{
 				Vector2 summonAt6 = Utils.ReadVector2(bb);
 				NPC.NewNPC((int)summonAt6.X, (int)summonAt6.Y, base.NPCType("MACEProjectHead"), 0, 0f, 0f, 0f, 0f, 255);
 				break;
 			}
-			case 10:
+			case 11:
 			{
 				Vector2 summonAt6A = Utils.ReadVector2(bb);
 				NPC.NewNPC((int)summonAt6A.X, (int)summonAt6A.Y, base.NPCType("MACEProjectOffA"), 0, 0f, 0f, 0f, 0f, 255);
 				break;
 			}
-			case 11:
+			case 12:
 			{
 				Vector2 summonAt6B = Utils.ReadVector2(bb);
 				NPC.NewNPC((int)summonAt6B.X, (int)summonAt6B.Y, base.NPCType("MACEProjectHeadA"), 0, 0f, 0f, 0f, 0f, 255);
 				break;
 			}
-			case 12:
+			case 13:
 			{
 				Vector2 summonAt7 = Utils.ReadVector2(bb);
 				NPC.NewNPC((int)summonAt7.X, (int)summonAt7.Y, base.NPCType("PatientZero"), 0, 0f, 0f, 0f, 0f, 255);
 				break;
 			}
-			case 13:
+			case 14:
 			{
 				Vector2 summonAt7A = Utils.ReadVector2(bb);
 				NPC.NewNPC((int)summonAt7A.X, (int)summonAt7A.Y, base.NPCType("PZ2Eyelid"), 0, 0f, 0f, 0f, 0f, 255);
 				break;
 			}
-			case 14:
+			case 15:
 			{
 				Vector2 summonAt7B = Utils.ReadVector2(bb);
 				NPC.NewNPC((int)summonAt7B.X, (int)summonAt7B.Y, base.NPCType("PZ2Fight"), 0, 0f, 0f, 0f, 0f, 255);
 				break;
 			}
-			case 15:
+			case 16:
 			{
 				Vector2 summonAt8 = Utils.ReadVector2(bb);
 				NPC.NewNPC((int)summonAt8.X, (int)summonAt8.Y, base.NPCType("KS3Sitting"), 0, 0f, 0f, 0f, 0f, 255);
 				break;
 			}
-			case 16:
+			case 17:
 			{
 				Vector2 summonAt9 = Utils.ReadVector2(bb);
 				NPC.NewNPC((int)summonAt9.X, (int)summonAt9.Y, base.NPCType("JanitorBotCleaning"), 0, 0f, 0f, 0f, 0f, 255);
 				break;
 			}
-			case 17:
+			case 18:
 			{
 				Vector2 summonAt10 = Utils.ReadVector2(bb);
 				NPC.NewNPC((int)summonAt10.X, (int)summonAt10.Y, base.NPCType("JanitorBotNPC"), 0, 0f, 0f, 0f, 0f, 255);
 				break;
 			}
-			case 18:
+			case 19:
 			{
 				Vector2 summonAt11 = Utils.ReadVector2(bb);
 				NPC.NewNPC((int)summonAt11.X, (int)summonAt11.Y, base.NPCType("ProtectorVoltNPC"), 0, 0f, 0f, 0f, 0f, 255);
 				break;
 			}
-			case 19:
+			case 20:
 			{
 				Vector2 summonAt12 = Utils.ReadVector2(bb);
 				NPC.NewNPC((int)summonAt12.X, (int)summonAt12.Y, base.NPCType("LabSentryTurretLeg"), 0, 0f, 0f, 0f, 0f, 255);
 				break;
 			}
-			case 20:
+			case 21:
 			{
 				Vector2 summonAt13 = Utils.ReadVector2(bb);
 				NPC.NewNPC((int)summonAt13.X, (int)summonAt13.Y, base.NPCType("MACEControllerIdle"), 0, 0f, 0f, 0f, 0f, 255);

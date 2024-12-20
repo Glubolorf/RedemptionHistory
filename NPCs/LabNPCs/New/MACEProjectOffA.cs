@@ -35,10 +35,14 @@ namespace Redemption.NPCs.LabNPCs.New
 				int minion = NPC.NewNPC((int)base.npc.position.X + 58, (int)base.npc.position.Y + 170, base.mod.NPCType("MACEProjectJawOffA"), 0, 0f, 0f, 0f, 0f, 255);
 				Main.npc[minion].netUpdate = true;
 			}
-			if (Main.netMode != 1 && RedeWorld.maceUS)
+			if (RedeWorld.maceUS)
 			{
 				base.npc.SetDefaults(ModContent.NPCType<MACEProjectHeadA>(), -1f);
 				return;
+			}
+			if (NPC.CountNPCS(base.mod.NPCType("MACEProjectOffA")) >= 2 && Main.rand.Next(2) == 0)
+			{
+				base.npc.active = false;
 			}
 			base.npc.timeLeft = 10;
 			base.npc.TargetClosest(true);
@@ -50,7 +54,8 @@ namespace Redemption.NPCs.LabNPCs.New
 			Texture2D texture = Main.npcTexture[base.npc.type];
 			Texture2D trolleyAni = base.mod.GetTexture("NPCs/LabNPCs/New/CraneTrolley2");
 			Texture2D hookAni = base.mod.GetTexture("NPCs/LabNPCs/New/CraneHook");
-			int spriteDirection = base.npc.spriteDirection;
+			Texture2D glowMask = base.mod.GetTexture("NPCs/LabNPCs/New/MACEProjectOffA_Glow");
+			SpriteEffects effects = (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 			Vector2 drawCenterA = new Vector2(base.npc.Center.X, base.npc.Center.Y - 37f);
 			int num214A = hookAni.Height / 1;
 			int y6A = 0;
@@ -60,6 +65,7 @@ namespace Redemption.NPCs.LabNPCs.New
 			int y6 = 0;
 			Main.spriteBatch.Draw(trolleyAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, trolleyAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)trolleyAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			spriteBatch.Draw(glowMask, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, effects, 0f);
 			return false;
 		}
 

@@ -52,12 +52,16 @@ namespace Redemption.NPCs.LabNPCs.New
 				this.coverFrame = 0;
 			}
 			base.npc.frame.Y = 164;
-			if (Main.netMode != 1 && RedeWorld.pzUS)
+			if (RedeWorld.pzUS)
 			{
 				int p = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y + 2f), new Vector2(0f, 0f), base.mod.ProjectileType("PZ2HideTheAAA"), 0, 0f, 255, 0f, 0f);
 				Main.projectile[p].netUpdate = true;
 				base.npc.SetDefaults(ModContent.NPCType<PZ2Fight>(), -1f);
 				return;
+			}
+			if ((NPC.CountNPCS(base.mod.NPCType("PZ2Eyelid")) >= 2 && Main.rand.Next(2) == 0) || RedeWorld.downedPatientZero)
+			{
+				base.npc.active = false;
 			}
 			base.npc.timeLeft = 10;
 			base.npc.TargetClosest(true);
@@ -84,11 +88,13 @@ namespace Redemption.NPCs.LabNPCs.New
 		{
 			Texture2D texture = Main.npcTexture[base.npc.type];
 			Texture2D eyeAni = base.mod.GetTexture("NPCs/LabNPCs/New/PZ2Pupil");
+			Texture2D eyeGlow = base.mod.GetTexture("NPCs/LabNPCs/New/PZ2Pupil_Glow");
 			Texture2D bodyAni = base.mod.GetTexture("NPCs/LabNPCs/New/PZ2");
+			Texture2D bodyGlow = base.mod.GetTexture("NPCs/LabNPCs/New/PZ2_Glow");
 			Texture2D coverAni = base.mod.GetTexture("NPCs/LabNPCs/New/PZ2BodyCover2");
 			Texture2D sludgeAni = base.mod.GetTexture("NPCs/LabNPCs/New/SlimeThings");
 			int spriteDirection = base.npc.spriteDirection;
-			Vector2 drawCenterC = new Vector2(base.npc.Center.X, base.npc.Center.Y + 7f);
+			Vector2 drawCenterC = new Vector2(base.npc.Center.X + 15f, base.npc.Center.Y + 7f);
 			int num214C = sludgeAni.Height;
 			int y6C = 0;
 			Main.spriteBatch.Draw(sludgeAni, drawCenterC - Main.screenPosition, new Rectangle?(new Rectangle(0, y6C, sludgeAni.Width, num214C)), drawColor, base.npc.rotation, new Vector2((float)sludgeAni.Width / 2f, (float)num214C / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
@@ -96,6 +102,7 @@ namespace Redemption.NPCs.LabNPCs.New
 			int num214B = bodyAni.Height / 8;
 			int y6B = num214B * this.bodyFrame;
 			Main.spriteBatch.Draw(bodyAni, drawCenterB - Main.screenPosition, new Rectangle?(new Rectangle(0, y6B, bodyAni.Width, num214B)), drawColor, base.npc.rotation, new Vector2((float)bodyAni.Width / 2f, (float)num214B / 2f), base.npc.scale * 2f, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			Main.spriteBatch.Draw(bodyGlow, drawCenterB - Main.screenPosition, new Rectangle?(new Rectangle(0, y6B, bodyAni.Width, num214B)), base.npc.GetAlpha(Color.White), base.npc.rotation, new Vector2((float)bodyAni.Width / 2f, (float)num214B / 2f), base.npc.scale * 2f, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			Vector2 drawCenterD = new Vector2(base.npc.Center.X - 2f, base.npc.Center.Y + 18f);
 			int num214D = coverAni.Height / 4;
 			int y6D = num214D * this.coverFrame;
@@ -104,6 +111,7 @@ namespace Redemption.NPCs.LabNPCs.New
 			int num214A = eyeAni.Height / 1;
 			int y6A = num214A * this.eyeFrame;
 			Main.spriteBatch.Draw(eyeAni, drawCenterA - Main.screenPosition, new Rectangle?(new Rectangle(0, y6A, eyeAni.Width, num214A)), drawColor, Utils.ToRotation(base.npc.DirectionTo(Main.player[base.npc.target].Center)), new Vector2((float)eyeAni.Width / 2f, (float)num214A / 2f), base.npc.scale, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(eyeGlow, drawCenterA - Main.screenPosition, new Rectangle?(new Rectangle(0, y6A, eyeAni.Width, num214A)), base.npc.GetAlpha(Color.White), Utils.ToRotation(base.npc.DirectionTo(Main.player[base.npc.target].Center)), new Vector2((float)eyeAni.Width / 2f, (float)num214A / 2f), base.npc.scale, SpriteEffects.None, 0f);
 			spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			return false;
 		}

@@ -14,7 +14,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Wandering Soul's Leggings");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n2% increased druidic damage\n3% damage reduction\nDecreased falling speed\nIncreased movement speed");
+			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n2% increased druidic damage\n3% damage reduction\nDecreased falling speed\nIncreased movement speed\n[c/bdffff:Spirit Level +1]");
 		}
 
 		public override void SetDefaults()
@@ -32,6 +32,7 @@ namespace Redemption.Items.Armor
 			player.endurance += 0.03f;
 			player.slowFall = true;
 			player.moveSpeed += 0.5f;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).spiritLevel++;
 		}
 
 		public override void AddRecipes()

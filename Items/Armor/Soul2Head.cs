@@ -14,7 +14,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Wandering Soul's Head");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n6% increased druidic damage\n3% damage reduction\n4% increased druidic critical strike chance\nIncreased night vision");
+			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n6% increased druidic damage\n3% damage reduction\n4% increased druidic critical strike chance\nIncreased night vision\n[c/bdffff:Spirit Level +1]");
 		}
 
 		public override void SetDefaults()
@@ -29,10 +29,12 @@ namespace Redemption.Items.Armor
 		public override void UpdateEquip(Player player)
 		{
 			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
+			RedePlayer modPlayer2 = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
 			druidDamagePlayer.druidDamage += 0.06f;
 			druidDamagePlayer.druidCrit += 4;
 			player.endurance += 0.03f;
 			player.nightVision = true;
+			modPlayer2.spiritLevel++;
 		}
 
 		public override bool IsArmorSet(Item head, Item body, Item legs)
@@ -42,9 +44,9 @@ namespace Redemption.Items.Armor
 
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "Spirit summoning weapons will summon 2 extra spirits\nYou emit an aura of light";
+			player.setBonus = "Increases spirits summoned by 1\nYou emit an aura of light";
 			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.moreSpirits = true;
+			redePlayer.spiritExtras++;
 			redePlayer.wanderingSoulSet = true;
 			player.AddBuff(11, 2, true);
 		}

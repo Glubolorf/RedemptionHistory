@@ -10,6 +10,7 @@ namespace Redemption.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("The Keeper's Claw");
+			base.Tooltip.SetDefault("Hitting enemies inflict Necrotic Gouge, causing slain enemies to burst into tiny dark souls");
 		}
 
 		public override void SetDefaults()
@@ -27,6 +28,11 @@ namespace Redemption.Items.Weapons
 			base.item.UseSound = SoundID.Item7;
 			base.item.autoReuse = false;
 			base.item.useTurn = false;
+		}
+
+		public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
+		{
+			target.AddBuff(base.mod.BuffType("NecroticGouge"), 600, false);
 		}
 
 		public override void AddRecipes()

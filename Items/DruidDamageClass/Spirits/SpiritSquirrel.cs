@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 			base.item.UseSound = SoundID.NPCDeath6.WithVolume(0.5f);
 			base.item.noMelee = true;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("SpiritSquirrelPro");
+			base.item.shoot = ModContent.ProjectileType<SpiritSquirrelPro>();
 			base.item.shootSpeed = 7f;
 			this.spiritWeapon = true;
 			this.minSpiritLevel = 0;
@@ -83,15 +84,15 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 			{
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().corruptedTalisman)
 				{
-					type = base.mod.ProjectileType("SpiritSquirrelCorruptPro");
+					type = ModContent.ProjectileType<SpiritSquirrelCorruptPro>();
 				}
 				else if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloodedTalisman)
 				{
-					type = base.mod.ProjectileType("SpiritSquirrelCrimsonPro");
+					type = ModContent.ProjectileType<SpiritSquirrelCrimsonPro>();
 				}
 				else
 				{
-					type = base.mod.ProjectileType("SpiritSquirrelPro");
+					type = ModContent.ProjectileType<SpiritSquirrelPro>();
 				}
 			}
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritLevel >= 3)
@@ -100,28 +101,28 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 				{
 					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().corruptedTalisman)
 					{
-						type = base.mod.ProjectileType("SpiritSquirrelCorruptAcorn");
+						type = ModContent.ProjectileType<SpiritSquirrelCorruptAcorn>();
 					}
 					else if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloodedTalisman)
 					{
-						type = base.mod.ProjectileType("SpiritSquirrelCrimsonAcorn");
+						type = ModContent.ProjectileType<SpiritSquirrelCrimsonAcorn>();
 					}
 					else
 					{
-						type = base.mod.ProjectileType("SpiritSquirrelAcorn");
+						type = ModContent.ProjectileType<SpiritSquirrelAcorn>();
 					}
 				}
 				else if (Main.LocalPlayer.GetModPlayer<RedePlayer>().corruptedTalisman)
 				{
-					type = base.mod.ProjectileType("SpiritSquirrelCorruptPro");
+					type = ModContent.ProjectileType<SpiritSquirrelCorruptPro>();
 				}
 				else if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloodedTalisman)
 				{
-					type = base.mod.ProjectileType("SpiritSquirrelCrimsonPro");
+					type = ModContent.ProjectileType<SpiritSquirrelCrimsonPro>();
 				}
 				else
 				{
-					type = base.mod.ProjectileType("SpiritSquirrelPro");
+					type = ModContent.ProjectileType<SpiritSquirrelPro>();
 				}
 			}
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritExtras == 0)

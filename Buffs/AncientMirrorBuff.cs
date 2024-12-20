@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -16,7 +17,7 @@ namespace Redemption.Buffs
 		public override void Update(Player player, ref int buffIndex)
 		{
 			RedePlayer modPlayer2 = player.GetModPlayer<RedePlayer>();
-			if (player.ownedProjectileCounts[base.mod.ProjectileType("AncientMirrorShieldPro")] > 0)
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<AncientMirrorShieldPro>()] > 0)
 			{
 				modPlayer2.ancientMirror = true;
 			}

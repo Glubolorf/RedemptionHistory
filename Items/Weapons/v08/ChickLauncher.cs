@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -25,7 +26,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.knockBack = 9f;
 			base.item.UseSound = base.mod.GetLegacySoundSlot(2, "Sounds/Item/Launch1");
 			base.item.value = Item.sellPrice(0, 15, 0, 0);
-			base.item.shoot = base.mod.ProjectileType("ChickPro");
+			base.item.shoot = ModContent.ProjectileType<ChickPro>();
 			base.item.shootSpeed = 18f;
 			base.item.autoReuse = true;
 			base.item.noMelee = true;

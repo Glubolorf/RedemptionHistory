@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.LabDeco;
+using Redemption.NPCs.LabNPCs;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -43,47 +45,25 @@ namespace Redemption.Tiles.LabDeco
 				float dist = Vector2.Distance(Main.LocalPlayer.Center / 16f, new Vector2((float)i + 0.5f, (float)j + 0.5f));
 				if (dist <= 12f && dist > 6f)
 				{
-					if (Main.rand.Next(350) == 0 && NPC.CountNPCS(base.mod.NPCType("WalterInfected")) <= 3)
+					if (Main.rand.Next(350) == 0 && NPC.CountNPCS(ModContent.NPCType<WalterInfected>()) <= 3)
 					{
 						i *= 16;
 						j *= 16;
-						int k = NPC.NewNPC(i + 2, j + 2, base.mod.NPCType("WalterInfected"), 0, 0f, 0f, 0f, 0f, 255);
+						int k = NPC.NewNPC(i + 2, j + 2, ModContent.NPCType<WalterInfected>(), 0, 0f, 0f, 0f, 0f, 255);
 						if (Main.netMode == 2)
 						{
 							NetMessage.SendData(23, -1, -1, null, k, 0f, 0f, 0f, 0, 0, 0);
 						}
 					}
-					if (NPC.downedMoonlord && Main.rand.Next(600) == 0 && NPC.CountNPCS(base.mod.NPCType("Stage2Scientist")) == 0)
+					if (NPC.downedMoonlord && Main.rand.Next(600) == 0 && NPC.CountNPCS(ModContent.NPCType<Stage2Scientist>()) == 0)
 					{
 						i *= 16;
 						j *= 16;
-						int l = NPC.NewNPC(i + 2, j + 2, base.mod.NPCType("Stage2Scientist"), 0, 0f, 0f, 0f, 0f, 255);
+						int l = NPC.NewNPC(i + 2, j + 2, ModContent.NPCType<Stage2Scientist>(), 0, 0f, 0f, 0f, 0f, 255);
 						if (Main.netMode == 2)
 						{
 							NetMessage.SendData(23, -1, -1, null, l, 0f, 0f, 0f, 0, 0, 0);
-							return;
 						}
-					}
-				}
-			}
-			else
-			{
-				float dist2 = Vector2.Distance(Main.LocalPlayer.Center / 16f, new Vector2((float)i + 0.5f, (float)j + 0.5f));
-				if (dist2 <= 12f && dist2 > 6f)
-				{
-					if (Main.rand.Next(350) == 0 && NPC.CountNPCS(base.mod.NPCType("WalterInfected")) <= 3)
-					{
-						Main.tile[i, j];
-						i *= 16;
-						j *= 16;
-						Projectile.NewProjectile((float)i, (float)j, 0f, 0f, base.mod.ProjectileType("WalterInfectedSummonPro"), 0, 0f, 255, 0f, 0f);
-					}
-					if (NPC.downedMoonlord && Main.rand.Next(600) == 0 && NPC.CountNPCS(base.mod.NPCType("Stage2Scientist")) == 0)
-					{
-						Main.tile[i, j];
-						i *= 16;
-						j *= 16;
-						Projectile.NewProjectile((float)i, (float)j, 0f, 0f, base.mod.ProjectileType("Stage2ScientistSummonPro"), 0, 0f, 255, 0f, 0f);
 					}
 				}
 			}
@@ -91,7 +71,7 @@ namespace Redemption.Tiles.LabDeco
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 32, 16, base.mod.ItemType("LabDoor2"), 1, false, 0, false, false);
+			Item.NewItem(i * 16, j * 16, 32, 16, ModContent.ItemType<LabDoor2>(), 1, false, 0, false, false);
 		}
 
 		public override bool CanExplode(int i, int j)

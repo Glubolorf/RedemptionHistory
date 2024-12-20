@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.Minions;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -17,7 +18,7 @@ namespace Redemption.Buffs
 		public override void Update(Player player, ref int buffIndex)
 		{
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
-			if (player.ownedProjectileCounts[base.mod.ProjectileType("XeniumTurretMinion4")] > 0)
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<XeniumTurretMinion4>()] > 0)
 			{
 				modPlayer.xeniumMinion4 = true;
 			}

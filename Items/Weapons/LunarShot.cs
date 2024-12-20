@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -57,7 +58,7 @@ namespace Redemption.Items.Weapons
 		{
 			if (type == 1)
 			{
-				type = base.mod.ProjectileType("LunarShotPro");
+				type = ModContent.ProjectileType<LunarShotPro>();
 			}
 			return true;
 		}

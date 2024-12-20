@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,7 +32,7 @@ namespace Redemption.Items.DruidDamageClass.v08
 			base.item.autoReuse = true;
 			base.item.UseSound = SoundID.Item1;
 			base.item.value = Item.sellPrice(0, 0, 0, 10);
-			base.item.shoot = base.mod.ProjectileType("SandDustPro");
+			base.item.shoot = ModContent.ProjectileType<SandDustPro>();
 		}
 
 		public override void AddRecipes()

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,7 +32,7 @@ namespace Redemption.Items.Weapons
 			base.item.rare = 11;
 			base.item.UseSound = SoundID.Item117;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("XeniumStaffPro1");
+			base.item.shoot = ModContent.ProjectileType<XeniumStaffPro1>();
 			base.item.shootSpeed = 14f;
 		}
 
@@ -40,7 +41,7 @@ namespace Redemption.Items.Weapons
 			Projectile.NewProjectile(shootPos.X, shootPos.Y, speedX, speedY, projType, damage, knockback, player.whoAmI, 0f, 0f);
 			for (int i = 0; i < 2; i++)
 			{
-				Projectile.NewProjectile(shootPos.X, shootPos.Y, speedX * 1f, speedY * 1f, (i == 0) ? base.mod.ProjectileType("XeniumStaffPro2") : base.mod.ProjectileType("XeniumStaffPro3"), damage, knockback, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(shootPos.X, shootPos.Y, speedX * 1f, speedY * 1f, (i == 0) ? ModContent.ProjectileType<XeniumStaffPro2>() : ModContent.ProjectileType<XeniumStaffPro3>(), damage, knockback, player.whoAmI, 0f, 0f);
 			}
 			return false;
 		}

@@ -47,7 +47,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 			base.projectile.localAI[0] += 1f;
 			if (Main.rand.Next(20) == 0)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.Center.X + (float)Main.rand.Next(-26, 26), base.projectile.Center.Y + (float)Main.rand.Next(-6, 6)), new Vector2(0f, 0f), base.mod.ProjectileType("CloudNightshadeRain2"), 11, 3f, base.projectile.owner, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.Center.X + (float)Main.rand.Next(-26, 26), base.projectile.Center.Y + (float)Main.rand.Next(-6, 6)), new Vector2(0f, 0f), ModContent.ProjectileType<CloudNightshadeRain2>(), 11, 3f, base.projectile.owner, 0f, 0f);
 			}
 		}
 

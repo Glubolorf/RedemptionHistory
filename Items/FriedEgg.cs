@@ -8,7 +8,7 @@ namespace Redemption.Items
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Fried Egg");
+			base.DisplayName.SetDefault("Fried Chicken Egg");
 			base.Tooltip.SetDefault("'Because eggs are tasty.'\nMinor improvements to all stats");
 		}
 

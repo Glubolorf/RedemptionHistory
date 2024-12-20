@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -29,7 +30,7 @@ namespace Redemption.Items.LabThings
 			base.item.maxStack = 1;
 			base.item.value = Item.buyPrice(0, 10, 0, 0);
 			base.item.rare = 6;
-			base.item.buffType = base.mod.BuffType("GirusCloakBuff");
+			base.item.buffType = ModContent.BuffType<GirusCloakBuff>();
 			base.item.buffTime = 72000;
 		}
 

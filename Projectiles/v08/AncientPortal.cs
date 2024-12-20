@@ -38,15 +38,15 @@ namespace Redemption.Projectiles.v08
 					int num = Main.rand.Next(3);
 					if (num == 0)
 					{
-						Projectile.NewProjectile(new Vector2(base.projectile.Center.X + (float)Main.rand.Next(-35, 35), base.projectile.Center.Y + (float)Main.rand.Next(-35, 35)), RedeHelper.PolarVector(20f, Utils.ToRotation(this.target.Center - base.projectile.Center)), base.mod.ProjectileType("AncientArrowHeadPro"), base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.Center.X + (float)Main.rand.Next(-35, 35), base.projectile.Center.Y + (float)Main.rand.Next(-35, 35)), RedeHelper.PolarVector(20f, Utils.ToRotation(this.target.Center - base.projectile.Center)), ModContent.ProjectileType<AncientArrowHeadPro>(), base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 0f);
 					}
 					if (num == 1)
 					{
-						Projectile.NewProjectile(new Vector2(base.projectile.Center.X + (float)Main.rand.Next(-35, 35), base.projectile.Center.Y + (float)Main.rand.Next(-35, 35)), RedeHelper.PolarVector(20f, Utils.ToRotation(this.target.Center - base.projectile.Center)), base.mod.ProjectileType("AncientDaggerPro"), base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.Center.X + (float)Main.rand.Next(-35, 35), base.projectile.Center.Y + (float)Main.rand.Next(-35, 35)), RedeHelper.PolarVector(20f, Utils.ToRotation(this.target.Center - base.projectile.Center)), ModContent.ProjectileType<AncientDaggerPro>(), base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 0f);
 					}
 					if (num == 2)
 					{
-						Projectile.NewProjectile(new Vector2(base.projectile.Center.X + (float)Main.rand.Next(-35, 35), base.projectile.Center.Y + (float)Main.rand.Next(-35, 35)), RedeHelper.PolarVector(20f, Utils.ToRotation(this.target.Center - base.projectile.Center)), base.mod.ProjectileType("AncientStalacmitePro"), base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.Center.X + (float)Main.rand.Next(-35, 35), base.projectile.Center.Y + (float)Main.rand.Next(-35, 35)), RedeHelper.PolarVector(20f, Utils.ToRotation(this.target.Center - base.projectile.Center)), ModContent.ProjectileType<AncientStalacmitePro>(), base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 0f);
 					}
 				}
 			}

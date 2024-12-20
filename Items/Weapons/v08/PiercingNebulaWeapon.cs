@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,7 +30,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.value = Item.buyPrice(1, 0, 0, 0);
 			base.item.UseSound = SoundID.Item117;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("PiercingNebWeaponPro");
+			base.item.shoot = ModContent.ProjectileType<PiercingNebWeaponPro>();
 			base.item.shootSpeed = 18f;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 3;
 		}
@@ -39,7 +40,7 @@ namespace Redemption.Items.Weapons.v08
 			Projectile.NewProjectile(shootPos.X, shootPos.Y, speedX, speedY, projType, damage, knockback, player.whoAmI, 0f, 0f);
 			for (int i = 0; i < 2; i++)
 			{
-				Projectile.NewProjectile(shootPos.X, shootPos.Y, speedX * 1f, speedY * 1f, (i == 0) ? base.mod.ProjectileType("PNebulaWep2") : base.mod.ProjectileType("PNebulaWep3"), damage, knockback, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(shootPos.X, shootPos.Y, speedX * 1f, speedY * 1f, (i == 0) ? ModContent.ProjectileType<PNebulaWep2>() : ModContent.ProjectileType<PNebulaWep3>(), damage, knockback, player.whoAmI, 0f, 0f);
 			}
 			return false;
 		}

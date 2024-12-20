@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -33,7 +34,7 @@ namespace Redemption.Items.Weapons
 
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
 		{
-			Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, 0f, base.mod.ProjectileType("FalconPro1"), base.item.damage, base.item.knockBack, Main.myPlayer, 0f, 0f);
+			Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, 0f, ModContent.ProjectileType<FalconPro1>(), base.item.damage, base.item.knockBack, Main.myPlayer, 0f, 0f);
 		}
 	}
 }

@@ -102,17 +102,5 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave
 				vector *= 7f / magnitude;
 			}
 		}
-
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
-		{
-			Player player = Main.player[base.projectile.owner];
-			int critChance = player.HeldItem.crit;
-			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref critChance);
-			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref critChance);
-			if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
-			{
-				crit = true;
-			}
-		}
 	}
 }

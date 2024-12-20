@@ -1,5 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Armor;
+using Redemption.Items.Weapons;
+using Redemption.NPCs.Bosses.TheKeeper;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -44,7 +47,7 @@ namespace Redemption.Items
 		{
 			get
 			{
-				return base.mod.NPCType("TheKeeper");
+				return ModContent.NPCType<TheKeeper>();
 			}
 		}
 
@@ -52,35 +55,35 @@ namespace Redemption.Items
 		{
 			if (Main.rand.Next(7) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("TheKeeperMask"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<TheKeeperMask>(), 1);
 			}
 			if (Main.rand.Next(3) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("OldGathicWaraxe"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<OldGathicWaraxe>(), 1);
 			}
 			int num = Main.rand.Next(5);
 			if (num == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("KeepersBow"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<KeepersBow>(), 1);
 			}
 			if (num == 1)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("KeepersStaff"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<KeepersStaff>(), 1);
 			}
 			if (num == 2)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("KeepersClaw"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<KeepersClaw>(), 1);
 			}
 			if (num == 3)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("KeepersKnife"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<KeepersKnife>(), 1);
 			}
 			if (num == 4)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("KeepersSummon"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<KeepersSummon>(), 1);
 			}
-			player.QuickSpawnItem(base.mod.ItemType("DarkShard"), Main.rand.Next(3, 4));
-			player.QuickSpawnItem(base.mod.ItemType("HeartEmblem"), 1);
+			player.QuickSpawnItem(ModContent.ItemType<DarkShard>(), Main.rand.Next(3, 4));
+			player.QuickSpawnItem(ModContent.ItemType<HeartEmblem>(), 1);
 		}
 
 		public static short customGlowMask;

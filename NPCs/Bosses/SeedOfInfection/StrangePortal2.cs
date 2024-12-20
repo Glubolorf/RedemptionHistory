@@ -44,14 +44,14 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 			base.projectile.velocity.Y = 0f;
 			if (base.projectile.timeLeft <= 30)
 			{
-				if (modPlayer.alphaText > 0f)
+				if (modPlayer.alphaText < 255f)
 				{
-					modPlayer.alphaText -= 10f;
+					modPlayer.alphaText += 5f;
 				}
 			}
-			else if (modPlayer.alphaText < 255f)
+			else if (modPlayer.alphaText > 0f)
 			{
-				modPlayer.alphaText += 10f;
+				modPlayer.alphaText -= 5f;
 			}
 			float[] localAI = base.projectile.localAI;
 			int num = 0;
@@ -59,7 +59,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 			localAI[num] = num2;
 			if (num2 % 10f == 0f)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(0f, 0f), base.mod.ProjectileType("StrangePortal3"), 0, 0f, base.projectile.owner, (float)(this.rotSwitch ? 0 : 1), 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(0f, 0f), ModContent.ProjectileType<StrangePortal3>(), 0, 0f, base.projectile.owner, (float)(this.rotSwitch ? 0 : 1), 0f);
 				if (this.rotSwitch)
 				{
 					this.rotSwitch = false;
@@ -78,7 +78,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 			}
 			if (Main.netMode != 1)
 			{
-				int j = NPC.NewNPC((int)base.projectile.Center.X, (int)base.projectile.Center.Y, base.mod.NPCType("SoI"), 0, 0f, 0f, 0f, 0f, 255);
+				int j = NPC.NewNPC((int)base.projectile.Center.X, (int)base.projectile.Center.Y, ModContent.NPCType<SoI>(), 0, 0f, 0f, 0f, 0f, 255);
 				if (Main.netMode == 2)
 				{
 					NetMessage.SendData(23, -1, -1, null, j, 0f, 0f, 0f, 0, 0, 0);

@@ -57,7 +57,7 @@ namespace Redemption.Projectiles
 				dustIndex2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 6, 0f, 0f, 100, default(Color), 2f);
 				Main.dust[dustIndex2].velocity *= 3f;
 			}
-			Projectile.NewProjectile(base.projectile.position.X, base.projectile.position.Y, 0f, 0f, base.mod.ProjectileType("ElectronadeTeslaFieldH"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+			Projectile.NewProjectile(base.projectile.position.X, base.projectile.position.Y, 0f, 0f, ModContent.ProjectileType<ElectronadeTeslaFieldH>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 		}
 	}
 }

@@ -47,12 +47,11 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			int DustID2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y + 2f), base.projectile.width + 2, base.projectile.height + 2, 21, base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 1f);
+			int DustID2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 21, base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 1f);
 			Main.dust[DustID2].noGravity = true;
-			base.projectile.localAI[0] += 1f;
 			if (Main.myPlayer == base.projectile.owner && Main.rand.Next(80) == 0)
 			{
-				int p = Projectile.NewProjectile(base.projectile.Center, base.projectile.velocity, base.mod.ProjectileType("TheTrueViolin"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				int p = Projectile.NewProjectile(base.projectile.Center, base.projectile.velocity, ModContent.ProjectileType<TheTrueViolin>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 				Main.projectile[p].usesLocalNPCImmunity = true;
 				Main.projectile[p].localNPCHitCooldown = 3;
 			}

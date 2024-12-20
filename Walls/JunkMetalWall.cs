@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -10,7 +11,7 @@ namespace Redemption.Walls
 		public override void SetDefaults()
 		{
 			Main.wallHouse[(int)base.Type] = false;
-			this.drop = base.mod.ItemType("Cyberscrap");
+			this.drop = ModContent.ItemType<Cyberscrap>();
 			base.AddMapEntry(new Color(120, 100, 80), null);
 		}
 

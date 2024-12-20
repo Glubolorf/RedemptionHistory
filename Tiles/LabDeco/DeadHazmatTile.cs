@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Armor.Costumes;
+using Redemption.Items.Weapons;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -38,7 +40,7 @@ namespace Redemption.Tiles.LabDeco
 			Player localPlayer = Main.LocalPlayer;
 			localPlayer.noThrow = 2;
 			localPlayer.showItemIcon = true;
-			localPlayer.showItemIcon2 = base.mod.ItemType("HazmatSuit");
+			localPlayer.showItemIcon2 = ModContent.ItemType<HazmatSuit>();
 		}
 
 		public override bool NewRightClick(int i, int j)
@@ -48,8 +50,8 @@ namespace Redemption.Tiles.LabDeco
 			if (Main.tile[left, top].frameX == 0)
 			{
 				Player localPlayer = Main.LocalPlayer;
-				localPlayer.QuickSpawnItem(base.mod.ItemType("Crowbar"), 1);
-				localPlayer.QuickSpawnItem(base.mod.ItemType("HazmatSuit"), 1);
+				localPlayer.QuickSpawnItem(ModContent.ItemType<Crowbar>(), 1);
+				localPlayer.QuickSpawnItem(ModContent.ItemType<HazmatSuit>(), 1);
 			}
 			for (int x = left; x < left + 3; x++)
 			{
@@ -72,8 +74,8 @@ namespace Redemption.Tiles.LabDeco
 			if (Main.tile[left, top].frameX == 0)
 			{
 				Player localPlayer = Main.LocalPlayer;
-				localPlayer.QuickSpawnItem(base.mod.ItemType("Crowbar"), 1);
-				localPlayer.QuickSpawnItem(base.mod.ItemType("HazmatSuit"), 1);
+				localPlayer.QuickSpawnItem(ModContent.ItemType<Crowbar>(), 1);
+				localPlayer.QuickSpawnItem(ModContent.ItemType<HazmatSuit>(), 1);
 			}
 		}
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,7 +30,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
 			base.item.shootSpeed = 20f;
-			base.item.shoot = base.mod.ProjectileType("CursedOrbPro1");
+			base.item.shoot = ModContent.ProjectileType<CursedOrbPro1>();
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}
 

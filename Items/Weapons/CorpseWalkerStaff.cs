@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Projectiles.Minions;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,9 +31,9 @@ namespace Redemption.Items.Weapons
 			base.item.value = Item.buyPrice(0, 0, 5, 0);
 			base.item.rare = 0;
 			base.item.UseSound = SoundID.Item44;
-			base.item.shoot = base.mod.ProjectileType("CorpseWalkerSkull");
+			base.item.shoot = ModContent.ProjectileType<CorpseWalkerSkull>();
 			base.item.shootSpeed = 10f;
-			base.item.buffType = base.mod.BuffType("CorpseSkullBuff");
+			base.item.buffType = ModContent.BuffType<CorpseSkullBuff>();
 			base.item.buffTime = 3600;
 		}
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -20,7 +21,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.useTime = 7;
 			base.item.useAnimation = 7;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("TeslaLightning");
+			base.item.shoot = ModContent.ProjectileType<TeslaLightning>();
 			base.item.shootSpeed = 18f;
 			base.item.UseSound = SoundID.Item92;
 			base.item.ranged = true;

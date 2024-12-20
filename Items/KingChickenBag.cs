@@ -1,4 +1,8 @@
 ﻿using System;
+using Redemption.Items.Armor;
+using Redemption.Items.DruidDamageClass;
+using Redemption.Items.Weapons;
+using Redemption.NPCs.Bosses;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -31,7 +35,7 @@ namespace Redemption.Items
 		{
 			get
 			{
-				return base.mod.NPCType("KingChicken");
+				return ModContent.NPCType<KingChicken>();
 			}
 		}
 
@@ -39,18 +43,18 @@ namespace Redemption.Items
 		{
 			if (Main.rand.Next(7) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("KingChickenMask"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<KingChickenMask>(), 1);
 			}
 			if (Main.rand.Next(10) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("CrownOfTheKing"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<CrownOfTheKing>(), 1);
 			}
 			if (Main.rand.Next(3) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("EggStaff"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<EggStaff>(), 1);
 			}
-			player.QuickSpawnItem(base.mod.ItemType("SpiritOfLife"), 1);
-			player.QuickSpawnItem(base.mod.ItemType("Grain"), 1);
+			player.QuickSpawnItem(ModContent.ItemType<SpiritOfLife>(), 1);
+			player.QuickSpawnItem(ModContent.ItemType<Grain>(), 1);
 			player.QuickSpawnItem(264, 1);
 		}
 	}

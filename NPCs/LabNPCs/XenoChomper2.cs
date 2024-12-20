@@ -1,4 +1,6 @@
 ﻿using System;
+using Redemption.Buffs;
+using Redemption.Items.Placeable.Banners.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +32,7 @@ namespace Redemption.NPCs.LabNPCs
 			this.aiType = 58;
 			this.animationType = 58;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("XenoChomperBanner");
+			this.bannerItem = ModContent.ItemType<XenoChomperBanner>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -57,11 +59,11 @@ namespace Redemption.NPCs.LabNPCs
 		{
 			if (Main.rand.Next(2) == 0 || (Main.expertMode && Main.rand.Next(0) == 0))
 			{
-				target.AddBuff(base.mod.BuffType("XenomiteDebuff"), Main.rand.Next(500, 1000), true);
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff>(), Main.rand.Next(500, 1000), true);
 			}
 			if (Main.rand.Next(9) == 0 || (Main.expertMode && Main.rand.Next(7) == 0))
 			{
-				target.AddBuff(base.mod.BuffType("XenomiteDebuff2"), Main.rand.Next(250, 500), true);
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff2>(), Main.rand.Next(250, 500), true);
 			}
 		}
 	}

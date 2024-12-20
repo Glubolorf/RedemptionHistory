@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Dusts;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -44,7 +45,7 @@ namespace Redemption.Projectiles
 		{
 			if (Main.rand.Next(7) == 0)
 			{
-				Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, base.mod.DustType("VlitchFlame"), base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 0, default(Color), 1f);
+				Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, ModContent.DustType<VlitchFlame>(), base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 0, default(Color), 1f);
 			}
 		}
 

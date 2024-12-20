@@ -1,5 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Projectiles.DruidProjectiles.Stave;
+using Redemption.Projectiles.DruidProjectiles.Stave.Guardians;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -19,8 +22,8 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 			base.item.damage = 88;
 			base.item.width = 56;
 			base.item.height = 56;
-			base.item.useTime = 28;
-			base.item.useAnimation = 28;
+			base.item.useTime = 19;
+			base.item.useAnimation = 19;
 			base.item.crit = 4;
 			base.item.knockBack = 5f;
 			base.item.value = Item.sellPrice(0, 5, 60, 0);
@@ -28,11 +31,11 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 			base.item.UseSound = SoundID.Item43;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
-			base.item.shoot = base.mod.ProjectileType("ScarletShardPro");
+			base.item.shoot = ModContent.ProjectileType<ScarletShardPro>();
 			base.item.shootSpeed = 19f;
-			this.defaultShoot = base.mod.ProjectileType("ScarletShardPro");
-			this.guardianBuffID = base.mod.BuffType("NatureGuardian21Buff");
-			this.guardianProjectileID = base.mod.ProjectileType("NatureGuardian21");
+			this.defaultShoot = ModContent.ProjectileType<ScarletShardPro>();
+			this.guardianBuffID = ModContent.BuffType<NatureGuardian21Buff>();
+			this.guardianProjectileID = ModContent.ProjectileType<NatureGuardian21>();
 			this.guardianTime = 600;
 			this.singleShotStave = true;
 			this.staveHoldOffset = new Vector2(4f, -10f);

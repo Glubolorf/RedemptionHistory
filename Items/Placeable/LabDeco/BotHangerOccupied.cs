@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles.LabDeco;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -24,7 +25,7 @@ namespace Redemption.Items.Placeable.LabDeco
 			base.item.consumable = true;
 			base.item.value = Item.sellPrice(0, 1, 0, 0);
 			base.item.rare = 6;
-			base.item.createTile = base.mod.TileType("BotHangerOccupiedTile");
+			base.item.createTile = ModContent.TileType<BotHangerOccupiedTile>();
 			base.item.placeStyle = 0;
 		}
 

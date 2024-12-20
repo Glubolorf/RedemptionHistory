@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Projectiles.Minions;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,9 +31,9 @@ namespace Redemption.Items.Weapons.v08
 			base.item.value = Item.sellPrice(0, 0, 45, 0);
 			base.item.rare = 3;
 			base.item.UseSound = SoundID.Item44;
-			base.item.shoot = base.mod.ProjectileType("LavaCubeMinion");
+			base.item.shoot = ModContent.ProjectileType<LavaCubeMinion>();
 			base.item.shootSpeed = 10f;
-			base.item.buffType = base.mod.BuffType("LavaCubeBuff");
+			base.item.buffType = ModContent.BuffType<LavaCubeBuff>();
 			base.item.buffTime = 3600;
 		}
 
@@ -39,7 +41,7 @@ namespace Redemption.Items.Weapons.v08
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
 			modRecipe.AddIngredient(1309, 1);
-			modRecipe.AddIngredient(base.mod.ItemType("DragonLeadBar"), 7);
+			modRecipe.AddIngredient(ModContent.ItemType<DragonLeadBar>(), 7);
 			modRecipe.AddIngredient(175, 7);
 			modRecipe.AddTile(77);
 			modRecipe.SetResult(this, 1);

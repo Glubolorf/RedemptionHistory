@@ -2,6 +2,13 @@
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
+using Redemption.Items;
+using Redemption.Items.Armor;
+using Redemption.Items.Datalogs;
+using Redemption.Items.Placeable;
+using Redemption.Items.Weapons;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -32,15 +39,15 @@ namespace Redemption.NPCs.Bosses.KingSlayerIIIClone
 			base.npc.buffImmune[31] = true;
 			base.npc.buffImmune[39] = true;
 			base.npc.buffImmune[24] = true;
-			base.npc.buffImmune[base.mod.BuffType("UltraFlameDebuff")] = true;
-			base.npc.buffImmune[base.mod.BuffType("EnjoymentDebuff")] = true;
+			base.npc.buffImmune[ModContent.BuffType<UltraFlameDebuff>()] = true;
+			base.npc.buffImmune[ModContent.BuffType<EnjoymentDebuff>()] = true;
 			base.npc.lavaImmune = true;
 			base.npc.boss = true;
 			base.npc.aiStyle = 0;
 			base.npc.netAlways = true;
 			base.npc.noGravity = true;
 			base.npc.noTileCollide = true;
-			this.bossBag = base.mod.ItemType("SlayerBag");
+			this.bossBag = ModContent.ItemType<SlayerBag>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -76,7 +83,7 @@ namespace Redemption.NPCs.Bosses.KingSlayerIIIClone
 		{
 			if (Main.rand.Next(10) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("SlayerTrophy"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<SlayerTrophy>(), 1, false, 0, false, false);
 			}
 			if (Main.expertMode)
 			{
@@ -85,30 +92,30 @@ namespace Redemption.NPCs.Bosses.KingSlayerIIIClone
 			}
 			if (Main.rand.Next(7) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("KingSlayerMask"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<KingSlayerMask>(), 1, false, 0, false, false);
 			}
 			int num = Main.rand.Next(4);
 			if (num == 0)
 			{
-				this.player.QuickSpawnItem(base.mod.ItemType("SlayerFlamethrower"), 1);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<SlayerFlamethrower>(), 1, false, 0, false, false);
 			}
 			if (num == 1)
 			{
-				this.player.QuickSpawnItem(base.mod.ItemType("SlayerNanogun"), 1);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<SlayerNanogun>(), 1, false, 0, false, false);
 			}
 			if (num == 2)
 			{
-				this.player.QuickSpawnItem(base.mod.ItemType("SlayerFist"), 1);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<SlayerFist>(), 1, false, 0, false, false);
 			}
 			if (num == 3)
 			{
-				this.player.QuickSpawnItem(base.mod.ItemType("SlayerGun"), 1);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<SlayerGun>(), 1, false, 0, false, false);
 			}
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CyberPlating"), Main.rand.Next(8, 12), false, 0, false, false);
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("KingCore"), 1, false, 0, false, false);
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("SlayerMedal"), 1, false, 0, false, false);
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("Holokey"), 1, false, 0, false, false);
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("StarcruiserRadar"), 1, false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<CyberPlating>(), Main.rand.Next(8, 12), false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<KingCore>(), 1, false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<SlayerMedal>(), 1, false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<Holokey>(), 1, false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<StarcruiserRadar>(), 1, false, 0, false, false);
 		}
 
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
@@ -1280,20 +1287,20 @@ namespace Redemption.NPCs.Bosses.KingSlayerIIIClone
 					base.npc.dontTakeDamage = true;
 					if (this.customAI[1] == 260f)
 					{
-						int p64 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
-						int p65 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+						int p64 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), ModContent.ProjectileType<KSOrb1>(), 30, 3f, 255, 0f, 0f);
+						int p65 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), ModContent.ProjectileType<KSOrb1>(), 30, 3f, 255, 0f, 0f);
 						Main.projectile[p64].netUpdate = true;
 						Main.projectile[p65].netUpdate = true;
 					}
 					if (this.customAI[1] == 320f)
 					{
-						int p66 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
-						int p67 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+						int p66 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), ModContent.ProjectileType<KSOrb1>(), 30, 3f, 255, 0f, 0f);
+						int p67 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), ModContent.ProjectileType<KSOrb1>(), 30, 3f, 255, 0f, 0f);
 						Main.projectile[p66].netUpdate = true;
 						Main.projectile[p67].netUpdate = true;
 					}
 				}
-				if (this.customAI[1] >= 500f && !NPC.AnyNPCs(base.mod.NPCType("SpaceKeeper")))
+				if (this.customAI[1] >= 500f && !NPC.AnyNPCs(ModContent.NPCType<SpaceKeeper>()))
 				{
 					this.customAI[1] = 0f;
 					this.shieldEvent = KSEntranceClone.AISTATE_SHIELD1;
@@ -1328,25 +1335,25 @@ namespace Redemption.NPCs.Bosses.KingSlayerIIIClone
 				}
 				if (this.customAI[1] == 180f)
 				{
-					int p68 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+					int p68 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), ModContent.ProjectileType<KSOrb1>(), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p68].netUpdate = true;
 				}
 				if (this.customAI[1] == 240f)
 				{
-					int p69 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+					int p69 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), ModContent.ProjectileType<KSOrb1>(), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p69].netUpdate = true;
 				}
 				if (this.customAI[1] == 300f)
 				{
-					int p70 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+					int p70 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), ModContent.ProjectileType<KSOrb1>(), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p70].netUpdate = true;
 				}
 				if (this.customAI[1] == 360f)
 				{
-					int p71 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+					int p71 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), ModContent.ProjectileType<KSOrb1>(), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p71].netUpdate = true;
 				}
-				if (this.customAI[1] >= 570f && !NPC.AnyNPCs(base.mod.NPCType("SpaceKeeper")))
+				if (this.customAI[1] >= 570f && !NPC.AnyNPCs(ModContent.NPCType<SpaceKeeper>()))
 				{
 					this.customAI[1] = 0f;
 					this.shieldEvent = KSEntranceClone.AISTATE_SHIELD2;
@@ -1391,25 +1398,25 @@ namespace Redemption.NPCs.Bosses.KingSlayerIIIClone
 				}
 				if (this.customAI[1] == 60f)
 				{
-					int p72 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+					int p72 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), ModContent.ProjectileType<KSOrb1>(), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p72].netUpdate = true;
 				}
 				if (this.customAI[1] == 120f)
 				{
-					int p73 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+					int p73 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), ModContent.ProjectileType<KSOrb1>(), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p73].netUpdate = true;
 				}
 				if (this.customAI[1] == 180f)
 				{
-					int p74 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+					int p74 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), ModContent.ProjectileType<KSOrb1>(), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p74].netUpdate = true;
 				}
 				if (this.customAI[1] == 240f)
 				{
-					int p75 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+					int p75 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), ModContent.ProjectileType<KSOrb1>(), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p75].netUpdate = true;
 				}
-				if (this.customAI[1] >= 480f && !NPC.AnyNPCs(base.mod.NPCType("SpaceKeeper")))
+				if (this.customAI[1] >= 480f && !NPC.AnyNPCs(ModContent.NPCType<SpaceKeeper>()))
 				{
 					this.customAI[1] = 0f;
 					this.shieldEvent = KSEntranceClone.AISTATE_SHIELD3;
@@ -1483,25 +1490,25 @@ namespace Redemption.NPCs.Bosses.KingSlayerIIIClone
 				}
 				if (this.customAI[1] == 180f)
 				{
-					int p76 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+					int p76 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), ModContent.ProjectileType<KSOrb1>(), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p76].netUpdate = true;
 				}
 				if (this.customAI[1] == 240f)
 				{
-					int p77 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+					int p77 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), ModContent.ProjectileType<KSOrb1>(), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p77].netUpdate = true;
 				}
 				if (this.customAI[1] == 300f)
 				{
-					int p78 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+					int p78 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), ModContent.ProjectileType<KSOrb1>(), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p78].netUpdate = true;
 				}
 				if (this.customAI[1] == 360f)
 				{
-					int p79 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+					int p79 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), ModContent.ProjectileType<KSOrb1>(), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p79].netUpdate = true;
 				}
-				if (this.customAI[1] >= 580f && !NPC.AnyNPCs(base.mod.NPCType("SpaceKeeper")))
+				if (this.customAI[1] >= 580f && !NPC.AnyNPCs(ModContent.NPCType<SpaceKeeper>()))
 				{
 					this.customAI[2] += 1f;
 					if (this.customAI[2] == 50f && !RedeConfigClient.Instance.NoBossText)
@@ -1559,13 +1566,13 @@ namespace Redemption.NPCs.Bosses.KingSlayerIIIClone
 						if (base.npc.direction == -1)
 						{
 							Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-							int p80 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(-10f, 0f), base.mod.ProjectileType("KSFistR"), 35, 3f, 255, 0f, 0f);
+							int p80 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(-10f, 0f), ModContent.ProjectileType<KSFistR>(), 35, 3f, 255, 0f, 0f);
 							Main.projectile[p80].netUpdate = true;
 						}
 						else
 						{
 							Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-							int p81 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(10f, 0f), base.mod.ProjectileType("KSFistR"), 35, 3f, 255, 0f, 0f);
+							int p81 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(10f, 0f), ModContent.ProjectileType<KSFistR>(), 35, 3f, 255, 0f, 0f);
 							Main.projectile[p81].netUpdate = true;
 						}
 						base.npc.netUpdate = true;
@@ -1592,13 +1599,13 @@ namespace Redemption.NPCs.Bosses.KingSlayerIIIClone
 						if (base.npc.direction == -1)
 						{
 							Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-							int p82 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(-10f, 0f), base.mod.ProjectileType("KSFist"), 35, 3f, 255, 0f, 0f);
+							int p82 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(-10f, 0f), ModContent.ProjectileType<KSFist>(), 35, 3f, 255, 0f, 0f);
 							Main.projectile[p82].netUpdate = true;
 						}
 						else
 						{
 							Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-							int p83 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(10f, 0f), base.mod.ProjectileType("KSFist"), 35, 3f, 255, 0f, 0f);
+							int p83 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(10f, 0f), ModContent.ProjectileType<KSFist>(), 35, 3f, 255, 0f, 0f);
 							Main.projectile[p83].netUpdate = true;
 						}
 						base.npc.netUpdate = true;
@@ -1943,8 +1950,6 @@ namespace Redemption.NPCs.Bosses.KingSlayerIIIClone
 		private bool fightBegin;
 
 		private int deadTimer;
-
-		private bool phase2;
 
 		private bool idle2R;
 

@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -57,7 +59,7 @@ namespace Redemption.Projectiles.Minions
 					base.projectile.frame = 0;
 				}
 			}
-			bool flag27 = base.projectile.type == base.mod.ProjectileType("EaglecrestMinion");
+			bool flag27 = base.projectile.type == ModContent.ProjectileType<EaglecrestMinion>();
 			Player player = Main.player[base.projectile.owner];
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
 			if (flag27)
@@ -71,7 +73,7 @@ namespace Redemption.Projectiles.Minions
 					base.projectile.timeLeft = 2;
 				}
 			}
-			if (player.dead || !player.HasBuff(base.mod.BuffType("EaglecrestMinionBuff")))
+			if (player.dead || !player.HasBuff(ModContent.BuffType<EaglecrestMinionBuff>()))
 			{
 				base.projectile.Kill();
 			}
@@ -169,7 +171,7 @@ namespace Redemption.Projectiles.Minions
 					Vector2 value19 = vector46 - base.projectile.Center;
 					value19.Normalize();
 					value19 *= 16f;
-					int proj2 = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, value19.X, value19.Y, base.mod.ProjectileType("AncientBeam1"), base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
+					int proj2 = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, value19.X, value19.Y, ModContent.ProjectileType<AncientBeam1>(), base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
 					Main.projectile[proj2].hostile = false;
 					Main.projectile[proj2].friendly = true;
 					Main.projectile[proj2].magic = false;

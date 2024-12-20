@@ -74,7 +74,7 @@ namespace Redemption.NPCs.v08
 			{
 				CombatText.NewText(base.npc.getRect(), Color.ForestGreen, "*Groan*", true, true);
 			}
-			base.npc.SetDefaults(base.mod.NPCType("ForestGolem"), -1f);
+			base.npc.SetDefaults(ModContent.NPCType<ForestGolem>(), -1f);
 			return false;
 		}
 

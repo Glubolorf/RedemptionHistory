@@ -49,34 +49,18 @@ namespace Redemption.Projectiles
 			if (base.projectile.localAI[0] == 60f)
 			{
 				Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Alarm2").WithVolume(0.5f), base.projectile.position);
-				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y + 92f, 0f, 0f, base.mod.ProjectileType("MACEOrbLaser2"), 40, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y + 92f, 0f, 0f, ModContent.ProjectileType<MACEOrbLaser2>(), 40, 3f, 255, 0f, 0f);
 			}
-			if (base.projectile.localAI[0] == 64f)
+			if (base.projectile.localAI[0] >= 64f && base.projectile.localAI[0] % 4f == 0f && base.projectile.localAI[0] <= 80f)
 			{
-				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y + 92f, 0f, 0f, base.mod.ProjectileType("MACEOrbLaser2"), 40, 3f, 255, 0f, 0f);
-			}
-			if (base.projectile.localAI[0] == 68f)
-			{
-				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y + 92f, 0f, 0f, base.mod.ProjectileType("MACEOrbLaser2"), 40, 3f, 255, 0f, 0f);
-			}
-			if (base.projectile.localAI[0] == 72f)
-			{
-				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y + 92f, 0f, 0f, base.mod.ProjectileType("MACEOrbLaser2"), 40, 3f, 255, 0f, 0f);
-			}
-			if (base.projectile.localAI[0] == 76f)
-			{
-				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y + 92f, 0f, 0f, base.mod.ProjectileType("MACEOrbLaser2"), 40, 3f, 255, 0f, 0f);
-			}
-			if (base.projectile.localAI[0] == 80f)
-			{
-				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y + 92f, 0f, 0f, base.mod.ProjectileType("MACEOrbLaser2"), 40, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y + 92f, 0f, 0f, ModContent.ProjectileType<MACEOrbLaser2>(), 40, 3f, 255, 0f, 0f);
 			}
 		}
 
 		public override void Kill(int timeLeft)
 		{
 			Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Zap1").WithVolume(0.5f).WithPitchVariance(0.1f), base.projectile.position);
-			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y + 92f, 0f, 0f, base.mod.ProjectileType("MACEOrbLaser1"), 34, 3f, 255, 0f, 0f);
+			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y + 92f, 0f, 0f, ModContent.ProjectileType<MACEOrbLaser1>(), 34, 3f, 255, 0f, 0f);
 		}
 	}
 }

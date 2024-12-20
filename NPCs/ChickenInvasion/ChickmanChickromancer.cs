@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.ChickenArmy;
+using Redemption.Items.Weapons.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -37,11 +38,11 @@ namespace Redemption.NPCs.ChickenInvasion
 		{
 			if (Main.rand.Next(50) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("Chickronomicon"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<Chickronomicon>(), 1, false, 0, false, false);
 			}
 			if (Main.rand.Next(1200) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ChickLauncher"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<ChickLauncher>(), 1, false, 0, false, false);
 			}
 			if (ChickWorld.chickArmy)
 			{
@@ -96,7 +97,7 @@ namespace Redemption.NPCs.ChickenInvasion
 				}
 				if (this.attackTimer == 20 || this.attackTimer == 30)
 				{
-					int minion = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(-44, 45), (int)base.npc.position.Y + Main.rand.Next(-44, 0), base.mod.NPCType("BoneChicken"), 0, 0f, 0f, 0f, 0f, 255);
+					int minion = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(-44, 45), (int)base.npc.position.Y + Main.rand.Next(-44, 0), ModContent.NPCType<BoneChicken>(), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[minion].netUpdate = true;
 				}
 				if (this.attackTimer >= 45)

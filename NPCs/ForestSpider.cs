@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,7 +29,7 @@ namespace Redemption.NPCs
 			this.aiType = 219;
 			this.animationType = 164;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("ForestSpiderBanner");
+			this.bannerItem = ModContent.ItemType<ForestSpiderBanner>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)

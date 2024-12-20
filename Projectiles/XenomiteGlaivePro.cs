@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Dusts;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -67,7 +68,7 @@ namespace Redemption.Projectiles
 			player.itemTime = 2;
 			player.itemAnimation = 2;
 			player.itemRotation = base.projectile.rotation;
-			int dust = Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, base.mod.DustType("PuriumFlame"), 0f, 0f, 0, default(Color), 1f);
+			int dust = Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, ModContent.DustType<PuriumFlame>(), 0f, 0f, 0, default(Color), 1f);
 			Main.dust[dust].velocity /= 1f;
 		}
 

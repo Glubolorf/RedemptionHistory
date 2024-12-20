@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -36,6 +37,18 @@ namespace Redemption.NPCs.LabNPCs
 			if (base.npc.Distance(Main.player[base.npc.target].Center) >= 700f)
 			{
 				base.npc.active = false;
+			}
+		}
+
+		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+		{
+			if (Main.rand.Next(2) == 0 || Main.expertMode)
+			{
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff>(), Main.rand.Next(500, 1000), true);
+			}
+			if (Main.rand.Next(9) == 0 || (Main.expertMode && Main.rand.Next(7) == 0))
+			{
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff2>(), Main.rand.Next(250, 500), true);
 			}
 		}
 

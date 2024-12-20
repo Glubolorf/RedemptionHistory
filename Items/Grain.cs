@@ -1,4 +1,6 @@
 ﻿using System;
+using Redemption.Buffs;
+using Redemption.Projectiles.Pets;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -16,8 +18,8 @@ namespace Redemption.Items
 		{
 			base.item.CloneDefaults(2420);
 			base.item.value = 0;
-			base.item.shoot = base.mod.ProjectileType("ChickenPet");
-			base.item.buffType = base.mod.BuffType("ChickenBuff");
+			base.item.shoot = ModContent.ProjectileType<ChickenPet>();
+			base.item.buffType = ModContent.BuffType<ChickenBuff>();
 		}
 
 		public override void UseStyle(Player player)

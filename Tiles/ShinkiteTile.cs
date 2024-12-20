@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -16,7 +17,7 @@ namespace Redemption.Tiles
 			Main.tileBlockLight[(int)base.Type] = true;
 			Main.tileValue[(int)base.Type] = 780;
 			this.dustType = 6;
-			this.drop = base.mod.ItemType("UnrefinedShinkite");
+			this.drop = ModContent.ItemType<UnrefinedShinkite>();
 			this.minPick = 300;
 			this.mineResist = 10f;
 			this.soundType = 21;

@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles.Banners.v08;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -24,7 +25,7 @@ namespace Redemption.Items.Placeable.Banners.v08
 			base.item.consumable = true;
 			base.item.rare = 1;
 			base.item.value = Item.buyPrice(0, 0, 10, 0);
-			base.item.createTile = base.mod.TileType("RadioactiveSlimerBannerTile");
+			base.item.createTile = ModContent.TileType<RadioactiveSlimerBannerTile>();
 			base.item.placeStyle = 0;
 		}
 	}

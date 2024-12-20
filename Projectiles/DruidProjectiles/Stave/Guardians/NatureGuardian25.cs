@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Redemption.Items.DruidDamageClass;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -50,7 +52,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 				}
 			}
 			Player player = Main.player[base.projectile.owner];
-			if (!player.HasBuff(base.mod.BuffType("NatureGuardian25Buff")))
+			if (!player.HasBuff(ModContent.BuffType<NatureGuardian25Buff>()))
 			{
 				base.projectile.Kill();
 			}
@@ -104,29 +106,29 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 			base.projectile.position.Y = player.Center.Y - 150f;
 			if (RedeHelper.ClosestNPC(ref this.target, 900f, base.projectile.Center, false, player.MinionAttackTargetNPC) && base.projectile.localAI[0] % 30f == 0f)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center)), base.mod.ProjectileType("PixieSpark"), 5, 3f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center)), ModContent.ProjectileType<PixieSpark>(), 5, 3f, Main.myPlayer, 0f, 0f);
 			}
 			if (RedeHelper.ClosestNPC(ref this.target, 900f, base.projectile.Center, false, player.MinionAttackTargetNPC) && base.projectile.localAI[0] % 25f == 0f)
 			{
 				if (Main.rand.Next(5) == 0)
 				{
-					Projectile.NewProjectile(new Vector2((base.projectile.spriteDirection == -1) ? (base.projectile.position.X + 59f) : (base.projectile.position.X + 19f), base.projectile.position.Y + 39f), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center) + 25f), base.mod.ProjectileType("PixieCorruptSpark"), 5, 3f, Main.myPlayer, 0f, 0f);
-					Projectile.NewProjectile(new Vector2((base.projectile.spriteDirection == -1) ? (base.projectile.position.X + 59f) : (base.projectile.position.X + 19f), base.projectile.position.Y + 39f), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center) - 25f), base.mod.ProjectileType("PixieCorruptSpark"), 5, 3f, Main.myPlayer, 0f, 0f);
+					Projectile.NewProjectile(new Vector2((base.projectile.spriteDirection == -1) ? (base.projectile.position.X + 59f) : (base.projectile.position.X + 19f), base.projectile.position.Y + 39f), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center) + 25f), ModContent.ProjectileType<PixieCorruptSpark>(), 5, 3f, Main.myPlayer, 0f, 0f);
+					Projectile.NewProjectile(new Vector2((base.projectile.spriteDirection == -1) ? (base.projectile.position.X + 59f) : (base.projectile.position.X + 19f), base.projectile.position.Y + 39f), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center) - 25f), ModContent.ProjectileType<PixieCorruptSpark>(), 5, 3f, Main.myPlayer, 0f, 0f);
 				}
-				Projectile.NewProjectile(new Vector2((base.projectile.spriteDirection == -1) ? (base.projectile.position.X + 59f) : (base.projectile.position.X + 19f), base.projectile.position.Y + 39f), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center)), base.mod.ProjectileType("PixieCorruptSpark"), 5, 3f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(new Vector2((base.projectile.spriteDirection == -1) ? (base.projectile.position.X + 59f) : (base.projectile.position.X + 19f), base.projectile.position.Y + 39f), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center)), ModContent.ProjectileType<PixieCorruptSpark>(), 5, 3f, Main.myPlayer, 0f, 0f);
 			}
 			if (RedeHelper.ClosestNPC(ref this.target, 900f, base.projectile.Center, false, player.MinionAttackTargetNPC) && base.projectile.localAI[0] % 30f == 0f)
 			{
 				if (Main.rand.Next(3) == 0)
 				{
-					Projectile.NewProjectile(new Vector2((base.projectile.spriteDirection == -1) ? (base.projectile.position.X + 12f) : (base.projectile.position.X + 66f), base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center) + 25f), base.mod.ProjectileType("PixieAncientSpark"), 8, 3f, Main.myPlayer, 0f, 0f);
-					Projectile.NewProjectile(new Vector2((base.projectile.spriteDirection == -1) ? (base.projectile.position.X + 12f) : (base.projectile.position.X + 66f), base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center) - 25f), base.mod.ProjectileType("PixieAncientSpark"), 8, 3f, Main.myPlayer, 0f, 0f);
+					Projectile.NewProjectile(new Vector2((base.projectile.spriteDirection == -1) ? (base.projectile.position.X + 12f) : (base.projectile.position.X + 66f), base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center) + 25f), ModContent.ProjectileType<PixieAncientSpark>(), 8, 3f, Main.myPlayer, 0f, 0f);
+					Projectile.NewProjectile(new Vector2((base.projectile.spriteDirection == -1) ? (base.projectile.position.X + 12f) : (base.projectile.position.X + 66f), base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center) - 25f), ModContent.ProjectileType<PixieAncientSpark>(), 8, 3f, Main.myPlayer, 0f, 0f);
 				}
-				Projectile.NewProjectile(new Vector2((base.projectile.spriteDirection == -1) ? (base.projectile.position.X + 12f) : (base.projectile.position.X + 66f), base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center)), base.mod.ProjectileType("PixieAncientSpark"), 8, 3f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(new Vector2((base.projectile.spriteDirection == -1) ? (base.projectile.position.X + 12f) : (base.projectile.position.X + 66f), base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center)), ModContent.ProjectileType<PixieAncientSpark>(), 8, 3f, Main.myPlayer, 0f, 0f);
 			}
 			if (base.projectile.localAI[0] % 180f == 0f)
 			{
-				Projectile.NewProjectile(new Vector2((base.projectile.spriteDirection == -1) ? (base.projectile.position.X + 28f) : (base.projectile.position.X + 50f), base.projectile.Center.Y), new Vector2(0f, 0f), base.mod.ProjectileType("SunPulse"), 40, 3f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(new Vector2((base.projectile.spriteDirection == -1) ? (base.projectile.position.X + 28f) : (base.projectile.position.X + 50f), base.projectile.Center.Y), new Vector2(0f, 0f), ModContent.ProjectileType<SunPulse>(), 40, 3f, Main.myPlayer, 0f, 0f);
 			}
 			if (RedeHelper.ClosestNPC(ref this.target, 900f, base.projectile.Center, false, player.MinionAttackTargetNPC) && base.projectile.localAI[0] % 30f == 0f)
 			{
@@ -192,18 +194,6 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 				Main.dust[dustIndex6].velocity *= 1.4f;
 			}
 		}
-
-		private int shootTimer;
-
-		private int shootTimer2;
-
-		private int shootTimer3;
-
-		private int shootTimer4;
-
-		private int shootTimer5;
-
-		private int shootTimer6;
 
 		private NPC target;
 	}

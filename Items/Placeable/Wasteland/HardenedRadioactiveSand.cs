@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles.Wasteland;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.Wasteland
@@ -22,7 +23,7 @@ namespace Redemption.Items.Placeable.Wasteland
 			base.item.useStyle = 1;
 			base.item.value = 0;
 			base.item.consumable = true;
-			base.item.createTile = base.mod.TileType("HardenedRadioactiveSandTile");
+			base.item.createTile = ModContent.TileType<HardenedRadioactiveSandTile>();
 		}
 	}
 }

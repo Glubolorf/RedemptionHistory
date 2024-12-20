@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.DruidProjectiles.Plants
 {
@@ -65,7 +66,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 			base.projectile.localAI[0] += 1f;
 			if (base.projectile.localAI[0] % 30f == 0f && base.projectile.frame >= 4)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 12f, base.projectile.position.Y + 8f), base.projectile.velocity, base.mod.ProjectileType("PollenCloud3"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 12f, base.projectile.position.Y + 8f), base.projectile.velocity, ModContent.ProjectileType<PollenCloud3>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
 			}
 		}
 

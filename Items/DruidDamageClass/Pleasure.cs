@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.DruidProjectiles.Stave;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,9 +29,9 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.UseSound = SoundID.Item43;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
-			base.item.shoot = base.mod.ProjectileType("PleasurePro1");
+			base.item.shoot = ModContent.ProjectileType<PleasurePro1>();
 			base.item.shootSpeed = 15f;
-			this.defaultShoot = base.mod.ProjectileType("PleasurePro1");
+			this.defaultShoot = ModContent.ProjectileType<PleasurePro1>();
 			this.singleShotStave = true;
 			this.staveHoldOffset = new Vector2(4f, -10f);
 			this.staveLength = 60.2f;

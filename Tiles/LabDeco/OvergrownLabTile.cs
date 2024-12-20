@@ -1,5 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Items.Placeable;
+using Redemption.Tiles.LabDeco.Overgrown;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -12,9 +15,9 @@ namespace Redemption.Tiles.LabDeco
 			Main.tileSolid[(int)base.Type] = true;
 			Main.tileMergeDirt[(int)base.Type] = true;
 			Main.tileBlockLight[(int)base.Type] = true;
-			Main.tileMerge[(int)base.Type][base.mod.TileType("LabTileUnsafe")] = true;
+			Main.tileMerge[(int)base.Type][ModContent.TileType<LabTileUnsafe>()] = true;
 			this.dustType = 226;
-			this.drop = base.mod.ItemType("LabPlating");
+			this.drop = ModContent.ItemType<LabPlating>();
 			this.minPick = 500;
 			this.mineResist = 3f;
 			this.soundType = 21;
@@ -27,7 +30,7 @@ namespace Redemption.Tiles.LabDeco
 			Player player = Main.LocalPlayer;
 			if ((int)Vector2.Distance(player.Center / 16f, new Vector2((float)i, (float)j)) <= 15)
 			{
-				player.AddBuff(base.mod.BuffType("RadioactiveFalloutDebuff"), Main.rand.Next(10, 20), true);
+				player.AddBuff(ModContent.BuffType<RadioactiveFalloutDebuff>(), Main.rand.Next(10, 20), true);
 				player.enemySpawns = false;
 			}
 		}
@@ -54,32 +57,32 @@ namespace Redemption.Tiles.LabDeco
 				switch (Main.rand.Next(7))
 				{
 				case 0:
-					OvergrownLabTile.PlaceObject(i, j - 1, base.mod.TileType("LabShrub1"), false, 0, 0, -1, -1);
-					NetMessage.SendObjectPlacment(-1, i, j - 1, base.mod.TileType("LabShrub1"), 0, 0, -1, -1);
+					OvergrownLabTile.PlaceObject(i, j - 1, ModContent.TileType<LabShrub1>(), false, 0, 0, -1, -1);
+					NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<LabShrub1>(), 0, 0, -1, -1);
 					return;
 				case 1:
-					OvergrownLabTile.PlaceObject(i, j - 1, base.mod.TileType("LabShrub2"), false, 0, 0, -1, -1);
-					NetMessage.SendObjectPlacment(-1, i, j - 1, base.mod.TileType("LabShrub2"), 0, 0, -1, -1);
+					OvergrownLabTile.PlaceObject(i, j - 1, ModContent.TileType<LabShrub2>(), false, 0, 0, -1, -1);
+					NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<LabShrub2>(), 0, 0, -1, -1);
 					return;
 				case 2:
-					OvergrownLabTile.PlaceObject(i, j - 1, base.mod.TileType("LabShrub3"), false, 0, 0, -1, -1);
-					NetMessage.SendObjectPlacment(-1, i, j - 1, base.mod.TileType("LabShrub3"), 0, 0, -1, -1);
+					OvergrownLabTile.PlaceObject(i, j - 1, ModContent.TileType<LabShrub3>(), false, 0, 0, -1, -1);
+					NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<LabShrub3>(), 0, 0, -1, -1);
 					return;
 				case 3:
-					OvergrownLabTile.PlaceObject(i, j - 1, base.mod.TileType("LabShrub4"), false, 0, 0, -1, -1);
-					NetMessage.SendObjectPlacment(-1, i, j - 1, base.mod.TileType("LabShrub4"), 0, 0, -1, -1);
+					OvergrownLabTile.PlaceObject(i, j - 1, ModContent.TileType<LabShrub4>(), false, 0, 0, -1, -1);
+					NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<LabShrub4>(), 0, 0, -1, -1);
 					return;
 				case 4:
-					OvergrownLabTile.PlaceObject(i, j - 1, base.mod.TileType("LabShrub5"), false, 0, 0, -1, -1);
-					NetMessage.SendObjectPlacment(-1, i, j - 1, base.mod.TileType("LabShrub5"), 0, 0, -1, -1);
+					OvergrownLabTile.PlaceObject(i, j - 1, ModContent.TileType<LabShrub5>(), false, 0, 0, -1, -1);
+					NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<LabShrub5>(), 0, 0, -1, -1);
 					return;
 				case 5:
-					OvergrownLabTile.PlaceObject(i, j - 1, base.mod.TileType("LabShrub6"), false, 0, 0, -1, -1);
-					NetMessage.SendObjectPlacment(-1, i, j - 1, base.mod.TileType("LabShrub6"), 0, 0, -1, -1);
+					OvergrownLabTile.PlaceObject(i, j - 1, ModContent.TileType<LabShrub6>(), false, 0, 0, -1, -1);
+					NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<LabShrub6>(), 0, 0, -1, -1);
 					return;
 				default:
-					OvergrownLabTile.PlaceObject(i, j - 1, base.mod.TileType("LabShrub7"), false, 0, 0, -1, -1);
-					NetMessage.SendObjectPlacment(-1, i, j - 1, base.mod.TileType("LabShrub7"), 0, 0, -1, -1);
+					OvergrownLabTile.PlaceObject(i, j - 1, ModContent.TileType<LabShrub7>(), false, 0, 0, -1, -1);
+					NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<LabShrub7>(), 0, 0, -1, -1);
 					break;
 				}
 			}

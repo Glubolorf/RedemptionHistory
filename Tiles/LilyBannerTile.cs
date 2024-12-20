@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Items.Placeable;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -34,7 +36,7 @@ namespace Redemption.Tiles
 		{
 			if (closer)
 			{
-				Main.LocalPlayer.AddBuff(base.mod.BuffType("LilyBuff"), Main.rand.Next(10, 20), true);
+				Main.LocalPlayer.AddBuff(ModContent.BuffType<LilyBuff>(), Main.rand.Next(10, 20), true);
 			}
 		}
 
@@ -45,7 +47,7 @@ namespace Redemption.Tiles
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 48, 32, base.mod.ItemType("LilyBanner"), 1, false, 0, false, false);
+			Item.NewItem(i * 16, j * 16, 48, 32, ModContent.ItemType<LilyBanner>(), 1, false, 0, false, false);
 		}
 	}
 }

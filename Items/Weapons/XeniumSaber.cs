@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -41,7 +42,7 @@ namespace Redemption.Items.Weapons
 			base.item.useTurn = true;
 			base.item.noMelee = true;
 			base.item.noUseGraphic = true;
-			base.item.shoot = base.mod.ProjectileType("XeniumSaberSlash");
+			base.item.shoot = ModContent.ProjectileType<XeniumSaberSlash>();
 			base.item.glowMask = XeniumSaber.customGlowMask;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}

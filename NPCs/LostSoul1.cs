@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,7 +29,7 @@ namespace Redemption.NPCs
 			base.npc.alpha = 100;
 			base.npc.noGravity = true;
 			this.aiType = 288;
-			base.npc.catchItem = (short)base.mod.ItemType("SmallLostSoul");
+			base.npc.catchItem = (short)ModContent.ItemType<SmallLostSoul>();
 		}
 
 		public override void AI()
@@ -50,7 +51,7 @@ namespace Redemption.NPCs
 
 		public override void NPCLoot()
 		{
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("SmallLostSoul"), 1, false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<SmallLostSoul>(), 1, false, 0, false, false);
 		}
 
 		public override bool CanHitPlayer(Player target, ref int cooldownSlot)

@@ -53,7 +53,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 			int pieCut = 5;
 			for (int i = 0; i < pieCut; i++)
 			{
-				int projID = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, base.mod.ProjectileType("CrystalStarPro2"), 30, 3f, 255, 0f, 0f);
+				int projID = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, ModContent.ProjectileType<CrystalStarPro2>(), 30, 3f, 255, 0f, 0f);
 				Main.projectile[projID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(8f, 0f), (float)i / (float)pieCut * 6.28f);
 			}
 		}

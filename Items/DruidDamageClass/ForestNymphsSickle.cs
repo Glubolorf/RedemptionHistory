@@ -1,6 +1,8 @@
 ﻿using System;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
@@ -27,7 +29,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.UseSound = SoundID.Item71;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
-			base.item.shoot = base.mod.ProjectileType("ForestSicklePro4");
+			base.item.shoot = ModContent.ProjectileType<ForestSicklePro4>();
 			base.item.shootSpeed = 7f;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 5;
 		}

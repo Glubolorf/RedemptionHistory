@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.NPCs.Bosses.Thorn;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,7 +32,7 @@ namespace Redemption.Items
 
 		public override bool CanUseItem(Player player)
 		{
-			return Main.dayTime && !NPC.AnyNPCs(base.mod.NPCType("Thorn")) && !NPC.AnyNPCs(base.mod.NPCType("ThornPZ"));
+			return Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<Thorn>()) && !NPC.AnyNPCs(ModContent.NPCType<ThornPZ>());
 		}
 
 		public override void AddRecipes()
@@ -47,7 +48,7 @@ namespace Redemption.Items
 
 		public override bool UseItem(Player player)
 		{
-			NPC.SpawnOnPlayer(player.whoAmI, base.mod.NPCType("Thorn"));
+			NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<Thorn>());
 			Main.PlaySound(15, player.position, 0);
 			return true;
 		}

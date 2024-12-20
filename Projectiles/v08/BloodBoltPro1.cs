@@ -79,7 +79,7 @@ namespace Redemption.Projectiles.v08
 				float y = vector14.Y;
 				float speedX5 = num77;
 				float speedY6 = y + (float)Main.rand.Next(-40, 41) * 0.02f;
-				Projectile.NewProjectile(vector13.X, vector13.Y, speedX5, speedY6, base.mod.ProjectileType("BloodBoltPro2"), damage / 2, 0f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(vector13.X, vector13.Y, speedX5, speedY6, ModContent.ProjectileType<BloodBoltPro2>(), damage / 2, 0f, Main.myPlayer, 0f, 0f);
 			}
 		}
 

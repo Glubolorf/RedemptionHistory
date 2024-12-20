@@ -1,5 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Projectiles.DruidProjectiles.Stave;
+using Redemption.Projectiles.DruidProjectiles.Stave.Guardians;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -19,8 +22,8 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 			base.item.damage = 93;
 			base.item.width = 58;
 			base.item.height = 54;
-			base.item.useTime = 35;
-			base.item.useAnimation = 35;
+			base.item.useTime = 23;
+			base.item.useAnimation = 23;
 			base.item.crit = 4;
 			base.item.knockBack = 7f;
 			base.item.value = Item.sellPrice(0, 5, 60, 0);
@@ -28,11 +31,11 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 			base.item.UseSound = SoundID.Item43;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
-			base.item.shoot = base.mod.ProjectileType("SapphireScythePro");
+			base.item.shoot = ModContent.ProjectileType<SapphireScythePro>();
 			base.item.shootSpeed = 16f;
-			this.defaultShoot = base.mod.ProjectileType("SapphireScythePro");
-			this.guardianBuffID = base.mod.BuffType("NatureGuardian20Buff");
-			this.guardianProjectileID = base.mod.ProjectileType("NatureGuardian20");
+			this.defaultShoot = ModContent.ProjectileType<SapphireScythePro>();
+			this.guardianBuffID = ModContent.BuffType<NatureGuardian20Buff>();
+			this.guardianProjectileID = ModContent.ProjectileType<NatureGuardian20>();
 			this.guardianTime = 600;
 			this.singleShotStave = true;
 			this.staveHoldOffset = new Vector2(4f, -10f);

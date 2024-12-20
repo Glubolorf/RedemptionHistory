@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -27,7 +28,7 @@ namespace Redemption.NPCs
 			this.aiType = 1;
 			this.animationType = 302;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("LivingBloomBanner");
+			this.bannerItem = ModContent.ItemType<LivingBloomBanner>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)

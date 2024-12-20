@@ -1,5 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Armor;
+using Redemption.Items.Weapons;
+using Redemption.NPCs.Bosses;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -20,7 +23,7 @@ namespace Redemption.Items
 				VlitchCleaverBag.customGlowMask = (short)(glowMasks.Length - 1);
 				Main.glowMaskTexture = glowMasks;
 			}
-			base.DisplayName.SetDefault("Treasure Bag");
+			base.DisplayName.SetDefault("Treasure Box");
 			base.Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
 		}
 
@@ -44,7 +47,7 @@ namespace Redemption.Items
 		{
 			get
 			{
-				return base.mod.NPCType("VlitchCleaver");
+				return ModContent.NPCType<VlitchCleaver>();
 			}
 		}
 
@@ -52,24 +55,24 @@ namespace Redemption.Items
 		{
 			if (Main.rand.Next(20) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("IntruderMask"), 1);
-				player.QuickSpawnItem(base.mod.ItemType("IntruderArmour"), 1);
-				player.QuickSpawnItem(base.mod.ItemType("IntruderPants"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<IntruderMask>(), 1);
+				player.QuickSpawnItem(ModContent.ItemType<IntruderArmour>(), 1);
+				player.QuickSpawnItem(ModContent.ItemType<IntruderPants>(), 1);
 			}
 			if (Main.rand.Next(14) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("GirusMask"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<GirusMask>(), 1);
 			}
 			if (Main.rand.Next(3) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("GirusDagger"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<GirusDagger>(), 1);
 			}
 			if (Main.rand.Next(3) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("GirusLance"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<GirusLance>(), 1);
 			}
-			player.QuickSpawnItem(base.mod.ItemType("CorruptedXenomite"), Main.rand.Next(12, 24));
-			player.QuickSpawnItem(base.mod.ItemType("VlitchBattery"), Main.rand.Next(1, 3));
+			player.QuickSpawnItem(ModContent.ItemType<CorruptedXenomite>(), Main.rand.Next(12, 24));
+			player.QuickSpawnItem(ModContent.ItemType<VlitchBattery>(), Main.rand.Next(1, 3));
 		}
 
 		public static short customGlowMask;

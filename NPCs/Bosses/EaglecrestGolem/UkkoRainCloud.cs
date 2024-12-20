@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Redemption.NPCs.Bosses.Thorn;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -55,7 +57,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 				{
 					if (base.projectile != proj && !proj.friendly && !proj.minion && base.projectile.localAI[0] == 0f)
 					{
-						if (proj.type == base.mod.ProjectileType("UkkoBlizzard"))
+						if (proj.type == ModContent.ProjectileType<UkkoBlizzard>())
 						{
 							for (int i = 0; i < 20; i++)
 							{
@@ -64,7 +66,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 							}
 							base.projectile.localAI[0] = 1f;
 						}
-						else if (proj.type == base.mod.ProjectileType("DualcastBall") || proj.type == base.mod.ProjectileType("UkkoLightning") || proj.type == base.mod.ProjectileType("UkkoThunderwave") || proj.type == base.mod.ProjectileType("UkkoZap2"))
+						else if (proj.type == ModContent.ProjectileType<DualcastBall>() || proj.type == ModContent.ProjectileType<UkkoLightning>() || proj.type == ModContent.ProjectileType<UkkoThunderwave>() || proj.type == ModContent.ProjectileType<UkkoZap2>())
 						{
 							Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Zap1").WithVolume(0.3f).WithPitchVariance(0.1f), -1, -1);
 							for (int j = 0; j < 20; j++)
@@ -74,7 +76,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 							}
 							base.projectile.localAI[0] = 2f;
 						}
-						else if (proj.type == base.mod.ProjectileType("AkkaPoisonBubble"))
+						else if (proj.type == ModContent.ProjectileType<AkkaPoisonBubble>())
 						{
 							for (int k = 0; k < 20; k++)
 							{
@@ -83,7 +85,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 							}
 							base.projectile.localAI[0] = 3f;
 						}
-						else if (proj.type == base.mod.ProjectileType("AkkaHealingSpirit"))
+						else if (proj.type == ModContent.ProjectileType<AkkaHealingSpirit>())
 						{
 							for (int l = 0; l < 20; l++)
 							{
@@ -98,7 +100,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 				{
 					if (Main.rand.Next(5) == 0)
 					{
-						Projectile.NewProjectile(new Vector2(base.projectile.Center.X + (float)Main.rand.Next(-150, 150), base.projectile.Center.Y + (float)Main.rand.Next(4, 8)), new Vector2(0f, 0f), base.mod.ProjectileType("UkkoRain"), 0, 0f, base.projectile.owner, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.Center.X + (float)Main.rand.Next(-150, 150), base.projectile.Center.Y + (float)Main.rand.Next(4, 8)), new Vector2(0f, 0f), ModContent.ProjectileType<UkkoRain>(), 0, 0f, base.projectile.owner, 0f, 0f);
 						return;
 					}
 				}
@@ -106,7 +108,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 				{
 					if (Main.rand.Next(5) == 0)
 					{
-						Projectile.NewProjectile(new Vector2(base.projectile.Center.X + (float)Main.rand.Next(-150, 150), base.projectile.Center.Y + (float)Main.rand.Next(4, 8)), new Vector2(0f, 0f), base.mod.ProjectileType("UkkoHail"), 0, 0f, base.projectile.owner, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.Center.X + (float)Main.rand.Next(-150, 150), base.projectile.Center.Y + (float)Main.rand.Next(4, 8)), new Vector2(0f, 0f), ModContent.ProjectileType<UkkoHail>(), 0, 0f, base.projectile.owner, 0f, 0f);
 					}
 					float[] localAI = base.projectile.localAI;
 					int num = 1;
@@ -124,7 +126,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 					if (Main.rand.Next(3) == 0)
 					{
 						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Zap2").WithVolume(0.2f).WithPitchVariance(0.1f), -1, -1);
-						Projectile.NewProjectile(new Vector2(base.projectile.Center.X + (float)Main.rand.Next(-150, 150), base.projectile.Center.Y + (float)Main.rand.Next(4, 8)), new Vector2(0f, 9f), base.mod.ProjectileType("ElectricZapPro1"), 28, 0f, base.projectile.owner, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.Center.X + (float)Main.rand.Next(-150, 150), base.projectile.Center.Y + (float)Main.rand.Next(4, 8)), new Vector2(0f, 9f), ModContent.ProjectileType<ElectricZapPro1>(), 28, 0f, base.projectile.owner, 0f, 0f);
 					}
 					float[] localAI2 = base.projectile.localAI;
 					int num3 = 1;
@@ -141,7 +143,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 				{
 					if (Main.rand.Next(5) == 0)
 					{
-						Projectile.NewProjectile(new Vector2(base.projectile.Center.X + (float)Main.rand.Next(-150, 150), base.projectile.Center.Y + (float)Main.rand.Next(4, 8)), new Vector2(0f, 0f), base.mod.ProjectileType("UkkoRainPoison"), 0, 0f, base.projectile.owner, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.Center.X + (float)Main.rand.Next(-150, 150), base.projectile.Center.Y + (float)Main.rand.Next(4, 8)), new Vector2(0f, 0f), ModContent.ProjectileType<UkkoRainPoison>(), 0, 0f, base.projectile.owner, 0f, 0f);
 					}
 					float[] localAI3 = base.projectile.localAI;
 					int num4 = 1;
@@ -158,7 +160,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 				{
 					if (Main.rand.Next(5) == 0)
 					{
-						Projectile.NewProjectile(new Vector2(base.projectile.Center.X + (float)Main.rand.Next(-150, 150), base.projectile.Center.Y + (float)Main.rand.Next(4, 8)), new Vector2(0f, 0f), base.mod.ProjectileType("UkkoRainHealing"), 0, 0f, base.projectile.owner, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.Center.X + (float)Main.rand.Next(-150, 150), base.projectile.Center.Y + (float)Main.rand.Next(4, 8)), new Vector2(0f, 0f), ModContent.ProjectileType<UkkoRainHealing>(), 0, 0f, base.projectile.owner, 0f, 0f);
 					}
 					float[] localAI4 = base.projectile.localAI;
 					int num5 = 1;

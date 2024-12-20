@@ -51,14 +51,14 @@ namespace Redemption.Projectiles
 			}
 			Lighting.AddLight(base.projectile.Center, (float)(255 - base.projectile.alpha) * 0.5f / 255f, (float)(255 - base.projectile.alpha) * 0.3f / 255f, (float)(255 - base.projectile.alpha) * 0f / 255f);
 			base.projectile.rotation = (float)Math.Atan2((double)base.projectile.velocity.Y, (double)base.projectile.velocity.X) + 1.57f;
-			base.projectile.localAI[0] += 1f;
-			if (base.projectile.localAI[0] == 1f)
+			if (base.projectile.localAI[0] == 0f)
 			{
 				for (int i = 0; i < 20; i++)
 				{
 					int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 6, 0f, 0f, 100, default(Color), 2f);
 					Main.dust[dustIndex].velocity *= 1.3f;
 				}
+				base.projectile.localAI[0] = 1f;
 			}
 		}
 

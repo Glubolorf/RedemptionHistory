@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,10 +30,9 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			base.projectile.localAI[0] += 1f;
-			base.projectile.alpha = (int)base.projectile.localAI[0] * 2;
+			base.projectile.alpha += 2;
 			base.projectile.rotation += 0.07f;
-			if (base.projectile.localAI[0] >= 60f)
+			if ((float)base.projectile.alpha >= 255f)
 			{
 				base.projectile.Kill();
 			}
@@ -77,7 +77,7 @@ namespace Redemption.Projectiles
 
 		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
 		{
-			target.AddBuff(base.mod.BuffType("GloomShroomDebuff"), Main.rand.Next(200, 400), true);
+			target.AddBuff(ModContent.BuffType<GloomShroomDebuff>(), Main.rand.Next(200, 400), true);
 		}
 	}
 }

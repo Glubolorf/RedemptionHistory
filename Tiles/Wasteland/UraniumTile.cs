@@ -16,7 +16,7 @@ namespace Redemption.Tiles.Wasteland
 			Main.tileLighted[(int)base.Type] = true;
 			Main.tileValue[(int)base.Type] = 660;
 			this.dustType = 226;
-			this.drop = base.mod.ItemType("Uranium");
+			this.drop = ModContent.ItemType<Uranium>();
 			this.minPick = 210;
 			this.mineResist = 7f;
 			this.soundType = 21;

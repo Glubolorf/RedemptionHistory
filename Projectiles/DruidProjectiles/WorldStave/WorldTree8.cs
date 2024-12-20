@@ -66,7 +66,7 @@ namespace Redemption.Projectiles.DruidProjectiles.WorldStave
 			projectile4.velocity.Y = projectile4.velocity.Y + 1f;
 			if (base.projectile.localAI[0] == 100f)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 32f, base.projectile.position.Y + 44f), base.projectile.velocity, base.mod.ProjectileType("CaveAura"), 0, 0f, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 32f, base.projectile.position.Y + 44f), base.projectile.velocity, ModContent.ProjectileType<CaveAura>(), 0, 0f, base.projectile.owner, (float)base.projectile.whoAmI, 0f);
 			}
 			if (base.projectile.localAI[0] >= 1000f)
 			{

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -51,7 +52,7 @@ namespace Redemption.Items.Armor
 
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
-			return body.type == base.mod.ItemType("GodArmor") && legs.type == base.mod.ItemType("GodArmorLeggings");
+			return body.type == ModContent.ItemType<GodArmor>() && legs.type == ModContent.ItemType<GodArmorLeggings>();
 		}
 
 		public override void UpdateArmorSet(Player player)
@@ -61,10 +62,10 @@ namespace Redemption.Items.Armor
 			player.armorPenetration += 50;
 			player.aggro += 5;
 			player.noKnockback = true;
-			player.buffImmune[base.mod.BuffType("XenomiteDebuff")] = true;
-			player.buffImmune[base.mod.BuffType("XenomiteDebuff2")] = true;
-			player.buffImmune[base.mod.BuffType("RadioactiveFalloutDebuff")] = true;
-			player.buffImmune[base.mod.BuffType("GloomShroomDebuff")] = true;
+			player.buffImmune[ModContent.BuffType<XenomiteDebuff>()] = true;
+			player.buffImmune[ModContent.BuffType<XenomiteDebuff2>()] = true;
+			player.buffImmune[ModContent.BuffType<RadioactiveFalloutDebuff>()] = true;
+			player.buffImmune[ModContent.BuffType<GloomShroomDebuff>()] = true;
 			player.buffImmune[30] = true;
 			player.buffImmune[20] = true;
 			player.buffImmune[24] = true;

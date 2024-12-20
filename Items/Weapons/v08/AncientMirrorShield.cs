@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -24,16 +26,16 @@ namespace Redemption.Items.Weapons.v08
 			base.item.useStyle = 1;
 			base.item.value = Item.sellPrice(0, 45, 0, 0);
 			base.item.UseSound = SoundID.Item44;
-			base.item.shoot = base.mod.ProjectileType("AncientMirrorShieldPro");
+			base.item.shoot = ModContent.ProjectileType<AncientMirrorShieldPro>();
 			base.item.shootSpeed = 0f;
-			base.item.buffType = base.mod.BuffType("AncientMirrorBuff");
+			base.item.buffType = ModContent.BuffType<AncientMirrorBuff>();
 			base.item.buffTime = 36000;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			return player.ownedProjectileCounts[base.mod.ProjectileType("AncientMirrorShieldPro")] == 0;
+			return player.ownedProjectileCounts[ModContent.ProjectileType<AncientMirrorShieldPro>()] == 0;
 		}
 
 		public override void AddRecipes()

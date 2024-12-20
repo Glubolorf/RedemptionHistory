@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items;
+using Redemption.Items.Quest;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,7 +30,7 @@ namespace Redemption.NPCs
 			base.npc.alpha = 100;
 			base.npc.noGravity = true;
 			this.aiType = 288;
-			base.npc.catchItem = (short)base.mod.ItemType("LostSoul");
+			base.npc.catchItem = (short)ModContent.ItemType<LostSoul>();
 		}
 
 		public override void AI()
@@ -47,17 +49,17 @@ namespace Redemption.NPCs
 				Main.PlaySound(SoundID.NPCDeath39.WithVolume(0.3f), (int)base.npc.position.X, (int)base.npc.position.Y);
 				base.npc.active = false;
 			}
-			if (player.FindItem(base.mod.ItemType("LostSoulCatcher")) >= 0)
+			if (player.FindItem(ModContent.ItemType<LostSoulCatcher>()) >= 0)
 			{
-				base.npc.catchItem = (short)base.mod.ItemType("BottledLostSoul");
+				base.npc.catchItem = (short)ModContent.ItemType<BottledLostSoul>();
 				return;
 			}
-			base.npc.catchItem = (short)base.mod.ItemType("LostSoul");
+			base.npc.catchItem = (short)ModContent.ItemType<LostSoul>();
 		}
 
 		public override void NPCLoot()
 		{
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("LostSoul"), 1, false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<LostSoul>(), 1, false, 0, false, false);
 		}
 
 		public override bool CanHitPlayer(Player target, ref int cooldownSlot)

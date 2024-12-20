@@ -18,17 +18,18 @@ namespace Redemption.Backgrounds
 			{
 				return;
 			}
-			Player player = Main.player[Main.myPlayer];
-			bool flag = Main.player[Main.myPlayer].GetModPlayer<RedePlayer>().ZoneXeno || Main.player[Main.myPlayer].GetModPlayer<RedePlayer>().ZoneEvilXeno;
-			if (!this.backgroundFog && BasePlayer.HasAccessory(player, Redemption.inst.ItemType("GasMask"), true, false))
+			Player player = Main.LocalPlayer;
+			bool inXeno = Main.LocalPlayer.GetModPlayer<RedePlayer>().ZoneXeno || Main.LocalPlayer.GetModPlayer<RedePlayer>().ZoneEvilXeno || Main.LocalPlayer.GetModPlayer<RedePlayer>().ZoneEvilXeno2;
+			if (!this.backgroundFog && (BasePlayer.HasAccessory(player, Redemption.inst.ItemType("GasMask"), true, false) || BasePlayer.HasAccessory(player, Redemption.inst.ItemType("HEVSuit"), true, false)))
 			{
-				this.fogOffsetX++;
+				inXeno = false;
 			}
+			this.fogOffsetX++;
 			if (this.fogOffsetX >= texture.Width)
 			{
 				this.fogOffsetX = 0;
 			}
-			if (flag || Main.player[Main.myPlayer].GetModPlayer<RedePlayer>().irradiatedEffect >= 4)
+			if (inXeno || Main.player[Main.myPlayer].GetModPlayer<RedePlayer>().irradiatedEffect >= 4)
 			{
 				this.fadeOpacity += 0.05f;
 				if (this.fadeOpacity > 1f)
@@ -82,9 +83,8 @@ namespace Redemption.Backgrounds
 			{
 				Main.spriteBatch.Begin();
 			}
-			Redemption inst = Redemption.inst;
+			Player localPlayer = Main.LocalPlayer;
 			Color DefaultFog = new Color(49, 100, 60);
-			this.GetAlpha(defaultColor, 0.2f * this.fadeOpacity * this.dayTimeOpacity);
 			Color fogColor = this.GetAlpha(DefaultFog, 0.4f * this.fadeOpacity * this.dayTimeOpacity);
 			int num = -texture.Width;
 			int minY = -texture.Height;

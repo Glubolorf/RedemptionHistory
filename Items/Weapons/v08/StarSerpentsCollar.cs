@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Redemption.Projectiles.Minions.StarSerpentMinion;
 using Terraria;
 using Terraria.ID;
@@ -21,7 +22,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.damage = 205;
 			base.item.useStyle = 1;
 			base.item.shootSpeed = 10f;
-			base.item.shoot = base.mod.ProjectileType("StarSerpentMinionHead");
+			base.item.shoot = ModContent.ProjectileType<StarSerpentMinionHead>();
 			base.item.width = 24;
 			base.item.height = 30;
 			base.item.UseSound = SoundID.Item44;
@@ -29,7 +30,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.useTime = 24;
 			base.item.noMelee = true;
 			base.item.knockBack = 2f;
-			base.item.buffType = base.mod.BuffType("StarSerpentBuff");
+			base.item.buffType = ModContent.BuffType<StarSerpentBuff>();
 			base.item.summon = true;
 			base.item.value = Item.sellPrice(1, 0, 0, 0);
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 3;
@@ -55,7 +56,7 @@ namespace Redemption.Items.Weapons.v08
 			{
 				return false;
 			}
-			player.AddBuff(base.mod.BuffType("StarSerpentBuff"), 2, true);
+			player.AddBuff(ModContent.BuffType<StarSerpentBuff>(), 2, true);
 			int num184 = -1;
 			int num185 = -1;
 			int num186 = base.item.shoot;

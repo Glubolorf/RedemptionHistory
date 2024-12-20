@@ -51,7 +51,7 @@ namespace Redemption.Projectiles.v08
 			projectile3.velocity.Y = projectile3.velocity.Y + 0.4f;
 			if (base.projectile.localAI[0] >= 60f && Main.myPlayer == base.projectile.owner && Main.rand.Next(4) == 0)
 			{
-				Projectile.NewProjectile(base.projectile.position.X + 6f, base.projectile.position.Y + 6f, (float)(-2 + Main.rand.Next(0, 4)), (float)(-4 + Main.rand.Next(0, 4)), base.mod.ProjectileType("GreenGasPro3"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(base.projectile.position.X + 6f, base.projectile.position.Y + 6f, (float)(-2 + Main.rand.Next(0, 4)), (float)(-4 + Main.rand.Next(0, 4)), ModContent.ProjectileType<GreenGasPro3>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 			}
 		}
 
@@ -68,18 +68,18 @@ namespace Redemption.Projectiles.v08
 				int dustIndex2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 6, 0f, 0f, 100, default(Color), 1.5f);
 				Main.dust[dustIndex2].velocity *= 1.4f;
 			}
-			Projectile.NewProjectile(base.projectile.position.X + 6f, base.projectile.position.Y + 6f, (float)(-2 + Main.rand.Next(0, 4)), (float)(-4 + Main.rand.Next(0, 4)), base.mod.ProjectileType("GreenGasPro3"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
+			Projectile.NewProjectile(base.projectile.position.X + 6f, base.projectile.position.Y + 6f, (float)(-2 + Main.rand.Next(0, 4)), (float)(-4 + Main.rand.Next(0, 4)), ModContent.ProjectileType<GreenGasPro3>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 			if (Main.rand.Next(2) == 0)
 			{
-				Projectile.NewProjectile(base.projectile.position.X + 6f, base.projectile.position.Y + 6f, (float)(-2 + Main.rand.Next(0, 4)), (float)(-2 + Main.rand.Next(0, 4)), base.mod.ProjectileType("GreenGasPro3"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(base.projectile.position.X + 6f, base.projectile.position.Y + 6f, (float)(-2 + Main.rand.Next(0, 4)), (float)(-2 + Main.rand.Next(0, 4)), ModContent.ProjectileType<GreenGasPro3>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 			}
 			if (Main.rand.Next(2) == 0)
 			{
-				Projectile.NewProjectile(base.projectile.position.X + 6f, base.projectile.position.Y + 6f, (float)(-2 + Main.rand.Next(0, 4)), (float)(-2 + Main.rand.Next(0, 4)), base.mod.ProjectileType("GreenGasPro3"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(base.projectile.position.X + 6f, base.projectile.position.Y + 6f, (float)(-2 + Main.rand.Next(0, 4)), (float)(-2 + Main.rand.Next(0, 4)), ModContent.ProjectileType<GreenGasPro3>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 			}
 			if (Main.rand.Next(2) == 0)
 			{
-				Projectile.NewProjectile(base.projectile.position.X + 6f, base.projectile.position.Y + 6f, (float)(-2 + Main.rand.Next(0, 4)), (float)(-2 + Main.rand.Next(0, 4)), base.mod.ProjectileType("GreenGasPro3"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(base.projectile.position.X + 6f, base.projectile.position.Y + 6f, (float)(-2 + Main.rand.Next(0, 4)), (float)(-2 + Main.rand.Next(0, 4)), ModContent.ProjectileType<GreenGasPro3>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 			}
 		}
 	}

@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.ChickenArmy;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -117,12 +118,12 @@ namespace Redemption.NPCs.ChickenInvasion
 					{
 						if (base.npc.direction == -1)
 						{
-							int p = Projectile.NewProjectile(new Vector2(base.npc.Center.X - 33f, base.npc.position.Y + 76f), new Vector2((float)(-3 + Main.rand.Next(-3, 0)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickmanFly1"), 10, 3f, 255, 0f, 0f);
+							int p = Projectile.NewProjectile(new Vector2(base.npc.Center.X - 33f, base.npc.position.Y + 76f), new Vector2((float)(-3 + Main.rand.Next(-3, 0)), (float)(-2 + Main.rand.Next(0, 3))), ModContent.ProjectileType<ChickmanFly1>(), 10, 3f, 255, 0f, 0f);
 							Main.projectile[p].netUpdate = true;
 						}
 						else
 						{
-							int p2 = Projectile.NewProjectile(new Vector2(base.npc.Center.X + 33f, base.npc.position.Y + 76f), new Vector2((float)(3 + Main.rand.Next(0, 3)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickmanFly1"), 10, 3f, 255, 0f, 0f);
+							int p2 = Projectile.NewProjectile(new Vector2(base.npc.Center.X + 33f, base.npc.position.Y + 76f), new Vector2((float)(3 + Main.rand.Next(0, 3)), (float)(-2 + Main.rand.Next(0, 3))), ModContent.ProjectileType<ChickmanFly1>(), 10, 3f, 255, 0f, 0f);
 							Main.projectile[p2].netUpdate = true;
 						}
 					}
@@ -130,12 +131,12 @@ namespace Redemption.NPCs.ChickenInvasion
 					{
 						if (base.npc.direction == -1)
 						{
-							int p3 = Projectile.NewProjectile(new Vector2(base.npc.Center.X - 33f, base.npc.position.Y + 76f), new Vector2((float)(-3 + Main.rand.Next(-3, 0)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickmanFly2"), 10, 3f, 255, 0f, 0f);
+							int p3 = Projectile.NewProjectile(new Vector2(base.npc.Center.X - 33f, base.npc.position.Y + 76f), new Vector2((float)(-3 + Main.rand.Next(-3, 0)), (float)(-2 + Main.rand.Next(0, 3))), ModContent.ProjectileType<ChickmanFly2>(), 10, 3f, 255, 0f, 0f);
 							Main.projectile[p3].netUpdate = true;
 						}
 						else
 						{
-							int p4 = Projectile.NewProjectile(new Vector2(base.npc.Center.X + 33f, base.npc.position.Y + 76f), new Vector2((float)(3 + Main.rand.Next(0, 3)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickmanFly2"), 10, 3f, 255, 0f, 0f);
+							int p4 = Projectile.NewProjectile(new Vector2(base.npc.Center.X + 33f, base.npc.position.Y + 76f), new Vector2((float)(3 + Main.rand.Next(0, 3)), (float)(-2 + Main.rand.Next(0, 3))), ModContent.ProjectileType<ChickmanFly2>(), 10, 3f, 255, 0f, 0f);
 							Main.projectile[p4].netUpdate = true;
 						}
 					}
@@ -143,12 +144,12 @@ namespace Redemption.NPCs.ChickenInvasion
 					{
 						if (base.npc.direction == -1)
 						{
-							int p5 = Projectile.NewProjectile(new Vector2(base.npc.Center.X - 33f, base.npc.position.Y + 76f), new Vector2((float)(-3 + Main.rand.Next(-3, 0)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickmanFly3"), 10, 3f, 255, 0f, 0f);
+							int p5 = Projectile.NewProjectile(new Vector2(base.npc.Center.X - 33f, base.npc.position.Y + 76f), new Vector2((float)(-3 + Main.rand.Next(-3, 0)), (float)(-2 + Main.rand.Next(0, 3))), ModContent.ProjectileType<ChickmanFly3>(), 10, 3f, 255, 0f, 0f);
 							Main.projectile[p5].netUpdate = true;
 						}
 						else
 						{
-							int p6 = Projectile.NewProjectile(new Vector2(base.npc.Center.X + 33f, base.npc.position.Y + 76f), new Vector2((float)(3 + Main.rand.Next(0, 3)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickmanFly3"), 10, 3f, 255, 0f, 0f);
+							int p6 = Projectile.NewProjectile(new Vector2(base.npc.Center.X + 33f, base.npc.position.Y + 76f), new Vector2((float)(3 + Main.rand.Next(0, 3)), (float)(-2 + Main.rand.Next(0, 3))), ModContent.ProjectileType<ChickmanFly3>(), 10, 3f, 255, 0f, 0f);
 							Main.projectile[p6].netUpdate = true;
 						}
 					}
@@ -174,23 +175,23 @@ namespace Redemption.NPCs.ChickenInvasion
 					{
 						if (base.npc.direction == -1)
 						{
-							int p7 = Projectile.NewProjectile(new Vector2(base.npc.Center.X - 33f, base.npc.position.Y + 76f), new Vector2((float)(-3 + Main.rand.Next(-9, 0)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickenEggProH"), 50, 3f, 255, 0f, 0f);
+							int p7 = Projectile.NewProjectile(new Vector2(base.npc.Center.X - 33f, base.npc.position.Y + 76f), new Vector2((float)(-3 + Main.rand.Next(-9, 0)), (float)(-2 + Main.rand.Next(0, 3))), ModContent.ProjectileType<ChickenEggProH>(), 50, 3f, 255, 0f, 0f);
 							Main.projectile[p7].netUpdate = true;
 						}
 						else
 						{
-							int p8 = Projectile.NewProjectile(new Vector2(base.npc.Center.X + 33f, base.npc.position.Y + 76f), new Vector2((float)(3 + Main.rand.Next(0, 9)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickenEggProH"), 50, 3f, 255, 0f, 0f);
+							int p8 = Projectile.NewProjectile(new Vector2(base.npc.Center.X + 33f, base.npc.position.Y + 76f), new Vector2((float)(3 + Main.rand.Next(0, 9)), (float)(-2 + Main.rand.Next(0, 3))), ModContent.ProjectileType<ChickenEggProH>(), 50, 3f, 255, 0f, 0f);
 							Main.projectile[p8].netUpdate = true;
 						}
 					}
 					else if (base.npc.direction == -1)
 					{
-						int p9 = Projectile.NewProjectile(new Vector2(base.npc.Center.X - 33f, base.npc.position.Y + 76f), new Vector2((float)(-3 + Main.rand.Next(-9, 0)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickenEggProH"), 10, 3f, 255, 0f, 0f);
+						int p9 = Projectile.NewProjectile(new Vector2(base.npc.Center.X - 33f, base.npc.position.Y + 76f), new Vector2((float)(-3 + Main.rand.Next(-9, 0)), (float)(-2 + Main.rand.Next(0, 3))), ModContent.ProjectileType<ChickenEggProH>(), 10, 3f, 255, 0f, 0f);
 						Main.projectile[p9].netUpdate = true;
 					}
 					else
 					{
-						int p10 = Projectile.NewProjectile(new Vector2(base.npc.Center.X + 33f, base.npc.position.Y + 76f), new Vector2((float)(3 + Main.rand.Next(0, 9)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickenEggProH"), 10, 3f, 255, 0f, 0f);
+						int p10 = Projectile.NewProjectile(new Vector2(base.npc.Center.X + 33f, base.npc.position.Y + 76f), new Vector2((float)(3 + Main.rand.Next(0, 9)), (float)(-2 + Main.rand.Next(0, 3))), ModContent.ProjectileType<ChickenEggProH>(), 10, 3f, 255, 0f, 0f);
 						Main.projectile[p10].netUpdate = true;
 					}
 				}

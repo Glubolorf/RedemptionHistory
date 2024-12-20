@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Projectiles.DruidProjectiles.Stave.Guardians;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,16 +33,16 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.autoReuse = false;
 			base.item.useTurn = true;
 			this.defaultShoot = 9;
-			this.guardianBuffID = base.mod.BuffType("NatureGuardian14Buff");
-			this.guardianProjectileID = base.mod.ProjectileType("NatureGuardian14");
+			this.guardianBuffID = ModContent.BuffType<NatureGuardian14Buff>();
+			this.guardianProjectileID = ModContent.ProjectileType<NatureGuardian14>();
 			this.guardianTime = 900;
 			this.singleShotStave = true;
 			this.staveHoldOffset = new Vector2(4f, -10f);
 			this.staveLength = 1000f;
 			this.guardianName = "Lunar Statuette";
 			this.guardianType = "Mystic";
-			this.guardianAbility = "Swift-Cast/Triple-Shot/Nightshade's Embrace";
-			this.guardianEffects = "Staves cast a lot faster, Staves that shoot a single projectile will shoot 2 more in an arc,\nMana Enhancement/Improved Sight/Mobility Enhancement at night";
+			this.guardianAbility = "Triple-Shot/Nightshade's Embrace";
+			this.guardianEffects = "Staves that shoot a single projectile will shoot 2 more in an arc,\nMana Enhancement/Improved Sight/Mobility Enhancement at night";
 		}
 
 		public override void AddRecipes()

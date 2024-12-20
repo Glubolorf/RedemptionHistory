@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -28,7 +29,7 @@ namespace Redemption.Items.Placeable
 			base.item.consumable = true;
 			base.item.rare = 7;
 			base.item.value = Item.buyPrice(1, 20, 0, 0);
-			base.item.createTile = base.mod.TileType("Mk3MicrobotFactoryTile");
+			base.item.createTile = ModContent.TileType<Mk3MicrobotFactoryTile>();
 		}
 
 		public override void AddRecipes()

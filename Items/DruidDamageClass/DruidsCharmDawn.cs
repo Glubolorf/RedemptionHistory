@@ -9,7 +9,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Druid's Charm");
-			base.Tooltip.SetDefault("'Dawn'\n10% increased druidic damage\nNegates fall damage\nGrants immunity to fire blocks\nStaves cast faster\nStaves will burn targets\n75% decrease to all other damage types");
+			base.Tooltip.SetDefault("'Dawn'\n10% increased druidic damage\nNegates fall damage\nGrants immunity to fire blocks\nStaves cast faster\nStave casts will burn targets\n75% decrease to all other damage types");
 		}
 
 		public override void SetDefaults()
@@ -30,15 +30,15 @@ namespace Redemption.Items.DruidDamageClass
 				int maxAccessoryIndex = 5 + player.extraAccessorySlots;
 				for (int i = 3; i < 3 + maxAccessoryIndex; i++)
 				{
-					if (slot != i && player.armor[i].type == base.mod.ItemType("DruidsCharmDusk"))
+					if (slot != i && player.armor[i].type == ModContent.ItemType<DruidsCharmDusk>())
 					{
 						return false;
 					}
-					if (slot != i && player.armor[i].type == base.mod.ItemType("DruidsCharmMidnight"))
+					if (slot != i && player.armor[i].type == ModContent.ItemType<DruidsCharmMidnight>())
 					{
 						return false;
 					}
-					if (slot != i && player.armor[i].type == base.mod.ItemType("DruidsCharm"))
+					if (slot != i && player.armor[i].type == ModContent.ItemType<DruidsCharm>())
 					{
 						return false;
 					}

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -49,7 +50,7 @@ namespace Redemption.NPCs
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 236, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
 			if (Main.netMode != 1 && base.npc.life <= 0)
 			{
-				NPC.NewNPC((int)base.npc.position.X + 24, (int)base.npc.position.Y + 18, base.mod.NPCType("LostSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.position.X + 24, (int)base.npc.position.Y + 18, ModContent.NPCType<LostSoul2>(), 0, 0f, 0f, 0f, 0f, 255);
 			}
 		}
 
@@ -81,7 +82,7 @@ namespace Redemption.NPCs
 				base.npc.defense = 0;
 				if (Main.rand.Next(25) == 0)
 				{
-					int p = Projectile.NewProjectile(base.npc.position.X + 24f, base.npc.position.Y + 18f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("FireSparkle"), 5, 3f, 255, 0f, 0f);
+					int p = Projectile.NewProjectile(base.npc.position.X + 24f, base.npc.position.Y + 18f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), ModContent.ProjectileType<FireSparkle>(), 5, 3f, 255, 0f, 0f);
 					Main.projectile[p].netUpdate = true;
 				}
 			}

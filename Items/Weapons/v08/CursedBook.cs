@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,7 +30,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.value = Item.buyPrice(1, 0, 0, 0);
 			base.item.UseSound = SoundID.Item101;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("CursedBookPro1");
+			base.item.shoot = ModContent.ProjectileType<CursedBookPro1>();
 			base.item.shootSpeed = 5f;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}
@@ -50,8 +51,8 @@ namespace Redemption.Items.Weapons.v08
 				{
 					vector2 = new Vector2(position.X - 75f * (float)Math.Cos((double)angle), position.Y - 75f * (float)Math.Sin((double)angle));
 				}
-				Projectile.NewProjectile(vector2.X, vector2.Y, vX, vY, base.mod.ProjectileType("CursedBookPro1"), damage, knockBack, Main.myPlayer, 0f, 0f);
-				Projectile.NewProjectile(vector2.X, vector2.Y, vX * 0.6f, vY * 0.6f, base.mod.ProjectileType("CursedBookPro1"), damage, knockBack, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(vector2.X, vector2.Y, vX, vY, ModContent.ProjectileType<CursedBookPro1>(), damage, knockBack, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(vector2.X, vector2.Y, vX * 0.6f, vY * 0.6f, ModContent.ProjectileType<CursedBookPro1>(), damage, knockBack, Main.myPlayer, 0f, 0f);
 			}
 			return false;
 		}

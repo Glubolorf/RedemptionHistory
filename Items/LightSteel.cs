@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles.Bars;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -28,7 +29,7 @@ namespace Redemption.Items
 			base.item.useTime = 10;
 			base.item.useStyle = 1;
 			base.item.consumable = true;
-			base.item.createTile = base.mod.TileType("LightSteelBarTile");
+			base.item.createTile = ModContent.TileType<LightSteelBarTile>();
 		}
 
 		public override void AddRecipes()

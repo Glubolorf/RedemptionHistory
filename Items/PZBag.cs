@@ -1,4 +1,8 @@
 ﻿using System;
+using Redemption.Items.Armor;
+using Redemption.Items.LabThings;
+using Redemption.Items.Weapons;
+using Redemption.NPCs.LabNPCs.New;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -31,7 +35,7 @@ namespace Redemption.Items
 		{
 			get
 			{
-				return base.mod.NPCType("PatientZero");
+				return ModContent.NPCType<PZ2BodyCover>();
 			}
 		}
 
@@ -39,23 +43,23 @@ namespace Redemption.Items
 		{
 			if (Main.rand.Next(7) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("PZMask"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<PZMask>(), 1);
 			}
 			if (Main.rand.Next(3) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("PZGauntlet"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<PZGauntlet>(), 1);
 			}
 			if (Main.rand.Next(3) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("SwarmerGun"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<SwarmerGun>(), 1);
 			}
 			if (Main.rand.Next(3) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("XeniumSaber"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<XeniumSaber>(), 1);
 			}
-			player.QuickSpawnItem(base.mod.ItemType("MedicKit1"), 1);
-			player.QuickSpawnItem(base.mod.ItemType("BluePrints"), 1);
-			player.QuickSpawnItem(base.mod.ItemType("HeartOfInfection"), 1);
+			player.QuickSpawnItem(ModContent.ItemType<MedicKit1>(), 1);
+			player.QuickSpawnItem(ModContent.ItemType<BluePrints>(), 1);
+			player.QuickSpawnItem(ModContent.ItemType<HeartOfInfection>(), 1);
 		}
 	}
 }

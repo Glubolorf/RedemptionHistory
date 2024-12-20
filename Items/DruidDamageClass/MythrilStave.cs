@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Projectiles.DruidProjectiles.Stave.Guardians;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -17,8 +19,8 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SafeSetDefaults()
 		{
 			base.item.damage = 43;
-			base.item.width = 44;
-			base.item.height = 44;
+			base.item.width = 52;
+			base.item.height = 52;
 			base.item.useTime = 28;
 			base.item.useAnimation = 28;
 			base.item.crit = 4;
@@ -31,12 +33,12 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
 			this.defaultShoot = 124;
-			this.guardianBuffID = base.mod.BuffType("NatureGuardian2Buff");
-			this.guardianProjectileID = base.mod.ProjectileType("NatureGuardian2");
+			this.guardianBuffID = ModContent.BuffType<NatureGuardian2Buff>();
+			this.guardianProjectileID = ModContent.ProjectileType<NatureGuardian2>();
 			this.guardianTime = 1200;
 			this.singleShotStave = true;
 			this.staveHoldOffset = new Vector2(4f, -10f);
-			this.staveLength = 44.2f;
+			this.staveLength = 52.2f;
 			this.guardianName = "Nature Guardian";
 			this.guardianType = "Guardian";
 			this.guardianAbility = "Swift-Cast/Dryad's Blessing/Druidic Embrace";

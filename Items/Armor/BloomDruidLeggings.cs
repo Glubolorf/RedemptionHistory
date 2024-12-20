@@ -33,7 +33,7 @@ namespace Redemption.Items.Armor
 			druidDamagePlayer.druidDamage += 0.08f;
 			druidDamagePlayer.druidCrit += 8;
 			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			player.lifeRegen += 8;
+			player.lifeRegen += 2;
 		}
 
 		public override void AddRecipes()

@@ -36,7 +36,7 @@ namespace Redemption.Projectiles.Minions
 
 		public override void AI()
 		{
-			bool flag20 = base.projectile.type == base.mod.ProjectileType("ChickenSwarmerMinion");
+			bool flag20 = base.projectile.type == ModContent.ProjectileType<ChickenSwarmerMinion>();
 			Player player = Main.player[base.projectile.owner];
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
 			if (flag20)
@@ -76,10 +76,6 @@ namespace Redemption.Projectiles.Minions
 			float num528 = base.projectile.position.Y;
 			float num529 = 900f;
 			bool flag19 = false;
-			if (base.projectile.ai[1] == 0f)
-			{
-				bool friendly = base.projectile.friendly;
-			}
 			if (base.projectile.ai[0] == 0f)
 			{
 				for (int num530 = 0; num530 < 200; num530++)

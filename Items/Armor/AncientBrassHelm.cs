@@ -13,7 +13,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Ancient Brass Helm");
-			base.Tooltip.SetDefault("Increases melee damage by 2%");
+			base.Tooltip.SetDefault("Increases melee damage by 4%");
 		}
 
 		public override void SetDefaults()
@@ -22,17 +22,17 @@ namespace Redemption.Items.Armor
 			base.item.height = 20;
 			base.item.value = Item.sellPrice(0, 0, 12, 50);
 			base.item.rare = 1;
-			base.item.defense = 2;
+			base.item.defense = 3;
 		}
 
 		public override void UpdateEquip(Player player)
 		{
-			player.meleeDamage *= 1.02f;
+			player.meleeDamage *= 1.04f;
 		}
 
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
-			return body.type == base.mod.ItemType("AncientBrassArmour") && legs.type == base.mod.ItemType("AncientBrassLeggings");
+			return body.type == ModContent.ItemType<AncientBrassArmour>() && legs.type == ModContent.ItemType<AncientBrassLeggings>();
 		}
 
 		public override void UpdateArmorSet(Player player)

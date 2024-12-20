@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,16 +31,15 @@ namespace Redemption.Projectiles
 		public override void AI()
 		{
 			Player player = Main.player[base.projectile.owner];
-			if (!player.HasBuff(base.mod.BuffType("BlightedShieldBuff")))
+			if (!player.HasBuff(ModContent.BuffType<BlightedShieldBuff>()))
 			{
 				base.projectile.Kill();
 			}
-			base.projectile.localAI[0] += 1f;
 			base.projectile.velocity.Y = 0f;
 			base.projectile.velocity.X = 0f;
 			base.projectile.position.X = player.Center.X - 36f;
 			base.projectile.position.Y = player.Center.Y - 25f;
-			if (base.projectile.localAI[0] == 1f)
+			if (base.projectile.localAI[0] == 0f)
 			{
 				int dustType = 74;
 				int pieCut = 8;
@@ -51,6 +51,7 @@ namespace Redemption.Projectiles
 					Main.dust[dustID].noGravity = true;
 				}
 				Main.PlaySound(SoundID.Item62, (int)base.projectile.position.X, (int)base.projectile.position.Y);
+				base.projectile.localAI[0] = 1f;
 			}
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
 			if (player.dead)

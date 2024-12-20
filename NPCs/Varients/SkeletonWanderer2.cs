@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Placeable.Banners;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +32,7 @@ namespace Redemption.NPCs.Varients
 			this.aiType = 271;
 			this.animationType = 271;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("SkeletonWandererBanner");
+			this.bannerItem = ModContent.ItemType<SkeletonWandererBanner>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -47,7 +49,7 @@ namespace Redemption.NPCs.Varients
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 1, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
 			if (Main.netMode != 1 && base.npc.life <= 0 && Main.rand.Next(2) == 0)
 			{
-				NPC.NewNPC((int)base.npc.position.X + 30, (int)base.npc.position.Y + 36, base.mod.NPCType("LostSoul1"), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.position.X + 30, (int)base.npc.position.Y + 36, ModContent.NPCType<LostSoul1>(), 0, 0f, 0f, 0f, 0f, 255);
 			}
 		}
 
@@ -87,13 +89,13 @@ namespace Redemption.NPCs.Varients
 				{
 					if (base.npc.direction == -1)
 					{
-						int p = Projectile.NewProjectile(base.npc.position.X + -14f, base.npc.position.Y + 18f, 0f, 0f, base.mod.ProjectileType("DamagePro3"), 5, 3f, 255, 0f, 0f);
+						int p = Projectile.NewProjectile(base.npc.position.X + -14f, base.npc.position.Y + 18f, 0f, 0f, ModContent.ProjectileType<DamagePro3>(), 5, 3f, 255, 0f, 0f);
 						Main.projectile[p].netUpdate = true;
 						Main.PlaySound(SoundID.Item1, (int)base.npc.position.X, (int)base.npc.position.Y);
 					}
 					else
 					{
-						int p2 = Projectile.NewProjectile(base.npc.position.X + 48f, base.npc.position.Y + 18f, 0f, 0f, base.mod.ProjectileType("DamagePro3"), 5, 3f, 255, 0f, 0f);
+						int p2 = Projectile.NewProjectile(base.npc.position.X + 48f, base.npc.position.Y + 18f, 0f, 0f, ModContent.ProjectileType<DamagePro3>(), 5, 3f, 255, 0f, 0f);
 						Main.projectile[p2].netUpdate = true;
 						Main.PlaySound(SoundID.Item1, (int)base.npc.position.X, (int)base.npc.position.Y);
 					}

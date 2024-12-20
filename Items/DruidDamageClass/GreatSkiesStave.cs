@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.NPCs.Bosses.EaglecrestGolem;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,9 +29,9 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.UseSound = SoundID.Item1;
 			base.item.autoReuse = false;
 			base.item.useTurn = true;
-			base.item.shoot = base.mod.ProjectileType("GreatGust");
+			base.item.shoot = ModContent.ProjectileType<GreatGust>();
 			base.item.shootSpeed = 8f;
-			this.defaultShoot = base.mod.ProjectileType("GreatGust");
+			this.defaultShoot = ModContent.ProjectileType<GreatGust>();
 			this.singleShotStave = true;
 			this.staveHoldOffset = new Vector2(4f, -10f);
 			this.staveLength = 60.2f;

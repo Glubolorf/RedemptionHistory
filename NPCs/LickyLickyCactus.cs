@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -34,11 +35,11 @@ namespace Redemption.NPCs
 		{
 			if (Main.netMode != 1 && base.npc.life <= 0)
 			{
-				NPC.NewNPC((int)base.npc.position.X + 30, (int)base.npc.position.Y + 55, base.mod.NPCType("Fly"), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.position.X + 30, (int)base.npc.position.Y + 55, ModContent.NPCType<Fly>(), 0, 0f, 0f, 0f, 0f, 255);
 			}
-			NPC.NewNPC((int)base.npc.position.X, (int)base.npc.position.Y + 70, base.mod.NPCType("Fly"), 0, 0f, 0f, 0f, 0f, 255);
-			NPC.NewNPC((int)base.npc.position.X - 20, (int)base.npc.position.Y + 10, base.mod.NPCType("Fly"), 0, 0f, 0f, 0f, 0f, 255);
-			NPC.NewNPC((int)base.npc.position.X + 20, (int)base.npc.position.Y, base.mod.NPCType("Fly"), 0, 0f, 0f, 0f, 0f, 255);
+			NPC.NewNPC((int)base.npc.position.X, (int)base.npc.position.Y + 70, ModContent.NPCType<Fly>(), 0, 0f, 0f, 0f, 0f, 255);
+			NPC.NewNPC((int)base.npc.position.X - 20, (int)base.npc.position.Y + 10, ModContent.NPCType<Fly>(), 0, 0f, 0f, 0f, 0f, 255);
+			NPC.NewNPC((int)base.npc.position.X + 20, (int)base.npc.position.Y, ModContent.NPCType<Fly>(), 0, 0f, 0f, 0f, 0f, 255);
 		}
 
 		public override void AI()
@@ -46,7 +47,7 @@ namespace Redemption.NPCs
 			this.timer++;
 			if (this.timer >= 250)
 			{
-				int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 44f), new Vector2(0f, 0f), base.mod.ProjectileType("PollenCloud8"), 8, 3f, 255, 0f, 0f);
+				int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 44f), new Vector2(0f, 0f), ModContent.ProjectileType<PollenCloud8>(), 8, 3f, 255, 0f, 0f);
 				Main.projectile[p].netUpdate = true;
 				this.timer = 0;
 			}

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -28,7 +29,7 @@ namespace Redemption.Projectiles
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.AddBuff(base.mod.BuffType("HolyFireDebuff"), 400, false);
+			target.AddBuff(ModContent.BuffType<HolyFireDebuff>(), 400, false);
 		}
 
 		public override void AI()
@@ -36,7 +37,5 @@ namespace Redemption.Projectiles
 			int dust = Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 64, 0f, 0f, 100, default(Color), 3f);
 			Main.dust[dust].noGravity = true;
 		}
-
-		public int proType;
 	}
 }

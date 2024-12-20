@@ -55,22 +55,7 @@ namespace Redemption.Items.Weapons
 
 		public override bool CanUseItem(Player player)
 		{
-			if (player.altFunctionUse == 2)
-			{
-				base.item.damage = 160;
-				base.item.useTime = 50;
-				base.item.useAnimation = 50;
-				base.item.shootSpeed = 50f;
-				base.item.UseSound = SoundID.Item91;
-			}
-			else
-			{
-				base.item.damage = 120;
-				base.item.useTime = 17;
-				base.item.UseSound = SoundID.Item91;
-				base.item.useAnimation = 17;
-				base.item.shootSpeed = 70f;
-			}
+			int altFunctionUse = player.altFunctionUse;
 			return base.CanUseItem(player);
 		}
 
@@ -78,6 +63,12 @@ namespace Redemption.Items.Weapons
 		{
 			if (player.altFunctionUse == 2)
 			{
+				player.itemAnimationMax = base.item.useTime * 3;
+				player.itemTime = base.item.useTime * 3;
+				player.itemAnimation = base.item.useTime * 3;
+				speedX *= 0.715f;
+				speedY *= 0.715f;
+				damage = (int)((float)damage * 1.333f);
 				float numberProjectiles = 5f;
 				float rotation = MathHelper.ToRadians(25f);
 				position += Vector2.Normalize(new Vector2(speedX, speedY)) * 45f;

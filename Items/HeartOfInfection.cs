@@ -1,4 +1,6 @@
 ﻿using System;
+using Redemption.Buffs;
+using Redemption.Projectiles.Minions;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -22,8 +24,8 @@ namespace Redemption.Items
 			base.item.value = Item.sellPrice(0, 8, 25, 0);
 			base.item.noUseGraphic = true;
 			base.item.expert = true;
-			base.item.shoot = base.mod.ProjectileType("HiveGrowthFriendly");
-			base.item.buffType = base.mod.BuffType("HiveGrowthBuff");
+			base.item.shoot = ModContent.ProjectileType<HiveGrowthFriendly>();
+			base.item.buffType = ModContent.BuffType<HiveGrowthBuff>();
 		}
 
 		public override void UseStyle(Player player)

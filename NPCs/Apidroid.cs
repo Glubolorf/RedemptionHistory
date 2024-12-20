@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.NPCs
 			this.aiType = 140;
 			this.animationType = 140;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("AndroidBanner");
+			this.bannerItem = ModContent.ItemType<AndroidBanner>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -53,6 +54,10 @@ namespace Redemption.NPCs
 				if (projectile.penetrate == 1)
 				{
 					projectile.penetrate = 2;
+				}
+				if (damage > 200)
+				{
+					damage = 200;
 				}
 				projectile.damage = damage / 4;
 				projectile.velocity.X = -projectile.velocity.X;

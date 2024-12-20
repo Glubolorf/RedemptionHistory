@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Redemption.Items.DruidDamageClass;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -50,7 +52,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 				}
 			}
 			Player player = Main.player[base.projectile.owner];
-			if (!player.HasBuff(base.mod.BuffType("NatureGuardian22Buff")))
+			if (!player.HasBuff(ModContent.BuffType<NatureGuardian22Buff>()))
 			{
 				base.projectile.Kill();
 			}
@@ -79,7 +81,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 			base.projectile.position.Y = player.Center.Y - 64f;
 			if (base.projectile.localAI[0] % 180f == 0f)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(0f, 0f), base.mod.ProjectileType("SunPulse"), 40, 3f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(0f, 0f), ModContent.ProjectileType<SunPulse>(), 40, 3f, Main.myPlayer, 0f, 0f);
 			}
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
 			if (player.dead)

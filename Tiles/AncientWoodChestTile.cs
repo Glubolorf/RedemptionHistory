@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Localization;
@@ -46,7 +47,7 @@ namespace Redemption.Tiles
 				21
 			};
 			this.chest = "Ancient Wood Chest";
-			this.chestDrop = base.mod.ItemType("AncientWoodChest");
+			this.chestDrop = ModContent.ItemType<AncientWoodChest>();
 		}
 
 		public string MapChestName(string name, int i, int j)
@@ -179,7 +180,7 @@ namespace Redemption.Tiles
 				player.showItemIconText = ((Main.chest[chest].name.Length > 0) ? Main.chest[chest].name : "Ancient Wood Chest");
 				if (player.showItemIconText == "Ancient Wood Chest")
 				{
-					player.showItemIcon2 = base.mod.ItemType("AncientWoodChest");
+					player.showItemIcon2 = ModContent.ItemType<AncientWoodChest>();
 					player.showItemIconText = "";
 				}
 			}

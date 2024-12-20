@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -15,7 +16,7 @@ namespace Redemption.Tiles
 			Main.tileSpelunker[(int)base.Type] = true;
 			Main.tileBlockLight[(int)base.Type] = true;
 			this.dustType = 3;
-			this.drop = base.mod.ItemType("PlantMatter");
+			this.drop = ModContent.ItemType<PlantMatter>();
 			this.minPick = 0;
 			this.mineResist = 1f;
 			this.soundType = 6;

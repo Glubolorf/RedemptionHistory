@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -54,7 +55,7 @@ namespace Redemption.Items.Weapons
 		{
 			if (type == 1)
 			{
-				type = base.mod.ProjectileType("WhisperwindPro");
+				type = ModContent.ProjectileType<WhisperwindPro>();
 			}
 			Vector2 perturbedSpeed = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(3f));
 			speedX = perturbedSpeed.X;

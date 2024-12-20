@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles.LabDeco;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -25,7 +26,7 @@ namespace Redemption.Items.Placeable.LabDeco
 			base.item.consumable = true;
 			base.item.value = (base.item.value = Item.sellPrice(0, 10, 0, 0));
 			base.item.rare = 11;
-			base.item.createTile = base.mod.TileType("XenoTank1");
+			base.item.createTile = ModContent.TileType<XenoTank1>();
 			base.item.placeStyle = 0;
 		}
 	}

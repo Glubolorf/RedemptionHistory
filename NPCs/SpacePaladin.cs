@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.NPCs
 			this.aiType = 425;
 			this.animationType = 425;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("SpacePaladinBanner");
+			this.bannerItem = ModContent.ItemType<SpacePaladinBanner>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)

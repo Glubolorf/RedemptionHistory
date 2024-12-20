@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -45,7 +46,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 				this.clearCheck = Main.player[p];
 				if (base.projectile.frame > 12 && Collision.CheckAABBvAABBCollision(base.projectile.position, base.projectile.Size, this.clearCheck.position, this.clearCheck.Size))
 				{
-					this.clearCheck.AddBuff(base.mod.BuffType("EarthbindDebuff"), 300, true);
+					this.clearCheck.AddBuff(ModContent.BuffType<EarthbindDebuff>(), 300, true);
 				}
 			}
 		}

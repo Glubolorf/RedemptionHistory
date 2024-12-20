@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -57,7 +58,7 @@ namespace Redemption.Items.Weapons
 		{
 			if (type == 1)
 			{
-				type = base.mod.ProjectileType("TacticalArrowPro");
+				type = ModContent.ProjectileType<TacticalArrowPro>();
 			}
 			Vector2 vector2 = player.RotatedRelativePoint(player.MountedCenter, true);
 			float num117 = 0.31415927f;
@@ -74,7 +75,7 @@ namespace Redemption.Items.Weapons
 				{
 					value9 -= vector3;
 				}
-				int num121 = Projectile.NewProjectile(vector2.X + value9.X, vector2.Y + value9.Y, speedX, speedY, type, (int)((double)damage), knockBack, player.whoAmI, 0f, 0f);
+				int num121 = Projectile.NewProjectile(vector2.X + value9.X, vector2.Y + value9.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, 0f, 0f);
 				Main.projectile[num121].noDropItem = true;
 			}
 			Main.rand.Next(-25, 26);

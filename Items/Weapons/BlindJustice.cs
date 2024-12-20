@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.Items.Weapons
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
 			base.item.shootSpeed = 14f;
-			base.item.shoot = base.mod.ProjectileType("SpectreScythe");
+			base.item.shoot = ModContent.ProjectileType<SpectreScythe>();
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 6;
 		}
 
@@ -64,19 +65,7 @@ namespace Redemption.Items.Weapons
 
 		public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
 		{
-			if (target.type == 62)
-			{
-				damage *= 2;
-			}
-			if (target.type == 66)
-			{
-				damage *= 2;
-			}
-			if (target.type == 24)
-			{
-				damage *= 2;
-			}
-			if (target.type == 156)
+			if (target.IsDemon())
 			{
 				damage *= 2;
 			}

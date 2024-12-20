@@ -42,7 +42,6 @@ namespace Redemption.Projectiles
 			}
 			Lighting.AddLight(base.projectile.Center, (float)(255 - base.projectile.alpha) * 0f / 255f, (float)(255 - base.projectile.alpha) * 0.1f / 255f, (float)(255 - base.projectile.alpha) * 0f / 255f);
 			base.projectile.rotation = (float)Math.Atan2((double)base.projectile.velocity.Y, (double)base.projectile.velocity.X) + 1.57f;
-			base.projectile.localAI[0] += 1f;
 		}
 
 		public override void Kill(int timeLeft)

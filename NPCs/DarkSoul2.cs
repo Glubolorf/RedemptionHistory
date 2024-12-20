@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Dusts;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,7 +31,7 @@ namespace Redemption.NPCs
 			base.npc.noGravity = true;
 			this.aiType = 288;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("DarkSoulBanner");
+			this.bannerItem = ModContent.ItemType<DarkSoulBanner>();
 		}
 
 		public override void NPCLoot()
@@ -44,7 +46,7 @@ namespace Redemption.NPCs
 		{
 			if (Main.rand.Next(1) == 0)
 			{
-				Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, base.mod.DustType("VoidFlame"), 0f, 0f, 0, default(Color), 1f);
+				Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, ModContent.DustType<VoidFlame>(), 0f, 0f, 0, default(Color), 1f);
 			}
 			this.deathTimer++;
 			if (this.deathTimer >= 300)

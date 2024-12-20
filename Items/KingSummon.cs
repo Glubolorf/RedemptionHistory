@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.NPCs.Bosses.KingSlayerIII;
+using Redemption.NPCs.Bosses.KingSlayerIIIClone;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,7 +33,7 @@ namespace Redemption.Items
 
 		public override bool CanUseItem(Player player)
 		{
-			return Main.dayTime && !NPC.AnyNPCs(base.mod.NPCType("KSEntrance")) && RedeWorld.downedTheKeeper && !NPC.AnyNPCs(base.mod.NPCType("KSEntranceClone")) && !NPC.AnyNPCs(base.mod.NPCType("KSNope"));
+			return Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<KSEntrance>()) && RedeWorld.downedTheKeeper && !NPC.AnyNPCs(ModContent.NPCType<KSEntranceClone>()) && !NPC.AnyNPCs(ModContent.NPCType<KSNope>());
 		}
 
 		public override bool UseItem(Player player)

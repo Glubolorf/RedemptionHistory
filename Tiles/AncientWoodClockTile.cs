@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -34,7 +35,7 @@ namespace Redemption.Tiles
 			};
 		}
 
-		public override void RightClick(int x, int y)
+		public override bool NewRightClick(int i, int j)
 		{
 			string text = "AM";
 			double time = Main.time;
@@ -76,6 +77,7 @@ namespace Redemption.Tiles
 				" ",
 				text
 			}), byte.MaxValue, 240, 20, false);
+			return true;
 		}
 
 		public override void NearbyEffects(int i, int j, bool closer)
@@ -93,7 +95,7 @@ namespace Redemption.Tiles
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 48, 32, base.mod.ItemType("AncientWoodClock"), 1, false, 0, false, false);
+			Item.NewItem(i * 16, j * 16, 48, 32, ModContent.ItemType<AncientWoodClock>(), 1, false, 0, false, false);
 		}
 	}
 }

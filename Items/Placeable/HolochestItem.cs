@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles.SlayerShip;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -26,7 +27,7 @@ namespace Redemption.Items.Placeable
 			base.item.useStyle = 1;
 			base.item.consumable = true;
 			base.item.value = 500;
-			base.item.createTile = base.mod.TileType("HolochestTile");
+			base.item.createTile = ModContent.TileType<HolochestTile>();
 		}
 	}
 }

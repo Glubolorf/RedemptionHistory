@@ -1,4 +1,6 @@
 ﻿using System;
+using Redemption.Buffs;
+using Redemption.Tiles.Bars;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -25,7 +27,7 @@ namespace Redemption.Items
 			base.item.useTime = 10;
 			base.item.useStyle = 1;
 			base.item.consumable = true;
-			base.item.createTile = base.mod.TileType("DragonLeadBarTile");
+			base.item.createTile = ModContent.TileType<DragonLeadBarTile>();
 		}
 
 		public override void AddRecipes()
@@ -39,7 +41,7 @@ namespace Redemption.Items
 
 		public override void HoldItem(Player player)
 		{
-			player.AddBuff(base.mod.BuffType("BurntHands"), 60, true);
+			player.AddBuff(ModContent.BuffType<BurntHands>(), 60, true);
 		}
 	}
 }

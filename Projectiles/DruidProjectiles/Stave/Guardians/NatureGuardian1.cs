@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ID;
@@ -50,7 +51,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 				}
 			}
 			Player player = Main.player[base.projectile.owner];
-			if (!player.HasBuff(base.mod.BuffType("NatureGuardianBuff")))
+			if (!player.HasBuff(ModContent.BuffType<NatureGuardianBuff>()))
 			{
 				base.projectile.Kill();
 			}
@@ -79,7 +80,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 			base.projectile.position.Y = player.Center.Y - 64f;
 			if (RedeHelper.ClosestNPC(ref this.target, 900f, base.projectile.Center, false, player.MinionAttackTargetNPC) && base.projectile.localAI[0] % 30f == 0f)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center)), base.mod.ProjectileType("PixieSpark"), 5, 3f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center)), ModContent.ProjectileType<PixieSpark>(), 5, 3f, Main.myPlayer, 0f, 0f);
 			}
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
 			if (player.dead)

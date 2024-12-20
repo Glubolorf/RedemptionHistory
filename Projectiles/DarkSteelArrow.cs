@@ -22,7 +22,7 @@ namespace Redemption.Projectiles
 			base.projectile.friendly = true;
 			base.projectile.ranged = true;
 			base.projectile.penetrate = -1;
-			base.projectile.timeLeft = 600;
+			base.projectile.timeLeft = 200;
 			base.projectile.alpha = 0;
 			base.projectile.extraUpdates = 1;
 			ProjectileID.Sets.TrailCacheLength[base.projectile.type] = 5;
@@ -33,12 +33,6 @@ namespace Redemption.Projectiles
 		public override void AI()
 		{
 			base.projectile.rotation = (float)Math.Atan2((double)base.projectile.velocity.Y, (double)base.projectile.velocity.X) + 1.57f;
-			base.projectile.localAI[0] += 1f;
-			base.projectile.alpha = (int)base.projectile.localAI[0] * 2;
-			if (base.projectile.localAI[0] > 130f)
-			{
-				base.projectile.Kill();
-			}
 		}
 
 		public override bool OnTileCollide(Vector2 oldVelocity)

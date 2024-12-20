@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.DruidProjectiles.Plants
 {
@@ -63,23 +64,23 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 				}
 				if (Main.rand.Next(100) == 0)
 				{
-					Projectile.NewProjectile(base.projectile.position.X + 22f, base.projectile.position.Y + 26f, (float)(-8 + Main.rand.Next(0, 16)), (float)(-8 + Main.rand.Next(0, 16)), base.mod.ProjectileType("GoldenOrange"), base.projectile.damage, 7f, base.projectile.owner, 0f, 0f);
+					Projectile.NewProjectile(base.projectile.position.X + 22f, base.projectile.position.Y + 26f, (float)(-8 + Main.rand.Next(0, 16)), (float)(-8 + Main.rand.Next(0, 16)), ModContent.ProjectileType<GoldenOrange>(), base.projectile.damage, 7f, base.projectile.owner, 0f, 0f);
 				}
 				if (Main.rand.Next(100) == 0)
 				{
-					Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 46f, (float)(-8 + Main.rand.Next(0, 16)), (float)(-8 + Main.rand.Next(0, 16)), base.mod.ProjectileType("GoldenOrange"), base.projectile.damage, 7f, base.projectile.owner, 0f, 0f);
+					Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 46f, (float)(-8 + Main.rand.Next(0, 16)), (float)(-8 + Main.rand.Next(0, 16)), ModContent.ProjectileType<GoldenOrange>(), base.projectile.damage, 7f, base.projectile.owner, 0f, 0f);
 				}
 				if (Main.rand.Next(100) == 0)
 				{
-					Projectile.NewProjectile(base.projectile.position.X + 44f, base.projectile.position.Y + 40f, (float)(-8 + Main.rand.Next(0, 16)), (float)(-8 + Main.rand.Next(0, 16)), base.mod.ProjectileType("GoldenOrange"), base.projectile.damage, 7f, base.projectile.owner, 0f, 0f);
+					Projectile.NewProjectile(base.projectile.position.X + 44f, base.projectile.position.Y + 40f, (float)(-8 + Main.rand.Next(0, 16)), (float)(-8 + Main.rand.Next(0, 16)), ModContent.ProjectileType<GoldenOrange>(), base.projectile.damage, 7f, base.projectile.owner, 0f, 0f);
 				}
 				if (Main.rand.Next(100) == 0)
 				{
-					Projectile.NewProjectile(base.projectile.position.X + 56f, base.projectile.position.Y + 18f, (float)(-8 + Main.rand.Next(0, 16)), (float)(-8 + Main.rand.Next(0, 16)), base.mod.ProjectileType("GoldenOrange"), base.projectile.damage, 7f, base.projectile.owner, 0f, 0f);
+					Projectile.NewProjectile(base.projectile.position.X + 56f, base.projectile.position.Y + 18f, (float)(-8 + Main.rand.Next(0, 16)), (float)(-8 + Main.rand.Next(0, 16)), ModContent.ProjectileType<GoldenOrange>(), base.projectile.damage, 7f, base.projectile.owner, 0f, 0f);
 				}
 				if (Main.rand.Next(100) == 0)
 				{
-					Projectile.NewProjectile(base.projectile.position.X + 60f, base.projectile.position.Y + 48f, (float)(-8 + Main.rand.Next(0, 16)), (float)(-8 + Main.rand.Next(0, 16)), base.mod.ProjectileType("GoldenOrange"), base.projectile.damage, 7f, base.projectile.owner, 0f, 0f);
+					Projectile.NewProjectile(base.projectile.position.X + 60f, base.projectile.position.Y + 48f, (float)(-8 + Main.rand.Next(0, 16)), (float)(-8 + Main.rand.Next(0, 16)), ModContent.ProjectileType<GoldenOrange>(), base.projectile.damage, 7f, base.projectile.owner, 0f, 0f);
 				}
 			}
 		}

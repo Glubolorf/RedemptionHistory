@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,14 +32,14 @@ namespace Redemption.Items.Weapons.v08
 			base.item.value = Item.sellPrice(0, 15, 0, 0);
 			base.item.UseSound = SoundID.Item43;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("TinyBlackenedHeartPro");
+			base.item.shoot = ModContent.ProjectileType<TinyBlackenedHeartPro>();
 			base.item.shootSpeed = 29f;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 2;
 		}
 
 		public override void HoldItem(Player player)
 		{
-			player.AddBuff(base.mod.BuffType("BlackenedHeartBuff2"), 4, true);
+			player.AddBuff(ModContent.BuffType<BlackenedHeartBuff2>(), 4, true);
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

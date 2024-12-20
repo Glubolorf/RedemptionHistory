@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
@@ -44,12 +45,25 @@ namespace Redemption.Projectiles.DruidProjectiles
 			int DustID2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y + 2f), base.projectile.width + 2, base.projectile.height + 2, 163, base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 1f);
 			Main.dust[DustID2].noGravity = true;
 			base.projectile.localAI[0] += 1f;
-			if (base.projectile.localAI[0] == 5f)
+			if (base.projectile.localAI[0] == 1f)
 			{
 				for (int i = 0; i < 25; i++)
 				{
 					int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 163, 0f, 0f, 100, default(Color), 1.2f);
 					Main.dust[dustIndex].velocity *= 1.4f;
+				}
+			}
+			foreach (Projectile proj in Enumerable.Where<Projectile>(Main.projectile, (Projectile x) => x.Hitbox.Intersects(base.projectile.Hitbox)))
+			{
+				if (base.projectile != proj && !proj.friendly && !proj.minion)
+				{
+					proj.damage *= 4;
+					base.projectile.localAI[1] += (float)proj.damage * 0.75f;
+					if (base.projectile.localAI[0] >= 100f)
+					{
+						base.projectile.Kill();
+					}
+					proj.Kill();
 				}
 			}
 			int Num3 = 1;

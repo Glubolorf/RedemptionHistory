@@ -40,15 +40,7 @@ namespace Redemption.Items.Weapons
 
 		public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
 		{
-			if (target.type == 551 || target.type == 558 || target.type == 559 || target.type == 560 || target.type == 170 || target.type == 180 || target.type == 171 || target.type == 370 || target.type == base.mod.NPCType("GreenPigron"))
-			{
-				damage *= 50;
-			}
-			if (target.type >= 87 && target.type <= 92)
-			{
-				damage *= 50;
-			}
-			if (target.type >= 454 && target.type <= 459)
+			if (target.IsDragonlike())
 			{
 				damage *= 50;
 			}

@@ -29,8 +29,8 @@ namespace Redemption.Items.Armor.PostML
 		{
 			player.statLifeMax2 += 50;
 			player.statManaMax2 += 50;
-			player.lifeRegen += 5;
-			player.manaRegen += 10;
+			player.lifeRegen += 3;
+			player.manaRegen += 6;
 			player.magicDamage *= 1.15f;
 			player.minionDamage *= 1.15f;
 		}

@@ -49,23 +49,23 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 				int maxAccessoryIndex = 5 + player.extraAccessorySlots;
 				for (int i = 3; i < 3 + maxAccessoryIndex; i++)
 				{
-					if (slot != i && player.armor[i].type == base.mod.ItemType("TinCross"))
+					if (slot != i && player.armor[i].type == ModContent.ItemType<TinCross>())
 					{
 						return false;
 					}
-					if (slot != i && player.armor[i].type == base.mod.ItemType("CopperCross"))
+					if (slot != i && player.armor[i].type == ModContent.ItemType<CopperCross>())
 					{
 						return false;
 					}
-					if (slot != i && player.armor[i].type == base.mod.ItemType("SacredCross"))
+					if (slot != i && player.armor[i].type == ModContent.ItemType<SacredCross>())
 					{
 						return false;
 					}
-					if (slot != i && player.armor[i].type == base.mod.ItemType("SpiritualGuide"))
+					if (slot != i && player.armor[i].type == ModContent.ItemType<SpiritualGuide>())
 					{
 						return false;
 					}
-					if (slot != i && player.armor[i].type == base.mod.ItemType("LastBurden"))
+					if (slot != i && player.armor[i].type == ModContent.ItemType<LastBurden>())
 					{
 						return false;
 					}

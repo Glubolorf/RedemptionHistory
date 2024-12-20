@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.LabDeco;
+using Redemption.NPCs.LabNPCs.New;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -39,20 +41,20 @@ namespace Redemption.Tiles.LabDeco
 		{
 			if (Main.netMode == 0)
 			{
-				if (!NPC.AnyNPCs(base.mod.NPCType("Blisterface2")) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && (!RedeWorld.labAccess4 || RedeWorld.downedPatientZero))
+				if (!NPC.AnyNPCs(ModContent.NPCType<Blisterface2>()) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && (!RedeWorld.labAccess4 || RedeWorld.downedPatientZero))
 				{
 					Player localPlayer = Main.LocalPlayer;
 					Main.tile[i, j];
 					i *= 16;
 					j *= 16;
-					int k = NPC.NewNPC(i + 1, j + 1, base.mod.NPCType("Blisterface2"), 0, 0f, 0f, 0f, 0f, 255);
+					int k = NPC.NewNPC(i + 1, j + 1, ModContent.NPCType<Blisterface2>(), 0, 0f, 0f, 0f, 0f, 255);
 					if (Main.netMode == 2)
 					{
 						NetMessage.SendData(23, -1, -1, null, k, 0f, 0f, 0f, 0, 0, 0);
 					}
 				}
 			}
-			else if (!NPC.AnyNPCs(base.mod.NPCType("Blisterface2")) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && (!RedeWorld.labAccess4 || RedeWorld.downedPatientZero))
+			else if (!NPC.AnyNPCs(ModContent.NPCType<Blisterface2>()) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && (!RedeWorld.labAccess4 || RedeWorld.downedPatientZero))
 			{
 				ModPacket packet = base.mod.GetPacket(256);
 				packet.Write(6);
@@ -86,7 +88,7 @@ namespace Redemption.Tiles.LabDeco
 			Player localPlayer = Main.LocalPlayer;
 			localPlayer.noThrow = 2;
 			localPlayer.showItemIcon = true;
-			localPlayer.showItemIcon2 = base.mod.ItemType("SignDeath");
+			localPlayer.showItemIcon2 = ModContent.ItemType<SignDeath>();
 		}
 
 		public override bool CanExplode(int i, int j)

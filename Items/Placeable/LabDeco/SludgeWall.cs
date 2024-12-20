@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Walls;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -24,7 +25,7 @@ namespace Redemption.Items.Placeable.LabDeco
 			base.item.useStyle = 1;
 			base.item.consumable = true;
 			base.item.rare = 6;
-			base.item.createWall = base.mod.WallType("HardenedSludgeWallTile");
+			base.item.createWall = ModContent.WallType<HardenedSludgeWallTile>();
 		}
 	}
 }

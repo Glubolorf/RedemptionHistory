@@ -21,10 +21,10 @@ namespace Redemption.Tiles.Wasteland
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
 			TileObjectData.newTile.AnchorValidTiles = new int[]
 			{
-				base.mod.TileType("DeadGrassTileCorruption"),
-				base.mod.TileType("DeadGrassTileCrimson"),
-				base.mod.TileType("IrradiatedEbonstoneTile"),
-				base.mod.TileType("IrradiatedCrimstoneTile")
+				ModContent.TileType<DeadGrassTileCorruption>(),
+				ModContent.TileType<DeadGrassTileCrimson>(),
+				ModContent.TileType<IrradiatedEbonstoneTile>(),
+				ModContent.TileType<IrradiatedCrimstoneTile>()
 			};
 			TileObjectData.newTile.AnchorAlternateTiles = new int[]
 			{

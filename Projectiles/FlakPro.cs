@@ -23,7 +23,7 @@ namespace Redemption.Projectiles
 			base.projectile.ranged = true;
 			base.projectile.hostile = false;
 			base.projectile.friendly = true;
-			base.projectile.ignoreWater = true;
+			base.projectile.ignoreWater = false;
 			base.projectile.timeLeft = 180;
 		}
 

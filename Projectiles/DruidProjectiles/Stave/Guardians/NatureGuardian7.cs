@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ID;
@@ -50,7 +51,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 				}
 			}
 			Player player = Main.player[base.projectile.owner];
-			if (!player.HasBuff(base.mod.BuffType("NatureGuardian7Buff")))
+			if (!player.HasBuff(ModContent.BuffType<NatureGuardian7Buff>()))
 			{
 				base.projectile.Kill();
 			}
@@ -70,7 +71,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 					int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 21, 0f, 0f, 100, default(Color), 1.2f);
 					Main.dust[dustIndex].velocity *= 1.4f;
 				}
-				Projectile.NewProjectile(player.position, Vector2.Zero, base.mod.ProjectileType("HallowedAura"), 0, 0f, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(player.position, Vector2.Zero, ModContent.ProjectileType<HallowedAura>(), 0, 0f, player.whoAmI, 0f, 0f);
 				Main.PlaySound(SoundID.Item74, base.projectile.position);
 			}
 			base.projectile.velocity.Y = 0f;
@@ -82,10 +83,10 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 			{
 				if (Main.rand.Next(5) == 0)
 				{
-					Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center) + 25f), base.mod.ProjectileType("LeafHGPro"), 20, 3f, Main.myPlayer, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center) - 25f), base.mod.ProjectileType("LeafHGPro"), 20, 3f, Main.myPlayer, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center) + 25f), ModContent.ProjectileType<LeafHGPro>(), 20, 3f, Main.myPlayer, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center) - 25f), ModContent.ProjectileType<LeafHGPro>(), 20, 3f, Main.myPlayer, 0f, 0f);
 				}
-				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center)), base.mod.ProjectileType("LeafHGPro"), 20, 3f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center)), ModContent.ProjectileType<LeafHGPro>(), 20, 3f, Main.myPlayer, 0f, 0f);
 			}
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
 			if (player.dead)

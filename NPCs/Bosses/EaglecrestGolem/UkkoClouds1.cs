@@ -3,21 +3,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Graphics.Effects;
-using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Redemption.NPCs.Bosses.EaglecrestGolem
 {
 	public class UkkoClouds1 : CustomSky
 	{
-		public override void OnLoad()
-		{
-			UkkoClouds1.CloudTex = ModLoader.GetMod("Redemption").GetTexture("NPCs/Bosses/EaglecrestGolem/UkkoClouds1");
-			UkkoClouds1.boltTexture = ModLoader.GetMod("Redemption").GetTexture("NPCs/Bosses/EaglecrestGolem/UkkoSkyBolt");
-			UkkoClouds1.flashTexture = ModLoader.GetMod("Redemption").GetTexture("NPCs/Bosses/EaglecrestGolem/UkkoSkyFlash");
-			UkkoClouds1.BeamTexture = ModLoader.GetMod("Redemption").GetTexture("NPCs/Bosses/EaglecrestGolem/UkkoSkyBeam");
-		}
-
 		public override void Update(GameTime gameTime)
 		{
 			if (this.Active)
@@ -65,10 +56,14 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 
 		public override void Draw(SpriteBatch spriteBatch, float minDepth, float maxDepth)
 		{
+			Texture2D CloudTex = this.mod.GetTexture("NPCs/Bosses/EaglecrestGolem/UkkoClouds1");
+			Texture2D boltTexture = this.mod.GetTexture("NPCs/Bosses/EaglecrestGolem/UkkoSkyBolt");
+			Texture2D flashTexture = this.mod.GetTexture("NPCs/Bosses/EaglecrestGolem/UkkoSkyFlash");
+			Texture2D BeamTexture = this.mod.GetTexture("NPCs/Bosses/EaglecrestGolem/UkkoSkyBeam");
 			if (maxDepth >= 3.4028235E+38f && minDepth < 3.4028235E+38f)
 			{
 				Vector2 SkyPos = new Vector2((float)(Main.screenWidth / 2), (float)(Main.screenHeight / 2));
-				spriteBatch.Draw(UkkoClouds1.CloudTex, SkyPos, null, new Color(200, 200, 200), 0f, new Vector2((float)(UkkoClouds1.CloudTex.Width >> 1), (float)(UkkoClouds1.CloudTex.Height >> 1)), 1f, SpriteEffects.None, 1f);
+				spriteBatch.Draw(CloudTex, SkyPos, null, new Color(200, 200, 200), 0f, new Vector2((float)(CloudTex.Width >> 1), (float)(CloudTex.Height >> 1)), 1f, SpriteEffects.None, 1f);
 				Color white2 = Color.White;
 				float num65 = 1f - Main.cloudAlpha * 1.5f;
 				if (num65 < 0f)
@@ -91,11 +86,11 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 					Vector2 position = (this.bolts[i].Position - value3) * value4 + value3 - Main.screenPosition;
 					if (rectangle.Contains((int)position.X, (int)position.Y))
 					{
-						Texture2D texture = UkkoClouds1.boltTexture;
+						Texture2D texture = boltTexture;
 						int life = this.bolts[i].Life;
 						if (life > 26 && life % 2 == 0)
 						{
-							texture = UkkoClouds1.flashTexture;
+							texture = flashTexture;
 						}
 						float scale2 = (float)life / 30f;
 						spriteBatch.Draw(texture, position, null, Color.White * scale * scale2 * this.Intensity, 0f, Vector2.Zero, value4.X * 5f, SpriteEffects.None, 0f);
@@ -132,28 +127,9 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 				if (rectangle2.Contains((int)vector.X, (int)vector.Y))
 				{
 					float num68 = value6.X * 450f;
-					spriteBatch.Draw(UkkoClouds1.BeamTexture, vector, null, Color.White * 0.2f * scale3 * this.Intensity, 0f, Vector2.Zero, new Vector2(num68 / 70f, num68 / 45f), SpriteEffects.None, 0f);
+					spriteBatch.Draw(BeamTexture, vector, null, Color.White * 0.2f * scale3 * this.Intensity, 0f, Vector2.Zero, new Vector2(num68 / 70f, num68 / 45f), SpriteEffects.None, 0f);
 				}
 			}
-		}
-
-		private bool UpdateUkkoIndex()
-		{
-			int UkkoType = ModLoader.GetMod("Redemption").NPCType("Ukko");
-			if (this.UkkoIndex >= 0 && Main.npc[this.UkkoIndex].active && Main.npc[this.UkkoIndex].type == this.UkkoIndex)
-			{
-				return true;
-			}
-			this.UkkoIndex = -1;
-			for (int i = 0; i < Main.npc.Length; i++)
-			{
-				if (Main.npc[i].active && Main.npc[i].type == UkkoType)
-				{
-					this.UkkoIndex = i;
-					break;
-				}
-			}
-			return this.UkkoIndex != -1;
 		}
 
 		public override float GetCloudAlpha()
@@ -202,23 +178,15 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 
 		private readonly UnifiedRandom random = new UnifiedRandom();
 
-		public static Texture2D CloudTex;
+		private readonly Redemption mod = Redemption.inst;
 
 		public bool Active;
 
 		public float Intensity;
 
-		private int UkkoIndex = -1;
-
-		public static Texture2D boltTexture;
-
-		public static Texture2D flashTexture;
-
 		private UkkoClouds1.Bolt[] bolts;
 
 		public int ticksUntilNextBolt;
-
-		public static Texture2D BeamTexture;
 
 		private UkkoClouds1.LightPillar[] _pillars;
 

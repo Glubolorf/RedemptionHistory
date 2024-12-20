@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -29,7 +30,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.rare = 9;
 			base.item.UseSound = base.mod.GetLegacySoundSlot(2, "Sounds/Item/GravGunSound");
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("GravPro");
+			base.item.shoot = ModContent.ProjectileType<GravPro>();
 			base.item.shootSpeed = 22f;
 		}
 

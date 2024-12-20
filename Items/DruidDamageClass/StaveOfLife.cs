@@ -1,6 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
+using Redemption.Projectiles.DruidProjectiles.Stave;
+using Redemption.Projectiles.DruidProjectiles.Stave.Guardians;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,7 +31,7 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override void SafeSetDefaults()
 		{
-			base.item.damage = 30;
+			base.item.damage = 49;
 			base.item.mana = 2;
 			base.item.width = 50;
 			base.item.height = 54;
@@ -41,19 +44,19 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.UseSound = SoundID.Item17;
 			base.item.autoReuse = true;
 			base.item.noMelee = true;
-			base.item.shoot = base.mod.ProjectileType("HerbOfLifePro");
+			base.item.shoot = ModContent.ProjectileType<HerbOfLifePro>();
 			base.item.shootSpeed = 18f;
 			base.item.glowMask = StaveOfLife.customGlowMask;
-			this.defaultShoot = base.mod.ProjectileType("HerbOfLifePro");
-			this.guardianBuffID = base.mod.BuffType("NatureGuardian18Buff");
-			this.guardianProjectileID = base.mod.ProjectileType("NatureGuardian18");
+			this.defaultShoot = ModContent.ProjectileType<HerbOfLifePro>();
+			this.guardianBuffID = ModContent.BuffType<NatureGuardian18Buff>();
+			this.guardianProjectileID = ModContent.ProjectileType<NatureGuardian18>();
 			this.guardianTime = 600;
 			this.singleShotStave = false;
 			this.staveHoldOffset = new Vector2(4f, -10f);
 			this.staveLength = 50.2f;
 			this.guardianName = "Tree of Creation";
 			this.guardianType = "Mystic";
-			this.guardianAbility = "Scatter-Shot/Quad-Shot/Swift-Cast/Creation's Embrace";
+			this.guardianAbility = "Scatter-Shot/Quad-Shot/Creation's Embrace";
 			this.guardianEffects = "Staves that shoot a single projectile will instead shoot a cluster,\nStaves that shoot a single projectile will shoot 4 more in an arc, Staves cast a lot faster,\nDefence Enhancement+/Mobility Enhancement+/Life & Mana Enhancement++";
 		}
 

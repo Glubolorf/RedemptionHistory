@@ -1,5 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Items;
+using Redemption.Items.Armor;
+using Redemption.Items.Placeable.Banners.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +34,7 @@ namespace Redemption.NPCs.v08
 			this.animationType = 6;
 			base.npc.noGravity = true;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("NerveParasiteBanner");
+			this.bannerItem = ModContent.ItemType<NerveParasiteBanner>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -50,30 +54,30 @@ namespace Redemption.NPCs.v08
 
 		public override void NPCLoot()
 		{
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("XenomiteShard"), Main.rand.Next(2, 5), false, 0, false, false);
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("Starlite"), Main.rand.Next(1, 3), false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<XenomiteShard>(), Main.rand.Next(2, 5), false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<Starlite>(), Main.rand.Next(1, 3), false, 0, false, false);
 			if (Main.rand.Next(3) == 0)
 			{
 				if (WorldGen.crimson)
 				{
-					Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("Bile"), 1, false, 0, false, false);
+					Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<Bile>(), 1, false, 0, false, false);
 				}
 				else
 				{
-					Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("Bioweapon"), 1, false, 0, false, false);
+					Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<Bioweapon>(), 1, false, 0, false, false);
 				}
 			}
 			if (Main.rand.Next(526) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("OldXenomiteHead"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<OldXenomiteHead>(), 1, false, 0, false, false);
 			}
 			if (Main.rand.Next(526) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("OldXenomiteBody"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<OldXenomiteBody>(), 1, false, 0, false, false);
 			}
 			if (Main.rand.Next(526) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("OldXenomiteLeggings"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<OldXenomiteLeggings>(), 1, false, 0, false, false);
 			}
 		}
 
@@ -81,11 +85,11 @@ namespace Redemption.NPCs.v08
 		{
 			if (Main.rand.Next(2) == 0 || Main.expertMode)
 			{
-				target.AddBuff(base.mod.BuffType("XenomiteDebuff"), Main.rand.Next(500, 1000), true);
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff>(), Main.rand.Next(500, 1000), true);
 			}
 			if (Main.rand.Next(9) == 0 || (Main.expertMode && Main.rand.Next(7) == 0))
 			{
-				target.AddBuff(base.mod.BuffType("XenomiteDebuff2"), Main.rand.Next(250, 500), true);
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff2>(), Main.rand.Next(250, 500), true);
 			}
 			target.AddBuff(163, Main.rand.Next(180, 280), true);
 		}

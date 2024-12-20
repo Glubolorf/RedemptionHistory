@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -23,7 +24,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.knockBack = 0f;
 			base.item.rare = 7;
 			base.item.damage = 52;
-			base.item.shoot = base.mod.ProjectileType("XenoSynthPro");
+			base.item.shoot = ModContent.ProjectileType<XenoSynthPro>();
 			base.item.shootSpeed = 11f;
 			base.item.UseSound = base.mod.GetLegacySoundSlot(2, "Sounds/Item/SynthSound");
 			base.item.magic = true;

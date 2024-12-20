@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.NPCs.LabNPCs.New;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -50,14 +51,14 @@ namespace Redemption.Tiles.LabDeco
 			{
 				if (Main.netMode == 0)
 				{
-					if (!NPC.AnyNPCs(base.mod.NPCType("MACEControllerIdle")) && !RedeWorld.downedMACE && RedeWorld.labSafe)
+					if (!NPC.AnyNPCs(ModContent.NPCType<MACEControllerIdle>()) && !RedeWorld.downedMACE && RedeWorld.labSafe)
 					{
 						Main.tile[i, j];
 						i += 3;
 						i *= 16;
 						j += 2;
 						j *= 16;
-						int k = NPC.NewNPC(i, j, base.mod.NPCType("MACEControllerIdle"), 0, 0f, 0f, 0f, 0f, 255);
+						int k = NPC.NewNPC(i, j, ModContent.NPCType<MACEControllerIdle>(), 0, 0f, 0f, 0f, 0f, 255);
 						if (Main.netMode == 2)
 						{
 							NetMessage.SendData(23, -1, -1, null, k, 0f, 0f, 0f, 0, 0, 0);
@@ -65,7 +66,7 @@ namespace Redemption.Tiles.LabDeco
 						}
 					}
 				}
-				else if (!NPC.AnyNPCs(base.mod.NPCType("MACEControllerIdle")) && !RedeWorld.downedMACE && RedeWorld.labSafe)
+				else if (!NPC.AnyNPCs(ModContent.NPCType<MACEControllerIdle>()) && !RedeWorld.downedMACE && RedeWorld.labSafe)
 				{
 					ModPacket packet = base.mod.GetPacket(256);
 					packet.Write(21);

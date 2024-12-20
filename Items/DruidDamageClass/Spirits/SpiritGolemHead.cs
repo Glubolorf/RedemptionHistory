@@ -76,8 +76,8 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 			localAI[num2] = num3;
 			if (num3 % 40f == 0f)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(-7f, 0f), base.mod.ProjectileType("SpiritGolemBolt"), 50, (float)((int)base.projectile.knockBack), base.projectile.owner, 0f, 1f);
-				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(7f, 0f), base.mod.ProjectileType("SpiritGolemBolt"), 50, (float)((int)base.projectile.knockBack), base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(-7f, 0f), ModContent.ProjectileType<SpiritGolemBolt>(), 50, (float)((int)base.projectile.knockBack), base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(7f, 0f), ModContent.ProjectileType<SpiritGolemBolt>(), 50, (float)((int)base.projectile.knockBack), base.projectile.owner, 0f, 1f);
 			}
 			int Num3 = 1;
 			if (base.projectile.position.X + (float)(base.projectile.width / 2) < Main.player[base.projectile.owner].position.X + (float)Main.player[base.projectile.owner].width)

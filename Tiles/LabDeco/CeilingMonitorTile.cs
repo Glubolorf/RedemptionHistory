@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.LabDeco;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -14,7 +15,6 @@ namespace Redemption.Tiles.LabDeco
 			Main.tileFrameImportant[(int)base.Type] = true;
 			Main.tileLavaDeath[(int)base.Type] = false;
 			Main.tileNoAttach[(int)base.Type] = true;
-			Main.tileLighted[(int)base.Type] = false;
 			Main.tileTable[(int)base.Type] = false;
 			Main.tileLighted[(int)base.Type] = true;
 			TileObjectData.newTile.Width = 3;
@@ -68,7 +68,7 @@ namespace Redemption.Tiles.LabDeco
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 32, 16, base.mod.ItemType("LabCeilingMonitor"), 1, false, 0, false, false);
+			Item.NewItem(i * 16, j * 16, 32, 16, ModContent.ItemType<LabCeilingMonitor>(), 1, false, 0, false, false);
 		}
 
 		public override bool CanExplode(int i, int j)

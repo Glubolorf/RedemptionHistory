@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Projectiles.Minions;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,9 +31,9 @@ namespace Redemption.Items.Weapons
 			base.item.value = Item.buyPrice(0, 1, 0, 0);
 			base.item.rare = 3;
 			base.item.UseSound = SoundID.Item44;
-			base.item.shoot = base.mod.ProjectileType("DarkSoulMinion");
+			base.item.shoot = ModContent.ProjectileType<DarkSoulMinion>();
 			base.item.shootSpeed = 8f;
-			base.item.buffType = base.mod.BuffType("DarkSoulBuff");
+			base.item.buffType = ModContent.BuffType<DarkSoulBuff>();
 			base.item.buffTime = 300;
 		}
 

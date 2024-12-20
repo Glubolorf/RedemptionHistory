@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.NPCs.LabNPCs.New;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -69,7 +70,7 @@ namespace Redemption.Tiles.LabDeco.BossDoors
 
 		public override void NearbyEffects(int i, int j, bool closer)
 		{
-			if (!NPC.AnyNPCs(base.mod.NPCType("JanitorBot")) && !NPC.AnyNPCs(base.mod.NPCType("Stage3Scientist2")) && !NPC.AnyNPCs(base.mod.NPCType("IrradiatedBehemoth2")) && !NPC.AnyNPCs(base.mod.NPCType("Blisterface2")) && !NPC.AnyNPCs(base.mod.NPCType("TbotMiniboss")) && !NPC.AnyNPCs(base.mod.NPCType("MACEProjectHeadA")) && !NPC.AnyNPCs(base.mod.NPCType("PZ2Fight")))
+			if (!NPC.AnyNPCs(ModContent.NPCType<JanitorBot>()) && !NPC.AnyNPCs(ModContent.NPCType<Stage3Scientist2>()) && !NPC.AnyNPCs(ModContent.NPCType<IrradiatedBehemoth2>()) && !NPC.AnyNPCs(ModContent.NPCType<Blisterface2>()) && !NPC.AnyNPCs(ModContent.NPCType<TbotMiniboss>()) && !NPC.AnyNPCs(ModContent.NPCType<MACEProjectHeadA>()) && !NPC.AnyNPCs(ModContent.NPCType<PZ2Fight>()))
 			{
 				Main.tileSolid[(int)base.Type] = false;
 				this._activated = false;

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 			base.item.UseSound = SoundID.NPCDeath6.WithVolume(0.5f);
 			base.item.noMelee = true;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("SpiritWyvernPro");
+			base.item.shoot = ModContent.ProjectileType<SpiritWyvernPro>();
 			base.item.shootSpeed = 0f;
 			this.spiritWeapon = true;
 			this.minSpiritLevel = 3;
@@ -43,15 +44,15 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 			{
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().corruptedTalisman)
 				{
-					type = base.mod.ProjectileType("SpiritWyvernProCorrupt");
+					type = ModContent.ProjectileType<SpiritWyvernProCorrupt>();
 				}
 				else if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloodedTalisman)
 				{
-					type = base.mod.ProjectileType("SpiritWyvernProCrimson");
+					type = ModContent.ProjectileType<SpiritWyvernProCrimson>();
 				}
 				else
 				{
-					type = base.mod.ProjectileType("SpiritWyvernPro");
+					type = ModContent.ProjectileType<SpiritWyvernPro>();
 				}
 				position = Main.MouseWorld;
 				Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, 0f, 0f);
@@ -60,14 +61,14 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 			{
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritLevel < 3)
 				{
-					type = base.mod.ProjectileType("NoSpiritPro");
+					type = ModContent.ProjectileType<NoSpiritPro>();
 				}
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritLevel >= 5 && Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritLevel < 7)
 				{
-					player.AddBuff(base.mod.BuffType("SpiritWyvernBuff"), 1200, true);
+					player.AddBuff(ModContent.BuffType<SpiritWyvernBuff>(), 1200, true);
 					int num184 = -1;
 					int num185 = -1;
-					int num186 = base.mod.ProjectileType("SpiritWyvernHead");
+					int num186 = ModContent.ProjectileType<SpiritWyvernHead>();
 					int num187 = damage;
 					float num188 = base.item.knockBack;
 					Vector2 vector2 = player.RotatedRelativePoint(player.MountedCenter, true);
@@ -112,10 +113,10 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 				}
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritLevel >= 7)
 				{
-					player.AddBuff(base.mod.BuffType("SpiritDragonBuff"), 2400, true);
+					player.AddBuff(ModContent.BuffType<SpiritDragonBuff>(), 2400, true);
 					int num194 = -1;
 					int num195 = -1;
-					int num196 = base.mod.ProjectileType("SpiritDragonHead");
+					int num196 = ModContent.ProjectileType<SpiritDragonHead>();
 					int num197 = damage;
 					float num198 = base.item.knockBack;
 					Vector2 vector3 = player.RotatedRelativePoint(player.MountedCenter, true);

@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.NPCs.Bosses.EaglecrestGolem;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -47,7 +49,7 @@ namespace Redemption.Items.Weapons.v08
 					base.projectile.frame = 0;
 				}
 			}
-			bool flag = base.projectile.type == base.mod.ProjectileType("Ukkonen");
+			bool flag = base.projectile.type == ModContent.ProjectileType<Ukkonen>();
 			Player player = Main.player[base.projectile.owner];
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
 			if (flag)
@@ -61,7 +63,7 @@ namespace Redemption.Items.Weapons.v08
 					base.projectile.timeLeft = 2;
 				}
 			}
-			if (player.dead || !player.HasBuff(base.mod.BuffType("UkkonenBuff")))
+			if (player.dead || !player.HasBuff(ModContent.BuffType<UkkonenBuff>()))
 			{
 				base.projectile.Kill();
 			}
@@ -72,7 +74,7 @@ namespace Redemption.Items.Weapons.v08
 				this.MoveToVector2(AttackPos);
 				if (Main.rand.Next(5) == 0)
 				{
-					int p = Projectile.NewProjectile(new Vector2(base.projectile.Center.X + (float)Main.rand.Next(-36, 36), base.projectile.Center.Y + (float)Main.rand.Next(-12, 12)), new Vector2(0f, 0f), base.mod.ProjectileType("UkkoRain"), base.projectile.damage / 2, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+					int p = Projectile.NewProjectile(new Vector2(base.projectile.Center.X + (float)Main.rand.Next(-36, 36), base.projectile.Center.Y + (float)Main.rand.Next(-12, 12)), new Vector2(0f, 0f), ModContent.ProjectileType<UkkoRain>(), base.projectile.damage / 2, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 					Main.projectile[p].friendly = true;
 					Main.projectile[p].hostile = false;
 				}
@@ -81,7 +83,7 @@ namespace Redemption.Items.Weapons.v08
 					Vector2 speed = Vector2.Normalize(Utils.RotatedBy(new Vector2(1f, 0f), (double)(base.projectile.rotation + 3.1415f), default(Vector2)));
 					speed = (float)((Main.rand.Next(2) == 0) ? 1 : -1) * speed;
 					float ai = (float)Main.rand.Next(120);
-					int p2 = Projectile.NewProjectile(base.projectile.Center.X + (float)Main.rand.Next(-20, 20), base.projectile.Center.Y, 0f, 10f, base.mod.ProjectileType("UkkoLightning"), base.projectile.damage, 0f, Main.myPlayer, Utils.ToRotation(speed) + 1000f, ai);
+					int p2 = Projectile.NewProjectile(base.projectile.Center.X + (float)Main.rand.Next(-20, 20), base.projectile.Center.Y, 0f, 10f, ModContent.ProjectileType<UkkoLightning>(), base.projectile.damage, 0f, Main.myPlayer, Utils.ToRotation(speed) + 1000f, ai);
 					Main.projectile[p2].hostile = false;
 					Main.projectile[p2].friendly = true;
 					return;

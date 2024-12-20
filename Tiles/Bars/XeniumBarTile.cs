@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -19,7 +20,7 @@ namespace Redemption.Tiles.Bars
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.addTile((int)base.Type);
-			this.drop = base.mod.ItemType("XeniumBar");
+			this.drop = ModContent.ItemType<XeniumBar>();
 			this.dustType = 8;
 			base.AddMapEntry(new Color(10, 90, 10), null);
 			this.minPick = 0;

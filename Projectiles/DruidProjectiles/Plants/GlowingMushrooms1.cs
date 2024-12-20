@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.DruidProjectiles.Plants
 {
@@ -67,7 +68,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 			{
 				if (base.projectile.localAI[0] % 60f == 0f && base.projectile.frame >= 5)
 				{
-					Projectile.NewProjectile(base.projectile.Center, base.projectile.velocity, base.mod.ProjectileType("GlowingMushroomSpores1"), 0, 0f, base.projectile.owner, 0f, 0f);
+					Projectile.NewProjectile(base.projectile.Center, base.projectile.velocity, ModContent.ProjectileType<GlowingMushroomSpores1>(), 0, 0f, base.projectile.owner, 0f, 0f);
 					return;
 				}
 			}
@@ -75,7 +76,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 			{
 				for (int i = -2; i <= 2; i++)
 				{
-					Projectile.NewProjectile(base.projectile.Center, 2f * Utils.RotatedBy(Vector2.UnitX, 1.5707963267948966 * (double)i, default(Vector2)), base.mod.ProjectileType("GlowingMushroomSpores1"), 0, 0f, base.projectile.owner, 0f, 0f);
+					Projectile.NewProjectile(base.projectile.Center, 2f * Utils.RotatedBy(Vector2.UnitX, 1.5707963267948966 * (double)i, default(Vector2)), ModContent.ProjectileType<GlowingMushroomSpores1>(), 0, 0f, base.projectile.owner, 0f, 0f);
 				}
 			}
 		}

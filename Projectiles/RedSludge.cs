@@ -38,7 +38,7 @@ namespace Redemption.Projectiles
 
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			Projectile.NewProjectile(base.projectile.Center, base.projectile.velocity, base.mod.ProjectileType("HardenedBlackGloop"), 10, 0f, base.projectile.owner, 0f, 1f);
+			Projectile.NewProjectile(base.projectile.Center, base.projectile.velocity, ModContent.ProjectileType<HardenedBlackGloop>(), 10, 0f, base.projectile.owner, 0f, 1f);
 			return true;
 		}
 	}

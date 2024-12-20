@@ -69,7 +69,7 @@ namespace Redemption.Projectiles.Minions
 			float num509 = 0.05f;
 			for (int num510 = 0; num510 < 1000; num510++)
 			{
-				bool flag23 = Main.projectile[num510].type == base.mod.ProjectileType("MiniVlitchCore");
+				bool flag23 = Main.projectile[num510].type == ModContent.ProjectileType<MiniVlitchCore>();
 				if (num510 != base.projectile.whoAmI && Main.projectile[num510].active && Main.projectile[num510].owner == base.projectile.owner && flag23 && Math.Abs(base.projectile.position.X - Main.projectile[num510].position.X) + Math.Abs(base.projectile.position.Y - Main.projectile[num510].position.Y) < (float)base.projectile.width)
 				{
 					if (base.projectile.position.X < Main.projectile[num510].position.X)
@@ -150,9 +150,9 @@ namespace Redemption.Projectiles.Minions
 			if (flag25 && base.projectile.ai[0] == 0f)
 			{
 				Vector2 vector47 = vector46 - base.projectile.Center;
-				float num518 = vector47.Length();
+				float num516 = vector47.Length();
 				vector47.Normalize();
-				if (num518 > 200f)
+				if (num516 > 200f)
 				{
 					float scaleFactor2 = 8f;
 					vector47 *= scaleFactor2;
@@ -179,23 +179,23 @@ namespace Redemption.Projectiles.Minions
 				}
 				Vector2 center2 = base.projectile.Center;
 				Vector2 vector48 = player.Center - center2 + new Vector2(0f, -30f);
-				float num519 = vector48.Length();
-				if (num519 > 200f && num515 < 6.5f)
+				float num517 = vector48.Length();
+				if (num517 > 200f && num515 < 6.5f)
 				{
 					num515 = 6.5f;
 				}
-				if (num519 < num508 && flag26 && !Collision.SolidCollision(base.projectile.position, base.projectile.width, base.projectile.height))
+				if (num517 < num508 && flag26 && !Collision.SolidCollision(base.projectile.position, base.projectile.width, base.projectile.height))
 				{
 					base.projectile.ai[0] = 0f;
 					base.projectile.netUpdate = true;
 				}
-				if (num519 > 2000f)
+				if (num517 > 2000f)
 				{
 					base.projectile.position.X = Main.player[base.projectile.owner].Center.X - (float)(base.projectile.width / 2);
 					base.projectile.position.Y = Main.player[base.projectile.owner].Center.Y - (float)(base.projectile.height / 2);
 					base.projectile.netUpdate = true;
 				}
-				if (num519 > 70f)
+				if (num517 > 70f)
 				{
 					vector48.Normalize();
 					vector48 *= num515;
@@ -216,28 +216,22 @@ namespace Redemption.Projectiles.Minions
 				base.projectile.ai[1] = 0f;
 				base.projectile.netUpdate = true;
 			}
-			if (base.projectile.ai[0] == 0f)
+			if (RedeHelper.ClosestNPC(ref this.target, 1000f, base.projectile.Center, false, player.MinionAttackTargetNPC))
 			{
-				float scaleFactor3 = 11f;
-				int num516 = ModContent.ProjectileType<VlitchLaserPro>();
-				if (flag25 && base.projectile.ai[1] == 0f)
+				int num518 = this.timer + 1;
+				this.timer = num518;
+				if (num518 % 80 == 0)
 				{
-					base.projectile.ai[1] += 1f;
-					if (Main.myPlayer == base.projectile.owner && Collision.CanHitLine(base.projectile.position, base.projectile.width, base.projectile.height, vector46, 0, 0))
-					{
-						Vector2 value19 = vector46 - base.projectile.Center;
-						value19.Normalize();
-						value19 *= scaleFactor3;
-						int num517 = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, value19.X, value19.Y, num516, base.projectile.damage, 0f, Main.myPlayer, 0f, 0f);
-						Main.projectile[num517].friendly = true;
-						Main.projectile[num517].hostile = false;
-						Main.projectile[num517].timeLeft = 300;
-						base.projectile.netUpdate = true;
-					}
+					int p = Projectile.NewProjectile(base.projectile.Center, RedeHelper.PolarVector(15f, Utils.ToRotation(this.target.Center - base.projectile.Center)), ModContent.ProjectileType<VlitchLaserPro2>(), base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
+					Main.projectile[p].netUpdate = true;
 				}
 			}
 		}
 
 		private int dust = 3;
+
+		private NPC target;
+
+		public int timer;
 	}
 }

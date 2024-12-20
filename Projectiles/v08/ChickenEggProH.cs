@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.NPCs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -43,7 +44,7 @@ namespace Redemption.Projectiles.v08
 			{
 				if (Main.rand.Next(4) == 0)
 				{
-					int i = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, base.mod.NPCType("Chicken"), 0, 0f, 0f, 0f, 0f, 255);
+					int i = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, ModContent.NPCType<Chicken>(), 0, 0f, 0f, 0f, 0f, 255);
 					if (Main.netMode == 2)
 					{
 						NetMessage.SendData(23, -1, -1, null, i, 0f, 0f, 0f, 0, 0, 0);
@@ -51,7 +52,7 @@ namespace Redemption.Projectiles.v08
 				}
 				if (Main.rand.Next(999) == 0)
 				{
-					int j = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, base.mod.NPCType("RainbowChicken"), 0, 0f, 0f, 0f, 0f, 255);
+					int j = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, ModContent.NPCType<RainbowChicken>(), 0, 0f, 0f, 0f, 0f, 255);
 					if (Main.netMode == 2)
 					{
 						NetMessage.SendData(23, -1, -1, null, j, 0f, 0f, 0f, 0, 0, 0);

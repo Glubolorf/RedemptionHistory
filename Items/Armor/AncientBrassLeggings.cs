@@ -13,7 +13,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Ancient Brass Leggings");
-			base.Tooltip.SetDefault("Increases melee damage by 2%");
+			base.Tooltip.SetDefault("Increases melee damage by 3%");
 		}
 
 		public override void SetDefaults()
@@ -27,7 +27,7 @@ namespace Redemption.Items.Armor
 
 		public override void UpdateEquip(Player player)
 		{
-			player.meleeDamage *= 1.02f;
+			player.meleeDamage *= 1.03f;
 		}
 
 		public override void AddRecipes()

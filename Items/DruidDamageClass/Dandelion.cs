@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.DruidProjectiles;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -29,7 +30,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
 			base.item.noMelee = true;
-			base.item.shoot = base.mod.ProjectileType("GiantDandelionSeed");
+			base.item.shoot = ModContent.ProjectileType<GiantDandelionSeed>();
 			base.item.shootSpeed = 10f;
 		}
 
@@ -85,7 +86,7 @@ namespace Redemption.Items.DruidDamageClass
 				num76 *= num77;
 				float speedX2 = num75 + (float)Main.rand.Next(-50, 51) * 0.02f;
 				float speedY2 = num76 + (float)Main.rand.Next(-50, 51) * 0.02f;
-				int projectile = Projectile.NewProjectile(vector2.X, vector2.Y, speedX2, speedY2, base.mod.ProjectileType("GiantDandelionSeed"), num73, num74, i, 0f, (float)Main.rand.Next(10));
+				int projectile = Projectile.NewProjectile(vector2.X, vector2.Y, speedX2, speedY2, ModContent.ProjectileType<GiantDandelionSeed>(), num73, num74, i, 0f, (float)Main.rand.Next(10));
 				Main.projectile[projectile].tileCollide = false;
 				Main.projectile[projectile].ranged = false;
 				Main.projectile[projectile].magic = true;

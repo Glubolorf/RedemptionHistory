@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Projectiles.DruidProjectiles.Stave.Guardians;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,8 +33,8 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.shoot = base.mod.ProjectileType("KingsOakShot" + (Main.rand.Next(5) + 1));
 			base.item.shootSpeed = 12f;
 			this.defaultShoot = base.mod.ProjectileType("KingsOakShot" + (Main.rand.Next(5) + 1));
-			this.guardianBuffID = base.mod.BuffType("NatureGuardian25Buff");
-			this.guardianProjectileID = base.mod.ProjectileType("NatureGuardian25");
+			this.guardianBuffID = ModContent.BuffType<NatureGuardian25Buff>();
+			this.guardianProjectileID = ModContent.ProjectileType<NatureGuardian25>();
 			this.guardianTime = 600;
 			this.singleShotStave = true;
 			this.staveHoldOffset = new Vector2(4f, -10f);
@@ -60,6 +62,7 @@ namespace Redemption.Items.DruidDamageClass
 			modRecipe.AddIngredient(null, "MahoganyStave", 1);
 			modRecipe.AddIngredient(null, "PalmStave", 1);
 			modRecipe.AddIngredient(null, "SmallLostSoul", 5);
+			modRecipe.AddIngredient(null, "DarkShard", 2);
 			modRecipe.AddTile(null, "DruidicAltarTile");
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
@@ -72,6 +75,7 @@ namespace Redemption.Items.DruidDamageClass
 			modRecipe2.AddIngredient(null, "MahoganyStave", 1);
 			modRecipe2.AddIngredient(null, "PalmStave", 1);
 			modRecipe2.AddIngredient(null, "SmallLostSoul", 5);
+			modRecipe2.AddIngredient(null, "DarkShard", 2);
 			modRecipe2.AddTile(null, "DruidicAltarTile");
 			modRecipe2.SetResult(this, 1);
 			modRecipe2.AddRecipe();

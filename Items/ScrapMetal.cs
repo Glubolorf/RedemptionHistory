@@ -30,11 +30,11 @@ namespace Redemption.Items
 		{
 			if (Main.rand.Next(2) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("Mk1Plating"), Main.rand.Next(1, 3));
+				player.QuickSpawnItem(ModContent.ItemType<Mk1Plating>(), Main.rand.Next(1, 3));
 			}
 			if (Main.rand.Next(2) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("Mk1Capacitator"), Main.rand.Next(1, 2));
+				player.QuickSpawnItem(ModContent.ItemType<Mk1Capacitator>(), Main.rand.Next(1, 2));
 			}
 			if (Main.rand.Next(75) == 0)
 			{
@@ -72,22 +72,22 @@ namespace Redemption.Items
 				}
 				if (Main.rand.Next(2) == 0)
 				{
-					player.QuickSpawnItem(base.mod.ItemType("Mk2Plating"), Main.rand.Next(1, 3));
+					player.QuickSpawnItem(ModContent.ItemType<Mk2Plating>(), Main.rand.Next(1, 3));
 				}
 				if (Main.rand.Next(2) == 0)
 				{
-					player.QuickSpawnItem(base.mod.ItemType("Mk2Capacitator"), Main.rand.Next(1, 2));
+					player.QuickSpawnItem(ModContent.ItemType<Mk2Capacitator>(), Main.rand.Next(1, 2));
 				}
 			}
 			if (NPC.downedGolemBoss)
 			{
 				if (Main.rand.Next(2) == 0)
 				{
-					player.QuickSpawnItem(base.mod.ItemType("Mk3Plating"), Main.rand.Next(1, 3));
+					player.QuickSpawnItem(ModContent.ItemType<Mk3Plating>(), Main.rand.Next(1, 3));
 				}
 				if (Main.rand.Next(2) == 0)
 				{
-					player.QuickSpawnItem(base.mod.ItemType("Mk3Capacitator"), Main.rand.Next(1, 2));
+					player.QuickSpawnItem(ModContent.ItemType<Mk3Capacitator>(), Main.rand.Next(1, 2));
 				}
 				if (Main.rand.Next(75) == 0)
 				{

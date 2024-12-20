@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -37,9 +38,9 @@ namespace Redemption.NPCs.LabNPCs.New
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			if (target.type == base.mod.NPCType("JanitorBot"))
+			if (target.type == ModContent.NPCType<JanitorBot>())
 			{
-				target.AddBuff(base.mod.BuffType("JanitorStun"), 5, false);
+				target.AddBuff(ModContent.BuffType<JanitorStun>(), 5, false);
 			}
 		}
 

@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Placeable.Banners;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,7 +33,7 @@ namespace Redemption.NPCs
 			this.aiType = 482;
 			this.animationType = 482;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("OmegaPrototypeSilverBanner");
+			this.bannerItem = ModContent.ItemType<OmegaPrototypeSilverBanner>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -97,7 +99,7 @@ namespace Redemption.NPCs
 					float Speed = 5f;
 					Vector2 vector8 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 					int damage = 50;
-					int type = base.mod.ProjectileType("OmegaWave3");
+					int type = ModContent.ProjectileType<OmegaWave3>();
 					float rotation = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
 					int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
 					Main.projectile[num54].netUpdate = true;

@@ -42,8 +42,8 @@ namespace Redemption.Projectiles.v08
 				Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 70, base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 0, default(Color), 1f);
 				Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 68, base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 0, default(Color), 1f);
 				Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 69, base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 0, default(Color), 1f);
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 7f, base.projectile.position.Y + 28f), new Vector2(base.projectile.velocity.X + 0f, base.projectile.velocity.Y + 5f), base.mod.ProjectileType("CrystalShurikenShardPro"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 7f, base.projectile.position.Y + 28f), new Vector2(base.projectile.velocity.X + 0f, base.projectile.velocity.Y - 5f), base.mod.ProjectileType("CrystalShurikenShardPro"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 7f, base.projectile.position.Y + 28f), new Vector2(base.projectile.velocity.X + 0f, base.projectile.velocity.Y + 5f), ModContent.ProjectileType<CrystalShurikenShardPro>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 7f, base.projectile.position.Y + 28f), new Vector2(base.projectile.velocity.X + 0f, base.projectile.velocity.Y - 5f), ModContent.ProjectileType<CrystalShurikenShardPro>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			}
 		}
 

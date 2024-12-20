@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,7 +30,7 @@ namespace Redemption.Items.Weapons
 			base.item.UseSound = SoundID.Item1;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
-			base.item.shoot = base.mod.ProjectileType("AkiClawPro");
+			base.item.shoot = ModContent.ProjectileType<AkiClawPro>();
 			base.item.shootSpeed = 15f;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 5;
 		}
@@ -39,7 +40,7 @@ namespace Redemption.Items.Weapons
 			if (Main.rand.Next(5) == 0)
 			{
 				Main.PlaySound(SoundID.Item71, player.position);
-				Projectile.NewProjectile(position.X, position.Y, speedX, speedY, base.mod.ProjectileType("AkiClawPro"), damage * 2, 7f, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(position.X, position.Y, speedX, speedY, ModContent.ProjectileType<AkiClawPro>(), damage * 2, 7f, player.whoAmI, 0f, 0f);
 			}
 			return false;
 		}

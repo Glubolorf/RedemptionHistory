@@ -1,7 +1,6 @@
 ﻿using System;
 using Terraria;
 using Terraria.Graphics.Shaders;
-using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.Nebuleus
 {
@@ -13,13 +12,13 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 
 		private void UpdateStarGodIndex()
 		{
-			int StarGodType = ModLoader.GetMod("Redemption").NPCType("Nebuleus");
+			int StarGodType = Redemption.inst.NPCType("Nebuleus");
 			if (this.StarGodIndex >= 0 && Main.npc[this.StarGodIndex].active && Main.npc[this.StarGodIndex].type == StarGodType)
 			{
 				return;
 			}
 			this.StarGodIndex = -1;
-			for (int i = 0; i < Main.npc.Length; i++)
+			for (int i = 0; i < 200; i++)
 			{
 				if (Main.npc[i].active && Main.npc[i].type == StarGodType)
 				{

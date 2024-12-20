@@ -51,7 +51,7 @@ namespace Redemption.Projectiles
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
 			Main.PlaySound(SoundID.Item93.WithVolume(0.3f), base.projectile.position);
-			Projectile.NewProjectile(base.projectile.position.X, base.projectile.position.Y, 0f, 0f, base.mod.ProjectileType("ElectronadeTeslaField"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+			Projectile.NewProjectile(base.projectile.position.X, base.projectile.position.Y, 0f, 0f, ModContent.ProjectileType<ElectronadeTeslaField>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 		}
 
 		public override void Kill(int timeLeft)

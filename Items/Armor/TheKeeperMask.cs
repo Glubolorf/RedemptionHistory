@@ -12,7 +12,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("The Keeper's Mask");
-			base.Tooltip.SetDefault("'Was this really it's face?'");
+			base.Tooltip.SetDefault("");
 		}
 
 		public override void SetDefaults()

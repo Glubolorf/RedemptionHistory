@@ -33,7 +33,7 @@ namespace Redemption.Items.Armor
 			druidDamagePlayer.druidDamage += 0.11f;
 			druidDamagePlayer.druidCrit += 8;
 			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).fasterSeedbags = true;
-			player.lifeRegen += 5;
+			player.lifeRegen += 2;
 		}
 
 		public override void AddRecipes()

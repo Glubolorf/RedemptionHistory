@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -27,7 +28,7 @@ namespace Redemption.Projectiles
 			base.projectile.alpha = 0;
 		}
 
-		public float movementFactor
+		public float MovementFactor
 		{
 			get
 			{
@@ -50,25 +51,25 @@ namespace Redemption.Projectiles
 			base.projectile.position.Y = ownerMountedCenter.Y - (float)(base.projectile.height / 2);
 			if (!projOwner.frozen)
 			{
-				if (this.movementFactor == 0f)
+				if (this.MovementFactor == 0f)
 				{
-					this.movementFactor = 1f;
+					this.MovementFactor = 1f;
 					base.projectile.netUpdate = true;
 				}
 				if (projOwner.itemAnimation < projOwner.itemAnimationMax / 3)
 				{
-					this.movementFactor -= 2.4f;
+					this.MovementFactor -= 2.4f;
 				}
 				else
 				{
-					this.movementFactor += 2.1f;
-					if (Main.rand.Next(30) == 0)
+					this.MovementFactor += 2.1f;
+					if (Main.myPlayer == base.projectile.owner && Main.rand.Next(30) == 0)
 					{
-						Projectile.NewProjectile(base.projectile.Center, base.projectile.velocity * 3f, base.mod.ProjectileType("PeaceBeam"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
+						Projectile.NewProjectile(base.projectile.Center, base.projectile.velocity * 3f, ModContent.ProjectileType<PeaceBeam>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
 					}
 				}
 			}
-			base.projectile.position += base.projectile.velocity * this.movementFactor;
+			base.projectile.position += base.projectile.velocity * this.MovementFactor;
 			if (projOwner.itemAnimation == 0)
 			{
 				base.projectile.Kill();

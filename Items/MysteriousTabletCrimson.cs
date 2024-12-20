@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.NPCs.Bosses.TheKeeper;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.Items
 
 		public override bool CanUseItem(Player player)
 		{
-			return !Main.dayTime && !NPC.AnyNPCs(base.mod.NPCType("TheKeeper"));
+			return !Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<TheKeeper>());
 		}
 
 		public override bool UseItem(Player player)
@@ -41,7 +42,7 @@ namespace Redemption.Items
 			}
 			else
 			{
-				Redemption.SpawnBoss(player, "TheKeeper", true, new Vector2(player.position.X + (float)Main.rand.Next(1100, 1300), player.position.Y - 80f), "The Keeper", false);
+				Redemption.SpawnBoss(player, "TheKeeper", true, new Vector2(player.position.X + (float)Main.rand.Next(400, 500), player.position.Y - 0f), "The Keeper", false);
 				Main.PlaySound(15, player.position, 0);
 			}
 			return true;

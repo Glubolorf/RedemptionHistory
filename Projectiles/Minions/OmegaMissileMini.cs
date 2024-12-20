@@ -110,7 +110,7 @@ namespace Redemption.Projectiles.Minions
 				int dustIndex2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 235, 0f, 0f, 100, default(Color), 1.2f);
 				Main.dust[dustIndex2].velocity *= 1.4f;
 			}
-			Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(0f, 0f), base.mod.ProjectileType("MissileBlast"), base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
+			Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(0f, 0f), ModContent.ProjectileType<MissileBlast>(), base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
 		}
 	}
 }

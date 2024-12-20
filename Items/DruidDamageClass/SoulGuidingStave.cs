@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.DruidProjectiles.Stave;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,11 +27,11 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.value = Item.sellPrice(0, 2, 35, 0);
 			base.item.rare = 4;
 			base.item.UseSound = SoundID.Item43;
-			base.item.shoot = base.mod.ProjectileType("LightSoulPro1");
+			base.item.shoot = ModContent.ProjectileType<LightSoulPro1>();
 			base.item.shootSpeed = 17f;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
-			this.defaultShoot = base.mod.ProjectileType("LightSoulPro1");
+			this.defaultShoot = ModContent.ProjectileType<LightSoulPro1>();
 			this.singleShotStave = true;
 			this.staveHoldOffset = new Vector2(4f, -10f);
 			this.staveLength = 32.2f;
@@ -38,7 +39,7 @@ namespace Redemption.Items.DruidDamageClass
 
 		protected override bool SpecialShootPattern(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, base.mod.ProjectileType("NightSoulPro1"), damage, knockBack, player.whoAmI, 0f, 0f);
+			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, ModContent.ProjectileType<NightSoulPro1>(), damage, knockBack, player.whoAmI, 0f, 0f);
 			return true;
 		}
 

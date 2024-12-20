@@ -48,7 +48,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 		public override void Kill(int timeLeft)
 		{
 			Main.PlaySound(SoundID.Item71, base.projectile.position);
-			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, base.mod.ProjectileType("SlashPro1"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
+			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, ModContent.ProjectileType<SlashPro1>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
 		}
 	}
 }

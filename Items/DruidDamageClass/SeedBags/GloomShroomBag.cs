@@ -1,7 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.DruidProjectiles.Plants;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass.SeedBags
 {
@@ -29,7 +31,7 @@ namespace Redemption.Items.DruidDamageClass.SeedBags
 			base.item.UseSound = SoundID.Item1;
 			base.item.noMelee = true;
 			base.item.autoReuse = false;
-			base.item.shoot = base.mod.ProjectileType("GloomShroomCapsule1");
+			base.item.shoot = ModContent.ProjectileType<GloomShroomCapsule1>();
 			base.item.shootSpeed = 17f;
 			this.NativeTerrainIDs = TileLists.GloomTiles;
 			this.nativeText = "Mud/Bones";

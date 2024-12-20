@@ -43,7 +43,7 @@ namespace Redemption.Projectiles.v08
 			base.projectile.localAI[0] += 1f;
 			if (base.projectile.localAI[0] >= 10f)
 			{
-				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, base.mod.ProjectileType("InfectiousSludgePro"), 30, 4f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, ModContent.ProjectileType<InfectiousSludgePro>(), 30, 4f, Main.myPlayer, 0f, 0f);
 				base.projectile.localAI[0] = 0f;
 			}
 		}

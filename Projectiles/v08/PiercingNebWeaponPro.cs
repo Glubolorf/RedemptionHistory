@@ -69,7 +69,7 @@ namespace Redemption.Projectiles.v08
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, 0f, base.mod.ProjectileType("NebulaSparklePro2"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
+			Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, 0f, ModContent.ProjectileType<NebulaSparklePro2>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
 		}
 
 		public int proType;

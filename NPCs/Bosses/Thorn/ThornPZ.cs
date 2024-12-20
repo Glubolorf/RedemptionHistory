@@ -2,6 +2,10 @@
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items;
+using Redemption.Items.Armor.PostML;
+using Redemption.Items.Placeable;
+using Redemption.Items.Weapons.v08;
 using Redemption.NPCs.Bosses.EaglecrestGolem;
 using Terraria;
 using Terraria.ID;
@@ -34,14 +38,14 @@ namespace Redemption.NPCs.Bosses.Thorn
 			base.npc.boss = true;
 			base.npc.netAlways = true;
 			base.npc.noTileCollide = false;
-			this.bossBag = base.mod.ItemType("ThornPZBag");
+			this.bossBag = ModContent.ItemType<ThornPZBag>();
 		}
 
 		public override void NPCLoot()
 		{
 			if (Main.rand.Next(10) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ThornTrophy"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<ThornTrophy>(), 1, false, 0, false, false);
 			}
 			if (Main.expertMode)
 			{
@@ -50,18 +54,18 @@ namespace Redemption.NPCs.Bosses.Thorn
 			}
 			if (Main.rand.Next(7) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ThornMask"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<ThornMask>(), 1, false, 0, false, false);
 			}
 			int num = Main.rand.Next(2);
 			if (num == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CursedThornBow2"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<CursedThornBow2>(), 1, false, 0, false, false);
 			}
 			if (num == 1)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CursedThornFlail"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<CursedThornFlail>(), 1, false, 0, false, false);
 			}
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CursedThorns"), Main.rand.Next(9, 18), false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<CursedThorns>(), Main.rand.Next(9, 18), false, 0, false, false);
 		}
 
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
@@ -196,7 +200,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 			{
 				base.npc.spriteDirection = -1;
 			}
-			if ((base.npc.life <= (int)((float)base.npc.lifeMax * 0.5f) || RedeUkkoAkka.begin) && NPC.AnyNPCs(base.mod.NPCType("EaglecrestGolemPZ")) && this.transformTimer == 0)
+			if ((base.npc.life <= (int)((float)base.npc.lifeMax * 0.5f) || RedeUkkoAkka.begin) && NPC.AnyNPCs(ModContent.NPCType<EaglecrestGolemPZ>()) && this.transformTimer == 0)
 			{
 				this.transformTimer = 1;
 			}
@@ -232,17 +236,17 @@ namespace Redemption.NPCs.Bosses.Thorn
 					this.transformTimer2++;
 					if (this.transformTimer2 == 10)
 					{
-						int p = Projectile.NewProjectile(player.Center.X - 60f, player.Center.Y + 300f, 0f, 0f, base.mod.ProjectileType("Text1"), 0, 0f, Main.myPlayer, 0f, 0f);
+						int p = Projectile.NewProjectile(player.Center.X - 60f, player.Center.Y + 300f, 0f, 0f, ModContent.ProjectileType<Text1>(), 0, 0f, Main.myPlayer, 0f, 0f);
 						Main.projectile[p].netUpdate = true;
 					}
 					if (this.transformTimer2 == 110)
 					{
-						int p2 = Projectile.NewProjectile(player.Center.X + 60f, player.Center.Y + 200f, 0f, 0f, base.mod.ProjectileType("Text2"), 0, 0f, Main.myPlayer, 0f, 0f);
+						int p2 = Projectile.NewProjectile(player.Center.X + 60f, player.Center.Y + 200f, 0f, 0f, ModContent.ProjectileType<Text2>(), 0, 0f, Main.myPlayer, 0f, 0f);
 						Main.projectile[p2].netUpdate = true;
 					}
 					if (this.transformTimer2 == 210)
 					{
-						int p3 = Projectile.NewProjectile(player.Center.X, player.Center.Y + 100f, 0f, 0f, base.mod.ProjectileType("Text3"), 0, 0f, Main.myPlayer, 0f, 0f);
+						int p3 = Projectile.NewProjectile(player.Center.X, player.Center.Y + 100f, 0f, 0f, ModContent.ProjectileType<Text3>(), 0, 0f, Main.myPlayer, 0f, 0f);
 						Main.projectile[p3].netUpdate = true;
 					}
 				}
@@ -276,7 +280,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 				this.transformTimer++;
 				if (this.transformTimer == 355)
 				{
-					int p4 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("TransitionUkko"), 0, 1f, Main.myPlayer, 0f, 0f);
+					int p4 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, ModContent.ProjectileType<TransitionUkko>(), 0, 1f, Main.myPlayer, 0f, 0f);
 					Main.projectile[p4].netUpdate = true;
 				}
 				if (this.transformTimer >= 380)
@@ -289,7 +293,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 					base.npc.velocity.Y = 0f;
 					base.npc.velocity.X = 0f;
 					Main.NewText("Akka, Ancient Goddess of Nature has awoken...", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B, false);
-					base.npc.SetDefaults(base.mod.NPCType("Akka"), -1f);
+					base.npc.SetDefaults(ModContent.NPCType<Akka>(), -1f);
 					return;
 				}
 			}
@@ -342,42 +346,42 @@ namespace Redemption.NPCs.Bosses.Thorn
 					this.customAI[0] += 1f;
 					if (this.customAI[0] == 30f)
 					{
-						int p5 = Projectile.NewProjectile(player.Center.X + 500f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 26, 1f, Main.myPlayer, 0f, 0f);
-						int p6 = Projectile.NewProjectile(player.Center.X + -500f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 26, 1f, Main.myPlayer, 0f, 0f);
+						int p5 = Projectile.NewProjectile(player.Center.X + 500f, player.Center.Y - 200f, 0f, 0f, ModContent.ProjectileType<ThornSeed>(), 26, 1f, Main.myPlayer, 0f, 0f);
+						int p6 = Projectile.NewProjectile(player.Center.X + -500f, player.Center.Y - 200f, 0f, 0f, ModContent.ProjectileType<ThornSeed>(), 26, 1f, Main.myPlayer, 0f, 0f);
 						Main.projectile[p5].netUpdate = true;
 						Main.projectile[p6].netUpdate = true;
 					}
 					if (this.customAI[0] == 40f)
 					{
-						int p7 = Projectile.NewProjectile(player.Center.X + 400f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 26, 1f, Main.myPlayer, 0f, 0f);
-						int p8 = Projectile.NewProjectile(player.Center.X + -400f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 26, 1f, Main.myPlayer, 0f, 0f);
+						int p7 = Projectile.NewProjectile(player.Center.X + 400f, player.Center.Y - 200f, 0f, 0f, ModContent.ProjectileType<ThornSeed>(), 26, 1f, Main.myPlayer, 0f, 0f);
+						int p8 = Projectile.NewProjectile(player.Center.X + -400f, player.Center.Y - 200f, 0f, 0f, ModContent.ProjectileType<ThornSeed>(), 26, 1f, Main.myPlayer, 0f, 0f);
 						Main.projectile[p7].netUpdate = true;
 						Main.projectile[p8].netUpdate = true;
 					}
 					if (this.customAI[0] == 50f)
 					{
-						int p9 = Projectile.NewProjectile(player.Center.X + 300f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 26, 1f, Main.myPlayer, 0f, 0f);
-						int p10 = Projectile.NewProjectile(player.Center.X + -300f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 26, 1f, Main.myPlayer, 0f, 0f);
+						int p9 = Projectile.NewProjectile(player.Center.X + 300f, player.Center.Y - 200f, 0f, 0f, ModContent.ProjectileType<ThornSeed>(), 26, 1f, Main.myPlayer, 0f, 0f);
+						int p10 = Projectile.NewProjectile(player.Center.X + -300f, player.Center.Y - 200f, 0f, 0f, ModContent.ProjectileType<ThornSeed>(), 26, 1f, Main.myPlayer, 0f, 0f);
 						Main.projectile[p9].netUpdate = true;
 						Main.projectile[p10].netUpdate = true;
 					}
 					if (this.customAI[0] == 60f)
 					{
-						int p11 = Projectile.NewProjectile(player.Center.X + 200f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 26, 1f, Main.myPlayer, 0f, 0f);
-						int p12 = Projectile.NewProjectile(player.Center.X + -200f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 26, 1f, Main.myPlayer, 0f, 0f);
+						int p11 = Projectile.NewProjectile(player.Center.X + 200f, player.Center.Y - 200f, 0f, 0f, ModContent.ProjectileType<ThornSeed>(), 26, 1f, Main.myPlayer, 0f, 0f);
+						int p12 = Projectile.NewProjectile(player.Center.X + -200f, player.Center.Y - 200f, 0f, 0f, ModContent.ProjectileType<ThornSeed>(), 26, 1f, Main.myPlayer, 0f, 0f);
 						Main.projectile[p11].netUpdate = true;
 						Main.projectile[p12].netUpdate = true;
 					}
 					if (this.customAI[0] == 70f)
 					{
-						int p13 = Projectile.NewProjectile(player.Center.X + 100f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 26, 1f, Main.myPlayer, 0f, 0f);
-						int p14 = Projectile.NewProjectile(player.Center.X + -100f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 26, 1f, Main.myPlayer, 0f, 0f);
+						int p13 = Projectile.NewProjectile(player.Center.X + 100f, player.Center.Y - 200f, 0f, 0f, ModContent.ProjectileType<ThornSeed>(), 26, 1f, Main.myPlayer, 0f, 0f);
+						int p14 = Projectile.NewProjectile(player.Center.X + -100f, player.Center.Y - 200f, 0f, 0f, ModContent.ProjectileType<ThornSeed>(), 26, 1f, Main.myPlayer, 0f, 0f);
 						Main.projectile[p13].netUpdate = true;
 						Main.projectile[p14].netUpdate = true;
 					}
 					if (this.customAI[0] == 80f)
 					{
-						int p15 = Projectile.NewProjectile(player.Center.X + 0f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 26, 1f, Main.myPlayer, 0f, 0f);
+						int p15 = Projectile.NewProjectile(player.Center.X + 0f, player.Center.Y - 200f, 0f, 0f, ModContent.ProjectileType<ThornSeed>(), 26, 1f, Main.myPlayer, 0f, 0f);
 						Main.projectile[p15].netUpdate = true;
 					}
 					if (this.customAI[0] >= 160f)
@@ -398,7 +402,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 						float Speed = 24f;
 						Vector2 vector8 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 						int damage = 27;
-						int type = base.mod.ProjectileType("CursedThornPro6");
+						int type = ModContent.ProjectileType<CursedThornPro6>();
 						float rotation = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
 						int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
 						Main.projectile[num54].netUpdate = true;
@@ -473,7 +477,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 					this.customAI[0] += 1f;
 					if (this.customAI[0] == 60f)
 					{
-						if (NPC.AnyNPCs(base.mod.NPCType("ManaBarrierPro2")))
+						if (NPC.AnyNPCs(ModContent.NPCType<ManaBarrierPro2>()))
 						{
 							this.customAI[0] = 0f;
 							this.customAI[2] = 0f;
@@ -497,7 +501,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 							for (int count = 0; count < 1; count++)
 							{
 								Vector2 spawn = base.npc.Center + distance * Utils.ToRotationVector2((float)count * n);
-								int Minion = NPC.NewNPC((int)spawn.X, (int)spawn.Y, base.mod.NPCType("ManaBarrierPro2"), 0, (float)base.npc.whoAmI, 0f, (float)count, 0f, 255);
+								int Minion = NPC.NewNPC((int)spawn.X, (int)spawn.Y, ModContent.NPCType<ManaBarrierPro2>(), 0, (float)base.npc.whoAmI, 0f, (float)count, 0f, 255);
 								Main.npc[Minion].netUpdate = true;
 							}
 						}
@@ -518,7 +522,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 					{
 						if (this.customAI[0] == 50f || this.customAI[0] == 55f || this.customAI[0] == 60f || this.customAI[0] == 65f || this.customAI[0] == 70f || this.customAI[0] == 75f || this.customAI[0] == 80f || this.customAI[0] == 85f || this.customAI[0] == 90f || this.customAI[0] == 95f)
 						{
-							int p16 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, base.mod.ProjectileType("SlashFlashPro"), 26, 3f, 255, 0f, 0f);
+							int p16 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<SlashFlashPro>(), 26, 3f, 255, 0f, 0f);
 							Main.projectile[p16].netUpdate = true;
 						}
 						if (this.customAI[0] >= 160f)
@@ -534,7 +538,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 					{
 						if (this.customAI[0] == 50f || this.customAI[0] == 70f || this.customAI[0] == 90f || this.customAI[0] == 120f || this.customAI[0] == 160f || this.customAI[0] == 220f)
 						{
-							int p17 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, base.mod.ProjectileType("SlashFlashPro"), 26, 3f, 255, 0f, 0f);
+							int p17 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<SlashFlashPro>(), 26, 3f, 255, 0f, 0f);
 							Main.projectile[p17].netUpdate = true;
 						}
 						if (this.customAI[0] >= 270f)

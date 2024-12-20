@@ -1,6 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items;
+using Redemption.Items.Placeable.Banners;
+using Redemption.NPCs.Varients;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,6 +16,7 @@ namespace Redemption.NPCs
 		{
 			base.DisplayName.SetDefault("Chicken");
 			Main.npcFrameCount[base.npc.type] = 7;
+			NPCID.Sets.TownCritter[base.npc.type] = true;
 		}
 
 		public override void SetDefaults()
@@ -30,8 +34,8 @@ namespace Redemption.NPCs
 			this.animationType = 46;
 			base.npc.dontTakeDamageFromHostiles = false;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("ChickenBanner");
-			base.npc.catchItem = (short)base.mod.ItemType("ChickenItem");
+			this.bannerItem = ModContent.ItemType<ChickenBanner>();
+			base.npc.catchItem = (short)ModContent.ItemType<ChickenItem>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -44,7 +48,7 @@ namespace Redemption.NPCs
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/ChickenGore3"), 1f);
 				if (base.npc.FindBuffIndex(24) != -1)
 				{
-					Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("FriedChicken"), 1, false, 0, false, false);
+					Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<FriedChicken>(), 1, false, 0, false, false);
 				}
 			}
 		}
@@ -56,17 +60,17 @@ namespace Redemption.NPCs
 				int changeChoice = Main.rand.Next(1000);
 				if (changeChoice == 0)
 				{
-					base.npc.SetDefaults(base.mod.NPCType("LongChicken"), -1f);
+					base.npc.SetDefaults(ModContent.NPCType<LongChicken>(), -1f);
 					this.change = true;
 				}
 				if (changeChoice >= 1 && changeChoice < 4)
 				{
-					base.npc.SetDefaults(base.mod.NPCType("ChickenGold"), -1f);
+					base.npc.SetDefaults(ModContent.NPCType<ChickenGold>(), -1f);
 					this.change = true;
 				}
 				if (changeChoice >= 4 && changeChoice < 8)
 				{
-					base.npc.SetDefaults(base.mod.NPCType("VlitchChicken"), -1f);
+					base.npc.SetDefaults(ModContent.NPCType<VlitchChicken>(), -1f);
 					this.change = true;
 				}
 				if (changeChoice >= 8)
@@ -74,12 +78,12 @@ namespace Redemption.NPCs
 					int num = Main.rand.Next(5);
 					if (num == 0)
 					{
-						base.npc.SetDefaults(base.mod.NPCType("LeghornChicken"), -1f);
+						base.npc.SetDefaults(ModContent.NPCType<LeghornChicken>(), -1f);
 						this.change = true;
 					}
 					if (num == 1)
 					{
-						base.npc.SetDefaults(base.mod.NPCType("RedChicken"), -1f);
+						base.npc.SetDefaults(ModContent.NPCType<RedChicken>(), -1f);
 						this.change = true;
 					}
 					if (num >= 2)
@@ -156,9 +160,9 @@ namespace Redemption.NPCs
 		{
 			if (RedeWorld.downedKingChicken)
 			{
-				return SpawnCondition.OverworldDayGrassCritter.Chance * ((Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == 2) ? 1.8f : 0f);
+				return SpawnCondition.OverworldDayGrassCritter.Chance * 1.8f;
 			}
-			return SpawnCondition.OverworldDayGrassCritter.Chance * ((Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == 2) ? 3.2f : 0f);
+			return SpawnCondition.OverworldDayGrassCritter.Chance * 3.2f;
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)

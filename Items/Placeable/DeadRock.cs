@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -23,7 +24,7 @@ namespace Redemption.Items.Placeable
 			base.item.useStyle = 1;
 			base.item.value = Item.buyPrice(0, 0, 1, 0);
 			base.item.consumable = true;
-			base.item.createTile = base.mod.TileType("DeadRockTile");
+			base.item.createTile = ModContent.TileType<DeadRockTile>();
 		}
 	}
 }

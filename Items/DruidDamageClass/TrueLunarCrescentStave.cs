@@ -1,5 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Projectiles.DruidProjectiles.Stave;
+using Redemption.Projectiles.DruidProjectiles.Stave.Guardians;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -27,18 +30,18 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.UseSound = SoundID.Item43;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
-			base.item.shoot = base.mod.ProjectileType("TrueCrescentPro");
+			base.item.shoot = ModContent.ProjectileType<TrueCrescentPro>();
 			base.item.shootSpeed = 18f;
-			this.defaultShoot = base.mod.ProjectileType("TrueCrescentPro");
-			this.guardianBuffID = base.mod.BuffType("NatureGuardian15Buff");
-			this.guardianProjectileID = base.mod.ProjectileType("NatureGuardian15");
+			this.defaultShoot = ModContent.ProjectileType<TrueCrescentPro>();
+			this.guardianBuffID = ModContent.BuffType<NatureGuardian15Buff>();
+			this.guardianProjectileID = ModContent.ProjectileType<NatureGuardian15>();
 			this.guardianTime = 600;
 			this.singleShotStave = true;
 			this.staveHoldOffset = new Vector2(4f, -10f);
 			this.staveLength = 76.2f;
 			this.guardianName = "True Lunar Statuette";
 			this.guardianType = "Mystic";
-			this.guardianAbility = "Quad-Shot/Swift-Cast/Nightshade's Embrace+";
+			this.guardianAbility = "Quad-Shot/Nightshade's Embrace+";
 			this.guardianEffects = "Staves that shoot a single projectile will shoot 4 more in an arc, Staves cast a lot faster,\nMana Enhancement+/Improved Sight+/Mobility Enhancement+ at night";
 		}
 

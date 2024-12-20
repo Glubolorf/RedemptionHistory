@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -24,7 +25,7 @@ namespace Redemption.Items.Placeable
 			base.item.rare = 4;
 			base.item.consumable = true;
 			base.item.value = Item.sellPrice(0, 30, 0, 0);
-			base.item.createTile = base.mod.TileType("ArchclothThroneTile");
+			base.item.createTile = ModContent.TileType<ArchclothThroneTile>();
 		}
 
 		public override void AddRecipes()

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -25,7 +26,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.useTime = 40;
 			base.item.useAnimation = 40;
 			base.item.useStyle = 5;
-			base.item.shoot = base.mod.ProjectileType("PlutoniumBeam");
+			base.item.shoot = ModContent.ProjectileType<PlutoniumBeam>();
 			base.item.knockBack = 0f;
 			base.item.value = Item.buyPrice(0, 35, 0, 0);
 			base.item.rare = 9;

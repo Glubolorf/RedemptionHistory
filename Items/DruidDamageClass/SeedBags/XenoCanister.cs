@@ -1,7 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles.DruidProjectiles.Plants;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass.SeedBags
 {
@@ -40,7 +42,7 @@ namespace Redemption.Items.DruidDamageClass.SeedBags
 			base.item.UseSound = SoundID.Item1;
 			base.item.noMelee = true;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("Seed12");
+			base.item.shoot = ModContent.ProjectileType<Seed12>();
 			base.item.shootSpeed = 18f;
 			base.item.glowMask = XenoCanister.customGlowMask;
 		}

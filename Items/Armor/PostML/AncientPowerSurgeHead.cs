@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -44,14 +45,14 @@ namespace Redemption.Items.Armor.PostML
 
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
-			return body.type == base.mod.ItemType("AncientPowerSurgeBody") && legs.type == base.mod.ItemType("AncientPowerSurgeLeggings");
+			return body.type == ModContent.ItemType<AncientPowerSurgeBody>() && legs.type == ModContent.ItemType<AncientPowerSurgeLeggings>();
 		}
 
 		public override void UpdateArmorSet(Player player)
 		{
 			player.setBonus = "Dealing damage has a 10% chance to fire out homing energy orbs at enemies\n8% increased magic and summon damage when you're not in a power surge\n6% increased magic critical strike chance.\nTaking damage builds up energy within the armour\nReaching a charge of 300 will unleash a Power Surge for 7 seconds\n--During Power Surge--\n25% increased magic and summon damage\nYour magic weapons don't consume mana\nYour immunity frames are extended";
 			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).powerSurgeSet = true;
-			if (!player.HasBuff(base.mod.BuffType("PowerSurgeBuff")))
+			if (!player.HasBuff(ModContent.BuffType<PowerSurgeBuff>()))
 			{
 				player.magicDamage += 0.08f;
 				player.minionDamage += 0.08f;

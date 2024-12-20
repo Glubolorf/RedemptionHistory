@@ -32,7 +32,7 @@ namespace Redemption.Items.Armor.PostML
 			player.magicDamage *= 1.1f;
 			player.minionDamage *= 1.1f;
 			player.thrownDamage *= 1.1f;
-			player.lifeRegen += 3;
+			player.lifeRegen++;
 		}
 
 		public override void ArmorSetShadows(Player player)
@@ -42,7 +42,7 @@ namespace Redemption.Items.Armor.PostML
 
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
-			return body.type == base.mod.ItemType("BloodShinkiteBody") && legs.type == base.mod.ItemType("BloodShinkiteLeggings");
+			return body.type == ModContent.ItemType<BloodShinkiteBody>() && legs.type == ModContent.ItemType<BloodShinkiteLeggings>();
 		}
 
 		public override void UpdateArmorSet(Player player)

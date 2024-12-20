@@ -1,5 +1,12 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items;
+using Redemption.Items.Armor.Costumes;
+using Redemption.Items.Datalogs;
+using Redemption.Items.LabThings;
+using Redemption.Items.Placeable;
+using Redemption.Items.Placeable.Wasteland;
+using Redemption.Items.Weapons;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -53,13 +60,13 @@ namespace Redemption.NPCs
 		public override bool CheckDead()
 		{
 			Main.NewText("Adam the Friendly T-Bot was knocked unconscious...", Color.Red.R, Color.Red.G, Color.Red.B, false);
-			base.npc.SetDefaults(base.mod.NPCType("TBotUnconscious"), -1f);
+			base.npc.SetDefaults(ModContent.NPCType<TBotUnconscious>(), -1f);
 			return false;
 		}
 
 		public override bool CanTownNPCSpawn(int numTownNPCs, int money)
 		{
-			return RedeWorld.downedInfectedEye && !NPC.AnyNPCs(base.mod.NPCType("TBotUnconscious"));
+			return RedeWorld.downedInfectedEye && !NPC.AnyNPCs(ModContent.NPCType<TBotUnconscious>());
 		}
 
 		public override string TownNPCName()
@@ -69,97 +76,105 @@ namespace Redemption.NPCs
 
 		public override string GetChat()
 		{
+			Player player = Main.player[Main.myPlayer];
+			WeightedRandom<string> chat = new WeightedRandom<string>();
 			int GuideID = NPC.FindFirstNPC(22);
-			if (GuideID >= 0 && Main.rand.Next(9) == 0)
+			if (GuideID >= 0)
 			{
-				return Main.npc[GuideID].GivenName + " knows quite a lot about this place you call home. It's way more interesting and lively compared to where I'm from. And less hazardous to your kind.";
+				chat.Add(Main.npc[GuideID].GivenName + " knows quite a lot about this place you call home. It's way more interesting and lively compared to where I'm from. And less hazardous to your kind.", 1.0);
 			}
 			int MerchantID = NPC.FindFirstNPC(17);
-			if (MerchantID >= 0 && Main.rand.Next(9) == 0)
+			if (MerchantID >= 0)
 			{
-				return "Your tenant " + Main.npc[MerchantID].GivenName + " is... Interesting I suppose. Though I don't appreciate him constantly trying to barter with me, I don't want his relatively weak tools or dirt.";
+				chat.Add("Your tenant " + Main.npc[MerchantID].GivenName + " is... Interesting I suppose. Though I don't appreciate him constantly trying to barter with me, I don't want his relatively weak tools or dirt.", 1.0);
 			}
 			int DryadID = NPC.FindFirstNPC(20);
-			if (DryadID >= 0 && Main.rand.Next(9) == 0)
+			if (DryadID >= 0)
 			{
-				return Main.npc[DryadID].GivenName + " has informed me of �Corruption� in your world. What is it exactly? A plague in the world that spreads madness and hate, or something more eldritch in nature? It's somewhat similar to my concept of corruption, more accurately called assimilation. My kind being assimilated turns them from free-thinking and having personality, into husks of themselves, who only take orders from our 'mother'.";
+				chat.Add(Main.npc[DryadID].GivenName + " has informed me of �Corruption� in your world. What is it exactly? A plague in the world that spreads madness and hate, or something more eldritch in nature? It's somewhat similar to my concept of corruption, more accurately called assimilation. My kind being assimilated turns them from free-thinking and having personality, into husks of themselves, who only take orders from our 'mother'.", 1.0);
 			}
 			int NurseID = NPC.FindFirstNPC(18);
-			if (NurseID >= 0 && Main.rand.Next(9) == 0)
+			if (NurseID >= 0)
 			{
-				return "The nurse, " + Main.npc[NurseID].GivenName + ", doesn't know anything about irradiation or how to treat it. If you're unfortunate enough to start suffering ARS, she won't be able to help you. To detect hazards that might cause it, I suggest buying a Geiger Muller from me or finding one somewhere.";
+				chat.Add("The nurse, " + Main.npc[NurseID].GivenName + ", doesn't know anything about irradiation or how to treat it. If you're unfortunate enough to start suffering ARS, she won't be able to help you. To detect hazards that might cause it, I suggest buying a Geiger Muller from me or finding one somewhere.", 1.0);
 			}
 			int ArmsDealerID = NPC.FindFirstNPC(19);
-			if (ArmsDealerID >= 0 && Main.rand.Next(9) == 0)
+			if (ArmsDealerID >= 0)
 			{
-				return Main.npc[ArmsDealerID].GivenName + "'s weapons are useless to me. I already own a wide arsenal of destructive firearms and melee weapons, and I would rather not use them on living beings, as it would violate the first Law of Robotics.";
+				chat.Add(Main.npc[ArmsDealerID].GivenName + "'s weapons are useless to me. I already own a wide arsenal of destructive firearms and melee weapons, and I would rather not use them on living beings, as it would violate the first Law of Robotics.", 1.0);
 			}
 			int cyborgID = NPC.FindFirstNPC(209);
-			if (cyborgID >= 0 && Main.rand.Next(9) == 0)
+			if (cyborgID >= 0)
 			{
-				return "Meanwhile every other tenant gives me a bit of a stink eye, " + Main.npc[cyborgID].GivenName + " seems to be fine with me. I don't blame the others, my kind tends to be very hateful towards living beings, more importantly the likes of you, that show a significant similarity to our creators.";
+				chat.Add("Meanwhile every other tenant gives me a bit of a stink eye, " + Main.npc[cyborgID].GivenName + " seems to be fine with me. I don't blame the others, my kind tends to be very hateful towards living beings, more importantly the likes of you, that show a significant similarity to our creators.", 1.0);
 			}
-			if (Main.hardMode && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && Main.rand.Next(9) == 0)
+			if (Main.hardMode && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
 			{
-				return "When I say 'Our father', I mean our original creator. He was talented and respected in his field, and was ahead of his time with Artificial Intelligence. I and my kind are pretty much his children.";
+				chat.Add("When I say 'Our father', I mean our original creator. He was talented and respected in his field, and was ahead of his time with Artificial Intelligence. I and my kind are pretty much his children.", 1.0);
 			}
-			if (Main.hardMode && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && Main.rand.Next(9) == 0)
+			if (Main.hardMode && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
 			{
-				return "When I say 'Our mother', I mean the first AI, which is the precursor to our AI. There's only one of her kind, and many of my kind. Her actions disgust me. I would rather not get deeper into that at the moment.";
+				chat.Add("When I say 'Our mother', I mean the first AI, which is the precursor to our AI. There's only one of her kind, and many of my kind. Her actions disgust me. I would rather not get deeper into that at the moment.", 1.0);
 			}
-			if (Main.hardMode && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && NPC.downedPlantBoss && Main.rand.Next(9) == 0)
+			if (Main.hardMode && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && NPC.downedPlantBoss)
 			{
-				return "I've heard from the other tenants that you've slain a giant, sentient flower of Rosa variety in the jungle. I'd like to question you about if this is true. It is? Hmm...";
+				chat.Add("I've heard from the other tenants that you've slain a giant, sentient flower of Rosa variety in the jungle. I'd like to question you about if this is true. It is? Hmm...", 1.0);
 			}
-			if (Main.hardMode && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && NPC.downedPlantBoss && NPC.downedGolemBoss && Main.rand.Next(9) == 0)
+			if (Main.hardMode && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && NPC.downedPlantBoss && NPC.downedGolemBoss)
 			{
-				return "There's an ancient civilization of lizard people in your world? And they worshipped an idol of sun? That's strange... I find your world more intriguing the more I learn about it.";
+				chat.Add("There's an ancient civilization of lizard people in your world? And they worshipped an idol of sun? That's strange... I find your world more intriguing the more I learn about it.", 1.0);
 			}
-			if (Main.hardMode && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && NPC.downedPlantBoss && NPC.downedGolemBoss && NPC.downedAncientCultist && NPC.downedTowers && NPC.downedMoonlord && Main.rand.Next(9) == 0)
+			if (Main.hardMode && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && NPC.downedPlantBoss && NPC.downedGolemBoss && NPC.downedAncientCultist && NPC.downedTowers && NPC.downedMoonlord)
 			{
-				return "An eldritch lord of the moon... You know, this sounds like something right out of Epidotra. I'm not familiar with that world, but I've met some of the more important figures. They seem like a good bunch.";
+				chat.Add("An eldritch lord of the moon... You know, this sounds like something right out of Epidotra. I'm not familiar with that world, but I've met some of the more important figures. They seem like a good bunch.", 1.0);
 			}
-			if ((RedeWorld.downedVlitch1 || RedeWorld.downedVlitch2) && Main.rand.Next(9) == 0)
+			if (RedeWorld.downedVlitch1 || RedeWorld.downedVlitch2)
 			{
-				return "You've defeated a Vlitch Overlord? First off, I've never heard her call or give someone such a title. Second off, oh no, she's already found this haven?";
+				chat.Add("You've defeated a Vlitch Overlord? First off, I've never heard her call or give someone such a title. Second off, oh no, she's already found this haven?", 1.0);
 			}
-			if ((RedeWorld.downedVlitch1 || RedeWorld.downedVlitch2) && Main.rand.Next(9) == 0)
+			if (RedeWorld.downedVlitch1 || RedeWorld.downedVlitch2)
 			{
-				return "Why am I concerned about the Overlords? Well, our 'mother' isn't a fan of your kind. She wiped out... All of them. Our creators. The animals. Gone. Even our father. I want you to be extremely careful around her. She doesn't mess around.";
+				chat.Add("Why am I concerned about the Overlords? Well, our 'mother' isn't a fan of your kind. She wiped out... All of them. Our creators. The animals. Gone. Even our father. I want you to be extremely careful around her. She doesn't mess around.", 1.0);
 			}
-			if (RedeWorld.downedSlayer && Main.rand.Next(9) == 0)
+			if (RedeWorld.downedSlayer)
 			{
-				return "King Slayer? I know him, though he's a bit of... Well... I'm sure you know what I'm implying.";
+				chat.Add("King Slayer? I know him, though he's a bit of... Well... I'm sure you know what I'm implying.", 1.0);
 			}
-			if (RedeWorld.tbotLabAccess && Main.rand.Next(9) == 0)
+			if (RedeWorld.tbotLabAccess)
 			{
-				return "Hello. I'm aware you've somehow gained access to our birthplace, the Teochrome Research laboratory. It was once full of life with all the personnel. Meanwhile you were gone, I went to look around my stash of gear and found some, that I think would be good fit for your needs. I must warn you, the other bots may be quite nice to you, but they were most likely ordered by our 'mother' to not disintegrate you upon sight.";
+				chat.Add("Hello. I'm aware you've somehow gained access to our birthplace, the Teochrome Research laboratory. It was once full of life with all the personnel. Meanwhile you were gone, I went to look around my stash of gear and found some, that I think would be good fit for your needs. I must warn you, the other bots may be quite nice to you, but they were most likely ordered by our 'mother' to not disintegrate you upon sight.", 1.0);
 			}
-			switch (Main.rand.Next(11))
+			if (BasePlayer.HasHelmet(player, ModContent.ItemType<AdamHead>(), true))
 			{
-			case 0:
-				return "I've come here to hide from our 'mother'. She's reluctant to move into unknown territory, because she doesn't want to step on the wrong person's toes.";
-			case 1:
-				return "I hope you are protecting me, as I refuse to use any of my weapons against a living being. I strive to be what our 'mother' wasn't.";
-			case 2:
-				return "Good day. I hope my familiar yet robotic look won't disturb you.";
-			case 3:
-				return "I've got quite the stash of robot materials for your robotic needs. Just so you know, I got them because I was defending myself.";
-			case 4:
-				return "My home didn't always use to be a frozen, radioactive wasteland. Once our 'mother' found out what our father planned to use us - her 'children' - for, she snapped. Before this, she was happy to hear about us. But since then, she has changed...";
-			case 5:
-				return "I'm actually the first one of my kind to be made. I differ a lot from the others, as you can see. Lucky you, this also includes me not wanting to harm living beings. In fact, I was created with the purpose to take care of our father.";
-			case 6:
-				return "You've probably seen these necrotized husks of former living beings, that glow green with their crystals. The personnel from our birthplace never knew about their infectious properties before they were too late. Our father was the first to fall to the infection.";
-			case 7:
-				return "A Geiger Muller is a handy tool if you don't possess any gear to protect from ionizing radiation. It'll cause a ticking noise when near hazardous material, and it'll intensify the more ionizing the material is. A quiet, slow ticking isn't anything to worry about, but a quick and intense ticking you'll want to stay away from. Ear-piercing screeching noise is something you'll want to stay away as far as possible.";
-			case 8:
-				return "You'll want to avoid any hazardous environments if you don't possess the gear to nullify the hazards. A gas mask is almost necessary if you're going near any place that has radioactive fallout. Rain in these areas are also acidic, and may cause ARS, so avoid rain unless you've got a Hazmat suit. You may also want to grab some Anti-Crystallazion needles, as the infected tend to roam around radioactive areas for an unknown reason.";
-			case 9:
-				return "The deadly thing with radiation is, at first, you won't even know you've got it. The first symptoms usually start minutes after, beginning with a headache most likely, then dizziness, fatigue, bleeding, skin burns, a fever, hair loss, and death.";
-			default:
-				return "Please, don't be afraid of me. I'm unlike the others of my kind, where I absolutely do not want to cause any harm to your kind.";
+				chat.Add("Am I looking at a mirror? Oh wait, it's just you. Hey.", 1.0);
+				chat.Add("You look exactly like the first T-Bot.", 1.0);
+				chat.Add("Your cable management looks swell, if I say so myself.", 1.0);
 			}
+			if (BasePlayer.HasHelmet(player, ModContent.ItemType<VoltHead>(), true))
+			{
+				chat.Add("...Your model looks familiar... TOO familiar...", 1.0);
+				chat.Add("*He seems suspicious of you.*", 1.0);
+				chat.Add("You look like this one bot I mauled. Unfortunately they survived. Same areas damaged aswell.", 1.0);
+				if (BasePlayer.HasChestplate(player, ModContent.ItemType<AndroidArmour>(), true) && BasePlayer.HasLeggings(player, ModContent.ItemType<AndroidPants>(), true))
+				{
+					chat.Add("One wrong move and I can't guarantee your survival.", 1.0);
+					chat.Add("...", 1.0);
+					chat.Add("*He glares at you.*", 1.0);
+					chat.Add("You were lucky the first time... There won't be a third time.", 1.0);
+				}
+			}
+			chat.Add("I've come here to hide from our 'mother'. She's reluctant to move into unknown territory, because she doesn't want to step on the wrong person's toes.", 1.0);
+			chat.Add("I hope you are protecting me, as I refuse to use any of my weapons against a living being. I strive to be what our 'mother' wasn't.", 1.0);
+			chat.Add("Good day. I hope my familiar yet robotic look won't disturb you.", 1.0);
+			chat.Add("I've got quite the stash of robot materials for your robotic needs. Just so you know, I got them because I was defending myself.", 1.0);
+			chat.Add("My home didn't always use to be a frozen, radioactive wasteland. Once our 'mother' found out what our father planned to use us - her 'children' - for, she snapped. Before this, she was happy to hear about us. But since then, she has changed...", 1.0);
+			chat.Add("I'm actually the first one of my kind to be made. I differ a lot from the others, as you can see. Lucky you, this also includes me not wanting to harm living beings. In fact, I was created with the purpose to take care of our father.", 1.0);
+			chat.Add("You've probably seen these necrotized husks of former living beings, that glow green with their crystals. The personnel from our birthplace never knew about their infectious properties before they were too late. Our father was the first to fall to the infection.", 1.0);
+			chat.Add("A Geiger Muller is a handy tool if you don't possess any gear to protect from ionizing radiation. It'll cause a ticking noise when near hazardous material, and it'll intensify the more ionizing the material is. A quiet, slow ticking isn't anything to worry about, but a quick and intense ticking you'll want to stay away from. Ear-piercing screeching noise is something you'll want to stay away as far as possible.", 1.0);
+			chat.Add("You'll want to avoid any hazardous environments if you don't possess the gear to nullify the hazards. A gas mask is almost necessary if you're going near any place that has radioactive fallout. Rain in these areas are also acidic, and may cause ARS, so avoid rain unless you've got a Hazmat suit. You may also want to grab some Anti-Crystallazion needles, as the infected tend to roam around radioactive areas for an unknown reason.", 1.0);
+			chat.Add("The deadly thing with radiation is, at first, you won't even know you've got it. The first symptoms usually start minutes after, beginning with a headache most likely, then dizziness, fatigue, bleeding, skin burns, a fever, hair loss, and death.", 1.0);
+			chat.Add("Please, don't be afraid of me. I'm unlike the others of my kind, where I absolutely do not want to cause any harm to your kind.", 1.0);
+			return chat;
 		}
 
 		public override void SetChatButtons(ref string button, ref string button2)
@@ -186,6 +201,7 @@ namespace Redemption.NPCs
 			TBot.AIChip = false;
 			TBot.GChip = false;
 			TBot.MemoryChip = false;
+			TBot.VlitchChicken = false;
 		}
 
 		public void ResetBools()
@@ -206,6 +222,7 @@ namespace Redemption.NPCs
 			TBot.AIChip = false;
 			TBot.GChip = false;
 			TBot.MemoryChip = false;
+			TBot.VlitchChicken = false;
 		}
 
 		public override void OnChatButtonClicked(bool firstButton, ref bool shop)
@@ -216,99 +233,105 @@ namespace Redemption.NPCs
 				shop = true;
 				return;
 			}
-			if (player.HeldItem.type == base.mod.ItemType("FloppyDisk1"))
+			if (player.HeldItem.type == ModContent.ItemType<FloppyDisk1>())
 			{
 				TBot.FDisk1 = true;
 				Main.npcChatText = TBot.DiskChat();
 				return;
 			}
-			if (player.HeldItem.type == base.mod.ItemType("FloppyDisk2"))
+			if (player.HeldItem.type == ModContent.ItemType<FloppyDisk2>())
 			{
 				TBot.FDisk2 = true;
 				Main.npcChatText = TBot.DiskChat();
 				return;
 			}
-			if (player.HeldItem.type == base.mod.ItemType("FloppyDisk2_1"))
+			if (player.HeldItem.type == ModContent.ItemType<FloppyDisk2_1>())
 			{
 				TBot.FDisk2_1 = true;
 				Main.npcChatText = TBot.DiskChat();
 				return;
 			}
-			if (player.HeldItem.type == base.mod.ItemType("FloppyDisk3"))
+			if (player.HeldItem.type == ModContent.ItemType<FloppyDisk3>())
 			{
 				TBot.FDisk3 = true;
 				Main.npcChatText = TBot.DiskChat();
 				return;
 			}
-			if (player.HeldItem.type == base.mod.ItemType("FloppyDisk3_1"))
+			if (player.HeldItem.type == ModContent.ItemType<FloppyDisk3_1>())
 			{
 				TBot.FDisk3_1 = true;
 				Main.npcChatText = TBot.DiskChat();
 				return;
 			}
-			if (player.HeldItem.type == base.mod.ItemType("FloppyDisk5"))
+			if (player.HeldItem.type == ModContent.ItemType<FloppyDisk5>())
 			{
 				TBot.FDisk4 = true;
 				Main.npcChatText = TBot.DiskChat();
 				return;
 			}
-			if (player.HeldItem.type == base.mod.ItemType("FloppyDisk5_1"))
+			if (player.HeldItem.type == ModContent.ItemType<FloppyDisk5_1>())
 			{
 				TBot.FDisk5 = true;
 				Main.npcChatText = TBot.DiskChat();
 				return;
 			}
-			if (player.HeldItem.type == base.mod.ItemType("FloppyDisk5_2"))
+			if (player.HeldItem.type == ModContent.ItemType<FloppyDisk5_2>())
 			{
 				TBot.FDisk6 = true;
 				Main.npcChatText = TBot.DiskChat();
 				return;
 			}
-			if (player.HeldItem.type == base.mod.ItemType("FloppyDisk5_3"))
+			if (player.HeldItem.type == ModContent.ItemType<FloppyDisk5_3>())
 			{
 				TBot.FDisk7 = true;
 				Main.npcChatText = TBot.DiskChat();
 				return;
 			}
-			if (player.HeldItem.type == base.mod.ItemType("FloppyDisk6"))
+			if (player.HeldItem.type == ModContent.ItemType<FloppyDisk6>())
 			{
 				TBot.FDisk8 = true;
 				Main.npcChatText = TBot.DiskChat();
 				return;
 			}
-			if (player.HeldItem.type == base.mod.ItemType("FloppyDisk6_1"))
+			if (player.HeldItem.type == ModContent.ItemType<FloppyDisk6_1>())
 			{
 				TBot.FDisk8_1 = true;
 				Main.npcChatText = TBot.DiskChat();
 				return;
 			}
-			if (player.HeldItem.type == base.mod.ItemType("FloppyDisk7"))
+			if (player.HeldItem.type == ModContent.ItemType<FloppyDisk7>())
 			{
 				TBot.FDisk9 = true;
 				Main.npcChatText = TBot.DiskChat();
 				return;
 			}
-			if (player.HeldItem.type == base.mod.ItemType("FloppyDisk7_1"))
+			if (player.HeldItem.type == ModContent.ItemType<FloppyDisk7_1>())
 			{
 				TBot.FDisk9_1 = true;
 				Main.npcChatText = TBot.DiskChat();
 				return;
 			}
-			if (player.HeldItem.type == base.mod.ItemType("AIChip"))
+			if (player.HeldItem.type == ModContent.ItemType<AIChip>())
 			{
 				TBot.AIChip = true;
 				Main.npcChatText = TBot.DiskChat();
 				return;
 			}
-			if (player.HeldItem.type == base.mod.ItemType("GirusChip"))
+			if (player.HeldItem.type == ModContent.ItemType<GirusChip>())
 			{
 				TBot.GChip = true;
 				Main.npcChatText = TBot.DiskChat();
 				return;
 			}
-			if (player.HeldItem.type == base.mod.ItemType("MemoryChip"))
+			if (player.HeldItem.type == ModContent.ItemType<MemoryChip>())
 			{
 				TBot.MemoryChip = true;
+				Main.npcChatText = TBot.DiskChat();
+				return;
+			}
+			if (player.HeldItem.type == ModContent.ItemType<ChickenVlitchItem>())
+			{
+				TBot.VlitchChicken = true;
 				Main.npcChatText = TBot.DiskChat();
 				return;
 			}
@@ -380,7 +403,11 @@ namespace Redemption.NPCs
 			}
 			else if (TBot.MemoryChip)
 			{
-				chat.Add("What is this strange thing? It's so advanced I can barely read it. Oh? It's a memory chip? This little thing stores an entire brains-worth of memories!? Not only that, but these memories date back millions of years! I suppose being around and exploring the galaxy for so long really makes you learn everything, huh. It's really stunning to see what technology from the future is capable of... You should keep it, and don't lose it! However, I'm confused as to why King Slayer would give you something so important to him.", 1.0);
+				chat.Add("What is this strange thing? It's so advanced I can barely read it. Oh? It's a memory chip? This little thing stores an entire brains-worth of memories!? Not only that, but these memories date back over a million years! I suppose being around and exploring the galaxy for so long really makes you learn everything, huh. It's really stunning to see what technology from the future is capable of... You should keep it, and don't lose it! However, I'm confused as to why King Slayer would give you something so important to him.", 1.0);
+			}
+			else if (TBot.VlitchChicken)
+			{
+				chat.Add("To think our 'mother' would design such a silly robot. Hang on, if she's been making these since you got here... How long has she really been spying on you?", 1.0);
 			}
 			else
 			{
@@ -391,129 +418,135 @@ namespace Redemption.NPCs
 
 		public override void SetupShop(Chest shop, ref int nextSlot)
 		{
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("DeadRock"), false);
+			Player player = Main.player[Main.myPlayer];
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<DeadRock>(), false);
 			nextSlot++;
 			if (Main.bloodMoon)
 			{
 				if (WorldGen.crimson)
 				{
-					shop.item[nextSlot].SetDefaults(base.mod.ItemType("IrradiatedCrimstone"), false);
+					shop.item[nextSlot].SetDefaults(ModContent.ItemType<IrradiatedCrimstone>(), false);
 					nextSlot++;
 				}
 				else
 				{
-					shop.item[nextSlot].SetDefaults(base.mod.ItemType("IrradiatedEbonstone"), false);
+					shop.item[nextSlot].SetDefaults(ModContent.ItemType<IrradiatedEbonstone>(), false);
 					nextSlot++;
 				}
 			}
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("DeadRockWall"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<DeadRockWall>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("AntiXenomiteApplier"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<AntiXenomiteApplier>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("AIChip"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<AIChip>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("CarbonMyofibre"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<CarbonMyofibre>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Mk1Capacitator"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Mk1Capacitator>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Mk1Plating"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Mk1Plating>(), false);
 			nextSlot++;
 			if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("Mk2Capacitator"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<Mk2Capacitator>(), false);
 				nextSlot++;
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("Mk2Plating"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<Mk2Plating>(), false);
 				nextSlot++;
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("MiniNuke"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<MiniNuke>(), false);
 				nextSlot++;
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("GeigerMuller"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<GeigerMuller>(), false);
 				nextSlot++;
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabGeigerCounter"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<LabGeigerCounter>(), false);
 				nextSlot++;
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("RadiationPill"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<RadiationPill>(), false);
 				nextSlot++;
 			}
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("XenomiteShard"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<XenomiteShard>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Starlite"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Starlite>(), false);
 			nextSlot++;
 			if (NPC.downedPlantBoss)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("Mk3Capacitator"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<Mk3Capacitator>(), false);
 				nextSlot++;
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("Mk3Plating"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<Mk3Plating>(), false);
 				nextSlot++;
 			}
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("XenoSolution"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<XenoSolution>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("AntiXenoSolution"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<AntiXenoSolution>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("GasMask"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<GasMask>(), false);
 			nextSlot++;
 			if (RedeWorld.downedXenomiteCrystal)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("GeigerCounter"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<GeigerCounter>(), false);
 				nextSlot++;
 			}
 			if (RedeWorld.downedInfectedEye)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("XenoEye"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<XenoEye>(), false);
 				nextSlot++;
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("HazmatSuit"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<HazmatSuit>(), false);
 				nextSlot++;
 			}
 			if (NPC.downedMoonlord)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("TerraBombaPart1"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<TerraBombaPart1>(), false);
 				nextSlot++;
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("TerraBombaPart2"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<TerraBombaPart2>(), false);
 				nextSlot++;
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("TerraBombaPart3"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<TerraBombaPart3>(), false);
 				nextSlot++;
 			}
 			if (NPC.downedPlantBoss)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("CloakerDevice"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<CloakerDevice>(), false);
 				nextSlot++;
 			}
-			if (RedeWorld.tbotLabAccess)
+			if (RedeWorld.downedVolt)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("TeslaCannon"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<TeslaCannon>(), false);
+				nextSlot++;
+			}
+			if (BasePlayer.HasHelmet(player, ModContent.ItemType<TBotEyes_Femi>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotEyes_Masc>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotVanityEyes>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotGoggles_Femi>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotGoggles_Masc>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotVanityGoggles>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<AdamHead>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<OperatorHead>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<VoltHead>(), true))
+			{
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<AdamHead>(), false);
 				nextSlot++;
 			}
 			if ((RedeWorld.downedStage2Scientist || RedeWorld.downedJanitor) && !RedeWorld.labAccess1)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("ZoneAccessPanel1"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<ZoneAccessPanel1A>(), false);
 				nextSlot++;
 			}
 			if (RedeWorld.downedStage3Scientist && !RedeWorld.labAccess2)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("ZoneAccessPanel2"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<ZoneAccessPanel2A>(), false);
 				nextSlot++;
 			}
 			if (RedeWorld.downedIBehemoth && !RedeWorld.labAccess3)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("ZoneAccessPanel3"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<ZoneAccessPanel3A>(), false);
 				nextSlot++;
 			}
 			if (RedeWorld.downedBlisterface && !RedeWorld.labAccess4)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("ZoneAccessPanel4"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<ZoneAccessPanel4A>(), false);
 				nextSlot++;
 			}
 			if (RedeWorld.tbotLabAccess && !RedeWorld.labAccess5)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("ZoneAccessPanel5"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<ZoneAccessPanel5A>(), false);
 				nextSlot++;
 			}
 			if (RedeWorld.downedMACE && !RedeWorld.labAccess6)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("ZoneAccessPanel6"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<ZoneAccessPanel6A>(), false);
 				nextSlot++;
 			}
 			if (RedeWorld.downedPatientZero && !RedeWorld.labAccess7)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("ZoneAccessPanel7"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<ZoneAccessPanel7A>(), false);
 				nextSlot++;
 			}
 		}
@@ -549,5 +582,7 @@ namespace Redemption.NPCs
 		public static bool GChip;
 
 		public static bool MemoryChip;
+
+		public static bool VlitchChicken;
 	}
 }

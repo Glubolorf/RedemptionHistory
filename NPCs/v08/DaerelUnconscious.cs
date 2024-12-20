@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -64,7 +65,7 @@ namespace Redemption.NPCs.v08
 			if (++RedeWorld.daerelDownedTimer >= Main.rand.Next(43200, 151200))
 			{
 				RedeWorld.daerelDownedTimer = 0;
-				base.npc.Transform(base.mod.NPCType("Daerel1"));
+				base.npc.Transform(ModContent.NPCType<Daerel1>());
 				Main.NewText("Daerel the Wayfarer has woken up!", new Color(45, 114, 233), false);
 			}
 		}
@@ -79,7 +80,7 @@ namespace Redemption.NPCs.v08
 			Player player = Main.player[Main.myPlayer];
 			if (firstButton)
 			{
-				int potion = player.FindItem(base.mod.ItemType("RevivalPotion"));
+				int potion = player.FindItem(ModContent.ItemType<RevivalPotion>());
 				if (potion >= 0)
 				{
 					player.inventory[potion].stack--;
@@ -92,7 +93,7 @@ namespace Redemption.NPCs.v08
 					Main.npcChatText = DaerelUnconscious.PotionChat();
 					return;
 				}
-				Main.npcChatCornerItem = base.mod.ItemType("RevivalPotion");
+				Main.npcChatCornerItem = ModContent.ItemType<RevivalPotion>();
 				Main.npcChatText = DaerelUnconscious.NoPotionChat();
 			}
 		}

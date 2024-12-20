@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -32,7 +33,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
 			base.item.noMelee = true;
-			base.item.shoot = base.mod.ProjectileType("RadioactiveCloud2");
+			base.item.shoot = ModContent.ProjectileType<RadioactiveCloud2>();
 			base.item.shootSpeed = 0f;
 		}
 
@@ -45,11 +46,11 @@ namespace Redemption.Items.Weapons.v08
 		{
 			if (player.altFunctionUse == 2)
 			{
-				base.item.shoot = base.mod.ProjectileType("RadioactiveCloud");
+				base.item.shoot = ModContent.ProjectileType<RadioactiveCloud>();
 			}
 			else
 			{
-				base.item.shoot = base.mod.ProjectileType("RadioactiveCloud2");
+				base.item.shoot = ModContent.ProjectileType<RadioactiveCloud2>();
 			}
 			return base.CanUseItem(player);
 		}

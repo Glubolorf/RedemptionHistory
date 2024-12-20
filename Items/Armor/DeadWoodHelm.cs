@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -26,13 +27,13 @@ namespace Redemption.Items.Armor
 
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
-			return body.type == base.mod.ItemType("DeadWoodArmour") && legs.type == base.mod.ItemType("DeadWoodLeggings");
+			return body.type == ModContent.ItemType<DeadWoodArmour>() && legs.type == ModContent.ItemType<DeadWoodLeggings>();
 		}
 
 		public override void UpdateArmorSet(Player player)
 		{
 			player.setBonus = "Immune to Radioactive Fallout";
-			player.buffImmune[base.mod.BuffType("RadioactiveFalloutDebuff")] = true;
+			player.buffImmune[ModContent.BuffType<RadioactiveFalloutDebuff>()] = true;
 		}
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)

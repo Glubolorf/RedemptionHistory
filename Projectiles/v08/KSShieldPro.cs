@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -43,7 +44,7 @@ namespace Redemption.Projectiles.v08
 				}
 			}
 			Player player = Main.player[base.projectile.owner];
-			if (!player.HasBuff(base.mod.BuffType("KSShieldBuff")))
+			if (!player.HasBuff(ModContent.BuffType<KSShieldBuff>()))
 			{
 				base.projectile.Kill();
 			}

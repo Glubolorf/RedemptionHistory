@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.DruidProjectiles.Plants
 {
@@ -29,15 +30,15 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 			int num = Main.rand.Next(3);
 			if (num == 0)
 			{
-				this.plantID = base.mod.ProjectileType("Plant21");
+				this.plantID = ModContent.ProjectileType<Plant21>();
 			}
 			if (num == 1)
 			{
-				this.plantID = base.mod.ProjectileType("Plant22");
+				this.plantID = ModContent.ProjectileType<Plant22>();
 			}
 			if (num == 2)
 			{
-				this.plantID = base.mod.ProjectileType("Plant23");
+				this.plantID = ModContent.ProjectileType<Plant23>();
 			}
 			Collision.HitTiles(base.projectile.position, oldVelocity, base.projectile.width, base.projectile.height);
 			Main.PlaySound(0, (int)base.projectile.position.X, (int)base.projectile.position.Y, 1, 1f, 0f);

@@ -2,8 +2,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items;
+using Redemption.Items.DruidDamageClass;
 using Redemption.Items.Placeable;
+using Redemption.Items.Quest;
 using Redemption.Items.Weapons;
+using Redemption.Items.Weapons.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -90,7 +93,7 @@ namespace Redemption.NPCs
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
 			if (!RedeWorld.keeperSaved && Main.netMode != 1 && base.npc.life <= 0)
 			{
-				NPC.NewNPC((int)base.npc.position.X + 20, (int)base.npc.position.Y + 20, base.mod.NPCType("AAAA"), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.position.X + 20, (int)base.npc.position.Y + 20, ModContent.NPCType<AAAA>(), 0, 0f, 0f, 0f, 0f, 255);
 				Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Shriek").WithVolume(0.4f).WithPitchVariance(0.1f), -1, -1);
 			}
 		}
@@ -123,19 +126,19 @@ namespace Redemption.NPCs
 				{
 					for (int j = 0; j < player.inventory.Length; j++)
 					{
-						if (player.inventory[j].type == base.mod.ItemType("BlackenedHeart") && Main.rand.Next(3) == 0)
+						if (player.inventory[j].type == ModContent.ItemType<BlackenedHeart>() && Main.rand.Next(3) == 0)
 						{
 							return "I wouldn't consume that Blackened Heart if I were you. Only bad things will come of it.";
 						}
 					}
 				}
 			}
-			int FallenID = NPC.FindFirstNPC(base.mod.NPCType("Fallen"));
+			int FallenID = NPC.FindFirstNPC(ModContent.NPCType<Fallen>());
 			if (Main.npc[FallenID].GivenName == "Okvot")
 			{
 				if (RedeWorld.keeperSaved && Main.rand.Next(3) == 0)
 				{
-					return "You saved the Keeper? Thank you for that, I can't imagine the pain she was feeling. If you need Dark Shards, I'll sell them now for you. However, I doubt this is over... Her husband died too, apparently of depression. But he didn't become an undead, his inverted soul made him into something worse.";
+					return "You saved the Keeper? Thank you for that, I can't imagine the pain she was feeling. If you need Dark Fragments, I'll sell them now for you. However, I doubt this is over... Her husband died too, apparently of depression. But he didn't become an undead, his inverted soul made him into something worse.";
 				}
 				switch (Main.rand.Next(9))
 				{
@@ -163,7 +166,7 @@ namespace Redemption.NPCs
 			{
 				if (RedeWorld.keeperSaved && Main.rand.Next(3) == 0)
 				{
-					return "You saved the Keeper? That's great to hear, she gave me trouble when she had escaped the catacombs. If you need Dark Shards, I'll sell them now for you.";
+					return "You saved the Keeper? That's great to hear, she gave me trouble when she had escaped the catacombs. If you need Dark Fragments, I'll sell them now for you.";
 				}
 				switch (Main.rand.Next(9))
 				{
@@ -191,7 +194,7 @@ namespace Redemption.NPCs
 			{
 				if (RedeWorld.keeperSaved && Main.rand.Next(3) == 0)
 				{
-					return "You saved the Keeper? Bah, I guess that's nice of ya. If you need Dark Shards, I'll sell them now for you.";
+					return "You saved the Keeper? Bah, I guess that's nice of ya. If you need Dark Fragments, I'll sell them now for you.";
 				}
 				switch (Main.rand.Next(9))
 				{
@@ -232,48 +235,48 @@ namespace Redemption.NPCs
 				shop = true;
 				return;
 			}
-			int Frag = player.FindItem(base.mod.ItemType("SwordSlicerFrag1"));
-			int Frag2 = player.FindItem(base.mod.ItemType("SwordSlicerFrag2"));
-			int Frag3 = player.FindItem(base.mod.ItemType("AkisClawFrag1"));
-			int Frag4 = player.FindItem(base.mod.ItemType("AkisClawFrag2"));
-			int Frag5 = player.FindItem(base.mod.ItemType("DeathsClawFrag1"));
-			int Frag6 = player.FindItem(base.mod.ItemType("DeathsClawFrag2"));
-			int Frag7 = player.FindItem(base.mod.ItemType("FalconFrag1"));
-			int Frag8 = player.FindItem(base.mod.ItemType("FalconFrag2"));
-			int Frag9 = player.FindItem(base.mod.ItemType("ForestNymphsSickleFrag1"));
-			int Frag10 = player.FindItem(base.mod.ItemType("ForestNymphsSickleFrag2"));
-			int Frag11 = player.FindItem(base.mod.ItemType("GoldenEdgeFrag1"));
-			int Frag12 = player.FindItem(base.mod.ItemType("GoldenEdgeFrag2"));
-			int Frag13 = player.FindItem(base.mod.ItemType("LightbaneFrag1"));
-			int Frag14 = player.FindItem(base.mod.ItemType("LightbaneFrag2"));
-			int Frag15 = player.FindItem(base.mod.ItemType("LivingWoodRapierFrag1"));
-			int Frag16 = player.FindItem(base.mod.ItemType("LivingWoodRapierFrag2"));
-			int Frag17 = player.FindItem(base.mod.ItemType("PeacekeeperFrag1"));
-			int Frag18 = player.FindItem(base.mod.ItemType("PeacekeeperFrag2"));
-			int Frag19 = player.FindItem(base.mod.ItemType("SilverRapierFrag1"));
-			int Frag20 = player.FindItem(base.mod.ItemType("SilverRapierFrag2"));
-			int Frag21 = player.FindItem(base.mod.ItemType("VictorBattletomeFrag1"));
-			int Frag22 = player.FindItem(base.mod.ItemType("VictorBattletomeFrag2"));
-			int Frag23 = player.FindItem(base.mod.ItemType("SilverwoodBowFrag1"));
-			int Frag24 = player.FindItem(base.mod.ItemType("SilverwoodBowFrag2"));
-			int Frag25 = player.FindItem(base.mod.ItemType("HonorsReachFrag1"));
-			int Frag26 = player.FindItem(base.mod.ItemType("HonorsReachFrag2"));
-			int Frag27 = player.FindItem(base.mod.ItemType("MidnightFrag1"));
-			int Frag28 = player.FindItem(base.mod.ItemType("MidnightFrag2"));
-			int Frag29 = player.FindItem(base.mod.ItemType("SpellsongFrag1"));
-			int Frag30 = player.FindItem(base.mod.ItemType("SpellsongFrag2"));
-			int Frag31 = player.FindItem(base.mod.ItemType("GodslayerFrag1"));
-			int Frag32 = player.FindItem(base.mod.ItemType("GodslayerFrag2"));
-			int Frag33 = player.FindItem(base.mod.ItemType("WhisperwindFrag1"));
-			int Frag34 = player.FindItem(base.mod.ItemType("WhisperwindFrag2"));
-			int Frag35 = player.FindItem(base.mod.ItemType("BlindJusticeFrag1"));
-			int Frag36 = player.FindItem(base.mod.ItemType("BlindJusticeFrag2"));
-			int Frag37 = player.FindItem(base.mod.ItemType("DusksongFrag1"));
-			int Frag38 = player.FindItem(base.mod.ItemType("DusksongFrag2"));
-			int Frag39 = player.FindItem(base.mod.ItemType("SteelSwordFragment1"));
-			int Frag40 = player.FindItem(base.mod.ItemType("SteelSwordFragment2"));
-			int Frag41 = player.FindItem(base.mod.ItemType("TiedsRapierFrag1"));
-			int Frag42 = player.FindItem(base.mod.ItemType("TiedsRapierFrag2"));
+			int Frag = player.FindItem(ModContent.ItemType<SwordSlicerFrag1>());
+			int Frag2 = player.FindItem(ModContent.ItemType<SwordSlicerFrag2>());
+			int Frag3 = player.FindItem(ModContent.ItemType<AkisClawFrag1>());
+			int Frag4 = player.FindItem(ModContent.ItemType<AkisClawFrag2>());
+			int Frag5 = player.FindItem(ModContent.ItemType<DeathsClawFrag1>());
+			int Frag6 = player.FindItem(ModContent.ItemType<DeathsClawFrag2>());
+			int Frag7 = player.FindItem(ModContent.ItemType<FalconFrag1>());
+			int Frag8 = player.FindItem(ModContent.ItemType<FalconFrag2>());
+			int Frag9 = player.FindItem(ModContent.ItemType<ForestNymphsSickleFrag1>());
+			int Frag10 = player.FindItem(ModContent.ItemType<ForestNymphsSickleFrag2>());
+			int Frag11 = player.FindItem(ModContent.ItemType<GoldenEdgeFrag1>());
+			int Frag12 = player.FindItem(ModContent.ItemType<GoldenEdgeFrag2>());
+			int Frag13 = player.FindItem(ModContent.ItemType<LightbaneFrag1>());
+			int Frag14 = player.FindItem(ModContent.ItemType<LightbaneFrag2>());
+			int Frag15 = player.FindItem(ModContent.ItemType<LivingWoodRapierFrag1>());
+			int Frag16 = player.FindItem(ModContent.ItemType<LivingWoodRapierFrag2>());
+			int Frag17 = player.FindItem(ModContent.ItemType<PeacekeeperFrag1>());
+			int Frag18 = player.FindItem(ModContent.ItemType<PeacekeeperFrag2>());
+			int Frag19 = player.FindItem(ModContent.ItemType<SilverRapierFrag1>());
+			int Frag20 = player.FindItem(ModContent.ItemType<SilverRapierFrag2>());
+			int Frag21 = player.FindItem(ModContent.ItemType<VictorBattletomeFrag1>());
+			int Frag22 = player.FindItem(ModContent.ItemType<VictorBattletomeFrag2>());
+			int Frag23 = player.FindItem(ModContent.ItemType<SilverwoodBowFrag1>());
+			int Frag24 = player.FindItem(ModContent.ItemType<SilverwoodBowFrag2>());
+			int Frag25 = player.FindItem(ModContent.ItemType<HonorsReachFrag1>());
+			int Frag26 = player.FindItem(ModContent.ItemType<HonorsReachFrag2>());
+			int Frag27 = player.FindItem(ModContent.ItemType<MidnightFrag1>());
+			int Frag28 = player.FindItem(ModContent.ItemType<MidnightFrag2>());
+			int Frag29 = player.FindItem(ModContent.ItemType<SpellsongFrag1>());
+			int Frag30 = player.FindItem(ModContent.ItemType<SpellsongFrag2>());
+			int Frag31 = player.FindItem(ModContent.ItemType<GodslayerFrag1>());
+			int Frag32 = player.FindItem(ModContent.ItemType<GodslayerFrag2>());
+			int Frag33 = player.FindItem(ModContent.ItemType<WhisperwindFrag1>());
+			int Frag34 = player.FindItem(ModContent.ItemType<WhisperwindFrag2>());
+			int Frag35 = player.FindItem(ModContent.ItemType<BlindJusticeFrag1>());
+			int Frag36 = player.FindItem(ModContent.ItemType<BlindJusticeFrag2>());
+			int Frag37 = player.FindItem(ModContent.ItemType<DusksongFrag1>());
+			int Frag38 = player.FindItem(ModContent.ItemType<DusksongFrag2>());
+			int Frag39 = player.FindItem(ModContent.ItemType<SteelSwordFragment1>());
+			int Frag40 = player.FindItem(ModContent.ItemType<SteelSwordFragment2>());
+			int Frag41 = player.FindItem(ModContent.ItemType<TiedsRapierFrag1>());
+			int Frag42 = player.FindItem(ModContent.ItemType<TiedsRapierFrag2>());
 			if (Frag >= 0 && Frag2 >= 0)
 			{
 				player.inventory[Frag].stack--;
@@ -286,9 +289,9 @@ namespace Redemption.NPCs
 				{
 					player.inventory[Frag2] = new Item();
 				}
-				Main.npcChatCornerItem = base.mod.ItemType("SwordSlicer");
+				Main.npcChatCornerItem = ModContent.ItemType<SwordSlicer>();
 				Main.npcChatText = Fallen.GiveChat();
-				player.QuickSpawnItem(base.mod.ItemType("SwordSlicer"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<SwordSlicer>(), 1);
 				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
 				return;
 			}
@@ -304,9 +307,9 @@ namespace Redemption.NPCs
 				{
 					player.inventory[Frag4] = new Item();
 				}
-				Main.npcChatCornerItem = base.mod.ItemType("AkisClaws");
+				Main.npcChatCornerItem = ModContent.ItemType<AkisClaws>();
 				Main.npcChatText = Fallen.GiveChat();
-				player.QuickSpawnItem(base.mod.ItemType("AkisClaws"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<AkisClaws>(), 1);
 				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
 				return;
 			}
@@ -322,9 +325,9 @@ namespace Redemption.NPCs
 				{
 					player.inventory[Frag6] = new Item();
 				}
-				Main.npcChatCornerItem = base.mod.ItemType("DeathsClaw");
+				Main.npcChatCornerItem = ModContent.ItemType<DeathsClaw>();
 				Main.npcChatText = Fallen.GiveChat();
-				player.QuickSpawnItem(base.mod.ItemType("DeathsClaw"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<DeathsClaw>(), 1);
 				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
 				return;
 			}
@@ -340,9 +343,9 @@ namespace Redemption.NPCs
 				{
 					player.inventory[Frag8] = new Item();
 				}
-				Main.npcChatCornerItem = base.mod.ItemType("Falcon");
+				Main.npcChatCornerItem = ModContent.ItemType<Falcon>();
 				Main.npcChatText = Fallen.GiveChat();
-				player.QuickSpawnItem(base.mod.ItemType("Falcon"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<Falcon>(), 1);
 				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
 				return;
 			}
@@ -358,9 +361,9 @@ namespace Redemption.NPCs
 				{
 					player.inventory[Frag10] = new Item();
 				}
-				Main.npcChatCornerItem = base.mod.ItemType("ForestNymphsSickle");
+				Main.npcChatCornerItem = ModContent.ItemType<ForestNymphsSickle>();
 				Main.npcChatText = Fallen.GiveChat();
-				player.QuickSpawnItem(base.mod.ItemType("ForestNymphsSickle"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<ForestNymphsSickle>(), 1);
 				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
 				return;
 			}
@@ -376,9 +379,9 @@ namespace Redemption.NPCs
 				{
 					player.inventory[Frag12] = new Item();
 				}
-				Main.npcChatCornerItem = base.mod.ItemType("GoldenEdge");
+				Main.npcChatCornerItem = ModContent.ItemType<GoldenEdge>();
 				Main.npcChatText = Fallen.GiveChat();
-				player.QuickSpawnItem(base.mod.ItemType("GoldenEdge"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<GoldenEdge>(), 1);
 				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
 				return;
 			}
@@ -394,9 +397,9 @@ namespace Redemption.NPCs
 				{
 					player.inventory[Frag14] = new Item();
 				}
-				Main.npcChatCornerItem = base.mod.ItemType("Lightbane");
+				Main.npcChatCornerItem = ModContent.ItemType<Lightbane>();
 				Main.npcChatText = Fallen.GiveChat();
-				player.QuickSpawnItem(base.mod.ItemType("Lightbane"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<Lightbane>(), 1);
 				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
 				return;
 			}
@@ -412,9 +415,9 @@ namespace Redemption.NPCs
 				{
 					player.inventory[Frag16] = new Item();
 				}
-				Main.npcChatCornerItem = base.mod.ItemType("LivingWoodRapier");
+				Main.npcChatCornerItem = ModContent.ItemType<LivingWoodRapier>();
 				Main.npcChatText = Fallen.GiveChat();
-				player.QuickSpawnItem(base.mod.ItemType("LivingWoodRapier"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<LivingWoodRapier>(), 1);
 				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
 				return;
 			}
@@ -430,9 +433,9 @@ namespace Redemption.NPCs
 				{
 					player.inventory[Frag18] = new Item();
 				}
-				Main.npcChatCornerItem = base.mod.ItemType("PeaceKeeper");
+				Main.npcChatCornerItem = ModContent.ItemType<PeaceKeeper>();
 				Main.npcChatText = Fallen.GiveChat();
-				player.QuickSpawnItem(base.mod.ItemType("PeaceKeeper"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<PeaceKeeper>(), 1);
 				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
 				return;
 			}
@@ -448,9 +451,9 @@ namespace Redemption.NPCs
 				{
 					player.inventory[Frag20] = new Item();
 				}
-				Main.npcChatCornerItem = base.mod.ItemType("SilverRapier");
+				Main.npcChatCornerItem = ModContent.ItemType<SilverRapier>();
 				Main.npcChatText = Fallen.GiveChat();
-				player.QuickSpawnItem(base.mod.ItemType("SilverRapier"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<SilverRapier>(), 1);
 				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
 				return;
 			}
@@ -466,9 +469,9 @@ namespace Redemption.NPCs
 				{
 					player.inventory[Frag22] = new Item();
 				}
-				Main.npcChatCornerItem = base.mod.ItemType("VictorBattletome");
+				Main.npcChatCornerItem = ModContent.ItemType<VictorBattletome>();
 				Main.npcChatText = Fallen.GiveChat();
-				player.QuickSpawnItem(base.mod.ItemType("VictorBattletome"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<VictorBattletome>(), 1);
 				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
 				return;
 			}
@@ -484,9 +487,9 @@ namespace Redemption.NPCs
 				{
 					player.inventory[Frag24] = new Item();
 				}
-				Main.npcChatCornerItem = base.mod.ItemType("SilverwoodBow");
+				Main.npcChatCornerItem = ModContent.ItemType<SilverwoodBow>();
 				Main.npcChatText = Fallen.GiveChat();
-				player.QuickSpawnItem(base.mod.ItemType("SilverwoodBow"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<SilverwoodBow>(), 1);
 				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
 				return;
 			}
@@ -502,9 +505,9 @@ namespace Redemption.NPCs
 				{
 					player.inventory[Frag26] = new Item();
 				}
-				Main.npcChatCornerItem = base.mod.ItemType("HonorsReach");
+				Main.npcChatCornerItem = ModContent.ItemType<HonorsReach>();
 				Main.npcChatText = Fallen.GiveChat();
-				player.QuickSpawnItem(base.mod.ItemType("HonorsReach"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<HonorsReach>(), 1);
 				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
 				return;
 			}
@@ -520,9 +523,9 @@ namespace Redemption.NPCs
 				{
 					player.inventory[Frag28] = new Item();
 				}
-				Main.npcChatCornerItem = base.mod.ItemType("Midnight");
+				Main.npcChatCornerItem = ModContent.ItemType<Midnight>();
 				Main.npcChatText = Fallen.GiveChat();
-				player.QuickSpawnItem(base.mod.ItemType("Midnight"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<Midnight>(), 1);
 				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
 				return;
 			}
@@ -538,9 +541,9 @@ namespace Redemption.NPCs
 				{
 					player.inventory[Frag30] = new Item();
 				}
-				Main.npcChatCornerItem = base.mod.ItemType("Spellsong");
+				Main.npcChatCornerItem = ModContent.ItemType<Spellsong>();
 				Main.npcChatText = Fallen.GiveChat();
-				player.QuickSpawnItem(base.mod.ItemType("Spellsong"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<Spellsong>(), 1);
 				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
 				return;
 			}
@@ -556,9 +559,9 @@ namespace Redemption.NPCs
 				{
 					player.inventory[Frag32] = new Item();
 				}
-				Main.npcChatCornerItem = base.mod.ItemType("Godslayer");
+				Main.npcChatCornerItem = ModContent.ItemType<Godslayer>();
 				Main.npcChatText = Fallen.GiveChat();
-				player.QuickSpawnItem(base.mod.ItemType("Godslayer"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<Godslayer>(), 1);
 				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
 				return;
 			}
@@ -574,9 +577,9 @@ namespace Redemption.NPCs
 				{
 					player.inventory[Frag34] = new Item();
 				}
-				Main.npcChatCornerItem = base.mod.ItemType("Whisperwind");
+				Main.npcChatCornerItem = ModContent.ItemType<Whisperwind>();
 				Main.npcChatText = Fallen.GiveChat();
-				player.QuickSpawnItem(base.mod.ItemType("Whisperwind"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<Whisperwind>(), 1);
 				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
 				return;
 			}
@@ -592,9 +595,9 @@ namespace Redemption.NPCs
 				{
 					player.inventory[Frag36] = new Item();
 				}
-				Main.npcChatCornerItem = base.mod.ItemType("BlindJustice");
+				Main.npcChatCornerItem = ModContent.ItemType<BlindJustice>();
 				Main.npcChatText = Fallen.GiveChat();
-				player.QuickSpawnItem(base.mod.ItemType("BlindJustice"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<BlindJustice>(), 1);
 				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
 				return;
 			}
@@ -610,9 +613,9 @@ namespace Redemption.NPCs
 				{
 					player.inventory[Frag38] = new Item();
 				}
-				Main.npcChatCornerItem = base.mod.ItemType("Dusksong");
+				Main.npcChatCornerItem = ModContent.ItemType<Dusksong>();
 				Main.npcChatText = Fallen.GiveChat();
-				player.QuickSpawnItem(base.mod.ItemType("Dusksong"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<Dusksong>(), 1);
 				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
 				return;
 			}
@@ -628,9 +631,9 @@ namespace Redemption.NPCs
 				{
 					player.inventory[Frag40] = new Item();
 				}
-				Main.npcChatCornerItem = base.mod.ItemType("HallamSword");
+				Main.npcChatCornerItem = ModContent.ItemType<HallamSword>();
 				Main.npcChatText = Fallen.GiveChat();
-				player.QuickSpawnItem(base.mod.ItemType("HallamSword"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<HallamSword>(), 1);
 				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
 				return;
 			}
@@ -646,9 +649,9 @@ namespace Redemption.NPCs
 				{
 					player.inventory[Frag42] = new Item();
 				}
-				Main.npcChatCornerItem = base.mod.ItemType("TiedRapier");
+				Main.npcChatCornerItem = ModContent.ItemType<TiedRapier>();
 				Main.npcChatText = Fallen.GiveChat();
-				player.QuickSpawnItem(base.mod.ItemType("TiedRapier"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<TiedRapier>(), 1);
 				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
 				return;
 			}
@@ -658,7 +661,7 @@ namespace Redemption.NPCs
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			int FallenID = NPC.FindFirstNPC(base.mod.NPCType("Fallen"));
+			int FallenID = NPC.FindFirstNPC(ModContent.NPCType<Fallen>());
 			Texture2D texture = Main.npcTexture[base.npc.type];
 			Texture2D TenvonAni = base.mod.GetTexture("NPCs/Fallen2");
 			Texture2D HappinsAni = base.mod.GetTexture("NPCs/Fallen3");

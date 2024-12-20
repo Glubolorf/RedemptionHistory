@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,7 +30,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.value = Item.buyPrice(5, 0, 0, 0);
 			base.item.UseSound = SoundID.Item20;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("AtomNucleus");
+			base.item.shoot = ModContent.ProjectileType<AtomNucleus>();
 			base.item.shootSpeed = 10f;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 4;
 		}

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -38,7 +39,7 @@ namespace Redemption.Items.Weapons
 			base.item.knockBack = 7.5f;
 			base.item.damage = 40;
 			base.item.noUseGraphic = true;
-			base.item.shoot = base.mod.ProjectileType("BoneFlailHeadPro");
+			base.item.shoot = ModContent.ProjectileType<BoneFlailHeadPro>();
 			base.item.shootSpeed = 24.5f;
 			base.item.UseSound = SoundID.Item1;
 			base.item.melee = true;

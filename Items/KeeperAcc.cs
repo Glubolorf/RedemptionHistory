@@ -21,7 +21,7 @@ namespace Redemption.Items
 				Main.glowMaskTexture = glowMasks;
 			}
 			base.DisplayName.SetDefault("Keeper's Circlet");
-			base.Tooltip.SetDefault("Skeletons become friendly");
+			base.Tooltip.SetDefault("Most skeletons become friendly");
 		}
 
 		public override void SetDefaults()

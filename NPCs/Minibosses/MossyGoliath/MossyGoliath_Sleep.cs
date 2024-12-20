@@ -54,7 +54,7 @@ namespace Redemption.NPCs.Minibosses.MossyGoliath
 			float distance = base.npc.Distance(Main.player[base.npc.target].Center);
 			if ((player.velocity.X > 5f || player.velocity.X < -5f) ? (distance < 400f) : (distance < 100f))
 			{
-				base.npc.SetDefaults(base.mod.NPCType("MossyGoliath"), -1f);
+				base.npc.SetDefaults(ModContent.NPCType<MossyGoliath>(), -1f);
 			}
 		}
 
@@ -73,14 +73,14 @@ namespace Redemption.NPCs.Minibosses.MossyGoliath
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			for (int i = 0; i < Main.npc.Length; i++)
+			for (int i = 0; i < 200; i++)
 			{
 				if (Main.npc[i].boss)
 				{
 					return 0f;
 				}
 			}
-			return SpawnCondition.SurfaceJungle.Chance * ((!RedeQuests.ZswordQuest && !RedeWorld.downedMossyGoliath && (RedeQuests.zephosQuests == 4 || RedeQuests.daerelQuests == 4) && !NPC.AnyNPCs(base.mod.NPCType("MossyGoliath_Sleep")) && !NPC.AnyNPCs(base.mod.NPCType("MossyGoliath"))) ? 1.5f : 0f);
+			return SpawnCondition.SurfaceJungle.Chance * ((!RedeQuests.ZswordQuest && !RedeWorld.downedMossyGoliath && (RedeQuests.zephosQuests == 4 || RedeQuests.daerelQuests == 4) && !NPC.AnyNPCs(ModContent.NPCType<MossyGoliath_Sleep>()) && !NPC.AnyNPCs(ModContent.NPCType<MossyGoliath>())) ? 1.5f : 0f);
 		}
 	}
 }

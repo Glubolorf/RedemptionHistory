@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -29,7 +30,7 @@ namespace Redemption.Projectiles.v08
 		public override void AI()
 		{
 			Player player = Main.player[base.projectile.owner];
-			if (!player.HasBuff(base.mod.BuffType("ChickenShieldBuff")))
+			if (!player.HasBuff(ModContent.BuffType<ChickenShieldBuff>()))
 			{
 				base.projectile.Kill();
 			}
@@ -61,11 +62,11 @@ namespace Redemption.Projectiles.v08
 				Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Slam3").WithVolume(0.9f).WithPitchVariance(0.1f), base.projectile.position);
 				if (base.projectile.spriteDirection == -1)
 				{
-					Projectile.NewProjectile(base.projectile.Center.X - 12f, base.projectile.Center.Y + 2f, 0f, 0f, base.mod.ProjectileType("DamagePro5"), base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
+					Projectile.NewProjectile(base.projectile.Center.X - 12f, base.projectile.Center.Y + 2f, 0f, 0f, ModContent.ProjectileType<DamagePro5>(), base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
 				}
 				else
 				{
-					Projectile.NewProjectile(base.projectile.Center.X + 78f, base.projectile.Center.Y + 2f, 0f, 0f, base.mod.ProjectileType("DamagePro5"), base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
+					Projectile.NewProjectile(base.projectile.Center.X + 78f, base.projectile.Center.Y + 2f, 0f, 0f, ModContent.ProjectileType<DamagePro5>(), base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
 				}
 			}
 			if (base.projectile.localAI[0] >= 40f)
@@ -77,9 +78,5 @@ namespace Redemption.Projectiles.v08
 			base.projectile.position.X = player.Center.X - 72f;
 			base.projectile.position.Y = player.Center.Y - 28f;
 		}
-
-		private int bashTimer;
-
-		private int bash;
 	}
 }

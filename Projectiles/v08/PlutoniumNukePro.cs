@@ -66,7 +66,7 @@ namespace Redemption.Projectiles.v08
 		public override void Kill(int timeLeft)
 		{
 			Main.PlaySound(SoundID.Item14, base.projectile.position);
-			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, base.mod.ProjectileType("DamagePro6"), base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
+			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, ModContent.ProjectileType<DamagePro6>(), base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
 			for (int i = 0; i < 15; i++)
 			{
 				int proj = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), 686, 200, 3f, Main.myPlayer, 0f, 0f);

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -26,7 +27,7 @@ namespace Redemption.Tiles
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 48, base.mod.ItemType("ForestBossBox"), 1, false, 0, false, false);
+			Item.NewItem(i * 16, j * 16, 16, 48, ModContent.ItemType<ForestBossBox>(), 1, false, 0, false, false);
 		}
 
 		public override void MouseOver(int i, int j)
@@ -34,7 +35,7 @@ namespace Redemption.Tiles
 			Player localPlayer = Main.LocalPlayer;
 			localPlayer.noThrow = 2;
 			localPlayer.showItemIcon = true;
-			localPlayer.showItemIcon2 = base.mod.ItemType("ForestBossBox");
+			localPlayer.showItemIcon2 = ModContent.ItemType<ForestBossBox>();
 		}
 	}
 }

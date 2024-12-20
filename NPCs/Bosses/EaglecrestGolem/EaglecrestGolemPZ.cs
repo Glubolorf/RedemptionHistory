@@ -1,6 +1,10 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items;
+using Redemption.Items.DruidDamageClass.v08;
+using Redemption.Items.Weapons.v08;
+using Redemption.NPCs.Bosses.Thorn;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -46,17 +50,17 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 			int num = Main.rand.Next(3);
 			if (num == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("StonePuppet"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<StonePuppet>(), 1, false, 0, false, false);
 			}
 			if (num == 1)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("EaglecrestGlove"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<EaglecrestGlove>(), 1, false, 0, false, false);
 			}
 			if (num == 2)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("AncientPowerStave"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<AncientPowerStave>(), 1, false, 0, false, false);
 			}
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("AncientPowerCore"), Main.rand.Next(9, 18), false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<AncientPowerCore>(), Main.rand.Next(9, 18), false, 0, false, false);
 		}
 
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
@@ -85,9 +89,10 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 			{
 				base.npc.spriteDirection = -1;
 			}
-			if ((base.npc.life <= (int)((float)base.npc.lifeMax * 0.5f) || RedeUkkoAkka.begin) && NPC.AnyNPCs(base.mod.NPCType("ThornPZ")) && base.npc.ai[0] == 0f)
+			if ((base.npc.life <= (int)((float)base.npc.lifeMax * 0.5f) || RedeUkkoAkka.begin) && NPC.AnyNPCs(ModContent.NPCType<ThornPZ>()) && base.npc.ai[0] == 0f)
 			{
 				base.npc.ai[0] = 1f;
+				base.npc.netUpdate = true;
 			}
 			if (base.npc.ai[0] >= 1f)
 			{
@@ -107,6 +112,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 				this.hop = false;
 				base.npc.noTileCollide = true;
 				base.npc.noGravity = true;
+				base.npc.netUpdate = true;
 				for (int j = 0; j < 2; j++)
 				{
 					int dustIndex = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 269, 0f, 0f, 100, default(Color), 1.5f);
@@ -121,17 +127,17 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 					base.npc.ai[3] += 1f;
 					if (base.npc.ai[3] == 10f)
 					{
-						int p = Projectile.NewProjectile(player.Center.X - 60f, player.Center.Y + 300f, 0f, 0f, base.mod.ProjectileType("Text1"), 0, 0f, Main.myPlayer, 0f, 0f);
+						int p = Projectile.NewProjectile(player.Center.X - 60f, player.Center.Y + 300f, 0f, 0f, ModContent.ProjectileType<Text1>(), 0, 0f, Main.myPlayer, 0f, 0f);
 						Main.projectile[p].netUpdate = true;
 					}
 					if (base.npc.ai[3] == 110f)
 					{
-						int p2 = Projectile.NewProjectile(player.Center.X + 60f, player.Center.Y + 200f, 0f, 0f, base.mod.ProjectileType("Text2"), 0, 0f, Main.myPlayer, 0f, 0f);
+						int p2 = Projectile.NewProjectile(player.Center.X + 60f, player.Center.Y + 200f, 0f, 0f, ModContent.ProjectileType<Text2>(), 0, 0f, Main.myPlayer, 0f, 0f);
 						Main.projectile[p2].netUpdate = true;
 					}
 					if (base.npc.ai[3] == 210f)
 					{
-						int p3 = Projectile.NewProjectile(player.Center.X, player.Center.Y + 100f, 0f, 0f, base.mod.ProjectileType("Text3"), 0, 0f, Main.myPlayer, 0f, 0f);
+						int p3 = Projectile.NewProjectile(player.Center.X, player.Center.Y + 100f, 0f, 0f, ModContent.ProjectileType<Text3>(), 0, 0f, Main.myPlayer, 0f, 0f);
 						Main.projectile[p3].netUpdate = true;
 					}
 				}
@@ -165,7 +171,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 				base.npc.ai[0] += 1f;
 				if (base.npc.ai[0] == 355f)
 				{
-					int p4 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("TransitionUkko"), 0, 1f, Main.myPlayer, 0f, 0f);
+					int p4 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, ModContent.ProjectileType<TransitionUkko>(), 0, 1f, Main.myPlayer, 0f, 0f);
 					Main.projectile[p4].netUpdate = true;
 				}
 				if (base.npc.ai[0] >= 380f)
@@ -175,10 +181,16 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 						int dustIndex2 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 269, 0f, 0f, 100, default(Color), 3f);
 						Main.dust[dustIndex2].velocity *= 5.2f;
 					}
+					if (!this.title)
+					{
+						Redemption.ShowTitle(base.npc, 4);
+						this.title = true;
+					}
 					base.npc.velocity.Y = 0f;
 					base.npc.velocity.X = 0f;
 					Main.NewText("Ukko, Ancient God of Weather has awoken...", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B, false);
-					base.npc.SetDefaults(base.mod.NPCType("Ukko"), -1f);
+					base.npc.SetDefaults(ModContent.NPCType<Ukko>(), -1f);
+					base.npc.netUpdate = true;
 					return;
 				}
 			}
@@ -245,10 +257,11 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 								float Speed = 10f;
 								Vector2 vector8 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 								int damage = 26;
-								int type = base.mod.ProjectileType("GolemSlashPro2");
+								int type = ModContent.ProjectileType<GolemSlashPro2>();
 								float rotation = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
 								int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
 								Main.projectile[num54].netUpdate = true;
+								base.npc.netUpdate = true;
 							}
 							if (base.npc.ai[1] >= 27f)
 							{
@@ -269,10 +282,11 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 								float Speed2 = 9f;
 								Vector2 vector9 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 								int damage2 = 26;
-								int type2 = base.mod.ProjectileType("GolemSlashPro2");
+								int type2 = ModContent.ProjectileType<GolemSlashPro2>();
 								float rotation2 = (float)Math.Atan2((double)(vector9.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector9.X - (player.position.X + (float)player.width * 0.5f)));
 								int num55 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0), type2, damage2, 0f, 0, 0f, 0f);
 								Main.projectile[num55].netUpdate = true;
+								base.npc.netUpdate = true;
 							}
 							if (base.npc.ai[1] >= 36f)
 							{
@@ -288,6 +302,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 				else
 				{
 					this.hop = true;
+					base.npc.netUpdate = true;
 				}
 				if (this.roll)
 				{
@@ -338,6 +353,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 					base.npc.defense = 40;
 					base.npc.aiStyle = -1;
 					this.aiType = 0;
+					base.npc.netUpdate = true;
 					if (base.npc.life < (int)((float)base.npc.lifeMax * 0.5f) && base.npc.life >= (int)((float)base.npc.lifeMax * 0.1f))
 					{
 						BaseAI.AIZombie(base.npc, ref base.npc.ai, false, false, -1, 0.09f, 8f, 30, 12, 60, true, 10, 60, false, null, false);
@@ -353,58 +369,62 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 				}
 				if (base.npc.life < (int)((float)base.npc.lifeMax * 0.9f) && !this.summon1)
 				{
-					int Minion = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPilePZ"), 0, 0f, 0f, 0f, 0f, 255);
+					int Minion = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPilePZ>(), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion].netUpdate = true;
-					int Minion2 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPilePZ"), 0, 0f, 0f, 0f, 0f, 255);
+					int Minion2 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPilePZ>(), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion2].netUpdate = true;
-					int Minion3 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPilePZ"), 0, 0f, 0f, 0f, 0f, 255);
+					int Minion3 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPilePZ>(), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion3].netUpdate = true;
-					int Minion4 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPilePZ"), 0, 0f, 0f, 0f, 0f, 255);
+					int Minion4 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPilePZ>(), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion4].netUpdate = true;
 					this.summon1 = true;
+					base.npc.netUpdate = true;
 					return;
 				}
 				if (base.npc.life < (int)((float)base.npc.lifeMax * 0.5f) && !this.summon2)
 				{
-					int Minion5 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPilePZ"), 0, 0f, 0f, 0f, 0f, 255);
+					int Minion5 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPilePZ>(), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion5].netUpdate = true;
-					int Minion6 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPilePZ"), 0, 0f, 0f, 0f, 0f, 255);
+					int Minion6 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPilePZ>(), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion6].netUpdate = true;
-					int Minion7 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPilePZ"), 0, 0f, 0f, 0f, 0f, 255);
+					int Minion7 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPilePZ>(), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion7].netUpdate = true;
-					int Minion8 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPilePZ"), 0, 0f, 0f, 0f, 0f, 255);
+					int Minion8 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPilePZ>(), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion8].netUpdate = true;
-					int Minion9 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPilePZ"), 0, 0f, 0f, 0f, 0f, 255);
+					int Minion9 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPilePZ>(), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion9].netUpdate = true;
 					this.summon2 = true;
+					base.npc.netUpdate = true;
 					return;
 				}
 				if (base.npc.life < (int)((float)base.npc.lifeMax * 0.25f) && !this.summon3)
 				{
-					int Minion10 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPilePZ"), 0, 0f, 0f, 0f, 0f, 255);
+					int Minion10 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPilePZ>(), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion10].netUpdate = true;
-					int Minion11 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPilePZ"), 0, 0f, 0f, 0f, 0f, 255);
+					int Minion11 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPilePZ>(), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion11].netUpdate = true;
-					int Minion12 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPilePZ"), 0, 0f, 0f, 0f, 0f, 255);
+					int Minion12 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPilePZ>(), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion12].netUpdate = true;
-					int Minion13 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPilePZ"), 0, 0f, 0f, 0f, 0f, 255);
+					int Minion13 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPilePZ>(), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion13].netUpdate = true;
-					int Minion14 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPilePZ"), 0, 0f, 0f, 0f, 0f, 255);
+					int Minion14 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPilePZ>(), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion14].netUpdate = true;
 					this.summon3 = true;
+					base.npc.netUpdate = true;
 					return;
 				}
 				if (base.npc.life < (int)((float)base.npc.lifeMax * 0.1f) && !this.summon4)
 				{
-					int Minion15 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPilePZ"), 0, 0f, 0f, 0f, 0f, 255);
+					int Minion15 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPilePZ>(), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion15].netUpdate = true;
-					int Minion16 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPilePZ"), 0, 0f, 0f, 0f, 0f, 255);
+					int Minion16 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPilePZ>(), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion16].netUpdate = true;
-					int Minion17 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPilePZ"), 0, 0f, 0f, 0f, 0f, 255);
+					int Minion17 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPilePZ>(), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion17].netUpdate = true;
-					int Minion18 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPilePZ"), 0, 0f, 0f, 0f, 0f, 255);
+					int Minion18 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPilePZ>(), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion18].netUpdate = true;
 					this.summon4 = true;
+					base.npc.netUpdate = true;
 				}
 			}
 		}
@@ -548,5 +568,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 		public int transformFrame;
 
 		public int transformCounter;
+
+		private bool title;
 	}
 }

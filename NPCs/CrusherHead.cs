@@ -73,11 +73,11 @@ namespace Redemption.NPCs
 				int randomWormLength = Main.rand.Next(10, 16);
 				for (int i = 0; i < randomWormLength; i++)
 				{
-					latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("CrusherBody"), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
+					latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<CrusherBody>(), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
 					Main.npc[latestNPC].realLife = base.npc.whoAmI;
 					Main.npc[latestNPC].ai[3] = (float)base.npc.whoAmI;
 				}
-				latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("CrusherTail"), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
+				latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<CrusherTail>(), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
 				Main.npc[latestNPC].realLife = base.npc.whoAmI;
 				Main.npc[latestNPC].ai[3] = (float)base.npc.whoAmI;
 				base.npc.ai[0] = 1f;
@@ -341,7 +341,7 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.Cavern.Chance * ((Main.hardMode && !NPC.AnyNPCs(base.mod.NPCType("CrusherHead"))) ? 0.001f : 0f);
+			return SpawnCondition.Cavern.Chance * ((Main.hardMode && !NPC.AnyNPCs(ModContent.NPCType<CrusherHead>())) ? 0.001f : 0f);
 		}
 
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)

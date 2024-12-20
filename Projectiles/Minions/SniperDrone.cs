@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -49,7 +50,7 @@ namespace Redemption.Projectiles.Minions
 			}
 			Player player = Main.player[base.projectile.owner];
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
-			if (player.dead || !player.HasBuff(base.mod.BuffType("SniperDroneBuff")))
+			if (player.dead || !player.HasBuff(ModContent.BuffType<SniperDroneBuff>()))
 			{
 				modPlayer.girusSniperDrone = false;
 				base.projectile.Kill();

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.NPCs
 			this.aiType = 482;
 			this.animationType = 482;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("ForestGolemBanner");
+			this.bannerItem = ModContent.ItemType<ForestGolemBanner>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -61,12 +62,12 @@ namespace Redemption.NPCs
 				int num = Main.rand.Next(5);
 				if (num == 0)
 				{
-					base.npc.SetDefaults(base.mod.NPCType("ForestGolemBlooming"), -1f);
+					base.npc.SetDefaults(ModContent.NPCType<ForestGolemBlooming>(), -1f);
 					this.change = true;
 				}
 				if (num == 1)
 				{
-					base.npc.SetDefaults(base.mod.NPCType("ForestGolemWounded"), -1f);
+					base.npc.SetDefaults(ModContent.NPCType<ForestGolemWounded>(), -1f);
 					this.change = true;
 				}
 				if (num >= 2)

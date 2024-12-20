@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -43,7 +44,7 @@ namespace Redemption.Items.Weapons
 			base.item.noUseGraphic = true;
 			base.item.useTurn = true;
 			base.item.shootSpeed = 85f;
-			base.item.shoot = base.mod.ProjectileType("GirusDaggerPro");
+			base.item.shoot = ModContent.ProjectileType<GirusDaggerPro>();
 			base.item.glowMask = GirusDaggerThrown.customGlowMask;
 		}
 

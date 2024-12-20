@@ -72,7 +72,7 @@ namespace Redemption.Items
 			RedeWorld.downedVolt = false;
 			RedeWorld.KSRajahInteraction = false;
 			RedeWorld.voltBegin = false;
-			RedeWorld.downedMossyGoliath = false;
+			RedeWorld.oblitDeath = 0;
 			return true;
 		}
 	}

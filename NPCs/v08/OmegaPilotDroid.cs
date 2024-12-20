@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.NPCs.Bosses.OmegaOblit;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,8 +30,8 @@ namespace Redemption.NPCs.v08
 			base.npc.buffImmune[31] = true;
 			base.npc.buffImmune[39] = true;
 			base.npc.buffImmune[24] = true;
-			base.npc.buffImmune[base.mod.BuffType("UltraFlameDebuff")] = true;
-			base.npc.buffImmune[base.mod.BuffType("EnjoymentDebuff")] = true;
+			base.npc.buffImmune[ModContent.BuffType<UltraFlameDebuff>()] = true;
+			base.npc.buffImmune[ModContent.BuffType<EnjoymentDebuff>()] = true;
 			base.npc.lavaImmune = true;
 			base.npc.noGravity = true;
 			base.npc.noTileCollide = true;
@@ -78,12 +80,12 @@ namespace Redemption.NPCs.v08
 			{
 				if (base.npc.direction == -1)
 				{
-					int p = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-10f, 0f), base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+					int p = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-10f, 0f), ModContent.ProjectileType<OmegaBlast>(), 40, 3f, 255, 0f, 0f);
 					Main.projectile[p].netUpdate = true;
 				}
 				else
 				{
-					int p2 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(10f, 0f), base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+					int p2 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(10f, 0f), ModContent.ProjectileType<OmegaBlast>(), 40, 3f, 255, 0f, 0f);
 					Main.projectile[p2].netUpdate = true;
 				}
 				this.timer = 0;
@@ -151,8 +153,6 @@ namespace Redemption.NPCs.v08
 		private float speed;
 
 		public int timer;
-
-		private int plasmaTimer;
 
 		private int aiCounter;
 	}

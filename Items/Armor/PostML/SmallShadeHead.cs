@@ -43,7 +43,7 @@ namespace Redemption.Items.Armor.PostML
 
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
-			return body.type == base.mod.ItemType("SmallShadeBody") && legs.type == base.mod.ItemType("SmallShadeLeggings");
+			return body.type == ModContent.ItemType<SmallShadeBody>() && legs.type == ModContent.ItemType<SmallShadeLeggings>();
 		}
 
 		public override void UpdateArmorSet(Player player)

@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Dusts;
+using Redemption.Items;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -38,11 +40,11 @@ namespace Redemption.NPCs.v08
 			{
 				for (int i = 0; i < 40; i++)
 				{
-					int dustIndex2 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, base.mod.DustType("VoidFlame"), 0f, 0f, 100, default(Color), 2f);
+					int dustIndex2 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, ModContent.DustType<VoidFlame>(), 0f, 0f, 100, default(Color), 2f);
 					Main.dust[dustIndex2].velocity *= 2.6f;
 				}
 			}
-			int dustIndex3 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, base.mod.DustType("VoidFlame"), 0f, 0f, 100, default(Color), 1f);
+			int dustIndex3 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, ModContent.DustType<VoidFlame>(), 0f, 0f, 100, default(Color), 1f);
 			Main.dust[dustIndex3].velocity *= 1.6f;
 		}
 
@@ -50,40 +52,40 @@ namespace Redemption.NPCs.v08
 		{
 			if (Main.netMode != 1 && base.npc.life <= 0)
 			{
-				NPC.NewNPC((int)base.npc.Center.X + Main.rand.Next(-26, 26), (int)base.npc.position.Y + Main.rand.Next(-70, 0), base.mod.NPCType("SmallShadesoulNPC"), 0, 0f, 0f, 0f, 0f, 255);
-				NPC.NewNPC((int)base.npc.Center.X + Main.rand.Next(-26, 26), (int)base.npc.position.Y + Main.rand.Next(-70, 0), base.mod.NPCType("SmallShadesoulNPC"), 0, 0f, 0f, 0f, 0f, 255);
-				NPC.NewNPC((int)base.npc.Center.X + Main.rand.Next(-26, 26), (int)base.npc.position.Y + Main.rand.Next(-70, 0), base.mod.NPCType("SmallShadesoulNPC"), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.Center.X + Main.rand.Next(-26, 26), (int)base.npc.position.Y + Main.rand.Next(-70, 0), ModContent.NPCType<SmallShadesoulNPC>(), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.Center.X + Main.rand.Next(-26, 26), (int)base.npc.position.Y + Main.rand.Next(-70, 0), ModContent.NPCType<SmallShadesoulNPC>(), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.Center.X + Main.rand.Next(-26, 26), (int)base.npc.position.Y + Main.rand.Next(-70, 0), ModContent.NPCType<SmallShadesoulNPC>(), 0, 0f, 0f, 0f, 0f, 255);
 				if (Main.rand.Next(2) == 0)
 				{
-					NPC.NewNPC((int)base.npc.Center.X + Main.rand.Next(-26, 26), (int)base.npc.position.Y + Main.rand.Next(-70, 0), base.mod.NPCType("SmallShadesoulNPC"), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)base.npc.Center.X + Main.rand.Next(-26, 26), (int)base.npc.position.Y + Main.rand.Next(-70, 0), ModContent.NPCType<SmallShadesoulNPC>(), 0, 0f, 0f, 0f, 0f, 255);
 				}
 				if (Main.rand.Next(2) == 0)
 				{
-					NPC.NewNPC((int)base.npc.Center.X + Main.rand.Next(-26, 26), (int)base.npc.position.Y + Main.rand.Next(-70, 0), base.mod.NPCType("SmallShadesoulNPC"), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)base.npc.Center.X + Main.rand.Next(-26, 26), (int)base.npc.position.Y + Main.rand.Next(-70, 0), ModContent.NPCType<SmallShadesoulNPC>(), 0, 0f, 0f, 0f, 0f, 255);
 				}
 				if (Main.rand.Next(2) == 0)
 				{
-					NPC.NewNPC((int)base.npc.Center.X + Main.rand.Next(-26, 26), (int)base.npc.position.Y + Main.rand.Next(-70, 0), base.mod.NPCType("SmallShadesoulNPC"), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)base.npc.Center.X + Main.rand.Next(-26, 26), (int)base.npc.position.Y + Main.rand.Next(-70, 0), ModContent.NPCType<SmallShadesoulNPC>(), 0, 0f, 0f, 0f, 0f, 255);
 				}
 				if (Main.rand.Next(2) == 0)
 				{
-					NPC.NewNPC((int)base.npc.Center.X + Main.rand.Next(-26, 26), (int)base.npc.position.Y + Main.rand.Next(-70, 0), base.mod.NPCType("SmallShadesoulNPC"), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)base.npc.Center.X + Main.rand.Next(-26, 26), (int)base.npc.position.Y + Main.rand.Next(-70, 0), ModContent.NPCType<SmallShadesoulNPC>(), 0, 0f, 0f, 0f, 0f, 255);
 				}
 				if (Main.rand.Next(4) == 0)
 				{
-					NPC.NewNPC((int)base.npc.Center.X + Main.rand.Next(-26, 26), (int)base.npc.position.Y + Main.rand.Next(-70, 0), base.mod.NPCType("ShadesoulNPC"), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)base.npc.Center.X + Main.rand.Next(-26, 26), (int)base.npc.position.Y + Main.rand.Next(-70, 0), ModContent.NPCType<ShadesoulNPC>(), 0, 0f, 0f, 0f, 0f, 255);
 				}
 				if (Main.rand.Next(4) == 0)
 				{
-					NPC.NewNPC((int)base.npc.Center.X + Main.rand.Next(-26, 26), (int)base.npc.position.Y + Main.rand.Next(-70, 0), base.mod.NPCType("ShadesoulNPC"), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)base.npc.Center.X + Main.rand.Next(-26, 26), (int)base.npc.position.Y + Main.rand.Next(-70, 0), ModContent.NPCType<ShadesoulNPC>(), 0, 0f, 0f, 0f, 0f, 255);
 				}
 				if (Main.rand.Next(4) == 0)
 				{
-					NPC.NewNPC((int)base.npc.Center.X + Main.rand.Next(-26, 26), (int)base.npc.position.Y + Main.rand.Next(-72, 0), base.mod.NPCType("ShadesoulNPC"), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)base.npc.Center.X + Main.rand.Next(-26, 26), (int)base.npc.position.Y + Main.rand.Next(-72, 0), ModContent.NPCType<ShadesoulNPC>(), 0, 0f, 0f, 0f, 0f, 255);
 				}
 				Main.NewText("Qua sudki uque ka rauin vou huto sik'ka hull'. Okijo, uf il comae, okijo.", Color.DarkGray.R, Color.DarkGray.G, Color.DarkGray.B, false);
 			}
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("BlackenedHeart"), 1, false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<BlackenedHeart>(), 1, false, 0, false, false);
 		}
 
 		public override void AI()

@@ -61,7 +61,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 			Main.PlaySound(SoundID.NPCDeath10, (int)base.projectile.position.X, (int)base.projectile.position.Y);
 			for (int i = -32; i <= 32; i++)
 			{
-				Projectile.NewProjectile(base.projectile.Center, 10f * Utils.RotatedBy(Vector2.UnitX, 0.09817477042468103 * (double)i, default(Vector2)), base.mod.ProjectileType("InfectionDust"), 0, 0f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(base.projectile.Center, 10f * Utils.RotatedBy(Vector2.UnitX, 0.09817477042468103 * (double)i, default(Vector2)), ModContent.ProjectileType<InfectionDust>(), 0, 0f, Main.myPlayer, 0f, 0f);
 			}
 			Gore.NewGore(base.projectile.position, base.projectile.velocity, base.mod.GetGoreSlot("Gores/XenomiteCrystalGore1"), 1f);
 			Gore.NewGore(base.projectile.position, base.projectile.velocity, base.mod.GetGoreSlot("Gores/XenomiteCrystalGore2"), 1f);

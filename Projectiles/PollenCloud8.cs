@@ -20,7 +20,7 @@ namespace Redemption.Projectiles
 			base.projectile.ignoreWater = true;
 			base.projectile.tileCollide = false;
 			base.projectile.alpha = 170;
-			base.projectile.timeLeft = 200;
+			base.projectile.timeLeft = 60;
 		}
 
 		public override void AI()
@@ -29,10 +29,6 @@ namespace Redemption.Projectiles
 			base.projectile.alpha = (int)base.projectile.localAI[0] * 3;
 			base.projectile.velocity *= 0.01f;
 			base.projectile.rotation += 0.03f;
-			if (base.projectile.localAI[0] >= 60f)
-			{
-				base.projectile.Kill();
-			}
 		}
 	}
 }

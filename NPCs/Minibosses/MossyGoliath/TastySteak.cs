@@ -2,6 +2,7 @@
 using Redemption.Items.DruidDamageClass.SeedBags;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Minibosses.MossyGoliath
 {
@@ -28,7 +29,7 @@ namespace Redemption.NPCs.Minibosses.MossyGoliath
 			base.item.UseSound = SoundID.Item1;
 			base.item.noMelee = true;
 			base.item.autoReuse = false;
-			base.item.shoot = base.mod.ProjectileType("TastySteakPro");
+			base.item.shoot = ModContent.ProjectileType<TastySteakPro>();
 			base.item.shootSpeed = 4f;
 			this.NativeTerrainIDs = TileLists.JungleTiles;
 			this.nativeText = "Jungle";

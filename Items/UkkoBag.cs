@@ -1,4 +1,8 @@
 ﻿using System;
+using Redemption.Items.Armor.PostML;
+using Redemption.Items.DruidDamageClass.v08;
+using Redemption.Items.Weapons.v08;
+using Redemption.NPCs.Bosses.EaglecrestGolem;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -31,7 +35,7 @@ namespace Redemption.Items
 		{
 			get
 			{
-				return base.mod.NPCType("Ukko");
+				return ModContent.NPCType<Ukko>();
 			}
 		}
 
@@ -39,24 +43,24 @@ namespace Redemption.Items
 		{
 			if (Main.rand.Next(7) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("UkkoMask"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<UkkoMask>(), 1);
 			}
 			int num = Main.rand.Next(3);
 			if (num == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("StonePuppet"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<StonePuppet>(), 1);
 			}
 			if (num == 1)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("EaglecrestGlove"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<EaglecrestGlove>(), 1);
 			}
 			if (num == 2)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("AncientPowerStave"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<AncientPowerStave>(), 1);
 			}
-			player.QuickSpawnItem(base.mod.ItemType("ViisaanKantele"), 1);
-			player.QuickSpawnItem(base.mod.ItemType("UkonRuno"), 1);
-			player.QuickSpawnItem(base.mod.ItemType("AncientPowerCore"), Main.rand.Next(9, 18));
+			player.QuickSpawnItem(ModContent.ItemType<ViisaanKantele>(), 1);
+			player.QuickSpawnItem(ModContent.ItemType<UkonRuno>(), 1);
+			player.QuickSpawnItem(ModContent.ItemType<AncientPowerCore>(), Main.rand.Next(9, 18));
 		}
 	}
 }

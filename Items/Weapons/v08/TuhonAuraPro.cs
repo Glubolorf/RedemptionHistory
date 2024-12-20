@@ -33,6 +33,10 @@ namespace Redemption.Items.Weapons.v08
 			projOwner.itemTime = projOwner.itemAnimation;
 			base.projectile.position.X = projOwner.Center.X - (float)(base.projectile.width / 2);
 			base.projectile.position.Y = projOwner.Center.Y - (float)(base.projectile.height / 2);
+			if (base.projectile.timeLeft < 10)
+			{
+				projOwner.velocity *= 0.96f;
+			}
 		}
 	}
 }

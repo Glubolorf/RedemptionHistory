@@ -50,7 +50,7 @@ namespace Redemption.Projectiles
 			Main.dust[DustID2].noGravity = true;
 			if (Main.myPlayer == base.projectile.owner && Main.rand.Next(300) == 0)
 			{
-				Projectile.NewProjectile(base.projectile.Center, base.projectile.velocity, base.mod.ProjectileType("MysteriousArtifactProC"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(base.projectile.Center, base.projectile.velocity, ModContent.ProjectileType<MysteriousArtifactProC>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			}
 		}
 

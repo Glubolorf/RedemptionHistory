@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Placeable.Banners;
+using Redemption.NPCs.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,7 +33,7 @@ namespace Redemption.NPCs
 			this.aiType = 3;
 			this.animationType = 3;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("AJollyMadmanBanner");
+			this.bannerItem = ModContent.ItemType<AJollyMadmanBanner>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -50,19 +52,19 @@ namespace Redemption.NPCs
 			{
 				if (Main.netMode != 1 && base.npc.life <= 0)
 				{
-					NPC.NewNPC((int)base.npc.position.X + 22, (int)base.npc.position.Y + 55, base.mod.NPCType("DarkSoul"), 0, 0f, 0f, 0f, 0f, 255);
-					NPC.NewNPC((int)base.npc.Center.X + 12, (int)base.npc.Center.Y + 8, base.mod.NPCType("ShadesoulNPC"), 0, 0f, 0f, 0f, 0f, 255);
-					NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y + 10, base.mod.NPCType("SmallShadesoulNPC"), 0, 0f, 0f, 0f, 0f, 255);
-					NPC.NewNPC((int)base.npc.Center.X - 8, (int)base.npc.Center.Y - 4, base.mod.NPCType("SmallShadesoulNPC"), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)base.npc.position.X + 22, (int)base.npc.position.Y + 55, ModContent.NPCType<DarkSoul>(), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)base.npc.Center.X + 12, (int)base.npc.Center.Y + 8, ModContent.NPCType<ShadesoulNPC>(), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y + 10, ModContent.NPCType<SmallShadesoulNPC>(), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)base.npc.Center.X - 8, (int)base.npc.Center.Y - 4, ModContent.NPCType<SmallShadesoulNPC>(), 0, 0f, 0f, 0f, 0f, 255);
 					return;
 				}
 			}
 			else if (Main.netMode != 1 && base.npc.life <= 0)
 			{
-				NPC.NewNPC((int)base.npc.position.X + 22, (int)base.npc.position.Y + 55, base.mod.NPCType("DarkSoul"), 0, 0f, 0f, 0f, 0f, 255);
-				NPC.NewNPC((int)base.npc.Center.X + 12, (int)base.npc.Center.Y + 8, base.mod.NPCType("LostSoul2"), 0, 0f, 0f, 0f, 0f, 255);
-				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y + 10, base.mod.NPCType("LostSoul1"), 0, 0f, 0f, 0f, 0f, 255);
-				NPC.NewNPC((int)base.npc.Center.X - 8, (int)base.npc.Center.Y - 4, base.mod.NPCType("LostSoul1"), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.position.X + 22, (int)base.npc.position.Y + 55, ModContent.NPCType<DarkSoul>(), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.Center.X + 12, (int)base.npc.Center.Y + 8, ModContent.NPCType<LostSoul2>(), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y + 10, ModContent.NPCType<LostSoul1>(), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.Center.X - 8, (int)base.npc.Center.Y - 4, ModContent.NPCType<LostSoul1>(), 0, 0f, 0f, 0f, 0f, 255);
 			}
 		}
 
@@ -107,7 +109,7 @@ namespace Redemption.NPCs
 				}
 				if (this.attackTimer == 5)
 				{
-					int minion = NPC.NewNPC((int)base.npc.position.X + 22, (int)base.npc.position.Y + 55, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
+					int minion = NPC.NewNPC((int)base.npc.position.X + 22, (int)base.npc.position.Y + 55, ModContent.NPCType<DarkSoul3>(), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[minion].netUpdate = true;
 					Main.PlaySound(SoundID.Item71.WithVolume(0.5f), (int)base.npc.position.X, (int)base.npc.position.Y);
 				}

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -13,7 +14,7 @@ namespace Redemption.Tiles
 			Main.tileSpelunker[(int)base.Type] = false;
 			Main.tileMergeDirt[(int)base.Type] = true;
 			Main.tileBlockLight[(int)base.Type] = true;
-			this.drop = base.mod.ItemType("AncientStone");
+			this.drop = ModContent.ItemType<AncientStone>();
 			this.minPick = 0;
 			this.mineResist = 2.5f;
 			base.AddMapEntry(new Color(120, 91, 35), null);

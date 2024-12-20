@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.DruidDamageClass.SeedBags;
+using Redemption.Projectiles.DruidProjectiles.Plants;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -21,7 +23,7 @@ namespace Redemption.Items.DruidDamageClass
 		{
 			base.item.width = 26;
 			base.item.height = 28;
-			base.item.value = Item.sellPrice(3, 50, 0, 0);
+			base.item.value = Item.buyPrice(3, 50, 0, 0);
 			base.item.rare = 8;
 			base.item.accessory = true;
 			base.item.GetGlobalItem<RedeItem>().druidTag = true;
@@ -30,12 +32,12 @@ namespace Redemption.Items.DruidDamageClass
 		public override void AddRecipes()
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(base.mod.ItemType("DBLiquidFlames"), 1);
-			modRecipe.AddIngredient(base.mod.ItemType("DBSunAndMoon"), 1);
-			modRecipe.AddIngredient(base.mod.ItemType("SeedNade"), 1);
-			modRecipe.AddIngredient(base.mod.ItemType("PowerCellWristband"), 1);
+			modRecipe.AddIngredient(ModContent.ItemType<DBLiquidFlames>(), 1);
+			modRecipe.AddIngredient(ModContent.ItemType<DBSunAndMoon>(), 1);
+			modRecipe.AddIngredient(ModContent.ItemType<SeedNade>(), 1);
+			modRecipe.AddIngredient(ModContent.ItemType<PowerCellWristband>(), 1);
 			modRecipe.AddIngredient(2766, 70);
-			modRecipe.AddIngredient(base.mod.ItemType("SoulOfBloom"), 70);
+			modRecipe.AddIngredient(ModContent.ItemType<SoulOfBloom>(), 70);
 			modRecipe.AddTile(null, "DruidicAltarTile");
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
@@ -49,7 +51,7 @@ namespace Redemption.Items.DruidDamageClass
 				{
 					if (Main.myPlayer == Main.projectile[this.p].owner && Main.rand.Next(90) == 0)
 					{
-						this.p = Projectile.NewProjectile(new Vector2(player.position.X + Utils.NextFloat(Main.rand, (float)player.width), player.position.Y + Utils.NextFloat(Main.rand, (float)player.height)), new Vector2(0f, 0f), base.mod.ProjectileType("AncientSporePro"), 80, 0f, Main.myPlayer, 0f, 0f);
+						this.p = Projectile.NewProjectile(new Vector2(player.position.X + Utils.NextFloat(Main.rand, (float)player.width), player.position.Y + Utils.NextFloat(Main.rand, (float)player.height)), new Vector2(0f, 0f), ModContent.ProjectileType<AncientSporePro>(), 80, 0f, Main.myPlayer, 0f, 0f);
 					}
 				}
 			}

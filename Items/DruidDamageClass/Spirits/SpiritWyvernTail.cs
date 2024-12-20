@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -66,7 +67,7 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 				modPlayer.spiritWyvern1 = false;
 			}
 			int num1038 = 30;
-			if (!player.HasBuff(base.mod.BuffType("SpiritWyvernBuff")))
+			if (!player.HasBuff(ModContent.BuffType<SpiritWyvernBuff>()))
 			{
 				base.projectile.Kill();
 			}
@@ -92,11 +93,11 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 				scaleFactor16 = 16f;
 				int alpha = Main.projectile[byUUID].alpha;
 				Main.projectile[byUUID].localAI[0] = base.projectile.localAI[0] + 1f;
-				if (Main.projectile[byUUID].type != base.mod.ProjectileType("SpiritWyvernHead"))
+				if (Main.projectile[byUUID].type != ModContent.ProjectileType<SpiritWyvernHead>())
 				{
 					Main.projectile[byUUID].localAI[1] = (float)base.projectile.whoAmI;
 				}
-				if (base.projectile.owner == player.whoAmI && Main.projectile[byUUID].type == base.mod.ProjectileType("SpiritWyvernHead"))
+				if (base.projectile.owner == player.whoAmI && Main.projectile[byUUID].type == ModContent.ProjectileType<SpiritWyvernHead>())
 				{
 					Main.projectile[byUUID].Kill();
 					base.projectile.Kill();

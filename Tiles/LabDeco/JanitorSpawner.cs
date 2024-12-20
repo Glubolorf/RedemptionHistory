@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.NPCs.LabNPCs.New;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -48,12 +49,12 @@ namespace Redemption.Tiles.LabDeco
 			{
 				if (Main.netMode == 0)
 				{
-					if (!NPC.AnyNPCs(base.mod.NPCType("JanitorBot")) && !NPC.AnyNPCs(base.mod.NPCType("JanitorBotCleaning")) && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && !RedeWorld.downedJanitor && !RedeWorld.labAccess1)
+					if (!NPC.AnyNPCs(ModContent.NPCType<JanitorBot>()) && !NPC.AnyNPCs(ModContent.NPCType<JanitorBotCleaning>()) && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && !RedeWorld.downedJanitor && !RedeWorld.labAccess1)
 					{
 						Main.tile[i, j];
 						i *= 16;
 						j *= 16;
-						int k = NPC.NewNPC(i + 1, j + 1, base.mod.NPCType("JanitorBotCleaning"), 0, 0f, 0f, 0f, 0f, 255);
+						int k = NPC.NewNPC(i + 1, j + 1, ModContent.NPCType<JanitorBotCleaning>(), 0, 0f, 0f, 0f, 0f, 255);
 						if (Main.netMode == 2)
 						{
 							NetMessage.SendData(23, -1, -1, null, k, 0f, 0f, 0f, 0, 0, 0);
@@ -61,7 +62,7 @@ namespace Redemption.Tiles.LabDeco
 						}
 					}
 				}
-				else if (!NPC.AnyNPCs(base.mod.NPCType("JanitorBot")) && !NPC.AnyNPCs(base.mod.NPCType("JanitorBotCleaning")) && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && !RedeWorld.downedJanitor && !RedeWorld.labAccess1)
+				else if (!NPC.AnyNPCs(ModContent.NPCType<JanitorBot>()) && !NPC.AnyNPCs(ModContent.NPCType<JanitorBotCleaning>()) && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && !RedeWorld.downedJanitor && !RedeWorld.labAccess1)
 				{
 					ModPacket packet = base.mod.GetPacket(256);
 					packet.Write(17);

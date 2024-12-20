@@ -77,7 +77,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 					this.clearCheck.velocity.Y = base.projectile.velocity.Y / 2f;
 				}
 			}
-			for (int p2 = 0; p2 < Main.npc.Length; p2++)
+			for (int p2 = 0; p2 < 200; p2++)
 			{
 				this.clearCheck2 = Main.npc[p2];
 				if (!this.clearCheck2.friendly && base.projectile.alpha < 250 && Collision.CheckAABBvAABBCollision(base.projectile.position, base.projectile.Size, this.clearCheck2.position, this.clearCheck2.Size))

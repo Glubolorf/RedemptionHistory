@@ -39,12 +39,12 @@ namespace Redemption.NPCs.Bosses.Thorn
 			base.projectile.localAI[0] += 1f;
 			if (base.projectile.localAI[0] == 5f)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, player.Center.Y - 1500f), new Vector2(0f, 15f), base.mod.ProjectileType("AkkaIslandWarning"), 0, 0f, base.projectile.owner, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, player.Center.Y - 1500f), new Vector2(0f, 15f), ModContent.ProjectileType<AkkaIslandWarning>(), 0, 0f, base.projectile.owner, 0f, 0f);
 			}
 			if (base.projectile.localAI[0] == 120f)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, player.Center.Y - 1500f), new Vector2(0f, 5f), base.mod.ProjectileType("AkkaIsland"), 0, 0f, base.projectile.owner, 0f, 0f);
-				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, player.Center.Y - 1244f), new Vector2(0f, 5f), base.mod.ProjectileType("AkkaIslandHitbox"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, player.Center.Y - 1500f), new Vector2(0f, 5f), ModContent.ProjectileType<AkkaIsland>(), 0, 0f, base.projectile.owner, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, player.Center.Y - 1244f), new Vector2(0f, 5f), ModContent.ProjectileType<AkkaIslandSummoner.AkkaIslandHitbox>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
 				base.projectile.Kill();
 			}
 		}

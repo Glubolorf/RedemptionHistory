@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -66,7 +67,7 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 				modPlayer.spiritWyvern2 = false;
 			}
 			int num1038 = 30;
-			if (!player.HasBuff(base.mod.BuffType("SpiritDragonBuff")))
+			if (!player.HasBuff(ModContent.BuffType<SpiritDragonBuff>()))
 			{
 				base.projectile.Kill();
 			}
@@ -92,7 +93,7 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 				scaleFactor16 = 16f;
 				int alpha = Main.projectile[byUUID].alpha;
 				Main.projectile[byUUID].localAI[0] = base.projectile.localAI[0] + 1f;
-				if (Main.projectile[byUUID].type != base.mod.ProjectileType("SpiritDragonHead"))
+				if (Main.projectile[byUUID].type != ModContent.ProjectileType<SpiritDragonHead>())
 				{
 					Main.projectile[byUUID].localAI[1] = (float)base.projectile.whoAmI;
 				}
@@ -143,7 +144,7 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 				if (byUUID != -1)
 				{
 					Projectile projectile = Main.projectile[byUUID];
-					if (projectile.type != base.mod.ProjectileType("SpiritDragonHead"))
+					if (projectile.type != ModContent.ProjectileType<SpiritDragonHead>())
 					{
 						projectile.localAI[1] = base.projectile.localAI[1];
 					}

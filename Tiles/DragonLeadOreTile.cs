@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -15,7 +16,7 @@ namespace Redemption.Tiles
 			Main.tileBlockLight[(int)base.Type] = true;
 			Main.tileValue[(int)base.Type] = 320;
 			this.dustType = 6;
-			this.drop = base.mod.ItemType("DragonLeadChunk");
+			this.drop = ModContent.ItemType<DragonLeadChunk>();
 			this.minPick = 100;
 			this.mineResist = 1.4f;
 			this.soundType = 21;

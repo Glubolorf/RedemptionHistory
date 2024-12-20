@@ -50,7 +50,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 			}
 			base.npc.TargetClosest(true);
 			int boss = (int)base.npc.ai[0];
-			if (boss < 0 || boss >= 200 || !Main.npc[boss].active || Main.npc[boss].type != base.mod.NPCType("ThornPZ"))
+			if (boss < 0 || boss >= 200 || !Main.npc[boss].active || Main.npc[boss].type != ModContent.NPCType<ThornPZ>())
 			{
 				base.npc.active = false;
 				return false;
@@ -73,6 +73,10 @@ namespace Redemption.NPCs.Bosses.Thorn
 				if (projectile.penetrate == 1)
 				{
 					projectile.penetrate = 2;
+				}
+				if (damage > 200)
+				{
+					damage = 200;
 				}
 				projectile.damage = damage / 4;
 				projectile.velocity.X = -projectile.velocity.X;

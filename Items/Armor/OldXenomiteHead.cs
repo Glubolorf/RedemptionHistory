@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -38,17 +39,17 @@ namespace Redemption.Items.Armor
 
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
-			return (body.type == base.mod.ItemType("OldXenomiteBody") && legs.type == base.mod.ItemType("OldXenomiteLeggings")) || (body.type == base.mod.ItemType("XenomiteBody") && legs.type == base.mod.ItemType("XenomiteLeggings"));
+			return (body.type == ModContent.ItemType<OldXenomiteBody>() && legs.type == ModContent.ItemType<OldXenomiteLeggings>()) || (body.type == ModContent.ItemType<XenomiteBody>() && legs.type == ModContent.ItemType<XenomiteLeggings>());
 		}
 
 		public override void UpdateArmorSet(Player player)
 		{
 			player.setBonus = "You are immune to the Xenomite Infection and Radioactive Fallout\nThe armour emits light\nCritical strikes have a chance to release a burst of xenomite shards at your cursor";
 			Lighting.AddLight(player.Center, 0.5f, 1f, 0.5f);
-			player.buffImmune[base.mod.BuffType("XenomiteDebuff")] = true;
-			player.buffImmune[base.mod.BuffType("XenomiteDebuff2")] = true;
-			player.buffImmune[base.mod.BuffType("RadioactiveFalloutDebuff")] = true;
-			player.buffImmune[base.mod.BuffType("HeavyRadiationDebuff")] = true;
+			player.buffImmune[ModContent.BuffType<XenomiteDebuff>()] = true;
+			player.buffImmune[ModContent.BuffType<XenomiteDebuff2>()] = true;
+			player.buffImmune[ModContent.BuffType<RadioactiveFalloutDebuff>()] = true;
+			player.buffImmune[ModContent.BuffType<HeavyRadiationDebuff>()] = true;
 			player.GetModPlayer<RedePlayer>().xenomiteSet = true;
 		}
 

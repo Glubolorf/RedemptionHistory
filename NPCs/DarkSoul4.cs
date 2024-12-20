@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.Banners;
+using Redemption.NPCs.Bosses.TheKeeper;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,7 +31,7 @@ namespace Redemption.NPCs
 			base.npc.noGravity = true;
 			this.aiType = 288;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("DarkSoulBanner");
+			this.bannerItem = ModContent.ItemType<DarkSoulBanner>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -66,7 +68,7 @@ namespace Redemption.NPCs
 				Main.PlaySound(SoundID.NPCDeath6, (int)base.npc.position.X, (int)base.npc.position.Y);
 				base.npc.active = false;
 			}
-			if (!NPC.AnyNPCs(base.mod.NPCType("TheKeeper")))
+			if (!NPC.AnyNPCs(ModContent.NPCType<TheKeeper>()))
 			{
 				base.npc.active = false;
 			}

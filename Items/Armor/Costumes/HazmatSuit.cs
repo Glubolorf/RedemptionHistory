@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -24,7 +25,7 @@ namespace Redemption.Items.Armor.Costumes
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			RedePlayer p = player.GetModPlayer<RedePlayer>();
-			player.buffImmune[base.mod.BuffType("HeavyRadiationDebuff")] = true;
+			player.buffImmune[ModContent.BuffType<HeavyRadiationDebuff>()] = true;
 			p.hazmatAccessory = true;
 			if (hideVisual)
 			{

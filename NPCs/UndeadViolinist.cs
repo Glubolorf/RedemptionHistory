@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.NPCs
 			this.aiType = 3;
 			this.animationType = 3;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("UndeadViBanner");
+			this.bannerItem = ModContent.ItemType<UndeadViBanner>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)

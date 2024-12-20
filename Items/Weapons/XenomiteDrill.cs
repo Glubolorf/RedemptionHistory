@@ -1,4 +1,6 @@
 ﻿using System;
+using Redemption.Buffs;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +32,7 @@ namespace Redemption.Items.Weapons
 			base.item.rare = 7;
 			base.item.UseSound = SoundID.Item23;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("XenomiteDrillPro");
+			base.item.shoot = ModContent.ProjectileType<XenomiteDrillPro>();
 			base.item.shootSpeed = 40f;
 		}
 
@@ -46,7 +48,7 @@ namespace Redemption.Items.Weapons
 
 		public override void HoldItem(Player player)
 		{
-			player.AddBuff(base.mod.BuffType("XenomiteDebuff"), Main.rand.Next(10, 20), true);
+			player.AddBuff(ModContent.BuffType<XenomiteDebuff>(), Main.rand.Next(10, 20), true);
 		}
 	}
 }

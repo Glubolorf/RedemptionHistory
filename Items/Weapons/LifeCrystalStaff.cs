@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.Items.Weapons
 			base.item.rare = 1;
 			base.item.UseSound = SoundID.Item43;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("TinyHeartPro");
+			base.item.shoot = ModContent.ProjectileType<TinyHeartPro>();
 			base.item.shootSpeed = 15f;
 		}
 

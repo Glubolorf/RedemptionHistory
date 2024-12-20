@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.NPCs.Bosses.OmegaOblit;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -34,12 +35,12 @@ namespace Redemption.Items
 
 		public override bool CanUseItem(Player player)
 		{
-			return !Main.dayTime && !NPC.AnyNPCs(base.mod.NPCType("OmegaOblitIdle")) && !NPC.AnyNPCs(base.mod.NPCType("OmegaOblitDamaged")) && RedeWorld.downedVlitch1 && RedeWorld.downedVlitch2;
+			return !Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<OO>()) && RedeWorld.downedVlitch1 && RedeWorld.downedVlitch2;
 		}
 
 		public override bool UseItem(Player player)
 		{
-			Redemption.SpawnBoss(player, "OmegaOblitIdle", true, new Vector2(player.position.X + (float)Main.rand.Next(-700, -600), player.position.Y - 0f), "Omega Obliterator", false);
+			Redemption.SpawnBoss(player, "OO", true, new Vector2(player.position.X + (float)Main.rand.Next(300, 400), player.position.Y - 800f), "Omega Obliterator", false);
 			Main.PlaySound(15, player.position, 0);
 			return true;
 		}

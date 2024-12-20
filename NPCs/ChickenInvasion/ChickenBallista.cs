@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.ChickenArmy;
+using Redemption.Items.Weapons.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -35,11 +36,11 @@ namespace Redemption.NPCs.ChickenInvasion
 		{
 			if (Main.rand.Next(10) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("HandheldBastilla"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<HandheldBastilla>(), 1, false, 0, false, false);
 			}
 			if (Main.rand.Next(1200) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ChickLauncher"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<ChickLauncher>(), 1, false, 0, false, false);
 			}
 			if (ChickWorld.chickArmy)
 			{
@@ -104,7 +105,7 @@ namespace Redemption.NPCs.ChickenInvasion
 					float Speed = 14f;
 					Vector2 vector8 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 					int damage = 55;
-					int type = base.mod.ProjectileType("BallistaArrow");
+					int type = ModContent.ProjectileType<BallistaArrow>();
 					float rotation = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
 					int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
 					Main.projectile[num54].netUpdate = true;
@@ -172,7 +173,7 @@ namespace Redemption.NPCs.ChickenInvasion
 			}
 			if (Main.netMode != 1 && base.npc.life <= 0)
 			{
-				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("Chicken"), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<Chicken>(), 0, 0f, 0f, 0f, 0f, 255);
 			}
 		}
 

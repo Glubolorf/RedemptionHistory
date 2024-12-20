@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles.v08;
+using Redemption.Walls;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -76,7 +78,7 @@ namespace Redemption.NPCs.LabNPCs.New
 			else if (distance < 450f)
 			{
 				this.customGunRot = false;
-				if ((int)Main.tile[point.X, point.Y].wall == base.mod.WallType("HardenedlyHardenedSludgeWallTile") || (int)Main.tile[point.X, point.Y].wall == base.mod.WallType("HardenedSludgeWallTile") || (int)Main.tile[point.X, point.Y].wall == base.mod.WallType("LabWallTileUnsafe") || ((int)Main.tile[point.X, point.Y].wall == base.mod.WallType("VentWallTile") && !this.player.dead))
+				if ((int)Main.tile[point.X, point.Y].wall == ModContent.WallType<HardenedlyHardenedSludgeWallTile>() || (int)Main.tile[point.X, point.Y].wall == ModContent.WallType<HardenedSludgeWallTile>() || (int)Main.tile[point.X, point.Y].wall == ModContent.WallType<LabWallTileUnsafe>() || ((int)Main.tile[point.X, point.Y].wall == ModContent.WallType<VentWallTile>() && !this.player.dead))
 				{
 					base.npc.ai[2] += 1f;
 					if (base.npc.ai[2] % 5f == 0f)
@@ -85,7 +87,7 @@ namespace Redemption.NPCs.LabNPCs.New
 						float Speed = 20f;
 						Vector2 vector8 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 						int damage = 200;
-						int type = base.mod.ProjectileType("ElectricZapPro1");
+						int type = ModContent.ProjectileType<ElectricZapPro1>();
 						float rotation = (float)Math.Atan2((double)(vector8.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector8.X - (this.player.position.X + (float)this.player.width * 0.5f)));
 						int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0) + (float)Main.rand.Next(-2, 2), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0) + (float)Main.rand.Next(-2, 2), type, damage, 0f, 0, 0f, 0f);
 						Main.projectile[num54].netUpdate = true;
@@ -115,7 +117,7 @@ namespace Redemption.NPCs.LabNPCs.New
 			int spriteDirection = base.npc.spriteDirection;
 			Vector2 drawCenterG = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 			int numG = gunAni.Height / 1;
-			int yG = numG * this.gunFrame;
+			int yG = 0;
 			spriteBatch.Draw(gunAni, drawCenterG - Main.screenPosition, new Rectangle?(new Rectangle(0, yG, gunAni.Width, numG)), drawColor, this.customGunRot ? this.gunRot : Utils.ToRotation(base.npc.DirectionTo(Main.player[base.npc.target].Center)), new Vector2((float)gunAni.Width / 2f, (float)numG / 2f), base.npc.scale, SpriteEffects.None, 0f);
 			spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			return false;
@@ -127,8 +129,6 @@ namespace Redemption.NPCs.LabNPCs.New
 		}
 
 		private Player player;
-
-		private int gunFrame;
 
 		private bool customGunRot;
 

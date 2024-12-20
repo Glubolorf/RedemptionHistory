@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -33,7 +34,7 @@ namespace Redemption.Items
 			base.item.noMelee = true;
 			base.item.thrown = true;
 			base.item.shootSpeed = 18f;
-			base.item.shoot = base.mod.ProjectileType("SuspEggPro");
+			base.item.shoot = ModContent.ProjectileType<SuspEggPro>();
 		}
 	}
 }

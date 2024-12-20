@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.DruidProjectiles.Plants
 {
@@ -63,27 +64,27 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 				}
 				if (Main.rand.Next(100) == 0)
 				{
-					Projectile.NewProjectile(base.projectile.position.X + 40f, base.projectile.position.Y + 14f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), base.mod.ProjectileType("ThornFluff1"), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
+					Projectile.NewProjectile(base.projectile.position.X + 40f, base.projectile.position.Y + 14f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), ModContent.ProjectileType<ThornFluff1>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
 				}
 				if (Main.rand.Next(100) == 0)
 				{
-					Projectile.NewProjectile(base.projectile.position.X + 20f, base.projectile.position.Y + 30f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), base.mod.ProjectileType("ThornFluff1"), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
+					Projectile.NewProjectile(base.projectile.position.X + 20f, base.projectile.position.Y + 30f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), ModContent.ProjectileType<ThornFluff1>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
 				}
 				if (Main.rand.Next(100) == 0)
 				{
-					Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 48f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), base.mod.ProjectileType("ThornFluff1"), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
+					Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 48f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), ModContent.ProjectileType<ThornFluff1>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
 				}
 				if (Main.rand.Next(100) == 0)
 				{
-					Projectile.NewProjectile(base.projectile.position.X + 62f, base.projectile.position.Y + 30f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), base.mod.ProjectileType("ThornFluff1"), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
+					Projectile.NewProjectile(base.projectile.position.X + 62f, base.projectile.position.Y + 30f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), ModContent.ProjectileType<ThornFluff1>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
 				}
 				if (Main.rand.Next(100) == 0)
 				{
-					Projectile.NewProjectile(base.projectile.position.X + 54f, base.projectile.position.Y + 52f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), base.mod.ProjectileType("ThornFluff1"), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
+					Projectile.NewProjectile(base.projectile.position.X + 54f, base.projectile.position.Y + 52f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), ModContent.ProjectileType<ThornFluff1>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
 				}
 				if (Main.rand.Next(100) == 0)
 				{
-					Projectile.NewProjectile(base.projectile.position.X + 30f, base.projectile.position.Y + 54f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), base.mod.ProjectileType("ThornFluff1"), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
+					Projectile.NewProjectile(base.projectile.position.X + 30f, base.projectile.position.Y + 54f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), ModContent.ProjectileType<ThornFluff1>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
 				}
 			}
 		}

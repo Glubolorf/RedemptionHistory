@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.NPCs.Bosses.OmegaOblit;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,8 +31,8 @@ namespace Redemption.NPCs
 			base.npc.buffImmune[31] = true;
 			base.npc.buffImmune[39] = true;
 			base.npc.buffImmune[24] = true;
-			base.npc.buffImmune[base.mod.BuffType("UltraFlameDebuff")] = true;
-			base.npc.buffImmune[base.mod.BuffType("EnjoymentDebuff")] = true;
+			base.npc.buffImmune[ModContent.BuffType<UltraFlameDebuff>()] = true;
+			base.npc.buffImmune[ModContent.BuffType<EnjoymentDebuff>()] = true;
 			base.npc.lavaImmune = true;
 			base.npc.noGravity = true;
 			base.npc.noTileCollide = true;
@@ -82,14 +84,14 @@ namespace Redemption.NPCs
 				if (base.npc.life > 7000 && this.timer >= 50)
 				{
 					Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-					int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 30f), new Vector2(10f, -4f), base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+					int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 30f), new Vector2(10f, -4f), ModContent.ProjectileType<OmegaBlast>(), 40, 3f, 255, 0f, 0f);
 					Main.projectile[p].netUpdate = true;
 					this.timer = 0;
 				}
 				if (base.npc.life <= 7000 && this.timer >= 30)
 				{
 					Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-					int p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 30f), new Vector2(10f, -4f), base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+					int p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 30f), new Vector2(10f, -4f), ModContent.ProjectileType<OmegaBlast>(), 40, 3f, 255, 0f, 0f);
 					Main.projectile[p2].netUpdate = true;
 					this.timer = 0;
 				}
@@ -99,14 +101,14 @@ namespace Redemption.NPCs
 				if (base.npc.life > 3500 && this.timer >= 50)
 				{
 					Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-					int p3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 30f), new Vector2(10f, -4f), base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+					int p3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 30f), new Vector2(10f, -4f), ModContent.ProjectileType<OmegaBlast>(), 40, 3f, 255, 0f, 0f);
 					Main.projectile[p3].netUpdate = true;
 					this.timer = 0;
 				}
 				if (base.npc.life <= 3500 && this.timer >= 30)
 				{
 					Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-					int p4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 30f), new Vector2(10f, -4f), base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+					int p4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 30f), new Vector2(10f, -4f), ModContent.ProjectileType<OmegaBlast>(), 40, 3f, 255, 0f, 0f);
 					Main.projectile[p4].netUpdate = true;
 					this.timer = 0;
 				}
@@ -174,8 +176,6 @@ namespace Redemption.NPCs
 		private float speed;
 
 		public int timer;
-
-		private int plasmaTimer;
 
 		private int aiCounter;
 	}

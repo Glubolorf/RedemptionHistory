@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -27,7 +28,7 @@ namespace Redemption.Items
 			base.item.maxStack = 1;
 			base.item.value = Item.buyPrice(0, 10, 0, 0);
 			base.item.rare = 6;
-			base.item.buffType = base.mod.BuffType("EvilJellyBuff");
+			base.item.buffType = ModContent.BuffType<EvilJellyBuff>();
 			base.item.buffTime = 7200;
 		}
 

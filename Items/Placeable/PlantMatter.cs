@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -25,7 +26,7 @@ namespace Redemption.Items.Placeable
 			base.item.useTime = 10;
 			base.item.useStyle = 1;
 			base.item.consumable = true;
-			base.item.createTile = base.mod.TileType("PlantMatterTile");
+			base.item.createTile = ModContent.TileType<PlantMatterTile>();
 		}
 
 		public override void ExtractinatorUse(ref int resultType, ref int resultStack)
@@ -35,7 +36,7 @@ namespace Redemption.Items.Placeable
 			{
 				if (Main.rand.Next(200) == 0)
 				{
-					resultType = base.mod.ItemType("AnglonicMysticBlossom");
+					resultType = ModContent.ItemType<AnglonicMysticBlossom>();
 					resultStack = 1;
 				}
 				else
@@ -71,7 +72,7 @@ namespace Redemption.Items.Placeable
 			}
 			if (num == 6)
 			{
-				resultType = base.mod.ItemType("Nightshade");
+				resultType = ModContent.ItemType<Nightshade>();
 				resultStack = 1;
 			}
 			if (num == 7)
@@ -106,7 +107,7 @@ namespace Redemption.Items.Placeable
 			}
 			if (num == 13)
 			{
-				resultType = base.mod.ItemType("NightshadeSeeds");
+				resultType = ModContent.ItemType<NightshadeSeeds>();
 				resultStack = 1;
 			}
 		}

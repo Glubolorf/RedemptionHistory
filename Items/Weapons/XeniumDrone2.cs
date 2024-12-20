@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Projectiles.Minions;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,9 +31,9 @@ namespace Redemption.Items.Weapons
 			base.item.value = Item.buyPrice(0, 10, 0, 0);
 			base.item.rare = 11;
 			base.item.UseSound = SoundID.Item44;
-			base.item.shoot = base.mod.ProjectileType("XeniumTurretMinion2");
+			base.item.shoot = ModContent.ProjectileType<XeniumTurretMinion2>();
 			base.item.shootSpeed = 8f;
-			base.item.buffType = base.mod.BuffType("XeniumTurretBuff2");
+			base.item.buffType = ModContent.BuffType<XeniumTurretBuff2>();
 			base.item.buffTime = 3600;
 		}
 

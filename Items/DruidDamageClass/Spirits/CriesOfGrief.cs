@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -32,7 +33,7 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 			base.item.noUseGraphic = true;
 			base.item.noMelee = true;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("CriesOfGriefPro2");
+			base.item.shoot = ModContent.ProjectileType<CriesOfGriefPro2>();
 			base.item.shootSpeed = 15f;
 			this.spiritWeapon = false;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 2;
@@ -116,7 +117,7 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 					Vector2 perturbedSpeed2 = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(15f));
 					float scale2 = 1f - Utils.NextFloat(Main.rand) * 0.3f;
 					perturbedSpeed2 *= scale2;
-					Projectile.NewProjectile(position.X, position.Y, perturbedSpeed2.X, perturbedSpeed2.Y, base.mod.ProjectileType("CriesOfGriefPro1"), damage * 2, knockBack, player.whoAmI, 0f, 0f);
+					Projectile.NewProjectile(position.X, position.Y, perturbedSpeed2.X, perturbedSpeed2.Y, ModContent.ProjectileType<CriesOfGriefPro1>(), damage * 2, knockBack, player.whoAmI, 0f, 0f);
 				}
 			}
 			return false;

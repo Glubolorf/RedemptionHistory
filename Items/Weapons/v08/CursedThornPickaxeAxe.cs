@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,7 +11,7 @@ namespace Redemption.Items.Weapons.v08
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Cursed Thorn Pickaxe Axe");
+			base.DisplayName.SetDefault("Sicklethorn Pickaxe Axe");
 			base.Tooltip.SetDefault("Right-clicking will shoot an illusion of the pickaxe axe, dealing magic damage");
 		}
 
@@ -28,9 +29,10 @@ namespace Redemption.Items.Weapons.v08
 			base.item.knockBack = 4f;
 			base.item.value = Item.buyPrice(0, 55, 0, 0);
 			base.item.UseSound = SoundID.Item1;
-			base.item.shoot = base.mod.ProjectileType("CursedThornPickaxeAxePro");
+			base.item.shoot = ModContent.ProjectileType<CursedThornPickaxeAxePro>();
 			base.item.shootSpeed = 15f;
 			base.item.autoReuse = true;
+			base.item.useTurn = true;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}
 
@@ -54,7 +56,7 @@ namespace Redemption.Items.Weapons.v08
 				base.item.useTime = 6;
 				base.item.pick = 0;
 				base.item.axe = 0;
-				base.item.shoot = base.mod.ProjectileType("CursedThornPickaxeAxePro");
+				base.item.shoot = ModContent.ProjectileType<CursedThornPickaxeAxePro>();
 				base.item.magic = true;
 			}
 			else

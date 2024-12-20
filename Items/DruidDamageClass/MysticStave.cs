@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.DruidProjectiles.Plants;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,9 +29,9 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.UseSound = SoundID.Item43;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
-			base.item.shoot = base.mod.ProjectileType("Seed18");
+			base.item.shoot = ModContent.ProjectileType<Seed18>();
 			base.item.shootSpeed = 11f;
-			this.defaultShoot = base.mod.ProjectileType("Seed18");
+			this.defaultShoot = ModContent.ProjectileType<Seed18>();
 			this.singleShotStave = false;
 			this.staveHoldOffset = new Vector2(4f, -10f);
 			this.staveLength = 48.2f;

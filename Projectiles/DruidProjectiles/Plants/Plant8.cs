@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.DruidProjectiles.Plants
 {
@@ -57,13 +58,13 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 			base.projectile.localAI[0] += 1f;
 			if (RedeHelper.ClosestNPC(ref this.target, 800f, base.projectile.Center, false, player.MinionAttackTargetNPC) && base.projectile.localAI[0] % 30f == 0f && base.projectile.frame >= 4)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 16f, base.projectile.position.Y + 8f), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center)), base.mod.ProjectileType("ShiverthornIcicle"), base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 16f, base.projectile.position.Y + 8f), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center)), ModContent.ProjectileType<ShiverthornIcicle>(), base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 0f);
 			}
 			if (base.projectile.localAI[0] % 40f == 0f && base.projectile.frame >= 4 && this.IsOnNativeTerrain)
 			{
 				for (int i = 0; i < 8; i++)
 				{
-					Projectile.NewProjectile(base.projectile.position.X + 16f, base.projectile.position.Y + 8f, (float)(-8 + Main.rand.Next(0, 16)), (float)(-10 + Main.rand.Next(0, 6)), base.mod.ProjectileType("ShiverthornIcicle2"), base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 0f);
+					Projectile.NewProjectile(base.projectile.position.X + 16f, base.projectile.position.Y + 8f, (float)(-8 + Main.rand.Next(0, 16)), (float)(-10 + Main.rand.Next(0, 6)), ModContent.ProjectileType<ShiverthornIcicle2>(), base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 0f);
 				}
 			}
 		}

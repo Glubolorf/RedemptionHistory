@@ -1,6 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.NPCs;
+using Redemption.NPCs.Bosses.KingSlayerIII;
+using Redemption.NPCs.Bosses.KingSlayerIIIClone;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -62,13 +65,13 @@ namespace Redemption.Projectiles.Minions
 				base.projectile.localAI[0] = 1f;
 			}
 			base.projectile.localAI[1] += 1f;
-			if (base.projectile.localAI[1] > 120f && base.projectile.localAI[1] < 500f && this.shotCount < 4 && RedeHelper.ClosestNPC(ref this.target, 1000f, base.projectile.Center, true, player.MinionAttackTargetNPC) && this.target.type != base.mod.NPCType("Android") && this.target.type != base.mod.NPCType("Apidroid") && this.target.type != base.mod.NPCType("PrototypeSilver") && this.target.type != base.mod.NPCType("SpaceKeeper") && this.target.type != base.mod.NPCType("SpacePaladin") && this.target.type != base.mod.NPCType("KSEntrance") && this.target.type != base.mod.NPCType("KSEntranceClone"))
+			if (base.projectile.localAI[1] > 120f && base.projectile.localAI[1] < 500f && this.shotCount < 4 && RedeHelper.ClosestNPC(ref this.target, 1000f, base.projectile.Center, true, player.MinionAttackTargetNPC) && this.target.type != ModContent.NPCType<Android>() && this.target.type != ModContent.NPCType<Apidroid>() && this.target.type != ModContent.NPCType<PrototypeSilver>() && this.target.type != ModContent.NPCType<SpaceKeeper>() && this.target.type != ModContent.NPCType<SpacePaladin>() && this.target.type != ModContent.NPCType<KSEntrance>() && this.target.type != ModContent.NPCType<KSEntranceClone>())
 			{
 				this.targetted = true;
 				if (base.projectile.localAI[1] % 30f == 0f)
 				{
 					Main.PlaySound(SoundID.Item74, (int)base.projectile.position.X, (int)base.projectile.position.Y);
-					Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center) + Utils.NextFloat(Main.rand, -20f, 20f)), base.mod.ProjectileType("SlayerMissilePro"), base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center) + Utils.NextFloat(Main.rand, -20f, 20f)), ModContent.ProjectileType<SlayerMissilePro>(), base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
 					this.shotCount++;
 				}
 			}

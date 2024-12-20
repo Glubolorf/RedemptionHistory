@@ -1,6 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.NPCs;
+using Redemption.NPCs.Bosses.KingSlayerIII;
+using Redemption.NPCs.Bosses.KingSlayerIIIClone;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -56,7 +59,7 @@ namespace Redemption.Projectiles.Minions
 			bool target = false;
 			for (int i = 0; i < 200; i++)
 			{
-				if (Main.npc[i].active && !Main.npc[i].dontTakeDamage && !Main.npc[i].friendly && Main.npc[i].lifeMax > 5 && !Main.npc[i].immortal && Main.npc[i].type != base.mod.NPCType("Android") && Main.npc[i].type != base.mod.NPCType("Apidroid") && Main.npc[i].type != base.mod.NPCType("PrototypeSilver") && Main.npc[i].type != base.mod.NPCType("SpaceKeeper") && Main.npc[i].type != base.mod.NPCType("SpacePaladin") && Main.npc[i].type != base.mod.NPCType("KSEntrance") && Main.npc[i].type != base.mod.NPCType("KSEntranceClone"))
+				if (Main.npc[i].active && !Main.npc[i].dontTakeDamage && !Main.npc[i].friendly && Main.npc[i].lifeMax > 5 && !Main.npc[i].immortal && Main.npc[i].type != ModContent.NPCType<Android>() && Main.npc[i].type != ModContent.NPCType<Apidroid>() && Main.npc[i].type != ModContent.NPCType<PrototypeSilver>() && Main.npc[i].type != ModContent.NPCType<SpaceKeeper>() && Main.npc[i].type != ModContent.NPCType<SpacePaladin>() && Main.npc[i].type != ModContent.NPCType<KSEntrance>() && Main.npc[i].type != ModContent.NPCType<KSEntranceClone>())
 				{
 					Vector2 newMove = Main.npc[i].Center - base.projectile.Center;
 					float distanceTo = (float)Math.Sqrt((double)(newMove.X * newMove.X + newMove.Y * newMove.Y));
@@ -111,7 +114,7 @@ namespace Redemption.Projectiles.Minions
 				int dustIndex2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 31, 0f, 0f, 100, default(Color), 1.2f);
 				Main.dust[dustIndex2].velocity *= 1.4f;
 			}
-			Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(0f, 0f), base.mod.ProjectileType("MissileBlast"), base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
+			Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(0f, 0f), ModContent.ProjectileType<MissileBlast>(), base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
 		}
 	}
 }

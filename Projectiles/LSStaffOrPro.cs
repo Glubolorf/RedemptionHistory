@@ -48,10 +48,6 @@ namespace Redemption.Projectiles
 			base.projectile.rotation = (float)Math.Atan2((double)base.projectile.velocity.Y, (double)base.projectile.velocity.X) + 1.57f;
 			base.projectile.localAI[0] += 1f;
 			base.projectile.alpha = (int)base.projectile.localAI[0] * 2;
-			if (base.projectile.localAI[0] > 130f)
-			{
-				base.projectile.Kill();
-			}
 		}
 	}
 }

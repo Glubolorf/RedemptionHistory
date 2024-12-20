@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -47,7 +48,7 @@ namespace Redemption.Items.Weapons.v08
 				dust.velocity = -player.DirectionTo(dust.position);
 				dust.noGravity = true;
 			}
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, base.mod.ProjectileType("BloodthirstArrow"), damage, knockBack, player.whoAmI, 0f, 0f);
+			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, ModContent.ProjectileType<BloodthirstArrow>(), damage, knockBack, player.whoAmI, 0f, 0f);
 			return false;
 		}
 	}

@@ -26,9 +26,9 @@ namespace Redemption.Items.Datalogs
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			player.GetModPlayer<RadarEffect>().effect = true;
-			if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[base.mod.ProjectileType("StarcruiserPointer")] < 1)
+			if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<StarcruiserPointer>()] < 1)
 			{
-				Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, -1f, base.mod.ProjectileType("StarcruiserPointer"), 0, 0f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, -1f, ModContent.ProjectileType<StarcruiserPointer>(), 0, 0f, Main.myPlayer, 0f, 0f);
 			}
 		}
 	}

@@ -1,4 +1,8 @@
 ﻿using System;
+using Redemption.Items.Armor;
+using Redemption.Items.Weapons;
+using Redemption.Items.Weapons.v08;
+using Redemption.NPCs.Bosses.InfectedEye;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -31,33 +35,33 @@ namespace Redemption.Items
 		{
 			get
 			{
-				return base.mod.NPCType("InfectedEye");
+				return ModContent.NPCType<InfectedEye>();
 			}
 		}
 
 		public override void OpenBossBag(Player player)
 		{
-			player.QuickSpawnItem(base.mod.ItemType("Xenomite"), Main.rand.Next(4, 8));
+			player.QuickSpawnItem(ModContent.ItemType<Xenomite>(), Main.rand.Next(4, 8));
 			if (Main.rand.Next(20) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("TiedsMask"), 1);
-				player.QuickSpawnItem(base.mod.ItemType("TiedsSuit"), 1);
-				player.QuickSpawnItem(base.mod.ItemType("TiedsLeggings"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<TiedsMask>(), 1);
+				player.QuickSpawnItem(ModContent.ItemType<TiedsSuit>(), 1);
+				player.QuickSpawnItem(ModContent.ItemType<TiedsLeggings>(), 1);
 			}
 			if (Main.rand.Next(2) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("XenomiteStaff"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<XenomiteStaff>(), 1);
 			}
 			if (Main.rand.Next(3) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("TheInfectedEye"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<TheInfectedEye>(), 1);
 			}
 			if (Main.rand.Next(3) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("InfectousJavelin"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<InfectousJavelin>(), 1);
 			}
-			player.QuickSpawnItem(base.mod.ItemType("AntiCrystallizer"), 1);
-			player.QuickSpawnItem(base.mod.ItemType("AntiXenomiteApplier"), Main.rand.Next(2, 6));
+			player.QuickSpawnItem(ModContent.ItemType<AntiCrystallizer>(), 1);
+			player.QuickSpawnItem(ModContent.ItemType<AntiXenomiteApplier>(), Main.rand.Next(2, 6));
 		}
 	}
 }

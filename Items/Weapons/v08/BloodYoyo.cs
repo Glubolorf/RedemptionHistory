@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -24,7 +25,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.knockBack = 3f;
 			base.item.value = Item.buyPrice(1, 0, 0, 0);
 			base.item.autoReuse = false;
-			base.item.shoot = base.mod.ProjectileType("BloodYoyoPro");
+			base.item.shoot = ModContent.ProjectileType<BloodYoyoPro>();
 			base.item.noUseGraphic = true;
 			base.item.noMelee = true;
 			base.item.UseSound = SoundID.Item1;

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Dusts;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
@@ -55,18 +56,18 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 		{
 			for (int i = 0; i < 25; i++)
 			{
-				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, base.mod.DustType("GloopDust"), 0f, 0f, 100, default(Color), 1.2f);
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, ModContent.DustType<GloopDust>(), 0f, 0f, 100, default(Color), 1.2f);
 				Main.dust[dustIndex].velocity *= 1.4f;
 			}
-			Projectile.NewProjectile(base.projectile.position.X + 10f, base.projectile.position.Y + 18f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("GloopPro1"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
-			Projectile.NewProjectile(base.projectile.position.X + 10f, base.projectile.position.Y + 18f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("GloopPro1"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
+			Projectile.NewProjectile(base.projectile.position.X + 10f, base.projectile.position.Y + 18f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), ModContent.ProjectileType<GloopPro1>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
+			Projectile.NewProjectile(base.projectile.position.X + 10f, base.projectile.position.Y + 18f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), ModContent.ProjectileType<GloopPro1>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 			if (Main.rand.Next(2) == 0)
 			{
-				Projectile.NewProjectile(base.projectile.position.X + 10f, base.projectile.position.Y + 18f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("GloopPro1"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(base.projectile.position.X + 10f, base.projectile.position.Y + 18f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), ModContent.ProjectileType<GloopPro1>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 			}
 			if (Main.rand.Next(2) == 0)
 			{
-				Projectile.NewProjectile(base.projectile.position.X + 10f, base.projectile.position.Y + 18f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("GloopPro1"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(base.projectile.position.X + 10f, base.projectile.position.Y + 18f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), ModContent.ProjectileType<GloopPro1>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 			}
 		}
 

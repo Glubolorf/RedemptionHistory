@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Redemption.Items.DruidDamageClass;
+using Redemption.Projectiles.DruidProjectiles.Plants;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -50,7 +52,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 				}
 			}
 			Player player = Main.player[base.projectile.owner];
-			if (!player.HasBuff(base.mod.BuffType("NatureGuardian18Buff")))
+			if (!player.HasBuff(ModContent.BuffType<NatureGuardian18Buff>()))
 			{
 				base.projectile.Kill();
 			}
@@ -76,21 +78,21 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 					Main.PlaySound(SoundID.Item105, (int)base.projectile.position.X, (int)base.projectile.position.Y);
 					for (int j = -4; j <= 4; j++)
 					{
-						Projectile.NewProjectile(base.projectile.Center, 12f * Utils.RotatedBy(Vector2.UnitX, 0.7853981633974483 * (double)j, default(Vector2)), base.mod.ProjectileType("HerbOfLifePro"), 40, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(base.projectile.Center, 12f * Utils.RotatedBy(Vector2.UnitX, 0.7853981633974483 * (double)j, default(Vector2)), ModContent.ProjectileType<HerbOfLifePro>(), 40, 3f, Main.myPlayer, 0f, 0f);
 					}
 					for (int k = -4; k <= 4; k++)
 					{
-						Projectile.NewProjectile(base.projectile.Center, 8f * Utils.RotatedBy(Vector2.UnitX, 0.7853981633974483 * (double)k, default(Vector2)), base.mod.ProjectileType("HerbOfLifePro"), 40, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(base.projectile.Center, 8f * Utils.RotatedBy(Vector2.UnitX, 0.7853981633974483 * (double)k, default(Vector2)), ModContent.ProjectileType<HerbOfLifePro>(), 40, 3f, Main.myPlayer, 0f, 0f);
 					}
 				}
 				if (Main.rand.Next(5) == 0)
 				{
 					for (int l = 0; l < 6; l++)
 					{
-						Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-12 + Main.rand.Next(0, 24)), (float)(-12 + Main.rand.Next(0, 24)), base.mod.ProjectileType("CreationRosePetal"), 40, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-12 + Main.rand.Next(0, 24)), (float)(-12 + Main.rand.Next(0, 24)), ModContent.ProjectileType<CreationRosePetal>(), 40, 3f, Main.myPlayer, 0f, 0f);
 					}
 				}
-				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2((float)(-12 + Main.rand.Next(0, 24)), (float)(-12 + Main.rand.Next(0, 24))), base.mod.ProjectileType("CreationRosePetal"), 40, 3f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2((float)(-12 + Main.rand.Next(0, 24)), (float)(-12 + Main.rand.Next(0, 24))), ModContent.ProjectileType<CreationRosePetal>(), 40, 3f, Main.myPlayer, 0f, 0f);
 			}
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
 			if (player.dead)

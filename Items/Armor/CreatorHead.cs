@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Redemption.Items.DruidDamageClass;
+using Redemption.Projectiles.DruidProjectiles;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -32,13 +33,13 @@ namespace Redemption.Items.Armor
 			DruidDamagePlayer.ModPlayer(player).druidDamage += 0.09f;
 			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
 			player.statManaMax2 += 60;
-			player.lifeRegen += 10;
-			player.manaRegen += 10;
+			player.lifeRegen += 5;
+			player.manaRegen += 5;
 		}
 
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
-			return body.type == base.mod.ItemType("CreatorBody") && legs.type == base.mod.ItemType("CreatorLegs");
+			return body.type == ModContent.ItemType<CreatorBody>() && legs.type == ModContent.ItemType<CreatorLegs>();
 		}
 
 		public override void ArmorSetShadows(Player player)
@@ -63,9 +64,9 @@ namespace Redemption.Items.Armor
 		{
 			player.setBonus = "You are surrounded by an aura of Nature, buffing any player within it and debuffing enemies.";
 			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).creationBonus = true;
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().creationBonus && player.ownedProjectileCounts[base.mod.ProjectileType("NatureRing")] == 0)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().creationBonus && player.ownedProjectileCounts[ModContent.ProjectileType<NatureRing>()] == 0)
 			{
-				Projectile.NewProjectile(player.position, Vector2.Zero, base.mod.ProjectileType("NatureRing"), 100, 0f, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(player.position, Vector2.Zero, ModContent.ProjectileType<NatureRing>(), 100, 0f, player.whoAmI, 0f, 0f);
 			}
 		}
 

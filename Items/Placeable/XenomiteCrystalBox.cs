@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable
@@ -19,7 +20,7 @@ namespace Redemption.Items.Placeable
 			base.item.useTime = 10;
 			base.item.autoReuse = true;
 			base.item.consumable = true;
-			base.item.createTile = base.mod.TileType("XenomiteCrystalBoxTile");
+			base.item.createTile = ModContent.TileType<XenomiteCrystalBoxTile>();
 			base.item.width = 28;
 			base.item.height = 34;
 			base.item.rare = 4;

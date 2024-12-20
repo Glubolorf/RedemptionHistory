@@ -50,7 +50,7 @@ namespace Redemption.NPCs.Minibosses.MossyGoliath
 					this.damage = 40;
 				}
 				base.projectile.velocity.X = 0f;
-				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.position.Y + 66f), new Vector2(0f, -4f), base.mod.ProjectileType("MossGoliath_nom"), base.projectile.damage + this.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.position.Y + 66f), new Vector2(0f, -4f), ModContent.ProjectileType<MossGoliath_nom>(), base.projectile.damage + this.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
 			}
 		}
 

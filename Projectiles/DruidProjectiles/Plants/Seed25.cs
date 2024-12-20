@@ -48,7 +48,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			Projectile.NewProjectile(base.projectile.Top, base.projectile.velocity, base.mod.ProjectileType("ScarletBush"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
+			Projectile.NewProjectile(base.projectile.Top, base.projectile.velocity, ModContent.ProjectileType<ScarletBush>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 			return true;
 		}
 

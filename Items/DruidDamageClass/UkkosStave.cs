@@ -1,7 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.DruidProjectiles.Stave;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
@@ -27,9 +29,9 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.UseSound = SoundID.Item43;
 			base.item.noMelee = true;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("UkkosLightning");
+			base.item.shoot = ModContent.ProjectileType<UkkosLightning>();
 			base.item.shootSpeed = 0f;
-			this.defaultShoot = base.mod.ProjectileType("UkkosLightning");
+			this.defaultShoot = ModContent.ProjectileType<UkkosLightning>();
 			this.singleShotStave = false;
 			this.staveHoldOffset = new Vector2(4f, -10f);
 			this.staveLength = 76.2f;
@@ -49,7 +51,7 @@ namespace Redemption.Items.DruidDamageClass
 				base.item.useTime = 25;
 				base.item.useAnimation = 25;
 				base.item.UseSound = base.mod.GetLegacySoundSlot(2, "Sounds/Item/Zap2");
-				base.item.shoot = base.mod.ProjectileType("UkkosLightning2");
+				base.item.shoot = ModContent.ProjectileType<UkkosLightning2>();
 				base.item.shootSpeed = 10f;
 			}
 			else
@@ -58,7 +60,7 @@ namespace Redemption.Items.DruidDamageClass
 				base.item.useTime = 40;
 				base.item.useAnimation = 40;
 				base.item.UseSound = SoundID.Item1;
-				base.item.shoot = base.mod.ProjectileType("UkkosLightning");
+				base.item.shoot = ModContent.ProjectileType<UkkosLightning>();
 				base.item.shootSpeed = 0f;
 			}
 			return NPC.downedMoonlord;

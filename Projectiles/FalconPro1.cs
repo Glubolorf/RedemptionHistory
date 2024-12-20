@@ -7,6 +7,14 @@ namespace Redemption.Projectiles
 {
 	public class FalconPro1 : ModProjectile
 	{
+		public override string Texture
+		{
+			get
+			{
+				return "Redemption/Empty";
+			}
+		}
+
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Mini Earthquake Starter");
@@ -21,7 +29,7 @@ namespace Redemption.Projectiles
 			base.projectile.friendly = false;
 			base.projectile.tileCollide = true;
 			base.projectile.ignoreWater = true;
-			base.projectile.timeLeft = 10;
+			base.projectile.timeLeft = 20;
 			base.projectile.alpha = 255;
 		}
 
@@ -33,7 +41,6 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			base.projectile.localAI[0] += 1f;
 			Projectile projectile = base.projectile;
 			projectile.velocity.Y = projectile.velocity.Y + 0.75f;
 			base.projectile.velocity.X = 0f;
@@ -41,7 +48,10 @@ namespace Redemption.Projectiles
 
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			Projectile.NewProjectile(base.projectile.Top, base.projectile.velocity, base.mod.ProjectileType("FalconPro2"), base.projectile.damage, 7f, base.projectile.owner, 0f, 1f);
+			if (Main.myPlayer == base.projectile.owner)
+			{
+				Projectile.NewProjectile(base.projectile.Top, base.projectile.velocity, ModContent.ProjectileType<FalconPro2>(), base.projectile.damage, 7f, base.projectile.owner, 0f, 0f);
+			}
 			return true;
 		}
 	}

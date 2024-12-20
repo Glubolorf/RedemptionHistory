@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -49,7 +50,7 @@ namespace Redemption.Projectiles.Minions
 			}
 			Player player = Main.player[base.projectile.owner];
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
-			if (player.dead || !player.HasBuff(base.mod.BuffType("CorruptedCopterBuff")))
+			if (player.dead || !player.HasBuff(ModContent.BuffType<CorruptedCopterBuff>()))
 			{
 				modPlayer.corruptedCopter = false;
 				base.projectile.Kill();
@@ -86,7 +87,7 @@ namespace Redemption.Projectiles.Minions
 				if (Main.rand.Next(400) == 0)
 				{
 					Main.PlaySound(SoundID.Item74, (int)base.projectile.position.X, (int)base.projectile.position.Y);
-					int p = Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(0f, -10f), base.mod.ProjectileType("OmegaMissileMini"), 180, 6f, Main.myPlayer, 0f, 0f);
+					int p = Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(0f, -10f), ModContent.ProjectileType<OmegaMissileMini>(), 180, 6f, Main.myPlayer, 0f, 0f);
 					Main.projectile[p].netUpdate = true;
 				}
 				if (Main.rand.Next(100) == 0 && this.timer == 0)

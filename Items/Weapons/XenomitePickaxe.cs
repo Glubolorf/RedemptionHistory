@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
+using Redemption.Dusts;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -58,13 +60,13 @@ namespace Redemption.Items.Weapons
 		{
 			if (Main.rand.Next(5) == 0)
 			{
-				Dust.NewDust(new Vector2((float)hitbox.X, (float)hitbox.Y), hitbox.Width, hitbox.Height, base.mod.DustType("XenoDust"), 0f, 0f, 0, default(Color), 1f);
+				Dust.NewDust(new Vector2((float)hitbox.X, (float)hitbox.Y), hitbox.Width, hitbox.Height, ModContent.DustType<XenoDust>(), 0f, 0f, 0, default(Color), 1f);
 			}
 		}
 
 		public override void HoldItem(Player player)
 		{
-			player.AddBuff(base.mod.BuffType("XenomiteDebuff"), Main.rand.Next(10, 20), true);
+			player.AddBuff(ModContent.BuffType<XenomiteDebuff>(), Main.rand.Next(10, 20), true);
 		}
 
 		public static short customGlowMask;

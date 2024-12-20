@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -42,7 +43,7 @@ namespace Redemption.Tiles.LabDeco
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 32, base.mod.ItemType("XenomiteShard"), Main.rand.Next(2, 8), false, 0, false, false);
+			Item.NewItem(i * 16, j * 16, 16, 32, ModContent.ItemType<XenomiteShard>(), Main.rand.Next(2, 8), false, 0, false, false);
 		}
 	}
 }

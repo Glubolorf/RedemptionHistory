@@ -1,6 +1,11 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
+using Redemption.Items;
+using Redemption.Items.Armor.PostML;
+using Redemption.Items.Placeable;
+using Redemption.Items.Weapons.v08;
 using Redemption.NPCs.Bosses.EaglecrestGolem;
 using Terraria;
 using Terraria.ID;
@@ -33,7 +38,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 			base.npc.noGravity = true;
 			base.npc.lavaImmune = true;
 			base.npc.boss = true;
-			this.bossBag = base.mod.ItemType("AkkaBag");
+			this.bossBag = ModContent.ItemType<AkkaBag>();
 		}
 
 		public override void BossLoot(ref string name, ref int potionType)
@@ -46,11 +51,17 @@ namespace Redemption.NPCs.Bosses.Thorn
 			}
 		}
 
+		public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+		{
+			damage *= 0.5;
+			return true;
+		}
+
 		public override void NPCLoot()
 		{
 			if (Main.rand.Next(10) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("AkanKirvesTrophy"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<AkanKirvesTrophy>(), 1, false, 0, false, false);
 			}
 			if (Main.expertMode)
 			{
@@ -59,20 +70,20 @@ namespace Redemption.NPCs.Bosses.Thorn
 			}
 			if (Main.rand.Next(7) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("AkkaMask"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<AkkaMask>(), 1, false, 0, false, false);
 			}
 			int num = Main.rand.Next(2);
 			if (num == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CursedThornBow2"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<CursedThornBow2>(), 1, false, 0, false, false);
 			}
 			if (num == 1)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CursedThornFlail"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<CursedThornFlail>(), 1, false, 0, false, false);
 			}
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("TuhonAura"), 1, false, 0, false, false);
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("Verenhimo"), 1, false, 0, false, false);
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CursedThorns"), Main.rand.Next(9, 18), false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<TuhonAura>(), 1, false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<Verenhimo>(), 1, false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<CursedThorns>(), Main.rand.Next(9, 18), false, 0, false, false);
 		}
 
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
@@ -129,7 +140,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 				}
 			}
 			Vector2 EarthProtectPos = new Vector2((player.Center.X > base.npc.Center.X) ? (player.Center.X - 500f) : (player.Center.X + 500f), player.Center.Y - 100f);
-			if (RedeUkkoAkka.TAbubbles && NPC.AnyNPCs(base.mod.NPCType("Ukko")))
+			if (RedeUkkoAkka.TAbubbles && NPC.AnyNPCs(ModContent.NPCType<Ukko>()))
 			{
 				if (base.npc.ai[0] == 0f)
 				{
@@ -164,7 +175,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 					{
 						for (int j = 0; j < 2; j++)
 						{
-							int p = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, Utils.NextFloat(Main.rand, -16f, 16f), Utils.NextFloat(Main.rand, -16f, 16f), base.mod.ProjectileType("AkkaBubble"), 26, 1f, 255, 0f, 0f);
+							int p = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, Utils.NextFloat(Main.rand, -16f, 16f), Utils.NextFloat(Main.rand, -16f, 16f), ModContent.ProjectileType<AkkaBubble>(), 26, 1f, 255, 0f, 0f);
 							Main.projectile[p].netUpdate = true;
 						}
 					}
@@ -179,7 +190,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 			}
 			else
 			{
-				if (RedeUkkoAkka.TAearthProtection && NPC.AnyNPCs(base.mod.NPCType("Ukko")))
+				if (RedeUkkoAkka.TAearthProtection && NPC.AnyNPCs(ModContent.NPCType<Ukko>()))
 				{
 					int dustIndex = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 163, 0f, 0f, 100, default(Color), 1.5f);
 					Main.dust[dustIndex].velocity *= 1.4f;
@@ -233,7 +244,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 						base.npc.ai[2] += 1f;
 						if (base.npc.ai[2] % 6f == 0f && base.npc.ai[2] < 60f)
 						{
-							int p2 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, Utils.NextFloat(Main.rand, -8f, 8f), Utils.NextFloat(Main.rand, -8f, 8f), base.mod.ProjectileType("AkkaPoisonBubble"), 20, 1f, 255, 0f, 0f);
+							int p2 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, Utils.NextFloat(Main.rand, -8f, 8f), Utils.NextFloat(Main.rand, -8f, 8f), ModContent.ProjectileType<AkkaPoisonBubble>(), 20, 1f, 255, 0f, 0f);
 							Main.projectile[p2].netUpdate = true;
 						}
 						if (base.npc.ai[2] >= 65f)
@@ -259,7 +270,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 							{
 								Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Quake1").WithVolume(1.2f).WithPitchVariance(0.1f), -1, -1);
 							}
-							int p3 = Projectile.NewProjectile(player.Center.X, player.Center.Y - 1000f, 0f, 0f, base.mod.ProjectileType("AkkaIslandSummoner"), 66, 1f, Main.myPlayer, 0f, 0f);
+							int p3 = Projectile.NewProjectile(player.Center.X, player.Center.Y - 1000f, 0f, 0f, ModContent.ProjectileType<AkkaIslandSummoner>(), 66, 1f, Main.myPlayer, 0f, 0f);
 							Main.projectile[p3].netUpdate = true;
 						}
 						if (base.npc.ai[2] >= 200f)
@@ -285,9 +296,9 @@ namespace Redemption.NPCs.Bosses.Thorn
 							this.TremorTimer++;
 							if (this.TremorTimer > 50 && this.TremorTimer % 40 == 0)
 							{
-								int p4 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, base.mod.ProjectileType("AkkaTremor"), 13, 1f, 255, 0f, 0f);
+								int p4 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<AkkaTremor>(), 13, 1f, 255, 0f, 0f);
 								Main.projectile[p4].netUpdate = true;
-								player.AddBuff(base.mod.BuffType("StunnedDebuff"), 60, true);
+								player.AddBuff(ModContent.BuffType<StunnedDebuff>(), 60, true);
 							}
 						}
 						if (base.npc.ai[2] >= 180f)
@@ -313,7 +324,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 						{
 							Dust dust = Dust.NewDustDirect(base.npc.position, base.npc.width, base.npc.height, 78, 0f, 0f, 100, default(Color), 2f);
 							dust.velocity = -base.npc.DirectionTo(dust.position);
-							base.npc.AddBuff(base.mod.BuffType("BarkskinBuff"), 3600, false);
+							base.npc.AddBuff(ModContent.BuffType<BarkskinBuff>(), 3600, false);
 						}
 						if (base.npc.ai[2] >= 90f)
 						{
@@ -335,13 +346,13 @@ namespace Redemption.NPCs.Bosses.Thorn
 						base.npc.ai[2] += 1f;
 						if (base.npc.ai[2] == 5f)
 						{
-							int p5 = Projectile.NewProjectile(base.npc.Center.X, base.npc.position.Y - 4f, 0f, -10f, base.mod.ProjectileType("Moonbeam"), 0, 0f, Main.myPlayer, 0f, 0f);
+							int p5 = Projectile.NewProjectile(base.npc.Center.X, base.npc.position.Y - 4f, 0f, -10f, ModContent.ProjectileType<Moonbeam>(), 0, 0f, Main.myPlayer, 0f, 0f);
 							Main.projectile[p5].hostile = false;
 							Main.projectile[p5].netUpdate = true;
 						}
 						if (base.npc.ai[2] == 25f)
 						{
-							int p6 = Projectile.NewProjectile(player.Center.X, player.Center.Y - 1000f, 0f, 10f, base.mod.ProjectileType("Moonbeam"), 33, 1f, Main.myPlayer, 0f, 0f);
+							int p6 = Projectile.NewProjectile(player.Center.X, player.Center.Y - 1000f, 0f, 10f, ModContent.ProjectileType<Moonbeam>(), 33, 1f, Main.myPlayer, 0f, 0f);
 							Main.projectile[p6].netUpdate = true;
 						}
 						if (base.npc.ai[2] >= 70f)
@@ -363,7 +374,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 						base.npc.ai[2] += 1f;
 						if (base.npc.ai[2] % 10f == 0f && base.npc.ai[2] > 40f && base.npc.ai[2] < 160f)
 						{
-							int p7 = Projectile.NewProjectile(player.Center.X + (float)Main.rand.Next(-300, 300), player.Center.Y + (float)Main.rand.Next(-300, 0), 0f, 0f, base.mod.ProjectileType("AkkaSeed"), 30, 3f, Main.myPlayer, 0f, 0f);
+							int p7 = Projectile.NewProjectile(player.Center.X + (float)Main.rand.Next(-300, 300), player.Center.Y + (float)Main.rand.Next(-300, 0), 0f, 0f, ModContent.ProjectileType<AkkaSeed>(), 30, 3f, Main.myPlayer, 0f, 0f);
 							Main.projectile[p7].netUpdate = true;
 						}
 						if (base.npc.ai[2] >= 200f)
@@ -385,7 +396,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 						base.npc.ai[2] += 1f;
 						if (base.npc.ai[2] % 10f == 0f && base.npc.ai[2] > 20f && base.npc.ai[2] < 200f)
 						{
-							int p8 = Projectile.NewProjectile(base.npc.Center.X + 50f, base.npc.Center.Y + 50f, 0f, 0f, base.mod.ProjectileType("AkkaHealingSpirit"), 0, 0f, Main.myPlayer, 0f, 0f);
+							int p8 = Projectile.NewProjectile(base.npc.Center.X + 50f, base.npc.Center.Y + 50f, 0f, 0f, ModContent.ProjectileType<AkkaHealingSpirit>(), 0, 0f, Main.myPlayer, 0f, 0f);
 							Main.projectile[p8].netUpdate = true;
 						}
 						if (base.npc.ai[2] >= 260f)
@@ -404,7 +415,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 							float Speed = 16f;
 							Vector2 vector8 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 							int damage = 46;
-							int type = base.mod.ProjectileType("CursedThornPro6");
+							int type = ModContent.ProjectileType<CursedThornPro6>();
 							float rotation = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
 							int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
 							Main.projectile[num54].netUpdate = true;
@@ -423,7 +434,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 							base.npc.ai[2] += 1f;
 							if (base.npc.ai[2] == 30f)
 							{
-								int p9 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, base.mod.ProjectileType("AkkaEarthbind"), 0, 0f, Main.myPlayer, 0f, 0f);
+								int p9 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<AkkaEarthbind>(), 0, 0f, Main.myPlayer, 0f, 0f);
 								Main.projectile[p9].netUpdate = true;
 							}
 							if (base.npc.ai[2] >= 70f)

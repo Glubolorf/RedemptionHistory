@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.NPCs.LabNPCs.New;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -48,13 +49,13 @@ namespace Redemption.Tiles.LabDeco
 			{
 				if (Main.netMode == 0)
 				{
-					if (!RedeWorld.labSafe && !NPC.AnyNPCs(base.mod.NPCType("LabSentryTurretLeg")))
+					if (!RedeWorld.labSafe && !NPC.AnyNPCs(ModContent.NPCType<LabSentryTurretLeg>()))
 					{
 						Main.tile[i, j];
 						i *= 16;
 						j++;
 						j *= 16;
-						int k = NPC.NewNPC(i + 8, j + 8, base.mod.NPCType("LabSentryTurretLeg"), 0, 0f, 0f, 0f, 0f, 255);
+						int k = NPC.NewNPC(i + 8, j + 8, ModContent.NPCType<LabSentryTurretLeg>(), 0, 0f, 0f, 0f, 0f, 255);
 						if (Main.netMode == 2)
 						{
 							NetMessage.SendData(23, -1, -1, null, k, 0f, 0f, 0f, 0, 0, 0);
@@ -62,7 +63,7 @@ namespace Redemption.Tiles.LabDeco
 						}
 					}
 				}
-				else if (!RedeWorld.labSafe && !NPC.AnyNPCs(base.mod.NPCType("LabSentryTurretLeg")))
+				else if (!RedeWorld.labSafe && !NPC.AnyNPCs(ModContent.NPCType<LabSentryTurretLeg>()))
 				{
 					ModPacket packet = base.mod.GetPacket(256);
 					packet.Write(20);

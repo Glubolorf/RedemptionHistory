@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.LabThings;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -27,7 +28,7 @@ namespace Redemption.Tiles.LabDeco
 			TileObjectData.newTile.CoordinatePadding = 2;
 			TileObjectData.newTile.AnchorBottom = new AnchorData(15, TileObjectData.newTile.Width, 0);
 			TileObjectData.addTile((int)base.Type);
-			this.drop = base.mod.ItemType("RadiationPill");
+			this.drop = ModContent.ItemType<RadiationPill>();
 			this.dustType = 226;
 			this.minPick = 0;
 			this.mineResist = 1f;
@@ -46,7 +47,7 @@ namespace Redemption.Tiles.LabDeco
 			Player localPlayer = Main.LocalPlayer;
 			localPlayer.noThrow = 2;
 			localPlayer.showItemIcon = true;
-			localPlayer.showItemIcon2 = base.mod.ItemType("RadiationPill");
+			localPlayer.showItemIcon2 = ModContent.ItemType<RadiationPill>();
 		}
 
 		public override bool NewRightClick(int i, int j)

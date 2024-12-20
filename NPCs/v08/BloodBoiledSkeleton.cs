@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -34,7 +35,7 @@ namespace Redemption.NPCs.v08
 		{
 			if (Main.netMode != 1 && base.npc.life <= 0)
 			{
-				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("LostSoul3"), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<LostSoul3>(), 0, 0f, 0f, 0f, 0f, 255);
 				for (int i = 0; i < 35; i++)
 				{
 					int dustIndex = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 5, 0f, 0f, 100, default(Color), 4f);
@@ -42,27 +43,27 @@ namespace Redemption.NPCs.v08
 				}
 				for (int j = 0; j < 10; j++)
 				{
-					Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("Blood"), 40, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), ModContent.ProjectileType<Blood>(), 40, 3f, 255, 0f, 0f);
 				}
 				for (int k = 0; k < 4; k++)
 				{
-					Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("BBBone1"), 40, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), ModContent.ProjectileType<BBBone1>(), 40, 3f, 255, 0f, 0f);
 				}
 				for (int l = 0; l < 4; l++)
 				{
-					Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("BBBone2"), 40, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), ModContent.ProjectileType<BBBone2>(), 40, 3f, 255, 0f, 0f);
 				}
-				Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("BBBone3"), 40, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), ModContent.ProjectileType<BBBone3>(), 40, 3f, 255, 0f, 0f);
 			}
 			if (Main.netMode != 1)
 			{
 				if (Main.rand.Next(5) == 0)
 				{
-					Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("BBBone1"), 40, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), ModContent.ProjectileType<BBBone1>(), 40, 3f, 255, 0f, 0f);
 				}
 				if (Main.rand.Next(5) == 0)
 				{
-					Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("BBBone2"), 40, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), ModContent.ProjectileType<BBBone2>(), 40, 3f, 255, 0f, 0f);
 				}
 			}
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
@@ -99,9 +100,9 @@ namespace Redemption.NPCs.v08
 			{
 				this.hop = true;
 			}
-			if (Main.rand.Next(300) == 0 && NPC.CountNPCS(base.mod.NPCType("GrandLarva")) <= 1)
+			if (Main.rand.Next(300) == 0 && NPC.CountNPCS(ModContent.NPCType<GrandLarva>()) <= 1)
 			{
-				int minion = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("GrandLarva"), 0, 0f, 0f, 0f, 0f, 255);
+				int minion = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<GrandLarva>(), 0, 0f, 0f, 0f, 0f, 255);
 				Main.npc[minion].netUpdate = true;
 			}
 		}
@@ -119,7 +120,7 @@ namespace Redemption.NPCs.v08
 			{
 				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 				int num214 = hopAni.Height / 1;
-				int y6 = num214 * this.hopFrame;
+				int y6 = 0;
 				Main.spriteBatch.Draw(hopAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, hopAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)hopAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
@@ -127,7 +128,7 @@ namespace Redemption.NPCs.v08
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if ((double)spawnInfo.spawnTileY >= Main.rockLayer || !Main.bloodMoon || NPC.AnyNPCs(base.mod.NPCType("BloodBoiledSkeleton")) || !NPC.downedMoonlord)
+			if ((double)spawnInfo.spawnTileY >= Main.rockLayer || !Main.bloodMoon || NPC.AnyNPCs(ModContent.NPCType<BloodBoiledSkeleton>()) || !NPC.downedMoonlord)
 			{
 				return 0f;
 			}
@@ -135,9 +136,5 @@ namespace Redemption.NPCs.v08
 		}
 
 		private bool hop;
-
-		private int hopFrame;
-
-		private int hopCounter;
 	}
 }

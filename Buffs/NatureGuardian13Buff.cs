@@ -1,5 +1,6 @@
 ﻿using System;
 using Redemption.Items.DruidDamageClass;
+using Redemption.Projectiles.DruidProjectiles.Stave.Guardians;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -20,11 +21,11 @@ namespace Redemption.Buffs
 			player.GetModPlayer<RedePlayer>();
 			player.statDefense += 18;
 			player.buffImmune[156] = true;
-			player.manaRegen += 10;
+			player.manaRegen += 4;
 			player.statManaMax2 += 40;
 			player.statLifeMax2 += 40;
 			RedePlayer modPlayer2 = player.GetModPlayer<RedePlayer>();
-			if (player.ownedProjectileCounts[base.mod.ProjectileType("NatureGuardian13")] > 0)
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<NatureGuardian13>()] > 0)
 			{
 				modPlayer2.natureGuardian13 = true;
 			}

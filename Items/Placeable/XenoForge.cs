@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable
@@ -24,7 +25,7 @@ namespace Redemption.Items.Placeable
 			base.item.consumable = true;
 			base.item.value = 1000;
 			base.item.rare = 7;
-			base.item.createTile = base.mod.TileType("XenoForgeTile");
+			base.item.createTile = ModContent.TileType<XenoForgeTile>();
 		}
 
 		public override void AddRecipes()

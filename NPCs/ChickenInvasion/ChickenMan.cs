@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Redemption.ChickenArmy;
+using Redemption.Items;
+using Redemption.Items.Weapons.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -44,7 +46,7 @@ namespace Redemption.NPCs.ChickenInvasion
 		{
 			if (RedeWorld.downedPatientZero && Main.rand.Next(1200) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ChickLauncher"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<ChickLauncher>(), 1, false, 0, false, false);
 			}
 			if (ChickWorld.chickArmy)
 			{
@@ -64,7 +66,7 @@ namespace Redemption.NPCs.ChickenInvasion
 				}
 				if (base.npc.FindBuffIndex(24) != -1)
 				{
-					Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("FriedChicken"), Main.rand.Next(1, 2), false, 0, false, false);
+					Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<FriedChicken>(), Main.rand.Next(1, 2), false, 0, false, false);
 				}
 			}
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);

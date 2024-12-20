@@ -30,15 +30,15 @@ namespace Redemption.Items.DruidDamageClass
 				int maxAccessoryIndex = 5 + player.extraAccessorySlots;
 				for (int i = 3; i < 3 + maxAccessoryIndex; i++)
 				{
-					if (slot != i && player.armor[i].type == base.mod.ItemType("DruidsCharmDawn"))
+					if (slot != i && player.armor[i].type == ModContent.ItemType<DruidsCharmDawn>())
 					{
 						return false;
 					}
-					if (slot != i && player.armor[i].type == base.mod.ItemType("DruidsCharmMidnight"))
+					if (slot != i && player.armor[i].type == ModContent.ItemType<DruidsCharmMidnight>())
 					{
 						return false;
 					}
-					if (slot != i && player.armor[i].type == base.mod.ItemType("DruidsCharm"))
+					if (slot != i && player.armor[i].type == ModContent.ItemType<DruidsCharm>())
 					{
 						return false;
 					}

@@ -10,7 +10,7 @@ namespace Redemption.Items.Datalogs
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Holokey");
-			base.Tooltip.SetDefault("'Unlocks Holochests found in a crashed spaceship'\nWill not work if more than one is in your inventory");
+			base.Tooltip.SetDefault("'Unlocks Holochests found in a crashed spaceship'\nOnly one is needed");
 			Main.RegisterItemAnimation(base.item.type, new DrawAnimationVertical(5, 2));
 		}
 

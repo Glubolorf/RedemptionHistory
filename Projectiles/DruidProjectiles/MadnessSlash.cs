@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Dusts;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.Projectiles.DruidProjectiles
 
 		public override void AI()
 		{
-			int DustID2 = Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, base.mod.DustType("VlitchFlame"), base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 1.5f);
+			int DustID2 = Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, ModContent.DustType<VlitchFlame>(), base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 1.5f);
 			Main.dust[DustID2].noGravity = true;
 		}
 

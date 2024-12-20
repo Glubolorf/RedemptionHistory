@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Dusts;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ID;
@@ -50,7 +52,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 				}
 			}
 			Player player = Main.player[base.projectile.owner];
-			if (!player.HasBuff(base.mod.BuffType("NatureGuardian6Buff")))
+			if (!player.HasBuff(ModContent.BuffType<NatureGuardian6Buff>()))
 			{
 				base.projectile.Kill();
 			}
@@ -67,7 +69,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 			{
 				for (int i = 0; i < 5; i++)
 				{
-					int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, base.mod.DustType("MoonflareDust"), 0f, 0f, 100, default(Color), 1.2f);
+					int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, ModContent.DustType<MoonflareDust>(), 0f, 0f, 100, default(Color), 1.2f);
 					Main.dust[dustIndex].velocity *= 1.4f;
 				}
 				Main.PlaySound(SoundID.Item74, base.projectile.position);
@@ -81,21 +83,21 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 			{
 				if (Main.rand.Next(5) == 0)
 				{
-					int p = Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(15f, Utils.ToRotation(this.target.Center - base.projectile.Center) + 25f), base.mod.ProjectileType("LunarShotPro"), 7, 3f, Main.myPlayer, 0f, 0f);
-					p = Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(15f, Utils.ToRotation(this.target.Center - base.projectile.Center) - 25f), base.mod.ProjectileType("LunarShotPro"), 7, 3f, Main.myPlayer, 0f, 0f);
+					int p = Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(15f, Utils.ToRotation(this.target.Center - base.projectile.Center) + 25f), ModContent.ProjectileType<LunarShotPro>(), 7, 3f, Main.myPlayer, 0f, 0f);
+					p = Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(15f, Utils.ToRotation(this.target.Center - base.projectile.Center) - 25f), ModContent.ProjectileType<LunarShotPro>(), 7, 3f, Main.myPlayer, 0f, 0f);
 					Main.projectile[p].ranged = false;
 					Main.projectile[p].GetGlobalProjectile<DruidProjectile>().druidic = true;
 					Main.projectile[p].GetGlobalProjectile<DruidProjectile>().fromStave = true;
 				}
 				if (Main.rand.Next(5) == 0)
 				{
-					int p2 = Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center)), base.mod.ProjectileType("LunarShotPro"), 7, 3f, Main.myPlayer, 0f, 0f);
-					p2 = Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(5f, Utils.ToRotation(this.target.Center - base.projectile.Center)), base.mod.ProjectileType("LunarShotPro"), 7, 3f, Main.myPlayer, 0f, 0f);
+					int p2 = Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center)), ModContent.ProjectileType<LunarShotPro>(), 7, 3f, Main.myPlayer, 0f, 0f);
+					p2 = Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(5f, Utils.ToRotation(this.target.Center - base.projectile.Center)), ModContent.ProjectileType<LunarShotPro>(), 7, 3f, Main.myPlayer, 0f, 0f);
 					Main.projectile[p2].ranged = false;
 					Main.projectile[p2].GetGlobalProjectile<DruidProjectile>().druidic = true;
 					Main.projectile[p2].GetGlobalProjectile<DruidProjectile>().fromStave = true;
 				}
-				int p3 = Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(15f, Utils.ToRotation(this.target.Center - base.projectile.Center)), base.mod.ProjectileType("LunarShotPro"), 7, 3f, Main.myPlayer, 0f, 0f);
+				int p3 = Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(15f, Utils.ToRotation(this.target.Center - base.projectile.Center)), ModContent.ProjectileType<LunarShotPro>(), 7, 3f, Main.myPlayer, 0f, 0f);
 				Main.projectile[p3].ranged = false;
 				Main.projectile[p3].GetGlobalProjectile<DruidProjectile>().druidic = true;
 				Main.projectile[p3].GetGlobalProjectile<DruidProjectile>().fromStave = true;
@@ -116,7 +118,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 		{
 			for (int i = 0; i < 5; i++)
 			{
-				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, base.mod.DustType("MoonflareDust"), 0f, 0f, 100, default(Color), 1.2f);
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, ModContent.DustType<MoonflareDust>(), 0f, 0f, 100, default(Color), 1.2f);
 				Main.dust[dustIndex].velocity *= 1.4f;
 			}
 		}

@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -25,7 +26,7 @@ namespace Redemption.Items.Placeable
 			base.item.rare = 4;
 			base.item.consumable = true;
 			base.item.value = Item.buyPrice(0, 3, 50, 0);
-			base.item.createTile = base.mod.TileType("GathicCryoFurnaceTile");
+			base.item.createTile = ModContent.TileType<GathicCryoFurnaceTile>();
 		}
 
 		public override void AddRecipes()

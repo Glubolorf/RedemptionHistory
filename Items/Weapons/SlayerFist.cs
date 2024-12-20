@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.Items.Weapons
 			base.item.rare = 9;
 			base.item.UseSound = SoundID.Item74;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("KSFist2");
+			base.item.shoot = ModContent.ProjectileType<KSFist2>();
 			base.item.shootSpeed = 10f;
 		}
 

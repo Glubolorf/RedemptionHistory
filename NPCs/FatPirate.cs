@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Placeable.Banners;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,7 +33,7 @@ namespace Redemption.NPCs
 			this.aiType = 212;
 			this.animationType = 212;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("PirateSpiceTraderBanner");
+			this.bannerItem = ModContent.ItemType<PirateSpiceTraderBanner>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -91,13 +93,13 @@ namespace Redemption.NPCs
 					if (base.npc.direction == -1)
 					{
 						Main.PlaySound(SoundID.Item7, (int)base.npc.position.X, (int)base.npc.position.Y);
-						int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2((float)(-6 + Main.rand.Next(-6, 0)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("BarrelPro"), 40, 3f, 255, 0f, 0f);
+						int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2((float)(-6 + Main.rand.Next(-6, 0)), (float)(-4 + Main.rand.Next(-4, 0))), ModContent.ProjectileType<BarrelPro>(), 40, 3f, 255, 0f, 0f);
 						Main.projectile[p].netUpdate = true;
 					}
 					else
 					{
 						Main.PlaySound(SoundID.Item7, (int)base.npc.position.X, (int)base.npc.position.Y);
-						int p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 44f), new Vector2((float)(6 + Main.rand.Next(0, 6)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("BarrelPro"), 40, 3f, 255, 0f, 0f);
+						int p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 44f), new Vector2((float)(6 + Main.rand.Next(0, 6)), (float)(-4 + Main.rand.Next(-4, 0))), ModContent.ProjectileType<BarrelPro>(), 40, 3f, 255, 0f, 0f);
 						Main.projectile[p2].netUpdate = true;
 					}
 				}

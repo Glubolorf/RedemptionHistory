@@ -43,7 +43,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 					base.projectile.localAI[0] = 1f;
 				}
 			}
-			for (int p = 0; p < Main.npc.Length; p++)
+			for (int p = 0; p < 200; p++)
 			{
 				this.clearCheck = Main.npc[p];
 				if (!this.clearCheck.immortal && !this.clearCheck.dontTakeDamage && base.projectile.alpha < 200 && Collision.CheckAABBvAABBCollision(base.projectile.position, base.projectile.Size, this.clearCheck.position, this.clearCheck.Size) && this.clearCheck.life <= this.clearCheck.lifeMax - 20)

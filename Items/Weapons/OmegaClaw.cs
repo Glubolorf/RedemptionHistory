@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -46,14 +47,14 @@ namespace Redemption.Items.Weapons
 			base.item.useTurn = true;
 			base.item.noMelee = true;
 			base.item.noUseGraphic = true;
-			base.item.shoot = base.mod.ProjectileType("OmegaClawPro");
+			base.item.shoot = ModContent.ProjectileType<OmegaClawPro>();
 			base.item.shootSpeed = 15f;
 			base.item.glowMask = OmegaClaw.customGlowMask;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, base.mod.ProjectileType("OmegaWave2"), damage * 2, knockBack, player.whoAmI, 0f, 0f);
+			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, ModContent.ProjectileType<OmegaWave2>(), damage * 2, knockBack, player.whoAmI, 0f, 0f);
 			return true;
 		}
 

@@ -1,4 +1,7 @@
 ﻿using System;
+using Redemption.Items.Armor.PostML;
+using Redemption.Items.Weapons.v08;
+using Redemption.NPCs.Bosses.Thorn;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -31,7 +34,7 @@ namespace Redemption.Items
 		{
 			get
 			{
-				return base.mod.NPCType("ThornPZ");
+				return ModContent.NPCType<ThornPZ>();
 			}
 		}
 
@@ -39,19 +42,19 @@ namespace Redemption.Items
 		{
 			if (Main.rand.Next(7) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("ThornMask"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<ThornMask>(), 1);
 			}
 			int num = Main.rand.Next(2);
 			if (num == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("CursedThornBow2"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<CursedThornBow2>(), 1);
 			}
 			if (num == 1)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("CursedThornFlail"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<CursedThornFlail>(), 1);
 			}
-			player.QuickSpawnItem(base.mod.ItemType("CursedThorns"), Main.rand.Next(9, 18));
-			player.QuickSpawnItem(base.mod.ItemType("CrownOfThorns"), 1);
+			player.QuickSpawnItem(ModContent.ItemType<CursedThorns>(), Main.rand.Next(9, 18));
+			player.QuickSpawnItem(ModContent.ItemType<CrownOfThorns>(), 1);
 		}
 	}
 }

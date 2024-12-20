@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Dusts;
+using Redemption.Items.Placeable;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -12,8 +14,8 @@ namespace Redemption.Tiles
 			Main.tileSolid[(int)base.Type] = true;
 			Main.tileMergeDirt[(int)base.Type] = true;
 			Main.tileBlockLight[(int)base.Type] = true;
-			this.dustType = base.mod.DustType("VlitchFlame");
-			this.drop = base.mod.ItemType("VlitchPlating");
+			this.dustType = ModContent.DustType<VlitchFlame>();
+			this.drop = ModContent.ItemType<VlitchPlating>();
 			this.minPick = 150;
 			this.mineResist = 1.5f;
 			this.soundType = 21;

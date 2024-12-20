@@ -29,7 +29,7 @@ namespace Redemption.Items.DruidDamageClass
 				int maxAccessoryIndex = 5 + player.extraAccessorySlots;
 				for (int i = 3; i < 3 + maxAccessoryIndex; i++)
 				{
-					if (slot != i && player.armor[i].type == base.mod.ItemType("SkeletonCan"))
+					if (slot != i && player.armor[i].type == ModContent.ItemType<SkeletonCan>())
 					{
 						return false;
 					}
@@ -42,7 +42,7 @@ namespace Redemption.Items.DruidDamageClass
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
 			modRecipe.AddIngredient(2766, 20);
-			modRecipe.AddIngredient(base.mod.ItemType("SoulOfBloom"), 20);
+			modRecipe.AddIngredient(ModContent.ItemType<SoulOfBloom>(), 20);
 			modRecipe.AddIngredient(209, 5);
 			modRecipe.AddTile(null, "DruidicAltarTile");
 			modRecipe.SetResult(this, 1);

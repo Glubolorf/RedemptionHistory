@@ -1,6 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
+using Redemption.Projectiles.DruidProjectiles.Stave;
+using Redemption.Projectiles.DruidProjectiles.Stave.Guardians;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -40,12 +43,12 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.UseSound = SoundID.Item9;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
-			base.item.shoot = base.mod.ProjectileType("MoonflareSpark");
+			base.item.shoot = ModContent.ProjectileType<MoonflareSpark>();
 			base.item.shootSpeed = 14f;
 			base.item.glowMask = MoonflareStave.customGlowMask;
-			this.defaultShoot = base.mod.ProjectileType("MoonflareSpark");
-			this.guardianBuffID = base.mod.BuffType("NatureGuardian6Buff");
-			this.guardianProjectileID = base.mod.ProjectileType("NatureGuardian6");
+			this.defaultShoot = ModContent.ProjectileType<MoonflareSpark>();
+			this.guardianBuffID = ModContent.BuffType<NatureGuardian6Buff>();
+			this.guardianProjectileID = ModContent.ProjectileType<NatureGuardian6>();
 			this.guardianTime = 1500;
 			this.singleShotStave = false;
 			this.staveHoldOffset = new Vector2(4f, -10f);

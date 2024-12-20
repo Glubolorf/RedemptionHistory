@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,7 +29,7 @@ namespace Redemption.NPCs
 			this.aiType = 74;
 			base.npc.dontTakeDamageFromHostiles = false;
 			this.animationType = 355;
-			base.npc.catchItem = (short)base.mod.ItemType("FlyBait");
+			base.npc.catchItem = (short)ModContent.ItemType<FlyBait>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)

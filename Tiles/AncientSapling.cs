@@ -29,7 +29,7 @@ namespace Redemption.Tiles
 			TileObjectData.newTile.CoordinatePadding = 2;
 			TileObjectData.newTile.AnchorValidTiles = new int[]
 			{
-				base.mod.TileType("AncientDirtTile")
+				ModContent.TileType<AncientDirtTile>()
 			};
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.DrawFlipHorizontal = true;

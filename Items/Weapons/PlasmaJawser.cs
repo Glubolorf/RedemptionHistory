@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -34,7 +35,7 @@ namespace Redemption.Items.Weapons
 			base.item.useAnimation = 20;
 			base.item.channel = true;
 			base.item.autoReuse = false;
-			base.item.shoot = base.mod.ProjectileType("OmegaLaser");
+			base.item.shoot = ModContent.ProjectileType<OmegaLaser>();
 			base.item.shootSpeed = 14f;
 			base.item.UseSound = SoundID.Item91;
 			base.item.magic = true;
@@ -64,7 +65,7 @@ namespace Redemption.Items.Weapons
 				base.item.useAnimation = 50;
 				base.item.channel = false;
 				base.item.autoReuse = true;
-				base.item.shoot = base.mod.ProjectileType("OmegaPlasmaBall2");
+				base.item.shoot = ModContent.ProjectileType<OmegaPlasmaBall2>();
 				base.item.shootSpeed = 20f;
 			}
 			else
@@ -74,7 +75,7 @@ namespace Redemption.Items.Weapons
 				base.item.useAnimation = 20;
 				base.item.channel = true;
 				base.item.autoReuse = false;
-				base.item.shoot = base.mod.ProjectileType("OmegaLaser");
+				base.item.shoot = ModContent.ProjectileType<OmegaLaser>();
 				base.item.shootSpeed = 14f;
 				base.item.UseSound = SoundID.Item91;
 			}

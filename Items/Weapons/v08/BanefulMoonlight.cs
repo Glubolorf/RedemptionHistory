@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,7 +29,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.UseSound = SoundID.Item71;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
-			base.item.shoot = base.mod.ProjectileType("CursedMoonPro1");
+			base.item.shoot = ModContent.ProjectileType<CursedMoonPro1>();
 			base.item.shootSpeed = 15f;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}
@@ -93,7 +94,7 @@ namespace Redemption.Items.Weapons.v08
 				num76 *= num77;
 				float speedX2 = num75 + (float)Main.rand.Next(-50, 51) * 0.02f;
 				float speedY2 = num76 + (float)Main.rand.Next(-50, 51) * 0.02f;
-				int projectile = Projectile.NewProjectile(vector2.X, vector2.Y, speedX2, speedY2, base.mod.ProjectileType("CursedMoonPro1"), num73, num74, i, 0f, (float)Main.rand.Next(10));
+				int projectile = Projectile.NewProjectile(vector2.X, vector2.Y, speedX2, speedY2, ModContent.ProjectileType<CursedMoonPro1>(), num73, num74, i, 0f, (float)Main.rand.Next(10));
 				Main.projectile[projectile].tileCollide = false;
 				Main.projectile[projectile].melee = true;
 				Main.projectile[projectile].timeLeft = 200;
@@ -104,13 +105,13 @@ namespace Redemption.Items.Weapons.v08
 		public override void AddRecipes()
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(base.mod.ItemType("Firebreak"), 1);
-			modRecipe.AddIngredient(base.mod.ItemType("ForgottenGreatsword"), 1);
-			modRecipe.AddIngredient(base.mod.ItemType("ForgottenSword"), 1);
+			modRecipe.AddIngredient(ModContent.ItemType<Firebreak>(), 1);
+			modRecipe.AddIngredient(ModContent.ItemType<ForgottenGreatsword>(), 1);
+			modRecipe.AddIngredient(ModContent.ItemType<ForgottenSword>(), 1);
 			modRecipe.AddIngredient(null, "ShinkiteCursed", 20);
 			modRecipe.AddIngredient(3467, 20);
-			modRecipe.AddIngredient(base.mod.ItemType("DarkShard"), 5);
-			modRecipe.AddIngredient(base.mod.ItemType("LargeLostSoul"), 2);
+			modRecipe.AddIngredient(ModContent.ItemType<DarkShard>(), 5);
+			modRecipe.AddIngredient(ModContent.ItemType<LargeLostSoul>(), 2);
 			modRecipe.AddTile(412);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();

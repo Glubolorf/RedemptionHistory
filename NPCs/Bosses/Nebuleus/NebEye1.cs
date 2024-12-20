@@ -49,9 +49,9 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 				float Speed = 16f;
 				Vector2 vector8 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 				int damage = 50;
-				int type = base.mod.ProjectileType("PNebula1");
-				int type2 = base.mod.ProjectileType("PNebula2");
-				int type3 = base.mod.ProjectileType("PNebula3");
+				int type = ModContent.ProjectileType<PNebula1>();
+				int type2 = ModContent.ProjectileType<PNebula2>();
+				int type3 = ModContent.ProjectileType<PNebula3>();
 				float rotation = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
 				Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
 				Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type2, damage, 0f, 0, 0f, 0f);
@@ -76,8 +76,6 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 		{
 			return (float)Math.Sqrt((double)(mag.X * mag.X + mag.Y * mag.Y));
 		}
-
-		private Player player;
 
 		private int startTimer;
 	}

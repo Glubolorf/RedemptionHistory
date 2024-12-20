@@ -78,7 +78,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 					int pieCut = 8;
 					for (int i = 0; i < pieCut; i++)
 					{
-						int projID = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, base.mod.ProjectileType("StarfruitPro"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
+						int projID = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, ModContent.ProjectileType<StarfruitPro>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
 						Main.projectile[projID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(4f, 0f), (float)i / (float)pieCut * 6.28f);
 						Main.npc[projID].netUpdate = true;
 					}
@@ -88,7 +88,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 					int pieCut2 = 8;
 					for (int j = 0; j < pieCut2; j++)
 					{
-						int projID2 = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, base.mod.ProjectileType("StarfruitPro2"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
+						int projID2 = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, ModContent.ProjectileType<StarfruitPro2>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
 						Main.projectile[projID2].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(4f, 0f), (float)j / (float)pieCut2 * 6.28f);
 						Main.npc[projID2].netUpdate = true;
 					}

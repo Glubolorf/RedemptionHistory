@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -25,7 +26,7 @@ namespace Redemption.Items
 			base.item.height = 38;
 			base.item.value = 100;
 			base.item.rare = 7;
-			base.item.buffType = base.mod.BuffType("AntiXenomiteBuff");
+			base.item.buffType = ModContent.BuffType<AntiXenomiteBuff>();
 			base.item.buffTime = 500;
 		}
 	}

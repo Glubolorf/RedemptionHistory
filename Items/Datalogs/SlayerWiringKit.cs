@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles.SlayerShip;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -27,7 +28,7 @@ namespace Redemption.Items.Datalogs
 			base.item.useStyle = 1;
 			base.item.consumable = true;
 			base.item.value = Item.sellPrice(0, 5, 0, 0);
-			base.item.createTile = base.mod.TileType("SlayerWiringKitTile");
+			base.item.createTile = ModContent.TileType<SlayerWiringKitTile>();
 		}
 
 		public override void AddRecipes()

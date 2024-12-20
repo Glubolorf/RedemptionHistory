@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -11,7 +12,7 @@ namespace Redemption.Tiles.Wasteland
 		{
 			Main.tileSolid[(int)base.Type] = true;
 			Main.tileMergeDirt[(int)base.Type] = false;
-			Main.tileMerge[(int)base.Type][base.mod.TileType("LivingDeadWoodTile")] = true;
+			Main.tileMerge[(int)base.Type][ModContent.TileType<LivingDeadWoodTile>()] = true;
 			Main.tileBlendAll[(int)base.Type] = true;
 			Main.tileBlockLight[(int)base.Type] = true;
 			base.AddMapEntry(new Color(100, 100, 100), null);
@@ -25,7 +26,7 @@ namespace Redemption.Tiles.Wasteland
 			Player player = Main.LocalPlayer;
 			if ((int)Vector2.Distance(player.Center / 16f, new Vector2((float)i, (float)j)) <= 15)
 			{
-				player.AddBuff(base.mod.BuffType("RadioactiveFalloutDebuff"), Main.rand.Next(10, 20), true);
+				player.AddBuff(ModContent.BuffType<RadioactiveFalloutDebuff>(), Main.rand.Next(10, 20), true);
 			}
 		}
 

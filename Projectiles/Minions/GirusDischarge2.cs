@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -66,7 +67,7 @@ namespace Redemption.Projectiles.Minions
 		{
 			if (!target.boss && target.knockBackResist != 0f)
 			{
-				target.AddBuff(base.mod.BuffType("StunnedDebuff"), 60, false);
+				target.AddBuff(ModContent.BuffType<StunnedDebuff>(), 60, false);
 			}
 		}
 	}

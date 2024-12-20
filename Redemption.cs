@@ -8,7 +8,8 @@ using Redemption.ChickenArmy;
 using Redemption.CrossMod;
 using Redemption.Items;
 using Redemption.Items.Armor.Costumes;
-using Redemption.Items.Cores;
+using Redemption.Items.DruidDamageClass.SeedBags;
+using Redemption.Items.Weapons;
 using Redemption.NPCs.Bosses.EaglecrestGolem;
 using Redemption.NPCs.Bosses.Nebuleus;
 using Redemption.NPCs.Bosses.SeedOfInfection;
@@ -29,6 +30,14 @@ namespace Redemption
 	internal class Redemption : Mod
 	{
 		public static Texture2D EmptyTexture { get; private set; }
+
+		public static Redemption inst
+		{
+			get
+			{
+				return ModContent.GetInstance<Redemption>();
+			}
+		}
 
 		public Redemption()
 		{
@@ -103,34 +112,34 @@ namespace Redemption
 			RecipeGroup.RegisterGroup("Redemption:Plant", group);
 			RecipeGroup group2 = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Seedbag", new int[]
 			{
-				base.ItemType("Seedbag"),
-				base.ItemType("BlinkrootBushBag"),
-				base.ItemType("CorpseFlowerBag"),
-				base.ItemType("CrimthornBushBag"),
-				base.ItemType("DeathweedBag"),
-				base.ItemType("FireblossomBag"),
-				base.ItemType("IcarsFlowerBag"),
-				base.ItemType("ShiverthornBag"),
-				base.ItemType("SkyflowerBag"),
-				base.ItemType("VilethornBushBag"),
-				base.ItemType("WaterleafBag"),
-				base.ItemType("DaybloomBag"),
-				base.ItemType("MoonglowBag"),
-				base.ItemType("MossBag"),
-				base.ItemType("EyeStalkBag"),
-				base.ItemType("MartianTreeBag"),
-				base.ItemType("TitaniumBloomBag"),
-				base.ItemType("AdamantiteLilyBag"),
-				base.ItemType("CreationRoseBag"),
-				base.ItemType("DeathsGraspBag"),
-				base.ItemType("GloomShroomBag"),
-				base.ItemType("GlowingMBag"),
-				base.ItemType("GoldenOrangeBag"),
-				base.ItemType("HealShroomBag"),
-				base.ItemType("NightshadeSeedbag"),
-				base.ItemType("BloodRootSeedbag"),
-				base.ItemType("ViciousShroomBag"),
-				base.ItemType("VileShroomBag")
+				ModContent.ItemType<Seedbag>(),
+				ModContent.ItemType<BlinkrootBushBag>(),
+				ModContent.ItemType<CorpseFlowerBag>(),
+				ModContent.ItemType<CrimthornBushBag>(),
+				ModContent.ItemType<DeathweedBag>(),
+				ModContent.ItemType<FireblossomBag>(),
+				ModContent.ItemType<IcarsFlowerBag>(),
+				ModContent.ItemType<ShiverthornBag>(),
+				ModContent.ItemType<SkyflowerBag>(),
+				ModContent.ItemType<VilethornBushBag>(),
+				ModContent.ItemType<WaterleafBag>(),
+				ModContent.ItemType<DaybloomBag>(),
+				ModContent.ItemType<MoonglowBag>(),
+				ModContent.ItemType<MossBag>(),
+				ModContent.ItemType<EyeStalkBag>(),
+				ModContent.ItemType<MartianTreeBag>(),
+				ModContent.ItemType<TitaniumBloomBag>(),
+				ModContent.ItemType<AdamantiteLilyBag>(),
+				ModContent.ItemType<CreationRoseBag>(),
+				ModContent.ItemType<DeathsGraspBag>(),
+				ModContent.ItemType<GloomShroomBag>(),
+				ModContent.ItemType<GlowingMBag>(),
+				ModContent.ItemType<GoldenOrangeBag>(),
+				ModContent.ItemType<HealShroomBag>(),
+				ModContent.ItemType<NightshadeSeedbag>(),
+				ModContent.ItemType<BloodRootSeedbag>(),
+				ModContent.ItemType<ViciousShroomBag>(),
+				ModContent.ItemType<VileShroomBag>()
 			});
 			RecipeGroup.RegisterGroup("Redemption:Seedbag", group2);
 			RecipeGroup group3 = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Phasesaber", new int[]
@@ -151,39 +160,39 @@ namespace Redemption
 			RecipeGroup.RegisterGroup("Redemption:EvilWood", group4);
 			RecipeGroup group5 = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Capacitator", new int[]
 			{
-				base.ItemType("Mk1Capacitator"),
-				base.ItemType("Mk2Capacitator"),
-				base.ItemType("Mk3Capacitator")
+				ModContent.ItemType<Mk1Capacitator>(),
+				ModContent.ItemType<Mk2Capacitator>(),
+				ModContent.ItemType<Mk3Capacitator>()
 			});
 			RecipeGroup.RegisterGroup("Redemption:Capacitators", group5);
 			RecipeGroup group6 = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Plating", new int[]
 			{
-				base.ItemType("Mk1Plating"),
-				base.ItemType("Mk2Plating"),
-				base.ItemType("Mk3Plating")
+				ModContent.ItemType<Mk1Plating>(),
+				ModContent.ItemType<Mk2Plating>(),
+				ModContent.ItemType<Mk3Plating>()
 			});
 			RecipeGroup.RegisterGroup("Redemption:Plating", group6);
 			RecipeGroup group7 = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Xenium Autoturret", new int[]
 			{
-				base.ItemType("XeniumDrone1"),
-				base.ItemType("XeniumDrone2"),
-				base.ItemType("XeniumDrone3"),
-				base.ItemType("XeniumDrone4"),
-				base.ItemType("XeniumDrone5"),
-				base.ItemType("XeniumDrone6"),
-				base.ItemType("XeniumDrone7"),
-				base.ItemType("XeniumDrone8"),
-				base.ItemType("XeniumDrone9"),
-				base.ItemType("XeniumDrone10"),
-				base.ItemType("XeniumDrone11"),
-				base.ItemType("XeniumDrone12")
+				ModContent.ItemType<XeniumDrone1>(),
+				ModContent.ItemType<XeniumDrone2>(),
+				ModContent.ItemType<XeniumDrone3>(),
+				ModContent.ItemType<XeniumDrone4>(),
+				ModContent.ItemType<XeniumDrone5>(),
+				ModContent.ItemType<XeniumDrone6>(),
+				ModContent.ItemType<XeniumDrone7>(),
+				ModContent.ItemType<XeniumDrone8>(),
+				ModContent.ItemType<XeniumDrone9>(),
+				ModContent.ItemType<XeniumDrone10>(),
+				ModContent.ItemType<XeniumDrone11>(),
+				ModContent.ItemType<XeniumDrone12>()
 			});
 			RecipeGroup.RegisterGroup("Redemption:XeniumTurret", group7);
 			RecipeGroup group8 = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Chicken", new int[]
 			{
-				base.ItemType("ChickenItem"),
-				base.ItemType("ChickenLeghornItem"),
-				base.ItemType("ChickenRedItem")
+				ModContent.ItemType<ChickenItem>(),
+				ModContent.ItemType<ChickenLeghornItem>(),
+				ModContent.ItemType<ChickenRedItem>()
 			});
 			RecipeGroup.RegisterGroup("Redemption:Chicken", group8);
 			if (RecipeGroup.recipeGroupIDs.ContainsKey("Wood"))
@@ -195,7 +204,7 @@ namespace Redemption
 			}
 		}
 
-		private void Wiring_ActuateForced(Wiring.orig_ActuateForced orig, int i, int j)
+		private void ActuateForced(Wiring.orig_ActuateForced orig, int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
 			if ((int)tile.type == ModContent.TileType<LabTileUnsafe>() || (int)tile.type == ModContent.TileType<HardenedSludgeTile>() || (int)tile.type == ModContent.TileType<HardenedSludge2Tile>() || (int)tile.type == ModContent.TileType<HardenedSludge3Tile>() || (int)tile.type == ModContent.TileType<OvergrownLabTile>())
@@ -213,77 +222,19 @@ namespace Redemption
 
 		public override void Load()
 		{
-			Redemption.inst = this;
 			if (Main.rand == null)
 			{
 				Main.rand = new UnifiedRandom();
 			}
-			Wiring.ActuateForced += new Wiring.hook_ActuateForced(this.Wiring_ActuateForced);
+			Wiring.ActuateForced += new Wiring.hook_ActuateForced(this.ActuateForced);
 			Wiring.Actuate += new Wiring.hook_Actuate(Redemption.Actuate);
 			if (!Main.dedServ)
 			{
-				base.AddEquipTexture(null, 2, "ArchclothRobe_Legs", "Redemption/Items/Armor/ArchclothRobe_Legs", "", "");
-				base.AddEquipTexture(null, 2, "HallamRobes_Legs", "Redemption/Items/Armor/HallamRobes_Legs", "", "");
-				base.AddEquipTexture(null, 2, "NebuleusVanity_Legs", "Redemption/Items/Armor/PostML/NebuleusVanity_Legs", "", "");
-				base.AddEquipTexture(new OmegaHead(), null, 0, "OmegaHead", "Redemption/Items/Cores/OmegaCore_Head", "", "");
-				base.AddEquipTexture(new OmegaBody(), null, 1, "OmegaBody", "Redemption/Items/Cores/OmegaCore_Body", "Redemption/Items/Cores/OmegaCore_FemaleBody", "Redemption/Items/Cores/OmegaCore_Arms");
-				base.AddEquipTexture(new OmegaLegs(), null, 2, "OmegaLegs", "Redemption/Items/Cores/OmegaCore_Legs", "", "");
-				base.AddEquipTexture(new ChickenHead(), null, 0, "ChickenHead", "Redemption/Items/CrownOfTheKing_Head", "", "");
-				base.AddEquipTexture(new ChickenBody(), null, 1, "ChickenBody", "Redemption/Items/CrownOfTheKing_Body", "Redemption/Items/CrownOfTheKing_Arms", "");
-				base.AddEquipTexture(new ChickenLegs(), null, 2, "ChickenLegs", "Redemption/Items/CrownOfTheKing_Legs", "", "");
-				base.AddEquipTexture(new HazmatHead(), null, 0, "HazmatHead", "Redemption/Items/Armor/Costumes/HazmatSuit_Head", "", "");
-				base.AddEquipTexture(new HazmatBody(), null, 1, "HazmatBody", "Redemption/Items/Armor/Costumes/HazmatSuit_Body", "Redemption/Items/Armor/Costumes/HazmatSuit_FemaleBody", "Redemption/Items/Armor/Costumes/HazmatSuit_Arms");
-				base.AddEquipTexture(new HazmatLegs(), null, 2, "HazmatLegs", "Redemption/Items/Armor/Costumes/HazmatSuit_Legs", "", "");
-				base.AddEquipTexture(new HEVHead(), null, 0, "HEVHead", "Redemption/Items/Armor/Costumes/HEVSuit_Head", "", "");
-				base.AddEquipTexture(new HEVBody(), null, 1, "HEVBody", "Redemption/Items/Armor/Costumes/HEVSuit_Body", "Redemption/Items/Armor/Costumes/HEVSuit_Arms", "");
-				base.AddEquipTexture(new HEVLegs(), null, 2, "HEVLegs", "Redemption/Items/Armor/Costumes/HEVSuit_Legs", "", "");
-				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/HallofHeroes"), base.ItemType("HallOfHeroesBox"), base.TileType("HallOfHeroesBoxTile"), 0);
-				Redemption.EmptyTexture = base.GetTexture("Empty");
-				Redemption.PremultiplyTexture(base.GetTexture("Backgrounds/fog"));
-				Redemption.boom = base.GetTexture("TransitionTex");
-				Redemption.PremultiplyTexture(Redemption.boom);
-				Redemption.dancingLight = base.GetTexture("NPCs/Bosses/EaglecrestGolem/UkkoDancingLights");
-				Redemption.PremultiplyTexture(Redemption.dancingLight);
-				Redemption.warningTex1 = base.GetTexture("NPCs/Bosses/Thorn/AkkaIslandWarning");
-				Redemption.PremultiplyTexture(Redemption.warningTex1);
-				Redemption.healingSpiritTex = base.GetTexture("NPCs/Bosses/Thorn/AkkaHealingSpirit");
-				Redemption.PremultiplyTexture(Redemption.healingSpiritTex);
-				Redemption.ukkoBlast = base.GetTexture("NPCs/Bosses/EaglecrestGolem/UkkoElectricBlast");
-				Redemption.PremultiplyTexture(Redemption.ukkoBlast);
-				Redemption.forcefield1 = base.GetTexture("Projectiles/DruidProjectiles/WorldStave/AncientForcefieldPro1");
-				Redemption.PremultiplyTexture(Redemption.forcefield1);
-				Redemption.forcefield2 = base.GetTexture("Projectiles/DruidProjectiles/WorldStave/AncientForcefieldPro2");
-				Redemption.PremultiplyTexture(Redemption.forcefield2);
-				Redemption.forcefield3 = base.GetTexture("Projectiles/DruidProjectiles/WorldStave/CaveAura");
-				Redemption.PremultiplyTexture(Redemption.forcefield3);
-				Redemption.forcefield4 = base.GetTexture("Projectiles/DruidProjectiles/WorldStave/FireForcePro1");
-				Redemption.PremultiplyTexture(Redemption.forcefield4);
-				Redemption.forcefield5 = base.GetTexture("Projectiles/DruidProjectiles/WorldStave/FreezeForcePro1");
-				Redemption.PremultiplyTexture(Redemption.forcefield5);
-				Redemption.forcefield6 = base.GetTexture("Projectiles/DruidProjectiles/WorldStave/MartianForcefieldPro1");
-				Redemption.PremultiplyTexture(Redemption.forcefield6);
-				Redemption.forcefield7 = base.GetTexture("Projectiles/DruidProjectiles/WorldStave/SunAura");
-				Redemption.PremultiplyTexture(Redemption.forcefield7);
-				Filters.Scene["Redemption:Nebuleus"] = new Filter(new StarGodSkyData("FilterMiniTower").UseColor(0.3f, 0f, 0.4f).UseOpacity(0.5f), 4);
-				SkyManager.Instance["Redemption:Nebuleus"] = new StarGodSky();
-				Filters.Scene["Redemption:BigNebuleus"] = new Filter(new StarGodSkyData2("FilterMiniTower").UseColor(0.3f, 0f, 0.4f).UseOpacity(0.5f), 4);
-				SkyManager.Instance["Redemption:BigNebuleus"] = new StarGodSky2();
-				Filters.Scene["Redemption:Ukko"] = new Filter(new UkkoClouds1Data("FilterMiniTower").UseColor(0.1f, 0.1f, 0f).UseOpacity(0.65f), 4);
-				SkyManager.Instance["Redemption:Ukko"] = new UkkoClouds1();
-				UkkoClouds1.boltTexture = ModLoader.GetMod("Redemption").GetTexture("NPCs/Bosses/EaglecrestGolem/UkkoSkyBolt");
-				UkkoClouds1.flashTexture = ModLoader.GetMod("Redemption").GetTexture("NPCs/Bosses/EaglecrestGolem/UkkoSkyFlash");
-				UkkoClouds1.BeamTexture = ModLoader.GetMod("Redemption").GetTexture("NPCs/Bosses/EaglecrestGolem/UkkoSkyBeam");
-				Redemption.PremultiplyTexture(base.GetTexture("NPCs/Bosses/EaglecrestGolem/UkkoSkyBeam"));
-				Redemption.PremultiplyTexture(base.GetTexture("NPCs/Bosses/EaglecrestGolem/UkkoClouds1"));
-				StarGodSky.SkyTex = ModLoader.GetMod("Redemption").GetTexture("NPCs/Bosses/Nebuleus/StarGodSky");
-				StarGodSky2.SkyTex = ModLoader.GetMod("Redemption").GetTexture("NPCs/Bosses/Nebuleus/StarGodSky2");
-				UkkoClouds1.CloudTex = ModLoader.GetMod("Redemption").GetTexture("NPCs/Bosses/EaglecrestGolem/UkkoClouds1");
-				Ref<Effect> screenRef = new Ref<Effect>(base.GetEffect("Effects/Shockwave"));
-				Filters.Scene["Shockwave"] = new Filter(new ScreenShaderData(screenRef, "Shockwave"), 4);
-				Filters.Scene["Shockwave"].Load();
+				this.LoadClient();
 			}
 			Redemption.FaceCustomCurrencyID = CustomCurrencyManager.RegisterCurrency(new CustomCurrency(ModContent.ItemType<AncientGoldCoin>(), 999L));
 			Filters.Scene["Redemption:XenoSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0.2f, 0f).UseOpacity(0.4f), 3);
+			Filters.Scene["Redemption:SoullessSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0f, 0f).UseOpacity(0.6f), 3);
 			ModTranslation text = base.CreateTranslation("DruidicOre");
 			text.SetDefault("Druidic energy courses through the world's ore...");
 			base.AddTranslation(text);
@@ -335,13 +286,64 @@ namespace Redemption
 			text = base.CreateTranslation("KeeperAwoken");
 			text.SetDefault("The Keeper has awoken!");
 			base.AddTranslation(text);
+			text = base.CreateTranslation("SoIChecklist");
+			text.SetDefault("New entries have appeared on the Boss Checklist!");
+			base.AddTranslation(text);
+			text = base.CreateTranslation("KingSlayerMoonlord");
+			text.SetDefault("Hey terrarian, it's King Slayer. I'll be leaving ship soon so if you have any unfinished business with me then I'd do it now.");
+			base.AddTranslation(text);
+			SubworldCache.InitCache();
 		}
 
 		public override void Unload()
 		{
-			this.CleanupStaticArrays();
-			Redemption.boom = null;
-			Redemption.inst = null;
+			SubworldCache.UnloadCache();
+		}
+
+		public void LoadClient()
+		{
+			base.AddEquipTexture(null, 2, "ArchclothRobe_Legs", "Redemption/Items/Armor/ArchclothRobe_Legs", "", "");
+			base.AddEquipTexture(null, 2, "HallamRobes_Legs", "Redemption/Items/Armor/HallamRobes_Legs", "", "");
+			base.AddEquipTexture(null, 2, "NebuleusVanity_Legs", "Redemption/Items/Armor/PostML/NebuleusVanity_Legs", "", "");
+			base.AddEquipTexture(new ChickenHead(), null, 0, "ChickenHead", "Redemption/Items/CrownOfTheKing_Head", "", "");
+			base.AddEquipTexture(new ChickenBody(), null, 1, "ChickenBody", "Redemption/Items/CrownOfTheKing_Body", "Redemption/Items/CrownOfTheKing_Arms", "");
+			base.AddEquipTexture(new ChickenLegs(), null, 2, "ChickenLegs", "Redemption/Items/CrownOfTheKing_Legs", "", "");
+			base.AddEquipTexture(new HazmatHead(), null, 0, "HazmatHead", "Redemption/Items/Armor/Costumes/HazmatSuit_Head", "", "");
+			base.AddEquipTexture(new HazmatBody(), null, 1, "HazmatBody", "Redemption/Items/Armor/Costumes/HazmatSuit_Body", "Redemption/Items/Armor/Costumes/HazmatSuit_FemaleBody", "Redemption/Items/Armor/Costumes/HazmatSuit_Arms");
+			base.AddEquipTexture(new HazmatLegs(), null, 2, "HazmatLegs", "Redemption/Items/Armor/Costumes/HazmatSuit_Legs", "", "");
+			base.AddEquipTexture(new HEVHead(), null, 0, "HEVHead", "Redemption/Items/Armor/Costumes/HEVSuit_Head", "", "");
+			base.AddEquipTexture(new HEVBody(), null, 1, "HEVBody", "Redemption/Items/Armor/Costumes/HEVSuit_Body", "Redemption/Items/Armor/Costumes/HEVSuit_Arms", "");
+			base.AddEquipTexture(new HEVLegs(), null, 2, "HEVLegs", "Redemption/Items/Armor/Costumes/HEVSuit_Legs", "", "");
+			base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/HallofHeroes"), base.ItemType("HallOfHeroesBox"), base.TileType("HallOfHeroesBoxTile"), 0);
+			Redemption.EmptyTexture = base.GetTexture("Empty");
+			Redemption.PremultiplyTexture(base.GetTexture("Backgrounds/fog"));
+			Redemption.PremultiplyTexture(base.GetTexture("TransitionTex"));
+			Redemption.PremultiplyTexture(base.GetTexture("NPCs/Bosses/EaglecrestGolem/UkkoDancingLights"));
+			Redemption.PremultiplyTexture(base.GetTexture("NPCs/Bosses/Thorn/AkkaPoisonBubble"));
+			Redemption.PremultiplyTexture(base.GetTexture("NPCs/Bosses/Thorn/AkkaIslandWarning"));
+			Redemption.PremultiplyTexture(base.GetTexture("NPCs/Bosses/Thorn/AkkaHealingSpirit"));
+			Redemption.PremultiplyTexture(base.GetTexture("NPCs/Bosses/EaglecrestGolem/UkkoElectricBlast"));
+			Redemption.PremultiplyTexture(base.GetTexture("Projectiles/DruidProjectiles/WorldStave/AncientForcefieldPro1"));
+			Redemption.PremultiplyTexture(base.GetTexture("Projectiles/DruidProjectiles/WorldStave/AncientForcefieldPro2"));
+			Redemption.PremultiplyTexture(base.GetTexture("Projectiles/DruidProjectiles/WorldStave/CaveAura"));
+			Redemption.PremultiplyTexture(base.GetTexture("Projectiles/DruidProjectiles/WorldStave/FireForcePro1"));
+			Redemption.PremultiplyTexture(base.GetTexture("Projectiles/DruidProjectiles/WorldStave/FreezeForcePro1"));
+			Redemption.PremultiplyTexture(base.GetTexture("Projectiles/DruidProjectiles/WorldStave/MartianForcefieldPro1"));
+			Redemption.PremultiplyTexture(base.GetTexture("Projectiles/DruidProjectiles/WorldStave/SunAura"));
+			StarGodSky sSky = new StarGodSky();
+			Filters.Scene["Redemption:Nebuleus"] = new Filter(new StarGodSkyData("FilterMiniTower").UseColor(0.3f, 0f, 0.4f).UseOpacity(0.5f), 4);
+			SkyManager.Instance["Redemption:Nebuleus"] = sSky;
+			StarGodSky2 sSky2 = new StarGodSky2();
+			Filters.Scene["Redemption:BigNebuleus"] = new Filter(new StarGodSkyData2("FilterMiniTower").UseColor(0.3f, 0f, 0.4f).UseOpacity(0.5f), 4);
+			SkyManager.Instance["Redemption:BigNebuleus"] = sSky2;
+			UkkoClouds1 uSky = new UkkoClouds1();
+			Filters.Scene["Redemption:Ukko"] = new Filter(new UkkoClouds1Data("FilterMiniTower").UseColor(0.1f, 0.1f, 0f).UseOpacity(0.65f), 4);
+			SkyManager.Instance["Redemption:Ukko"] = uSky;
+			Redemption.PremultiplyTexture(base.GetTexture("NPCs/Bosses/EaglecrestGolem/UkkoSkyBeam"));
+			Redemption.PremultiplyTexture(base.GetTexture("NPCs/Bosses/EaglecrestGolem/UkkoClouds1"));
+			Ref<Effect> screenRef = new Ref<Effect>(base.GetEffect("Effects/Shockwave"));
+			Filters.Scene["Redemption:Shockwave"] = new Filter(new ScreenShaderData(screenRef, "Shockwave"), 4);
+			Filters.Scene["Redemption:Shockwave"].Load();
 		}
 
 		public static void PremultiplyTexture(Texture2D texture)
@@ -353,20 +355,6 @@ namespace Redemption
 				buffer[i] = Color.FromNonPremultiplied((int)buffer[i].R, (int)buffer[i].G, (int)buffer[i].B, (int)buffer[i].A);
 			}
 			texture.SetData<Color>(buffer);
-		}
-
-		public void CleanupStaticArrays()
-		{
-			if (Main.netMode != 2)
-			{
-				Redemption.precachedTextures.Clear();
-				StarGodSky.SkyTex = null;
-				StarGodSky2.SkyTex = null;
-				UkkoClouds1.CloudTex = null;
-				UkkoClouds1.boltTexture = null;
-				UkkoClouds1.flashTexture = null;
-				UkkoClouds1.BeamTexture = null;
-			}
 		}
 
 		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
@@ -395,6 +383,28 @@ namespace Redemption
 				}, 1);
 				layers.Insert(textLayer, computerState);
 			}
+			Titles modPlayer = Main.player[Main.myPlayer].GetModPlayer<Titles>();
+			if (modPlayer.text)
+			{
+				int textLayer2 = layers.FindIndex((GameInterfaceLayer layer) => layer.Name.Equals("Vanilla: Inventory"));
+				LegacyGameInterfaceLayer computerState2 = new LegacyGameInterfaceLayer("Redemption: UI", delegate()
+				{
+					this.BossTitle(modPlayer.BossID);
+					return true;
+				}, 1);
+				layers.Insert(textLayer2, computerState2);
+			}
+			Texts modPlayer4 = Main.player[Main.myPlayer].GetModPlayer<Texts>();
+			if (modPlayer4.text)
+			{
+				int textLayer3 = layers.FindIndex((GameInterfaceLayer layer) => layer.Name.Equals("Vanilla: Inventory"));
+				LegacyGameInterfaceLayer computerState3 = new LegacyGameInterfaceLayer("Redemption: UI", delegate()
+				{
+					this.BossText(modPlayer4.BossID, modPlayer4.TextID);
+					return true;
+				}, 1);
+				layers.Insert(textLayer3, computerState3);
+			}
 		}
 
 		private void DrawInfectionText()
@@ -403,7 +413,482 @@ namespace Redemption
 			string text = "The Infection shall begin...";
 			Vector2 textSize = Main.fontDeathText.MeasureString(text);
 			float textPositionLeft = (float)(Main.screenWidth / 2) - textSize.X / 2f;
-			DynamicSpriteFontExtensionMethods.DrawString(Main.spriteBatch, Main.fontDeathText, text, new Vector2(textPositionLeft, (float)(Main.screenHeight / 2 - 300)), Color.Green * ((float)Color.Green.A / alpha), 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+			DynamicSpriteFontExtensionMethods.DrawString(Main.spriteBatch, Main.fontDeathText, text, new Vector2(textPositionLeft, (float)(Main.screenHeight / 2 - 300)), Color.Green * ((255f - alpha) / 255f), 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+		}
+
+		private void BossTitle(int BossID)
+		{
+			string BossName = "";
+			string BossTitle = "";
+			Color titleColor = Color.White;
+			switch (BossID)
+			{
+			case 1:
+				BossName = "Nebuleus";
+				BossTitle = "Angel of the Cosmos";
+				titleColor = Color.HotPink;
+				break;
+			case 2:
+				BossName = "Nebuleus";
+				BossTitle = "Ultimate Form";
+				titleColor = Color.HotPink;
+				break;
+			case 3:
+				BossName = "King Slayer III";
+				BossTitle = "Prototype Multium";
+				titleColor = Color.Cyan;
+				break;
+			case 4:
+				BossName = "Ukko & Akka";
+				BossTitle = "Ancient Deity Duo";
+				titleColor = Color.Yellow;
+				break;
+			case 5:
+				BossName = "Thorn";
+				BossTitle = "Bane of the Forest";
+				titleColor = Color.Green;
+				break;
+			case 6:
+				BossName = "Eaglecrest Golem";
+				BossTitle = "Guardian of Eaglecrest Meadows";
+				titleColor = Color.Gray;
+				break;
+			case 7:
+				BossName = "Kari Johansson";
+				BossTitle = "Patient Zero";
+				titleColor = Color.Green;
+				break;
+			case 8:
+				BossName = "Infected Eye";
+				BossTitle = "";
+				titleColor = Color.Green;
+				break;
+			case 9:
+				BossName = "Omega Obliterator";
+				BossTitle = "3rd Vlitch Overlord";
+				titleColor = Color.Red;
+				break;
+			case 10:
+				BossName = "Vlitch Cleaver";
+				BossTitle = "1st Vlitch Overlord";
+				titleColor = Color.Red;
+				break;
+			case 11:
+				BossName = "Vlitch Gigapede";
+				BossTitle = "2nd Vlitch Overlord";
+				titleColor = Color.Red;
+				break;
+			case 12:
+				BossName = "Seed of Infection";
+				BossTitle = "";
+				titleColor = Color.ForestGreen;
+				break;
+			case 13:
+				BossName = "The Keeper";
+				BossTitle = "Mistress of the Night";
+				titleColor = Color.Purple;
+				break;
+			case 14:
+				BossName = "King Chicken";
+				BossTitle = "The Mighty One";
+				titleColor = Color.LightGoldenrodYellow;
+				break;
+			case 15:
+				BossName = "The Janitor";
+				BossTitle = "A Janitor";
+				titleColor = Color.Yellow;
+				break;
+			case 16:
+				BossName = "Stage 2 Infected Scientist";
+				BossTitle = "";
+				titleColor = Color.Green;
+				break;
+			case 17:
+				BossName = "Irradiated Behemoth";
+				BossTitle = "An Unfortunate Scientist";
+				titleColor = Color.Green;
+				break;
+			case 18:
+				BossName = "Blisterface";
+				BossTitle = "An Unfortunate Goldfish";
+				titleColor = Color.Green;
+				break;
+			case 19:
+				BossName = "Protector Volt";
+				BossTitle = "Omega Division Commander";
+				titleColor = Color.Yellow;
+				break;
+			case 20:
+				BossName = "MACE Project";
+				BossTitle = "Incomplete War Machine";
+				titleColor = Color.Yellow;
+				break;
+			case 21:
+				BossName = "Skull Digger";
+				BossTitle = "The Keeper's First Creation";
+				titleColor = Color.MediumPurple;
+				break;
+			case 22:
+				BossName = "Sunken Captain";
+				BossTitle = "";
+				titleColor = Color.LightSeaGreen;
+				break;
+			case 23:
+				BossName = "The Warden";
+				BossTitle = "Husk of Sorrow";
+				titleColor = Color.GhostWhite;
+				break;
+			}
+			Vector2 textSize = Main.fontDeathText.MeasureString(BossName);
+			Vector2 textSize2 = Main.fontDeathText.MeasureString(BossTitle) * 0.33f;
+			float textPositionLeft = (float)(Main.screenWidth / 2) - textSize.X / 2f;
+			float text2PositionLeft = (float)(Main.screenWidth / 2) - textSize2.X / 2f;
+			Titles modPlayer = Main.player[Main.myPlayer].GetModPlayer<Titles>();
+			float alpha = modPlayer.alphaText;
+			float alpha2 = modPlayer.alphaText2;
+			DynamicSpriteFontExtensionMethods.DrawString(Main.spriteBatch, Main.fontDeathText, BossTitle, new Vector2(text2PositionLeft, (float)(Main.screenHeight / 2 - 350)), titleColor * ((255f - alpha2) / 255f), 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 0f);
+			DynamicSpriteFontExtensionMethods.DrawString(Main.spriteBatch, Main.fontDeathText, "~ " + BossName + " ~", new Vector2(textPositionLeft, (float)(Main.screenHeight / 2 - 300)), titleColor * ((255f - alpha) / 255f), 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+		}
+
+		public static void ShowTitle(NPC npc, int ID)
+		{
+			if (RedeConfigClient.Instance.BossIntroText)
+			{
+				Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Title>(), 0, 0f, Main.myPlayer, (float)ID, 0f);
+			}
+		}
+
+		public static void ShowTitle(Player player, int ID)
+		{
+			if (RedeConfigClient.Instance.BossIntroText)
+			{
+				Projectile.NewProjectile(player.Center, Vector2.Zero, ModContent.ProjectileType<Title>(), 0, 0f, Main.myPlayer, (float)ID, 0f);
+			}
+		}
+
+		private void BossText(int BossID, int TextID)
+		{
+			Player player = Main.LocalPlayer;
+			string BossName = "";
+			string BossText = "";
+			Color textColor = Color.White;
+			float alpha = 0f;
+			float shakeAmount = 0f;
+			switch (BossID)
+			{
+			case 0:
+				BossName = "???:";
+				textColor = RedeColor.GirusTier;
+				shakeAmount = 1f;
+				switch (TextID)
+				{
+				case 0:
+					BossText = "...";
+					break;
+				case 1:
+					BossText = "...Hm?";
+					break;
+				case 2:
+					BossText = "Would you look at that, an Overlord Unit has been taken down.";
+					break;
+				case 3:
+					BossText = "What a shame. That one was almost useful.";
+					break;
+				case 4:
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().omegaPower)
+					{
+						BossText = "You know, I never expected one of my own to take down an Overlord..?";
+					}
+					else
+					{
+						BossText = "You know, I never expected someone like you take down an Overlord.";
+					}
+					break;
+				case 5:
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().omegaPower)
+					{
+						BossText = "Huh... Very interesting. I never expected this.";
+					}
+					else
+					{
+						BossText = "Keep on going. It's rather interesting to see you attempt such a feat...";
+					}
+					break;
+				case 6:
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().omegaPower)
+					{
+						BossText = "Anyway, carry on your way, my underling. Hmm...";
+					}
+					else
+					{
+						BossText = "Hehehehe...";
+					}
+					break;
+				}
+				break;
+			case 1:
+				BossName = "???:";
+				textColor = RedeColor.GirusTier;
+				shakeAmount = 1f;
+				switch (TextID)
+				{
+				case 0:
+					BossText = "Second Overlord is down. Oh well.";
+					break;
+				case 1:
+					BossText = "Wasn't my creation though, in fact it was our...";
+					break;
+				case 2:
+					BossText = "...";
+					break;
+				case 3:
+					BossText = "... That doesn't matter.\n'Grats! You defeated a black-and-red worm machine thing!";
+					break;
+				case 4:
+					BossText = "*slow clapping* Very impressive.";
+					break;
+				case 5:
+					BossText = "Now, the next Overlord is a prototype of mine. It's already quite the fighter.";
+					break;
+				case 6:
+					BossText = "Good luck.";
+					break;
+				}
+				break;
+			case 2:
+				BossName = "???:";
+				textColor = RedeColor.GirusTier;
+				shakeAmount = 1f;
+				switch (TextID)
+				{
+				case 0:
+					BossText = "Welp, so much for that prototype.";
+					break;
+				case 1:
+					BossText = "I've noted the flaws so I can perfect the design.";
+					break;
+				case 2:
+					BossText = "...";
+					break;
+				case 3:
+					BossText = "Say, you would've now defeated every Overlord I had.";
+					break;
+				case 4:
+					BossText = "Well, bad or good news depending on you, that statement is now false.";
+					break;
+				case 5:
+					BossText = "One more has joined the ranks, and they are now contesting for YOUR place.";
+					break;
+				case 6:
+					if (RedeWorld.downedSlayer)
+					{
+						BossText = "I think you two have already met.";
+					}
+					else if (RedeWorld.deathBySlayer)
+					{
+						BossText = "Now's your chance to gain revenge on them.";
+					}
+					else
+					{
+						BossText = "I don't think you two have met.";
+					}
+					break;
+				case 7:
+					BossText = "So.";
+					break;
+				case 8:
+					BossText = "I'll be watching you two fight.";
+					break;
+				case 9:
+					BossText = "I want the strongest to be on my side.";
+					break;
+				case 10:
+					BossText = "Good luck.";
+					break;
+				case 11:
+					BossText = "You'll need it.";
+					break;
+				}
+				break;
+			case 3:
+				BossName = "Nebuleus:";
+				textColor = RedeColor.NebColour;
+				shakeAmount = 1f;
+				switch (TextID)
+				{
+				case 0:
+					BossText = "You... are still alive?";
+					break;
+				case 1:
+					if (RedeWorld.redemptionPoints <= -4)
+					{
+						BossText = player.name + ", I've been observing you from afar,\nI've seen the calamity you've caused,\nthe power you've gained...";
+					}
+					else
+					{
+						BossText = player.name + ", I've been observing you from afar,\nyou've been gaining a lot of power...";
+					}
+					break;
+				case 2:
+					BossText = "I fear I may be too late,\nbut your existence has brought a disequilibrium upon this world...";
+					break;
+				case 3:
+					BossText = "So many have fallen to you... If I don't stop this now, then who will!?";
+					break;
+				case 4:
+					BossText = "But enough chatter, I'm sure you're getting tired of this by now.";
+					break;
+				case 5:
+					BossText = "Just know, " + player.name + ", I am doing this for your sake...";
+					break;
+				case 6:
+					BossText = "If you lose to me... Maybe the Demigod won't notice you.";
+					break;
+				case 7:
+					BossText = "Now go, my pet! I will back you up.";
+					break;
+				case 8:
+					BossText = "My star serpent is slain... And soon, I fear, I will be next.";
+					break;
+				case 9:
+					BossText = "I can see now, I am too late...";
+					break;
+				case 10:
+					BossText = "It was foolish of me to wait so long...";
+					break;
+				case 11:
+					BossText = "...";
+					break;
+				case 12:
+					BossText = "No... I refuse to lose to someone like you...";
+					break;
+				case 13:
+					BossText = "If I'm going down, at least let me try...";
+					break;
+				case 14:
+					shakeAmount = 2f;
+					BossText = "... To give it all I've got!";
+					break;
+				case 15:
+					BossText = "Even with me gone, there are many others stronger than myself!";
+					break;
+				case 18:
+					BossText = "... and the Demigod of Light...";
+					break;
+				case 19:
+					BossText = "You wouldn't last a second against the Demigod of Light...";
+					break;
+				case 20:
+					shakeAmount = 1.5f;
+					BossText = "But enough talk, I'm your opponent!";
+					break;
+				case 21:
+					BossText = "It's always the same, isn't it.";
+					break;
+				case 22:
+					BossText = "Even when I try my hardest... I'm still a failure.";
+					break;
+				case 23:
+					BossText = "You've made me realise, I'm not strong enough. I give up.";
+					break;
+				case 24:
+					BossText = "Don't expect me to come back.";
+					break;
+				case 25:
+					BossText = "But... If the Demigod ever notices you, and comes for you...";
+					break;
+				case 26:
+					BossText = "Don't tell him I'm still alive, It would be best\nfor him to believe that robot had killed me...";
+					break;
+				case 27:
+					BossText = "And I'm too ashamed to face him.";
+					break;
+				case 28:
+					shakeAmount = 0.1f;
+					BossText = "Well, this is goodbye forever, Terrarian.";
+					break;
+				case 29:
+					BossText = "...the Tyrant of the Jungle...";
+					break;
+				case 30:
+					BossText = "...the witch of unyielding fury...";
+					break;
+				case 31:
+					BossText = "...the sphere of terror...";
+					break;
+				case 32:
+					BossText = "...the tyrant's dragon...";
+					break;
+				case 33:
+					BossText = "...the cosmic blacksmith...";
+					break;
+				case 34:
+					BossText = "...the god of unimaginable power...";
+					break;
+				case 35:
+					BossText = "...the Hero of Legend...";
+					break;
+				case 36:
+					BossText = "...the giant of steel and darkness...";
+					break;
+				case 37:
+					BossText = "...the forgotten soul of the destroyer titan...";
+					break;
+				case 38:
+					BossText = "...the overmind of fungus...";
+					break;
+				case 39:
+					BossText = "...the evil warden of that horrid dungeon...";
+					break;
+				case 40:
+					BossText = "...the Emperor of Discord...";
+					break;
+				case 41:
+					BossText = "...the shadow of death...";
+					break;
+				case 42:
+					BossText = "...he who created all...";
+					break;
+				}
+				break;
+			}
+			Vector2 textSize = Main.fontDeathText.MeasureString(BossName) * 3f;
+			Vector2 textSize2 = Main.fontDeathText.MeasureString(BossText) * 0.8f;
+			float textPositionLeft = (float)(Main.screenWidth / 2) - textSize.X / 2f;
+			float text2PositionLeft = (float)(Main.screenWidth / 2) - textSize2.X / 2f;
+			Main.player[Main.myPlayer].GetModPlayer<Texts>();
+			DynamicSpriteFontExtensionMethods.DrawString(Main.spriteBatch, Main.fontDeathText, BossText, new Vector2(text2PositionLeft + Utils.NextFloat(Main.rand, -shakeAmount, shakeAmount), (float)(Main.screenHeight / 2 - 300) + Utils.NextFloat(Main.rand, -shakeAmount, shakeAmount)), textColor * ((255f - alpha) / 255f), 0f, Vector2.Zero, 0.8f, SpriteEffects.None, 0f);
+			DynamicSpriteFontExtensionMethods.DrawString(Main.spriteBatch, Main.fontDeathText, BossName, new Vector2(textPositionLeft, (float)(Main.screenHeight / 2 - 350)), textColor * ((255f - alpha) / 255f), 0f, Vector2.Zero, 0.8f, SpriteEffects.None, 0f);
+		}
+
+		public static void ShowText(NPC npc, int ID, int TextID, int duration)
+		{
+			if (!RedeConfigClient.Instance.NoBossText)
+			{
+				Main.PlaySound(12, -1, -1, 1, 1f, 0f);
+				int text = Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Text>(), 0, 0f, Main.myPlayer, (float)ID, (float)TextID);
+				Main.projectile[text].timeLeft = duration;
+			}
+		}
+
+		public static void ShowText(Projectile projectile, int ID, int TextID, int duration)
+		{
+			if (!RedeConfigClient.Instance.NoBossText)
+			{
+				Main.PlaySound(12, -1, -1, 1, 1f, 0f);
+				int text = Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<Text>(), 0, 0f, Main.myPlayer, (float)ID, (float)TextID);
+				Main.projectile[text].timeLeft = duration;
+			}
+		}
+
+		public static void ShowText(Player player, int ID, int TextID, int duration)
+		{
+			if (!RedeConfigClient.Instance.NoBossText)
+			{
+				Main.PlaySound(12, -1, -1, 1, 1f, 0f);
+				int text = Projectile.NewProjectile(player.Center, Vector2.Zero, ModContent.ProjectileType<Text>(), 0, 0f, Main.myPlayer, (float)ID, (float)TextID);
+				Main.projectile[text].timeLeft = duration;
+			}
 		}
 
 		public void DrawChick(SpriteBatch spriteBatch)
@@ -476,7 +961,7 @@ namespace Redemption
 		public override void PostSetupContent()
 		{
 			WeakReferences.PerformModSupport();
-			ModLoader.GetMod("BossChecklist");
+			Mod bossChecklist = ModLoader.GetMod("BossChecklist");
 			Mod yabhb = ModLoader.GetMod("FKBossHealthBar");
 			Mod Calamity = ModLoader.GetMod("CalamityMod");
 			Mod Thorium = ModLoader.GetMod("ThoriumMod");
@@ -489,6 +974,7 @@ namespace Redemption
 			Mod HEROsMod = ModLoader.GetMod("HEROsMod");
 			Mod AA = ModLoader.GetMod("AAMod");
 			Mod fargos = ModLoader.GetMod("Fargowiltas");
+			Mod musicMod = ModLoader.GetMod("RedemptionMusic");
 			if (fargos != null)
 			{
 				Mod mod = fargos;
@@ -649,6 +1135,14 @@ namespace Redemption
 			{
 				Redemption.AALoaded = true;
 			}
+			if (musicMod != null)
+			{
+				Redemption.musicPackLoaded = true;
+			}
+			if (bossChecklist != null)
+			{
+				Redemption.checklistLoaded = true;
+			}
 			if (yabhb != null)
 			{
 				this.Call(new object[]
@@ -676,26 +1170,26 @@ namespace Redemption
 					"RegisterHealthBarMini",
 					Redemption.inst.NPCType("TrojanChicken")
 				});
+				this.Call(new object[]
+				{
+					"RegisterHealthBarMini",
+					Redemption.inst.NPCType("MansionWraith")
+				});
 			}
 		}
 
 		public override void ModifySunLightColor(ref Color tileColor, ref Color backgroundColor)
 		{
-			if (RedeWorld.xenoBiome > 0 && RedeWorld.evilXenoBiome > 0)
+			if (RedeWorld.xenoBiome > 0 || RedeWorld.evilXenoBiome > 0 || RedeWorld.evilXenoBiome2 > 0)
 			{
 				float exampleStrength = (float)RedeWorld.xenoBiome / 200f;
-				float exampleStrength2 = (float)RedeWorld.evilXenoBiome / 200f;
 				exampleStrength = Math.Min(exampleStrength, 1f);
-				exampleStrength2 = Math.Min(exampleStrength, 1f);
 				int sunR = (int)backgroundColor.R;
 				int sunG = (int)backgroundColor.G;
 				int sunB = (int)backgroundColor.B;
 				sunR -= (int)(200f * exampleStrength * ((float)backgroundColor.R / 255f));
 				sunB -= (int)(200f * exampleStrength * ((float)backgroundColor.B / 255f));
 				sunG -= (int)(170f * exampleStrength * ((float)backgroundColor.G / 255f));
-				sunR -= (int)(200f * exampleStrength2 * ((float)backgroundColor.R / 255f));
-				sunB -= (int)(200f * exampleStrength2 * ((float)backgroundColor.B / 255f));
-				sunG -= (int)(170f * exampleStrength2 * ((float)backgroundColor.G / 255f));
 				sunR = Utils.Clamp<int>(sunR, 15, 255);
 				sunG = Utils.Clamp<int>(sunG, 15, 255);
 				sunB = Utils.Clamp<int>(sunB, 15, 255);
@@ -1006,6 +1500,12 @@ namespace Redemption
 				NPC.NewNPC((int)summonAt13.X, (int)summonAt13.Y, base.NPCType("MACEControllerIdle"), 0, 0f, 0f, 0f, 0f, 255);
 				break;
 			}
+			case 22:
+			{
+				Vector2 summonAt14 = Utils.ReadVector2(bb);
+				NPC.NewNPC((int)summonAt14.X, (int)summonAt14.Y, base.NPCType("TheWarden"), 0, 0f, 0f, 0f, 0f, 255);
+				break;
+			}
 			}
 			MsgType msg = (MsgType)bb.ReadByte();
 			if (msg == MsgType.ProjectileHostility)
@@ -1159,66 +1659,40 @@ namespace Redemption
 
 		public const string customEventName = "Chicken Army";
 
-		public static Texture2D boom;
-
-		public static Texture2D dancingLight;
-
-		public static Texture2D warningTex1;
-
-		public static Texture2D healingSpiritTex;
-
-		public static Texture2D ukkoBlast;
-
-		public static Texture2D forcefield1;
-
-		public static Texture2D forcefield2;
-
-		public static Texture2D forcefield3;
-
-		public static Texture2D forcefield4;
-
-		public static Texture2D forcefield5;
-
-		public static Texture2D forcefield6;
-
-		public static Texture2D forcefield7;
-
-		public static bool cachedata = false;
-
-		public static int customEvent;
+		public static bool cachedata;
 
 		public static int FaceCustomCurrencyID;
 
 		public static bool GirusSilence;
 
-		public static Redemption inst = null;
-
 		public static bool templeOfHeroes;
 
-		public static IDictionary<string, Texture2D> Textures = null;
+		public static SpriteFont fontMouseText;
 
-		public static Dictionary<string, Texture2D> precachedTextures = new Dictionary<string, Texture2D>();
+		public static bool fargoLoaded;
 
-		public static bool fargoLoaded = false;
+		public static bool calamityLoaded;
 
-		public static bool calamityLoaded = false;
+		public static bool grealmLoaded;
 
-		public static bool grealmLoaded = false;
+		public static bool sacredToolsLoaded;
 
-		public static bool sacredToolsLoaded = false;
+		public static bool spiritLoaded;
 
-		public static bool spiritLoaded = false;
+		public static bool thoriumLoaded;
 
-		public static bool thoriumLoaded = false;
+		public static bool tremorLoaded;
 
-		public static bool tremorLoaded = false;
+		public static bool cheatsheetLoaded;
 
-		public static bool cheatsheetLoaded = false;
+		public static bool herosLoaded;
 
-		public static bool herosLoaded = false;
+		public static bool AALoaded;
 
-		public static bool AALoaded = false;
+		public static bool GRealmLoaded;
 
-		public static bool GRealmLoaded = false;
+		public static bool musicPackLoaded;
+
+		public static bool checklistLoaded;
 	}
 }

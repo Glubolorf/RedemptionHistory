@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -78,13 +80,13 @@ namespace Redemption.NPCs.LabNPCs
 					if (base.npc.direction == -1)
 					{
 						Main.PlaySound(SoundID.Item7, (int)base.npc.position.X, (int)base.npc.position.Y);
-						int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 42f, base.npc.position.Y + 24f), new Vector2((float)(-6 + Main.rand.Next(-6, 0)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("GloopBallPro1"), 50, 3f, 255, 0f, 0f);
+						int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 42f, base.npc.position.Y + 24f), new Vector2((float)(-6 + Main.rand.Next(-6, 0)), (float)(-4 + Main.rand.Next(-4, 0))), ModContent.ProjectileType<GloopBallPro1>(), 50, 3f, 255, 0f, 0f);
 						Main.projectile[p].netUpdate = true;
 					}
 					else
 					{
 						Main.PlaySound(SoundID.Item7, (int)base.npc.position.X, (int)base.npc.position.Y);
-						int p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 12f, base.npc.position.Y + 24f), new Vector2((float)(6 + Main.rand.Next(0, 6)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("GloopBallPro1"), 50, 3f, 255, 0f, 0f);
+						int p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 12f, base.npc.position.Y + 24f), new Vector2((float)(6 + Main.rand.Next(0, 6)), (float)(-4 + Main.rand.Next(-4, 0))), ModContent.ProjectileType<GloopBallPro1>(), 50, 3f, 255, 0f, 0f);
 						Main.projectile[p2].netUpdate = true;
 					}
 				}
@@ -95,6 +97,18 @@ namespace Redemption.NPCs.LabNPCs
 					this.throwCounter = 0;
 					this.throwFrame = 0;
 				}
+			}
+		}
+
+		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+		{
+			if (Main.rand.Next(2) == 0 || Main.expertMode)
+			{
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff>(), Main.rand.Next(500, 1000), true);
+			}
+			if (Main.rand.Next(9) == 0 || (Main.expertMode && Main.rand.Next(7) == 0))
+			{
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff2>(), Main.rand.Next(250, 500), true);
 			}
 		}
 

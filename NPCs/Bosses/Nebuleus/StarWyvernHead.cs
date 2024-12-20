@@ -135,31 +135,31 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 			{
 				base.npc.realLife = base.npc.whoAmI;
 				int latestNPC = base.npc.whoAmI;
-				latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("StarWyvernNeck"), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
+				latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<StarWyvernNeck>(), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
 				Main.npc[latestNPC].realLife = base.npc.whoAmI;
 				Main.npc[latestNPC].ai[3] = (float)base.npc.whoAmI;
-				latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("StarWyvernCollar"), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
+				latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<StarWyvernCollar>(), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
 				Main.npc[latestNPC].realLife = base.npc.whoAmI;
 				Main.npc[latestNPC].ai[3] = (float)base.npc.whoAmI;
 				for (int j = 0; j < 8; j++)
 				{
-					latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("StarWyvernBody"), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
+					latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<StarWyvernBody>(), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
 					Main.npc[latestNPC].realLife = base.npc.whoAmI;
 					Main.npc[latestNPC].ai[3] = (float)base.npc.whoAmI;
-					latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("StarWyvernBody"), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
+					latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<StarWyvernBody>(), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
 					Main.npc[latestNPC].realLife = base.npc.whoAmI;
 					Main.npc[latestNPC].ai[3] = (float)base.npc.whoAmI;
-					latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("StarWyvernLeg"), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
+					latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<StarWyvernLeg>(), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
 					Main.npc[latestNPC].realLife = base.npc.whoAmI;
 					Main.npc[latestNPC].ai[3] = (float)base.npc.whoAmI;
 				}
-				latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("StarWyvernTail1"), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
+				latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<StarWyvernTail1>(), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
 				Main.npc[latestNPC].realLife = base.npc.whoAmI;
 				Main.npc[latestNPC].ai[3] = (float)base.npc.whoAmI;
-				latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("StarWyvernTail2"), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
+				latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<StarWyvernTail2>(), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
 				Main.npc[latestNPC].realLife = base.npc.whoAmI;
 				Main.npc[latestNPC].ai[3] = (float)base.npc.whoAmI;
-				latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("StarWyvernTail3"), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
+				latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<StarWyvernTail3>(), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
 				Main.npc[latestNPC].realLife = base.npc.whoAmI;
 				Main.npc[latestNPC].ai[3] = (float)base.npc.whoAmI;
 				base.npc.ai[0] = 1f;
@@ -415,8 +415,6 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 			BaseDrawing.DrawTexture(spriteBatch, myGlowTex, shader, base.npc, new Color?(base.npc.GetAlpha(Color.White)), true, Utils.Size(base.npc.frame) / 2f);
 			return false;
 		}
-
-		private int speed = 8;
 
 		public float[] internalAI = new float[4];
 	}

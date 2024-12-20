@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.LabDeco;
+using Redemption.NPCs.LabNPCs.New;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -44,14 +46,14 @@ namespace Redemption.Tiles.LabDeco
 		{
 			if (Main.netMode == 0)
 			{
-				if (!NPC.AnyNPCs(base.mod.NPCType("MACEProjectHeadA")) && !NPC.AnyNPCs(base.mod.NPCType("MACEProjectJawA")) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface && RedeWorld.downedVolt && (!RedeWorld.labAccess6 || RedeWorld.downedPatientZero))
+				if (!NPC.AnyNPCs(ModContent.NPCType<MACEProjectHeadA>()) && !NPC.AnyNPCs(ModContent.NPCType<MACEProjectJawA>()) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface && RedeWorld.downedVolt && (!RedeWorld.labAccess6 || RedeWorld.downedPatientZero))
 				{
 					RedeWorld.maceUS = true;
 				}
 			}
 			else if (Main.tile[i, j].frameY >= 18)
 			{
-				if (!NPC.AnyNPCs(base.mod.NPCType("MACEProjectHeadA")) && !NPC.AnyNPCs(base.mod.NPCType("MACEProjectJawA")) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface && RedeWorld.downedVolt && (!RedeWorld.labAccess6 || RedeWorld.downedPatientZero))
+				if (!NPC.AnyNPCs(ModContent.NPCType<MACEProjectHeadA>()) && !NPC.AnyNPCs(ModContent.NPCType<MACEProjectJawA>()) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface && RedeWorld.downedVolt && (!RedeWorld.labAccess6 || RedeWorld.downedPatientZero))
 				{
 					ModPacket packet = base.mod.GetPacket(256);
 					packet.Write(12);
@@ -59,7 +61,7 @@ namespace Redemption.Tiles.LabDeco
 					packet.Send(-1, -1);
 				}
 			}
-			else if (!NPC.AnyNPCs(base.mod.NPCType("MACEProjectHeadA")) && !NPC.AnyNPCs(base.mod.NPCType("MACEProjectJawA")) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface && RedeWorld.downedVolt && (!RedeWorld.labAccess6 || RedeWorld.downedPatientZero))
+			else if (!NPC.AnyNPCs(ModContent.NPCType<MACEProjectHeadA>()) && !NPC.AnyNPCs(ModContent.NPCType<MACEProjectJawA>()) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface && RedeWorld.downedVolt && (!RedeWorld.labAccess6 || RedeWorld.downedPatientZero))
 			{
 				ModPacket packet2 = base.mod.GetPacket(256);
 				packet2.Write(12);
@@ -73,14 +75,14 @@ namespace Redemption.Tiles.LabDeco
 		{
 			Player localPlayer = Main.LocalPlayer;
 			RedePlayer redePlayer = (RedePlayer)localPlayer.GetModPlayer(base.mod, "RedePlayer");
-			if ((int)Vector2.Distance(localPlayer.Center / 16f, new Vector2((float)i, (float)j)) <= 100 && Main.netMode == 0 && !NPC.AnyNPCs(base.mod.NPCType("MACEProjectJawA")) && !NPC.AnyNPCs(base.mod.NPCType("MACEProjectHeadA")) && !NPC.AnyNPCs(base.mod.NPCType("MACEProjectOffA")))
+			if ((int)Vector2.Distance(localPlayer.Center / 16f, new Vector2((float)i, (float)j)) <= 100 && Main.netMode == 0 && !NPC.AnyNPCs(ModContent.NPCType<MACEProjectJawA>()) && !NPC.AnyNPCs(ModContent.NPCType<MACEProjectHeadA>()) && !NPC.AnyNPCs(ModContent.NPCType<MACEProjectOffA>()))
 			{
 				Main.tile[i, j];
 				i += 15;
 				i *= 16;
 				j -= 7;
 				j *= 16;
-				int k = NPC.NewNPC(i + 1, j + 1, base.mod.NPCType("MACEProjectOffA"), 0, 0f, 0f, 0f, 0f, 255);
+				int k = NPC.NewNPC(i + 1, j + 1, ModContent.NPCType<MACEProjectOffA>(), 0, 0f, 0f, 0f, 0f, 255);
 				if (Main.netMode == 2)
 				{
 					NetMessage.SendData(23, -1, -1, null, k, 0f, 0f, 0f, 0, 0, 0);
@@ -107,7 +109,7 @@ namespace Redemption.Tiles.LabDeco
 			Player localPlayer = Main.LocalPlayer;
 			localPlayer.noThrow = 2;
 			localPlayer.showItemIcon = true;
-			localPlayer.showItemIcon2 = base.mod.ItemType("SignDeath");
+			localPlayer.showItemIcon2 = ModContent.ItemType<SignDeath>();
 		}
 
 		public override bool CanExplode(int i, int j)

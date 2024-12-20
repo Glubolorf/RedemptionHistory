@@ -49,7 +49,7 @@ namespace Redemption.Projectiles.Minions
 
 		public override void AI()
 		{
-			bool flag = base.projectile.type == base.mod.ProjectileType("LavaCubeMinion");
+			bool flag = base.projectile.type == ModContent.ProjectileType<LavaCubeMinion>();
 			Player player = Main.player[base.projectile.owner];
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
 			if (flag)

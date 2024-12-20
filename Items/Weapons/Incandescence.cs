@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -42,7 +43,7 @@ namespace Redemption.Items.Weapons
 		{
 			if (player.altFunctionUse == 2)
 			{
-				base.item.shoot = base.mod.ProjectileType("HolyFirePro1");
+				base.item.shoot = ModContent.ProjectileType<HolyFirePro1>();
 				base.item.autoReuse = false;
 			}
 			else
@@ -57,7 +58,7 @@ namespace Redemption.Items.Weapons
 		{
 			if (player.altFunctionUse <= 1)
 			{
-				Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, -6f, base.mod.ProjectileType("HolyFirePro1"), damage * 3, knockBack, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, -6f, ModContent.ProjectileType<HolyFirePro1>(), damage * 3, knockBack, Main.myPlayer, 0f, 0f);
 			}
 		}
 
@@ -69,7 +70,7 @@ namespace Redemption.Items.Weapons
 				int pieCut = 20;
 				for (int i = 0; i < pieCut; i++)
 				{
-					int projID = Projectile.NewProjectile(position.X, position.Y, 0f, 0f, base.mod.ProjectileType("HolyFirePro1"), damage * 3, knockBack, Main.myPlayer, 0f, 0f);
+					int projID = Projectile.NewProjectile(position.X, position.Y, 0f, 0f, ModContent.ProjectileType<HolyFirePro1>(), damage * 3, knockBack, Main.myPlayer, 0f, 0f);
 					Main.projectile[projID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)pieCut * 6.28f);
 				}
 				return false;

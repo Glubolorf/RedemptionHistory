@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.NPCs.LabNPCs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -51,7 +52,7 @@ namespace Redemption.Projectiles
 			{
 				if (Main.rand.Next(50) == 0)
 				{
-					int j = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, base.mod.NPCType("Stage2Scientist"), 0, 0f, 0f, 0f, 0f, 255);
+					int j = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, ModContent.NPCType<Stage2Scientist>(), 0, 0f, 0f, 0f, 0f, 255);
 					if (Main.netMode == 2)
 					{
 						NetMessage.SendData(23, -1, -1, null, j, 0f, 0f, 0f, 0, 0, 0);
@@ -59,7 +60,7 @@ namespace Redemption.Projectiles
 				}
 				if (Main.rand.Next(3) == 0)
 				{
-					int k = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, base.mod.NPCType("Blisterling"), 0, 0f, 0f, 0f, 0f, 255);
+					int k = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, ModContent.NPCType<Blisterling>(), 0, 0f, 0f, 0f, 0f, 255);
 					if (Main.netMode == 2)
 					{
 						NetMessage.SendData(23, -1, -1, null, k, 0f, 0f, 0f, 0, 0, 0);

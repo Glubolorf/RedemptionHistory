@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.DruidProjectiles.Plants
 {
@@ -57,7 +58,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 			base.projectile.localAI[0] += 1f;
 			if (RedeHelper.ClosestNPC(ref this.target, 800f, base.projectile.Center, false, player.MinionAttackTargetNPC) && base.projectile.localAI[0] % 15f == 0f && base.projectile.frame >= 4)
 			{
-				Projectile.NewProjectile(this.switchPos ? new Vector2(base.projectile.position.X + 4f, base.projectile.position.Y + 12f) : new Vector2(base.projectile.position.X + 24f, base.projectile.position.Y + 14f), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center)), base.mod.ProjectileType("DeathweedSpike"), base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(this.switchPos ? new Vector2(base.projectile.position.X + 4f, base.projectile.position.Y + 12f) : new Vector2(base.projectile.position.X + 24f, base.projectile.position.Y + 14f), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center)), ModContent.ProjectileType<DeathweedSpike>(), base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 0f);
 				if (this.switchPos)
 				{
 					this.switchPos = false;
@@ -71,7 +72,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 			{
 				for (int i = 0; i < 8; i++)
 				{
-					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 16)), (float)(-10 + Main.rand.Next(0, 6)), base.mod.ProjectileType("DeathweedSpike2"), base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 0f);
+					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 16)), (float)(-10 + Main.rand.Next(0, 6)), ModContent.ProjectileType<DeathweedSpike2>(), base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 0f);
 				}
 			}
 		}

@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -52,11 +54,11 @@ namespace Redemption.NPCs
 			}
 			if (Main.netMode != 1 && base.npc.life <= 0)
 			{
-				NPC.NewNPC((int)base.npc.position.X + 48, (int)base.npc.position.Y + 38, base.mod.NPCType("LostSoul2"), 0, 0f, 0f, 0f, 0f, 255);
-				NPC.NewNPC((int)base.npc.position.X + 30, (int)base.npc.position.Y + 62, base.mod.NPCType("LostSoul2"), 0, 0f, 0f, 0f, 0f, 255);
-				NPC.NewNPC((int)base.npc.position.X + 48, (int)base.npc.position.Y + 98, base.mod.NPCType("LostSoul1"), 0, 0f, 0f, 0f, 0f, 255);
-				NPC.NewNPC((int)base.npc.position.X + 58, (int)base.npc.position.Y + 60, base.mod.NPCType("LostSoul1"), 0, 0f, 0f, 0f, 0f, 255);
-				NPC.NewNPC((int)base.npc.position.X + 36, (int)base.npc.position.Y + 94, base.mod.NPCType("LostSoul1"), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.position.X + 48, (int)base.npc.position.Y + 38, ModContent.NPCType<LostSoul2>(), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.position.X + 30, (int)base.npc.position.Y + 62, ModContent.NPCType<LostSoul2>(), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.position.X + 48, (int)base.npc.position.Y + 98, ModContent.NPCType<LostSoul1>(), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.position.X + 58, (int)base.npc.position.Y + 60, ModContent.NPCType<LostSoul1>(), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.position.X + 36, (int)base.npc.position.Y + 94, ModContent.NPCType<LostSoul1>(), 0, 0f, 0f, 0f, 0f, 255);
 				CombatText.NewText(base.npc.getRect(), Colors.RarityPurple, "You're... Soulless...", true, false);
 			}
 		}
@@ -65,7 +67,7 @@ namespace Redemption.NPCs
 		{
 			base.npc.TargetClosest(true);
 			Player player3 = Main.player[base.npc.target];
-			potionType = base.mod.ItemType("DarkShard");
+			potionType = ModContent.ItemType<DarkShard>();
 			if (!RedeWorld.downedSkullDigger)
 			{
 				RedeWorld.redemptionPoints -= 3;
@@ -76,7 +78,7 @@ namespace Redemption.NPCs
 					{
 						for (int j = 0; j < player2.inventory.Length; j++)
 						{
-							if (player2.inventory[j].type == base.mod.ItemType("RedemptionTeller"))
+							if (player2.inventory[j].type == ModContent.ItemType<RedemptionTeller>())
 							{
 								Main.NewText("<Chalice of Alignment> Oh... Oh damn...", Color.DarkGoldenrod, false);
 							}
@@ -94,6 +96,11 @@ namespace Redemption.NPCs
 
 		public override void AI()
 		{
+			if (!this.title)
+			{
+				Redemption.ShowTitle(base.npc, 21);
+				this.title = true;
+			}
 			if (this.specialStart)
 			{
 				this.specialCounter++;
@@ -167,16 +174,16 @@ namespace Redemption.NPCs
 					this.specialTimer++;
 					if (this.specialTimer == 30)
 					{
-						int minion = NPC.NewNPC((int)base.npc.position.X + 48, (int)base.npc.position.Y + 38, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
-						minion = NPC.NewNPC((int)base.npc.position.X + 30, (int)base.npc.position.Y + 48, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
-						minion = NPC.NewNPC((int)base.npc.position.X + 54, (int)base.npc.position.Y + 50, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
-						minion = NPC.NewNPC((int)base.npc.position.X + 36, (int)base.npc.position.Y + 80, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
-						minion = NPC.NewNPC((int)base.npc.position.X + 45, (int)base.npc.position.Y + 90, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
-						minion = NPC.NewNPC((int)base.npc.position.X + 42, (int)base.npc.position.Y + 78, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
-						minion = NPC.NewNPC((int)base.npc.position.X + 37, (int)base.npc.position.Y + 28, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
-						minion = NPC.NewNPC((int)base.npc.position.X + 51, (int)base.npc.position.Y + 60, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
-						minion = NPC.NewNPC((int)base.npc.position.X + 37, (int)base.npc.position.Y + 40, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
-						minion = NPC.NewNPC((int)base.npc.position.X + 44, (int)base.npc.position.Y + 54, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
+						int minion = NPC.NewNPC((int)base.npc.position.X + 48, (int)base.npc.position.Y + 38, ModContent.NPCType<DarkSoul3>(), 0, 0f, 0f, 0f, 0f, 255);
+						minion = NPC.NewNPC((int)base.npc.position.X + 30, (int)base.npc.position.Y + 48, ModContent.NPCType<DarkSoul3>(), 0, 0f, 0f, 0f, 0f, 255);
+						minion = NPC.NewNPC((int)base.npc.position.X + 54, (int)base.npc.position.Y + 50, ModContent.NPCType<DarkSoul3>(), 0, 0f, 0f, 0f, 0f, 255);
+						minion = NPC.NewNPC((int)base.npc.position.X + 36, (int)base.npc.position.Y + 80, ModContent.NPCType<DarkSoul3>(), 0, 0f, 0f, 0f, 0f, 255);
+						minion = NPC.NewNPC((int)base.npc.position.X + 45, (int)base.npc.position.Y + 90, ModContent.NPCType<DarkSoul3>(), 0, 0f, 0f, 0f, 0f, 255);
+						minion = NPC.NewNPC((int)base.npc.position.X + 42, (int)base.npc.position.Y + 78, ModContent.NPCType<DarkSoul3>(), 0, 0f, 0f, 0f, 0f, 255);
+						minion = NPC.NewNPC((int)base.npc.position.X + 37, (int)base.npc.position.Y + 28, ModContent.NPCType<DarkSoul3>(), 0, 0f, 0f, 0f, 0f, 255);
+						minion = NPC.NewNPC((int)base.npc.position.X + 51, (int)base.npc.position.Y + 60, ModContent.NPCType<DarkSoul3>(), 0, 0f, 0f, 0f, 0f, 255);
+						minion = NPC.NewNPC((int)base.npc.position.X + 37, (int)base.npc.position.Y + 40, ModContent.NPCType<DarkSoul3>(), 0, 0f, 0f, 0f, 0f, 255);
+						minion = NPC.NewNPC((int)base.npc.position.X + 44, (int)base.npc.position.Y + 54, ModContent.NPCType<DarkSoul3>(), 0, 0f, 0f, 0f, 0f, 255);
 						Main.npc[minion].netUpdate = true;
 						Main.PlaySound(SoundID.NPCDeath6, (int)base.npc.position.X, (int)base.npc.position.Y);
 					}
@@ -193,11 +200,11 @@ namespace Redemption.NPCs
 					this.specialTimer++;
 					if (this.specialTimer == 30)
 					{
-						int minion2 = NPC.NewNPC((int)base.npc.position.X + 48, (int)base.npc.position.Y + 38, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
-						minion2 = NPC.NewNPC((int)base.npc.position.X + 30, (int)base.npc.position.Y + 48, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
-						minion2 = NPC.NewNPC((int)base.npc.position.X + 54, (int)base.npc.position.Y + 50, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
-						minion2 = NPC.NewNPC((int)base.npc.position.X + 36, (int)base.npc.position.Y + 80, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
-						minion2 = NPC.NewNPC((int)base.npc.position.X + 45, (int)base.npc.position.Y + 90, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+						int minion2 = NPC.NewNPC((int)base.npc.position.X + 48, (int)base.npc.position.Y + 38, ModContent.NPCType<DarkSoul2>(), 0, 0f, 0f, 0f, 0f, 255);
+						minion2 = NPC.NewNPC((int)base.npc.position.X + 30, (int)base.npc.position.Y + 48, ModContent.NPCType<DarkSoul2>(), 0, 0f, 0f, 0f, 0f, 255);
+						minion2 = NPC.NewNPC((int)base.npc.position.X + 54, (int)base.npc.position.Y + 50, ModContent.NPCType<DarkSoul2>(), 0, 0f, 0f, 0f, 0f, 255);
+						minion2 = NPC.NewNPC((int)base.npc.position.X + 36, (int)base.npc.position.Y + 80, ModContent.NPCType<DarkSoul2>(), 0, 0f, 0f, 0f, 0f, 255);
+						minion2 = NPC.NewNPC((int)base.npc.position.X + 45, (int)base.npc.position.Y + 90, ModContent.NPCType<DarkSoul2>(), 0, 0f, 0f, 0f, 0f, 255);
 						Main.npc[minion2].netUpdate = true;
 						Main.PlaySound(SoundID.NPCDeath6, (int)base.npc.position.X, (int)base.npc.position.Y);
 					}
@@ -214,14 +221,14 @@ namespace Redemption.NPCs
 					this.specialTimer++;
 					if (this.specialTimer == 30)
 					{
-						int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(0f, -6f), base.mod.ProjectileType("DarkSoulPro3"), 15, 3f, 255, 0f, 0f);
-						p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(0f, 6f), base.mod.ProjectileType("DarkSoulPro3"), 15, 3f, 255, 0f, 0f);
-						p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(-6f, 0f), base.mod.ProjectileType("DarkSoulPro3"), 15, 3f, 255, 0f, 0f);
-						p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(6f, 0f), base.mod.ProjectileType("DarkSoulPro3"), 15, 3f, 255, 0f, 0f);
-						p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(4f, 4f), base.mod.ProjectileType("DarkSoulPro3"), 15, 3f, 255, 0f, 0f);
-						p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(4f, -4f), base.mod.ProjectileType("DarkSoulPro3"), 15, 3f, 255, 0f, 0f);
-						p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(-4f, 4f), base.mod.ProjectileType("DarkSoulPro3"), 15, 3f, 255, 0f, 0f);
-						p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(-4f, -4f), base.mod.ProjectileType("DarkSoulPro3"), 15, 3f, 255, 0f, 0f);
+						int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(0f, -6f), ModContent.ProjectileType<DarkSoulPro3>(), 15, 3f, 255, 0f, 0f);
+						p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(0f, 6f), ModContent.ProjectileType<DarkSoulPro3>(), 15, 3f, 255, 0f, 0f);
+						p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(-6f, 0f), ModContent.ProjectileType<DarkSoulPro3>(), 15, 3f, 255, 0f, 0f);
+						p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(6f, 0f), ModContent.ProjectileType<DarkSoulPro3>(), 15, 3f, 255, 0f, 0f);
+						p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(4f, 4f), ModContent.ProjectileType<DarkSoulPro3>(), 15, 3f, 255, 0f, 0f);
+						p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(4f, -4f), ModContent.ProjectileType<DarkSoulPro3>(), 15, 3f, 255, 0f, 0f);
+						p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(-4f, 4f), ModContent.ProjectileType<DarkSoulPro3>(), 15, 3f, 255, 0f, 0f);
+						p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(-4f, -4f), ModContent.ProjectileType<DarkSoulPro3>(), 15, 3f, 255, 0f, 0f);
 						Main.projectile[p].netUpdate = true;
 						Main.PlaySound(SoundID.NPCDeath6, (int)base.npc.position.X, (int)base.npc.position.Y);
 					}
@@ -265,14 +272,14 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			for (int i = 0; i < Main.npc.Length; i++)
+			for (int i = 0; i < 200; i++)
 			{
 				if (Main.npc[i].boss)
 				{
 					return 0f;
 				}
 			}
-			return SpawnCondition.Cavern.Chance * ((RedeWorld.downedTheKeeper && !RedeWorld.downedSkullDigger && !NPC.AnyNPCs(base.mod.NPCType("SkullDigger"))) ? 0.002f : 0f);
+			return SpawnCondition.Cavern.Chance * ((RedeWorld.downedTheKeeper && !RedeWorld.downedSkullDigger && !NPC.AnyNPCs(ModContent.NPCType<SkullDigger>())) ? 0.002f : 0f);
 		}
 
 		private int skullDiggerTimer;
@@ -285,6 +292,6 @@ namespace Redemption.NPCs
 
 		private int specialTimer;
 
-		private bool beginFight;
+		private bool title;
 	}
 }

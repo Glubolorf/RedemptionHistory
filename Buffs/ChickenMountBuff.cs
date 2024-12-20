@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.Mounts;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -16,7 +17,7 @@ namespace Redemption.Buffs
 
 		public override void Update(Player player, ref int buffIndex)
 		{
-			player.mount.SetMount(base.mod.MountType("ChickenMount"), player, false);
+			player.mount.SetMount(ModContent.MountType<ChickenMount>(), player, false);
 			player.buffTime[buffIndex] = 10;
 		}
 	}

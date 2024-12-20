@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Armor.Costumes;
+using Redemption.Items.LabThings;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -117,13 +119,20 @@ namespace Redemption.NPCs.LabNPCs.New
 			}
 			if (RedeWorld.downedVolt)
 			{
-				base.npc.Transform(base.mod.NPCType("ProtectorVoltNPC"));
+				base.npc.Transform(ModContent.NPCType<ProtectorVoltNPC>());
 			}
 			else
 			{
 				if (base.npc.Distance(Main.player[base.npc.target].Center) < 300f && base.npc.ai[0] == 0f && player.Center.X > base.npc.Center.X)
 				{
-					base.npc.ai[0] = 1f;
+					if (((BasePlayer.HasChestplate(player, ModContent.ItemType<TBotVanityChestplate>(), true) && BasePlayer.HasLeggings(player, ModContent.ItemType<TBotVanityLegs>(), true)) || (BasePlayer.HasChestplate(player, ModContent.ItemType<AndroidArmour>(), true) && BasePlayer.HasLeggings(player, ModContent.ItemType<AndroidPants>(), true)) || (BasePlayer.HasChestplate(player, ModContent.ItemType<JanitorOutfit>(), true) && BasePlayer.HasLeggings(player, ModContent.ItemType<JanitorPants>(), true))) && (BasePlayer.HasHelmet(player, ModContent.ItemType<TBotEyes_Femi>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotEyes_Masc>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotVanityEyes>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotGoggles_Femi>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotGoggles_Masc>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotVanityGoggles>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<AdamHead>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<OperatorHead>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<VoltHead>(), true)))
+					{
+						base.npc.ai[0] = 2f;
+					}
+					else
+					{
+						base.npc.ai[0] = 1f;
+					}
 				}
 				if (base.npc.ai[0] == 1f)
 				{
@@ -132,7 +141,8 @@ namespace Redemption.NPCs.LabNPCs.New
 						base.npc.ai[1] += 1f;
 						if (base.npc.ai[1] >= 60f)
 						{
-							base.npc.Transform(base.mod.NPCType("TbotMiniboss"));
+							Redemption.ShowTitle(base.npc, 19);
+							base.npc.Transform(ModContent.NPCType<TbotMiniboss>());
 						}
 					}
 					else
@@ -165,26 +175,56 @@ namespace Redemption.NPCs.LabNPCs.New
 							Dictionary<Color, int> colorToTile = new Dictionary<Color, int>();
 							colorToTile[new Color(150, 150, 150)] = -2;
 							colorToTile[Color.Black] = -1;
-							TexGen texGenerator = BaseWorldGenTex.GetTexGenerator(mod.GetTexture("WorldGeneration/VoltDestroy"), colorToTile, null, null, null, null);
+							TexGen texGenerator = BaseWorldGenTex.GetTexGenerator(mod.GetTexture("WorldGeneration/VoltDestroy"), colorToTile, null, null, null, null, null, null);
 							Point origin = new Point((int)((float)Main.maxTilesX * 0.55f), (int)((float)Main.maxTilesY * 0.65f));
 							texGenerator.Generate(origin.X, origin.Y, true, true);
 							if (Main.netMode == 2)
 							{
 								NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 							}
-							base.npc.ai[0] += 1f;
+							base.npc.ai[0] = 3f;
 							base.npc.ai[1] = 0f;
 						}
 					}
 				}
+				else if (base.npc.ai[0] == 2f)
+				{
+					base.npc.ai[1] += 1f;
+					if (base.npc.ai[1] == 40f && !RedeConfigClient.Instance.NoCombatText)
+					{
+						CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "Hm? Are you supposed to be let through?", true, false);
+					}
+					if (base.npc.ai[1] == 220f && !RedeConfigClient.Instance.NoCombatText)
+					{
+						CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "One second...", true, false);
+					}
+					if (base.npc.ai[1] == 340f && !RedeConfigClient.Instance.NoCombatText)
+					{
+						CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "...", true, false);
+					}
+					if (base.npc.ai[1] == 500f && !RedeConfigClient.Instance.NoCombatText)
+					{
+						CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "Everything seems to be in order. Move along.", true, false);
+					}
+					if (base.npc.ai[1] > 560f)
+					{
+						if (!RedeWorld.labAccess5)
+						{
+							Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<ZoneAccessPanel5A>(), 1, false, 0, false, false);
+						}
+						RedeWorld.downedVolt = true;
+						base.npc.Transform(ModContent.NPCType<ProtectorVoltNPC>());
+					}
+				}
 			}
-			if (base.npc.ai[0] >= 2f)
+			if (base.npc.ai[0] >= 3f)
 			{
 				base.npc.ai[1] += 1f;
 				if (base.npc.ai[1] >= 60f)
 				{
+					Redemption.ShowTitle(base.npc, 19);
 					RedeWorld.voltBegin = true;
-					base.npc.Transform(base.mod.NPCType("TbotMiniboss"));
+					base.npc.Transform(ModContent.NPCType<TbotMiniboss>());
 				}
 			}
 			if (base.npc.collideY && base.npc.velocity.Y > 0f && base.npc.ai[1] >= 320f && !this.landed)
@@ -207,7 +247,7 @@ namespace Redemption.NPCs.LabNPCs.New
 			{
 				new Vector2(base.npc.Center.X, base.npc.Center.Y);
 				int num214 = hopAni.Height / 1;
-				int y6 = num214 * this.singleFrame;
+				int y6 = 0;
 				new Vector2((float)hopAni.Width * 0.5f, (float)hopAni.Height * 0.5f);
 				for (int i = this.oldPos.Length - 1; i >= 0; i--)
 				{
@@ -223,12 +263,12 @@ namespace Redemption.NPCs.LabNPCs.New
 			{
 				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 				int num215 = hopAni.Height / 1;
-				int y7 = num215 * this.singleFrame;
+				int y7 = 0;
 				Main.spriteBatch.Draw(hopAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y7, hopAni.Width, num215)), drawColor, base.npc.rotation, new Vector2((float)hopAni.Width / 2f, (float)num215 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			Vector2 drawCenterG = new Vector2(base.npc.Center.X, base.npc.Center.Y + 6f);
 			int numG = gunAni.Height / 4;
-			int yG = numG * this.gunFrame;
+			int yG = 0;
 			spriteBatch.Draw(gunAni, drawCenterG - Main.screenPosition, new Rectangle?(new Rectangle(0, yG, gunAni.Width, numG)), drawColor, this.gunRot, new Vector2((float)gunAni.Width / 2f, (float)numG / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
 			return false;
 		}
@@ -267,10 +307,6 @@ namespace Redemption.NPCs.LabNPCs.New
 		private float[] oldrot = new float[3];
 
 		private bool landed;
-
-		private int singleFrame;
-
-		private int gunFrame;
 
 		public Vector2 MoveVector2;
 

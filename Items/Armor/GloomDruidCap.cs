@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Dusts;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
@@ -37,7 +38,7 @@ namespace Redemption.Items.Armor
 
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
-			return body.type == base.mod.ItemType("GloomDruidCapplate") && legs.type == base.mod.ItemType("GloomDruidLeggings");
+			return body.type == ModContent.ItemType<GloomDruidCapplate>() && legs.type == ModContent.ItemType<GloomDruidLeggings>();
 		}
 
 		public override void ArmorSetShadows(Player player)
@@ -46,7 +47,7 @@ namespace Redemption.Items.Armor
 			{
 				for (int i = 0; i < 1; i++)
 				{
-					int index = Dust.NewDust(new Vector2(player.position.X - player.velocity.X * 2f, player.position.Y - 2f - player.velocity.Y * 2f), player.width, player.height, base.mod.DustType("ShroomDust1"), 0f, 0f, 100, default(Color), 2f);
+					int index = Dust.NewDust(new Vector2(player.position.X - player.velocity.X * 2f, player.position.Y - 2f - player.velocity.Y * 2f), player.width, player.height, ModContent.DustType<ShroomDust1>(), 0f, 0f, 100, default(Color), 2f);
 					Main.dust[index].noGravity = true;
 					Main.dust[index].noLight = true;
 					Dust dust = Main.dust[index];

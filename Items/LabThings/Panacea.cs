@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs.Wasteland;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -33,7 +34,7 @@ namespace Redemption.Items.LabThings
 			player.GetModPlayer<RedePlayer>().irradiatedEffect = 0;
 			player.GetModPlayer<RedePlayer>().irradiatedLevel = 0;
 			player.GetModPlayer<RedePlayer>().irradiatedTimer = 0;
-			player.AddBuff(base.mod.BuffType("PanaceaBuff"), 36000, true);
+			player.AddBuff(ModContent.BuffType<PanaceaBuff>(), 36000, true);
 			return true;
 		}
 	}

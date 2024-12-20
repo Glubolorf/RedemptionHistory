@@ -1,6 +1,13 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
+using Redemption.Items;
+using Redemption.Items.Armor.PostML;
+using Redemption.Items.DruidDamageClass.v08;
+using Redemption.Items.Placeable;
+using Redemption.Items.Weapons.v08;
+using Redemption.NPCs.Bosses.Thorn;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -32,7 +39,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 			base.npc.noGravity = true;
 			base.npc.lavaImmune = true;
 			base.npc.boss = true;
-			this.bossBag = base.mod.ItemType("UkkoBag");
+			this.bossBag = ModContent.ItemType<UkkoBag>();
 		}
 
 		public override void BossLoot(ref string name, ref int potionType)
@@ -45,11 +52,17 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 			}
 		}
 
+		public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+		{
+			damage *= 0.5;
+			return true;
+		}
+
 		public override void NPCLoot()
 		{
 			if (Main.rand.Next(10) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("UkkoKirvesTrophy"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<UkonKirvesTrophy>(), 1, false, 0, false, false);
 			}
 			if (Main.expertMode)
 			{
@@ -58,24 +71,24 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 			}
 			if (Main.rand.Next(7) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("UkkoMask"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<UkkoMask>(), 1, false, 0, false, false);
 			}
 			int num = Main.rand.Next(3);
 			if (num == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("StonePuppet"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<StonePuppet>(), 1, false, 0, false, false);
 			}
 			if (num == 1)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("EaglecrestGlove"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<EaglecrestGlove>(), 1, false, 0, false, false);
 			}
 			if (num == 2)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("AncientPowerStave"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<AncientPowerStave>(), 1, false, 0, false, false);
 			}
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ViisaanKantele"), 1, false, 0, false, false);
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("UkonRuno"), 1, false, 0, false, false);
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("AncientPowerCore"), Main.rand.Next(9, 18), false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<ViisaanKantele>(), 1, false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<UkonRuno>(), 1, false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<AncientPowerCore>(), Main.rand.Next(9, 18), false, 0, false, false);
 		}
 
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
@@ -186,7 +199,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 				{
 					this.mendingCooldown--;
 				}
-				if (this.stoneskinCooldown > 0 && !base.npc.HasBuff(base.mod.BuffType("StoneskinBuff")))
+				if (this.stoneskinCooldown > 0 && !base.npc.HasBuff(ModContent.BuffType<StoneskinBuff>()))
 				{
 					this.stoneskinCooldown--;
 				}
@@ -220,7 +233,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 						if (base.npc.ai[2] == 8f)
 						{
 							base.npc.ai[3] = 1f;
-							int p = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, base.mod.ProjectileType("UkkoZap1"), 46, 3f, Main.myPlayer, 0f, 0f);
+							int p = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<UkkoZap1>(), 46, 3f, Main.myPlayer, 0f, 0f);
 							Main.projectile[p].netUpdate = true;
 						}
 						if (base.npc.ai[2] >= 60f)
@@ -242,7 +255,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 							base.npc.ai[3] = 1f;
 							for (int j = 0; j < 2; j++)
 							{
-								int p2 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, Utils.NextFloat(Main.rand, -8f, 8f), Utils.NextFloat(Main.rand, -8f, 8f), base.mod.ProjectileType("UkkoGust"), 0, 0f, 255, 0f, 0f);
+								int p2 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, Utils.NextFloat(Main.rand, -8f, 8f), Utils.NextFloat(Main.rand, -8f, 8f), ModContent.ProjectileType<UkkoGust>(), 0, 0f, 255, 0f, 0f);
 								Main.projectile[p2].netUpdate = true;
 							}
 						}
@@ -287,7 +300,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 								float Speed = 18f;
 								Vector2 vector8 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 								float rotation = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
-								int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0) + (float)Main.rand.Next(-1, 1), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0) + (float)Main.rand.Next(-1, 1), base.mod.ProjectileType("UkkoThunderwave"), 30, 0f, 0, (float)base.npc.whoAmI, 0f);
+								int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0) + (float)Main.rand.Next(-1, 1), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0) + (float)Main.rand.Next(-1, 1), ModContent.ProjectileType<UkkoThunderwave>(), 30, 0f, 0, (float)base.npc.whoAmI, 0f);
 								Main.projectile[num54].netUpdate = true;
 							}
 							if (Main.raining ? (base.npc.ai[2] >= 35f) : (base.npc.ai[2] >= 25f))
@@ -331,7 +344,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 						}
 						if ((Main.raining ? (base.npc.ai[2] % 15f == 0f) : (base.npc.ai[2] % 20f == 0f)) && base.npc.ai[2] > 40f && base.npc.ai[2] < 160f)
 						{
-							int p3 = Projectile.NewProjectile(player.Center.X + (float)Main.rand.Next(-300, 300), player.Center.Y + (float)Main.rand.Next(-300, 300), 0f, 0f, base.mod.ProjectileType("UkkoZap1"), 46, 3f, Main.myPlayer, 0f, 0f);
+							int p3 = Projectile.NewProjectile(player.Center.X + (float)Main.rand.Next(-300, 300), player.Center.Y + (float)Main.rand.Next(-300, 300), 0f, 0f, ModContent.ProjectileType<UkkoZap1>(), 46, 3f, Main.myPlayer, 0f, 0f);
 							Main.projectile[p3].netUpdate = true;
 						}
 						if (base.npc.ai[2] >= 180f)
@@ -399,7 +412,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 						{
 							Dust dust2 = Dust.NewDustDirect(base.npc.position, base.npc.width, base.npc.height, 269, 0f, 0f, 100, default(Color), 2f);
 							dust2.velocity = -base.npc.DirectionTo(dust2.position);
-							base.npc.AddBuff(base.mod.BuffType("StoneskinBuff"), 3600, false);
+							base.npc.AddBuff(ModContent.BuffType<StoneskinBuff>(), 3600, false);
 						}
 						if (base.npc.ai[2] >= 90f)
 						{
@@ -440,22 +453,22 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 						{
 							if (Main.rand.Next(8) == 0)
 							{
-								int p4 = Projectile.NewProjectile(player.Center.X + (float)Main.rand.Next(-600, -300), player.Center.Y + (float)Main.rand.Next(-600, 600), Utils.NextFloat(Main.rand, -1f, 1f), Utils.NextFloat(Main.rand, -1f, 1f), base.mod.ProjectileType("UkkoDancingLights"), 0, 0f, Main.myPlayer, 0f, 0f);
+								int p4 = Projectile.NewProjectile(player.Center.X + (float)Main.rand.Next(-600, -300), player.Center.Y + (float)Main.rand.Next(-600, 600), Utils.NextFloat(Main.rand, -1f, 1f), Utils.NextFloat(Main.rand, -1f, 1f), ModContent.ProjectileType<UkkoDancingLights>(), 0, 0f, Main.myPlayer, 0f, 0f);
 								Main.projectile[p4].netUpdate = true;
 							}
 							if (Main.rand.Next(8) == 0)
 							{
-								int p5 = Projectile.NewProjectile(player.Center.X + (float)Main.rand.Next(300, 600), player.Center.Y + (float)Main.rand.Next(-600, 600), Utils.NextFloat(Main.rand, -1f, 1f), Utils.NextFloat(Main.rand, -1f, 1f), base.mod.ProjectileType("UkkoDancingLights"), 0, 0f, Main.myPlayer, 0f, 0f);
+								int p5 = Projectile.NewProjectile(player.Center.X + (float)Main.rand.Next(300, 600), player.Center.Y + (float)Main.rand.Next(-600, 600), Utils.NextFloat(Main.rand, -1f, 1f), Utils.NextFloat(Main.rand, -1f, 1f), ModContent.ProjectileType<UkkoDancingLights>(), 0, 0f, Main.myPlayer, 0f, 0f);
 								Main.projectile[p5].netUpdate = true;
 							}
 							if (Main.rand.Next(8) == 0)
 							{
-								int p6 = Projectile.NewProjectile(player.Center.X + (float)Main.rand.Next(-600, 600), player.Center.Y + (float)Main.rand.Next(-600, -300), Utils.NextFloat(Main.rand, -1f, 1f), Utils.NextFloat(Main.rand, -1f, 1f), base.mod.ProjectileType("UkkoDancingLights"), 0, 0f, Main.myPlayer, 0f, 0f);
+								int p6 = Projectile.NewProjectile(player.Center.X + (float)Main.rand.Next(-600, 600), player.Center.Y + (float)Main.rand.Next(-600, -300), Utils.NextFloat(Main.rand, -1f, 1f), Utils.NextFloat(Main.rand, -1f, 1f), ModContent.ProjectileType<UkkoDancingLights>(), 0, 0f, Main.myPlayer, 0f, 0f);
 								Main.projectile[p6].netUpdate = true;
 							}
 							if (Main.rand.Next(8) == 0)
 							{
-								int p7 = Projectile.NewProjectile(player.Center.X + (float)Main.rand.Next(-600, 600), player.Center.Y + (float)Main.rand.Next(300, 600), Utils.NextFloat(Main.rand, -1f, 1f), Utils.NextFloat(Main.rand, -1f, 1f), base.mod.ProjectileType("UkkoDancingLights"), 0, 0f, Main.myPlayer, 0f, 0f);
+								int p7 = Projectile.NewProjectile(player.Center.X + (float)Main.rand.Next(-600, 600), player.Center.Y + (float)Main.rand.Next(300, 600), Utils.NextFloat(Main.rand, -1f, 1f), Utils.NextFloat(Main.rand, -1f, 1f), ModContent.ProjectileType<UkkoDancingLights>(), 0, 0f, Main.myPlayer, 0f, 0f);
 								Main.projectile[p7].netUpdate = true;
 							}
 						}
@@ -505,7 +518,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 								speed = (float)((Main.rand.Next(2) == 0) ? 1 : -1) * speed;
 								float ai = (float)Main.rand.Next(120);
 								Vector2 speedR = Vector2.Normalize(Utils.RotatedByRandom(speed, 0.6)) * 20f;
-								Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, speedR.X, speedR.Y, base.mod.ProjectileType("UkkoLightning"), base.npc.damage / 4, 0f, Main.myPlayer, Utils.ToRotation(speed) + 1000f, ai);
+								Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, speedR.X, speedR.Y, ModContent.ProjectileType<UkkoLightning>(), base.npc.damage / 4, 0f, Main.myPlayer, Utils.ToRotation(speed) + 1000f, ai);
 							}
 							if (base.npc.ai[2] >= 50f && this.dashCounter < 2)
 							{
@@ -515,7 +528,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 							}
 							if (base.npc.ai[2] >= 20f && this.dashCounter >= 2)
 							{
-								int p8 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, base.npc.velocity.X, base.npc.velocity.Y, (base.npc.spriteDirection == -1) ? base.mod.ProjectileType("Jyrina") : base.mod.ProjectileType("JyrinaOpp"), 43, 3f, Main.myPlayer, 0f, 0f);
+								int p8 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, base.npc.velocity.X, base.npc.velocity.Y, (base.npc.spriteDirection == -1) ? ModContent.ProjectileType<Jyrina>() : ModContent.ProjectileType<JyrinaOpp>(), 43, 3f, Main.myPlayer, 0f, 0f);
 								Main.projectile[p8].netUpdate = true;
 								this.chariotCooldown = 5;
 								this.dashCounter = 0;
@@ -545,7 +558,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 							base.npc.ai[3] = 1f;
 							for (int n = 0; n < 5; n++)
 							{
-								int p9 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, Utils.NextFloat(Main.rand, -10f, 10f), Utils.NextFloat(Main.rand, -10f, 10f), base.mod.ProjectileType("UkkoGust"), 0, 0f, 255, 0f, 0f);
+								int p9 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, Utils.NextFloat(Main.rand, -10f, 10f), Utils.NextFloat(Main.rand, -10f, 10f), ModContent.ProjectileType<UkkoGust>(), 0, 0f, 255, 0f, 0f);
 								Main.projectile[p9].netUpdate = true;
 							}
 						}
@@ -565,7 +578,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 							speed2 = (float)((Main.rand.Next(2) == 0) ? 1 : -1) * speed2;
 							float ai2 = (float)Main.rand.Next(120);
 							Vector2 speedR2 = Vector2.Normalize(Utils.RotatedByRandom(speed2, 0.6)) * 20f;
-							Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, speedR2.X, speedR2.Y, base.mod.ProjectileType("UkkoLightning"), base.npc.damage / 4, 0f, Main.myPlayer, Utils.ToRotation(speed2) + 1000f, ai2);
+							Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, speedR2.X, speedR2.Y, ModContent.ProjectileType<UkkoLightning>(), base.npc.damage / 4, 0f, Main.myPlayer, Utils.ToRotation(speed2) + 1000f, ai2);
 						}
 						if (base.npc.ai[2] >= 50f)
 						{
@@ -587,7 +600,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 						if (base.npc.ai[2] == 8f)
 						{
 							base.npc.ai[3] = 1f;
-							int p10 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, base.mod.ProjectileType("StormSummonerPro"), 46, 3f, Main.myPlayer, (float)Main.rand.Next(4), 0f);
+							int p10 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<StormSummonerPro>(), 46, 3f, Main.myPlayer, (float)Main.rand.Next(4), 0f);
 							Main.projectile[p10].netUpdate = true;
 						}
 						if (base.npc.ai[2] >= 80f)
@@ -621,9 +634,9 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 							float Speed2 = 8f;
 							Vector2 vector9 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 							float rotation2 = (float)Math.Atan2((double)(vector9.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector9.X - (player.position.X + (float)player.width * 0.5f)));
-							int p11 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0), base.mod.ProjectileType("DualcastBall"), 36, 3f, Main.myPlayer, 0f, 0f);
+							int p11 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0), ModContent.ProjectileType<DualcastBall>(), 36, 3f, Main.myPlayer, 0f, 0f);
 							Main.projectile[p11].netUpdate = true;
-							int p12 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0), base.mod.ProjectileType("DualcastBall"), 36, 3f, Main.myPlayer, 1f, 0f);
+							int p12 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0), ModContent.ProjectileType<DualcastBall>(), 36, 3f, Main.myPlayer, 1f, 0f);
 							Main.projectile[p12].netUpdate = true;
 						}
 						if (base.npc.life < (int)((float)base.npc.lifeMax * 0.3f))
@@ -637,9 +650,9 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 								float Speed3 = 6f;
 								Vector2 vector10 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 								float rotation3 = (float)Math.Atan2((double)(vector10.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector10.X - (player.position.X + (float)player.width * 0.5f)));
-								int p13 = Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)rotation3) * (double)Speed3 * -1.0), (float)(Math.Sin((double)rotation3) * (double)Speed3 * -1.0), base.mod.ProjectileType("DualcastBall"), 36, 3f, Main.myPlayer, 0f, 0f);
+								int p13 = Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)rotation3) * (double)Speed3 * -1.0), (float)(Math.Sin((double)rotation3) * (double)Speed3 * -1.0), ModContent.ProjectileType<DualcastBall>(), 36, 3f, Main.myPlayer, 0f, 0f);
 								Main.projectile[p13].netUpdate = true;
-								int p14 = Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)rotation3) * (double)Speed3 * -1.0), (float)(Math.Sin((double)rotation3) * (double)Speed3 * -1.0), base.mod.ProjectileType("DualcastBall"), 36, 3f, Main.myPlayer, 1f, 0f);
+								int p14 = Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)rotation3) * (double)Speed3 * -1.0), (float)(Math.Sin((double)rotation3) * (double)Speed3 * -1.0), ModContent.ProjectileType<DualcastBall>(), 36, 3f, Main.myPlayer, 1f, 0f);
 								Main.projectile[p14].netUpdate = true;
 							}
 							if (base.npc.ai[2] >= 120f)
@@ -676,7 +689,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 						{
 							int A = Main.rand.Next(-200, 200) * 6;
 							int B = Main.rand.Next(-200, 200) - 1000;
-							int p15 = Projectile.NewProjectile(player.Center.X + (float)A, player.Center.Y + (float)B, 2f, 4f, base.mod.ProjectileType("UkkoBlizzard"), 26, 3f, Main.myPlayer, 0f, 0f);
+							int p15 = Projectile.NewProjectile(player.Center.X + (float)A, player.Center.Y + (float)B, 2f, 4f, ModContent.ProjectileType<UkkoBlizzard>(), 26, 3f, Main.myPlayer, 0f, 0f);
 							Main.projectile[p15].netUpdate = true;
 						}
 						if (base.npc.ai[2] >= 190f)
@@ -692,7 +705,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 						if (base.npc.ai[2] == 8f)
 						{
 							base.npc.ai[3] = 1f;
-							int p16 = Projectile.NewProjectile(player.Center.X, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("UkkoRainCloud"), 0, 0f, Main.myPlayer, 0f, 0f);
+							int p16 = Projectile.NewProjectile(player.Center.X, player.Center.Y - 200f, 0f, 0f, ModContent.ProjectileType<UkkoRainCloud>(), 0, 0f, Main.myPlayer, 0f, 0f);
 							Main.projectile[p16].netUpdate = true;
 						}
 						if (base.npc.ai[2] >= 60f)
@@ -736,7 +749,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 							}
 							for (int i3 = -16; i3 <= 16; i3++)
 							{
-								Projectile.NewProjectile(base.npc.Center, 10f * Utils.RotatedBy(Vector2.UnitX, 0.19634954084936207 * (double)i3, default(Vector2)), base.mod.ProjectileType("UkkoThunderwave"), 30, 0f, 0, (float)base.npc.whoAmI, 0f);
+								Projectile.NewProjectile(base.npc.Center, 10f * Utils.RotatedBy(Vector2.UnitX, 0.19634954084936207 * (double)i3, default(Vector2)), ModContent.ProjectileType<UkkoThunderwave>(), 30, 0f, 0, (float)base.npc.whoAmI, 0f);
 							}
 						}
 						if (base.npc.ai[2] == 58f)
@@ -747,7 +760,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 							}
 							for (int i4 = -8; i4 <= 8; i4++)
 							{
-								Projectile.NewProjectile(base.npc.Center, 8f * Utils.RotatedBy(Vector2.UnitX, 0.39269908169872414 * (double)i4, default(Vector2)), base.mod.ProjectileType("UkkoThunderwave"), 30, 0f, 0, (float)base.npc.whoAmI, 0f);
+								Projectile.NewProjectile(base.npc.Center, 8f * Utils.RotatedBy(Vector2.UnitX, 0.39269908169872414 * (double)i4, default(Vector2)), ModContent.ProjectileType<UkkoThunderwave>(), 30, 0f, 0, (float)base.npc.whoAmI, 0f);
 							}
 						}
 						if (base.npc.ai[2] >= 160f)
@@ -760,7 +773,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 						}
 						break;
 					case 15:
-						if (this.teamCooldown != 0 || !NPC.AnyNPCs(base.mod.NPCType("Akka")))
+						if (this.teamCooldown != 0 || !NPC.AnyNPCs(ModContent.NPCType<Akka>()))
 						{
 							base.npc.ai[1] = (float)Main.rand.Next(17);
 							base.npc.ai[2] = 0f;
@@ -791,7 +804,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 							{
 								Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Zap1").WithVolume(0.9f).WithPitchVariance(0.1f), -1, -1);
 							}
-							Projectile.NewProjectile(base.npc.Center, new Vector2(0f, 0f), base.mod.ProjectileType("UkkoElectricBlast"), 0, 0f, 0, (float)base.npc.whoAmI, 0f);
+							Projectile.NewProjectile(base.npc.Center, new Vector2(0f, 0f), ModContent.ProjectileType<UkkoElectricBlast>(), 0, 0f, 0, (float)base.npc.whoAmI, 0f);
 						}
 						if (base.npc.ai[2] >= 180f)
 						{
@@ -804,7 +817,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 						}
 						break;
 					case 16:
-						if (this.teamCooldown == 0 && NPC.AnyNPCs(base.mod.NPCType("Akka")))
+						if (this.teamCooldown == 0 && NPC.AnyNPCs(ModContent.NPCType<Akka>()))
 						{
 							RedeUkkoAkka.TAearthProtection = true;
 							this.MoveToVector2(EarthProtectPos);
@@ -813,27 +826,27 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 							{
 								if (player.ZoneHoly)
 								{
-									int p17 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("EarthBarrier"), 0, 0f, Main.myPlayer, 0f, 0f);
+									int p17 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, ModContent.ProjectileType<EarthBarrier>(), 0, 0f, Main.myPlayer, 0f, 0f);
 									Main.projectile[p17].netUpdate = true;
 								}
 								else if (player.ZoneCorrupt)
 								{
-									int p18 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("EarthBarrier"), 0, 0f, Main.myPlayer, 1f, 0f);
+									int p18 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, ModContent.ProjectileType<EarthBarrier>(), 0, 0f, Main.myPlayer, 1f, 0f);
 									Main.projectile[p18].netUpdate = true;
 								}
 								else if (player.ZoneCrimson)
 								{
-									int p19 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("EarthBarrier"), 0, 0f, Main.myPlayer, 3f, 0f);
+									int p19 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, ModContent.ProjectileType<EarthBarrier>(), 0, 0f, Main.myPlayer, 3f, 0f);
 									Main.projectile[p19].netUpdate = true;
 								}
 								else if (player.ZoneDesert)
 								{
-									int p20 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("EarthBarrier"), 0, 0f, Main.myPlayer, 4f, 0f);
+									int p20 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, ModContent.ProjectileType<EarthBarrier>(), 0, 0f, Main.myPlayer, 4f, 0f);
 									Main.projectile[p20].netUpdate = true;
 								}
 								else
 								{
-									int p21 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("EarthBarrier"), 0, 0f, Main.myPlayer, 2f, 0f);
+									int p21 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, ModContent.ProjectileType<EarthBarrier>(), 0, 0f, Main.myPlayer, 2f, 0f);
 									Main.projectile[p21].netUpdate = true;
 								}
 							}
@@ -851,9 +864,9 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 								float Speed4 = Utils.NextFloat(Main.rand, 4f, 8f);
 								Vector2 vector11 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 								float rotation4 = (float)Math.Atan2((double)(vector11.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector11.X - (player.position.X + (float)player.width * 0.5f)));
-								int p22 = Projectile.NewProjectile(vector11.X, vector11.Y, (float)(Math.Cos((double)rotation4) * (double)Speed4 * -1.0), (float)(Math.Sin((double)rotation4) * (double)Speed4 * -1.0), base.mod.ProjectileType("DualcastBall"), 36, 3f, Main.myPlayer, 0f, 0f);
+								int p22 = Projectile.NewProjectile(vector11.X, vector11.Y, (float)(Math.Cos((double)rotation4) * (double)Speed4 * -1.0), (float)(Math.Sin((double)rotation4) * (double)Speed4 * -1.0), ModContent.ProjectileType<DualcastBall>(), 36, 3f, Main.myPlayer, 0f, 0f);
 								Main.projectile[p22].netUpdate = true;
-								int p23 = Projectile.NewProjectile(vector11.X, vector11.Y, (float)(Math.Cos((double)rotation4) * (double)Speed4 * -1.0), (float)(Math.Sin((double)rotation4) * (double)Speed4 * -1.0), base.mod.ProjectileType("DualcastBall"), 36, 3f, Main.myPlayer, 1f, 0f);
+								int p23 = Projectile.NewProjectile(vector11.X, vector11.Y, (float)(Math.Cos((double)rotation4) * (double)Speed4 * -1.0), (float)(Math.Sin((double)rotation4) * (double)Speed4 * -1.0), ModContent.ProjectileType<DualcastBall>(), 36, 3f, Main.myPlayer, 1f, 0f);
 								Main.projectile[p23].netUpdate = true;
 							}
 							if (base.npc.ai[2] >= 300f)

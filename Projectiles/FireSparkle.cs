@@ -7,6 +7,14 @@ namespace Redemption.Projectiles
 {
 	public class FireSparkle : ModProjectile
 	{
+		public override string Texture
+		{
+			get
+			{
+				return "Redemption/Empty";
+			}
+		}
+
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Fire Spark");
@@ -26,7 +34,7 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			int DustID2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y + 2f), base.projectile.width + 2, base.projectile.height + 2, 6, base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 1f);
+			int DustID2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 6, base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 1f);
 			Main.dust[DustID2].noGravity = true;
 			base.projectile.rotation += 0.06f;
 			Projectile projectile = base.projectile;

@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.NPCs;
+using Redemption.NPCs.v08;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -58,11 +60,6 @@ namespace Redemption.Projectiles
 			int DustID2 = Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 57, base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 1f);
 			base.projectile.rotation = (float)Math.Atan2((double)base.projectile.velocity.Y, (double)base.projectile.velocity.X) + 1.57f;
 			Main.dust[DustID2].noGravity = true;
-			base.projectile.localAI[0] += 1f;
-			if (base.projectile.localAI[0] > 120f)
-			{
-				base.projectile.Kill();
-			}
 			if (base.projectile.localAI[0] == 0f)
 			{
 				this.AdjustMagnitude(ref base.projectile.velocity);
@@ -104,11 +101,11 @@ namespace Redemption.Projectiles
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			if (target.type == base.mod.NPCType("TheSoulless") && target.life <= 0)
+			if (target.type == ModContent.NPCType<TheSoulless>() && target.life <= 0)
 			{
 				Main.NewText("The darkened Night will lose its Sight, Leaving the Light command the Fright, And the Might to the Holy Knight.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 			}
-			if (target.type == base.mod.NPCType("TheSoulless2") && target.life <= 0)
+			if (target.type == ModContent.NPCType<TheSoulless2>() && target.life <= 0)
 			{
 				Main.NewText("Be wary of the sombre tune that pierces the halls. Soon, he will come, soon.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 			}

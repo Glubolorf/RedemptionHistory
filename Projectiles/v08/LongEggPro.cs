@@ -1,5 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.NPCs;
+using Redemption.NPCs.Bosses;
+using Redemption.NPCs.Varients;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -39,7 +42,7 @@ namespace Redemption.Projectiles.v08
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			if ((target.type == base.mod.NPCType("KingChicken") || target.type == base.mod.NPCType("KingChickenT")) && target.life <= 0)
+			if (target.type == ModContent.NPCType<KingChicken>() && target.life <= 0)
 			{
 				string text = "*cluck cluck* What, You egg? *cluck cluck*";
 				Color rarityOrange = Colors.RarityOrange;
@@ -49,11 +52,11 @@ namespace Redemption.Projectiles.v08
 				rarityOrange = Colors.RarityOrange;
 				Main.NewText(text, r, g, rarityOrange.B, false);
 			}
-			if (target.type == base.mod.NPCType("VlitchCleaver") && target.life <= 0)
+			if (target.type == ModContent.NPCType<VlitchCleaver>() && target.life <= 0)
 			{
 				Main.NewText("Excuse me what?", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
 			}
-			if ((target.type == base.mod.NPCType("VlitchWormHead") || target.type == base.mod.NPCType("VlitchWormBody") || target.type == base.mod.NPCType("VlitchWormTail")) && target.life <= 0)
+			if ((target.type == ModContent.NPCType<VlitchWormHead>() || target.type == ModContent.NPCType<VlitchWormBody>() || target.type == ModContent.NPCType<VlitchWormTail>()) && target.life <= 0)
 			{
 				Main.NewText("SLAIN... BY AN EGG!?", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
 			}
@@ -67,7 +70,7 @@ namespace Redemption.Projectiles.v08
 			{
 				if (Main.rand.Next(4) == 0)
 				{
-					int i = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, base.mod.NPCType("LongChicken"), 0, 0f, 0f, 0f, 0f, 255);
+					int i = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, ModContent.NPCType<LongChicken>(), 0, 0f, 0f, 0f, 0f, 255);
 					if (Main.netMode == 2)
 					{
 						NetMessage.SendData(23, -1, -1, null, i, 0f, 0f, 0f, 0, 0, 0);
@@ -75,7 +78,7 @@ namespace Redemption.Projectiles.v08
 				}
 				if (Main.rand.Next(999) == 0)
 				{
-					int j = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, base.mod.NPCType("RainbowChicken"), 0, 0f, 0f, 0f, 0f, 255);
+					int j = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, ModContent.NPCType<RainbowChicken>(), 0, 0f, 0f, 0f, 0f, 255);
 					if (Main.netMode == 2)
 					{
 						NetMessage.SendData(23, -1, -1, null, j, 0f, 0f, 0f, 0, 0, 0);

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -54,7 +55,7 @@ namespace Redemption.Items.Weapons
 		{
 			if (type == 1)
 			{
-				type = base.mod.ProjectileType("DarkSteelArrow");
+				type = ModContent.ProjectileType<DarkSteelArrow>();
 			}
 			float numberProjectiles = (float)(2 + Main.rand.Next(1));
 			float rotation = MathHelper.ToRadians(1f);

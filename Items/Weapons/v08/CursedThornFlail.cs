@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -25,7 +26,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.knockBack = 7.5f;
 			base.item.damage = 930;
 			base.item.noUseGraphic = true;
-			base.item.shoot = base.mod.ProjectileType("CursedThornFlailPro");
+			base.item.shoot = ModContent.ProjectileType<CursedThornFlailPro>();
 			base.item.shootSpeed = 30f;
 			base.item.UseSound = SoundID.Item1;
 			base.item.melee = true;

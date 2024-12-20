@@ -30,11 +30,11 @@ namespace Redemption.Items.DruidDamageClass
 				int maxAccessoryIndex = 5 + player.extraAccessorySlots;
 				for (int i = 3; i < 3 + maxAccessoryIndex; i++)
 				{
-					if (slot != i && player.armor[i].type == base.mod.ItemType("ForestShacklesDusk"))
+					if (slot != i && player.armor[i].type == ModContent.ItemType<ForestShacklesDusk>())
 					{
 						return false;
 					}
-					if (slot != i && player.armor[i].type == base.mod.ItemType("ForestShacklesMidnight"))
+					if (slot != i && player.armor[i].type == ModContent.ItemType<ForestShacklesMidnight>())
 					{
 						return false;
 					}

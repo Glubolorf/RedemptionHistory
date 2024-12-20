@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -63,7 +65,7 @@ namespace Redemption.NPCs.LabNPCs.New
 			base.npc.TargetClosest(true);
 			Entity entity = Main.player[base.npc.target];
 			int boss = (int)base.npc.ai[0];
-			if (boss < 0 || boss >= 200 || !Main.npc[boss].active || Main.npc[boss].type != base.mod.NPCType("IrradiatedBehemoth2"))
+			if (boss < 0 || boss >= 200 || !Main.npc[boss].active || Main.npc[boss].type != ModContent.NPCType<IrradiatedBehemoth2>())
 			{
 				base.npc.active = false;
 			}
@@ -85,8 +87,20 @@ namespace Redemption.NPCs.LabNPCs.New
 			}
 			if (entity.Center.Y < base.npc.Center.Y && Main.rand.Next(5) == 0)
 			{
-				int projID = Projectile.NewProjectile(base.npc.Center.X + (float)Main.rand.Next(-250, 250), base.npc.Center.Y + (float)Main.rand.Next(-30, 30), 0f, (float)Main.rand.Next(-20, -10), base.mod.ProjectileType("GreenGasPro2"), 100, 1f, 255, 0f, 0f);
+				int projID = Projectile.NewProjectile(base.npc.Center.X + (float)Main.rand.Next(-250, 250), base.npc.Center.Y + (float)Main.rand.Next(-30, 30), 0f, (float)Main.rand.Next(-20, -10), ModContent.ProjectileType<GreenGasPro2>(), 100, 1f, 255, 0f, 0f);
 				Main.projectile[projID].netUpdate = true;
+			}
+		}
+
+		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+		{
+			if (Main.rand.Next(2) == 0 || Main.expertMode)
+			{
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff>(), Main.rand.Next(500, 1000), true);
+			}
+			if (Main.rand.Next(9) == 0 || (Main.expertMode && Main.rand.Next(7) == 0))
+			{
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff2>(), Main.rand.Next(250, 500), true);
 			}
 		}
 

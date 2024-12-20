@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
@@ -99,7 +100,7 @@ namespace Redemption.Projectiles.v08
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			target.AddBuff(base.mod.BuffType("BlackenedHeartDebuff"), 500, false);
+			target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), 500, false);
 		}
 	}
 }

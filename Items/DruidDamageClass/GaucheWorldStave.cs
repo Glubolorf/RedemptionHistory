@@ -1,7 +1,10 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
+using Redemption.Projectiles.DruidProjectiles.WorldStave;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
@@ -38,20 +41,20 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.UseSound = base.mod.GetLegacySoundSlot(2, "Sounds/Item/WorldTree1");
 			base.item.noMelee = true;
 			base.item.autoReuse = false;
-			base.item.shoot = base.mod.ProjectileType("WorldTree8");
+			base.item.shoot = ModContent.ProjectileType<WorldTree8>();
 			base.item.shootSpeed = 0f;
-			base.item.buffType = base.mod.BuffType("WorldStaveCooldownDebuff");
-			base.item.buffTime = 1000;
 			base.item.glowMask = GaucheWorldStave.customGlowMask;
+			base.item.potion = false;
 		}
 
 		public override bool CanUseItem(Player player)
 		{
-			return !player.HasBuff(base.mod.BuffType("WorldStaveCooldownDebuff"));
+			return !player.HasBuff(ModContent.BuffType<WorldStaveCooldownDebuff>());
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
+			player.AddBuff(ModContent.BuffType<WorldStaveCooldownDebuff>(), 1200, true);
 			position = Main.MouseWorld;
 			return true;
 		}

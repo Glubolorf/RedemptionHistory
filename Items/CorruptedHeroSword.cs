@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.NPCs.Bosses;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.Items
 
 		public override bool CanUseItem(Player player)
 		{
-			return !Main.dayTime && !NPC.AnyNPCs(base.mod.NPCType("VlitchCleaver"));
+			return !Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<VlitchCleaver>());
 		}
 
 		public override bool UseItem(Player player)

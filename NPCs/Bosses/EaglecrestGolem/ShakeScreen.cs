@@ -9,6 +9,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 		public override void ResetEffects()
 		{
 			this.shake = false;
+			this.shakeMega = false;
 			this.shakeSubtle = false;
 			this.shakeQuake = false;
 		}
@@ -16,6 +17,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 		public override void UpdateDead()
 		{
 			this.shake = false;
+			this.shakeMega = false;
 			this.shakeSubtle = false;
 			this.shakeQuake = false;
 		}
@@ -26,6 +28,11 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 			{
 				Main.screenPosition.X = Main.screenPosition.X + (float)Main.rand.Next(-10, 11);
 				Main.screenPosition.Y = Main.screenPosition.Y + (float)Main.rand.Next(-10, 11);
+			}
+			if (this.shakeMega)
+			{
+				Main.screenPosition.X = Main.screenPosition.X + (float)Main.rand.Next(-20, 21);
+				Main.screenPosition.Y = Main.screenPosition.Y + (float)Main.rand.Next(-20, 21);
 			}
 			if (this.shakeSubtle)
 			{
@@ -39,6 +46,8 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 		}
 
 		public bool shake;
+
+		public bool shakeMega;
 
 		public bool shakeSubtle;
 

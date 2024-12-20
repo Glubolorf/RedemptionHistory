@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -42,7 +43,7 @@ namespace Redemption.Items.Weapons
 			base.item.value = Item.sellPrice(0, 15, 0, 0);
 			base.item.rare = 9;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("BlueFlames");
+			base.item.shoot = ModContent.ProjectileType<BlueFlames>();
 			base.item.shootSpeed = 7.5f;
 			base.item.useAmmo = 23;
 			base.item.glowMask = SlayerFlamethrower.customGlowMask;

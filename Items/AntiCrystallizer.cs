@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -32,8 +33,8 @@ namespace Redemption.Items
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			player.buffImmune[base.mod.BuffType("XenomiteDebuff")] = true;
-			player.buffImmune[base.mod.BuffType("XenomiteDebuff2")] = true;
+			player.buffImmune[ModContent.BuffType<XenomiteDebuff>()] = true;
+			player.buffImmune[ModContent.BuffType<XenomiteDebuff2>()] = true;
 		}
 	}
 }

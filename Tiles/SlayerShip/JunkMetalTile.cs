@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -14,7 +15,7 @@ namespace Redemption.Tiles.SlayerShip
 			Main.tileBlockLight[(int)base.Type] = true;
 			Main.tileValue[(int)base.Type] = 650;
 			this.dustType = 226;
-			this.drop = base.mod.ItemType("Cyberscrap");
+			this.drop = ModContent.ItemType<Cyberscrap>();
 			this.minPick = 200;
 			this.mineResist = 4f;
 			this.soundType = 21;

@@ -1,9 +1,13 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
+using Redemption.Items.Armor;
+using Redemption.Items.Weapons;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 
 namespace Redemption.NPCs
 {
@@ -27,8 +31,8 @@ namespace Redemption.NPCs
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Newb");
-			Main.npcFrameCount[base.npc.type] = 26;
-			NPCID.Sets.ExtraFramesCount[base.npc.type] = 10;
+			Main.npcFrameCount[base.npc.type] = 25;
+			NPCID.Sets.ExtraFramesCount[base.npc.type] = 5;
 			NPCID.Sets.AttackFrameCount[base.npc.type] = 5;
 			NPCID.Sets.DangerDetectRange[base.npc.type] = 80;
 			NPCID.Sets.AttackType[base.npc.type] = 3;
@@ -97,37 +101,40 @@ namespace Redemption.NPCs
 
 		public override string GetChat()
 		{
-			if (RedeWorld.downedNebuleus)
+			if (!RedeWorld.downedNebuleus)
 			{
-				switch (Main.rand.Next(4))
+				Player player = Main.player[Main.myPlayer];
+				WeightedRandom<string> chat = new WeightedRandom<string>();
+				if (BasePlayer.HasHelmet(player, ModContent.ItemType<KingSlayerMask>(), true))
 				{
-				case 0:
-					return "Soon... I can feel myself being restored...";
-				case 1:
-					return "My death, my sleep within the earth, it has undone myself. But as my time awake grows longer, my lost self returns.";
-				case 2:
-					return "It's all coming back to me... I saw what you did... I can comprehend more than just the dirt below my feet now... I have something to say to you, but I am still not ready.";
-				default:
-					return "... I saw what you did.";
+					chat.Add("Heheh! Hewwo mister slayer! Wait... who's that?", 1.0);
 				}
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().chickenPower)
+				{
+					chat.Add("IT'S A CHICKEN! Come on mister chicken, time for your walk!", 1.0);
+				}
+				if (BasePlayer.HasHelmet(player, ModContent.ItemType<ArmorHKHead>(), true) && BasePlayer.HasChestplate(player, ModContent.ItemType<ArmorHK>(), true) && BasePlayer.HasChestplate(player, ModContent.ItemType<ArmorHKLeggings>(), true))
+				{
+					chat.Add("Do I know you?", 1.0);
+				}
+				chat.Add("Who you? You Terrarian?", 1.0);
+				chat.Add("Me find shiny stones!", 1.0);
+				chat.Add("You look stupid! Haha!", 1.0);
+				chat.Add("My dirt is 10% off!", 1.0);
+				chat.Add("Heheheh!", 1.0);
+				chat.Add("Hewwo! I am Newb!", 1.0);
+				return chat;
 			}
-			else
+			switch (Main.rand.Next(4))
 			{
-				switch (Main.rand.Next(6))
-				{
-				case 0:
-					return "I'M READY, I'M READY!";
-				case 1:
-					return "Me find shiny stones!";
-				case 2:
-					return "You look stupid! Haha!";
-				case 3:
-					return "My dirt is 10% off!";
-				case 4:
-					return "Where are all the other Noobs?";
-				default:
-					return "Hewwo! I am Newb!";
-				}
+			case 0:
+				return "Soon... I can feel myself being restored...";
+			case 1:
+				return "My death, my sleep within the earth, it has undone myself. But as my time awake grows longer, my lost self returns.";
+			case 2:
+				return "It's all coming back to me... I saw what you did... I can comprehend more than just the dirt below my feet now... I have something to say to you, but I am still not ready.";
+			default:
+				return "... I saw what you did.";
 			}
 		}
 
@@ -155,7 +162,7 @@ namespace Redemption.NPCs
 				return;
 			}
 			Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 37, 1f, 0f);
-			Main.LocalPlayer.AddBuff(base.mod.BuffType("NoobsBlessingBuff"), 36000, true);
+			Main.LocalPlayer.AddBuff(ModContent.BuffType<NoobsBlessingBuff>(), 36000, true);
 		}
 
 		public static string SeriousChat()
@@ -232,9 +239,7 @@ namespace Redemption.NPCs
 
 		public override void DrawTownAttackSwing(ref Texture2D item, ref int itemSize, ref float scale, ref Vector2 offset)
 		{
-			item = Main.itemTexture[base.mod.ItemType("AncientWoodSword")];
+			item = Main.itemTexture[ModContent.ItemType<AncientWoodSword>()];
 		}
-
-		private int seriousFrame;
 	}
 }

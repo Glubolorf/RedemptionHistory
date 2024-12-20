@@ -35,7 +35,7 @@ namespace Redemption.Projectiles
 			base.projectile.magic = true;
 			base.projectile.tileCollide = false;
 			base.projectile.ignoreWater = true;
-			base.projectile.alpha = 240;
+			base.projectile.alpha = 100;
 			base.projectile.extraUpdates = 1;
 			ProjectileID.Sets.TrailCacheLength[base.projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[base.projectile.type] = 0;
@@ -47,9 +47,8 @@ namespace Redemption.Projectiles
 			Lighting.AddLight(base.projectile.Center, (float)(255 - base.projectile.alpha) * 1f / 255f, (float)(255 - base.projectile.alpha) * 1f / 255f, (float)(255 - base.projectile.alpha) * 1f / 255f);
 			Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, 235, 0f, 0f, 0, default(Color), 1f);
 			base.projectile.rotation = (float)Math.Atan2((double)base.projectile.velocity.Y, (double)base.projectile.velocity.X) + 1.57f;
-			base.projectile.localAI[0] += 1f;
-			base.projectile.alpha = (int)base.projectile.localAI[0] * 10;
-			if (base.projectile.localAI[0] > 30f)
+			base.projectile.alpha += 4;
+			if (base.projectile.alpha >= 255)
 			{
 				base.projectile.Kill();
 			}

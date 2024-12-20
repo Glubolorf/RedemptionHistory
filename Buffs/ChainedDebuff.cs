@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Redemption.NPCs;
 using Terraria;
 using Terraria.ModLoader;
@@ -17,9 +18,9 @@ namespace Redemption.Buffs
 
 		public override void Update(Player player, ref int buffIndex)
 		{
-			player.velocity.X = 0f;
-			player.velocity.Y = 0f;
+			player.velocity = Vector2.Zero;
 			player.maxFallSpeed = 0f;
+			player.position = player.oldPosition;
 		}
 
 		public override void Update(NPC npc, ref int buffIndex)

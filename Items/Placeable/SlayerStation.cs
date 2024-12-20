@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles.SlayerShip;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -25,7 +26,7 @@ namespace Redemption.Items.Placeable
 			base.item.consumable = true;
 			base.item.value = (base.item.value = Item.sellPrice(0, 8, 0, 0));
 			base.item.rare = 9;
-			base.item.createTile = base.mod.TileType("SlayerFabricatorTile");
+			base.item.createTile = ModContent.TileType<SlayerFabricatorTile>();
 			base.item.placeStyle = 0;
 		}
 	}

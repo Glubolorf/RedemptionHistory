@@ -27,7 +27,6 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			base.projectile.localAI[0] += 1f;
 			Projectile projectile = base.projectile;
 			projectile.velocity.Y = projectile.velocity.Y + 0.5f;
 		}

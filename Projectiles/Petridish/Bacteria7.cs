@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ID;
@@ -64,7 +65,7 @@ namespace Redemption.Projectiles.Petridish
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			target.immune[base.projectile.owner] = 3;
-			target.AddBuff(base.mod.BuffType("BInfectionDebuff"), 1000, false);
+			target.AddBuff(ModContent.BuffType<BInfectionDebuff>(), 1000, false);
 		}
 	}
 }

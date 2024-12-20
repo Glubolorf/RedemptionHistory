@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.DruidProjectiles;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -36,7 +37,7 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
-			return body.type == base.mod.ItemType("SapphireChestplate") && legs.type == base.mod.ItemType("SapphireLeggings");
+			return body.type == ModContent.ItemType<SapphireChestplate>() && legs.type == ModContent.ItemType<SapphireLeggings>();
 		}
 
 		public override void ArmorSetShadows(Player player)
@@ -48,9 +49,9 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 		{
 			player.setBonus = "You are surrounded by 3 Corruption Spirits, damages foes and reforms quickly after death";
 			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).sapphireBonus = true;
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().sapphireBonus && Main.rand.Next(100) == 0 && player.ownedProjectileCounts[base.mod.ProjectileType("CorruptSoul2")] <= 2)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().sapphireBonus && Main.rand.Next(100) == 0 && player.ownedProjectileCounts[ModContent.ProjectileType<CorruptSoul2>()] <= 2)
 			{
-				Projectile.NewProjectile(player.position, Vector2.Zero, base.mod.ProjectileType("CorruptSoul2"), 60, 0f, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(player.position, Vector2.Zero, ModContent.ProjectileType<CorruptSoul2>(), 60, 0f, player.whoAmI, 0f, 0f);
 			}
 		}
 

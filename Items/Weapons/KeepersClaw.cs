@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -32,7 +33,7 @@ namespace Redemption.Items.Weapons
 
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
 		{
-			target.AddBuff(base.mod.BuffType("NecroticGouge"), 600, false);
+			target.AddBuff(ModContent.BuffType<NecroticGouge>(), 600, false);
 		}
 
 		public override void AddRecipes()

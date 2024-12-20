@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Projectiles.Minions.HoloMinions;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,9 +30,9 @@ namespace Redemption.Items.Weapons
 			base.item.knockBack = 5f;
 			base.item.value = Item.buyPrice(1, 50, 0, 0);
 			base.item.UseSound = SoundID.Item44;
-			base.item.shoot = base.mod.ProjectileType("HoloProjector");
+			base.item.shoot = ModContent.ProjectileType<HoloProjector>();
 			base.item.shootSpeed = 0f;
-			base.item.buffType = base.mod.BuffType("HoloMinionBuff");
+			base.item.buffType = ModContent.BuffType<HoloMinionBuff>();
 			base.item.buffTime = 3600;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}

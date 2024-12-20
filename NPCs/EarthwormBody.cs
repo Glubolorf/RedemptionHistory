@@ -55,7 +55,7 @@ namespace Redemption.NPCs
 				base.npc.active = false;
 				NetMessage.SendData(28, -1, -1, null, base.npc.whoAmI, -1f, 0f, 0f, 0, 0, 0);
 			}
-			if ((double)base.npc.ai[1] < (double)Main.npc.Length)
+			if ((double)base.npc.ai[1] < 200.0)
 			{
 				Vector2 npcCenter = new Vector2(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
 				float dirX = Main.npc[(int)base.npc.ai[1]].position.X + (float)(Main.npc[(int)base.npc.ai[1]].width / 2) - npcCenter.X;

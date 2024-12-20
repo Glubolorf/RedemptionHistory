@@ -1,5 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Items.Placeable;
+using Redemption.Projectiles.Minions;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -30,7 +33,7 @@ namespace Redemption.Tiles
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 32, 48, base.mod.ItemType("Mk2MicrobotFactory"), 1, false, 0, false, false);
+			Item.NewItem(i * 16, j * 16, 32, 48, ModContent.ItemType<Mk2MicrobotFactory>(), 1, false, 0, false, false);
 		}
 
 		public override void AnimateTile(ref int frame, ref int frameCounter)
@@ -47,13 +50,14 @@ namespace Redemption.Tiles
 			}
 		}
 
-		public override void RightClick(int x, int y)
+		public override bool NewRightClick(int i, int j)
 		{
-			x *= 16;
-			y *= 16;
-			Projectile.NewProjectile((float)x, (float)y, 0f, 0f, base.mod.ProjectileType("Mk2Microbot"), 40, 1.5f, Main.LocalPlayer.whoAmI, 0f, 0f);
-			Main.PlaySound(2, x, y, 53, 1f, 0f);
-			Main.LocalPlayer.AddBuff(base.mod.BuffType("Mk2MicrobotBuff"), 18000, true);
+			i *= 16;
+			j *= 16;
+			Projectile.NewProjectile((float)i, (float)j, 0f, 0f, ModContent.ProjectileType<Mk2Microbot>(), 40, 1.5f, Main.LocalPlayer.whoAmI, 0f, 0f);
+			Main.PlaySound(2, i, j, 53, 1f, 0f);
+			Main.LocalPlayer.AddBuff(ModContent.BuffType<Mk2MicrobotBuff>(), 18000, true);
+			return true;
 		}
 	}
 }

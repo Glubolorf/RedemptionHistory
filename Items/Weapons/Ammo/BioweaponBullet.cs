@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.v08;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -23,7 +24,7 @@ namespace Redemption.Items.Weapons.Ammo
 			base.item.knockBack = 4f;
 			base.item.value = 7;
 			base.item.rare = 7;
-			base.item.shoot = base.mod.ProjectileType("BioweaponBulletPro");
+			base.item.shoot = ModContent.ProjectileType<BioweaponBulletPro>();
 			base.item.shootSpeed = 5f;
 			base.item.ammo = AmmoID.Bullet;
 		}

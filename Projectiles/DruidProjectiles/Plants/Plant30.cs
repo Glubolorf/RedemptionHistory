@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.DruidProjectiles.Plants
 {
@@ -76,11 +77,11 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 			{
 				if (Main.rand.Next(30) == 0)
 				{
-					Projectile.NewProjectile(base.projectile.position.X + 6f, base.projectile.position.Y + 10f, (float)(-4 + Main.rand.Next(0, 3)), (float)(1 + Main.rand.Next(0, 3)), base.mod.ProjectileType("NightshadeMiniSkull"), base.projectile.damage, 0f, base.projectile.owner, (float)(this.IsOnNativeTerrain ? 1 : 0), 0f);
+					Projectile.NewProjectile(base.projectile.position.X + 6f, base.projectile.position.Y + 10f, (float)(-4 + Main.rand.Next(0, 3)), (float)(1 + Main.rand.Next(0, 3)), ModContent.ProjectileType<NightshadeMiniSkull>(), base.projectile.damage, 0f, base.projectile.owner, (float)(this.IsOnNativeTerrain ? 1 : 0), 0f);
 				}
 				if (Main.rand.Next(30) == 0)
 				{
-					Projectile.NewProjectile(base.projectile.position.X + 20f, base.projectile.position.Y + 10f, (float)(1 + Main.rand.Next(0, 3)), (float)(-5 + Main.rand.Next(0, 3)), base.mod.ProjectileType("NightshadeMiniSkull"), base.projectile.damage, 0f, base.projectile.owner, (float)(this.IsOnNativeTerrain ? 1 : 0), 0f);
+					Projectile.NewProjectile(base.projectile.position.X + 20f, base.projectile.position.Y + 10f, (float)(1 + Main.rand.Next(0, 3)), (float)(-5 + Main.rand.Next(0, 3)), ModContent.ProjectileType<NightshadeMiniSkull>(), base.projectile.damage, 0f, base.projectile.owner, (float)(this.IsOnNativeTerrain ? 1 : 0), 0f);
 				}
 			}
 		}

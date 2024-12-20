@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -60,7 +61,7 @@ namespace Redemption.NPCs
 				base.npc.active = false;
 				NetMessage.SendData(28, -1, -1, null, base.npc.whoAmI, -1f, 0f, 0f, 0, 0, 0);
 			}
-			if ((double)base.npc.ai[1] < (double)Main.npc.Length)
+			if ((double)base.npc.ai[1] < 200.0)
 			{
 				Vector2 npcCenter = new Vector2(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
 				float dirX = Main.npc[(int)base.npc.ai[1]].position.X + (float)(Main.npc[(int)base.npc.ai[1]].width / 2) - npcCenter.X;
@@ -99,11 +100,11 @@ namespace Redemption.NPCs
 		{
 			if (Main.rand.Next(2) == 0 || (Main.expertMode && Main.rand.Next(0) == 0))
 			{
-				target.AddBuff(base.mod.BuffType("XenomiteDebuff"), Main.rand.Next(500, 750), true);
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff>(), Main.rand.Next(500, 750), true);
 			}
 			if (Main.rand.Next(14) == 0 || (Main.expertMode && Main.rand.Next(9) == 0))
 			{
-				target.AddBuff(base.mod.BuffType("XenomiteDebuff2"), Main.rand.Next(50, 100), true);
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff2>(), Main.rand.Next(50, 100), true);
 			}
 		}
 	}

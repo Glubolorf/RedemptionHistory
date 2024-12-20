@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles.DruidProjectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -43,7 +44,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.useTurn = true;
 			base.item.noMelee = true;
 			base.item.noUseGraphic = true;
-			base.item.shoot = base.mod.ProjectileType("MadnessSlash");
+			base.item.shoot = ModContent.ProjectileType<MadnessSlash>();
 			base.item.glowMask = BeamKatana.customGlowMask;
 		}
 
@@ -72,7 +73,7 @@ namespace Redemption.Items.Weapons.v08
 				base.item.useAnimation = 4;
 				base.item.noMelee = true;
 				base.item.noUseGraphic = true;
-				base.item.shoot = base.mod.ProjectileType("MadnessSlash");
+				base.item.shoot = ModContent.ProjectileType<MadnessSlash>();
 			}
 			return base.CanUseItem(player);
 		}
@@ -83,7 +84,7 @@ namespace Redemption.Items.Weapons.v08
 			modRecipe.AddRecipeGroup("Redemption:Phasesabers", 1);
 			modRecipe.AddIngredient(null, "CorruptedXenomite", 10);
 			modRecipe.AddIngredient(548, 10);
-			modRecipe.AddTile(null, "DruidicAltarTile");
+			modRecipe.AddTile(134);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
 		}

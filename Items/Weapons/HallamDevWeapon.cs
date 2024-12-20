@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -45,7 +46,7 @@ namespace Redemption.Items.Weapons
 			base.item.expert = true;
 			base.item.UseSound = SoundID.Item44;
 			base.item.autoReuse = false;
-			base.item.shoot = base.mod.ProjectileType("RainbowCatPro");
+			base.item.shoot = ModContent.ProjectileType<RainbowCatPro>();
 			base.item.shootSpeed = 0f;
 			base.item.glowMask = HallamDevWeapon.customGlowMask;
 		}

@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -25,7 +26,7 @@ namespace Redemption.Items.Placeable
 			base.item.rare = 1;
 			base.item.consumable = true;
 			base.item.value = Item.sellPrice(0, 0, 15, 0);
-			base.item.createTile = base.mod.TileType("ChickenCoopTile");
+			base.item.createTile = ModContent.TileType<ChickenCoopTile>();
 		}
 
 		public override void AddRecipes()

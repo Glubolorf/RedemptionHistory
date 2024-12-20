@@ -1,6 +1,12 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Dusts;
+using Redemption.Items;
+using Redemption.Items.Armor;
+using Redemption.Items.Placeable;
+using Redemption.Items.Weapons;
+using Redemption.NPCs.Bosses.OmegaOblit;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,7 +18,7 @@ namespace Redemption.NPCs.Bosses
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Vlitch Gigipede");
+			base.DisplayName.SetDefault("Vlitch Gigapede");
 			Main.npcFrameCount[base.npc.type] = 1;
 		}
 
@@ -39,7 +45,7 @@ namespace Redemption.NPCs.Bosses
 			base.npc.value = (float)Item.buyPrice(0, 20, 0, 0);
 			base.npc.npcSlots = 1f;
 			base.npc.netAlways = true;
-			this.bossBag = base.mod.ItemType("VlitchGigipedeBag");
+			this.bossBag = ModContent.ItemType<VlitchGigipedeBag>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -55,7 +61,7 @@ namespace Redemption.NPCs.Bosses
 		{
 			if (Main.rand.Next(10) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("VlitchTrophy"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<VlitchTrophy>(), 1, false, 0, false, false);
 			}
 			if (Main.expertMode)
 			{
@@ -64,20 +70,20 @@ namespace Redemption.NPCs.Bosses
 			}
 			if (Main.rand.Next(14) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("GirusMask"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<GirusMask>(), 1, false, 0, false, false);
 			}
 			if (Main.rand.Next(3) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CorruptedRocketLauncher"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<CorruptedRocketLauncher>(), 1, false, 0, false, false);
 			}
 			if (Main.rand.Next(3) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CorruptedDoubleRifle"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<CorruptedDoubleRifle>(), 1, false, 0, false, false);
 			}
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CorruptedXenomite"), Main.rand.Next(18, 28), false, 0, false, false);
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CorruptedStarlite"), Main.rand.Next(15, 20), false, 0, false, false);
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("VlitchScale"), Main.rand.Next(25, 35), false, 0, false, false);
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("VlitchBattery"), Main.rand.Next(2, 4), false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<CorruptedXenomite>(), Main.rand.Next(18, 28), false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<CorruptedStarliteBar>(), Main.rand.Next(15, 20), false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<VlitchScale>(), Main.rand.Next(25, 35), false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<VlitchBattery>(), Main.rand.Next(2, 4), false, 0, false, false);
 		}
 
 		public override void BossLoot(ref string name, ref int potionType)
@@ -93,7 +99,7 @@ namespace Redemption.NPCs.Bosses
 					{
 						for (int j = 0; j < player2.inventory.Length; j++)
 						{
-							if (player2.inventory[j].type == base.mod.ItemType("RedemptionTeller"))
+							if (player2.inventory[j].type == ModContent.ItemType<RedemptionTeller>())
 							{
 								Main.NewText("<Chalice of Alignment> The second Vlitch Overlord is down! Only 1 more... I think?", Color.DarkGoldenrod, false);
 							}
@@ -107,9 +113,9 @@ namespace Redemption.NPCs.Bosses
 			{
 				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 			}
-			if (!RedeWorld.girusTalk2 && !NPC.AnyNPCs(base.mod.NPCType("VlitchCleaver")) && !NPC.AnyNPCs(base.mod.NPCType("OmegaOblitDamaged")) && !RedeWorld.girusCloaked && !RedeConfigClient.Instance.NoBossText)
+			if (!RedeWorld.girusTalk2 && !NPC.AnyNPCs(ModContent.NPCType<VlitchCleaver>()) && !NPC.AnyNPCs(ModContent.NPCType<OO>()) && !RedeWorld.girusCloaked && !RedeConfigClient.Instance.NoBossText)
 			{
-				Projectile.NewProjectile(new Vector2(base.npc.position.X, base.npc.position.Y), new Vector2(0f, 0f), base.mod.ProjectileType("GirusTalking2"), 0, 0f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X, base.npc.position.Y), new Vector2(0f, 0f), ModContent.ProjectileType<GirusTalking2>(), 0, 0f, 255, 0f, 0f);
 			}
 			if (!Main.dedServ)
 			{
@@ -161,25 +167,30 @@ namespace Redemption.NPCs.Bosses
 
 		public override bool PreAI()
 		{
+			if (!this.title)
+			{
+				Redemption.ShowTitle(base.npc, 11);
+				this.title = true;
+			}
 			if (Main.dayTime)
 			{
 				base.npc.timeLeft = 0;
 				NPC npc = base.npc;
 				npc.position.Y = npc.position.Y - 300f;
 			}
-			if (NPC.AnyNPCs(base.mod.NPCType("VlitchCore1")))
+			if (NPC.AnyNPCs(ModContent.NPCType<VlitchCore1>()))
 			{
 				base.npc.dontTakeDamage = true;
 			}
-			if (NPC.AnyNPCs(base.mod.NPCType("VlitchCore2")))
+			if (NPC.AnyNPCs(ModContent.NPCType<VlitchCore2>()))
 			{
 				base.npc.dontTakeDamage = true;
 			}
-			if (NPC.AnyNPCs(base.mod.NPCType("VlitchCore3")))
+			if (NPC.AnyNPCs(ModContent.NPCType<VlitchCore3>()))
 			{
 				base.npc.dontTakeDamage = true;
 			}
-			if (!NPC.AnyNPCs(base.mod.NPCType("VlitchCore1")) && !NPC.AnyNPCs(base.mod.NPCType("VlitchCore2")) && !NPC.AnyNPCs(base.mod.NPCType("VlitchCore3")))
+			if (!NPC.AnyNPCs(ModContent.NPCType<VlitchCore1>()) && !NPC.AnyNPCs(ModContent.NPCType<VlitchCore2>()) && !NPC.AnyNPCs(ModContent.NPCType<VlitchCore3>()))
 			{
 				base.npc.dontTakeDamage = false;
 			}
@@ -195,7 +206,7 @@ namespace Redemption.NPCs.Bosses
 					Main.NewText("No matter... The corrupted worms are smart enough.", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
 				}
 			}
-			if (base.npc.life > 0 && !NPC.AnyNPCs(base.mod.NPCType("VlitchWormTail")))
+			if (base.npc.life > 0 && !NPC.AnyNPCs(ModContent.NPCType<VlitchWormTail>()))
 			{
 				base.npc.ai[2] += 1f;
 				if (base.npc.ai[2] == 60f && !RedeConfigClient.Instance.NoBossText)
@@ -225,7 +236,7 @@ namespace Redemption.NPCs.Bosses
 				{
 					Main.NewText("[DEPLOYING CORE]", Color.Red.R, Color.Red.G, Color.Red.B, false);
 				}
-				int Minion = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("VlitchCore1"), 0, 0f, 0f, 0f, 0f, 255);
+				int Minion = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<VlitchCore1>(), 0, 0f, 0f, 0f, 0f, 255);
 				Main.npc[Minion].netUpdate = true;
 				base.npc.ai[3] = 0f;
 				this.Core1 = true;
@@ -243,7 +254,7 @@ namespace Redemption.NPCs.Bosses
 					{
 						Main.NewText("[DEPLOYING CORE]", Color.Red.R, Color.Red.G, Color.Red.B, false);
 					}
-					int Minion2 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("VlitchCore2"), 0, 0f, 0f, 0f, 0f, 255);
+					int Minion2 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<VlitchCore2>(), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion2].netUpdate = true;
 					base.npc.ai[3] = 0f;
 					this.Core2 = true;
@@ -266,7 +277,7 @@ namespace Redemption.NPCs.Bosses
 					{
 						Main.NewText("[DEPLOYING CORE]", Color.Red.R, Color.Red.G, Color.Red.B, false);
 					}
-					int Minion3 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("VlitchCore3"), 0, 0f, 0f, 0f, 0f, 255);
+					int Minion3 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<VlitchCore3>(), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion3].netUpdate = true;
 					base.npc.ai[3] = 0f;
 					this.Core3 = true;
@@ -283,11 +294,11 @@ namespace Redemption.NPCs.Bosses
 					int randomWormLength = 16;
 					for (int i = 0; i < randomWormLength; i++)
 					{
-						latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("VlitchWormBody"), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
+						latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<VlitchWormBody>(), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
 						Main.npc[latestNPC].realLife = base.npc.whoAmI;
 						Main.npc[latestNPC].ai[3] = (float)base.npc.whoAmI;
 					}
-					latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("VlitchWormTail"), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
+					latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<VlitchWormTail>(), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
 					Main.npc[latestNPC].realLife = base.npc.whoAmI;
 					Main.npc[latestNPC].ai[3] = (float)base.npc.whoAmI;
 					base.npc.ai[0] = 1f;
@@ -295,7 +306,7 @@ namespace Redemption.NPCs.Bosses
 				}
 				if (Main.rand.Next(2) == 0)
 				{
-					Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, base.mod.DustType("VlitchFlame"), 0f, 0f, 0, default(Color), 1f);
+					Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, ModContent.DustType<VlitchFlame>(), 0f, 0f, 0, default(Color), 1f);
 				}
 			}
 			int minTilePosX = (int)((double)base.npc.position.X / 16.0) - 1;
@@ -587,5 +598,7 @@ namespace Redemption.NPCs.Bosses
 		private bool Core2;
 
 		private bool Core3;
+
+		private bool title;
 	}
 }

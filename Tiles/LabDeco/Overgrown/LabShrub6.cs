@@ -10,7 +10,6 @@ namespace Redemption.Tiles.LabDeco.Overgrown
 		public override void SetDefaults()
 		{
 			Main.tileFrameImportant[(int)base.Type] = true;
-			TileObjectData.addTile((int)base.Type);
 			Main.tileCut[(int)base.Type] = true;
 			Main.tileSolid[(int)base.Type] = false;
 			Main.tileMergeDirt[(int)base.Type] = true;

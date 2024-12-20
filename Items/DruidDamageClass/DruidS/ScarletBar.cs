@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles.Bars;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -24,7 +25,7 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 			base.item.useTime = 10;
 			base.item.useStyle = 1;
 			base.item.consumable = true;
-			base.item.createTile = base.mod.TileType("ScarletBarTile");
+			base.item.createTile = ModContent.TileType<ScarletBarTile>();
 			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 

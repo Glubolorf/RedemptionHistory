@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.ChickenArmy;
+using Redemption.Items;
+using Redemption.Items.Weapons.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -55,12 +57,12 @@ namespace Redemption.NPCs.ChickenInvasion
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/ChickenGore3"), 1f);
 				if (base.npc.FindBuffIndex(24) != -1)
 				{
-					Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("FriedChicken"), 1, false, 0, false, false);
+					Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<FriedChicken>(), 1, false, 0, false, false);
 				}
 			}
 			if (Main.netMode != 1 && base.npc.life <= 0)
 			{
-				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("ChickenMan"), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<ChickenMan>(), 0, 0f, 0f, 0f, 0f, 255);
 			}
 		}
 
@@ -68,15 +70,15 @@ namespace Redemption.NPCs.ChickenInvasion
 		{
 			if (Main.rand.Next(200) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ChickenMountItem"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<ChickenMountItem>(), 1, false, 0, false, false);
 			}
 			if (Main.rand.Next(200) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CavalryLance"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<CavalryLance>(), 1, false, 0, false, false);
 			}
 			if (RedeWorld.downedPatientZero && Main.rand.Next(1200) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ChickLauncher"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<ChickLauncher>(), 1, false, 0, false, false);
 			}
 			if (ChickWorld.chickArmy)
 			{
@@ -138,17 +140,13 @@ namespace Redemption.NPCs.ChickenInvasion
 			{
 				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 				int num214 = hopAni.Height / 1;
-				int y6 = num214 * this.hopFrame;
+				int y6 = 0;
 				Main.spriteBatch.Draw(hopAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, hopAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)hopAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
 		}
 
 		private bool hop;
-
-		private int hopFrame;
-
-		private int hopCounter;
 
 		private bool charrrge;
 	}

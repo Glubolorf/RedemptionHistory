@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ID;
@@ -50,7 +51,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 				}
 			}
 			Player player = Main.player[base.projectile.owner];
-			if (!player.HasBuff(base.mod.BuffType("NatureGuardian23Buff")))
+			if (!player.HasBuff(ModContent.BuffType<NatureGuardian23Buff>()))
 			{
 				base.projectile.Kill();
 			}

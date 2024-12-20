@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Projectiles.Minions;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,9 +31,9 @@ namespace Redemption.Items.Weapons
 			base.item.value = Item.buyPrice(0, 0, 2, 50);
 			base.item.rare = 1;
 			base.item.UseSound = SoundID.Item44;
-			base.item.shoot = base.mod.ProjectileType("CombatChicken");
+			base.item.shoot = ModContent.ProjectileType<CombatChicken>();
 			base.item.shootSpeed = 10f;
-			base.item.buffType = base.mod.BuffType("CombatChickenBuff");
+			base.item.buffType = ModContent.BuffType<CombatChickenBuff>();
 			base.item.buffTime = 3600;
 		}
 

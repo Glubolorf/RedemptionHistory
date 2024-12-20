@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -61,7 +62,7 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 				modPlayer.spiritWyvern1 = false;
 			}
 			int num1038 = 30;
-			if (!player.HasBuff(base.mod.BuffType("SpiritWyvernBuff")))
+			if (!player.HasBuff(ModContent.BuffType<SpiritWyvernBuff>()))
 			{
 				base.projectile.Kill();
 			}

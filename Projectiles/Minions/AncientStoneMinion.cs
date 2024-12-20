@@ -1,7 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Minions
 {
@@ -49,7 +51,7 @@ namespace Redemption.Projectiles.Minions
 		{
 			Player player = Main.player[base.projectile.owner];
 			RedePlayer modPlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			if (player.dead || !player.HasBuff(base.mod.BuffType("AncientStoneMinionBuff")))
+			if (player.dead || !player.HasBuff(ModContent.BuffType<AncientStoneMinionBuff>()))
 			{
 				modPlayer.ancientStoneMinion = false;
 				base.projectile.Kill();

@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable
@@ -24,7 +25,7 @@ namespace Redemption.Items.Placeable
 			base.item.consumable = true;
 			base.item.value = 100;
 			base.item.rare = 2;
-			base.item.createTile = base.mod.TileType("ForestGolemPaintingTile");
+			base.item.createTile = ModContent.TileType<ForestGolemPaintingTile>();
 			base.item.placeStyle = 0;
 		}
 	}

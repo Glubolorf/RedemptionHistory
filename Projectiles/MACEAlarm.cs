@@ -27,7 +27,6 @@ namespace Redemption.Projectiles
 		public override void AI()
 		{
 			Player player = Main.player[base.projectile.owner];
-			base.projectile.localAI[0] += 1f;
 			base.projectile.alpha += 10;
 			base.projectile.scale -= 0.1f;
 			if (base.projectile.scale < 0f)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.DruidProjectiles.Plants
 {
@@ -72,27 +73,27 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 				{
 					if (Main.rand.Next(50) == 0)
 					{
-						Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 8f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-8 + Main.rand.Next(0, 6)), base.mod.ProjectileType("PoisonTearPro"), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
+						Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 8f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-8 + Main.rand.Next(0, 6)), ModContent.ProjectileType<PoisonTearPro>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
 					}
 					if (Main.rand.Next(50) == 0)
 					{
-						Projectile.NewProjectile(base.projectile.position.X + 28f, base.projectile.position.Y + 16f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-8 + Main.rand.Next(0, 6)), base.mod.ProjectileType("PoisonTearPro"), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
+						Projectile.NewProjectile(base.projectile.position.X + 28f, base.projectile.position.Y + 16f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-8 + Main.rand.Next(0, 6)), ModContent.ProjectileType<PoisonTearPro>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
 					}
 					if (Main.rand.Next(50) == 0)
 					{
-						Projectile.NewProjectile(base.projectile.position.X + 8f, base.projectile.position.Y + 22f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-8 + Main.rand.Next(0, 6)), base.mod.ProjectileType("PoisonTearPro"), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
+						Projectile.NewProjectile(base.projectile.position.X + 8f, base.projectile.position.Y + 22f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-8 + Main.rand.Next(0, 6)), ModContent.ProjectileType<PoisonTearPro>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
 					}
 					if (Main.rand.Next(50) == 0)
 					{
-						Projectile.NewProjectile(base.projectile.position.X + 30f, base.projectile.position.Y + 24f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-8 + Main.rand.Next(0, 6)), base.mod.ProjectileType("PoisonTearPro"), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
+						Projectile.NewProjectile(base.projectile.position.X + 30f, base.projectile.position.Y + 24f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-8 + Main.rand.Next(0, 6)), ModContent.ProjectileType<PoisonTearPro>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
 					}
 					if (Main.rand.Next(50) == 0)
 					{
-						Projectile.NewProjectile(base.projectile.position.X + 6f, base.projectile.position.Y + 38f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-8 + Main.rand.Next(0, 6)), base.mod.ProjectileType("PoisonTearPro"), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
+						Projectile.NewProjectile(base.projectile.position.X + 6f, base.projectile.position.Y + 38f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-8 + Main.rand.Next(0, 6)), ModContent.ProjectileType<PoisonTearPro>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
 					}
 					if (Main.rand.Next(50) == 0)
 					{
-						Projectile.NewProjectile(base.projectile.position.X + 26f, base.projectile.position.Y + 34f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-8 + Main.rand.Next(0, 6)), base.mod.ProjectileType("PoisonTearPro"), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
+						Projectile.NewProjectile(base.projectile.position.X + 26f, base.projectile.position.Y + 34f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-8 + Main.rand.Next(0, 6)), ModContent.ProjectileType<PoisonTearPro>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
 						return;
 					}
 				}
@@ -100,27 +101,27 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 				{
 					if (Main.rand.Next(100) == 0)
 					{
-						Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 8f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), base.mod.ProjectileType("PoisonTearPro"), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
+						Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 8f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), ModContent.ProjectileType<PoisonTearPro>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
 					}
 					if (Main.rand.Next(100) == 0)
 					{
-						Projectile.NewProjectile(base.projectile.position.X + 28f, base.projectile.position.Y + 16f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), base.mod.ProjectileType("PoisonTearPro"), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
+						Projectile.NewProjectile(base.projectile.position.X + 28f, base.projectile.position.Y + 16f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), ModContent.ProjectileType<PoisonTearPro>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
 					}
 					if (Main.rand.Next(100) == 0)
 					{
-						Projectile.NewProjectile(base.projectile.position.X + 8f, base.projectile.position.Y + 22f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), base.mod.ProjectileType("PoisonTearPro"), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
+						Projectile.NewProjectile(base.projectile.position.X + 8f, base.projectile.position.Y + 22f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), ModContent.ProjectileType<PoisonTearPro>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
 					}
 					if (Main.rand.Next(100) == 0)
 					{
-						Projectile.NewProjectile(base.projectile.position.X + 30f, base.projectile.position.Y + 24f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), base.mod.ProjectileType("PoisonTearPro"), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
+						Projectile.NewProjectile(base.projectile.position.X + 30f, base.projectile.position.Y + 24f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), ModContent.ProjectileType<PoisonTearPro>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
 					}
 					if (Main.rand.Next(100) == 0)
 					{
-						Projectile.NewProjectile(base.projectile.position.X + 6f, base.projectile.position.Y + 38f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), base.mod.ProjectileType("PoisonTearPro"), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
+						Projectile.NewProjectile(base.projectile.position.X + 6f, base.projectile.position.Y + 38f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), ModContent.ProjectileType<PoisonTearPro>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
 					}
 					if (Main.rand.Next(100) == 0)
 					{
-						Projectile.NewProjectile(base.projectile.position.X + 26f, base.projectile.position.Y + 34f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), base.mod.ProjectileType("PoisonTearPro"), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
+						Projectile.NewProjectile(base.projectile.position.X + 26f, base.projectile.position.Y + 34f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), ModContent.ProjectileType<PoisonTearPro>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
 					}
 				}
 			}

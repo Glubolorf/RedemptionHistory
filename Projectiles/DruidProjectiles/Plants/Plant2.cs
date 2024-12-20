@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.DruidProjectiles.Plants
 {
@@ -74,11 +75,11 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 			base.projectile.localAI[0] += 1f;
 			if (RedeHelper.ClosestNPC(ref this.target, 800f, base.projectile.Center, false, player.MinionAttackTargetNPC) && base.projectile.localAI[0] % 15f == 0f && base.projectile.frame >= 5)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 2f, base.projectile.position.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center)), base.mod.ProjectileType("SkyflowerPetal"), base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 2f, base.projectile.position.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center)), ModContent.ProjectileType<SkyflowerPetal>(), base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 0f);
 			}
 			if (this.IsOnNativeTerrain && Main.rand.Next(5) == 0)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.Center.X + (float)Main.rand.Next(-32, 32), base.projectile.Bottom.Y + 6f), new Vector2(0f, 0f), base.mod.ProjectileType("SkyflowerRainPro"), base.projectile.damage / 2, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(new Vector2(base.projectile.Center.X + (float)Main.rand.Next(-32, 32), base.projectile.Bottom.Y + 6f), new Vector2(0f, 0f), ModContent.ProjectileType<SkyflowerRainPro>(), base.projectile.damage / 2, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			}
 		}
 

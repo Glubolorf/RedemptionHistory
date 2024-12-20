@@ -44,23 +44,23 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 				int maxAccessoryIndex = 5 + player.extraAccessorySlots;
 				for (int i = 3; i < 3 + maxAccessoryIndex; i++)
 				{
-					if (slot != i && player.armor[i].type == base.mod.ItemType("TinCross"))
+					if (slot != i && player.armor[i].type == ModContent.ItemType<TinCross>())
 					{
 						return false;
 					}
-					if (slot != i && player.armor[i].type == base.mod.ItemType("SpiritualRelic"))
+					if (slot != i && player.armor[i].type == ModContent.ItemType<SpiritualRelic>())
 					{
 						return false;
 					}
-					if (slot != i && player.armor[i].type == base.mod.ItemType("SacredCross"))
+					if (slot != i && player.armor[i].type == ModContent.ItemType<SacredCross>())
 					{
 						return false;
 					}
-					if (slot != i && player.armor[i].type == base.mod.ItemType("CopperCross"))
+					if (slot != i && player.armor[i].type == ModContent.ItemType<CopperCross>())
 					{
 						return false;
 					}
-					if (slot != i && player.armor[i].type == base.mod.ItemType("LastBurden"))
+					if (slot != i && player.armor[i].type == ModContent.ItemType<LastBurden>())
 					{
 						return false;
 					}
@@ -77,9 +77,9 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 			redePlayer.spiritExtras += 3;
 			redePlayer.spiritHoming = true;
 			redePlayer.spiritGolemCross = true;
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritGolemCross && player.ownedProjectileCounts[base.mod.ProjectileType("SpiritGolemHead")] == 0)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritGolemCross && player.ownedProjectileCounts[ModContent.ProjectileType<SpiritGolemHead>()] == 0)
 			{
-				Projectile.NewProjectile(player.position, Vector2.Zero, base.mod.ProjectileType("SpiritGolemHead"), 50, 0f, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(player.position, Vector2.Zero, ModContent.ProjectileType<SpiritGolemHead>(), 50, 0f, player.whoAmI, 0f, 0f);
 			}
 		}
 	}

@@ -1,4 +1,8 @@
 ﻿using System;
+using Redemption.Items.Armor;
+using Redemption.Items.Datalogs;
+using Redemption.Items.Weapons;
+using Redemption.NPCs.Bosses.KingSlayerIII;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -8,7 +12,7 @@ namespace Redemption.Items
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Treasure Bag");
+			base.DisplayName.SetDefault("Cyber Loot Box");
 			base.Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
 		}
 
@@ -31,7 +35,7 @@ namespace Redemption.Items
 		{
 			get
 			{
-				return base.mod.NPCType("KSEntrance");
+				return ModContent.NPCType<KSEntrance>();
 			}
 		}
 
@@ -39,31 +43,31 @@ namespace Redemption.Items
 		{
 			if (Main.rand.Next(7) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("KingSlayerMask"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<KingSlayerMask>(), 1);
 			}
 			int num = Main.rand.Next(4);
 			if (num == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("SlayerFlamethrower"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<SlayerFlamethrower>(), 1);
 			}
 			if (num == 1)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("SlayerNanogun"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<SlayerNanogun>(), 1);
 			}
 			if (num == 2)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("SlayerFist"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<SlayerFist>(), 1);
 			}
 			if (num == 3)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("SlayerGun"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<SlayerGun>(), 1);
 			}
-			player.QuickSpawnItem(base.mod.ItemType("KingCore"), 1);
-			player.QuickSpawnItem(base.mod.ItemType("SlayerMedal"), 1);
-			player.QuickSpawnItem(base.mod.ItemType("Holokey"), 1);
-			player.QuickSpawnItem(base.mod.ItemType("CyberPlating"), Main.rand.Next(12, 16));
-			player.QuickSpawnItem(base.mod.ItemType("PocketShieldProjector"), 1);
-			player.QuickSpawnItem(base.mod.ItemType("StarcruiserRadar"), 1);
+			player.QuickSpawnItem(ModContent.ItemType<KingCore>(), 1);
+			player.QuickSpawnItem(ModContent.ItemType<SlayerMedal>(), 1);
+			player.QuickSpawnItem(ModContent.ItemType<Holokey>(), 1);
+			player.QuickSpawnItem(ModContent.ItemType<CyberPlating>(), Main.rand.Next(12, 16));
+			player.QuickSpawnItem(ModContent.ItemType<PocketShieldProjector>(), 1);
+			player.QuickSpawnItem(ModContent.ItemType<StarcruiserRadar>(), 1);
 		}
 	}
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Redemption.Items.DruidDamageClass;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -51,7 +53,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 			}
 			Player player = Main.player[base.projectile.owner];
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
-			if (!player.HasBuff(base.mod.BuffType("NatureGuardian26Buff")))
+			if (!player.HasBuff(ModContent.BuffType<NatureGuardian26Buff>()))
 			{
 				base.projectile.Kill();
 			}
@@ -71,7 +73,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 					int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 80, 0f, 0f, 100, default(Color), 1.2f);
 					Main.dust[dustIndex].velocity *= 1.4f;
 				}
-				Projectile.NewProjectile(player.position, Vector2.Zero, base.mod.ProjectileType("IceShield2"), 0, 0f, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(player.position, Vector2.Zero, ModContent.ProjectileType<IceShield2>(), 0, 0f, player.whoAmI, 0f, 0f);
 				Main.PlaySound(SoundID.Item74, base.projectile.position);
 			}
 			base.projectile.velocity.Y = 0f;
@@ -93,7 +95,5 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 				Main.dust[dustIndex].velocity *= 1.4f;
 			}
 		}
-
-		private NPC target;
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,15 +32,15 @@ namespace Redemption.Items.Weapons
 			base.item.UseSound = SoundID.Item71;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
-			base.item.shoot = base.mod.ProjectileType("DanceOfBladesPro1");
+			base.item.shoot = ModContent.ProjectileType<DanceOfBladesPro1>();
 			base.item.shootSpeed = 16f;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			Projectile.NewProjectile(new Vector2(player.position.X + (float)Main.rand.Next(-44, 45), player.position.Y + (float)Main.rand.Next(-44, 45)), new Vector2(speedX, speedY), base.mod.ProjectileType("DanceOfBladesPro1"), base.item.damage, 5f, player.whoAmI, 0f, 0f);
-			Projectile.NewProjectile(new Vector2(player.position.X + (float)Main.rand.Next(-44, 45), player.position.Y + (float)Main.rand.Next(-44, 45)), new Vector2(speedX, speedY), base.mod.ProjectileType("DanceOfBladesPro2"), base.item.damage, 5f, player.whoAmI, 0f, 0f);
-			Projectile.NewProjectile(new Vector2(player.position.X + (float)Main.rand.Next(-44, 45), player.position.Y + (float)Main.rand.Next(-44, 45)), new Vector2(speedX, speedY), base.mod.ProjectileType("DanceOfBladesPro2"), base.item.damage, 5f, player.whoAmI, 0f, 0f);
+			Projectile.NewProjectile(new Vector2(player.position.X + (float)Main.rand.Next(-44, 45), player.position.Y + (float)Main.rand.Next(-44, 45)), new Vector2(speedX, speedY), ModContent.ProjectileType<DanceOfBladesPro1>(), base.item.damage, 5f, player.whoAmI, 0f, 0f);
+			Projectile.NewProjectile(new Vector2(player.position.X + (float)Main.rand.Next(-44, 45), player.position.Y + (float)Main.rand.Next(-44, 45)), new Vector2(speedX, speedY), ModContent.ProjectileType<DanceOfBladesPro2>(), base.item.damage, 5f, player.whoAmI, 0f, 0f);
+			Projectile.NewProjectile(new Vector2(player.position.X + (float)Main.rand.Next(-44, 45), player.position.Y + (float)Main.rand.Next(-44, 45)), new Vector2(speedX, speedY), ModContent.ProjectileType<DanceOfBladesPro2>(), base.item.damage, 5f, player.whoAmI, 0f, 0f);
 			return true;
 		}
 

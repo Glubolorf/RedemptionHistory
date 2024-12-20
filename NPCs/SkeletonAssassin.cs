@@ -1,6 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Placeable.Banners;
+using Redemption.NPCs.Varients;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +33,7 @@ namespace Redemption.NPCs
 			this.aiType = 271;
 			this.animationType = 271;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("SkeletonAssassinBanner");
+			this.bannerItem = ModContent.ItemType<SkeletonAssassinBanner>();
 		}
 
 		public override void AI()
@@ -42,7 +45,7 @@ namespace Redemption.NPCs
 				{
 					if (RedeWorld.downedVlitch1 || RedeWorld.downedVlitch2 || RedeWorld.downedVlitch3)
 					{
-						base.npc.SetDefaults(base.mod.NPCType("SkeletonAssassin2"), -1f);
+						base.npc.SetDefaults(ModContent.NPCType<SkeletonAssassin2>(), -1f);
 						this.change = true;
 					}
 					else
@@ -89,13 +92,13 @@ namespace Redemption.NPCs
 				{
 					if (base.npc.direction == -1)
 					{
-						int p = Projectile.NewProjectile(base.npc.position.X + -14f, base.npc.position.Y + 28f, 0f, 0f, base.mod.ProjectileType("DamagePro1"), 5, 3f, 255, 0f, 0f);
+						int p = Projectile.NewProjectile(base.npc.position.X + -14f, base.npc.position.Y + 28f, 0f, 0f, ModContent.ProjectileType<DamagePro1>(), 5, 3f, 255, 0f, 0f);
 						Main.projectile[p].netUpdate = true;
 						Main.PlaySound(SoundID.Item19, (int)base.npc.position.X, (int)base.npc.position.Y);
 					}
 					else
 					{
-						int p2 = Projectile.NewProjectile(base.npc.position.X + 48f, base.npc.position.Y + 28f, 0f, 0f, base.mod.ProjectileType("DamagePro1"), 5, 3f, 255, 0f, 0f);
+						int p2 = Projectile.NewProjectile(base.npc.position.X + 48f, base.npc.position.Y + 28f, 0f, 0f, ModContent.ProjectileType<DamagePro1>(), 5, 3f, 255, 0f, 0f);
 						Main.projectile[p2].netUpdate = true;
 						Main.PlaySound(SoundID.Item19, (int)base.npc.position.X, (int)base.npc.position.Y);
 					}
@@ -125,7 +128,7 @@ namespace Redemption.NPCs
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 1, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
 			if (Main.netMode != 1 && base.npc.life <= 0 && Main.rand.Next(2) == 0)
 			{
-				NPC.NewNPC((int)base.npc.position.X + 28, (int)base.npc.position.Y + 36, base.mod.NPCType("LostSoul1"), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.position.X + 28, (int)base.npc.position.Y + 36, ModContent.NPCType<LostSoul1>(), 0, 0f, 0f, 0f, 0f, 255);
 			}
 		}
 

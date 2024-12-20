@@ -10,6 +10,7 @@ namespace Redemption.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Bronze Greatsword");
+			base.Tooltip.SetDefault("100% critical strike chance when hitting skeletons");
 		}
 
 		public override void SetDefaults()
@@ -27,6 +28,14 @@ namespace Redemption.Items.Weapons
 			base.item.UseSound = SoundID.Item7;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
+		}
+
+		public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
+		{
+			if (target.IsAnySkeleton())
+			{
+				crit = true;
+			}
 		}
 	}
 }

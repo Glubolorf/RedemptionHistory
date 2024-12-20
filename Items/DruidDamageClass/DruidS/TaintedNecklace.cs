@@ -26,7 +26,7 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 		public override void AddRecipes()
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(base.mod.ItemType("SapphireBar"), 5);
+			modRecipe.AddIngredient(ModContent.ItemType<SapphireBar>(), 5);
 			modRecipe.AddIngredient(1225, 10);
 			modRecipe.AddTile(null, "DruidicAltarTile");
 			modRecipe.SetResult(this, 1);

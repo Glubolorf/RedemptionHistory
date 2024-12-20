@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -16,10 +17,150 @@ namespace Redemption.Projectiles.Minions
 			ProjectileID.Sets.Homing[base.projectile.type] = true;
 		}
 
+		public static void LookAt(Vector2 lookTarget, Entity c, int lookType = 0, float rotAddon = 0f, float rotAmount = 0.1f, bool flipSpriteDir = false)
+		{
+			int spriteDirection = (c is NPC) ? ((NPC)c).spriteDirection : ((c is Projectile) ? ((Projectile)c).spriteDirection : 0);
+			float rotation = (c is NPC) ? ((NPC)c).rotation : ((c is Projectile) ? ((Projectile)c).rotation : 0f);
+			MageDrone.LookAt(lookTarget, c.Center, ref rotation, ref spriteDirection, lookType, rotAddon, rotAmount, flipSpriteDir);
+			if (c is NPC)
+			{
+				((NPC)c).spriteDirection = spriteDirection;
+				((NPC)c).rotation = rotation;
+				return;
+			}
+			if (c is Projectile)
+			{
+				((Projectile)c).spriteDirection = spriteDirection;
+				((Projectile)c).rotation = rotation;
+			}
+		}
+
+		public static void LookAt(Vector2 lookTarget, Vector2 center, ref float rotation, ref int spriteDirection, int lookType = 0, float rotAddon = 0f, float rotAmount = 0.075f, bool flipSpriteDir = false)
+		{
+			if (lookType == 0)
+			{
+				if (lookTarget.X > center.X)
+				{
+					spriteDirection = -1;
+				}
+				else
+				{
+					spriteDirection = 1;
+				}
+				if (flipSpriteDir)
+				{
+					spriteDirection *= -1;
+				}
+				float rotX = lookTarget.X - center.X;
+				float rotY = lookTarget.Y - center.Y;
+				rotation = -((float)Math.Atan2((double)rotX, (double)rotY) - 1.57f + rotAddon);
+				if (spriteDirection == 1)
+				{
+					rotation -= 3.1415927f;
+					return;
+				}
+			}
+			else if (lookType == 1)
+			{
+				if (lookTarget.X > center.X)
+				{
+					spriteDirection = -1;
+				}
+				else
+				{
+					spriteDirection = 1;
+				}
+				if (flipSpriteDir)
+				{
+					spriteDirection *= -1;
+					return;
+				}
+			}
+			else
+			{
+				if (lookType == 2)
+				{
+					float rotX2 = lookTarget.X - center.X;
+					float rotY2 = lookTarget.Y - center.Y;
+					rotation = -((float)Math.Atan2((double)rotX2, (double)rotY2) - 1.57f + rotAddon);
+					return;
+				}
+				if (lookType == 3 || lookType == 4)
+				{
+					int num = spriteDirection;
+					if (lookType == 3 && lookTarget.X > center.X)
+					{
+						spriteDirection = -1;
+					}
+					else
+					{
+						spriteDirection = 1;
+					}
+					if (lookType == 3 && flipSpriteDir)
+					{
+						spriteDirection *= -1;
+					}
+					if (num != spriteDirection)
+					{
+						rotation += 3.1415927f * (float)spriteDirection;
+					}
+					float pi2 = 6.2831855f;
+					float rotX3 = lookTarget.X - center.X;
+					float rot = (float)Math.Atan2((double)(lookTarget.Y - center.Y), (double)rotX3) + rotAddon;
+					if (spriteDirection == 1)
+					{
+						rot += 3.1415927f;
+					}
+					if (rot > pi2)
+					{
+						rot -= pi2;
+					}
+					else if (rot < 0f)
+					{
+						rot += pi2;
+					}
+					if (rotation > pi2)
+					{
+						rotation -= pi2;
+					}
+					else if (rotation < 0f)
+					{
+						rotation += pi2;
+					}
+					if (rotation < rot)
+					{
+						if ((double)(rot - rotation) > 3.1415927410125732)
+						{
+							rotation -= rotAmount;
+						}
+						else
+						{
+							rotation += rotAmount;
+						}
+					}
+					else if (rotation > rot)
+					{
+						if ((double)(rotation - rot) > 3.1415927410125732)
+						{
+							rotation += rotAmount;
+						}
+						else
+						{
+							rotation -= rotAmount;
+						}
+					}
+					if (rotation > rot - rotAmount && rotation < rot + rotAmount)
+					{
+						rotation = rot;
+					}
+				}
+			}
+		}
+
 		public override void SetDefaults()
 		{
-			base.projectile.width = 48;
-			base.projectile.height = 34;
+			base.projectile.width = 38;
+			base.projectile.height = 38;
 			base.projectile.penetrate = -1;
 			base.projectile.minion = true;
 			base.projectile.hostile = false;
@@ -31,39 +172,94 @@ namespace Redemption.Projectiles.Minions
 			base.projectile.minionSlots = 0f;
 		}
 
+		private void LookInDirection(Vector2 look)
+		{
+			float angle = 1.5707964f;
+			if (look.X != 0f)
+			{
+				angle = (float)Math.Atan((double)(look.Y / look.X));
+			}
+			else if (look.Y < 0f)
+			{
+				angle += 3.1415927f;
+			}
+			if (look.X < 0f)
+			{
+				angle += 3.1415927f;
+			}
+			base.projectile.rotation = angle - 1.5707964f;
+		}
+
 		public override void AI()
 		{
-			Projectile projectile = base.projectile;
-			int num = projectile.frameCounter + 1;
-			projectile.frameCounter = num;
-			if (num >= 5)
+			if (base.projectile.frame < 4)
 			{
-				base.projectile.frameCounter = 0;
-				Projectile projectile2 = base.projectile;
-				num = projectile2.frame + 1;
-				projectile2.frame = num;
-				if (num >= 4)
+				base.projectile.frameCounter++;
+				if (base.projectile.frameCounter >= 4)
 				{
-					base.projectile.frame = 0;
+					base.projectile.frameCounter = 0;
+					base.projectile.frame++;
+					base.projectile.frame %= 4;
 				}
 			}
 			Player player = Main.player[base.projectile.owner];
-			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
-			if (player.dead || !player.HasBuff(base.mod.BuffType("MageDroneBuff")))
+			if (base.projectile.ai[1] == 0f)
 			{
-				modPlayer.jellyfishDrone = false;
-				base.projectile.Kill();
+				this.projecc = 0;
+				this.speed1 = 4f;
+				base.projectile.ai[0] += 0.08f;
+				base.projectile.rotation -= base.projectile.rotation / 20f;
+				Projectile projectile = base.projectile;
+				projectile.velocity.Y = projectile.velocity.Y + (float)Math.Sin((double)base.projectile.ai[0]) / 10f;
+				this.Move(new Vector2(30f, -30f), player.Center, 20f, this.speed1);
 			}
-			if (modPlayer.jellyfishDrone)
+			if (Vector2.Distance(base.projectile.Center, player.Center) > 300f)
 			{
-				base.projectile.timeLeft = 2;
+				base.projectile.ai[1] = 1f;
 			}
-			base.projectile.rotation = base.projectile.velocity.X * 0.05f;
+			else if (!this.iLoveRedemption && this.projecc % 2 == 0 && this.projecc != 0)
+			{
+				base.projectile.ai[1] = 0f;
+			}
+			if (this.iLoveRedemption && base.projectile.ai[1] == 1f)
+			{
+				this.speed1 = 1f;
+				base.projectile.velocity *= 0.982f;
+				if (this.Magnitude(base.projectile.velocity) < 5f)
+				{
+					this.projecc++;
+					this.iLoveRedemption = false;
+				}
+			}
+			if (!this.iLoveRedemption && base.projectile.ai[1] == 1f)
+			{
+				MageDrone.LookAt(base.projectile.Center + base.projectile.velocity, base.projectile, 4, -1.5707964f, 0.1f, false);
+				this.speed1 += 0.9f;
+				this.Move(new Vector2(30f, -30f), player.Center, 30f, this.speed1);
+				if (this.speed1 >= 26f + Vector2.Distance(base.projectile.Center, player.Center) / 50f)
+				{
+					this.projecc++;
+					this.iLoveRedemption = true;
+				}
+			}
+			if (Vector2.Distance(base.projectile.Center, player.Center) > 2000f)
+			{
+				base.projectile.position = player.Center + new Vector2(30f, 30f);
+				base.projectile.alpha = 255;
+			}
+			else
+			{
+				base.projectile.alpha -= 5;
+				if (base.projectile.alpha < 0)
+				{
+					base.projectile.alpha = 0;
+				}
+			}
 			float[] localAI = base.projectile.localAI;
-			int num2 = 0;
-			float num3 = localAI[num2] + 1f;
-			localAI[num2] = num3;
-			if (num3 % 180f == 0f)
+			int num = 0;
+			float num2 = localAI[num] + 1f;
+			localAI[num] = num2;
+			if (num2 % 180f == 0f)
 			{
 				double angle = Main.rand.NextDouble() * 2.0 * 3.141592653589793;
 				this.vector.X = (float)(Math.Sin(angle) * 200.0);
@@ -72,8 +268,8 @@ namespace Redemption.Projectiles.Minions
 			for (int i = 0; i < 4; i++)
 			{
 				double angle2 = Main.rand.NextDouble() * 2.0 * 3.141592653589793;
-				this.vector2.X = (float)(Math.Sin(angle2) * 100.0);
-				this.vector2.Y = (float)(Math.Cos(angle2) * 100.0);
+				this.vector2.X = (float)(Math.Sin(angle2) * 200.0);
+				this.vector2.Y = (float)(Math.Cos(angle2) * 200.0);
 				Dust dust = Main.dust[Dust.NewDust(base.projectile.Center + this.vector2, 2, 2, 235, 0f, 0f, 100, default(Color), 1f)];
 				dust.noGravity = true;
 				dust.velocity *= 0f;
@@ -83,33 +279,41 @@ namespace Redemption.Projectiles.Minions
 			{
 				this.clearCheck = Main.projectile[p];
 			}
-			if (Vector2.Distance(base.projectile.Center, this.clearCheck.Center) < 100f && this.clearCheck.whoAmI != base.projectile.whoAmI && base.projectile.localAI[1] % 120f == 0f)
+			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
+			if (player.dead || !player.HasBuff(ModContent.BuffType<MageDroneBuff>()))
+			{
+				modPlayer.jellyfishDrone = false;
+				base.projectile.Kill();
+			}
+			if (modPlayer.jellyfishDrone)
+			{
+				base.projectile.timeLeft = 2;
+			}
+			if (Vector2.Distance(base.projectile.Center, this.clearCheck.Center) < 200f && this.clearCheck.whoAmI != base.projectile.whoAmI && base.projectile.localAI[1] % 120f == 0f)
 			{
 				Main.PlaySound(SoundID.Item93, (int)base.projectile.position.X, (int)base.projectile.position.Y);
-				int proj = Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.clearCheck.Center - base.projectile.Center)), base.mod.ProjectileType("GirusDischarge2"), 100, 0f, Main.myPlayer, 0f, 0f);
+				int proj = Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.clearCheck.Center - base.projectile.Center)), ModContent.ProjectileType<GirusDischarge2>(), 100, 0f, Main.myPlayer, 0f, 0f);
 				Main.projectile[proj].netUpdate = true;
 			}
-			if (RedeHelper.ClosestNPC(ref this.target, 100f, base.projectile.Center, false, player.MinionAttackTargetNPC) && base.projectile.localAI[1] % 120f == 0f)
+			if (RedeHelper.ClosestNPC(ref this.target, 200f, base.projectile.Center, false, player.MinionAttackTargetNPC) && base.projectile.localAI[1] % 120f == 0f)
 			{
 				Main.PlaySound(SoundID.Item93, (int)base.projectile.position.X, (int)base.projectile.position.Y);
-				int proj2 = Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center)), base.mod.ProjectileType("GirusDischarge2"), 100, 0f, Main.myPlayer, 0f, 0f);
+				int proj2 = Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center)), ModContent.ProjectileType<GirusDischarge2>(), 100, 0f, Main.myPlayer, 0f, 0f);
 				Main.projectile[proj2].netUpdate = true;
 			}
-			this.Move(new Vector2(this.vector.X, this.vector.Y));
 		}
 
-		public void Move(Vector2 offset)
+		public void Move(Vector2 offset, Vector2 moveTo1, float resistance, float speed2)
 		{
-			Entity entity = Main.player[base.projectile.owner];
-			this.speed = 11f;
-			Vector2 move = entity.Center + offset - base.projectile.Center;
+			Player player = Main.player[base.projectile.owner];
+			this.speed = speed2;
+			Vector2 move = moveTo1 + offset - base.projectile.Center;
 			float magnitude = this.Magnitude(move);
 			if (magnitude > this.speed)
 			{
 				move *= this.speed / magnitude;
 			}
-			float turnResistance = 30f;
-			move = (base.projectile.velocity * turnResistance + move) / (turnResistance + 1f);
+			move = (base.projectile.velocity * resistance + move) / (resistance + 1f);
 			magnitude = this.Magnitude(move);
 			if (magnitude > this.speed)
 			{
@@ -138,6 +342,12 @@ namespace Redemption.Projectiles.Minions
 
 		private Projectile clearCheck;
 
-		public int timer;
+		public bool iLoveRedemption;
+
+		public float distance = 1000f;
+
+		public float speed1 = 2f;
+
+		public int projecc;
 	}
 }

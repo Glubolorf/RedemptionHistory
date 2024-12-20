@@ -30,8 +30,8 @@ namespace Redemption.Items.Armor
 		public override void UpdateEquip(Player player)
 		{
 			DruidDamagePlayer.ModPlayer(player).druidDamage += 0.05f;
-			player.lifeRegen += 2;
-			player.manaRegen += 2;
+			player.lifeRegen++;
+			player.manaRegen++;
 		}
 
 		public override void AddRecipes()

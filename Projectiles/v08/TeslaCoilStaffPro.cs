@@ -105,7 +105,7 @@ namespace Redemption.Projectiles.v08
 						int num4 = base.projectile.damage;
 						for (int i = 0; i < 7; i++)
 						{
-							Projectile.NewProjectile(center3.X, center3.Y, vector3.X, vector3.Y, base.mod.ProjectileType("TeslaLaser"), num4, base.projectile.knockBack, base.projectile.owner, (float)i, (float)base.projectile.whoAmI);
+							Projectile.NewProjectile(center3.X, center3.Y, vector3.X, vector3.Y, ModContent.ProjectileType<TeslaLaser>(), num4, base.projectile.knockBack, base.projectile.owner, (float)i, (float)base.projectile.whoAmI);
 						}
 						base.projectile.netUpdate = true;
 					}

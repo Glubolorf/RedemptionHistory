@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.NPCs
 			this.aiType = 34;
 			this.animationType = 34;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("UnstablePortalBanner");
+			this.bannerItem = ModContent.ItemType<UnstablePortalBanner>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)

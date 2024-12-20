@@ -41,6 +41,7 @@ namespace Redemption.Items.Weapons
 			base.item.rare = 11;
 			base.item.UseSound = SoundID.Item15;
 			base.item.autoReuse = true;
+			base.item.useTurn = true;
 			base.item.tileBoost += 3;
 			base.item.glowMask = NanoAxe.customGlowMask;
 		}

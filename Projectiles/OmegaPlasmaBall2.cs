@@ -12,7 +12,7 @@ namespace Redemption.Projectiles
 		{
 			get
 			{
-				return "Redemption/Projectiles/OmegaPlasmaBall";
+				return "Redemption/NPCs/Bosses/OmegaOblit/OmegaPlasmaBall";
 			}
 		}
 
@@ -54,19 +54,22 @@ namespace Redemption.Projectiles
 					base.projectile.frame = 0;
 				}
 			}
-			base.projectile.localAI[0] += 1f;
-			if (base.projectile.localAI[0] >= 60f)
+			base.projectile.localAI[1] += 1f;
+			if (base.projectile.localAI[1] >= 60f)
 			{
 				Main.PlaySound(SoundID.Item33, (int)base.projectile.position.X, (int)base.projectile.position.Y);
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 25f, base.projectile.position.Y + 24f), new Vector2(0f, -8f), base.mod.ProjectileType("OmegaBlast2"), 150, 3f, base.projectile.owner, 0f, 1f);
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 25f, base.projectile.position.Y + 24f), new Vector2(0f, 8f), base.mod.ProjectileType("OmegaBlast2"), 150, 3f, base.projectile.owner, 0f, 1f);
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 25f, base.projectile.position.Y + 24f), new Vector2(-8f, 0f), base.mod.ProjectileType("OmegaBlast2"), 150, 3f, base.projectile.owner, 0f, 1f);
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 25f, base.projectile.position.Y + 24f), new Vector2(8f, 0f), base.mod.ProjectileType("OmegaBlast2"), 150, 3f, base.projectile.owner, 0f, 1f);
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 25f, base.projectile.position.Y + 24f), new Vector2(6f, 6f), base.mod.ProjectileType("OmegaBlast2"), 150, 3f, base.projectile.owner, 0f, 1f);
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 25f, base.projectile.position.Y + 24f), new Vector2(6f, -6f), base.mod.ProjectileType("OmegaBlast2"), 150, 3f, base.projectile.owner, 0f, 1f);
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 25f, base.projectile.position.Y + 24f), new Vector2(-6f, 6f), base.mod.ProjectileType("OmegaBlast2"), 150, 3f, base.projectile.owner, 0f, 1f);
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 25f, base.projectile.position.Y + 24f), new Vector2(-6f, -6f), base.mod.ProjectileType("OmegaBlast2"), 150, 3f, base.projectile.owner, 0f, 1f);
-				base.projectile.localAI[0] = 0f;
+				if (Main.myPlayer == base.projectile.owner)
+				{
+					Projectile.NewProjectile(new Vector2(base.projectile.position.X + 25f, base.projectile.position.Y + 24f), new Vector2(0f, -8f), ModContent.ProjectileType<OmegaBlast2>(), 150, 3f, base.projectile.owner, 0f, 1f);
+					Projectile.NewProjectile(new Vector2(base.projectile.position.X + 25f, base.projectile.position.Y + 24f), new Vector2(0f, 8f), ModContent.ProjectileType<OmegaBlast2>(), 150, 3f, base.projectile.owner, 0f, 1f);
+					Projectile.NewProjectile(new Vector2(base.projectile.position.X + 25f, base.projectile.position.Y + 24f), new Vector2(-8f, 0f), ModContent.ProjectileType<OmegaBlast2>(), 150, 3f, base.projectile.owner, 0f, 1f);
+					Projectile.NewProjectile(new Vector2(base.projectile.position.X + 25f, base.projectile.position.Y + 24f), new Vector2(8f, 0f), ModContent.ProjectileType<OmegaBlast2>(), 150, 3f, base.projectile.owner, 0f, 1f);
+					Projectile.NewProjectile(new Vector2(base.projectile.position.X + 25f, base.projectile.position.Y + 24f), new Vector2(6f, 6f), ModContent.ProjectileType<OmegaBlast2>(), 150, 3f, base.projectile.owner, 0f, 1f);
+					Projectile.NewProjectile(new Vector2(base.projectile.position.X + 25f, base.projectile.position.Y + 24f), new Vector2(6f, -6f), ModContent.ProjectileType<OmegaBlast2>(), 150, 3f, base.projectile.owner, 0f, 1f);
+					Projectile.NewProjectile(new Vector2(base.projectile.position.X + 25f, base.projectile.position.Y + 24f), new Vector2(-6f, 6f), ModContent.ProjectileType<OmegaBlast2>(), 150, 3f, base.projectile.owner, 0f, 1f);
+					Projectile.NewProjectile(new Vector2(base.projectile.position.X + 25f, base.projectile.position.Y + 24f), new Vector2(-6f, -6f), ModContent.ProjectileType<OmegaBlast2>(), 150, 3f, base.projectile.owner, 0f, 1f);
+				}
+				base.projectile.localAI[1] = 0f;
 			}
 			if (base.projectile.localAI[0] == 0f)
 			{

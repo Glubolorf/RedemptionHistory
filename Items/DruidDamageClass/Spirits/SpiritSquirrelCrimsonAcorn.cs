@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -81,7 +82,7 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 			}
 			for (int l = 0; l < 2; l++)
 			{
-				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("AcornBombProShard"), 4, 1f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), ModContent.ProjectileType<AcornBombProShard>(), 4, 1f, Main.myPlayer, 0f, 0f);
 			}
 		}
 

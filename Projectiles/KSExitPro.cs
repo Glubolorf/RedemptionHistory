@@ -40,10 +40,7 @@ namespace Redemption.Projectiles
 					base.projectile.frame = 10;
 				}
 			}
-			Projectile projectile3 = base.projectile;
-			projectile3.velocity.X = projectile3.velocity.X * 0f;
-			Projectile projectile4 = base.projectile;
-			projectile4.velocity.Y = projectile4.velocity.Y + 0f;
+			base.projectile.velocity *= 0f;
 		}
 	}
 }

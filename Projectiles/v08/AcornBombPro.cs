@@ -43,7 +43,7 @@ namespace Redemption.Projectiles.v08
 			}
 			for (int k = 0; k < 6; k++)
 			{
-				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("AcornBombProShard"), 8, 1f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), ModContent.ProjectileType<AcornBombProShard>(), 8, 1f, Main.myPlayer, 0f, 0f);
 			}
 		}
 	}

@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,7 +30,7 @@ namespace Redemption.NPCs
 			this.aiType = 287;
 			this.animationType = 21;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("SkelemiesBanner");
+			this.bannerItem = ModContent.ItemType<SkelemiesBanner>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)

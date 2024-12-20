@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -29,7 +30,7 @@ namespace Redemption.Items.Quest
 			base.item.useTurn = true;
 			base.item.useAnimation = 14;
 			base.item.useTime = 14;
-			base.item.buffType = base.mod.BuffType("DisgustingDebuff");
+			base.item.buffType = ModContent.BuffType<DisgustingDebuff>();
 			base.item.buffTime = 3000;
 		}
 

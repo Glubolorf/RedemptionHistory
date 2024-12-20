@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -68,7 +69,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 				int pieCut = 8;
 				for (int i = 0; i < pieCut; i++)
 				{
-					int projID = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, base.mod.ProjectileType("BloodrootRoot"), base.projectile.damage, 3f, Main.myPlayer, 0f, 0f);
+					int projID = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, ModContent.ProjectileType<BloodrootRoot>(), base.projectile.damage, 3f, Main.myPlayer, 0f, 0f);
 					Main.projectile[projID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(12f, 0f), (float)i / (float)pieCut * 6.28f);
 				}
 			}

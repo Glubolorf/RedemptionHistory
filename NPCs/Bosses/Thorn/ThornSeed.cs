@@ -47,7 +47,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y - 36f, 0f, 0f, base.mod.ProjectileType("BigThorns"), base.projectile.damage, 3f, 255, 0f, 0f);
+			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y - 36f, 0f, 0f, ModContent.ProjectileType<BigThorns>(), base.projectile.damage, 3f, 255, 0f, 0f);
 			return true;
 		}
 

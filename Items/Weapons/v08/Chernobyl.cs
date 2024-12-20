@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -24,7 +25,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.value = Item.buyPrice(0, 4, 0, 0);
 			base.item.rare = 7;
 			base.item.autoReuse = false;
-			base.item.shoot = base.mod.ProjectileType("ChernobylPro");
+			base.item.shoot = ModContent.ProjectileType<ChernobylPro>();
 			base.item.noUseGraphic = true;
 			base.item.noMelee = true;
 			base.item.UseSound = SoundID.Item1;

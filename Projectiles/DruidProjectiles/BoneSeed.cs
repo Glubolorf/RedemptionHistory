@@ -45,11 +45,10 @@ namespace Redemption.Projectiles.DruidProjectiles
 			Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 31, base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 0, default(Color), 1f);
 			if (Main.myPlayer == base.projectile.owner)
 			{
-				Projectile.NewProjectile(base.projectile.position.X + 6f, base.projectile.position.Y + 6f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 21, base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
-				Projectile.NewProjectile(base.projectile.position.X + 6f, base.projectile.position.Y + 6f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 21, base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
-				if (Main.rand.Next(2) == 0)
+				for (int i = 0; i < Main.rand.Next(2, 3); i++)
 				{
-					Projectile.NewProjectile(base.projectile.position.X + 6f, base.projectile.position.Y + 6f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 21, base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
+					int p = Projectile.NewProjectile(base.projectile.position.X + 6f, base.projectile.position.Y + 6f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 21, base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
+					Main.projectile[p].noDropItem = true;
 				}
 			}
 		}

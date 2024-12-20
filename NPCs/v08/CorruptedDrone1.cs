@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,8 +29,8 @@ namespace Redemption.NPCs.v08
 			base.npc.buffImmune[31] = true;
 			base.npc.buffImmune[39] = true;
 			base.npc.buffImmune[24] = true;
-			base.npc.buffImmune[base.mod.BuffType("UltraFlameDebuff")] = true;
-			base.npc.buffImmune[base.mod.BuffType("EnjoymentDebuff")] = true;
+			base.npc.buffImmune[ModContent.BuffType<UltraFlameDebuff>()] = true;
+			base.npc.buffImmune[ModContent.BuffType<EnjoymentDebuff>()] = true;
 			base.npc.HitSound = SoundID.NPCHit4;
 			base.npc.DeathSound = SoundID.NPCDeath14;
 			base.npc.value = (float)Item.buyPrice(0, 25, 0, 0);
@@ -69,7 +70,7 @@ namespace Redemption.NPCs.v08
 				int num56 = Main.rand.Next(7);
 				if (num56 == 0)
 				{
-					base.npc.SetDefaults(base.mod.NPCType("CorruptedCopter1"), -1f);
+					base.npc.SetDefaults(ModContent.NPCType<CorruptedCopter1>(), -1f);
 					this.change = true;
 				}
 				if (num56 >= 1)
@@ -104,10 +105,6 @@ namespace Redemption.NPCs.v08
 			if (base.npc.Distance(Main.player[base.npc.target].Center) <= 400f && Main.rand.Next(150) == 0 && !this.minigunAttack)
 			{
 				this.minigunAttack = true;
-			}
-			if (!this.minigunAttack)
-			{
-				this.attackStart = false;
 			}
 			if (this.minigunAttack)
 			{
@@ -210,19 +207,17 @@ namespace Redemption.NPCs.v08
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			for (int i = 0; i < Main.npc.Length; i++)
+			for (int i = 0; i < 200; i++)
 			{
 				if (Main.npc[i].boss)
 				{
 					return 0f;
 				}
 			}
-			return SpawnCondition.OverworldNightMonster.Chance * ((!RedeWorld.girusCloaked && Main.hardMode && NPC.downedMoonlord && RedeWorld.downedVlitch3 && RedeWorld.downedPatientZero && !NPC.AnyNPCs(base.mod.NPCType("CorruptedDrone1")) && !NPC.AnyNPCs(base.mod.NPCType("CorruptedCopter1"))) ? 0.009f : 0f);
+			return SpawnCondition.OverworldNightMonster.Chance * ((!RedeWorld.girusCloaked && Main.hardMode && NPC.downedMoonlord && RedeWorld.downedVlitch3 && RedeWorld.downedPatientZero && !NPC.AnyNPCs(ModContent.NPCType<CorruptedDrone1>()) && !NPC.AnyNPCs(ModContent.NPCType<CorruptedCopter1>())) ? 0.009f : 0f);
 		}
 
 		private bool minigunAttack;
-
-		private bool attackStart;
 
 		private int attackTimer;
 

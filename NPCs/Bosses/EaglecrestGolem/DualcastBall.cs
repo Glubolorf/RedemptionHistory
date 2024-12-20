@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -99,7 +100,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 			{
 				target.AddBuff(144, target.HasBuff(103) ? 320 : 160, true);
 			}
-			target.AddBuff(base.mod.BuffType("StunnedDebuff"), 60, true);
+			target.AddBuff(ModContent.BuffType<StunnedDebuff>(), 60, true);
 		}
 
 		public float vectorOffset;

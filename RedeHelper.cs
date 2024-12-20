@@ -1,5 +1,14 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.NPCs;
+using Redemption.NPCs.Bosses.InfectedEye;
+using Redemption.NPCs.Bosses.SeedOfInfection;
+using Redemption.NPCs.Bosses.TheKeeper;
+using Redemption.NPCs.ChickenInvasion;
+using Redemption.NPCs.LabNPCs;
+using Redemption.NPCs.LabNPCs.New;
+using Redemption.NPCs.v08;
+using Redemption.NPCs.Varients;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.Utilities;
@@ -8,6 +17,46 @@ namespace Redemption
 {
 	public static class RedeHelper
 	{
+		public static bool IsBunny(this NPC npc)
+		{
+			return npc.type == 46 || npc.type == 443 || npc.type == 303 || npc.type == 337 || npc.type == 540;
+		}
+
+		public static bool IsVanillaWeakSkeleton(this NPC npc)
+		{
+			return npc.type == 77 || npc.type == -49 || npc.type == -51 || npc.type == -53 || npc.type == -47 || npc.type == 449 || npc.type == 450 || npc.type == 451 || npc.type == 452 || npc.type == 566 || npc.type == 567 || npc.type == 481 || npc.type == 201 || npc.type == -15 || npc.type == 202 || npc.type == 203 || npc.type == 21 || npc.type == 324 || npc.type == 110 || npc.type == 323 || npc.type == 293 || npc.type == 291 || npc.type == 322 || npc.type == -48 || npc.type == -50 || npc.type == -52 || npc.type == -46 || npc.type == 292 || npc.type == 31 || npc.type == 294 || npc.type == 296 || npc.type == 295 || (npc.type >= 39 && npc.type <= 41) || npc.type == 32 || npc.type == 34 || npc.type == 44 || npc.type == 167 || npc.type == 197 || npc.type == 273 || npc.type == 274 || npc.type == 275 || npc.type == 276 || npc.type == 287 || npc.type == 285 || npc.type == 286 || npc.type == 289 || npc.type == 277 || npc.type == 279 || npc.type == 278 || npc.type == 280 || npc.type == 283 || npc.type == 284 || npc.type == 281 || npc.type == 282 || npc.type == 172 || npc.type == 269 || npc.type == 270 || npc.type == 271 || npc.type == 272;
+		}
+
+		public static bool IsInfected(this NPC npc)
+		{
+			return npc.type == ModContent.NPCType<HazmatSkeleton>() || npc.type == ModContent.NPCType<HazmatZombie>() || npc.type == ModContent.NPCType<InfectedCaveBat>() || npc.type == ModContent.NPCType<InfectedDemonEye>() || npc.type == ModContent.NPCType<InfectedDiggerHead>() || npc.type == ModContent.NPCType<InfectedDiggerBody>() || npc.type == ModContent.NPCType<InfectedDiggerTail>() || npc.type == ModContent.NPCType<InfectedGiantBat>() || npc.type == ModContent.NPCType<InfectedGiantWormBody>() || npc.type == ModContent.NPCType<InfectedGiantWormHead>() || npc.type == ModContent.NPCType<InfectedGiantWormTail>() || npc.type == ModContent.NPCType<InfectedGiantWormTail>() || npc.type == ModContent.NPCType<InfectedZombie>() || npc.type == ModContent.NPCType<SludgyBoi>() || npc.type == ModContent.NPCType<XenoChomper>() || npc.type == ModContent.NPCType<XenomiteEye>() || npc.type == ModContent.NPCType<XenomiteGargantuan>() || npc.type == ModContent.NPCType<XenomiteGolem>() || npc.type == ModContent.NPCType<XenonRoller>() || npc.type == ModContent.NPCType<RadiumDiggerBody>() || npc.type == ModContent.NPCType<RadiumDiggerTail>() || npc.type == ModContent.NPCType<RadiumDiggerHead>() || npc.type == ModContent.NPCType<InfectedEye>() || npc.type == ModContent.NPCType<Blisterling>() || npc.type == ModContent.NPCType<Blisterling2>() || npc.type == ModContent.NPCType<InfectionHive>() || npc.type == ModContent.NPCType<SludgyBlob>() || npc.type == ModContent.NPCType<SludgyBoi2>() || npc.type == ModContent.NPCType<Stage2Scientist>() || npc.type == ModContent.NPCType<WalterInfected>() || npc.type == ModContent.NPCType<XenoChomper2>() || npc.type == ModContent.NPCType<XenomiteBeast>() || npc.type == ModContent.NPCType<SpikyRadioactiveSlime>() || npc.type == ModContent.NPCType<SneezyInfectedFlinx>() || npc.type == ModContent.NPCType<RadiumRampager>() || npc.type == ModContent.NPCType<RadiumDigger2Tail>() || npc.type == ModContent.NPCType<RadiumDigger2Head>() || npc.type == ModContent.NPCType<RadiumDigger2Body>() || npc.type == ModContent.NPCType<RadioactiveSlime>() || npc.type == ModContent.NPCType<NuclearSlime>() || npc.type == ModContent.NPCType<InfectedSwarmer>() || npc.type == ModContent.NPCType<InfectedSnowFlinx>() || npc.type == ModContent.NPCType<InfectedChicken>() || npc.type == ModContent.NPCType<GreenPigron>() || npc.type == ModContent.NPCType<DecayedGhoul>() || npc.type == ModContent.NPCType<BobTheBlob>() || npc.type == ModContent.NPCType<Injector>() || npc.type == ModContent.NPCType<BileBoomer>() || npc.type == ModContent.NPCType<IrradiatedSpear>() || npc.type == ModContent.NPCType<VirusJelly>() || npc.type == ModContent.NPCType<Superbug>() || npc.type == ModContent.NPCType<BloatedFaceMonster>() || npc.type == ModContent.NPCType<BloatedGoldfish>() || npc.type == ModContent.NPCType<IrradiatedWorldFeederTail>() || npc.type == ModContent.NPCType<IrradiatedWorldFeederHead>() || npc.type == ModContent.NPCType<IrradiatedWorldFeederBody>() || npc.type == ModContent.NPCType<NerveParasite>() || npc.type == ModContent.NPCType<RadioactiveSlimer>() || npc.type == ModContent.NPCType<Xenoling>() || npc.type == ModContent.NPCType<Superbug2>() || npc.type == ModContent.NPCType<Blisterface2>() || npc.type == ModContent.NPCType<IrradiatedBehemoth2>() || npc.type == ModContent.NPCType<PZ2BodyCover>() || npc.type == ModContent.NPCType<PZ2Fight>() || npc.type == ModContent.NPCType<Stage3Scientist2>() || npc.type == ModContent.NPCType<SeedGrowth>() || npc.type == ModContent.NPCType<SoI>();
+		}
+
+		public static bool IsGhostly(this NPC npc)
+		{
+			return npc.type == 84 || npc.type == 179 || npc.type == 83 || npc.type == 533 || npc.type == 288 || npc.type == 182 || npc.type == 316 || npc.type == 140 || npc.type == 82 || npc.type == 253 || npc.type == 330 || npc.type == ModContent.NPCType<TheKeeper>() || npc.type == ModContent.NPCType<AAAA>() || npc.type == ModContent.NPCType<DarkSoul>() || npc.type == ModContent.NPCType<DarkSoul2>() || npc.type == ModContent.NPCType<DarkSoul3>() || npc.type == ModContent.NPCType<SkullDigger>() || npc.type == ModContent.NPCType<WanderingSoul>() || npc.type == ModContent.NPCType<IrradiatedSpear>() || npc.type == ModContent.NPCType<SoullessAssassin>() || npc.type == ModContent.NPCType<SoullessDueller>() || npc.type == ModContent.NPCType<SoullessWanderer>() || npc.type == ModContent.NPCType<BileBoomer>() || npc.type == ModContent.NPCType<Shadebug>();
+		}
+
+		public static bool IsDragonlike(this NPC npc)
+		{
+			return npc.type == 551 || npc.type == 558 || npc.type == 559 || npc.type == 560 || npc.type == 170 || npc.type == 180 || npc.type == 171 || npc.type == 370 || npc.type == ModContent.NPCType<GreenPigron>() || (npc.type >= 87 && npc.type <= 92) || (npc.type >= 454 && npc.type <= 459);
+		}
+
+		public static bool IsDemon(this NPC npc)
+		{
+			return npc.type == 62 || npc.type == 66 || npc.type == 24 || npc.type == 156;
+		}
+
+		public static bool IsSoulless(this NPC npc)
+		{
+			return npc.type == ModContent.NPCType<SoullessAssassin>() || npc.type == ModContent.NPCType<SoullessDueller>() || npc.type == ModContent.NPCType<SoullessWanderer>() || npc.type == ModContent.NPCType<ShadesoulNPC>() || npc.type == ModContent.NPCType<SmallShadesoulNPC>() || npc.type == ModContent.NPCType<TheSoulless2>() || npc.type == ModContent.NPCType<TheSoulless>() || npc.type == ModContent.NPCType<Shadebug>();
+		}
+
+		public static bool IsAnySkeleton(this NPC npc)
+		{
+			return npc.type == 77 || npc.type == -49 || npc.type == -51 || npc.type == -53 || npc.type == -47 || npc.type == 449 || npc.type == 450 || npc.type == 451 || npc.type == 452 || npc.type == 566 || npc.type == 567 || npc.type == 481 || npc.type == 201 || npc.type == -15 || npc.type == 202 || npc.type == 203 || npc.type == 21 || npc.type == 324 || npc.type == 110 || npc.type == 323 || npc.type == 293 || npc.type == 291 || npc.type == 322 || npc.type == -48 || npc.type == -50 || npc.type == -52 || npc.type == -46 || npc.type == 292 || npc.type == 31 || npc.type == 294 || npc.type == 296 || npc.type == 295 || (npc.type >= 39 && npc.type <= 41) || npc.type == 32 || npc.type == 34 || npc.type == 68 || npc.type == 44 || npc.type == 167 || npc.type == 197 || npc.type == 273 || npc.type == 274 || npc.type == 275 || npc.type == 276 || npc.type == 287 || npc.type == 285 || npc.type == 286 || npc.type == 289 || npc.type == 277 || npc.type == 279 || npc.type == 278 || npc.type == 280 || npc.type == 283 || npc.type == 284 || npc.type == 281 || npc.type == 282 || npc.type == 172 || npc.type == 269 || npc.type == 270 || npc.type == 271 || npc.type == 272 || npc.type == 35 || npc.type == 36 || npc.type == ModContent.NPCType<BoneChicken>() || npc.type == ModContent.NPCType<ChickmanChickromancer>() || npc.type == ModContent.NPCType<BloodBoiledSkeleton>() || npc.type == ModContent.NPCType<SkeletonAssassin2>() || npc.type == ModContent.NPCType<SkeletonWanderer2>() || npc.type == ModContent.NPCType<SkeletonWarden>() || npc.type == ModContent.NPCType<Vepdor>() || npc.type == ModContent.NPCType<BoneLeviathanBody>() || npc.type == ModContent.NPCType<BoneLeviathanHead>() || npc.type == ModContent.NPCType<BoneLeviathanTail>() || npc.type == ModContent.NPCType<BoneSpider>() || npc.type == ModContent.NPCType<CorpseWalkerPriest>() || npc.type == ModContent.NPCType<DeathGardener>() || npc.type == ModContent.NPCType<HazmatSkeleton>() || npc.type == ModContent.NPCType<SkeleDruid>() || npc.type == ModContent.NPCType<Skelemies>() || npc.type == ModContent.NPCType<Skelemies2>() || npc.type == ModContent.NPCType<SkeletonAssassin>() || npc.type == ModContent.NPCType<SkeletonDueller>() || npc.type == ModContent.NPCType<SkeletonMinion>() || npc.type == ModContent.NPCType<SkeletonNoble>() || npc.type == ModContent.NPCType<SkeletonNobleArmoured>() || npc.type == ModContent.NPCType<SkeletonNobleArmoured2>() || npc.type == ModContent.NPCType<SkeletonNobleArmoured3>() || npc.type == ModContent.NPCType<SkeletonWanderer>();
+		}
+
 		public static Vector2 PolarVector(float radius, float theta)
 		{
 			return new Vector2((float)Math.Cos((double)theta), (float)Math.Sin((double)theta)) * radius;
@@ -36,7 +85,7 @@ namespace Redemption
 				target = Main.npc[overrideTarget];
 				return true;
 			}
-			for (int i = 0; i < Main.npc.Length; i++)
+			for (int i = 0; i < 200; i++)
 			{
 				NPC possibleTarget = Main.npc[i];
 				if ((possibleTarget.Center - position).Length() < maxDistance && possibleTarget.active && possibleTarget.chaseable && !possibleTarget.dontTakeDamage && !possibleTarget.friendly && possibleTarget.lifeMax > 5 && !possibleTarget.immortal && (Collision.CanHit(position, 0, 0, possibleTarget.Center, 0, 0) || ignoreTiles))
@@ -166,7 +215,7 @@ namespace Redemption
 			return new Vector2((float)Main.rand.Next(Area.X, Area.X + Area.Width), (float)Main.rand.Next(Area.Y, Area.Y + Area.Height));
 		}
 
-		public static float rotateBetween2Points(Vector2 A, Vector2 B)
+		public static float RotateBetween2Points(Vector2 A, Vector2 B)
 		{
 			return (float)Math.Atan2((double)(A.Y - B.Y), (double)(A.X - B.X));
 		}
@@ -331,7 +380,30 @@ namespace Redemption
 			return rect.Contains((int)pos.X, (int)pos.Y);
 		}
 
-		public delegate void ExtraAction();
+		public static bool AnyProjectiles(int type)
+		{
+			for (int i = 0; i < 1000; i++)
+			{
+				if (Main.projectile[i].active && Main.projectile[i].type == type)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		public static int CountProjectiles(int type)
+		{
+			int p = 0;
+			for (int i = 0; i < 1000; i++)
+			{
+				if (Main.projectile[i].active && Main.projectile[i].type == type)
+				{
+					p++;
+				}
+			}
+			return p;
+		}
 
 		[Flags]
 		public enum LiquidType

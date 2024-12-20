@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.DruidProjectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,7 +30,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.UseSound = SoundID.Item8;
 			base.item.noMelee = true;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("DarkBoltPro");
+			base.item.shoot = ModContent.ProjectileType<DarkBoltPro>();
 			base.item.shootSpeed = 20f;
 		}
 

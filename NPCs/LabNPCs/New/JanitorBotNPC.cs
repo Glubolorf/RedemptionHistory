@@ -1,4 +1,8 @@
 ﻿using System;
+using Redemption.Items.Armor.Costumes;
+using Redemption.Items.Placeable;
+using Redemption.Items.Placeable.LabDeco;
+using Redemption.Items.Weapons;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -58,7 +62,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					base.npc.frame.Y = 0;
 				}
 			}
-			if (NPC.CountNPCS(base.mod.NPCType("JanitorBotNPC")) >= 2 && Main.rand.Next(2) == 0)
+			if (NPC.CountNPCS(ModContent.NPCType<JanitorBotNPC>()) >= 2 && Main.rand.Next(2) == 0)
 			{
 				base.npc.active = false;
 			}
@@ -182,73 +186,94 @@ namespace Redemption.NPCs.LabNPCs.New
 
 		public override void SetupShop(Chest shop, ref int nextSlot)
 		{
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabPlating"), false);
+			Player player = Main.player[Main.myPlayer];
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<LabPlating>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabPlatingWall"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<LabPlatingWall>(), false);
 			nextSlot++;
 			if (RedeWorld.downedVolt)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("XenoTank"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<XenoTank>(), false);
 				nextSlot++;
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabForge"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<LabForge>(), false);
 				nextSlot++;
 			}
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Vent3"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Vent3>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Vent2"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Vent2>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Vent1"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Vent1>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("SignElectric"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<SignElectric>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("SignDeath"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<SignDeath>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("SignBoi"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<SignBoi>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("SignRadioactive"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<SignRadioactive>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabWorkbench"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<LabWorkbench>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabTestTubes"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<LabTestTubes>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabTable"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<LabTable>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabFan"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<LabFan>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabDoor3"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<LabDoor3>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabDoor1"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<LabDoor1>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabChest"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<LabChest>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabChair"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<LabChair>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabBookshelf"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<LabBookshelf>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabBed"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<LabBed>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Intercom"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Intercom>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Computer"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Computer>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabReceptionCouch"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<LabReceptionCouch>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabCeilingMonitor"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<LabCeilingMonitor>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabReceptionDesk"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<LabReceptionDesk>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabCeilingLamp"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<LabCeilingLamp>(), false);
 			nextSlot++;
+			if (BasePlayer.HasHelmet(player, ModContent.ItemType<TBotEyes_Femi>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotEyes_Masc>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotVanityEyes>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotGoggles_Femi>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotGoggles_Masc>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotVanityGoggles>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<AdamHead>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<OperatorHead>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<VoltHead>(), true))
+			{
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<OperatorHead>(), false);
+				nextSlot++;
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<VoltHead>(), false);
+				nextSlot++;
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<JanitorOutfit>(), false);
+				nextSlot++;
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<JanitorPants>(), false);
+				nextSlot++;
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<AndroidArmour>(), false);
+				nextSlot++;
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<AndroidPants>(), false);
+				nextSlot++;
+			}
+			if (BasePlayer.HasChestplate(player, ModContent.ItemType<JanitorOutfit>(), true) && BasePlayer.HasLeggings(player, ModContent.ItemType<JanitorPants>(), true))
+			{
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<NoveltyMop>(), false);
+				nextSlot++;
+			}
 			if (RedeWorld.downedVolt)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("BotHanger"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<BotHanger>(), false);
 				nextSlot++;
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("BotHangerOccupied"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<BotHangerOccupied>(), false);
 				nextSlot++;
 			}
 			if (RedeWorld.downedBlisterface)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("NanoAxe"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<NanoAxe>(), false);
 				nextSlot++;
 			}
 		}
@@ -289,18 +314,25 @@ namespace Redemption.NPCs.LabNPCs.New
 
 		public override string GetChat()
 		{
+			Player player = Main.player[Main.myPlayer];
 			ModLoader.GetMod("Grealm");
 			ModLoader.GetMod("AAMod");
 			ModLoader.GetMod("Calamity");
 			ModLoader.GetMod("ThoriumMod");
-			WeightedRandom<string> weightedRandom = new WeightedRandom<string>();
-			weightedRandom.Add("Bugger off, you're bringing a whole bunch of dust in here!", 1.0);
-			weightedRandom.Add("Oh it's you again. You better not interrupt my cleaning.", 1.0);
-			weightedRandom.Add("Make it quick, I've got to resume mopping the floor.", 1.0);
-			return weightedRandom;
+			WeightedRandom<string> chat = new WeightedRandom<string>();
+			if (BasePlayer.HasChestplate(player, ModContent.ItemType<JanitorOutfit>(), true) && BasePlayer.HasLeggings(player, ModContent.ItemType<JanitorPants>(), true))
+			{
+				chat.Add("So you've been assigned to janitor duty, eh? Here's a task, go to the reactors and remove that dense lava stuff from under the reactor. My Nano-chisel won't even leave a mark on it!", 1.0);
+				chat.Add("About time she got me an assistant to help clean this mess of a place. Remember to check under the tables for dust.", 1.0);
+			}
+			else
+			{
+				chat.Add("Bugger off, you're bringing a whole bunch of dust in here!", 1.0);
+				chat.Add("Oh it's you again. You better not interrupt my cleaning.", 1.0);
+				chat.Add("Make it quick, I've got to resume mopping the floor.", 1.0);
+			}
+			return chat;
 		}
-
-		private Player player;
 
 		public static bool SwitchInfo;
 

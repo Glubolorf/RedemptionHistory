@@ -35,7 +35,7 @@ namespace Redemption.Projectiles.v08
 			base.projectile.scale += 0.5f;
 			if (base.projectile.localAI[0] == 1f)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 27f, base.projectile.position.Y + 27f), base.projectile.velocity, base.mod.ProjectileType("SunPulse2"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 27f, base.projectile.position.Y + 27f), base.projectile.velocity, ModContent.ProjectileType<SunPulse2>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 			}
 			if (base.projectile.alpha >= 255)
 			{

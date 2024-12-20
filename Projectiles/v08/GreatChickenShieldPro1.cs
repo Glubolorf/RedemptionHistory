@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -28,7 +29,7 @@ namespace Redemption.Projectiles.v08
 		public override void AI()
 		{
 			Player player = Main.player[base.projectile.owner];
-			if (!player.HasBuff(base.mod.BuffType("ChickenShieldBuff")))
+			if (!player.HasBuff(ModContent.BuffType<ChickenShieldBuff>()))
 			{
 				base.projectile.Kill();
 			}
@@ -40,7 +41,7 @@ namespace Redemption.Projectiles.v08
 			{
 				base.projectile.spriteDirection = -1;
 			}
-			if (player.ownedProjectileCounts[base.mod.ProjectileType("GreatChickenShieldPro2")] != 0)
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<GreatChickenShieldPro2>()] != 0)
 			{
 				base.projectile.alpha = 255;
 				base.projectile.netUpdate = true;
@@ -56,9 +57,5 @@ namespace Redemption.Projectiles.v08
 			base.projectile.position.X = player.Center.X - 72f;
 			base.projectile.position.Y = player.Center.Y - 28f;
 		}
-
-		private int bashTimer;
-
-		private int bash;
 	}
 }

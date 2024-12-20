@@ -23,6 +23,7 @@ namespace Redemption.Projectiles
 			base.projectile.ignoreWater = true;
 			base.projectile.tileCollide = false;
 			base.projectile.alpha = 140;
+			base.projectile.timeLeft = 120;
 		}
 
 		public override void AI()
@@ -31,16 +32,14 @@ namespace Redemption.Projectiles
 			{
 				Main.PlaySound(SoundID.Item125, base.projectile.position);
 				Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 21, base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 0, default(Color), 1f);
-				Projectile.NewProjectile(base.projectile.position.X + 42f, base.projectile.position.Y + 42f, (float)(-12 + Main.rand.Next(0, 24)), (float)(-12 + Main.rand.Next(0, 24)), base.mod.ProjectileType("LastRPro5"), 400, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				if (Main.myPlayer == base.projectile.owner)
+				{
+					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-12 + Main.rand.Next(0, 24)), (float)(-12 + Main.rand.Next(0, 24)), ModContent.ProjectileType<LastRPro5>(), 400, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
+				}
 			}
 			Lighting.AddLight(base.projectile.Center, (float)(255 - base.projectile.alpha) * 1f / 255f, (float)(255 - base.projectile.alpha) * 1f / 255f, (float)(255 - base.projectile.alpha) * 1f / 255f);
-			base.projectile.localAI[0] += 1f;
-			base.projectile.alpha = (int)base.projectile.localAI[0] * 2;
+			base.projectile.alpha += 2;
 			base.projectile.rotation += 1.03f;
-			if (base.projectile.localAI[0] >= 120f)
-			{
-				base.projectile.Kill();
-			}
 		}
 	}
 }

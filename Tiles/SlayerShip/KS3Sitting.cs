@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Armor;
 using Redemption.Items.Datalogs;
+using Redemption.Items.LabThings;
+using Redemption.NPCs.Bosses.KingSlayerIII;
+using Redemption.Walls;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -69,30 +73,30 @@ namespace Redemption.Tiles.SlayerShip
 					case 0:
 						if (RedeWorld.slayerRep >= 3)
 						{
-							int p = Projectile.NewProjectile(base.npc.Center.X - 140f, base.npc.Center.Y - 50f, 0f, 0f, base.mod.ProjectileType("HologramShip2"), 0, 1f, Main.myPlayer, 0f, 0f);
+							int p = Projectile.NewProjectile(base.npc.Center.X - 140f, base.npc.Center.Y - 50f, 0f, 0f, ModContent.ProjectileType<HologramShip2>(), 0, 1f, Main.myPlayer, 0f, 0f);
 							Main.projectile[p].netUpdate = true;
 						}
 						else
 						{
-							int p2 = Projectile.NewProjectile(base.npc.Center.X - 140f, base.npc.Center.Y - 50f, 0f, 0f, base.mod.ProjectileType("HologramShip"), 0, 1f, Main.myPlayer, 0f, 0f);
+							int p2 = Projectile.NewProjectile(base.npc.Center.X - 140f, base.npc.Center.Y - 50f, 0f, 0f, ModContent.ProjectileType<HologramShip>(), 0, 1f, Main.myPlayer, 0f, 0f);
 							Main.projectile[p2].netUpdate = true;
 						}
 						break;
 					case 1:
 					{
-						int p3 = Projectile.NewProjectile(base.npc.Center.X - 140f, base.npc.Center.Y - 50f, 0f, 0f, base.mod.ProjectileType("HologramLab"), 0, 1f, Main.myPlayer, 0f, 0f);
+						int p3 = Projectile.NewProjectile(base.npc.Center.X - 140f, base.npc.Center.Y - 50f, 0f, 0f, ModContent.ProjectileType<HologramLab>(), 0, 1f, Main.myPlayer, 0f, 0f);
 						Main.projectile[p3].netUpdate = true;
 						break;
 					}
 					case 2:
 					{
-						int p4 = Projectile.NewProjectile(base.npc.Center.X - 140f, base.npc.Center.Y - 50f, 0f, 0f, base.mod.ProjectileType("HologramPlanet"), 0, 1f, Main.myPlayer, 0f, 0f);
+						int p4 = Projectile.NewProjectile(base.npc.Center.X - 140f, base.npc.Center.Y - 50f, 0f, 0f, ModContent.ProjectileType<HologramPlanet>(), 0, 1f, Main.myPlayer, 0f, 0f);
 						Main.projectile[p4].netUpdate = true;
 						break;
 					}
 					case 3:
 					{
-						int p5 = Projectile.NewProjectile(base.npc.Center.X - 140f, base.npc.Center.Y - 50f, 0f, 0f, base.mod.ProjectileType("HologramEpidotra"), 0, 1f, Main.myPlayer, 0f, 0f);
+						int p5 = Projectile.NewProjectile(base.npc.Center.X - 140f, base.npc.Center.Y - 50f, 0f, 0f, ModContent.ProjectileType<HologramEpidotra>(), 0, 1f, Main.myPlayer, 0f, 0f);
 						Main.projectile[p5].netUpdate = true;
 						break;
 					}
@@ -109,11 +113,11 @@ namespace Redemption.Tiles.SlayerShip
 			{
 				base.npc.active = false;
 			}
-			if (NPC.CountNPCS(base.mod.NPCType("KS3Sitting")) >= 2 && Main.rand.Next(2) == 0)
+			if (NPC.CountNPCS(ModContent.NPCType<KS3Sitting>()) >= 2 && Main.rand.Next(2) == 0)
 			{
 				base.npc.active = false;
 			}
-			if (NPC.AnyNPCs(base.mod.NPCType("KSEntrance")))
+			if (NPC.AnyNPCs(ModContent.NPCType<KSEntrance>()))
 			{
 				for (int i = 0; i < 15; i++)
 				{
@@ -280,7 +284,7 @@ namespace Redemption.Tiles.SlayerShip
 			{
 				Main.PlaySound(12, -1, -1, 1, 1f, 0f);
 				Player player = Main.LocalPlayer;
-				int Urani = player.FindItem(base.mod.ItemType("Uranium"));
+				int Urani = player.FindItem(ModContent.ItemType<Uranium>());
 				if (Urani >= 0)
 				{
 					player.inventory[Urani].stack--;
@@ -303,7 +307,7 @@ namespace Redemption.Tiles.SlayerShip
 			{
 				Main.PlaySound(12, -1, -1, 1, 1f, 0f);
 				Player player2 = Main.LocalPlayer;
-				int WiringKit = player2.FindItem(base.mod.ItemType("SlayerWiringKit"));
+				int WiringKit = player2.FindItem(ModContent.ItemType<SlayerWiringKit>());
 				if (WiringKit >= 0)
 				{
 					player2.inventory[WiringKit].stack--;
@@ -320,8 +324,12 @@ namespace Redemption.Tiles.SlayerShip
 					Dictionary<Color, int> colorToTile = new Dictionary<Color, int>();
 					colorToTile[new Color(150, 150, 150)] = -2;
 					colorToTile[Color.Black] = -1;
-					TexGen texGenerator = BaseWorldGenTex.GetTexGenerator(inst.GetTexture("WorldGeneration/SlayerShipFix1"), colorToTile, null, null, null, null);
+					TexGen texGenerator = BaseWorldGenTex.GetTexGenerator(inst.GetTexture("WorldGeneration/SlayerShipFix1"), colorToTile, null, null, null, null, null, null);
 					Point origin = new Point((int)((float)Main.maxTilesX * 0.65f), (int)((float)Main.maxTilesY * 0.3f));
+					if (Main.dungeonX < Main.maxTilesX / 2)
+					{
+						origin = new Point((int)((float)Main.maxTilesX * 0.35f), (int)((float)Main.maxTilesY * 0.3f));
+					}
 					texGenerator.Generate(origin.X, origin.Y, true, true);
 					if (Main.netMode == 2)
 					{
@@ -337,7 +345,7 @@ namespace Redemption.Tiles.SlayerShip
 			{
 				Main.PlaySound(12, -1, -1, 1, 1f, 0f);
 				Player player3 = Main.LocalPlayer;
-				int HullPlating = player3.FindItem(base.mod.ItemType("SlayerHullPlating"));
+				int HullPlating = player3.FindItem(ModContent.ItemType<SlayerHullPlating>());
 				if (HullPlating >= 0)
 				{
 					player3.inventory[HullPlating].stack--;
@@ -350,14 +358,18 @@ namespace Redemption.Tiles.SlayerShip
 					RedeWorld.slayerRep++;
 					CombatText.NewText(base.npc.getRect(), Color.LightCyan, "New Dialogue Available", true, false);
 					Main.PlaySound(24, -1, -1, 1, 1f, 0f);
-					Mod mod = Redemption.inst;
+					Mod inst2 = Redemption.inst;
 					Dictionary<Color, int> colorToTile2 = new Dictionary<Color, int>();
-					colorToTile2[new Color(0, 255, 255)] = mod.TileType("SlayerShipPanelTile");
-					colorToTile2[new Color(255, 0, 255)] = mod.TileType("ShipGlassTile");
+					colorToTile2[new Color(0, 255, 255)] = ModContent.TileType<SlayerShipPanelTile>();
+					colorToTile2[new Color(255, 0, 255)] = ModContent.TileType<ShipGlassTile>();
 					colorToTile2[new Color(150, 150, 150)] = -2;
 					colorToTile2[Color.Black] = -1;
-					TexGen texGenerator2 = BaseWorldGenTex.GetTexGenerator(mod.GetTexture("WorldGeneration/SlayerShipFix2"), colorToTile2, null, null, null, null);
+					TexGen texGenerator2 = BaseWorldGenTex.GetTexGenerator(inst2.GetTexture("WorldGeneration/SlayerShipFix2"), colorToTile2, null, null, null, null, null, null);
 					Point origin2 = new Point((int)((float)Main.maxTilesX * 0.65f), (int)((float)Main.maxTilesY * 0.3f));
+					if (Main.dungeonX < Main.maxTilesX / 2)
+					{
+						origin2 = new Point((int)((float)Main.maxTilesX * 0.35f), (int)((float)Main.maxTilesY * 0.3f));
+					}
 					texGenerator2.Generate(origin2.X, origin2.Y, true, true);
 					if (Main.netMode == 2)
 					{
@@ -373,7 +385,7 @@ namespace Redemption.Tiles.SlayerShip
 			{
 				Main.PlaySound(12, -1, -1, 1, 1f, 0f);
 				Player player4 = Main.LocalPlayer;
-				int ShipEngine = player4.FindItem(base.mod.ItemType("SlayerShipEngine"));
+				int ShipEngine = player4.FindItem(ModContent.ItemType<SlayerShipEngine>());
 				if (ShipEngine >= 0)
 				{
 					player4.inventory[ShipEngine].stack--;
@@ -389,17 +401,21 @@ namespace Redemption.Tiles.SlayerShip
 					CombatText.NewText(base.npc.getRect(), Color.LightCyan, "New Dialogue Available", true, false);
 					CombatText.NewText(player4.getRect(), Color.Gold, "+2", true, false);
 					Main.PlaySound(24, -1, -1, 1, 1f, 0f);
-					Mod mod2 = Redemption.inst;
+					Mod mod = Redemption.inst;
 					Dictionary<Color, int> colorToTile3 = new Dictionary<Color, int>();
-					colorToTile3[new Color(0, 255, 255)] = mod2.TileType("SlayerShipPanelTile");
-					colorToTile3[new Color(255, 0, 255)] = mod2.TileType("ShipGlassTile");
+					colorToTile3[new Color(0, 255, 255)] = ModContent.TileType<SlayerShipPanelTile>();
+					colorToTile3[new Color(255, 0, 255)] = ModContent.TileType<ShipGlassTile>();
 					colorToTile3[new Color(150, 150, 150)] = -2;
 					colorToTile3[Color.Black] = -1;
 					Dictionary<Color, int> colorToWall = new Dictionary<Color, int>();
-					colorToWall[new Color(0, 255, 0)] = mod2.WallType("SlayerShipPanelWallTile");
+					colorToWall[new Color(0, 255, 0)] = ModContent.WallType<SlayerShipPanelWallTile>();
 					colorToWall[Color.Black] = -1;
-					TexGen texGenerator3 = BaseWorldGenTex.GetTexGenerator(mod2.GetTexture("WorldGeneration/SlayerShipFix3"), colorToTile3, mod2.GetTexture("WorldGeneration/SlayerShipWallsFix"), colorToWall, null, null);
+					TexGen texGenerator3 = BaseWorldGenTex.GetTexGenerator(mod.GetTexture("WorldGeneration/SlayerShipFix3"), colorToTile3, mod.GetTexture("WorldGeneration/SlayerShipWallsFix"), colorToWall, null, null, null, null);
 					Point origin3 = new Point((int)((float)Main.maxTilesX * 0.65f), (int)((float)Main.maxTilesY * 0.3f));
+					if (Main.dungeonX < Main.maxTilesX / 2)
+					{
+						origin3 = new Point((int)((float)Main.maxTilesX * 0.35f), (int)((float)Main.maxTilesY * 0.3f));
+					}
 					texGenerator3.Generate(origin3.X, origin3.Y, true, true);
 					if (Main.netMode == 2)
 					{
@@ -430,57 +446,57 @@ namespace Redemption.Tiles.SlayerShip
 
 		public override void SetupShop(Chest shop, ref int nextSlot)
 		{
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Datalog1"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Datalog1>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Datalog2"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Datalog2>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Datalog3"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Datalog3>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Datalog6"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Datalog6>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Datalog335"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Datalog335>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Datalog772"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Datalog772>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Datalog919"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Datalog919>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Datalog180499"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Datalog180499>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Datalog182500"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Datalog182500>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Datalog182501"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Datalog182501>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Datalog182573"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Datalog182573>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Datalog184753"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Datalog184753>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Datalog184989"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Datalog184989>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Datalog466105"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Datalog466105>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Datalog500198"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Datalog500198>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Datalog545675"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Datalog545675>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Datalog999735"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Datalog999735>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Datalog1000000"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Datalog1000000>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Datalog1012875"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Datalog1012875>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Datalog3650000"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Datalog3650000>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Datalog5385430"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Datalog5385430>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Datalog36500001"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Datalog36500001>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Datalog164550614"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Datalog164550614>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Datalog364635000"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Datalog364635000>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Datalog365000000"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Datalog365000000>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Datalog389035250"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Datalog389035250>(), false);
 			nextSlot++;
 		}
 
@@ -751,11 +767,11 @@ namespace Redemption.Tiles.SlayerShip
 				{
 					chat.Add("I'll be leaving here soon, make it quick.", 1.0);
 				}
-				if (BasePlayer.HasHelmet(player, base.mod.ItemType("KingSlayerMask"), true))
+				if (BasePlayer.HasHelmet(player, ModContent.ItemType<KingSlayerMask>(), true))
 				{
 					chat.Add("What have you got on your head? Are you trying to cosplay as me or something?", 1.0);
 				}
-				if (BasePlayer.HasHelmet(player, base.mod.ItemType("AndroidHead"), true) || BasePlayer.HasHelmet(player, base.mod.ItemType("PrototypeSilverHead"), true))
+				if (BasePlayer.HasHelmet(player, ModContent.ItemType<AndroidHead>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<PrototypeSilverHead>(), true))
 				{
 					chat.Add("I'm not an idiot ya know, I know one of my own minions when I see one.", 1.0);
 				}

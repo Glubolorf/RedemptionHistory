@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -41,7 +42,7 @@ namespace Redemption.Items.Armor.PostML
 
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
-			return body.type == base.mod.ItemType("XeniumBody") && legs.type == base.mod.ItemType("XeniumLeggings");
+			return body.type == ModContent.ItemType<XeniumBody>() && legs.type == ModContent.ItemType<XeniumLeggings>();
 		}
 
 		public override void UpdateArmorSet(Player player)
@@ -66,10 +67,10 @@ namespace Redemption.Items.Armor.PostML
 			{
 				player.magicCrit += 50;
 			}
-			player.buffImmune[base.mod.BuffType("XenomiteDebuff")] = true;
-			player.buffImmune[base.mod.BuffType("XenomiteDebuff2")] = true;
-			player.buffImmune[base.mod.BuffType("RadioactiveFalloutDebuff")] = true;
-			player.buffImmune[base.mod.BuffType("HeavyRadiationDebuff")] = true;
+			player.buffImmune[ModContent.BuffType<XenomiteDebuff>()] = true;
+			player.buffImmune[ModContent.BuffType<XenomiteDebuff2>()] = true;
+			player.buffImmune[ModContent.BuffType<RadioactiveFalloutDebuff>()] = true;
+			player.buffImmune[ModContent.BuffType<HeavyRadiationDebuff>()] = true;
 			redePlayer.labWaterImmune = true;
 		}
 

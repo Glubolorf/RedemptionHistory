@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -34,7 +35,7 @@ namespace Redemption.Items
 
 		public override void HoldItem(Player player)
 		{
-			player.AddBuff(base.mod.BuffType("XenomiteDebuff"), Main.rand.Next(10, 20), true);
+			player.AddBuff(ModContent.BuffType<XenomiteDebuff>(), Main.rand.Next(10, 20), true);
 		}
 	}
 }

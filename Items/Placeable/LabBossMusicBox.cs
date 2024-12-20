@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable
@@ -19,7 +20,7 @@ namespace Redemption.Items.Placeable
 			base.item.useTime = 10;
 			base.item.autoReuse = true;
 			base.item.consumable = true;
-			base.item.createTile = base.mod.TileType("LabBossMusicBoxTile");
+			base.item.createTile = ModContent.TileType<LabBossMusicBoxTile>();
 			base.item.width = 32;
 			base.item.height = 32;
 			base.item.rare = 4;

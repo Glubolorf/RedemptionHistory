@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ID;
@@ -59,14 +60,14 @@ namespace Redemption.Projectiles.Petridish
 				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 4, 0f, 0f, 100, default(Color), 1.2f);
 				Main.dust[dustIndex].velocity *= 1.4f;
 			}
-			Projectile.NewProjectile(base.projectile.position.X + 8f, base.projectile.position.Y + 8f, (float)(-3 + Main.rand.Next(0, 7)), (float)(-3 + Main.rand.Next(0, 7)), base.mod.ProjectileType("Bacteria4"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
-			Projectile.NewProjectile(base.projectile.position.X + 8f, base.projectile.position.Y + 8f, (float)(-3 + Main.rand.Next(0, 7)), (float)(-3 + Main.rand.Next(0, 7)), base.mod.ProjectileType("Bacteria5"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
+			Projectile.NewProjectile(base.projectile.position.X + 8f, base.projectile.position.Y + 8f, (float)(-3 + Main.rand.Next(0, 7)), (float)(-3 + Main.rand.Next(0, 7)), ModContent.ProjectileType<Bacteria4>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
+			Projectile.NewProjectile(base.projectile.position.X + 8f, base.projectile.position.Y + 8f, (float)(-3 + Main.rand.Next(0, 7)), (float)(-3 + Main.rand.Next(0, 7)), ModContent.ProjectileType<Bacteria5>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 		}
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			target.immune[base.projectile.owner] = 3;
-			target.AddBuff(base.mod.BuffType("BInfectionDebuff"), 1000, false);
+			target.AddBuff(ModContent.BuffType<BInfectionDebuff>(), 1000, false);
 		}
 	}
 }

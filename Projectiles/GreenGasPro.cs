@@ -21,16 +21,12 @@ namespace Redemption.Projectiles
 			base.projectile.ignoreWater = true;
 			base.projectile.tileCollide = false;
 			base.projectile.alpha = 200;
+			base.projectile.timeLeft = 120;
 		}
 
 		public override void AI()
 		{
-			base.projectile.localAI[0] += 1f;
 			base.projectile.rotation += 0.04f;
-			if (base.projectile.localAI[0] >= 120f)
-			{
-				base.projectile.Kill();
-			}
 		}
 	}
 }

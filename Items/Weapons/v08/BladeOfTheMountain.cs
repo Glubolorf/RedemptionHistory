@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -35,7 +36,7 @@ namespace Redemption.Items.Weapons.v08
 			int targetSize = target.width + target.height;
 			if (Main.rand.Next(6) == 0 && targetSize < 100 && !target.boss)
 			{
-				target.AddBuff(base.mod.BuffType("FrozenEnemyDebuff"), 180, false);
+				target.AddBuff(ModContent.BuffType<FrozenEnemyDebuff>(), 180, false);
 			}
 			target.AddBuff(44, 360, false);
 		}
@@ -44,8 +45,8 @@ namespace Redemption.Items.Weapons.v08
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
 			modRecipe.AddIngredient(724, 1);
-			modRecipe.AddIngredient(base.mod.ItemType("PureIron"), 14);
-			modRecipe.AddIngredient(base.mod.ItemType("DarkShard"), 2);
+			modRecipe.AddIngredient(ModContent.ItemType<PureIron>(), 14);
+			modRecipe.AddIngredient(ModContent.ItemType<DarkShard>(), 2);
 			modRecipe.AddTile(16);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();

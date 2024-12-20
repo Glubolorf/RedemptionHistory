@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -24,7 +25,7 @@ namespace Redemption.Items.Weapons
 			base.item.value = Item.buyPrice(0, 0, 5, 0);
 			base.item.rare = 0;
 			base.item.autoReuse = false;
-			base.item.shoot = base.mod.ProjectileType("LivingWoodYoyoPro");
+			base.item.shoot = ModContent.ProjectileType<LivingWoodYoyoPro>();
 			base.item.noUseGraphic = true;
 			base.item.noMelee = true;
 			base.item.UseSound = SoundID.Item1;

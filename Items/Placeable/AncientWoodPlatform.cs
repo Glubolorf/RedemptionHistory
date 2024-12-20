@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable
@@ -21,7 +22,7 @@ namespace Redemption.Items.Placeable
 			base.item.useTime = 10;
 			base.item.useStyle = 1;
 			base.item.consumable = true;
-			base.item.createTile = base.mod.TileType("AncientWoodPlatformTile");
+			base.item.createTile = ModContent.TileType<AncientWoodPlatformTile>();
 		}
 
 		public override void AddRecipes()

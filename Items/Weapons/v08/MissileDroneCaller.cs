@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.Minions;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.knockBack = 9f;
 			base.item.value = Item.sellPrice(0, 10, 0, 0);
 			base.item.UseSound = SoundID.Item44;
-			base.item.shoot = base.mod.ProjectileType("SlayerMissileDroneMinion");
+			base.item.shoot = ModContent.ProjectileType<SlayerMissileDroneMinion>();
 			base.item.shootSpeed = 0f;
 			base.item.consumable = true;
 		}

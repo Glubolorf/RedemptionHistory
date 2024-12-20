@@ -51,17 +51,17 @@ namespace Redemption.Projectiles.Petridish
 				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 4, 0f, 0f, 100, default(Color), 1.2f);
 				Main.dust[dustIndex].velocity *= 1.4f;
 			}
-			Projectile.NewProjectile(base.projectile.position.X + 8f, base.projectile.position.Y + 4f, (float)(-3 + Main.rand.Next(0, 7)), (float)(-3 + Main.rand.Next(0, 7)), base.mod.ProjectileType("Bacteria1"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
-			Projectile.NewProjectile(base.projectile.position.X + 8f, base.projectile.position.Y + 4f, (float)(-3 + Main.rand.Next(0, 7)), (float)(-3 + Main.rand.Next(0, 7)), base.mod.ProjectileType("Bacteria2"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
-			Projectile.NewProjectile(base.projectile.position.X + 8f, base.projectile.position.Y + 4f, (float)(-3 + Main.rand.Next(0, 7)), (float)(-3 + Main.rand.Next(0, 7)), base.mod.ProjectileType("Bacteria3"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
-			Projectile.NewProjectile(base.projectile.position.X + 8f, base.projectile.position.Y + 4f, (float)(-3 + Main.rand.Next(0, 7)), (float)(-3 + Main.rand.Next(0, 7)), base.mod.ProjectileType("Bacteria1"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
+			Projectile.NewProjectile(base.projectile.position.X + 8f, base.projectile.position.Y + 4f, (float)(-3 + Main.rand.Next(0, 7)), (float)(-3 + Main.rand.Next(0, 7)), ModContent.ProjectileType<Bacteria1>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
+			Projectile.NewProjectile(base.projectile.position.X + 8f, base.projectile.position.Y + 4f, (float)(-3 + Main.rand.Next(0, 7)), (float)(-3 + Main.rand.Next(0, 7)), ModContent.ProjectileType<Bacteria2>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
+			Projectile.NewProjectile(base.projectile.position.X + 8f, base.projectile.position.Y + 4f, (float)(-3 + Main.rand.Next(0, 7)), (float)(-3 + Main.rand.Next(0, 7)), ModContent.ProjectileType<Bacteria3>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
+			Projectile.NewProjectile(base.projectile.position.X + 8f, base.projectile.position.Y + 4f, (float)(-3 + Main.rand.Next(0, 7)), (float)(-3 + Main.rand.Next(0, 7)), ModContent.ProjectileType<Bacteria1>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 			if (Main.rand.Next(2) == 0)
 			{
-				Projectile.NewProjectile(base.projectile.position.X + 8f, base.projectile.position.Y + 4f, (float)(-4 + Main.rand.Next(0, 9)), (float)(-4 + Main.rand.Next(0, 9)), base.mod.ProjectileType("Bacteria2"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(base.projectile.position.X + 8f, base.projectile.position.Y + 4f, (float)(-4 + Main.rand.Next(0, 9)), (float)(-4 + Main.rand.Next(0, 9)), ModContent.ProjectileType<Bacteria2>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 			}
 			if (Main.rand.Next(2) == 0)
 			{
-				Projectile.NewProjectile(base.projectile.position.X + 8f, base.projectile.position.Y + 4f, (float)(-4 + Main.rand.Next(0, 9)), (float)(-4 + Main.rand.Next(0, 9)), base.mod.ProjectileType("Bacteria3"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(base.projectile.position.X + 8f, base.projectile.position.Y + 4f, (float)(-4 + Main.rand.Next(0, 9)), (float)(-4 + Main.rand.Next(0, 9)), ModContent.ProjectileType<Bacteria3>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 			}
 		}
 	}

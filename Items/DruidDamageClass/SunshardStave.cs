@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles.DruidProjectiles.Stave;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,11 +29,11 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override void SafeSetDefaults()
 		{
-			base.item.damage = 70;
+			base.item.damage = 78;
 			base.item.height = 116;
 			base.item.width = 116;
-			base.item.useTime = 8;
-			base.item.useAnimation = 8;
+			base.item.useTime = 11;
+			base.item.useAnimation = 11;
 			base.item.mana = 2;
 			base.item.crit = 18;
 			base.item.knockBack = 7f;
@@ -40,10 +41,10 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.rare = 8;
 			base.item.UseSound = SoundID.Item125;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("SunshardSpark");
+			base.item.shoot = ModContent.ProjectileType<SunshardSpark>();
 			base.item.shootSpeed = 18f;
 			base.item.glowMask = SunshardStave.customGlowMask;
-			this.defaultShoot = base.mod.ProjectileType("SunshardSpark");
+			this.defaultShoot = ModContent.ProjectileType<SunshardSpark>();
 			this.singleShotStave = true;
 			this.staveHoldOffset = new Vector2(4f, -10f);
 			this.staveLength = 122.2f;
@@ -64,25 +65,12 @@ namespace Redemption.Items.DruidDamageClass
 			modRecipe.AddIngredient(null, "FDruidStave", 1);
 			modRecipe.AddIngredient(null, "CrystalStave", 1);
 			modRecipe.AddIngredient(null, "HallowedStave", 1);
-			modRecipe.AddIngredient(null, "SapphireStave", 1);
 			modRecipe.AddIngredient(549, 10);
 			modRecipe.AddIngredient(548, 10);
 			modRecipe.AddIngredient(547, 10);
 			modRecipe.AddTile(null, "DruidicAltarTile");
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
-			ModRecipe modRecipe2 = new ModRecipe(base.mod);
-			modRecipe2.AddIngredient(null, "MoonflareStave", 1);
-			modRecipe2.AddIngredient(null, "FDruidStave", 1);
-			modRecipe2.AddIngredient(null, "CrystalStave", 1);
-			modRecipe2.AddIngredient(null, "HallowedStave", 1);
-			modRecipe2.AddIngredient(null, "ScarletStave", 1);
-			modRecipe2.AddIngredient(549, 10);
-			modRecipe2.AddIngredient(548, 10);
-			modRecipe2.AddIngredient(547, 10);
-			modRecipe2.AddTile(null, "DruidicAltarTile");
-			modRecipe2.SetResult(this, 1);
-			modRecipe2.AddRecipe();
 		}
 
 		public static short customGlowMask;

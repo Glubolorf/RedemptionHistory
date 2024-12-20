@@ -53,11 +53,11 @@ namespace Redemption.NPCs
 				int randomWormLength = Main.rand.Next(2, 3);
 				for (int i = 0; i < randomWormLength; i++)
 				{
-					latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("CorruptedWormBody"), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
+					latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<CorruptedWormBody>(), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
 					Main.npc[latestNPC].realLife = base.npc.whoAmI;
 					Main.npc[latestNPC].ai[3] = (float)base.npc.whoAmI;
 				}
-				latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("CorruptedWormTail"), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
+				latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<CorruptedWormTail>(), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
 				Main.npc[latestNPC].realLife = base.npc.whoAmI;
 				Main.npc[latestNPC].ai[3] = (float)base.npc.whoAmI;
 				base.npc.ai[0] = 1f;

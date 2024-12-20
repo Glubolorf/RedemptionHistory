@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -21,7 +22,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.useAnimation = 20;
 			base.item.reuseDelay = 25;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("UraniumRaygunRingPro");
+			base.item.shoot = ModContent.ProjectileType<UraniumRaygunRingPro>();
 			base.item.shootSpeed = 11f;
 			base.item.UseSound = SoundID.Item92;
 			base.item.ranged = true;

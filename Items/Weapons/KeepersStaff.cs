@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.Items.Weapons
 			base.item.rare = 3;
 			base.item.UseSound = SoundID.Item20;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("DarkSoulPro2");
+			base.item.shoot = ModContent.ProjectileType<DarkSoulPro2>();
 			base.item.shootSpeed = 16f;
 		}
 

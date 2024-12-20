@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Redemption.Items.DruidDamageClass;
+using Redemption.Projectiles.DruidProjectiles.Plants;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -38,7 +39,7 @@ namespace Redemption.Projectiles.DruidProjectiles
 		{
 			if (Main.myPlayer == base.projectile.owner)
 			{
-				Projectile.NewProjectile(base.projectile.Top, base.projectile.velocity, base.mod.ProjectileType("DarkSeed"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(base.projectile.Top, base.projectile.velocity, ModContent.ProjectileType<DarkSeed>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 			}
 		}
 	}

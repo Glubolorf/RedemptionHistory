@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ID;
@@ -50,7 +51,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 				}
 			}
 			Player player = Main.player[base.projectile.owner];
-			if (!player.HasBuff(base.mod.BuffType("NatureGuardian8Buff")))
+			if (!player.HasBuff(ModContent.BuffType<NatureGuardian8Buff>()))
 			{
 				base.projectile.Kill();
 			}
@@ -83,7 +84,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 				{
 					this.shootBarrage = true;
 				}
-				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center)), base.mod.ProjectileType("CorruptBlast"), 20, 7f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center)), ModContent.ProjectileType<CorruptBlast>(), 20, 7f, Main.myPlayer, 0f, 0f);
 			}
 			if (this.shootBarrage && base.projectile.localAI[0] % 180f == 0f)
 			{

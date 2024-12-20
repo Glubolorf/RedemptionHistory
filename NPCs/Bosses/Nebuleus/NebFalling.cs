@@ -82,7 +82,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 
 		public override void Kill(int timeLeft)
 		{
-			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, base.mod.ProjectileType("NebDefeated"), 0, 3f, 255, 0f, 0f);
+			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, ModContent.ProjectileType<NebDefeated>(), 0, 3f, 255, 0f, 0f);
 			for (int i = 0; i < 25; i++)
 			{
 				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 58, 0f, 0f, 100, default(Color), 4f);

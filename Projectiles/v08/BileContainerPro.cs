@@ -44,7 +44,7 @@ namespace Redemption.Projectiles.v08
 			}
 			for (int j = 0; j < 6; j++)
 			{
-				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-4 + Main.rand.Next(0, 7)), (float)(-3 + Main.rand.Next(-6, 0)), base.mod.ProjectileType("BilePro"), base.projectile.damage / 2, 4f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-4 + Main.rand.Next(0, 7)), (float)(-3 + Main.rand.Next(-6, 0)), ModContent.ProjectileType<BilePro>(), base.projectile.damage / 2, 4f, Main.myPlayer, 0f, 0f);
 			}
 		}
 

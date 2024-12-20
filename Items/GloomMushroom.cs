@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -25,7 +26,7 @@ namespace Redemption.Items
 			base.item.useTime = 10;
 			base.item.useStyle = 1;
 			base.item.consumable = true;
-			base.item.createTile = base.mod.TileType("GloomShroomTile");
+			base.item.createTile = ModContent.TileType<GloomShroomTile>();
 			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 	}

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,7 +27,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.knockBack = 9f;
 			base.item.UseSound = SoundID.Item11;
 			base.item.value = Item.buyPrice(5, 0, 0, 0);
-			base.item.shoot = base.mod.ProjectileType("CoriumBallPro");
+			base.item.shoot = ModContent.ProjectileType<CoriumBallPro>();
 			base.item.shootSpeed = 22f;
 			base.item.autoReuse = true;
 			base.item.noMelee = true;

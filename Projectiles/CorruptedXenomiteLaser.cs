@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Dusts;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -33,7 +34,7 @@ namespace Redemption.Projectiles
 			base.projectile.friendly = true;
 			base.projectile.magic = true;
 			base.projectile.penetrate = 1;
-			base.projectile.timeLeft = 600;
+			base.projectile.timeLeft = 130;
 			base.projectile.alpha = 0;
 			base.projectile.light = 0.5f;
 			base.projectile.extraUpdates = 1;
@@ -44,14 +45,9 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			int DustID2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y + 2f), base.projectile.width + 2, base.projectile.height + 2, base.mod.DustType("VlitchFlame"), base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 2.9f);
+			int DustID2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, ModContent.DustType<VlitchFlame>(), base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 2.9f);
 			Main.dust[DustID2].noGravity = true;
-			base.projectile.localAI[0] += 1f;
-			base.projectile.alpha = (int)base.projectile.localAI[0] * 2;
-			if (base.projectile.localAI[0] > 130f)
-			{
-				base.projectile.Kill();
-			}
+			base.projectile.alpha += 2;
 		}
 
 		public override bool OnTileCollide(Vector2 oldVelocity)

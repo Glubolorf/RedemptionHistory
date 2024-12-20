@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.NPCs.LabNPCs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -41,7 +42,7 @@ namespace Redemption.Projectiles
 		{
 			if (Main.netMode != 1)
 			{
-				int i = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, base.mod.NPCType("Blisterling"), 0, 0f, 0f, 0f, 0f, 255);
+				int i = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, ModContent.NPCType<Blisterling>(), 0, 0f, 0f, 0f, 0f, 255);
 				if (Main.netMode == 2)
 				{
 					NetMessage.SendData(23, -1, -1, null, i, 0f, 0f, 0f, 0, 0, 0);

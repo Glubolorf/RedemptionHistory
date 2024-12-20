@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -18,7 +19,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.height = 22;
 			base.item.ranged = true;
 			base.item.damage = 4;
-			base.item.shoot = base.mod.ProjectileType("AncientSlingShotPro");
+			base.item.shoot = ModContent.ProjectileType<AncientSlingShotPro>();
 			base.item.useTime = 10;
 			base.item.useAnimation = 10;
 			base.item.useStyle = 5;

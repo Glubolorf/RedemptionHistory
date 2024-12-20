@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.UseSound = SoundID.Item15;
 			base.item.autoReuse = true;
 			base.item.noUseGraphic = true;
-			base.item.shoot = base.mod.ProjectileType("SlayersChakramPro");
+			base.item.shoot = ModContent.ProjectileType<SlayersChakramPro>();
 			base.item.shootSpeed = 18f;
 		}
 

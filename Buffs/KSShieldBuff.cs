@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -24,7 +25,7 @@ namespace Redemption.Buffs
 				player.lifeRegen = 0;
 			}
 			player.GetModPlayer<RedePlayer>();
-			if (player.ownedProjectileCounts[base.mod.ProjectileType("KSShieldPro")] == 0)
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<KSShieldPro>()] == 0)
 			{
 				player.DelBuff(buffIndex);
 				buffIndex--;

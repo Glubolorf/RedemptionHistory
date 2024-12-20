@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items;
+using Redemption.Items.Placeable;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -40,8 +42,13 @@ namespace Redemption.Tiles
 		{
 			if (Main.rand.Next(8) == 0)
 			{
-				Item.NewItem(i * 16, j * 16, 16, 32, base.mod.ItemType("ChickenEgg"), 1, false, 0, false, false);
+				Item.NewItem(i * 16, j * 16, 16, 32, ModContent.ItemType<ChickenEgg>(), 1, false, 0, false, false);
 			}
+		}
+
+		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height)
+		{
+			offsetY = 4;
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -51,7 +58,7 @@ namespace Redemption.Tiles
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 32, base.mod.ItemType("ChickenCoop"), 1, false, 0, false, false);
+			Item.NewItem(i * 16, j * 16, 16, 32, ModContent.ItemType<ChickenCoop>(), 1, false, 0, false, false);
 		}
 
 		public override bool CanExplode(int i, int j)

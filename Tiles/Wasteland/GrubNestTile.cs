@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.NPCs.v08;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -33,7 +34,7 @@ namespace Redemption.Tiles.Wasteland
 					i *= 16;
 					j++;
 					j *= 16;
-					int k = NPC.NewNPC(i, j, base.mod.NPCType("InfectedGrub"), 0, 0f, 0f, 0f, 0f, 255);
+					int k = NPC.NewNPC(i, j, ModContent.NPCType<InfectedGrub>(), 0, 0f, 0f, 0f, 0f, 255);
 					if (Main.netMode == 2)
 					{
 						NetMessage.SendData(23, -1, -1, null, k, 0f, 0f, 0f, 0, 0, 0);

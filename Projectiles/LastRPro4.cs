@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -39,13 +40,11 @@ namespace Redemption.Projectiles
 		public override void AI()
 		{
 			Player player = Main.player[base.projectile.owner];
-			if (!player.HasBuff(base.mod.BuffType("RedemptiveEmbraceBuff")))
+			if (!player.HasBuff(ModContent.BuffType<RedemptiveEmbraceBuff>()))
 			{
 				base.projectile.Kill();
 			}
-			base.projectile.localAI[0] += 1f;
-			base.projectile.velocity.Y = 0f;
-			base.projectile.velocity.X = 0f;
+			base.projectile.velocity *= 0f;
 			base.projectile.rotation += 0.06f;
 			Lighting.AddLight(base.projectile.Center, (float)(255 - base.projectile.alpha) * 1f / 255f, (float)(255 - base.projectile.alpha) * 1f / 255f, (float)(255 - base.projectile.alpha) * 1f / 255f);
 			base.projectile.position.X = player.Center.X - 204f;

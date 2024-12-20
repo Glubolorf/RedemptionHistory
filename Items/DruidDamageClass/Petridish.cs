@@ -1,6 +1,8 @@
 ﻿using System;
+using Redemption.Projectiles.Petridish;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
@@ -29,7 +31,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.noMelee = true;
 			base.item.noUseGraphic = true;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("PetridishPro");
+			base.item.shoot = ModContent.ProjectileType<PetridishPro>();
 			base.item.shootSpeed = 14f;
 		}
 	}

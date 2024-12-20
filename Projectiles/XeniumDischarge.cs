@@ -48,7 +48,7 @@ namespace Redemption.Projectiles
 			if (base.projectile.localAI[0] == 1f)
 			{
 				Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Zap1").WithVolume(0.9f).WithPitchVariance(0.1f), -1, -1);
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 51f, base.projectile.position.Y + 51f), base.projectile.velocity, base.mod.ProjectileType("XeniumDischarge2"), player.statDefense * 3, 0f, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 51f, base.projectile.position.Y + 51f), base.projectile.velocity, ModContent.ProjectileType<XeniumDischarge2>(), player.statDefense * 3, 0f, base.projectile.owner, 0f, 1f);
 			}
 			if (base.projectile.alpha >= 255)
 			{

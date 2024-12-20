@@ -1,4 +1,6 @@
 ﻿using System;
+using Redemption.Buffs;
+using Redemption.Projectiles.Pets;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -9,14 +11,17 @@ namespace Redemption.Items
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Mysterious Skull");
-			base.Tooltip.SetDefault("Summons Tiedemies to light your way!");
+			base.Tooltip.SetDefault("Summons a certain spooky skeleton");
 		}
 
 		public override void SetDefaults()
 		{
-			base.item.CloneDefaults(1183);
-			base.item.shoot = base.mod.ProjectileType("TiedemiesPet");
-			base.item.buffType = base.mod.BuffType("TiedemiesBuff");
+			base.item.CloneDefaults(669);
+			base.item.width = 20;
+			base.item.height = 20;
+			base.item.rare = -12;
+			base.item.shoot = ModContent.ProjectileType<TiedPet>();
+			base.item.buffType = ModContent.BuffType<TiedPetBuff>();
 		}
 
 		public override void UseStyle(Player player)
@@ -25,16 +30,6 @@ namespace Redemption.Items
 			{
 				player.AddBuff(base.item.buffType, 3600, true);
 			}
-		}
-
-		public override void AddRecipes()
-		{
-			ModRecipe modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "OldTophat", 1);
-			modRecipe.AddIngredient(1183, 1);
-			modRecipe.AddTile(26);
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
 		}
 	}
 }

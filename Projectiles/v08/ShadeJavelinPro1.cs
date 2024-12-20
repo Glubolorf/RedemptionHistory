@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Dusts;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -67,7 +68,7 @@ namespace Redemption.Projectiles.v08
 			usePos += rotVector * 16f;
 			for (int i = 0; i < 20; i++)
 			{
-				Dust dust = Dust.NewDustDirect(usePos, base.projectile.width, base.projectile.height, base.mod.DustType("VoidFlame"), 0f, 0f, 0, default(Color), 1f);
+				Dust dust = Dust.NewDustDirect(usePos, base.projectile.width, base.projectile.height, ModContent.DustType<VoidFlame>(), 0f, 0f, 0, default(Color), 1f);
 				dust.position = (dust.position + base.projectile.Center) / 2f;
 				dust.velocity += rotVector * 2f;
 				dust.velocity *= 0.5f;

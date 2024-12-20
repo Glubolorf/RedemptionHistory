@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -37,7 +38,7 @@ namespace Redemption.Tiles
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 64, 32, base.mod.ItemType("DeadWoodBed"), 1, false, 0, false, false);
+			Item.NewItem(i * 16, j * 16, 64, 32, ModContent.ItemType<DeadWoodBed>(), 1, false, 0, false, false);
 		}
 
 		public override bool NewRightClick(int i, int j)
@@ -70,7 +71,7 @@ namespace Redemption.Tiles
 			Player localPlayer = Main.LocalPlayer;
 			localPlayer.noThrow = 2;
 			localPlayer.showItemIcon = true;
-			localPlayer.showItemIcon2 = base.mod.ItemType("DeadWoodBed");
+			localPlayer.showItemIcon2 = ModContent.ItemType<DeadWoodBed>();
 		}
 	}
 }

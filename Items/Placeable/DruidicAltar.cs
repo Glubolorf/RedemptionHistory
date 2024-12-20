@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -25,7 +26,7 @@ namespace Redemption.Items.Placeable
 			base.item.rare = 3;
 			base.item.consumable = true;
 			base.item.value = Item.sellPrice(0, 0, 60, 50);
-			base.item.createTile = base.mod.TileType("DruidicAltarTile");
+			base.item.createTile = ModContent.TileType<DruidicAltarTile>();
 			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 

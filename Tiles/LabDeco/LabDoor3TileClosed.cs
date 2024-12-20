@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.LabDeco;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -51,7 +52,7 @@ namespace Redemption.Tiles.LabDeco
 			{
 				10
 			};
-			this.openDoorID = base.mod.TileType("LabDoor3TileOpen");
+			this.openDoorID = ModContent.TileType<LabDoor3TileOpen>();
 		}
 
 		public override bool CanKillTile(int i, int j, ref bool blockDamaged)
@@ -76,7 +77,7 @@ namespace Redemption.Tiles.LabDeco
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 48, base.mod.ItemType("LabDoor3"), 1, false, 0, false, false);
+			Item.NewItem(i * 16, j * 16, 16, 48, ModContent.ItemType<LabDoor3>(), 1, false, 0, false, false);
 		}
 
 		public override void MouseOver(int i, int j)
@@ -84,7 +85,7 @@ namespace Redemption.Tiles.LabDeco
 			Player localPlayer = Main.LocalPlayer;
 			localPlayer.noThrow = 2;
 			localPlayer.showItemIcon = true;
-			localPlayer.showItemIcon2 = base.mod.ItemType("LabDoor3");
+			localPlayer.showItemIcon2 = ModContent.ItemType<LabDoor3>();
 		}
 	}
 }

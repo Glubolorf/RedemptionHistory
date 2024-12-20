@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,7 +27,7 @@ namespace Redemption.NPCs
 			base.npc.aiStyle = 7;
 			this.aiType = 46;
 			this.animationType = 428;
-			base.npc.catchItem = (short)base.mod.ItemType("GrandLarvaBait");
+			base.npc.catchItem = (short)ModContent.ItemType<GrandLarvaBait>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -45,13 +46,13 @@ namespace Redemption.NPCs
 				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 273, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
 				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 273, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
 				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 273, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
-				NPC.NewNPC((int)base.npc.position.X + 22, (int)base.npc.position.Y + 10, base.mod.NPCType("Fly"), 0, 0f, 0f, 0f, 0f, 255);
-				NPC.NewNPC((int)base.npc.position.X + 16, (int)base.npc.position.Y + 10, base.mod.NPCType("Fly"), 0, 0f, 0f, 0f, 0f, 255);
-				NPC.NewNPC((int)base.npc.position.X + 12, (int)base.npc.position.Y + 6, base.mod.NPCType("Fly"), 0, 0f, 0f, 0f, 0f, 255);
-				NPC.NewNPC((int)base.npc.position.X + 24, (int)base.npc.position.Y + 12, base.mod.NPCType("Fly"), 0, 0f, 0f, 0f, 0f, 255);
-				NPC.NewNPC((int)base.npc.position.X + 28, (int)base.npc.position.Y + 14, base.mod.NPCType("Fly"), 0, 0f, 0f, 0f, 0f, 255);
-				NPC.NewNPC((int)base.npc.position.X + 30, (int)base.npc.position.Y + 8, base.mod.NPCType("Fly"), 0, 0f, 0f, 0f, 0f, 255);
-				NPC.NewNPC((int)base.npc.position.X + 10, (int)base.npc.position.Y + 14, base.mod.NPCType("Fly"), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.position.X + 22, (int)base.npc.position.Y + 10, ModContent.NPCType<Fly>(), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.position.X + 16, (int)base.npc.position.Y + 10, ModContent.NPCType<Fly>(), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.position.X + 12, (int)base.npc.position.Y + 6, ModContent.NPCType<Fly>(), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.position.X + 24, (int)base.npc.position.Y + 12, ModContent.NPCType<Fly>(), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.position.X + 28, (int)base.npc.position.Y + 14, ModContent.NPCType<Fly>(), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.position.X + 30, (int)base.npc.position.Y + 8, ModContent.NPCType<Fly>(), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.position.X + 10, (int)base.npc.position.Y + 14, ModContent.NPCType<Fly>(), 0, 0f, 0f, 0f, 0f, 255);
 			}
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 273, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
 		}

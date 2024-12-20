@@ -13,7 +13,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Ancient Brass Breastplate");
-			base.Tooltip.SetDefault("Increases melee damage by 2%");
+			base.Tooltip.SetDefault("Increases melee damage by 4%");
 		}
 
 		public override void SetDefaults()
@@ -22,12 +22,12 @@ namespace Redemption.Items.Armor
 			base.item.height = 24;
 			base.item.value = Item.sellPrice(0, 0, 16, 0);
 			base.item.rare = 1;
-			base.item.defense = 3;
+			base.item.defense = 5;
 		}
 
 		public override void UpdateEquip(Player player)
 		{
-			player.meleeDamage *= 1.02f;
+			player.meleeDamage *= 1.04f;
 		}
 
 		public override void AddRecipes()

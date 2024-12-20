@@ -42,7 +42,7 @@ namespace Redemption.Items.Armor.PostML
 
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
-			return body.type == base.mod.ItemType("CursedShinkiteBody") && legs.type == base.mod.ItemType("CursedShinkiteLeggings");
+			return body.type == ModContent.ItemType<CursedShinkiteBody>() && legs.type == ModContent.ItemType<CursedShinkiteLeggings>();
 		}
 
 		public override void UpdateArmorSet(Player player)

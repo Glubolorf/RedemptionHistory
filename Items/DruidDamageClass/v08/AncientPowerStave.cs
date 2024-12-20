@@ -1,7 +1,11 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Projectiles.DruidProjectiles.Stave.Guardians;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass.v08
 {
@@ -10,6 +14,7 @@ namespace Redemption.Items.DruidDamageClass.v08
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Ancient Power Stave");
+			base.Tooltip.SetDefault("");
 			Item.staff[base.item.type] = true;
 		}
 
@@ -27,11 +32,11 @@ namespace Redemption.Items.DruidDamageClass.v08
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
 			base.item.noMelee = true;
-			base.item.shoot = base.mod.ProjectileType("AncientTimeAura");
+			base.item.shoot = ModContent.ProjectileType<AncientTimeAura>();
 			base.item.shootSpeed = 0f;
-			this.defaultShoot = base.mod.ProjectileType("AncientTimeAura");
-			this.guardianBuffID = base.mod.BuffType("NatureGuardian27Buff");
-			this.guardianProjectileID = base.mod.ProjectileType("NatureGuardian27");
+			this.defaultShoot = ModContent.ProjectileType<AncientTimeAura>();
+			this.guardianBuffID = ModContent.BuffType<NatureGuardian27Buff>();
+			this.guardianProjectileID = ModContent.ProjectileType<NatureGuardian27>();
 			this.guardianTime = 600;
 			this.singleShotStave = false;
 			this.staveHoldOffset = new Vector2(4f, -10f);

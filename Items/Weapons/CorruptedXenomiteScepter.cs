@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -44,7 +45,7 @@ namespace Redemption.Items.Weapons
 			base.item.rare = 10;
 			base.item.UseSound = SoundID.Item15;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("CorruptedXenomiteLaser");
+			base.item.shoot = ModContent.ProjectileType<CorruptedXenomiteLaser>();
 			base.item.shootSpeed = 32f;
 			base.item.glowMask = CorruptedXenomiteScepter.customGlowMask;
 		}

@@ -48,7 +48,7 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 			if (base.projectile.localAI[0] == 1f)
 			{
 				Main.PlaySound(SoundID.NPCDeath62, (int)player.position.X, (int)player.position.Y);
-				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(0f, 0f), base.mod.ProjectileType("SpectralLordEyes"), base.projectile.damage * 2, 0f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(0f, 0f), ModContent.ProjectileType<SpectralLordEyes>(), base.projectile.damage * 2, 0f, Main.myPlayer, 0f, 0f);
 			}
 			base.projectile.alpha += 5;
 			if (base.projectile.alpha >= 255)

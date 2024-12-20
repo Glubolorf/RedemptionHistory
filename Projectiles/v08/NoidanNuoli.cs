@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Dusts;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -40,7 +41,7 @@ namespace Redemption.Projectiles.v08
 			base.projectile.rotation = (float)Math.Atan2((double)base.projectile.velocity.Y, (double)base.projectile.velocity.X) + 1.57f;
 			if (Main.rand.Next(3) == 0)
 			{
-				Dust dust = Dust.NewDustDirect(base.projectile.position, base.projectile.height, base.projectile.width, base.mod.DustType("NoidanSauvaDust"), base.projectile.velocity.X, base.projectile.velocity.Y, 200, default(Color), 1.5f);
+				Dust dust = Dust.NewDustDirect(base.projectile.position, base.projectile.height, base.projectile.width, ModContent.DustType<NoidanSauvaDust>(), base.projectile.velocity.X, base.projectile.velocity.Y, 200, default(Color), 1.5f);
 				dust.velocity += base.projectile.velocity * 0.3f;
 				dust.velocity *= 0.2f;
 				dust.noGravity = true;
@@ -49,7 +50,7 @@ namespace Redemption.Projectiles.v08
 
 		public override void Kill(int timeLeft)
 		{
-			int dustType = base.mod.DustType("NoidanSauvaDust");
+			int dustType = ModContent.DustType<NoidanSauvaDust>();
 			int pieCut = 16;
 			for (int i = 0; i < pieCut; i++)
 			{

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.NPCs.ChickenInvasion;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -36,7 +37,7 @@ namespace Redemption.Projectiles.v08
 			Collision.HitTiles(base.projectile.position, oldVelocity, base.projectile.width, base.projectile.height);
 			if (Main.netMode != 1)
 			{
-				int i = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, base.mod.NPCType("ShieldedChickenMan"), 0, 0f, 0f, 0f, 0f, 255);
+				int i = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, ModContent.NPCType<ShieldedChickenMan>(), 0, 0f, 0f, 0f, 0f, 255);
 				if (Main.netMode == 2)
 				{
 					NetMessage.SendData(23, -1, -1, null, i, 0f, 0f, 0f, 0, 0, 0);

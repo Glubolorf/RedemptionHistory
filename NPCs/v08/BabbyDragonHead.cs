@@ -111,17 +111,17 @@ namespace Redemption.NPCs.v08
 				int latestNPC = base.npc.whoAmI;
 				for (int j = 0; j < 4; j++)
 				{
-					latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("BabbyDragonBody"), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
+					latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<BabbyDragonBody>(), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
 					Main.npc[latestNPC].realLife = base.npc.whoAmI;
 					Main.npc[latestNPC].ai[3] = (float)base.npc.whoAmI;
-					latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("BabbyDragonLeg"), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
+					latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<BabbyDragonLeg>(), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
 					Main.npc[latestNPC].realLife = base.npc.whoAmI;
 					Main.npc[latestNPC].ai[3] = (float)base.npc.whoAmI;
 				}
-				latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("BabbyDragonTail1"), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
+				latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<BabbyDragonTail1>(), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
 				Main.npc[latestNPC].realLife = base.npc.whoAmI;
 				Main.npc[latestNPC].ai[3] = (float)base.npc.whoAmI;
-				latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("BabbyDragonTail2"), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
+				latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<BabbyDragonTail2>(), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
 				Main.npc[latestNPC].realLife = base.npc.whoAmI;
 				Main.npc[latestNPC].ai[3] = (float)base.npc.whoAmI;
 				base.npc.ai[0] = 1f;
@@ -350,10 +350,8 @@ namespace Redemption.NPCs.v08
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.Sky.Chance * ((Main.hardMode && !NPC.AnyNPCs(base.mod.NPCType("BabbyDragonHead")) && NPC.downedMoonlord && RedeWorld.downedPatientZero) ? 0.1f : 0f);
+			return SpawnCondition.Sky.Chance * ((Main.hardMode && !NPC.AnyNPCs(ModContent.NPCType<BabbyDragonHead>()) && NPC.downedMoonlord && RedeWorld.downedPatientZero) ? 0.1f : 0f);
 		}
-
-		private int speed = 8;
 
 		public float[] internalAI = new float[4];
 	}

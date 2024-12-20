@@ -1,6 +1,10 @@
 ﻿using System;
 using System.IO;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Dusts;
+using Redemption.Items.LabThings;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -42,7 +46,7 @@ namespace Redemption.NPCs.LabNPCs.New
 			{
 				for (int i = 0; i < 40; i++)
 				{
-					int dustIndex = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, base.mod.DustType("XenoDust"), 0f, 0f, 100, default(Color), 1.5f);
+					int dustIndex = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, ModContent.DustType<XenoDust>(), 0f, 0f, 100, default(Color), 1.5f);
 					Main.dust[dustIndex].velocity *= 1.9f;
 				}
 			}
@@ -62,10 +66,10 @@ namespace Redemption.NPCs.LabNPCs.New
 		{
 			if (!RedeWorld.labAccess2)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ZoneAccessPanel2A"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<ZoneAccessPanel2A>(), 1, false, 0, false, false);
 			}
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("FloppyDisk2"), 1, false, 0, false, false);
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("FloppyDisk2_1"), 1, false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<FloppyDisk2>(), 1, false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<FloppyDisk2_1>(), 1, false, 0, false, false);
 		}
 
 		public override void SendExtraAI(BinaryWriter writer)
@@ -88,6 +92,11 @@ namespace Redemption.NPCs.LabNPCs.New
 
 		public override void AI()
 		{
+			if (!this.title)
+			{
+				Redemption.ShowTitle(base.npc, 16);
+				this.title = true;
+			}
 			this.Target();
 			this.DespawnHandler();
 			base.npc.frameCounter += 1.0;
@@ -144,7 +153,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					float Speed = 6f;
 					Vector2 vector8 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 					int damage = 30;
-					int type = base.mod.ProjectileType("XenoShard2");
+					int type = ModContent.ProjectileType<XenoShard2>();
 					float rotation = (float)Math.Atan2((double)(vector8.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector8.X - (P.position.X + (float)P.width * 0.5f)));
 					int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
 					Main.projectile[num54].netUpdate = true;
@@ -154,7 +163,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					float Speed2 = 6f;
 					Vector2 vector9 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 					int damage2 = 30;
-					int type2 = base.mod.ProjectileType("XenoShard2");
+					int type2 = ModContent.ProjectileType<XenoShard2>();
 					float rotation2 = (float)Math.Atan2((double)(vector9.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector9.X - (P.position.X + (float)P.width * 0.5f)));
 					int num55 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0), type2, damage2, 0f, 0, 0f, 0f);
 					Main.projectile[num55].netUpdate = true;
@@ -164,49 +173,49 @@ namespace Redemption.NPCs.LabNPCs.New
 					float Speed3 = 6f;
 					Vector2 vector10 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 					int damage3 = 30;
-					int type3 = base.mod.ProjectileType("XenoShard2");
+					int type3 = ModContent.ProjectileType<XenoShard2>();
 					float rotation3 = (float)Math.Atan2((double)(vector10.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector10.X - (P.position.X + (float)P.width * 0.5f)));
 					int num56 = Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)rotation3) * (double)Speed3 * -1.0), (float)(Math.Sin((double)rotation3) * (double)Speed3 * -1.0), type3, damage3, 0f, 0, 0f, 0f);
 					Main.projectile[num56].netUpdate = true;
 				}
 				if (base.npc.ai[1] == 90f)
 				{
-					int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(0f, -8f), base.mod.ProjectileType("XenoShard2"), 30, 3f, 255, 0f, 0f);
+					int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(0f, -8f), ModContent.ProjectileType<XenoShard2>(), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p].netUpdate = true;
 				}
 				if (base.npc.ai[1] == 93f)
 				{
-					int p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(6f, -6f), base.mod.ProjectileType("XenoShard2"), 30, 3f, 255, 0f, 0f);
+					int p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(6f, -6f), ModContent.ProjectileType<XenoShard2>(), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p2].netUpdate = true;
 				}
 				if (base.npc.ai[1] == 96f)
 				{
-					int p3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(8f, 0f), base.mod.ProjectileType("XenoShard2"), 30, 3f, 255, 0f, 0f);
+					int p3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(8f, 0f), ModContent.ProjectileType<XenoShard2>(), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p3].netUpdate = true;
 				}
 				if (base.npc.ai[1] == 99f)
 				{
-					int p4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(6f, 6f), base.mod.ProjectileType("XenoShard2"), 30, 3f, 255, 0f, 0f);
+					int p4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(6f, 6f), ModContent.ProjectileType<XenoShard2>(), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p4].netUpdate = true;
 				}
 				if (base.npc.ai[1] == 102f)
 				{
-					int p5 = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(0f, 8f), base.mod.ProjectileType("XenoShard2"), 30, 3f, 255, 0f, 0f);
+					int p5 = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(0f, 8f), ModContent.ProjectileType<XenoShard2>(), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p5].netUpdate = true;
 				}
 				if (base.npc.ai[1] == 105f)
 				{
-					int p6 = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(-6f, 6f), base.mod.ProjectileType("XenoShard2"), 30, 3f, 255, 0f, 0f);
+					int p6 = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(-6f, 6f), ModContent.ProjectileType<XenoShard2>(), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p6].netUpdate = true;
 				}
 				if (base.npc.ai[1] == 108f)
 				{
-					int p7 = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(-8f, 0f), base.mod.ProjectileType("XenoShard2"), 30, 3f, 255, 0f, 0f);
+					int p7 = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(-8f, 0f), ModContent.ProjectileType<XenoShard2>(), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p7].netUpdate = true;
 				}
 				if (base.npc.ai[1] == 111f)
 				{
-					int p8 = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(-6f, -6f), base.mod.ProjectileType("XenoShard2"), 30, 3f, 255, 0f, 0f);
+					int p8 = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(-6f, -6f), ModContent.ProjectileType<XenoShard2>(), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p8].netUpdate = true;
 				}
 				if (base.npc.ai[1] == 199f)
@@ -250,7 +259,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					float Speed4 = 9f;
 					Vector2 vector11 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 					int damage4 = 30;
-					int type4 = base.mod.ProjectileType("XenoShard2");
+					int type4 = ModContent.ProjectileType<XenoShard2>();
 					float rotation4 = (float)Math.Atan2((double)(vector11.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector11.X - (P.position.X + (float)P.width * 0.5f)));
 					int num61 = Projectile.NewProjectile(vector11.X, vector11.Y, (float)(Math.Cos((double)rotation4) * (double)Speed4 * -1.0), (float)(Math.Sin((double)rotation4) * (double)Speed4 * -1.0), type4, damage4, 0f, 0, 0f, 0f);
 					Main.projectile[num61].netUpdate = true;
@@ -260,7 +269,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					float Speed5 = 9f;
 					Vector2 vector12 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 					int damage5 = 30;
-					int type5 = base.mod.ProjectileType("XenoShard2");
+					int type5 = ModContent.ProjectileType<XenoShard2>();
 					float rotation5 = (float)Math.Atan2((double)(vector12.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector12.X - (P.position.X + (float)P.width * 0.5f)));
 					int num62 = Projectile.NewProjectile(vector12.X, vector12.Y, (float)(Math.Cos((double)rotation5) * (double)Speed5 * -1.0), (float)(Math.Sin((double)rotation5) * (double)Speed5 * -1.0), type5, damage5, 0f, 0, 0f, 0f);
 					Main.projectile[num62].netUpdate = true;
@@ -270,7 +279,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					float Speed6 = 9f;
 					Vector2 vector13 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 					int damage6 = 30;
-					int type6 = base.mod.ProjectileType("XenoShard2");
+					int type6 = ModContent.ProjectileType<XenoShard2>();
 					float rotation6 = (float)Math.Atan2((double)(vector13.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector13.X - (P.position.X + (float)P.width * 0.5f)));
 					int num63 = Projectile.NewProjectile(vector13.X, vector13.Y, (float)(Math.Cos((double)rotation6) * (double)Speed6 * -1.0), (float)(Math.Sin((double)rotation6) * (double)Speed6 * -1.0), type6, damage6, 0f, 0, 0f, 0f);
 					Main.projectile[num63].netUpdate = true;
@@ -280,7 +289,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					float Speed7 = 9f;
 					Vector2 vector14 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 					int damage7 = 30;
-					int type7 = base.mod.ProjectileType("XenoShard2");
+					int type7 = ModContent.ProjectileType<XenoShard2>();
 					float rotation7 = (float)Math.Atan2((double)(vector14.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector14.X - (P.position.X + (float)P.width * 0.5f)));
 					int num64 = Projectile.NewProjectile(vector14.X, vector14.Y, (float)(Math.Cos((double)rotation7) * (double)Speed7 * -1.0), (float)(Math.Sin((double)rotation7) * (double)Speed7 * -1.0), type7, damage7, 0f, 0, 0f, 0f);
 					Main.projectile[num64].netUpdate = true;
@@ -290,14 +299,14 @@ namespace Redemption.NPCs.LabNPCs.New
 					float Speed8 = 9f;
 					Vector2 vector15 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 					int damage8 = 30;
-					int type8 = base.mod.ProjectileType("XenoShard2");
+					int type8 = ModContent.ProjectileType<XenoShard2>();
 					float rotation8 = (float)Math.Atan2((double)(vector15.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector15.X - (P.position.X + (float)P.width * 0.5f)));
 					int num65 = Projectile.NewProjectile(vector15.X, vector15.Y, (float)(Math.Cos((double)rotation8) * (double)Speed8 * -1.0), (float)(Math.Sin((double)rotation8) * (double)Speed8 * -1.0), type8, damage8, 0f, 0, 0f, 0f);
 					Main.projectile[num65].netUpdate = true;
 				}
 				if (base.npc.ai[1] == 90f || base.npc.ai[1] == 93f || base.npc.ai[1] == 96f || base.npc.ai[1] == 99f || base.npc.ai[1] == 102f || base.npc.ai[1] == 105f || base.npc.ai[1] == 108f || base.npc.ai[1] == 111f)
 				{
-					int p9 = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2((float)Main.rand.Next(-1, 2), (float)(8 + Main.rand.Next(-2, 0))), base.mod.ProjectileType("XenoShard2"), 30, 3f, 255, 0f, 0f);
+					int p9 = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2((float)Main.rand.Next(-1, 2), (float)(8 + Main.rand.Next(-2, 0))), ModContent.ProjectileType<XenoShard2>(), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p9].netUpdate = true;
 				}
 				if (base.npc.ai[1] == 149f)
@@ -341,7 +350,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					float Speed9 = 11f;
 					Vector2 vector16 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 					int damage9 = 30;
-					int type9 = base.mod.ProjectileType("XenoShard2");
+					int type9 = ModContent.ProjectileType<XenoShard2>();
 					float rotation9 = (float)Math.Atan2((double)(vector16.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector16.X - (P.position.X + (float)P.width * 0.5f)));
 					int num70 = Projectile.NewProjectile(vector16.X, vector16.Y, (float)(Math.Cos((double)rotation9) * (double)Speed9 * -1.0), (float)(Math.Sin((double)rotation9) * (double)Speed9 * -1.0), type9, damage9, 0f, 0, 0f, 0f);
 					Main.projectile[num70].netUpdate = true;
@@ -351,7 +360,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					float Speed10 = 11f;
 					Vector2 vector17 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 					int damage10 = 30;
-					int type10 = base.mod.ProjectileType("XenoShard2");
+					int type10 = ModContent.ProjectileType<XenoShard2>();
 					float rotation10 = (float)Math.Atan2((double)(vector17.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector17.X - (P.position.X + (float)P.width * 0.5f)));
 					int num71 = Projectile.NewProjectile(vector17.X, vector17.Y, (float)(Math.Cos((double)rotation10) * (double)Speed10 * -1.0), (float)(Math.Sin((double)rotation10) * (double)Speed10 * -1.0), type10, damage10, 0f, 0, 0f, 0f);
 					Main.projectile[num71].netUpdate = true;
@@ -361,7 +370,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					float Speed11 = 11f;
 					Vector2 vector18 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 					int damage11 = 30;
-					int type11 = base.mod.ProjectileType("XenoShard2");
+					int type11 = ModContent.ProjectileType<XenoShard2>();
 					float rotation11 = (float)Math.Atan2((double)(vector18.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector18.X - (P.position.X + (float)P.width * 0.5f)));
 					int num72 = Projectile.NewProjectile(vector18.X, vector18.Y, (float)(Math.Cos((double)rotation11) * (double)Speed11 * -1.0), (float)(Math.Sin((double)rotation11) * (double)Speed11 * -1.0), type11, damage11, 0f, 0, 0f, 0f);
 					Main.projectile[num72].netUpdate = true;
@@ -371,7 +380,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					float Speed12 = 11f;
 					Vector2 vector19 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 					int damage12 = 30;
-					int type12 = base.mod.ProjectileType("XenoShard2");
+					int type12 = ModContent.ProjectileType<XenoShard2>();
 					float rotation12 = (float)Math.Atan2((double)(vector19.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector19.X - (P.position.X + (float)P.width * 0.5f)));
 					int num73 = Projectile.NewProjectile(vector19.X, vector19.Y, (float)(Math.Cos((double)rotation12) * (double)Speed12 * -1.0), (float)(Math.Sin((double)rotation12) * (double)Speed12 * -1.0), type12, damage12, 0f, 0, 0f, 0f);
 					Main.projectile[num73].netUpdate = true;
@@ -381,7 +390,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					float Speed13 = 11f;
 					Vector2 vector20 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 					int damage13 = 30;
-					int type13 = base.mod.ProjectileType("XenoShard2");
+					int type13 = ModContent.ProjectileType<XenoShard2>();
 					float rotation13 = (float)Math.Atan2((double)(vector20.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector20.X - (P.position.X + (float)P.width * 0.5f)));
 					int num74 = Projectile.NewProjectile(vector20.X, vector20.Y, (float)(Math.Cos((double)rotation13) * (double)Speed13 * -1.0), (float)(Math.Sin((double)rotation13) * (double)Speed13 * -1.0), type13, damage13, 0f, 0, 0f, 0f);
 					Main.projectile[num74].netUpdate = true;
@@ -391,7 +400,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					float Speed14 = 11f;
 					Vector2 vector21 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 					int damage14 = 30;
-					int type14 = base.mod.ProjectileType("XenoShard2");
+					int type14 = ModContent.ProjectileType<XenoShard2>();
 					float rotation14 = (float)Math.Atan2((double)(vector21.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector21.X - (P.position.X + (float)P.width * 0.5f)));
 					int num75 = Projectile.NewProjectile(vector21.X, vector21.Y, (float)(Math.Cos((double)rotation14) * (double)Speed14 * -1.0), (float)(Math.Sin((double)rotation14) * (double)Speed14 * -1.0), type14, damage14, 0f, 0, 0f, 0f);
 					Main.projectile[num75].netUpdate = true;
@@ -401,7 +410,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					float Speed15 = 11f;
 					Vector2 vector22 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 					int damage15 = 30;
-					int type15 = base.mod.ProjectileType("XenoShard2");
+					int type15 = ModContent.ProjectileType<XenoShard2>();
 					float rotation15 = (float)Math.Atan2((double)(vector22.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector22.X - (P.position.X + (float)P.width * 0.5f)));
 					int num76 = Projectile.NewProjectile(vector22.X, vector22.Y, (float)(Math.Cos((double)rotation15) * (double)Speed15 * -1.0), (float)(Math.Sin((double)rotation15) * (double)Speed15 * -1.0), type15, damage15, 0f, 0, 0f, 0f);
 					Main.projectile[num76].netUpdate = true;
@@ -411,7 +420,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					float Speed16 = 11f;
 					Vector2 vector23 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 					int damage16 = 30;
-					int type16 = base.mod.ProjectileType("XenoShard2");
+					int type16 = ModContent.ProjectileType<XenoShard2>();
 					float rotation16 = (float)Math.Atan2((double)(vector23.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector23.X - (P.position.X + (float)P.width * 0.5f)));
 					int num77 = Projectile.NewProjectile(vector23.X, vector23.Y, (float)(Math.Cos((double)rotation16) * (double)Speed16 * -1.0), (float)(Math.Sin((double)rotation16) * (double)Speed16 * -1.0), type16, damage16, 0f, 0, 0f, 0f);
 					Main.projectile[num77].netUpdate = true;
@@ -442,7 +451,7 @@ namespace Redemption.NPCs.LabNPCs.New
 				}
 				if (base.npc.ai[1] == 90f || base.npc.ai[1] == 93f || base.npc.ai[1] == 96f || base.npc.ai[1] == 99f || base.npc.ai[1] == 102f || base.npc.ai[1] == 105f || base.npc.ai[1] == 108f || base.npc.ai[1] == 111f)
 				{
-					int p10 = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2((float)Main.rand.Next(-2, 3), (float)(10 + Main.rand.Next(-2, 0))), base.mod.ProjectileType("XenoShard2"), 30, 3f, 255, 0f, 0f);
+					int p10 = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2((float)Main.rand.Next(-2, 3), (float)(10 + Main.rand.Next(-2, 0))), ModContent.ProjectileType<XenoShard2>(), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p10].netUpdate = true;
 				}
 				if (base.npc.ai[1] == 149f)
@@ -474,7 +483,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					float Speed17 = 5f;
 					Vector2 vector24 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 					int damage17 = 30;
-					int type17 = base.mod.ProjectileType("XenoShard3");
+					int type17 = ModContent.ProjectileType<XenoShard3>();
 					float rotation17 = (float)Math.Atan2((double)(vector24.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector24.X - (P.position.X + (float)P.width * 0.5f)));
 					int num86 = Projectile.NewProjectile(vector24.X, vector24.Y, (float)(Math.Cos((double)rotation17) * (double)Speed17 * -1.0), (float)(Math.Sin((double)rotation17) * (double)Speed17 * -1.0), type17, damage17, 0f, 0, 0f, 0f);
 					Main.projectile[num86].netUpdate = true;
@@ -541,11 +550,11 @@ namespace Redemption.NPCs.LabNPCs.New
 		{
 			if (Main.rand.Next(2) == 0 || (Main.expertMode && Main.rand.Next(0) == 0))
 			{
-				target.AddBuff(base.mod.BuffType("XenomiteDebuff"), Main.rand.Next(500, 1000), true);
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff>(), Main.rand.Next(500, 1000), true);
 			}
 			if (Main.rand.Next(9) == 0 || (Main.expertMode && Main.rand.Next(7) == 0))
 			{
-				target.AddBuff(base.mod.BuffType("XenomiteDebuff2"), Main.rand.Next(250, 500), true);
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff2>(), Main.rand.Next(250, 500), true);
 			}
 		}
 
@@ -557,5 +566,7 @@ namespace Redemption.NPCs.LabNPCs.New
 		private Player player;
 
 		private bool beginFight;
+
+		private bool title;
 	}
 }

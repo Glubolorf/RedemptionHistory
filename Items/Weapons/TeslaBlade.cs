@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -42,7 +43,7 @@ namespace Redemption.Items.Weapons
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
 			base.item.shootSpeed = 20f;
-			base.item.shoot = base.mod.ProjectileType("TeslaBladePro");
+			base.item.shoot = ModContent.ProjectileType<TeslaBladePro>();
 			base.item.glowMask = TeslaBlade.customGlowMask;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}

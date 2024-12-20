@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -35,7 +36,7 @@ namespace Redemption.Projectiles.v08
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			target.AddBuff(base.mod.BuffType("ChainedDebuff"), 60, false);
+			target.AddBuff(ModContent.BuffType<ChainedDebuff>(), 60, false);
 		}
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

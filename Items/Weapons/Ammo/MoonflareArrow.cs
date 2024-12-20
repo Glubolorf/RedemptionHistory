@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -23,7 +24,7 @@ namespace Redemption.Items.Weapons.Ammo
 			base.item.knockBack = 2.5f;
 			base.item.value = 2;
 			base.item.rare = 0;
-			base.item.shoot = base.mod.ProjectileType("MoonflareArrowPro");
+			base.item.shoot = ModContent.ProjectileType<MoonflareArrowPro>();
 			base.item.shootSpeed = 7f;
 			base.item.ammo = AmmoID.Arrow;
 		}

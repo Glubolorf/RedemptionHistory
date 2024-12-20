@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable
@@ -8,7 +9,7 @@ namespace Redemption.Items.Placeable
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Music Box (Abandoned Lab)");
-			base.Tooltip.SetDefault("Harry101UK - Combine Operations");
+			base.Tooltip.SetDefault("inSignia - Facility of Contagion");
 		}
 
 		public override void SetDefaults()
@@ -19,7 +20,7 @@ namespace Redemption.Items.Placeable
 			base.item.useTime = 10;
 			base.item.autoReuse = true;
 			base.item.consumable = true;
-			base.item.createTile = base.mod.TileType("LabMusicBoxTile");
+			base.item.createTile = ModContent.TileType<LabMusicBoxTile>();
 			base.item.width = 32;
 			base.item.height = 32;
 			base.item.rare = 4;

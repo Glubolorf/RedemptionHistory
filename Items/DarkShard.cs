@@ -7,7 +7,7 @@ namespace Redemption.Items
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Dark Shard");
+			base.DisplayName.SetDefault("Dark Fragment");
 			base.Tooltip.SetDefault("'Gives the Undead power'");
 		}
 

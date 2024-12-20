@@ -58,7 +58,10 @@ namespace Redemption.Projectiles
 				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 57, 0f, 0f, 100, default(Color), 1.5f);
 				Main.dust[dustIndex].velocity *= 1.9f;
 			}
-			Projectile.NewProjectile(base.projectile.position.X + 18f, base.projectile.position.Y + 22f, 0f, 0f, base.mod.ProjectileType("LastRPro2"), 500, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+			if (Main.myPlayer == base.projectile.owner)
+			{
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, ModContent.ProjectileType<LastRPro2>(), 500, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
+			}
 		}
 
 		public static short customGlowMask;

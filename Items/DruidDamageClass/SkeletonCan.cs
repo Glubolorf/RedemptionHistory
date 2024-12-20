@@ -29,7 +29,7 @@ namespace Redemption.Items.DruidDamageClass
 				int maxAccessoryIndex = 5 + player.extraAccessorySlots;
 				for (int i = 3; i < 3 + maxAccessoryIndex; i++)
 				{
-					if (slot != i && player.armor[i].type == base.mod.ItemType("GolemWateringCan"))
+					if (slot != i && player.armor[i].type == ModContent.ItemType<GolemWateringCan>())
 					{
 						return false;
 					}

@@ -1,13 +1,14 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles.DruidProjectiles.Stave;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class Belrose1 : DruidDamageItem
+	public class Belrose1 : DruidStave
 	{
 		public override void SetStaticDefaults()
 		{
@@ -23,7 +24,7 @@ namespace Redemption.Items.DruidDamageClass
 				Main.glowMaskTexture = glowMasks;
 			}
 			base.DisplayName.SetDefault("The Belrose");
-			base.Tooltip.SetDefault("'Shifting from bones to dust'\nRight Clicks throws 3 Belroses out like boomerangs");
+			base.Tooltip.SetDefault("'Shifting from bones to dust'\nThrows 3 Belroses out like boomerangs");
 		}
 
 		public override void SafeSetDefaults()
@@ -31,8 +32,8 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.damage = 75;
 			base.item.width = 50;
 			base.item.height = 50;
-			base.item.useTime = 23;
-			base.item.useAnimation = 23;
+			base.item.useTime = 33;
+			base.item.useAnimation = 33;
 			base.item.useStyle = 1;
 			base.item.crit = 4;
 			base.item.knockBack = 5f;
@@ -41,42 +42,16 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.UseSound = SoundID.Item1;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
-			base.item.shoot = base.mod.ProjectileType("BelrosePro1");
+			base.item.shoot = ModContent.ProjectileType<BelrosePro1>();
 			base.item.shootSpeed = 22f;
 			base.item.glowMask = Belrose1.customGlowMask;
+			this.defaultShoot = ModContent.ProjectileType<BelrosePro1>();
+			this.singleShotStave = false;
+			this.staveHoldOffset = new Vector2(4f, -10f);
+			this.staveLength = 50.2f;
 		}
 
-		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
-		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().burnStaves)
-			{
-				target.AddBuff(24, 180, false);
-			}
-		}
-
-		public override bool AltFunctionUse(Player player)
-		{
-			return true;
-		}
-
-		public override bool CanUseItem(Player player)
-		{
-			if (player.altFunctionUse == 2)
-			{
-				base.item.useTime = 33;
-				base.item.useAnimation = 33;
-				base.item.shoot = base.mod.ProjectileType("BelrosePro1");
-			}
-			else
-			{
-				base.item.useTime = 23;
-				base.item.useAnimation = 23;
-				base.item.shoot = 0;
-			}
-			return base.CanUseItem(player);
-		}
-
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		protected override bool SpecialShootPattern(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
 			int numberProjectiles = 3;
 			for (int i = 0; i < numberProjectiles; i++)
@@ -99,7 +74,7 @@ namespace Redemption.Items.DruidDamageClass
 			ModRecipe modRecipe = new ModRecipe(base.mod);
 			modRecipe.AddIngredient(522, 25);
 			modRecipe.AddIngredient(208, 1);
-			modRecipe.AddIngredient(null, "BrokenHeroStave", 1);
+			modRecipe.AddIngredient(1006, 12);
 			modRecipe.AddTile(null, "DruidicAltarTile");
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();

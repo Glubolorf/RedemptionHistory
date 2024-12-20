@@ -50,7 +50,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 		{
 			Collision.HitTiles(base.projectile.position, oldVelocity, base.projectile.width, base.projectile.height);
 			Main.PlaySound(0, (int)base.projectile.position.X, (int)base.projectile.position.Y, 1, 1f, 0f);
-			Projectile.NewProjectile(base.projectile.Top, base.projectile.velocity, base.mod.ProjectileType("Plant17"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
+			Projectile.NewProjectile(base.projectile.Top, base.projectile.velocity, ModContent.ProjectileType<Plant17>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 			return true;
 		}
 

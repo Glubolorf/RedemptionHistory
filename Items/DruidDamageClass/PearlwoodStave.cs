@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
+using Redemption.Projectiles.DruidProjectiles.Stave.Guardians;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -44,8 +46,8 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.shoot = 121;
 			base.item.shootSpeed = 8f;
 			this.defaultShoot = 121;
-			this.guardianBuffID = base.mod.BuffType("NatureGuardian7Buff");
-			this.guardianProjectileID = base.mod.ProjectileType("NatureGuardian7");
+			this.guardianBuffID = ModContent.BuffType<NatureGuardian7Buff>();
+			this.guardianProjectileID = ModContent.ProjectileType<NatureGuardian7>();
 			this.guardianTime = 1200;
 			this.singleShotStave = true;
 			this.staveHoldOffset = new Vector2(4f, -10f);

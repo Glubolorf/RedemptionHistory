@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.NPCs.Bosses;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -61,7 +62,7 @@ namespace Redemption.NPCs.v08
 		{
 			base.npc.TargetClosest(true);
 			int boss = (int)base.npc.ai[0];
-			if (boss < 0 || boss >= 200 || !Main.npc[boss].active || Main.npc[boss].type != base.mod.NPCType("VlitchCleaver"))
+			if (boss < 0 || boss >= 200 || !Main.npc[boss].active || Main.npc[boss].type != ModContent.NPCType<VlitchCleaver>())
 			{
 				base.npc.active = false;
 				return false;

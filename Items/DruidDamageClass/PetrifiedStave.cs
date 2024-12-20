@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,9 +29,9 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.UseSound = SoundID.Item43;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
-			base.item.shoot = base.mod.ProjectileType("XenoBolt");
+			base.item.shoot = ModContent.ProjectileType<XenoBolt>();
 			base.item.shootSpeed = 9f;
-			this.defaultShoot = base.mod.ProjectileType("XenoBolt");
+			this.defaultShoot = ModContent.ProjectileType<XenoBolt>();
 			this.singleShotStave = true;
 			this.staveHoldOffset = new Vector2(4f, -10f);
 			this.staveLength = 58.2f;

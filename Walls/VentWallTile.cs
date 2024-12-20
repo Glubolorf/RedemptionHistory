@@ -10,7 +10,6 @@ namespace Redemption.Walls
 		public override void SetDefaults()
 		{
 			Main.wallHouse[(int)base.Type] = false;
-			this.drop = base.mod.ItemType("VentWall");
 			base.AddMapEntry(new Color(60, 60, 60), null);
 		}
 

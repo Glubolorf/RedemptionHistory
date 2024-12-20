@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -25,7 +26,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.knockBack = 0f;
 			base.item.damage = 90;
 			base.item.noUseGraphic = true;
-			base.item.shoot = base.mod.ProjectileType("CosmosChainF1");
+			base.item.shoot = ModContent.ProjectileType<CosmosChainF1>();
 			base.item.shootSpeed = 26f;
 			base.item.UseSound = SoundID.Item125;
 			base.item.magic = true;

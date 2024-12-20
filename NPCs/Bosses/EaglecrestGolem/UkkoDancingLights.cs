@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -48,7 +49,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 				this.clearCheck = Main.player[p];
 				if (base.projectile.alpha < 110 && Collision.CheckAABBvAABBCollision(base.projectile.position, base.projectile.Size, this.clearCheck.position, this.clearCheck.Size))
 				{
-					this.clearCheck.AddBuff(base.mod.BuffType("HolyFireDebuff"), 30, true);
+					this.clearCheck.AddBuff(ModContent.BuffType<HolyFireDebuff>(), 30, true);
 				}
 			}
 			if (base.projectile.alpha >= 255 && base.projectile.localAI[0] != 0f)

@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,7 +27,7 @@ namespace Redemption.Items.Weapons
 			base.item.damage = 70;
 			base.item.scale = 1f;
 			base.item.noUseGraphic = true;
-			base.item.shoot = base.mod.ProjectileType("XenomiteFlailHead");
+			base.item.shoot = ModContent.ProjectileType<XenomiteFlailHead>();
 			base.item.shootSpeed = 28.5f;
 			base.item.UseSound = SoundID.Item1;
 			base.item.melee = true;

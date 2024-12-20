@@ -1,5 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.Banners.v08;
+using Redemption.NPCs;
+using Redemption.NPCs.LabNPCs;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -30,7 +33,7 @@ namespace Redemption.Tiles.Banners.v08
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 48, base.mod.ItemType("XenoChomperBanner"), 1, false, 0, false, false);
+			Item.NewItem(i * 16, j * 16, 16, 48, ModContent.ItemType<XenoChomperBanner>(), 1, false, 0, false, false);
 		}
 
 		public override void NearbyEffects(int i, int j, bool closer)
@@ -38,8 +41,8 @@ namespace Redemption.Tiles.Banners.v08
 			if (closer)
 			{
 				Player localPlayer = Main.LocalPlayer;
-				localPlayer.NPCBannerBuff[base.mod.NPCType("XenoChomper")] = true;
-				localPlayer.NPCBannerBuff[base.mod.NPCType("XenoChomper2")] = true;
+				localPlayer.NPCBannerBuff[ModContent.NPCType<XenoChomper>()] = true;
+				localPlayer.NPCBannerBuff[ModContent.NPCType<XenoChomper2>()] = true;
 				localPlayer.hasBanner = true;
 			}
 		}

@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,7 +29,7 @@ namespace Redemption.Items
 			base.item.value = Item.buyPrice(0, 50, 0, 0);
 			base.item.noUseGraphic = true;
 			base.item.noMelee = true;
-			base.item.shoot = base.mod.ProjectileType("MiniNukePro");
+			base.item.shoot = ModContent.ProjectileType<MiniNukePro>();
 			base.item.shootSpeed = 5f;
 		}
 	}

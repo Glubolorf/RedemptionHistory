@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -42,7 +44,7 @@ namespace Redemption.Items.Weapons
 			base.item.mana = 5;
 			base.item.UseSound = SoundID.Item15;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("TiedProjectile");
+			base.item.shoot = ModContent.ProjectileType<TiedProjectile>();
 			base.item.shootSpeed = 30f;
 			base.item.glowMask = XenomitePlasmaPistol.customGlowMask;
 		}
@@ -64,7 +66,7 @@ namespace Redemption.Items.Weapons
 
 		public override void HoldItem(Player player)
 		{
-			player.AddBuff(base.mod.BuffType("XenomiteDebuff"), Main.rand.Next(10, 20), true);
+			player.AddBuff(ModContent.BuffType<XenomiteDebuff>(), Main.rand.Next(10, 20), true);
 		}
 
 		public static short customGlowMask;

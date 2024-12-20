@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Walls;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -24,7 +25,7 @@ namespace Redemption.Items.Placeable
 			base.item.useStyle = 1;
 			base.item.consumable = true;
 			base.item.rare = 10;
-			base.item.createWall = base.mod.WallType("VlitchPlatingWallTile");
+			base.item.createWall = ModContent.WallType<VlitchPlatingWallTile>();
 		}
 
 		public override void AddRecipes()

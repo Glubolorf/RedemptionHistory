@@ -1,4 +1,6 @@
 ﻿using System;
+using Redemption.Buffs;
+using Redemption.NPCs.Bosses.InfectedEye;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,12 +32,12 @@ namespace Redemption.Items
 
 		public override bool CanUseItem(Player player)
 		{
-			return !Main.dayTime && !NPC.AnyNPCs(base.mod.NPCType("InfectedEye"));
+			return !Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<InfectedEye>());
 		}
 
 		public override bool UseItem(Player player)
 		{
-			NPC.SpawnOnPlayer(player.whoAmI, base.mod.NPCType("InfectedEye"));
+			NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<InfectedEye>());
 			Main.PlaySound(15, player.position, 0);
 			return true;
 		}
@@ -52,7 +54,7 @@ namespace Redemption.Items
 
 		public override void HoldItem(Player player)
 		{
-			player.AddBuff(base.mod.BuffType("XenomiteDebuff"), Main.rand.Next(10, 20), true);
+			player.AddBuff(ModContent.BuffType<XenomiteDebuff>(), Main.rand.Next(10, 20), true);
 		}
 	}
 }

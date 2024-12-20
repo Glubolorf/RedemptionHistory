@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -31,7 +32,7 @@ namespace Redemption.Tiles
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 32, 48, base.mod.ItemType("DruidicAltar"), 1, false, 0, false, false);
+			Item.NewItem(i * 16, j * 16, 32, 48, ModContent.ItemType<DruidicAltar>(), 1, false, 0, false, false);
 		}
 	}
 }

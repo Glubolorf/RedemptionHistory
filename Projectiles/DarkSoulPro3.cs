@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Dusts;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -75,7 +76,7 @@ namespace Redemption.Projectiles
 			}
 			if (base.projectile.alpha <= 100)
 			{
-				int dust = Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, base.mod.DustType("VoidFlame"), 0f, 0f, 0, default(Color), 1f);
+				int dust = Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, ModContent.DustType<VoidFlame>(), 0f, 0f, 0, default(Color), 1f);
 				Main.dust[dust].velocity /= 2f;
 			}
 		}

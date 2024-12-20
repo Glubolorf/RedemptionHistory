@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.DruidProjectiles.Plants
 {
@@ -65,11 +66,11 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 			base.projectile.localAI[0] += 1f;
 			if (base.projectile.localAI[0] % 60f == 0f && base.projectile.frame >= 6)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), base.projectile.velocity, base.mod.ProjectileType("GloomShroomSpore2"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), base.projectile.velocity, ModContent.ProjectileType<GloomShroomSpore2>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
 			}
 			if (base.projectile.localAI[0] % 20f == 0f && base.projectile.frame >= 6 && this.IsOnNativeTerrain)
 			{
-				Projectile.NewProjectile(base.projectile.Center, new Vector2(0f, 0f), base.mod.ProjectileType("GloomShroomAura"), 0, 0f, base.projectile.owner, 0f, 0f);
+				Projectile.NewProjectile(base.projectile.Center, new Vector2(0f, 0f), ModContent.ProjectileType<GloomShroomAura>(), 0, 0f, base.projectile.owner, 0f, 0f);
 			}
 		}
 

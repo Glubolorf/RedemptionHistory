@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles.Wasteland;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -48,7 +49,7 @@ namespace Redemption.Projectiles.v08
 						int type = (int)Main.tile[k, l].type;
 						if (TileID.Sets.Conversion.Stone[type] || TileID.Sets.Conversion.HardenedSand[type] || TileID.Sets.Conversion.Ice[type] || TileID.Sets.Conversion.Moss[type] || TileID.Sets.Conversion.Sand[type] || TileID.Sets.Conversion.Sandstone[type] || TileID.Sets.Conversion.Grass[type])
 						{
-							Main.tile[k, l].type = (ushort)base.mod.TileType("PlutoniumTile");
+							Main.tile[k, l].type = (ushort)ModContent.TileType<PlutoniumTile>();
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1, 0);
 						}

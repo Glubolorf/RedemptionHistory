@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
+using Redemption.Projectiles.Minions;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -42,9 +44,9 @@ namespace Redemption.Items.Weapons
 			base.item.value = Item.buyPrice(0, 20, 0, 0);
 			base.item.rare = 7;
 			base.item.UseSound = SoundID.Item44;
-			base.item.shoot = base.mod.ProjectileType("XenomiteEyeS");
+			base.item.shoot = ModContent.ProjectileType<XenomiteEyeS>();
 			base.item.shootSpeed = 7f;
-			base.item.buffType = base.mod.BuffType("XenoEyeSBuff");
+			base.item.buffType = ModContent.BuffType<XenoEyeSBuff>();
 			base.item.buffTime = 3600;
 			base.item.glowMask = XenomiteStaff.customGlowMask;
 		}

@@ -1,7 +1,6 @@
 ﻿using System;
 using Terraria;
 using Terraria.Graphics.Shaders;
-using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.EaglecrestGolem
 {
@@ -13,13 +12,13 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 
 		private void UpdateUkkoIndex()
 		{
-			int UkkoType = ModLoader.GetMod("Redemption").NPCType("Ukko");
+			int UkkoType = Redemption.inst.NPCType("Ukko");
 			if (this.UkkoIndex >= 0 && Main.npc[this.UkkoIndex].active && Main.npc[this.UkkoIndex].type == UkkoType)
 			{
 				return;
 			}
 			this.UkkoIndex = -1;
-			for (int i = 0; i < Main.npc.Length; i++)
+			for (int i = 0; i < 200; i++)
 			{
 				if (Main.npc[i].active && Main.npc[i].type == UkkoType)
 				{

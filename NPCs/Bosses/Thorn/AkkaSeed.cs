@@ -55,7 +55,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, Utils.NextFloat(Main.rand, -2f, 2f), Utils.NextFloat(Main.rand, -16f, -8f), base.mod.ProjectileType("CursedThornPro6"), base.projectile.damage, 1f, Main.myPlayer, 0f, 0f);
+			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, Utils.NextFloat(Main.rand, -2f, 2f), Utils.NextFloat(Main.rand, -16f, -8f), ModContent.ProjectileType<CursedThornPro6>(), base.projectile.damage, 1f, Main.myPlayer, 0f, 0f);
 			return true;
 		}
 

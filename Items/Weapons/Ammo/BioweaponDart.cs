@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.v08;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -23,7 +24,7 @@ namespace Redemption.Items.Weapons.Ammo
 			base.item.rare = 7;
 			base.item.knockBack = 2.2f;
 			base.item.value = 7;
-			base.item.shoot = base.mod.ProjectileType("BioweaponDartPro");
+			base.item.shoot = ModContent.ProjectileType<BioweaponDartPro>();
 			base.item.shootSpeed = 3f;
 			base.item.ammo = AmmoID.Dart;
 		}

@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -41,15 +42,15 @@ namespace Redemption.Projectiles.DruidProjectiles
 				this.clearCheck = Main.player[p];
 				if (Collision.CheckAABBvAABBCollision(base.projectile.position, base.projectile.Size, this.clearCheck.position, this.clearCheck.Size))
 				{
-					this.clearCheck.AddBuff(base.mod.BuffType("DruidsBlessing"), 2, false);
+					this.clearCheck.AddBuff(ModContent.BuffType<DruidsBlessing>(), 2, false);
 				}
 			}
-			for (int p2 = 0; p2 < Main.npc.Length; p2++)
+			for (int p2 = 0; p2 < 200; p2++)
 			{
 				this.clearCheck2 = Main.npc[p2];
-				if (!this.clearCheck2.immortal && !this.clearCheck2.dontTakeDamage && !this.clearCheck2.friendly && Collision.CheckAABBvAABBCollision(base.projectile.position, base.projectile.Size, this.clearCheck2.position, this.clearCheck2.Size))
+				if (!this.clearCheck2.immortal && !this.clearCheck2.dontTakeDamage && !this.clearCheck2.friendly && this.clearCheck2.CanBeChasedBy(null, false) && base.projectile.Hitbox.Intersects(this.clearCheck2.Hitbox))
 				{
-					this.clearCheck2.AddBuff(base.mod.BuffType("DruidsBane"), 10, false);
+					this.clearCheck2.AddBuff(ModContent.BuffType<DruidsBane>(), 10, false);
 				}
 			}
 			if (player.dead)

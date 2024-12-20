@@ -30,17 +30,18 @@ namespace Redemption.NPCs.LabNPCs.New
 
 		public override void AI()
 		{
-			if (!NPC.AnyNPCs(base.mod.NPCType("MACEProjectJawOffA")))
+			if (!NPC.AnyNPCs(ModContent.NPCType<MACEProjectJawOffA>()))
 			{
-				int minion = NPC.NewNPC((int)base.npc.position.X + 58, (int)base.npc.position.Y + 170, base.mod.NPCType("MACEProjectJawOffA"), 0, 0f, 0f, 0f, 0f, 255);
+				int minion = NPC.NewNPC((int)base.npc.position.X + 58, (int)base.npc.position.Y + 170, ModContent.NPCType<MACEProjectJawOffA>(), 0, 0f, 0f, 0f, 0f, 255);
 				Main.npc[minion].netUpdate = true;
 			}
 			if (RedeWorld.maceUS)
 			{
+				Redemption.ShowTitle(base.npc, 20);
 				base.npc.SetDefaults(ModContent.NPCType<MACEProjectHeadA>(), -1f);
 				return;
 			}
-			if (NPC.CountNPCS(base.mod.NPCType("MACEProjectOffA")) >= 2 && Main.rand.Next(2) == 0)
+			if (NPC.CountNPCS(ModContent.NPCType<MACEProjectOffA>()) >= 2 && Main.rand.Next(2) == 0)
 			{
 				base.npc.active = false;
 			}

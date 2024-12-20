@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -32,7 +33,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.noMelee = true;
 			base.item.autoReuse = false;
 			base.item.useTurn = true;
-			base.item.shoot = base.mod.ProjectileType("AncientPortal");
+			base.item.shoot = ModContent.ProjectileType<AncientPortal>();
 			base.item.shootSpeed = 0f;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Armor.Costumes;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -44,6 +45,11 @@ namespace Redemption.NPCs.LabNPCs.New
 
 		public override void AI()
 		{
+			Player player = Main.player[base.npc.target];
+			if (base.npc.target < 0 || base.npc.target == 255 || Main.player[base.npc.target].dead || !Main.player[base.npc.target].active)
+			{
+				base.npc.TargetClosest(true);
+			}
 			base.npc.frameCounter += 1.0;
 			if (base.npc.frameCounter >= 6.0)
 			{
@@ -68,25 +74,9 @@ namespace Redemption.NPCs.LabNPCs.New
 				}
 			}
 			Vector2 TheDoor = new Vector2(this.Origin.X + 3040f, this.Origin.Y + 336f);
-			base.npc.ai[0] += 1f;
-			if (base.npc.ai[0] == 10f && !RedeConfigClient.Instance.NoCombatText)
+			if (((BasePlayer.HasChestplate(player, ModContent.ItemType<TBotVanityChestplate>(), true) && BasePlayer.HasLeggings(player, ModContent.ItemType<TBotVanityLegs>(), true)) || (BasePlayer.HasChestplate(player, ModContent.ItemType<AndroidArmour>(), true) && BasePlayer.HasLeggings(player, ModContent.ItemType<AndroidPants>(), true)) || (BasePlayer.HasChestplate(player, ModContent.ItemType<JanitorOutfit>(), true) && BasePlayer.HasLeggings(player, ModContent.ItemType<JanitorPants>(), true))) && (BasePlayer.HasHelmet(player, ModContent.ItemType<TBotEyes_Femi>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotEyes_Masc>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotVanityEyes>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotGoggles_Femi>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotGoggles_Masc>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotVanityGoggles>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<AdamHead>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<OperatorHead>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<VoltHead>(), true)))
 			{
-				CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "Okay, okay!", true, false);
-			}
-			if (base.npc.ai[0] == 100f && !RedeConfigClient.Instance.NoCombatText)
-			{
-				CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "Alright fine, you probably can handle yourself here.", true, false);
-			}
-			if (base.npc.ai[0] == 260f && !RedeConfigClient.Instance.NoCombatText)
-			{
-				CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "Here, have this Lab Access thing and piss off!", true, false);
-			}
-			if (base.npc.ai[0] == 390f && !RedeConfigClient.Instance.NoCombatText)
-			{
-				CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "I got moppin' to do.", true, false);
-			}
-			if (base.npc.ai[0] >= 390f)
-			{
+				base.npc.ai[0] = 390f;
 				if (Vector2.Distance(base.npc.Center, TheDoor) < 32f)
 				{
 					base.npc.velocity *= 0f;
@@ -95,6 +85,38 @@ namespace Redemption.NPCs.LabNPCs.New
 				else
 				{
 					this.MoveToVector2(TheDoor);
+				}
+			}
+			else
+			{
+				base.npc.ai[0] += 1f;
+				if (base.npc.ai[0] == 10f && !RedeConfigClient.Instance.NoCombatText)
+				{
+					CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "Okay, okay!", true, false);
+				}
+				if (base.npc.ai[0] == 100f && !RedeConfigClient.Instance.NoCombatText)
+				{
+					CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "Alright fine, you probably can handle yourself here.", true, false);
+				}
+				if (base.npc.ai[0] == 260f && !RedeConfigClient.Instance.NoCombatText)
+				{
+					CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "Here, have this Lab Access thing and piss off!", true, false);
+				}
+				if (base.npc.ai[0] == 390f && !RedeConfigClient.Instance.NoCombatText)
+				{
+					CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "I got moppin' to do.", true, false);
+				}
+				if (base.npc.ai[0] >= 390f)
+				{
+					if (Vector2.Distance(base.npc.Center, TheDoor) < 32f)
+					{
+						base.npc.velocity *= 0f;
+						base.npc.ai[1] += 1f;
+					}
+					else
+					{
+						this.MoveToVector2(TheDoor);
+					}
 				}
 			}
 			if (base.npc.ai[1] >= 1f)

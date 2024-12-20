@@ -1,6 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
+using Redemption.Projectiles.DruidProjectiles.Stave.Guardians;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,7 +31,7 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override void SafeSetDefaults()
 		{
-			base.item.damage = 13;
+			base.item.damage = 28;
 			base.item.width = 48;
 			base.item.height = 48;
 			base.item.useTime = 28;
@@ -41,11 +44,11 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
 			base.item.glowMask = AncientWoodStave.customGlowMask;
-			base.item.shoot = base.mod.ProjectileType("KingsOakShot4");
-			base.item.shootSpeed = 7f;
-			this.defaultShoot = base.mod.ProjectileType("KingsOakShot4");
-			this.guardianBuffID = base.mod.BuffType("NatureGuardian5Buff");
-			this.guardianProjectileID = base.mod.ProjectileType("NatureGuardian5");
+			base.item.shoot = ModContent.ProjectileType<KingsOakShot4>();
+			base.item.shootSpeed = 14f;
+			this.defaultShoot = ModContent.ProjectileType<KingsOakShot4>();
+			this.guardianBuffID = ModContent.BuffType<NatureGuardian5Buff>();
+			this.guardianProjectileID = ModContent.ProjectileType<NatureGuardian5>();
 			this.guardianTime = 1200;
 			this.singleShotStave = true;
 			this.staveHoldOffset = new Vector2(4f, -10f);

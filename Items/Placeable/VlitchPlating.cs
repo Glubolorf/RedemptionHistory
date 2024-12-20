@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -24,7 +25,7 @@ namespace Redemption.Items.Placeable
 			base.item.value = Item.buyPrice(0, 0, 15, 0);
 			base.item.consumable = true;
 			base.item.rare = 10;
-			base.item.createTile = base.mod.TileType("VlitchPlatingTile");
+			base.item.createTile = ModContent.TileType<VlitchPlatingTile>();
 		}
 
 		public override void AddRecipes()

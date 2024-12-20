@@ -1,8 +1,10 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
 using Redemption.Items.Quest;
 using Redemption.NPCs.Bosses.EaglecrestGolem;
+using Redemption.NPCs.Bosses.Thorn;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -46,18 +48,18 @@ namespace Redemption.NPCs.Minibosses.MossyGoliath
 
 		public override void NPCLoot()
 		{
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("MossyWimpGun"), 1, false, 0, false, false);
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("MudMace"), 1, false, 0, false, false);
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("TastySteak"), 1, false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<MossyWimpGun>(), 1, false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<MudMace>(), 1, false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<TastySteak>(), 1, false, 0, false, false);
 			if (RedeQuests.zephosQuests == 4)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("SwordSlicerFrag1"), 1, false, 0, false, false);
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("SwordSlicerFrag2"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<SwordSlicerFrag1>(), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<SwordSlicerFrag2>(), 1, false, 0, false, false);
 			}
 			if (RedeQuests.daerelQuests == 4)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("SilverwoodBowFrag1"), 1, false, 0, false, false);
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("SilverwoodBowFrag2"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<SilverwoodBowFrag1>(), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<SilverwoodBowFrag2>(), 1, false, 0, false, false);
 			}
 		}
 
@@ -242,7 +244,7 @@ namespace Redemption.NPCs.Minibosses.MossyGoliath
 						}
 						if (base.npc.ai[2] > 25f && base.npc.ai[2] % 10f == 0f)
 						{
-							int p = Projectile.NewProjectile(new Vector2((base.npc.spriteDirection == -1) ? (base.npc.position.X + 12f) : (base.npc.position.X + 148f), base.npc.position.Y + 56f), new Vector2((base.npc.spriteDirection == -1) ? -3f : 3f, 0f), base.mod.ProjectileType("GoliathScreech"), 0, 0f, Main.myPlayer, 0f, 0f);
+							int p = Projectile.NewProjectile(new Vector2((base.npc.spriteDirection == -1) ? (base.npc.position.X + 12f) : (base.npc.position.X + 148f), base.npc.position.Y + 56f), new Vector2((base.npc.spriteDirection == -1) ? -3f : 3f, 0f), ModContent.ProjectileType<GoliathScreech>(), 0, 0f, Main.myPlayer, 0f, 0f);
 							Main.projectile[p].netUpdate = true;
 						}
 						if (base.npc.ai[2] >= 80f)
@@ -272,9 +274,9 @@ namespace Redemption.NPCs.Minibosses.MossyGoliath
 							}
 							if (Main.tile[point.X, point.Y + 3].type != 0 && distance < 600f)
 							{
-								int p2 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, base.mod.ProjectileType("AkkaTremor"), 13, 1f, 255, 0f, 0f);
+								int p2 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<AkkaTremor>(), 13, 1f, 255, 0f, 0f);
 								Main.projectile[p2].netUpdate = true;
-								player.AddBuff(base.mod.BuffType("StunnedDebuff"), 60, true);
+								player.AddBuff(ModContent.BuffType<StunnedDebuff>(), 60, true);
 							}
 						}
 						if (base.npc.ai[2] >= 60f)
@@ -334,9 +336,9 @@ namespace Redemption.NPCs.Minibosses.MossyGoliath
 							}
 							if (Main.tile[point.X, point.Y + 1].type != 0 && distance < 600f)
 							{
-								int p3 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, base.mod.ProjectileType("AkkaTremor"), 13, 1f, 255, 0f, 0f);
+								int p3 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<AkkaTremor>(), 13, 1f, 255, 0f, 0f);
 								Main.projectile[p3].netUpdate = true;
-								player.AddBuff(base.mod.BuffType("StunnedDebuff"), 60, true);
+								player.AddBuff(ModContent.BuffType<StunnedDebuff>(), 60, true);
 							}
 							base.npc.ai[3] = 0f;
 							base.npc.ai[0] = 1f;
@@ -356,7 +358,7 @@ namespace Redemption.NPCs.Minibosses.MossyGoliath
 						}
 						if (base.npc.ai[2] > 25f && base.npc.ai[2] % 4f == 0f)
 						{
-							int p4 = Projectile.NewProjectile(new Vector2((base.npc.spriteDirection == -1) ? (base.npc.position.X + 12f) : (base.npc.position.X + 148f), base.npc.position.Y + 46f), new Vector2((base.npc.spriteDirection == -1) ? -3f : 3f, Utils.NextFloat(Main.rand, -1f, 1f)), base.mod.ProjectileType("ToxicBreath"), 13, 0f, Main.myPlayer, 0f, 0f);
+							int p4 = Projectile.NewProjectile(new Vector2((base.npc.spriteDirection == -1) ? (base.npc.position.X + 12f) : (base.npc.position.X + 148f), base.npc.position.Y + 46f), new Vector2((base.npc.spriteDirection == -1) ? -3f : 3f, Utils.NextFloat(Main.rand, -1f, 1f)), ModContent.ProjectileType<ToxicBreath>(), 13, 0f, Main.myPlayer, 0f, 0f);
 							Main.projectile[p4].netUpdate = true;
 						}
 						if (base.npc.ai[2] >= 80f)

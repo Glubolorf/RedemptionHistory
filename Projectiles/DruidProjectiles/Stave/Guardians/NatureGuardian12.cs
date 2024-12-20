@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ID;
@@ -50,7 +51,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 				}
 			}
 			Player player = Main.player[base.projectile.owner];
-			if (!player.HasBuff(base.mod.BuffType("NatureGuardian12Buff")))
+			if (!player.HasBuff(ModContent.BuffType<NatureGuardian12Buff>()))
 			{
 				base.projectile.Kill();
 			}
@@ -84,7 +85,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 					Main.PlaySound(SoundID.Item73, base.projectile.position);
 					for (int j = 0; j < 4; j++)
 					{
-						Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("LavaBlast"), 35, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), ModContent.ProjectileType<LavaBlast>(), 35, 3f, Main.myPlayer, 0f, 0f);
 					}
 				}
 				for (int k = 0; k < 2; k++)

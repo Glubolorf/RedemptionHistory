@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Redemption.Tiles.LabDeco;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -56,13 +57,13 @@ namespace Redemption.Items.LabThings
 			{
 				Main.NewText("Sigma sector laser security has been deactivated", messageColor, false);
 			}
-			Mod mod = Redemption.inst;
+			Mod inst = Redemption.inst;
 			Dictionary<Color, int> colorToTile = new Dictionary<Color, int>();
-			colorToTile[new Color(220, 255, 255)] = mod.TileType("DeactivatedLaserTile");
-			colorToTile[new Color(255, 0, 0)] = mod.TileType("DeactivatedLaserV2Tile");
+			colorToTile[new Color(220, 255, 255)] = ModContent.TileType<DeactivatedLaserTile>();
+			colorToTile[new Color(255, 0, 0)] = ModContent.TileType<DeactivatedLaserV2Tile>();
 			colorToTile[new Color(150, 150, 150)] = -2;
 			colorToTile[Color.Black] = -1;
-			TexGen texGenerator = BaseWorldGenTex.GetTexGenerator(mod.GetTexture("WorldGeneration/ALabAccess4"), colorToTile, null, null, null, null);
+			TexGen texGenerator = BaseWorldGenTex.GetTexGenerator(inst.GetTexture("WorldGeneration/ALabAccess4"), colorToTile, null, null, null, null, null, null);
 			Point origin = new Point((int)((float)Main.maxTilesX * 0.55f), (int)((float)Main.maxTilesY * 0.65f));
 			texGenerator.Generate(origin.X, origin.Y, true, true);
 			if (Main.netMode == 2)

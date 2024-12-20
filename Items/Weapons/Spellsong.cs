@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -42,7 +43,7 @@ namespace Redemption.Items.Weapons
 			base.item.rare = 11;
 			base.item.UseSound = SoundID.Item7;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("SpellsongPro1");
+			base.item.shoot = ModContent.ProjectileType<SpellsongPro1>();
 			base.item.shootSpeed = 10f;
 			base.item.glowMask = Spellsong.customGlowMask;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 6;

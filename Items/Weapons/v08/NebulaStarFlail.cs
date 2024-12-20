@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -25,7 +26,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.knockBack = 8.5f;
 			base.item.damage = 500;
 			base.item.noUseGraphic = true;
-			base.item.shoot = base.mod.ProjectileType("NebulaStarFlailPro");
+			base.item.shoot = ModContent.ProjectileType<NebulaStarFlailPro>();
 			base.item.shootSpeed = 20f;
 			base.item.UseSound = SoundID.Item20;
 			base.item.melee = true;

@@ -45,7 +45,7 @@ namespace Redemption.Prefixes
 
 		public override void ModifyValue(ref float valueMult)
 		{
-			float multiplier = 3f;
+			float multiplier = 1.4f;
 			valueMult *= multiplier;
 		}
 	}

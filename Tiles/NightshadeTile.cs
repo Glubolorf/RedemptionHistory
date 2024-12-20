@@ -14,6 +14,8 @@ namespace Redemption.Tiles
 			Main.tileFrameImportant[(int)base.Type] = true;
 			Main.tileCut[(int)base.Type] = true;
 			Main.tileNoFail[(int)base.Type] = true;
+			Main.tileWaterDeath[(int)base.Type] = true;
+			Main.tileLavaDeath[(int)base.Type] = true;
 			this.dustType = 3;
 			this.soundType = 6;
 			Main.tileLighted[(int)base.Type] = true;

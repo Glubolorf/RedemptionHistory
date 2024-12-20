@@ -1,4 +1,6 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -21,24 +23,21 @@ namespace Redemption.Projectiles.DruidProjectiles.WorldStave
 			base.projectile.ignoreWater = true;
 			base.projectile.tileCollide = false;
 			base.projectile.alpha = 150;
+			base.projectile.timeLeft = 900;
 		}
 
 		public override void AI()
 		{
-			base.projectile.localAI[0] += 1f;
-			base.projectile.velocity.Y = 0f;
-			base.projectile.velocity.X = 0f;
+			Projectile worldTree = Main.projectile[(int)base.projectile.ai[0]];
+			base.projectile.Center = worldTree.Center;
+			base.projectile.velocity = Vector2.Zero;
 			base.projectile.rotation += 0.04f;
-			if (base.projectile.localAI[0] >= 900f)
-			{
-				base.projectile.Kill();
-			}
 			for (int p = 0; p < 255; p++)
 			{
 				this.clearCheck = Main.player[p];
 				if (Collision.CheckAABBvAABBCollision(base.projectile.position, base.projectile.Size, this.clearCheck.position, this.clearCheck.Size))
 				{
-					this.clearCheck.AddBuff(base.mod.BuffType("AncientForcefieldBuff2"), 1800, false);
+					this.clearCheck.AddBuff(ModContent.BuffType<AncientForcefieldBuff2>(), 1800, false);
 				}
 			}
 		}

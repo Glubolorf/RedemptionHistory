@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Items.Placeable.Wasteland;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -19,7 +21,7 @@ namespace Redemption.Tiles.Wasteland
 			Main.tileMerge[147][(int)base.Type] = true;
 			Main.tileLighted[(int)base.Type] = true;
 			base.AddMapEntry(new Color(70, 130, 70), null);
-			this.drop = base.mod.ItemType("RadioactiveIce");
+			this.drop = ModContent.ItemType<RadioactiveIce>();
 		}
 
 		public override void NearbyEffects(int i, int j, bool closer)
@@ -27,7 +29,7 @@ namespace Redemption.Tiles.Wasteland
 			Player player = Main.LocalPlayer;
 			if ((int)Vector2.Distance(player.Center / 16f, new Vector2((float)i, (float)j)) <= 15)
 			{
-				player.AddBuff(base.mod.BuffType("RadioactiveFalloutDebuff"), Main.rand.Next(10, 20), true);
+				player.AddBuff(ModContent.BuffType<RadioactiveFalloutDebuff>(), Main.rand.Next(10, 20), true);
 			}
 		}
 
@@ -50,7 +52,7 @@ namespace Redemption.Tiles.Wasteland
 		{
 			if (Main.tile[i, j - 1].type == 0 && Main.tile[i, j].active() && Main.rand.Next(12) == 0)
 			{
-				WorldGen.PlaceTile(i, j - 1, base.mod.TileType("XenomiteCrystalTile"), true, false, -1, 0);
+				WorldGen.PlaceTile(i, j - 1, ModContent.TileType<XenomiteCrystalTile>(), true, false, -1, 0);
 				return true;
 			}
 			return false;
@@ -60,12 +62,12 @@ namespace Redemption.Tiles.Wasteland
 		{
 			if (Main.tile[i, j + 1].type == 0 && Main.tile[i, j + 2].type == 0 && Main.rand.Next(4) == 0)
 			{
-				WorldGen.PlaceTile(i, j + 1, base.mod.TileType("RadioactiveIciclesTile"), true, false, -1, 0);
+				WorldGen.PlaceTile(i, j + 1, ModContent.TileType<RadioactiveIciclesTile>(), true, false, -1, 0);
 				return true;
 			}
 			if (Main.tile[i, j + 1].type == 0 && Main.rand.Next(4) == 0)
 			{
-				WorldGen.PlaceTile(i, j + 1, base.mod.TileType("RadioactiveIcicles2Tile"), true, false, -1, 0);
+				WorldGen.PlaceTile(i, j + 1, ModContent.TileType<RadioactiveIcicles2Tile>(), true, false, -1, 0);
 				return true;
 			}
 			return false;

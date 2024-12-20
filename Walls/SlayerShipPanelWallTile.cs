@@ -10,7 +10,6 @@ namespace Redemption.Walls
 		public override void SetDefaults()
 		{
 			Main.wallHouse[(int)base.Type] = false;
-			this.drop = base.mod.ItemType("SlayerShipPanelWall");
 			base.AddMapEntry(new Color(80, 80, 80), null);
 		}
 

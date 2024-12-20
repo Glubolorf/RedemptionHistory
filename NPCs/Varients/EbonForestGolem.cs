@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.NPCs.Varients
 			this.aiType = 482;
 			this.animationType = 482;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("ForestGolemBanner");
+			this.bannerItem = ModContent.ItemType<ForestGolemBanner>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -84,8 +85,6 @@ namespace Redemption.NPCs.Varients
 			}
 			return SpawnCondition.Corruption.Chance * ((Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == 23 && !RedeWorld.downedPatientZero) ? 0.02f : 0f);
 		}
-
-		private bool change;
 
 		private int regenTimer;
 	}

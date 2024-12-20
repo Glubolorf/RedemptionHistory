@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles.LabDeco;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.LabDeco
@@ -23,7 +24,7 @@ namespace Redemption.Items.Placeable.LabDeco
 			base.item.consumable = true;
 			base.item.value = 400;
 			base.item.rare = 6;
-			base.item.createTile = base.mod.TileType("LabChairTile");
+			base.item.createTile = ModContent.TileType<LabChairTile>();
 			base.item.placeStyle = 0;
 		}
 

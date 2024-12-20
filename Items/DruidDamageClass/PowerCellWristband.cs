@@ -27,7 +27,7 @@ namespace Redemption.Items.DruidDamageClass
 			ModRecipe modRecipe = new ModRecipe(base.mod);
 			modRecipe.AddIngredient(259, 5);
 			modRecipe.AddIngredient(1293, 3);
-			modRecipe.AddIngredient(base.mod.ItemType("SoulOfBloom"), 30);
+			modRecipe.AddIngredient(ModContent.ItemType<SoulOfBloom>(), 30);
 			modRecipe.AddTile(null, "DruidicAltarTile");
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();

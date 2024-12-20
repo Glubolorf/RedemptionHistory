@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Redemption.Items.DruidDamageClass;
+using Redemption.Projectiles.DruidProjectiles.Plants;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -38,7 +39,7 @@ namespace Redemption.Projectiles.DruidProjectiles
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			Projectile.NewProjectile(new Vector2(base.projectile.position.X + 14f, base.projectile.position.Y + 26f), base.projectile.velocity, base.mod.ProjectileType("PollenCloud7"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+			Projectile.NewProjectile(new Vector2(base.projectile.position.X + 14f, base.projectile.position.Y + 26f), base.projectile.velocity, ModContent.ProjectileType<PollenCloud7>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 		}
 
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)

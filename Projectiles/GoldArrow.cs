@@ -50,16 +50,12 @@ namespace Redemption.Projectiles
 				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 57, 0f, 0f, 100, default(Color), 1.2f);
 				Main.dust[dustIndex].velocity *= 1.4f;
 			}
-			Projectile.NewProjectile(base.projectile.position.X + 10f, base.projectile.position.Y + 24f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 90, 10, 1f, base.projectile.owner, 0f, 1f);
-			Projectile.NewProjectile(base.projectile.position.X + 10f, base.projectile.position.Y + 24f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 90, 10, 1f, base.projectile.owner, 0f, 1f);
-			Projectile.NewProjectile(base.projectile.position.X + 10f, base.projectile.position.Y + 24f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 90, 10, 1f, base.projectile.owner, 0f, 1f);
-			if (Main.rand.Next(2) == 0)
+			if (Main.myPlayer == base.projectile.owner)
 			{
-				Projectile.NewProjectile(base.projectile.position.X + 10f, base.projectile.position.Y + 24f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 90, 10, 1f, base.projectile.owner, 0f, 1f);
-			}
-			if (Main.rand.Next(2) == 0)
-			{
-				Projectile.NewProjectile(base.projectile.position.X + 10f, base.projectile.position.Y + 24f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 90, 10, 1f, base.projectile.owner, 0f, 1f);
+				for (int j = 0; j < Main.rand.Next(3, 5); j++)
+				{
+					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 90, 10, 1f, base.projectile.owner, 0f, 0f);
+				}
 			}
 		}
 

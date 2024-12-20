@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -34,10 +36,10 @@ namespace Redemption.NPCs.v08
 		{
 			if (RedeWorld.downedEaglecrestGolemPZ)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("AncientPowerCore"), Main.rand.Next(3, 7), false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<AncientPowerCore>(), Main.rand.Next(3, 7), false, 0, false, false);
 				return;
 			}
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("AncientCoreF"), Main.rand.Next(3, 7), false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<AncientCoreF>(), Main.rand.Next(3, 7), false, 0, false, false);
 		}
 
 		public override void AI()
@@ -114,12 +116,12 @@ namespace Redemption.NPCs.v08
 						Main.PlaySound(SoundID.Item71, (int)base.npc.position.X, (int)base.npc.position.Y);
 						if (base.npc.direction == -1)
 						{
-							int p = Projectile.NewProjectile(base.npc.Center.X + -90f, base.npc.Center.Y + 18f, 0f, 0f, base.mod.ProjectileType("DamagePro4"), 140, 3f, 255, 0f, 0f);
+							int p = Projectile.NewProjectile(base.npc.Center.X + -90f, base.npc.Center.Y + 18f, 0f, 0f, ModContent.ProjectileType<DamagePro4>(), 140, 3f, 255, 0f, 0f);
 							Main.projectile[p].netUpdate = true;
 						}
 						else
 						{
-							int p2 = Projectile.NewProjectile(base.npc.Center.X + 62f, base.npc.Center.Y + 18f, 0f, 0f, base.mod.ProjectileType("DamagePro4"), 140, 3f, 255, 0f, 0f);
+							int p2 = Projectile.NewProjectile(base.npc.Center.X + 62f, base.npc.Center.Y + 18f, 0f, 0f, ModContent.ProjectileType<DamagePro4>(), 140, 3f, 255, 0f, 0f);
 							Main.projectile[p2].netUpdate = true;
 						}
 					}
@@ -176,6 +178,10 @@ namespace Redemption.NPCs.v08
 				{
 					projectile.penetrate = 2;
 				}
+				if (damage > 200)
+				{
+					damage = 200;
+				}
 				projectile.damage = damage / 8;
 				projectile.velocity.X = -projectile.velocity.X;
 				projectile.velocity.Y = -projectile.velocity.Y;
@@ -199,7 +205,7 @@ namespace Redemption.NPCs.v08
 			{
 				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 				int num214 = hopAni.Height / 1;
-				int y6 = num214 * this.hopFrame;
+				int y6 = 0;
 				Main.spriteBatch.Draw(hopAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, hopAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)hopAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.slash)
@@ -221,7 +227,7 @@ namespace Redemption.NPCs.v08
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.Cavern.Chance * ((RedeWorld.downedPatientZero && !NPC.AnyNPCs(base.mod.NPCType("FallenAncient"))) ? 0.04f : 0f);
+			return SpawnCondition.Cavern.Chance * ((RedeWorld.downedPatientZero && !NPC.AnyNPCs(ModContent.NPCType<FallenAncient>())) ? 0.04f : 0f);
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -230,7 +236,7 @@ namespace Redemption.NPCs.v08
 			{
 				if (Main.netMode != 1 && base.npc.life <= 0)
 				{
-					NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("LostSoul3"), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<LostSoul3>(), 0, 0f, 0f, 0f, 0f, 255);
 				}
 				for (int i = 0; i < 40; i++)
 				{
@@ -248,8 +254,6 @@ namespace Redemption.NPCs.v08
 		}
 
 		private bool hop;
-
-		private int hopFrame;
 
 		private bool slash;
 

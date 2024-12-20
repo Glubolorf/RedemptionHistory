@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 			base.item.UseSound = SoundID.NPCDeath6.WithVolume(0.5f);
 			base.item.noMelee = true;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("SoulSkull");
+			base.item.shoot = ModContent.ProjectileType<SoulSkull>();
 			base.item.shootSpeed = 26f;
 			this.spiritWeapon = true;
 			this.minSpiritLevel = 5;
@@ -39,28 +40,28 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 
 		public override bool CanUseItem(Player player)
 		{
-			return !player.HasBuff(base.mod.BuffType("SoulCallerDebuff"));
+			return !player.HasBuff(ModContent.BuffType<SoulCallerDebuff>());
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritLevel < 5)
 			{
-				type = base.mod.ProjectileType("NoSpiritPro");
+				type = ModContent.ProjectileType<NoSpiritPro>();
 			}
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritLevel == 5 || Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritLevel == 6)
 			{
-				type = base.mod.ProjectileType("SoulSkull");
+				type = ModContent.ProjectileType<SoulSkull>();
 			}
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritLevel == 7 || Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritLevel == 8 || Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritLevel == 9)
 			{
-				type = base.mod.ProjectileType("DragonSkull");
+				type = ModContent.ProjectileType<DragonSkull>();
 			}
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritLevel >= 10)
 			{
 				Main.PlaySound(SoundID.Item123, (int)player.position.X, (int)player.position.Y);
-				player.AddBuff(base.mod.BuffType("SoulCallerDebuff"), 600, true);
-				type = base.mod.ProjectileType("SpectralLord");
+				player.AddBuff(ModContent.BuffType<SoulCallerDebuff>(), 600, true);
+				type = ModContent.ProjectileType<SpectralLord>();
 				Projectile.NewProjectile(position.X, position.Y, 0f, 0f, type, damage * 2, knockBack, player.whoAmI, 0f, 0f);
 			}
 			else

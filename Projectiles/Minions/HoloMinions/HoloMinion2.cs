@@ -1,6 +1,7 @@
 ﻿using System;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Minions.HoloMinions
 {
@@ -29,7 +30,7 @@ namespace Redemption.Projectiles.Minions.HoloMinions
 			base.projectile.ignoreWater = true;
 			base.projectile.alpha = 100;
 			this.inertia = 25f;
-			this.shoot = base.mod.ProjectileType("HoloAndroidPro");
+			this.shoot = ModContent.ProjectileType<HoloAndroidPro>();
 			this.shootSpeed = 13f;
 		}
 

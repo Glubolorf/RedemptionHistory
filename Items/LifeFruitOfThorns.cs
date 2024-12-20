@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.NPCs.Bosses.Thorn;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,12 +30,12 @@ namespace Redemption.Items
 
 		public override bool CanUseItem(Player player)
 		{
-			return Main.dayTime && RedeWorld.downedThorn && !NPC.AnyNPCs(base.mod.NPCType("Thorn")) && !NPC.AnyNPCs(base.mod.NPCType("ThornPZ")) && !NPC.AnyNPCs(base.mod.NPCType("Akka"));
+			return Main.dayTime && RedeWorld.downedThorn && !NPC.AnyNPCs(ModContent.NPCType<Thorn>()) && !NPC.AnyNPCs(ModContent.NPCType<ThornPZ>()) && !NPC.AnyNPCs(ModContent.NPCType<Akka>());
 		}
 
 		public override bool UseItem(Player player)
 		{
-			NPC.SpawnOnPlayer(player.whoAmI, base.mod.NPCType("ThornPZ"));
+			NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<ThornPZ>());
 			Main.PlaySound(15, player.position, 0);
 			return true;
 		}

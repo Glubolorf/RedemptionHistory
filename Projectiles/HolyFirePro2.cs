@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,7 +30,7 @@ namespace Redemption.Projectiles
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.AddBuff(base.mod.BuffType("HolyFireDebuff"), 400, false);
+			target.AddBuff(ModContent.BuffType<HolyFireDebuff>(), 400, false);
 		}
 
 		public override void AI()
@@ -41,7 +42,10 @@ namespace Redemption.Projectiles
 		public override void Kill(int timeLeft)
 		{
 			Main.PlaySound(SoundID.Item74, base.projectile.position);
-			Projectile.NewProjectile(base.projectile.position.X + 8f, base.projectile.position.Y + 8f, 0f, 0f, base.mod.ProjectileType("HolyFirePro3"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+			if (Main.myPlayer == base.projectile.owner)
+			{
+				Projectile.NewProjectile(base.projectile.position.X + 8f, base.projectile.position.Y + 8f, 0f, 0f, ModContent.ProjectileType<HolyFirePro3>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+			}
 		}
 	}
 }

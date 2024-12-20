@@ -1,5 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Items;
+using Redemption.Items.Placeable.Banners.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +33,7 @@ namespace Redemption.NPCs.v08
 			base.npc.noGravity = true;
 			base.npc.noTileCollide = true;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("SuperbugBanner");
+			this.bannerItem = ModContent.ItemType<SuperbugBanner>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -49,7 +52,7 @@ namespace Redemption.NPCs.v08
 		{
 			if (Main.rand.Next(3) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("Bile"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<Bile>(), 1, false, 0, false, false);
 			}
 			if (Main.rand.Next(100) == 0 || (Main.expertMode && Main.rand.Next(50) == 0))
 			{
@@ -66,8 +69,8 @@ namespace Redemption.NPCs.v08
 				base.npc.ai[3] += 1f;
 				if (base.npc.ai[3] >= 300f && base.npc.scale == 0.9f)
 				{
-					int Split = NPC.NewNPC((int)base.npc.Center.X + Main.rand.Next(-12, 12), (int)base.npc.Center.Y + Main.rand.Next(-12, 12), base.mod.NPCType("Superbug2"), 0, 0f, 0f, 0f, 0f, 255);
-					int Split2 = NPC.NewNPC((int)base.npc.Center.X + Main.rand.Next(-12, 12), (int)base.npc.Center.Y + Main.rand.Next(-12, 12), base.mod.NPCType("Superbug2"), 0, 0f, 0f, 0f, 0f, 255);
+					int Split = NPC.NewNPC((int)base.npc.Center.X + Main.rand.Next(-12, 12), (int)base.npc.Center.Y + Main.rand.Next(-12, 12), ModContent.NPCType<Superbug2>(), 0, 0f, 0f, 0f, 0f, 255);
+					int Split2 = NPC.NewNPC((int)base.npc.Center.X + Main.rand.Next(-12, 12), (int)base.npc.Center.Y + Main.rand.Next(-12, 12), ModContent.NPCType<Superbug2>(), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Split].lifeMax /= 2;
 					Main.npc[Split].life /= 2;
 					Main.npc[Split].damage -= 5;
@@ -91,11 +94,11 @@ namespace Redemption.NPCs.v08
 		{
 			if (Main.rand.Next(2) == 0 || Main.expertMode)
 			{
-				target.AddBuff(base.mod.BuffType("XenomiteDebuff"), Main.rand.Next(500, 1000), true);
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff>(), Main.rand.Next(500, 1000), true);
 			}
 			if (Main.rand.Next(9) == 0 || (Main.expertMode && Main.rand.Next(7) == 0))
 			{
-				target.AddBuff(base.mod.BuffType("XenomiteDebuff2"), Main.rand.Next(250, 500), true);
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff2>(), Main.rand.Next(250, 500), true);
 			}
 		}
 	}

@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Walls;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable
@@ -21,7 +22,7 @@ namespace Redemption.Items.Placeable
 			base.item.useTime = 7;
 			base.item.useStyle = 1;
 			base.item.consumable = true;
-			base.item.createWall = base.mod.WallType("AncientStoneBrickWallTile");
+			base.item.createWall = ModContent.WallType<AncientStoneBrickWallTile>();
 		}
 
 		public override void AddRecipes()

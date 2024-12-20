@@ -1,4 +1,5 @@
 ﻿using System;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.DruidProjectiles.Plants
 {
@@ -20,7 +21,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 			base.projectile.ignoreWater = true;
 			base.projectile.timeLeft = 60;
 			base.projectile.alpha = 255;
-			this.plantID = base.mod.ProjectileType("DarkTree");
+			this.plantID = ModContent.ProjectileType<DarkTree>();
 		}
 	}
 }

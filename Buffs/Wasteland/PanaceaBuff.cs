@@ -18,13 +18,13 @@ namespace Redemption.Buffs.Wasteland
 			player.GetModPlayer<RedePlayer>().irradiatedEffect = 0;
 			player.GetModPlayer<RedePlayer>().irradiatedLevel = 0;
 			player.GetModPlayer<RedePlayer>().irradiatedTimer = 0;
-			player.ClearBuff(base.mod.BuffType("HeadacheDebuff"));
-			player.ClearBuff(base.mod.BuffType("NauseaDebuff"));
-			player.ClearBuff(base.mod.BuffType("FatigueDebuff"));
-			player.ClearBuff(base.mod.BuffType("FeverDebuff"));
-			player.ClearBuff(base.mod.BuffType("HairLossDebuff"));
-			player.ClearBuff(base.mod.BuffType("SkinBurnDebuff"));
-			player.ClearBuff(base.mod.BuffType("RadiationDebuff"));
+			player.ClearBuff(ModContent.BuffType<HeadacheDebuff>());
+			player.ClearBuff(ModContent.BuffType<NauseaDebuff>());
+			player.ClearBuff(ModContent.BuffType<FatigueDebuff>());
+			player.ClearBuff(ModContent.BuffType<FeverDebuff>());
+			player.ClearBuff(ModContent.BuffType<HairLossDebuff>());
+			player.ClearBuff(ModContent.BuffType<SkinBurnDebuff>());
+			player.ClearBuff(ModContent.BuffType<RadiationDebuff>());
 		}
 	}
 }

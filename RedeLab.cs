@@ -68,6 +68,10 @@ namespace Redemption
 		public void SlayersShip()
 		{
 			Point origin = new Point((int)((float)Main.maxTilesX * 0.65f), (int)((float)Main.maxTilesY * 0.3f));
+			if (Main.dungeonX < Main.maxTilesX / 2)
+			{
+				origin = new Point((int)((float)Main.maxTilesX * 0.35f), (int)((float)Main.maxTilesY * 0.3f));
+			}
 			GenStructure genStructure = new SlayerShip();
 			new SlayerShipClear().Place(origin, WorldGen.structures);
 			genStructure.Place(origin, WorldGen.structures);
@@ -76,6 +80,10 @@ namespace Redemption
 		public void PreSlayersShip()
 		{
 			Point origin = new Point((int)((float)Main.maxTilesX * 0.65f), (int)((float)Main.maxTilesY * 0.3f));
+			if (Main.dungeonX < Main.maxTilesX / 2)
+			{
+				origin = new Point((int)((float)Main.maxTilesX * 0.35f), (int)((float)Main.maxTilesY * 0.3f));
+			}
 			origin.Y = BaseWorldGen.GetFirstTileFloor(origin.X, origin.Y, true);
 			WorldUtils.Gen(origin, new Shapes.Rectangle(80, 50), Actions.Chain(new GenAction[]
 			{

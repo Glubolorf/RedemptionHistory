@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -35,7 +37,7 @@ namespace Redemption.NPCs
 			base.npc.npcSlots = 1f;
 			base.npc.netAlways = true;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("InfectedGiantWormBanner");
+			this.bannerItem = ModContent.ItemType<InfectedGiantWormBanner>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -59,11 +61,11 @@ namespace Redemption.NPCs
 				int randomWormLength = Main.rand.Next(4, 6);
 				for (int i = 0; i < randomWormLength; i++)
 				{
-					latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("InfectedGiantWormBody"), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
+					latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<InfectedGiantWormBody>(), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
 					Main.npc[latestNPC].realLife = base.npc.whoAmI;
 					Main.npc[latestNPC].ai[3] = (float)base.npc.whoAmI;
 				}
-				latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("InfectedGiantWormTail"), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
+				latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<InfectedGiantWormTail>(), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
 				Main.npc[latestNPC].realLife = base.npc.whoAmI;
 				Main.npc[latestNPC].ai[3] = (float)base.npc.whoAmI;
 				base.npc.ai[0] = 1f;
@@ -334,11 +336,11 @@ namespace Redemption.NPCs
 		{
 			if (Main.rand.Next(2) == 0 || (Main.expertMode && Main.rand.Next(0) == 0))
 			{
-				target.AddBuff(base.mod.BuffType("XenomiteDebuff"), Main.rand.Next(500, 750), true);
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff>(), Main.rand.Next(500, 750), true);
 			}
 			if (Main.rand.Next(14) == 0 || (Main.expertMode && Main.rand.Next(9) == 0))
 			{
-				target.AddBuff(base.mod.BuffType("XenomiteDebuff2"), Main.rand.Next(50, 100), true);
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff2>(), Main.rand.Next(50, 100), true);
 			}
 		}
 	}

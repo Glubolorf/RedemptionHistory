@@ -98,11 +98,11 @@ namespace Redemption.Projectiles.Minions.StarSerpentMinion
 				scaleFactor16 = 16f;
 				int alpha = Main.projectile[byUUID].alpha;
 				Main.projectile[byUUID].localAI[0] = base.projectile.localAI[0] + 1f;
-				if (Main.projectile[byUUID].type != base.mod.ProjectileType("StarSerpentMinionHead"))
+				if (Main.projectile[byUUID].type != ModContent.ProjectileType<StarSerpentMinionHead>())
 				{
 					Main.projectile[byUUID].localAI[1] = (float)base.projectile.whoAmI;
 				}
-				if (base.projectile.owner == player.whoAmI && Main.projectile[byUUID].type == base.mod.ProjectileType("StarSerpentMinionHead"))
+				if (base.projectile.owner == player.whoAmI && Main.projectile[byUUID].type == ModContent.ProjectileType<StarSerpentMinionHead>())
 				{
 					Main.projectile[byUUID].Kill();
 					base.projectile.Kill();

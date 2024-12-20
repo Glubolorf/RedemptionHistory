@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ID;
@@ -50,7 +51,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 				}
 			}
 			Player player = Main.player[base.projectile.owner];
-			if (!player.HasBuff(base.mod.BuffType("NatureGuardian11Buff")))
+			if (!player.HasBuff(ModContent.BuffType<NatureGuardian11Buff>()))
 			{
 				base.projectile.Kill();
 			}
@@ -70,7 +71,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 					int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 38, 0f, 0f, 100, default(Color), 1.2f);
 					Main.dust[dustIndex].velocity *= 1.4f;
 				}
-				Projectile.NewProjectile(player.position, Vector2.Zero, base.mod.ProjectileType("MudAura"), 0, 0f, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(player.position, Vector2.Zero, ModContent.ProjectileType<MudAura>(), 0, 0f, player.whoAmI, 0f, 0f);
 				Main.PlaySound(SoundID.Item74, base.projectile.position);
 			}
 			base.projectile.velocity.Y = 0f;
@@ -84,24 +85,24 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 				{
 					if (base.projectile.spriteDirection == -1)
 					{
-						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 32f), new Vector2((float)(-6 + Main.rand.Next(-6, 0)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("MudGloopPro"), 20, 3f, Main.myPlayer, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 32f), new Vector2((float)(-6 + Main.rand.Next(-6, 0)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("MudGloopPro"), 20, 3f, Main.myPlayer, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 32f), new Vector2((float)(-6 + Main.rand.Next(-6, 0)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("MudGloopPro"), 20, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 32f), new Vector2((float)(-6 + Main.rand.Next(-6, 0)), (float)(-4 + Main.rand.Next(-4, 0))), ModContent.ProjectileType<MudGloopPro>(), 20, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 32f), new Vector2((float)(-6 + Main.rand.Next(-6, 0)), (float)(-4 + Main.rand.Next(-4, 0))), ModContent.ProjectileType<MudGloopPro>(), 20, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 32f), new Vector2((float)(-6 + Main.rand.Next(-6, 0)), (float)(-4 + Main.rand.Next(-4, 0))), ModContent.ProjectileType<MudGloopPro>(), 20, 3f, Main.myPlayer, 0f, 0f);
 					}
 					else
 					{
-						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 32f, base.projectile.position.Y + 32f), new Vector2((float)(6 + Main.rand.Next(0, 6)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("MudGloopPro"), 20, 3f, Main.myPlayer, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 32f, base.projectile.position.Y + 32f), new Vector2((float)(6 + Main.rand.Next(0, 6)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("MudGloopPro"), 20, 3f, Main.myPlayer, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 32f, base.projectile.position.Y + 32f), new Vector2((float)(6 + Main.rand.Next(0, 6)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("MudGloopPro"), 20, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 32f, base.projectile.position.Y + 32f), new Vector2((float)(6 + Main.rand.Next(0, 6)), (float)(-4 + Main.rand.Next(-4, 0))), ModContent.ProjectileType<MudGloopPro>(), 20, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 32f, base.projectile.position.Y + 32f), new Vector2((float)(6 + Main.rand.Next(0, 6)), (float)(-4 + Main.rand.Next(-4, 0))), ModContent.ProjectileType<MudGloopPro>(), 20, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 32f, base.projectile.position.Y + 32f), new Vector2((float)(6 + Main.rand.Next(0, 6)), (float)(-4 + Main.rand.Next(-4, 0))), ModContent.ProjectileType<MudGloopPro>(), 20, 3f, Main.myPlayer, 0f, 0f);
 					}
 				}
 				if (base.projectile.spriteDirection == -1)
 				{
-					Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 32f), new Vector2(-10f, 0f), base.mod.ProjectileType("MudGloopPro"), 20, 3f, Main.myPlayer, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 32f), new Vector2(-10f, 0f), ModContent.ProjectileType<MudGloopPro>(), 20, 3f, Main.myPlayer, 0f, 0f);
 				}
 				else
 				{
-					Projectile.NewProjectile(new Vector2(base.projectile.position.X + 32f, base.projectile.position.Y + 32f), new Vector2(10f, 0f), base.mod.ProjectileType("MudGloopPro"), 20, 3f, Main.myPlayer, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.projectile.position.X + 32f, base.projectile.position.Y + 32f), new Vector2(10f, 0f), ModContent.ProjectileType<MudGloopPro>(), 20, 3f, Main.myPlayer, 0f, 0f);
 				}
 			}
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.Items.Weapons
 			base.item.UseSound = SoundID.Item5;
 			base.item.autoReuse = true;
 			base.item.shoot = 10;
-			base.item.shootSpeed = 30f;
+			base.item.shootSpeed = 15f;
 			base.item.useAmmo = AmmoID.Arrow;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 5;
 		}
@@ -49,8 +50,7 @@ namespace Redemption.Items.Weapons
 		{
 			if (type == 1)
 			{
-				type = base.mod.ProjectileType("SilverwoodArrowPro");
-				base.item.shootSpeed = 30f;
+				type = ModContent.ProjectileType<SilverwoodArrowPro>();
 			}
 			return true;
 		}

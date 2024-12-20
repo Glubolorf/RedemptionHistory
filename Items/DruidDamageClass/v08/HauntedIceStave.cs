@@ -1,5 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Projectiles.DruidProjectiles.Stave.Guardians;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -19,8 +22,8 @@ namespace Redemption.Items.DruidDamageClass.v08
 			base.item.damage = 20;
 			base.item.width = 52;
 			base.item.height = 52;
-			base.item.useTime = 24;
-			base.item.useAnimation = 24;
+			base.item.useTime = 32;
+			base.item.useAnimation = 32;
 			base.item.crit = 4;
 			base.item.knockBack = 7f;
 			base.item.value = Item.buyPrice(0, 1, 25, 0);
@@ -28,11 +31,11 @@ namespace Redemption.Items.DruidDamageClass.v08
 			base.item.UseSound = SoundID.Item43;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
-			base.item.shoot = base.mod.ProjectileType("IceSoulPro1");
+			base.item.shoot = ModContent.ProjectileType<IceSoulPro1>();
 			base.item.shootSpeed = 10f;
-			this.defaultShoot = base.mod.ProjectileType("IceSoulPro1");
-			this.guardianBuffID = base.mod.BuffType("NatureGuardian26Buff");
-			this.guardianProjectileID = base.mod.ProjectileType("NatureGuardian26");
+			this.defaultShoot = ModContent.ProjectileType<IceSoulPro1>();
+			this.guardianBuffID = ModContent.BuffType<NatureGuardian26Buff>();
+			this.guardianProjectileID = ModContent.ProjectileType<NatureGuardian26>();
 			this.guardianTime = 600;
 			this.singleShotStave = true;
 			this.staveHoldOffset = new Vector2(4f, -10f);

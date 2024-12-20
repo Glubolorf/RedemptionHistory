@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -27,7 +28,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 
 		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
 		{
-			target.AddBuff(base.mod.BuffType("ChainedDebuff"), 60, true);
+			target.AddBuff(ModContent.BuffType<ChainedDebuff>(), 60, true);
 		}
 	}
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,6 +15,7 @@ namespace Redemption.NPCs.Varients
 		{
 			base.DisplayName.SetDefault("L o n g  Chicken");
 			Main.npcFrameCount[base.npc.type] = 7;
+			NPCID.Sets.TownCritter[base.npc.type] = true;
 		}
 
 		public override void SetDefaults()
@@ -30,13 +33,13 @@ namespace Redemption.NPCs.Varients
 			this.animationType = 46;
 			base.npc.dontTakeDamageFromHostiles = false;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("ChickenBanner");
-			base.npc.catchItem = (short)base.mod.ItemType("ChickenItem");
+			this.bannerItem = ModContent.ItemType<ChickenBanner>();
+			base.npc.catchItem = (short)ModContent.ItemType<ChickenLongItem>();
 		}
 
 		public override void NPCLoot()
 		{
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("LongEgg"), 1, false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<LongEgg>(), 1, false, 0, false, false);
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -49,7 +52,7 @@ namespace Redemption.NPCs.Varients
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/ChickenGore3"), 1f);
 				if (base.npc.FindBuffIndex(24) != -1)
 				{
-					Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("FriedChicken"), 1, false, 0, false, false);
+					Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<FriedChicken>(), 1, false, 0, false, false);
 				}
 			}
 		}
@@ -155,7 +158,5 @@ namespace Redemption.NPCs.Varients
 		private bool cluckCluck;
 
 		private int cluckTimer;
-
-		private bool change;
 	}
 }

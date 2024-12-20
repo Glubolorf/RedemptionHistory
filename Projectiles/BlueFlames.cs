@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -101,7 +102,7 @@ namespace Redemption.Projectiles
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			target.immune[base.projectile.owner] = 3;
-			target.AddBuff(base.mod.BuffType("UltraFlameDebuff"), 400, false);
+			target.AddBuff(ModContent.BuffType<UltraFlameDebuff>(), 400, false);
 		}
 	}
 }

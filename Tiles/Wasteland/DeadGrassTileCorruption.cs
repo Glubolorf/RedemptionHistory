@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,9 +13,9 @@ namespace Redemption.Tiles.Wasteland
 		{
 			Main.tileSolid[(int)base.Type] = true;
 			base.SetModTree(new DeadTree());
-			Main.tileMerge[(int)base.Type][base.mod.TileType("DeadGrassTile")] = true;
-			Main.tileMerge[(int)base.Type][base.mod.TileType("DeadGrassTileCorruption")] = true;
-			Main.tileMerge[(int)base.Type][base.mod.TileType("DeadGrassTileCrimson")] = true;
+			Main.tileMerge[(int)base.Type][ModContent.TileType<DeadGrassTile>()] = true;
+			Main.tileMerge[(int)base.Type][ModContent.TileType<DeadGrassTileCorruption>()] = true;
+			Main.tileMerge[(int)base.Type][ModContent.TileType<DeadGrassTileCrimson>()] = true;
 			TileID.Sets.Conversion.Grass[(int)base.Type] = true;
 			Main.tileBlendAll[(int)base.Type] = true;
 			TileID.Sets.NeedsGrassFraming[(int)base.Type] = true;
@@ -30,7 +31,7 @@ namespace Redemption.Tiles.Wasteland
 			Player player = Main.LocalPlayer;
 			if ((int)Vector2.Distance(player.Center / 16f, new Vector2((float)i, (float)j)) <= 15)
 			{
-				player.AddBuff(base.mod.BuffType("RadioactiveFalloutDebuff"), Main.rand.Next(10, 20), true);
+				player.AddBuff(ModContent.BuffType<RadioactiveFalloutDebuff>(), Main.rand.Next(10, 20), true);
 			}
 		}
 
@@ -51,31 +52,10 @@ namespace Redemption.Tiles.Wasteland
 
 		public override void RandomUpdate(int i, int j)
 		{
-			if (!Framing.GetTileSafely(i, j - 1).active() && Main.rand.Next(10) == 0)
+			if (!Framing.GetTileSafely(i, j - 1).active())
 			{
-				switch (Main.rand.Next(5))
-				{
-				case 0:
-					DeadGrassTile.PlaceObject(i, j - 1, base.mod.TileType("DeadGrassA1"), false, 0, 0, -1, -1);
-					NetMessage.SendObjectPlacment(-1, i, j - 1, base.mod.TileType("DeadGrassA1"), 0, 0, -1, -1);
-					break;
-				case 1:
-					DeadGrassTile.PlaceObject(i, j - 1, base.mod.TileType("DeadGrassA2"), false, 0, 0, -1, -1);
-					NetMessage.SendObjectPlacment(-1, i, j - 1, base.mod.TileType("DeadGrassA2"), 0, 0, -1, -1);
-					break;
-				case 2:
-					DeadGrassTile.PlaceObject(i, j - 1, base.mod.TileType("DeadGrassA3"), false, 0, 0, -1, -1);
-					NetMessage.SendObjectPlacment(-1, i, j - 1, base.mod.TileType("DeadGrassA3"), 0, 0, -1, -1);
-					break;
-				case 3:
-					DeadGrassTile.PlaceObject(i, j - 1, base.mod.TileType("DeadGrassA4"), false, 0, 0, -1, -1);
-					NetMessage.SendObjectPlacment(-1, i, j - 1, base.mod.TileType("DeadGrassA4"), 0, 0, -1, -1);
-					break;
-				default:
-					DeadGrassTile.PlaceObject(i, j - 1, base.mod.TileType("DeadGrassA5"), false, 0, 0, -1, -1);
-					NetMessage.SendObjectPlacment(-1, i, j - 1, base.mod.TileType("DeadGrassA5"), 0, 0, -1, -1);
-					break;
-				}
+				WorldGen.PlaceObject(i, j - 1, ModContent.TileType<DeadGrassA>(), true, Main.rand.Next(5), 0, -1, -1);
+				NetMessage.SendObjectPlacment(-1, i, j - 1, ModContent.TileType<DeadGrassA>(), Main.rand.Next(5), 0, -1, -1);
 			}
 			if (Main.rand.Next(12) == 0)
 			{
@@ -87,7 +67,7 @@ namespace Redemption.Tiles.Wasteland
 		{
 			if (Main.tile[i, j - 1].type == 0 && Main.tile[i, j].active() && Main.rand.Next(12) == 0)
 			{
-				WorldGen.PlaceTile(i, j - 1, base.mod.TileType("XenomiteCrystalTile"), true, false, -1, 0);
+				WorldGen.PlaceTile(i, j - 1, ModContent.TileType<XenomiteCrystalTile>(), true, false, -1, 0);
 				return true;
 			}
 			return false;
@@ -108,7 +88,7 @@ namespace Redemption.Tiles.Wasteland
 		public override int SaplingGrowthType(ref int style)
 		{
 			style = 0;
-			return base.mod.TileType("DeadSapling");
+			return ModContent.TileType<DeadSapling>();
 		}
 	}
 }

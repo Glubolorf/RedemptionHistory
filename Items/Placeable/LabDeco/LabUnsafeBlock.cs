@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -24,7 +25,7 @@ namespace Redemption.Items.Placeable.LabDeco
 			base.item.value = Item.buyPrice(0, 0, 2, 0);
 			base.item.consumable = true;
 			base.item.rare = 6;
-			base.item.createTile = base.mod.TileType("LabTileUnsafe");
+			base.item.createTile = ModContent.TileType<LabTileUnsafe>();
 		}
 	}
 }

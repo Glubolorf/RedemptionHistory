@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -42,7 +43,7 @@ namespace Redemption.Projectiles.v08
 
 		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
 		{
-			target.AddBuff(base.mod.BuffType("TimestopDebuff"), Main.rand.Next(40, 80), true);
+			target.AddBuff(ModContent.BuffType<TimestopDebuff>(), Main.rand.Next(40, 80), true);
 		}
 
 		public override void Kill(int timeLeft)

@@ -46,20 +46,6 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 			RedeUkkoAkka.TAearthProtection = tag.GetBool("team2");
 		}
 
-		public override void LoadLegacy(BinaryReader reader)
-		{
-			int loadVersion = reader.ReadInt32();
-			if (loadVersion == 0)
-			{
-				BitsByte godFlags = reader.ReadByte();
-				RedeUkkoAkka.begin = godFlags[0];
-				RedeUkkoAkka.TAbubbles = godFlags[1];
-				RedeUkkoAkka.TAearthProtection = godFlags[2];
-				return;
-			}
-			base.mod.Logger.Debug("Redemption: Unknown loadVersion: " + loadVersion);
-		}
-
 		public override void NetSend(BinaryWriter writer)
 		{
 			BitsByte godFlags = default(BitsByte);

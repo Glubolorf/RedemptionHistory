@@ -1,5 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Projectiles.DruidProjectiles.Stave.Guardians;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,13 +29,13 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.value = Item.sellPrice(0, 0, 54, 30);
 			base.item.rare = 3;
 			base.item.UseSound = SoundID.Item43;
-			base.item.shoot = base.mod.ProjectileType("MoltenStavePro");
+			base.item.shoot = ModContent.ProjectileType<MoltenStavePro>();
 			base.item.shootSpeed = 11f;
 			base.item.autoReuse = false;
 			base.item.useTurn = true;
-			this.defaultShoot = base.mod.ProjectileType("MoltenStavePro");
-			this.guardianBuffID = base.mod.BuffType("NatureGuardian12Buff");
-			this.guardianProjectileID = base.mod.ProjectileType("NatureGuardian12");
+			this.defaultShoot = ModContent.ProjectileType<MoltenStavePro>();
+			this.guardianBuffID = ModContent.BuffType<NatureGuardian12Buff>();
+			this.guardianProjectileID = ModContent.ProjectileType<NatureGuardian12>();
 			this.guardianTime = 1200;
 			this.singleShotStave = true;
 			this.staveHoldOffset = new Vector2(4f, -10f);

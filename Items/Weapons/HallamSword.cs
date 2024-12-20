@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.Items.Weapons
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
 			base.item.shootSpeed = 90f;
-			base.item.shoot = base.mod.ProjectileType("HallamSwordPro");
+			base.item.shoot = ModContent.ProjectileType<HallamSwordPro>();
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 6;
 		}
 

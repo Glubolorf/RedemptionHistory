@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.NPCs.LabNPCs;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -40,26 +41,15 @@ namespace Redemption.Tiles.LabDeco
 			if (Main.netMode != 1)
 			{
 				float dist = Vector2.Distance(Main.LocalPlayer.Center / 16f, new Vector2((float)i + 0.5f, (float)j + 0.5f));
-				if (dist <= 12f && dist > 5f && Main.rand.Next(300) == 0 && NPC.CountNPCS(base.mod.NPCType("SludgyBoi2")) <= 4)
+				if (dist <= 12f && dist > 5f && Main.rand.Next(300) == 0 && NPC.CountNPCS(ModContent.NPCType<SludgyBoi2>()) <= 4)
 				{
 					i *= 16;
 					j *= 16;
-					int k = NPC.NewNPC(i + 1, j + 2, base.mod.NPCType("SludgyBoi2"), 0, 0f, 0f, 0f, 0f, 255);
+					int k = NPC.NewNPC(i + 1, j + 2, ModContent.NPCType<SludgyBoi2>(), 0, 0f, 0f, 0f, 0f, 255);
 					if (Main.netMode == 2)
 					{
 						NetMessage.SendData(23, -1, -1, null, k, 0f, 0f, 0f, 0, 0, 0);
-						return;
 					}
-				}
-			}
-			else
-			{
-				float dist2 = Vector2.Distance(Main.LocalPlayer.Center / 16f, new Vector2((float)i + 0.5f, (float)j + 0.5f));
-				if (dist2 <= 12f && dist2 > 5f && Main.rand.Next(300) == 0 && NPC.CountNPCS(base.mod.NPCType("SludgyBoi2")) <= 4)
-				{
-					i *= 16;
-					j *= 16;
-					Projectile.NewProjectile((float)i, (float)j, 0f, 0f, base.mod.ProjectileType("SludgyBoi2SummonPro"), 0, 0f, 255, 0f, 0f);
 				}
 			}
 		}
@@ -68,9 +58,5 @@ namespace Redemption.Tiles.LabDeco
 		{
 			return false;
 		}
-
-		private int sludgeCount;
-
-		private int sludgeCooldown;
 	}
 }

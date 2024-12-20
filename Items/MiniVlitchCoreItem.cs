@@ -1,4 +1,6 @@
 ﻿using System;
+using Redemption.Buffs;
+using Redemption.Projectiles.Minions;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -19,8 +21,8 @@ namespace Redemption.Items
 			base.item.height = 34;
 			base.item.value = Item.sellPrice(0, 6, 0, 0);
 			base.item.expert = true;
-			base.item.shoot = base.mod.ProjectileType("MiniVlitchCore");
-			base.item.buffType = base.mod.BuffType("VlitchCoreBuff");
+			base.item.shoot = ModContent.ProjectileType<MiniVlitchCore>();
+			base.item.buffType = ModContent.BuffType<VlitchCoreBuff>();
 		}
 
 		public override void UseStyle(Player player)

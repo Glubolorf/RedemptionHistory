@@ -1,5 +1,6 @@
 ﻿using System;
 using Redemption.Items.DruidDamageClass;
+using Redemption.Projectiles.DruidProjectiles.Stave.Guardians;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -22,9 +23,9 @@ namespace Redemption.Buffs
 			modPlayer3.staveQuadShot = true;
 			druidDamagePlayer.druidDamage += 0.25f;
 			druidDamagePlayer.druidCrit += 25;
-			player.lifeRegen += 15;
+			player.lifeRegen += 2;
 			RedePlayer modPlayer2 = player.GetModPlayer<RedePlayer>();
-			if (player.ownedProjectileCounts[base.mod.ProjectileType("NatureGuardian21")] > 0)
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<NatureGuardian21>()] > 0)
 			{
 				modPlayer2.natureGuardian21 = true;
 			}

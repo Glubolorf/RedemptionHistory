@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -41,7 +42,7 @@ namespace Redemption.Tiles
 			Player localPlayer = Main.LocalPlayer;
 			localPlayer.noThrow = 2;
 			localPlayer.showItemIcon = true;
-			localPlayer.showItemIcon2 = base.mod.ItemType("CursedGem");
+			localPlayer.showItemIcon2 = ModContent.ItemType<CursedGem>();
 		}
 
 		public override bool CanKillTile(int i, int j, ref bool blockDamaged)
@@ -55,7 +56,7 @@ namespace Redemption.Tiles
 			int top = j - (int)(Main.tile[i, j].frameY / 18 % 3);
 			if (Main.tile[left, top].frameX == 0)
 			{
-				Main.LocalPlayer.QuickSpawnItem(base.mod.ItemType("CursedGem"), 1);
+				Main.LocalPlayer.QuickSpawnItem(ModContent.ItemType<CursedGem>(), 1);
 			}
 			for (int x = left; x < left + 2; x++)
 			{

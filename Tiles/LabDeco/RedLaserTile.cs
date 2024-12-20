@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -31,7 +32,7 @@ namespace Redemption.Tiles.LabDeco
 			Player player = Main.LocalPlayer;
 			if (Vector2.Distance(player.Center / 16f, new Vector2((float)i + 0.5f, (float)j + 0.5f)) <= 1f)
 			{
-				player.AddBuff(base.mod.BuffType("HazardLaserDebuff"), 10, true);
+				player.AddBuff(ModContent.BuffType<HazardLaserDebuff>(), 10, true);
 			}
 		}
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.v08;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -29,7 +30,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.thrown = true;
 			base.item.shootSpeed = 14f;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("EggBombPro2");
+			base.item.shoot = ModContent.ProjectileType<EggBombPro2>();
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}
 	}

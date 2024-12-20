@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -37,7 +38,7 @@ namespace Redemption.Items.Weapons
 			base.item.value = Item.buyPrice(0, 7, 50, 0);
 			base.item.rare = 10;
 			base.item.autoReuse = false;
-			base.item.shoot = base.mod.ProjectileType("CorruptedXenomiteYoyoPro");
+			base.item.shoot = ModContent.ProjectileType<CorruptedXenomiteYoyoPro>();
 			base.item.noUseGraphic = true;
 			base.item.noMelee = true;
 			base.item.UseSound = SoundID.Item1;

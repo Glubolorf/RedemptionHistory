@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -41,7 +42,7 @@ namespace Redemption.Tiles.SlayerShip
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 32, 16, base.mod.ItemType("SlayerStation"), 1, false, 0, false, false);
+			Item.NewItem(i * 16, j * 16, 32, 16, ModContent.ItemType<SlayerStation>(), 1, false, 0, false, false);
 		}
 
 		public override void AnimateTile(ref int frame, ref int frameCounter)

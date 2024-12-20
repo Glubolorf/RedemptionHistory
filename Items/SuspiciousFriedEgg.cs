@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -29,7 +30,7 @@ namespace Redemption.Items
 			base.item.height = 38;
 			base.item.value = 100;
 			base.item.rare = 9;
-			base.item.buffType = base.mod.BuffType("DisgustingDebuff");
+			base.item.buffType = ModContent.BuffType<DisgustingDebuff>();
 			base.item.buffTime = 3600;
 		}
 

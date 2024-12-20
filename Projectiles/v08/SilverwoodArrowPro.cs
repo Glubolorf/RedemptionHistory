@@ -24,7 +24,7 @@ namespace Redemption.Projectiles.v08
 			base.projectile.penetrate = 3;
 			base.projectile.timeLeft = 600;
 			base.projectile.alpha = 0;
-			base.projectile.extraUpdates = 1;
+			base.projectile.extraUpdates = 3;
 			base.projectile.hide = true;
 		}
 

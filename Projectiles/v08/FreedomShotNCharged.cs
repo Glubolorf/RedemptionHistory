@@ -53,7 +53,7 @@ namespace Redemption.Projectiles.v08
 		{
 			if (this.firstHit && base.projectile.owner == Main.myPlayer)
 			{
-				Projectile.NewProjectile(base.projectile.Center, new Vector2(0f, 0f), base.mod.ProjectileType("FreedomBallN"), base.projectile.damage / 6, 0f, base.projectile.owner, 0f, 0f);
+				Projectile.NewProjectile(base.projectile.Center, new Vector2(0f, 0f), ModContent.ProjectileType<FreedomBallN>(), base.projectile.damage / 6, 0f, base.projectile.owner, 0f, 0f);
 				this.firstHit = false;
 			}
 		}
@@ -61,7 +61,7 @@ namespace Redemption.Projectiles.v08
 		public override void Kill(int timeLeft)
 		{
 			Main.PlaySound(SoundID.DD2_ExplosiveTrapExplode, base.projectile.position);
-			int p = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, base.mod.ProjectileType("DummyExplosionFreedom"), base.projectile.damage, 0f, Main.myPlayer, 0f, 0f);
+			int p = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, ModContent.ProjectileType<DummyExplosionFreedom>(), base.projectile.damage, 0f, Main.myPlayer, 0f, 0f);
 			Main.projectile[p].magic = false;
 			Main.projectile[p].ranged = true;
 			for (int index = 0; index < 30; index++)

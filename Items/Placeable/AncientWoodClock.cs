@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable
@@ -23,7 +24,7 @@ namespace Redemption.Items.Placeable
 			base.item.useStyle = 1;
 			base.item.consumable = true;
 			base.item.value = 500;
-			base.item.createTile = base.mod.TileType("AncientWoodClockTile");
+			base.item.createTile = ModContent.TileType<AncientWoodClockTile>();
 		}
 
 		public override void AddRecipes()

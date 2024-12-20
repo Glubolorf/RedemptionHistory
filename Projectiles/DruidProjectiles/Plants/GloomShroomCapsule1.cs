@@ -1,4 +1,5 @@
 ﻿using System;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.DruidProjectiles.Plants
 {
@@ -19,7 +20,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 			base.projectile.tileCollide = true;
 			base.projectile.ignoreWater = true;
 			base.projectile.timeLeft = 200;
-			this.plantID = base.mod.ProjectileType("GloomShroom1");
+			this.plantID = ModContent.ProjectileType<GloomShroom1>();
 		}
 	}
 }

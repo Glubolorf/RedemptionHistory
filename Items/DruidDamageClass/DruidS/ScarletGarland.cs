@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.DruidProjectiles.Plants;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -36,7 +37,7 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
-			return body.type == base.mod.ItemType("ScarletChestguard") && legs.type == base.mod.ItemType("ScarletLeggings");
+			return body.type == ModContent.ItemType<ScarletChestguard>() && legs.type == ModContent.ItemType<ScarletLeggings>();
 		}
 
 		public override void ArmorSetShadows(Player player)
@@ -54,7 +55,7 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 				{
 					if (Main.rand.Next(40) == 0)
 					{
-						Projectile.NewProjectile(new Vector2(player.position.X + Utils.NextFloat(Main.rand, (float)player.width), player.position.Y + Utils.NextFloat(Main.rand, (float)player.height)), new Vector2(0f, 0f), base.mod.ProjectileType("Seed25"), 50, 0f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(player.position.X + Utils.NextFloat(Main.rand, (float)player.width), player.position.Y + Utils.NextFloat(Main.rand, (float)player.height)), new Vector2(0f, 0f), ModContent.ProjectileType<Seed25>(), 50, 0f, Main.myPlayer, 0f, 0f);
 					}
 				}
 			}

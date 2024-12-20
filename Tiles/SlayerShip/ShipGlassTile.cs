@@ -13,7 +13,6 @@ namespace Redemption.Tiles.SlayerShip
 			Main.tileMergeDirt[(int)base.Type] = true;
 			Main.tileBlockLight[(int)base.Type] = true;
 			this.dustType = 226;
-			this.drop = base.mod.ItemType("ShipGlass");
 			this.minPick = 500;
 			this.mineResist = 7f;
 			this.soundType = 21;

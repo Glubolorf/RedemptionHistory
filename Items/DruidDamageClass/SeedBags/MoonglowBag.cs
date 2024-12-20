@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.DruidProjectiles.Plants;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,7 +30,7 @@ namespace Redemption.Items.DruidDamageClass.SeedBags
 			base.item.UseSound = SoundID.Item1;
 			base.item.noMelee = true;
 			base.item.autoReuse = false;
-			base.item.shoot = base.mod.ProjectileType("Seed14");
+			base.item.shoot = ModContent.ProjectileType<Seed14>();
 			base.item.shootSpeed = 18f;
 			this.NativeTerrainIDs = TileLists.JungleTiles;
 			this.nativeText = "Jungle";

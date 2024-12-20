@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.DruidProjectiles.Plants
 {
@@ -56,11 +57,11 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 			base.projectile.localAI[0] += 1f;
 			if (this.IsOnNativeTerrain ? (base.projectile.localAI[0] % 35f == 0f) : (base.projectile.localAI[0] % 45f == 0f && base.projectile.frame >= 0))
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 14f, base.projectile.position.Y + 14f), base.projectile.velocity, base.mod.ProjectileType("PollenCloud6"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 14f, base.projectile.position.Y + 14f), base.projectile.velocity, ModContent.ProjectileType<PollenCloud6>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
 			}
 			if (this.IsOnNativeTerrain ? (base.projectile.localAI[0] % 20f == 0f) : (base.projectile.localAI[0] % 30f == 0f && base.projectile.frame >= 0))
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 44f, base.projectile.position.Y + 14f), base.projectile.velocity, base.mod.ProjectileType("DayPulse"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 44f, base.projectile.position.Y + 14f), base.projectile.velocity, ModContent.ProjectileType<DayPulse>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
 			}
 		}
 

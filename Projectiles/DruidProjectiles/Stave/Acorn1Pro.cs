@@ -54,7 +54,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave
 			Point point = Utils.ToTileCoordinates(base.projectile.Bottom);
 			if (Main.tile[point.X, point.Y + 1].type == 2 || Main.tile[point.X, point.Y].type == 2)
 			{
-				Projectile projectile = Main.projectile[Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.position.Y - 12f), new Vector2(0f, 0f), base.mod.ProjectileType("SaplingPro"), base.projectile.damage, 4f, base.projectile.owner, 0f, 0f)];
+				Projectile projectile = Main.projectile[Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.position.Y - 12f), new Vector2(0f, 0f), ModContent.ProjectileType<SaplingPro>(), base.projectile.damage, 4f, base.projectile.owner, 0f, 0f)];
 			}
 			for (int i = 0; i < 15; i++)
 			{

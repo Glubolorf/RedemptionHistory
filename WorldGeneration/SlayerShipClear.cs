@@ -14,7 +14,7 @@ namespace Redemption.WorldGeneration
 			Dictionary<Color, int> colorToTile = new Dictionary<Color, int>();
 			colorToTile[new Color(150, 150, 150)] = -2;
 			colorToTile[Color.Black] = -1;
-			BaseWorldGenTex.GetTexGenerator(inst.GetTexture("WorldGeneration/SlayerShipClear"), colorToTile, null, null, null, null).Generate(origin.X, origin.Y, true, true);
+			BaseWorldGenTex.GetTexGenerator(inst.GetTexture("WorldGeneration/SlayerShipClear"), colorToTile, null, null, null, null, null, null).Generate(origin.X, origin.Y, true, true);
 			return true;
 		}
 	}

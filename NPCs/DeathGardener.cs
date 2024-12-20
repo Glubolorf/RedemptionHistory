@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,7 +30,7 @@ namespace Redemption.NPCs
 			this.aiType = 31;
 			this.animationType = 271;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("DeathGardenerBanner");
+			this.bannerItem = ModContent.ItemType<DeathGardenerBanner>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)

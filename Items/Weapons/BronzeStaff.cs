@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,13 +32,13 @@ namespace Redemption.Items.Weapons
 			base.item.rare = 1;
 			base.item.UseSound = SoundID.Item21;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("BlueOrb1");
+			base.item.shoot = ModContent.ProjectileType<BlueOrb1>();
 			base.item.shootSpeed = 10f;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, base.mod.ProjectileType("BlueOrb2"), damage, knockBack, player.whoAmI, 0f, 0f);
+			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, ModContent.ProjectileType<BlueOrb2>(), damage, knockBack, player.whoAmI, 0f, 0f);
 			return true;
 		}
 	}

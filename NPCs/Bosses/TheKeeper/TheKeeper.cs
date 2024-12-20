@@ -1,6 +1,12 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Dusts;
+using Redemption.Items;
+using Redemption.Items.Armor;
+using Redemption.Items.Placeable;
+using Redemption.Items.Weapons;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -36,7 +42,7 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 			base.npc.netAlways = true;
 			base.npc.HitSound = SoundID.NPCHit13;
 			base.npc.DeathSound = SoundID.NPCDeath19;
-			this.bossBag = base.mod.ItemType("TheKeeperBag");
+			this.bossBag = ModContent.ItemType<TheKeeperBag>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -70,7 +76,7 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 					{
 						for (int j = 0; j < player2.inventory.Length; j++)
 						{
-							if (player2.inventory[j].type == base.mod.ItemType("RedemptionTeller"))
+							if (player2.inventory[j].type == ModContent.ItemType<RedemptionTeller>())
 							{
 								Main.NewText("<Chalice of Alignment> An undead... disgusting. Good thing you killed it.", Color.DarkGoldenrod, false);
 							}
@@ -90,7 +96,7 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 		{
 			if (Main.rand.Next(10) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("TheKeeperTrophy"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<TheKeeperTrophy>(), 1, false, 0, false, false);
 			}
 			if (Main.expertMode)
 			{
@@ -99,38 +105,43 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 			}
 			if (Main.rand.Next(3) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("OldGathicWaraxe"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<OldGathicWaraxe>(), 1, false, 0, false, false);
 			}
 			if (Main.rand.Next(7) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("TheKeeperMask"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<TheKeeperMask>(), 1, false, 0, false, false);
 			}
 			int num = Main.rand.Next(5);
 			if (num == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("KeepersBow"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<KeepersBow>(), 1, false, 0, false, false);
 			}
 			if (num == 1)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("KeepersStaff"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<KeepersStaff>(), 1, false, 0, false, false);
 			}
 			if (num == 2)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("KeepersClaw"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<KeepersClaw>(), 1, false, 0, false, false);
 			}
 			if (num == 3)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("KeepersKnife"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<KeepersKnife>(), 1, false, 0, false, false);
 			}
 			if (num == 4)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("KeepersSummon"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<KeepersSummon>(), 1, false, 0, false, false);
 			}
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("DarkShard"), Main.rand.Next(2, 3), false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<DarkShard>(), Main.rand.Next(2, 3), false, 0, false, false);
 		}
 
 		public override void AI()
 		{
+			if (!this.title)
+			{
+				Redemption.ShowTitle(base.npc, 13);
+				this.title = true;
+			}
 			Player player = Main.player[base.npc.target];
 			if (base.npc.target < 0 || base.npc.target == 255 || Main.player[base.npc.target].dead || !Main.player[base.npc.target].active)
 			{
@@ -187,6 +198,7 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 			Vector2 LowPos = new Vector2((player.Center.X > base.npc.Center.X) ? (player.Center.X - 240f) : (player.Center.X + 240f), player.Center.Y + 50f);
 			Vector2 CenterPos = new Vector2((player.Center.X > base.npc.Center.X) ? (player.Center.X - 140f) : (player.Center.X + 140f), player.Center.Y);
 			Vector2 FarPos = new Vector2((player.Center.X > base.npc.Center.X) ? (player.Center.X - 320f) : (player.Center.X + 320f), player.Center.Y - 25f);
+			this.DespawnHandler();
 			for (int i = 0; i < 255; i++)
 			{
 				Player player2 = Main.player[i];
@@ -194,7 +206,7 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 				{
 					for (int j = 0; j < player2.inventory.Length; j++)
 					{
-						if (player2.inventory[j].type == base.mod.ItemType("AbandonedTeddy"))
+						if (player2.inventory[j].type == ModContent.ItemType<AbandonedTeddy>())
 						{
 							this.teddy = true;
 						}
@@ -214,7 +226,7 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 					{
 						if (this.teddy)
 						{
-							int p = Projectile.NewProjectile(base.npc.position.X + 48f, base.npc.position.Y + 24f, 0f, 0f, base.mod.ProjectileType("VeilFX"), 0, 0f, 255, 0f, 0f);
+							int p = Projectile.NewProjectile(base.npc.position.X + 48f, base.npc.position.Y + 24f, 0f, 0f, ModContent.ProjectileType<VeilFX>(), 0, 0f, 255, 0f, 0f);
 							Main.projectile[p].netUpdate = true;
 							this.frameCounters = 0;
 							base.npc.ai[0] = 5f;
@@ -248,7 +260,7 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 							float Speed = 6f;
 							Vector2 vector8 = new Vector2(base.npc.position.X + (float)Main.rand.Next(0, base.npc.width), base.npc.position.Y + (float)Main.rand.Next(0, base.npc.height));
 							float rotation = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
-							int p2 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), base.mod.ProjectileType("ShadowBolt"), 10, 3f, Main.myPlayer, 0f, 0f);
+							int p2 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), ModContent.ProjectileType<ShadowBolt>(), 10, 3f, Main.myPlayer, 0f, 0f);
 							Main.projectile[p2].netUpdate = true;
 						}
 						if (base.npc.ai[2] >= 200f)
@@ -275,14 +287,14 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 							Main.PlaySound(SoundID.Item71, (int)base.npc.position.X, (int)base.npc.position.Y);
 							if (player.Center.X > base.npc.Center.X)
 							{
-								int p3 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 25f, 0f, base.mod.ProjectileType("ReaperSlashPro"), 11, 3f, 255, 0f, 0f);
+								int p3 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 25f, 0f, ModContent.ProjectileType<ReaperSlashPro>(), 11, 3f, 255, 0f, 0f);
 								Main.projectile[p3].netUpdate = true;
 								NPC npc2 = base.npc;
 								npc2.velocity.X = npc2.velocity.X + 24f;
 							}
 							else
 							{
-								int p4 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, -25f, 0f, base.mod.ProjectileType("ReaperSlashPro"), 11, 3f, 255, 0f, 0f);
+								int p4 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, -25f, 0f, ModContent.ProjectileType<ReaperSlashPro>(), 11, 3f, 255, 0f, 0f);
 								Main.projectile[p4].netUpdate = true;
 								NPC npc3 = base.npc;
 								npc3.velocity.X = npc3.velocity.X - 24f;
@@ -323,7 +335,7 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 								float Speed2 = Utils.NextFloat(Main.rand, 6f, 11f);
 								Vector2 vector9 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 								float rotation2 = (float)Math.Atan2((double)(vector9.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector9.X - (player.position.X + (float)player.width * 0.5f)));
-								int p5 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0) + Utils.NextFloat(Main.rand, -3f, 3f), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0) + Utils.NextFloat(Main.rand, -3f, 3f), base.mod.ProjectileType("BloodwavePro"), 10, 3f, Main.myPlayer, 0f, 0f);
+								int p5 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0) + Utils.NextFloat(Main.rand, -3f, 3f), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0) + Utils.NextFloat(Main.rand, -3f, 3f), ModContent.ProjectileType<BloodwavePro>(), 10, 3f, Main.myPlayer, 0f, 0f);
 								Main.projectile[p5].netUpdate = true;
 							}
 							for (int l = 0; l < 30; l++)
@@ -354,7 +366,7 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 						if (base.npc.ai[2] == 80f)
 						{
 							Main.PlaySound(SoundID.NPCDeath52, (int)base.npc.position.X, (int)base.npc.position.Y);
-							int p6 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)((player.Center.X > base.npc.Center.X) ? 14 : -14), 0f, base.mod.ProjectileType("SoulChargePro"), 13, 3f, 255, 0f, 0f);
+							int p6 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)((player.Center.X > base.npc.Center.X) ? 14 : -14), 0f, ModContent.ProjectileType<SoulChargePro>(), 13, 3f, 255, 0f, 0f);
 							Main.projectile[p6].netUpdate = true;
 							base.npc.velocity *= 0f;
 						}
@@ -376,7 +388,7 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 								float Speed3 = 7f;
 								Vector2 vector10 = new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 26f);
 								float rotation3 = (float)Math.Atan2((double)(vector10.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector10.X - (player.position.X + (float)player.width * 0.5f)));
-								int p7 = Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)rotation3) * (double)Speed3 * -1.0), (float)(Math.Sin((double)rotation3) * (double)Speed3 * -1.0), base.mod.ProjectileType("DreadCoil"), 11, 3f, Main.myPlayer, 0f, 0f);
+								int p7 = Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)rotation3) * (double)Speed3 * -1.0), (float)(Math.Sin((double)rotation3) * (double)Speed3 * -1.0), ModContent.ProjectileType<DreadCoil>(), 11, 3f, Main.myPlayer, 0f, 0f);
 								Main.projectile[p7].netUpdate = true;
 							}
 							if (base.npc.ai[2] >= 130f)
@@ -417,7 +429,7 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 								player.ApplyDamageToNPC(base.npc, 120, 0f, 0, false);
 								for (int i2 = 0; i2 < 15; i2++)
 								{
-									Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("Blood"), 11, 3f, 255, 0f, 0f);
+									Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), ModContent.ProjectileType<Blood>(), 11, 3f, 255, 0f, 0f);
 								}
 							}
 							if (base.npc.ai[2] >= 120f)
@@ -448,7 +460,7 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 				{
 					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Shriek").WithVolume(0.5f).WithPitchVariance(0.1f), -1, -1);
 				}
-				int p8 = Projectile.NewProjectile(base.npc.position.X + 48f, base.npc.position.Y + 24f, 0f, 0f, base.mod.ProjectileType("VeilFX"), 0, 0f, 255, 0f, 0f);
+				int p8 = Projectile.NewProjectile(base.npc.position.X + 48f, base.npc.position.Y + 24f, 0f, 0f, ModContent.ProjectileType<VeilFX>(), 0, 0f, 255, 0f, 0f);
 				Main.projectile[p8].netUpdate = true;
 			}
 			else
@@ -458,7 +470,7 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 				{
 					for (int i3 = -16; i3 <= 16; i3++)
 					{
-						Projectile.NewProjectile(base.npc.Center, 14f * Utils.RotatedBy(Vector2.UnitX, 0.19634954084936207 * (double)i3, default(Vector2)), base.mod.ProjectileType("ShriekWave"), 0, 0f, 0, (float)base.npc.whoAmI, 0f);
+						Projectile.NewProjectile(base.npc.Center, 14f * Utils.RotatedBy(Vector2.UnitX, 0.19634954084936207 * (double)i3, default(Vector2)), ModContent.ProjectileType<ShriekWave>(), 0, 0f, 0, (float)base.npc.whoAmI, 0f);
 					}
 					base.npc.netUpdate = true;
 				}
@@ -597,6 +609,18 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 				{
 					CombatText.NewText(base.npc.getRect(), Color.GhostWhite, "You...", true, false);
 				}
+				if (base.npc.ai[2] >= 900f)
+				{
+					for (int k2 = 0; k2 < 1; k2++)
+					{
+						double angle = Main.rand.NextDouble() * 2.0 * 3.141592653589793;
+						this.vector.X = (float)(Math.Sin(angle) * 100.0);
+						this.vector.Y = (float)(Math.Cos(angle) * 100.0);
+						Dust dust3 = Main.dust[Dust.NewDust(base.npc.Center + this.vector, 2, 2, ModContent.DustType<VoidFlame>(), 0f, 0f, 100, default(Color), 3f)];
+						dust3.noGravity = true;
+						dust3.velocity = -base.npc.DirectionTo(dust3.position) * 10f;
+					}
+				}
 				if (base.npc.alpha >= 255)
 				{
 					for (int i4 = 0; i4 < 50; i4++)
@@ -604,29 +628,36 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 						int dustIndex3 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 20, 0f, 0f, 100, default(Color), 2.5f);
 						Main.dust[dustIndex3].velocity *= 2.6f;
 					}
-					string text5 = "The Keeper's Spirit fades away...";
+					for (int i5 = 0; i5 < 50; i5++)
+					{
+						int dustIndex4 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, ModContent.DustType<VoidFlame>(), 0f, 0f, 100, default(Color), 3f);
+						Main.dust[dustIndex4].velocity *= 2.6f;
+					}
+					string text5 = "The Keeper's Spirit fades away... ?";
 					Color rarityPurple = Colors.RarityPurple;
 					byte r5 = rarityPurple.R;
 					rarityPurple = Colors.RarityPurple;
 					byte g5 = rarityPurple.G;
 					rarityPurple = Colors.RarityPurple;
 					Main.NewText(text5, r5, g5, rarityPurple.B, false);
-					Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("KeeperAcc"), 1, false, 0, false, false);
-					Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("TheKeeperTrophy"), 1, false, 0, false, false);
+					Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<KeeperAcc>(), 1, false, 0, false, false);
+					Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<TheKeeperTrophy>(), 1, false, 0, false, false);
+					int p9 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, ModContent.ProjectileType<KeeperSoul>(), 0, 0f, Main.myPlayer, 0f, 0f);
+					Main.projectile[p9].netUpdate = true;
 					if (!RedeWorld.keeperSaved)
 					{
 						RedeWorld.redemptionPoints += 3;
 						CombatText.NewText(player.getRect(), Color.Gold, "+3", true, false);
-						for (int k2 = 0; k2 < 255; k2++)
+						for (int k3 = 0; k3 < 255; k3++)
 						{
-							Player player3 = Main.player[k2];
+							Player player3 = Main.player[k3];
 							if (player3.active)
 							{
 								for (int j2 = 0; j2 < player3.inventory.Length; j2++)
 								{
-									if (player3.inventory[j2].type == base.mod.ItemType("RedemptionTeller"))
+									if (player3.inventory[j2].type == ModContent.ItemType<RedemptionTeller>())
 									{
-										Main.NewText("<Chalice of Alignment> You've redeemed yourself, Octavia may rest in undisturbed peace...", Color.DarkGoldenrod, false);
+										Main.NewText("<Chalice of Alignment> You've redeemed yourself, Octavia may rest in undisturbed peace... Hm, Strange, something feels off... I'm sure it's nothing.", Color.DarkGoldenrod, false);
 									}
 								}
 							}
@@ -642,6 +673,20 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 				}
 			}
 			Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 5, 0f, 0f, 0, default(Color), 1f);
+		}
+
+		private void DespawnHandler()
+		{
+			Player player = Main.player[base.npc.target];
+			if (!player.active || player.dead)
+			{
+				base.npc.alpha -= 5;
+				if (base.npc.timeLeft > 10)
+				{
+					base.npc.timeLeft = 10;
+				}
+				return;
+			}
 		}
 
 		public void MoveToVector2(Vector2 p)
@@ -745,5 +790,7 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 		public int slashFrame;
 
 		public int closureFrame;
+
+		private bool title;
 	}
 }

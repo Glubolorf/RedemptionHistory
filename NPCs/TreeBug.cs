@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,7 +30,7 @@ namespace Redemption.NPCs
 			this.animationType = 219;
 			base.npc.dontTakeDamageFromHostiles = false;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("TreeBugBanner");
+			this.bannerItem = ModContent.ItemType<TreeBugBanner>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)

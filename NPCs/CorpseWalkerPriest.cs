@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Placeable.Banners;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,7 +33,7 @@ namespace Redemption.NPCs
 			this.aiType = 271;
 			this.animationType = 271;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("CorpseWalkerPriestBanner");
+			this.bannerItem = ModContent.ItemType<CorpseWalkerPriestBanner>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -51,7 +53,7 @@ namespace Redemption.NPCs
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
 			if (Main.netMode != 1 && base.npc.life <= 0 && Main.rand.Next(2) == 0)
 			{
-				NPC.NewNPC((int)base.npc.position.X + 20, (int)base.npc.position.Y + 30, base.mod.NPCType("LostSoul1"), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.position.X + 20, (int)base.npc.position.Y + 30, ModContent.NPCType<LostSoul1>(), 0, 0f, 0f, 0f, 0f, 255);
 			}
 		}
 
@@ -92,13 +94,13 @@ namespace Redemption.NPCs
 					if (base.npc.direction == -1)
 					{
 						Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-						int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 2f, base.npc.position.Y + 12f), new Vector2(-6f, 1f), base.mod.ProjectileType("RedeSparkPro2"), 10, 3f, 255, 0f, 0f);
+						int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 2f, base.npc.position.Y + 12f), new Vector2(-6f, 1f), ModContent.ProjectileType<RedeSparkPro2>(), 10, 3f, 255, 0f, 0f);
 						Main.projectile[p].netUpdate = true;
 					}
 					else
 					{
 						Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-						int p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 2f, base.npc.position.Y + 12f), new Vector2(6f, 1f), base.mod.ProjectileType("RedeSparkPro2"), 10, 3f, 255, 0f, 0f);
+						int p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 2f, base.npc.position.Y + 12f), new Vector2(6f, 1f), ModContent.ProjectileType<RedeSparkPro2>(), 10, 3f, 255, 0f, 0f);
 						Main.projectile[p2].netUpdate = true;
 					}
 				}
@@ -107,13 +109,13 @@ namespace Redemption.NPCs
 					if (base.npc.direction == -1)
 					{
 						Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-						int p3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 26f), new Vector2(-6f, 0f), base.mod.ProjectileType("RedeSparkPro2"), 10, 3f, 255, 0f, 0f);
+						int p3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 26f), new Vector2(-6f, 0f), ModContent.ProjectileType<RedeSparkPro2>(), 10, 3f, 255, 0f, 0f);
 						Main.projectile[p3].netUpdate = true;
 					}
 					else
 					{
 						Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-						int p4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 26f), new Vector2(6f, 0f), base.mod.ProjectileType("RedeSparkPro2"), 10, 3f, 255, 0f, 0f);
+						int p4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 26f), new Vector2(6f, 0f), ModContent.ProjectileType<RedeSparkPro2>(), 10, 3f, 255, 0f, 0f);
 						Main.projectile[p4].netUpdate = true;
 					}
 				}
@@ -122,13 +124,13 @@ namespace Redemption.NPCs
 					if (base.npc.direction == -1)
 					{
 						Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-						int p5 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 0f, base.npc.position.Y + 44f), new Vector2(-6f, -1f), base.mod.ProjectileType("RedeSparkPro2"), 10, 3f, 255, 0f, 0f);
+						int p5 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 0f, base.npc.position.Y + 44f), new Vector2(-6f, -1f), ModContent.ProjectileType<RedeSparkPro2>(), 10, 3f, 255, 0f, 0f);
 						Main.projectile[p5].netUpdate = true;
 					}
 					else
 					{
 						Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-						int p6 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 0f, base.npc.position.Y + 44f), new Vector2(6f, -1f), base.mod.ProjectileType("RedeSparkPro2"), 10, 3f, 255, 0f, 0f);
+						int p6 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 0f, base.npc.position.Y + 44f), new Vector2(6f, -1f), ModContent.ProjectileType<RedeSparkPro2>(), 10, 3f, 255, 0f, 0f);
 						Main.projectile[p6].netUpdate = true;
 					}
 				}

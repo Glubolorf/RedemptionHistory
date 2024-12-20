@@ -2,6 +2,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.ChickenArmy;
+using Redemption.Items;
+using Redemption.Items.DruidDamageClass.v08;
+using Redemption.Items.Weapons.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -46,7 +49,7 @@ namespace Redemption.NPCs.ChickenInvasion
 				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
 				if (base.npc.FindBuffIndex(24) != -1)
 				{
-					Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("FriedChicken"), Main.rand.Next(1, 2), false, 0, false, false);
+					Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<FriedChicken>(), Main.rand.Next(1, 2), false, 0, false, false);
 				}
 			}
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
@@ -56,15 +59,15 @@ namespace Redemption.NPCs.ChickenInvasion
 		{
 			if (Main.rand.Next(3) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("Archcloth"), Main.rand.Next(1, 3), false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<Archcloth>(), Main.rand.Next(1, 3), false, 0, false, false);
 			}
 			if (Main.rand.Next(150) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ArchmagesEnchantment"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<ArchmagesEnchantment>(), 1, false, 0, false, false);
 			}
 			if (Main.rand.Next(1200) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ChickLauncher"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<ChickLauncher>(), 1, false, 0, false, false);
 			}
 			if (ChickWorld.chickArmy)
 			{
@@ -96,13 +99,13 @@ namespace Redemption.NPCs.ChickenInvasion
 					if (base.npc.direction == -1)
 					{
 						Main.PlaySound(SoundID.NPCDeath6.WithVolume(0.5f), (int)base.npc.position.X, (int)base.npc.position.Y);
-						int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 2f, base.npc.position.Y + 12f), new Vector2(-2f, 1f), base.mod.ProjectileType("ArcaneChickenPro1"), 45, 3f, 255, 0f, 0f);
+						int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 2f, base.npc.position.Y + 12f), new Vector2(-2f, 1f), ModContent.ProjectileType<ArcaneChickenPro1>(), 45, 3f, 255, 0f, 0f);
 						Main.projectile[p].netUpdate = true;
 					}
 					else
 					{
 						Main.PlaySound(SoundID.NPCDeath6.WithVolume(0.5f), (int)base.npc.position.X, (int)base.npc.position.Y);
-						int p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 2f, base.npc.position.Y + 12f), new Vector2(2f, 1f), base.mod.ProjectileType("ArcaneChickenPro1"), 45, 3f, 255, 0f, 0f);
+						int p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 2f, base.npc.position.Y + 12f), new Vector2(2f, 1f), ModContent.ProjectileType<ArcaneChickenPro1>(), 45, 3f, 255, 0f, 0f);
 						Main.projectile[p2].netUpdate = true;
 					}
 				}
@@ -111,13 +114,13 @@ namespace Redemption.NPCs.ChickenInvasion
 					if (base.npc.direction == -1)
 					{
 						Main.PlaySound(SoundID.NPCDeath6.WithVolume(0.5f), (int)base.npc.position.X, (int)base.npc.position.Y);
-						int p3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 26f), new Vector2(-2f, 0f), base.mod.ProjectileType("ArcaneChickenPro1"), 45, 3f, 255, 0f, 0f);
+						int p3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 26f), new Vector2(-2f, 0f), ModContent.ProjectileType<ArcaneChickenPro1>(), 45, 3f, 255, 0f, 0f);
 						Main.projectile[p3].netUpdate = true;
 					}
 					else
 					{
 						Main.PlaySound(SoundID.NPCDeath6.WithVolume(0.5f), (int)base.npc.position.X, (int)base.npc.position.Y);
-						int p4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 26f), new Vector2(2f, 0f), base.mod.ProjectileType("ArcaneChickenPro1"), 45, 3f, 255, 0f, 0f);
+						int p4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 26f), new Vector2(2f, 0f), ModContent.ProjectileType<ArcaneChickenPro1>(), 45, 3f, 255, 0f, 0f);
 						Main.projectile[p4].netUpdate = true;
 					}
 				}
@@ -126,13 +129,13 @@ namespace Redemption.NPCs.ChickenInvasion
 					if (base.npc.direction == -1)
 					{
 						Main.PlaySound(SoundID.NPCDeath6.WithVolume(0.5f), (int)base.npc.position.X, (int)base.npc.position.Y);
-						int p5 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 0f, base.npc.position.Y + 44f), new Vector2(-2f, -1f), base.mod.ProjectileType("ArcaneChickenPro1"), 45, 3f, 255, 0f, 0f);
+						int p5 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 0f, base.npc.position.Y + 44f), new Vector2(-2f, -1f), ModContent.ProjectileType<ArcaneChickenPro1>(), 45, 3f, 255, 0f, 0f);
 						Main.projectile[p5].netUpdate = true;
 					}
 					else
 					{
 						Main.PlaySound(SoundID.NPCDeath6.WithVolume(0.5f), (int)base.npc.position.X, (int)base.npc.position.Y);
-						int p6 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 0f, base.npc.position.Y + 44f), new Vector2(2f, -1f), base.mod.ProjectileType("ArcaneChickenPro1"), 45, 3f, 255, 0f, 0f);
+						int p6 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 0f, base.npc.position.Y + 44f), new Vector2(2f, -1f), ModContent.ProjectileType<ArcaneChickenPro1>(), 45, 3f, 255, 0f, 0f);
 						Main.projectile[p6].netUpdate = true;
 					}
 				}
@@ -140,7 +143,6 @@ namespace Redemption.NPCs.ChickenInvasion
 				{
 					this.specialAttack = false;
 					this.attackTimer = 0;
-					this.attackCounter = 0;
 					this.attackFrame = 0;
 				}
 			}
@@ -168,8 +170,6 @@ namespace Redemption.NPCs.ChickenInvasion
 		private bool specialAttack;
 
 		private int attackFrame;
-
-		private int attackCounter;
 
 		private int attackTimer;
 	}

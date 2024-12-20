@@ -1,5 +1,6 @@
 ﻿using System;
 using Redemption.Items.DruidDamageClass;
+using Redemption.Projectiles.DruidProjectiles.Stave.Guardians;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -23,7 +24,7 @@ namespace Redemption.Buffs
 			player.moveSpeed *= 0.5f;
 			player.noKnockback = true;
 			RedePlayer modPlayer2 = player.GetModPlayer<RedePlayer>();
-			if (player.ownedProjectileCounts[base.mod.ProjectileType("NatureGuardian27")] > 0)
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<NatureGuardian27>()] > 0)
 			{
 				modPlayer2.natureGuardian27 = true;
 			}

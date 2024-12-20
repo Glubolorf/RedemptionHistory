@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,7 +32,7 @@ namespace Redemption.Items.Weapons
 			base.item.channel = true;
 			base.item.knockBack = 0f;
 			base.item.value = Item.buyPrice(1, 50, 0, 0);
-			base.item.shoot = base.mod.ProjectileType("TeslaCoilStaffPro");
+			base.item.shoot = ModContent.ProjectileType<TeslaCoilStaffPro>();
 			base.item.shootSpeed = 30f;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}

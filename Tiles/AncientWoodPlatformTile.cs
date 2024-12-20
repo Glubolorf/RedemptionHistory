@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -34,7 +35,7 @@ namespace Redemption.Tiles
 			base.AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
 			base.AddMapEntry(new Color(200, 200, 200), null);
 			this.dustType = 78;
-			this.drop = base.mod.ItemType("AncientWoodPlatform");
+			this.drop = ModContent.ItemType<AncientWoodPlatform>();
 			this.disableSmartCursor = true;
 			this.adjTiles = new int[]
 			{

@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.LabDeco;
+using Redemption.NPCs.LabNPCs.New;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -41,25 +43,25 @@ namespace Redemption.Tiles.LabDeco
 			{
 				if (Main.tile[i, j].frameX >= 18)
 				{
-					if (!NPC.AnyNPCs(base.mod.NPCType("IrradiatedBehemoth2")) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && (!RedeWorld.labAccess3 || RedeWorld.downedPatientZero))
+					if (!NPC.AnyNPCs(ModContent.NPCType<IrradiatedBehemoth2>()) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && (!RedeWorld.labAccess3 || RedeWorld.downedPatientZero))
 					{
 						Main.tile[i, j];
 						i *= 16;
 						j *= 16;
-						int k = NPC.NewNPC(i, j, base.mod.NPCType("IrradiatedBehemoth2"), 0, 0f, 0f, 0f, 0f, 255);
+						int k = NPC.NewNPC(i, j, ModContent.NPCType<IrradiatedBehemoth2>(), 0, 0f, 0f, 0f, 0f, 255);
 						if (Main.netMode == 2)
 						{
 							NetMessage.SendData(23, -1, -1, null, k, 0f, 0f, 0f, 0, 0, 0);
 						}
 					}
 				}
-				else if (!NPC.AnyNPCs(base.mod.NPCType("IrradiatedBehemoth2")) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && (!RedeWorld.labAccess3 || RedeWorld.downedPatientZero))
+				else if (!NPC.AnyNPCs(ModContent.NPCType<IrradiatedBehemoth2>()) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && (!RedeWorld.labAccess3 || RedeWorld.downedPatientZero))
 				{
 					Main.tile[i, j];
 					i++;
 					i *= 16;
 					j *= 16;
-					int l = NPC.NewNPC(i, j, base.mod.NPCType("IrradiatedBehemoth2"), 0, 0f, 0f, 0f, 0f, 255);
+					int l = NPC.NewNPC(i, j, ModContent.NPCType<IrradiatedBehemoth2>(), 0, 0f, 0f, 0f, 0f, 255);
 					if (Main.netMode == 2)
 					{
 						NetMessage.SendData(23, -1, -1, null, l, 0f, 0f, 0f, 0, 0, 0);
@@ -68,7 +70,7 @@ namespace Redemption.Tiles.LabDeco
 			}
 			else if (Main.tile[i, j].frameX >= 18)
 			{
-				if (!NPC.AnyNPCs(base.mod.NPCType("IrradiatedBehemoth2")) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && (!RedeWorld.labAccess3 || RedeWorld.downedPatientZero))
+				if (!NPC.AnyNPCs(ModContent.NPCType<IrradiatedBehemoth2>()) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && (!RedeWorld.labAccess3 || RedeWorld.downedPatientZero))
 				{
 					ModPacket packet = base.mod.GetPacket(256);
 					packet.Write(4);
@@ -76,7 +78,7 @@ namespace Redemption.Tiles.LabDeco
 					packet.Send(-1, -1);
 				}
 			}
-			else if (!NPC.AnyNPCs(base.mod.NPCType("IrradiatedBehemoth2")) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && (!RedeWorld.labAccess3 || RedeWorld.downedPatientZero))
+			else if (!NPC.AnyNPCs(ModContent.NPCType<IrradiatedBehemoth2>()) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && (!RedeWorld.labAccess3 || RedeWorld.downedPatientZero))
 			{
 				ModPacket packet2 = base.mod.GetPacket(256);
 				packet2.Write(4);
@@ -110,7 +112,7 @@ namespace Redemption.Tiles.LabDeco
 			Player localPlayer = Main.LocalPlayer;
 			localPlayer.noThrow = 2;
 			localPlayer.showItemIcon = true;
-			localPlayer.showItemIcon2 = base.mod.ItemType("SignDeath");
+			localPlayer.showItemIcon2 = ModContent.ItemType<SignDeath>();
 		}
 
 		public override bool CanExplode(int i, int j)

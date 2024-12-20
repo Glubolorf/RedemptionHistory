@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -50,11 +52,11 @@ namespace Redemption.NPCs.v08
 		{
 			if (Main.rand.Next(2) == 0 || (Main.expertMode && Main.rand.Next(0) == 0))
 			{
-				target.AddBuff(base.mod.BuffType("XenomiteDebuff"), Main.rand.Next(500, 1000), true);
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff>(), Main.rand.Next(500, 1000), true);
 			}
 			if (Main.rand.Next(9) == 0 || (Main.expertMode && Main.rand.Next(7) == 0))
 			{
-				target.AddBuff(base.mod.BuffType("XenomiteDebuff2"), Main.rand.Next(250, 500), true);
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff2>(), Main.rand.Next(250, 500), true);
 			}
 		}
 
@@ -116,7 +118,7 @@ namespace Redemption.NPCs.v08
 						int pieCut = 16;
 						for (int i = 0; i < pieCut; i++)
 						{
-							int projID = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("InfectedFlinxWave"), 1, 3f, 255, 0f, 0f);
+							int projID = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, ModContent.ProjectileType<InfectedFlinxWave>(), 1, 3f, 255, 0f, 0f);
 							Main.projectile[projID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(26f, 0f), (float)i / (float)pieCut * 6.28f);
 							Main.projectile[projID].netUpdate = true;
 						}
@@ -145,7 +147,7 @@ namespace Redemption.NPCs.v08
 			{
 				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 				int num214 = hopAni.Height / 1;
-				int y6 = num214 * this.hopFrame;
+				int y6 = 0;
 				Main.spriteBatch.Draw(hopAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, hopAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)hopAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.fakeDeath)
@@ -167,9 +169,5 @@ namespace Redemption.NPCs.v08
 		private int fakeDeathTimer;
 
 		private bool hop;
-
-		private int hopFrame;
-
-		private int hopCounter;
 	}
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,7 +28,7 @@ namespace Redemption.Items.Weapons
 			base.item.knockBack = 5f;
 			base.item.UseSound = SoundID.Item74;
 			base.item.value = Item.buyPrice(5, 0, 0, 0);
-			base.item.shoot = base.mod.ProjectileType("BlightedFistPro1");
+			base.item.shoot = ModContent.ProjectileType<BlightedFistPro1>();
 			base.item.shootSpeed = 15f;
 			base.item.autoReuse = true;
 			base.item.noMelee = true;
@@ -43,16 +45,16 @@ namespace Redemption.Items.Weapons
 			if (player.altFunctionUse == 2)
 			{
 				base.item.mana = 150;
-				base.item.buffType = base.mod.BuffType("BlightedShieldBuff");
+				base.item.buffType = ModContent.BuffType<BlightedShieldBuff>();
 				base.item.buffTime = 900;
-				base.item.shoot = base.mod.ProjectileType("BlightedShield");
+				base.item.shoot = ModContent.ProjectileType<BlightedShield>();
 				base.item.shootSpeed = 0f;
-				return !player.HasBuff(base.mod.BuffType("BlightedShieldBuff"));
+				return !player.HasBuff(ModContent.BuffType<BlightedShieldBuff>());
 			}
 			base.item.mana = 0;
 			base.item.buffType = 0;
 			base.item.buffTime = 0;
-			base.item.shoot = base.mod.ProjectileType("BlightedFistPro1");
+			base.item.shoot = ModContent.ProjectileType<BlightedFistPro1>();
 			base.item.shootSpeed = 10f;
 			return true;
 		}

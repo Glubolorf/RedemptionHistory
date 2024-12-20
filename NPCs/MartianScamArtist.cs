@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.NPCs
 			this.aiType = 385;
 			this.animationType = 385;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("MartianSABanner");
+			this.bannerItem = ModContent.ItemType<MartianSABanner>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)

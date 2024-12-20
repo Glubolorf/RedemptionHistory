@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.Banners;
+using Redemption.NPCs;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -30,7 +32,7 @@ namespace Redemption.Tiles.Banners
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 48, base.mod.ItemType("DeathGardenerBanner"), 1, false, 0, false, false);
+			Item.NewItem(i * 16, j * 16, 16, 48, ModContent.ItemType<DeathGardenerBanner>(), 1, false, 0, false, false);
 		}
 
 		public override void NearbyEffects(int i, int j, bool closer)
@@ -38,7 +40,7 @@ namespace Redemption.Tiles.Banners
 			if (closer)
 			{
 				Player localPlayer = Main.LocalPlayer;
-				localPlayer.NPCBannerBuff[base.mod.NPCType("DeathGardener")] = true;
+				localPlayer.NPCBannerBuff[ModContent.NPCType<DeathGardener>()] = true;
 				localPlayer.hasBanner = true;
 			}
 		}

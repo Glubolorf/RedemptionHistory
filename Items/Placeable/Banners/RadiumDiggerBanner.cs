@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles.Banners;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -24,7 +25,7 @@ namespace Redemption.Items.Placeable.Banners
 			base.item.consumable = true;
 			base.item.rare = 1;
 			base.item.value = Item.buyPrice(0, 0, 10, 0);
-			base.item.createTile = base.mod.TileType("RadiumDiggerBannerTile");
+			base.item.createTile = ModContent.TileType<RadiumDiggerBannerTile>();
 			base.item.placeStyle = 0;
 		}
 	}

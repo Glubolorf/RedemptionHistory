@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.DruidProjectiles.Plants
 {
@@ -69,17 +70,17 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 			base.projectile.localAI[0] += 1f;
 			if (base.projectile.localAI[0] % 30f == 0f && base.projectile.frame >= 4)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), base.projectile.velocity, base.mod.ProjectileType("PollenCloud5"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), base.projectile.velocity, ModContent.ProjectileType<PollenCloud5>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
 			}
 			if (base.projectile.frame >= 4 && this.IsOnNativeTerrain)
 			{
 				if (Main.rand.Next(20) == 0)
 				{
-					Projectile.NewProjectile(base.projectile.position.X + 6f, base.projectile.position.Y + 12f, (float)(-3 + Main.rand.Next(0, 6)), (float)(-3 + Main.rand.Next(0, 6)), base.mod.ProjectileType("FieryOil"), 7, 0f, base.projectile.owner, 0f, 0f);
+					Projectile.NewProjectile(base.projectile.position.X + 6f, base.projectile.position.Y + 12f, (float)(-3 + Main.rand.Next(0, 6)), (float)(-3 + Main.rand.Next(0, 6)), ModContent.ProjectileType<FieryOil>(), 7, 0f, base.projectile.owner, 0f, 0f);
 				}
 				if (Main.rand.Next(20) == 0)
 				{
-					Projectile.NewProjectile(base.projectile.position.X + 28f, base.projectile.position.Y + 18f, (float)(-3 + Main.rand.Next(0, 6)), (float)(-3 + Main.rand.Next(0, 6)), base.mod.ProjectileType("FieryOil"), 7, 0f, base.projectile.owner, 0f, 0f);
+					Projectile.NewProjectile(base.projectile.position.X + 28f, base.projectile.position.Y + 18f, (float)(-3 + Main.rand.Next(0, 6)), (float)(-3 + Main.rand.Next(0, 6)), ModContent.ProjectileType<FieryOil>(), 7, 0f, base.projectile.owner, 0f, 0f);
 				}
 			}
 		}

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
@@ -38,7 +39,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.AddBuff(base.mod.BuffType("EnjoymentDebuff"), 18000, false);
+			target.AddBuff(ModContent.BuffType<EnjoymentDebuff>(), 18000, false);
 		}
 
 		public override void AI()

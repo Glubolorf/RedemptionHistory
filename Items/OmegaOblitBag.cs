@@ -1,5 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Armor;
+using Redemption.Items.DruidDamageClass.SeedBags;
+using Redemption.Items.Weapons;
+using Redemption.NPCs.Bosses.OmegaOblit;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -20,7 +24,7 @@ namespace Redemption.Items
 				OmegaOblitBag.customGlowMask = (short)(glowMasks.Length - 1);
 				Main.glowMaskTexture = glowMasks;
 			}
-			base.DisplayName.SetDefault("Treasure Bag");
+			base.DisplayName.SetDefault("Treasure Box");
 			base.Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
 		}
 
@@ -44,7 +48,7 @@ namespace Redemption.Items
 		{
 			get
 			{
-				return base.mod.NPCType("OmegaOblitDamaged");
+				return ModContent.NPCType<OO>();
 			}
 		}
 
@@ -52,30 +56,30 @@ namespace Redemption.Items
 		{
 			if (Main.rand.Next(20) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("IntruderMask"), 1);
-				player.QuickSpawnItem(base.mod.ItemType("IntruderArmour"), 1);
-				player.QuickSpawnItem(base.mod.ItemType("IntruderPants"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<IntruderMask>(), 1);
+				player.QuickSpawnItem(ModContent.ItemType<IntruderArmour>(), 1);
+				player.QuickSpawnItem(ModContent.ItemType<IntruderPants>(), 1);
 			}
 			if (Main.rand.Next(14) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("GirusMask"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<GirusMask>(), 1);
 			}
 			if (Main.rand.Next(3) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("PlasmaJawser"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<PlasmaJawser>(), 1);
 			}
 			if (Main.rand.Next(3) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("OmegaClaw"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<OmegaClaw>(), 1);
 			}
 			if (Main.rand.Next(3) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("GloopContainer"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<GloopContainer>(), 1);
 			}
-			player.QuickSpawnItem(base.mod.ItemType("CorruptedXenomite"), Main.rand.Next(30, 40));
-			player.QuickSpawnItem(base.mod.ItemType("VlitchBattery"), Main.rand.Next(4, 6));
-			player.QuickSpawnItem(base.mod.ItemType("OblitBrain"), 1);
-			player.QuickSpawnItem(base.mod.ItemType("ObliterationDrive"), 1);
+			player.QuickSpawnItem(ModContent.ItemType<CorruptedXenomite>(), Main.rand.Next(30, 40));
+			player.QuickSpawnItem(ModContent.ItemType<VlitchBattery>(), Main.rand.Next(4, 6));
+			player.QuickSpawnItem(ModContent.ItemType<OblitBrain>(), 1);
+			player.QuickSpawnItem(ModContent.ItemType<ObliterationDrive>(), 1);
 		}
 
 		public static short customGlowMask;

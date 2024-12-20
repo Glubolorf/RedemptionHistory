@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -43,7 +44,7 @@ namespace Redemption.Items.Weapons
 			base.item.rare = 4;
 			base.item.UseSound = SoundID.Item20;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("MoltenBlastPro1");
+			base.item.shoot = ModContent.ProjectileType<MoltenBlastPro1>();
 			base.item.shootSpeed = 24f;
 			base.item.glowMask = DragonLeadStaff.customGlowMask;
 		}
@@ -60,15 +61,7 @@ namespace Redemption.Items.Weapons
 
 		public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
 		{
-			if (target.type == 551 || target.type == 558 || target.type == 559 || target.type == 560 || target.type == 170 || target.type == 180 || target.type == 171 || target.type == 370 || target.type == base.mod.NPCType("GreenPigron"))
-			{
-				damage *= 50;
-			}
-			if (target.type >= 87 && target.type <= 92)
-			{
-				damage *= 50;
-			}
-			if (target.type >= 454 && target.type <= 459)
+			if (target.IsDragonlike())
 			{
 				damage *= 50;
 			}

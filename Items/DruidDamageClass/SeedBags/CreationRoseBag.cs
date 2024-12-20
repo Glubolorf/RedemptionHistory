@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles.DruidProjectiles.Plants;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -27,7 +28,7 @@ namespace Redemption.Items.DruidDamageClass.SeedBags
 
 		public override void SafeSetDefaults()
 		{
-			base.item.damage = 76;
+			base.item.damage = 200;
 			base.item.width = 22;
 			base.item.height = 26;
 			base.item.useTime = 46;
@@ -41,7 +42,7 @@ namespace Redemption.Items.DruidDamageClass.SeedBags
 			base.item.UseSound = SoundID.Item1;
 			base.item.noMelee = true;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("Seed24");
+			base.item.shoot = ModContent.ProjectileType<Seed24>();
 			base.item.shootSpeed = 14f;
 			base.item.glowMask = CreationRoseBag.customGlowMask;
 		}

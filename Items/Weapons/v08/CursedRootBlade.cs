@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -69,7 +70,7 @@ namespace Redemption.Items.Weapons.v08
 				Vector2 perturbedSpeed2 = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(30f));
 				float scale2 = 1f - Utils.NextFloat(Main.rand) * 0.4f;
 				perturbedSpeed2 *= scale2;
-				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed2.X, perturbedSpeed2.Y, base.mod.ProjectileType("CursedThornPro5"), damage, knockBack, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed2.X, perturbedSpeed2.Y, ModContent.ProjectileType<CursedThornPro5>(), damage, knockBack, player.whoAmI, 0f, 0f);
 			}
 			return false;
 		}

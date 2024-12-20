@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.NPCs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -58,31 +59,27 @@ namespace Redemption.Items.Weapons
 			{
 				if (target.type == 84)
 				{
-					NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, base.mod.NPCType("CorruptedBlade"), 0, 0f, 0f, 0f, 0f, 255);
-				}
-				if (target.type == 290)
-				{
-					NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, base.mod.NPCType("CorruptedPaladin"), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, ModContent.NPCType<CorruptedBlade>(), 0, 0f, 0f, 0f, 0f, 255);
 				}
 				if (target.type == 139)
 				{
-					NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, base.mod.NPCType("CorruptedProbe"), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, ModContent.NPCType<CorruptedProbe>(), 0, 0f, 0f, 0f, 0f, 255);
 				}
-				if (target.type == base.mod.NPCType("RogueTBot"))
+				if (target.type == ModContent.NPCType<RogueTBot>())
 				{
-					NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, base.mod.NPCType("CorruptedTBot"), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, ModContent.NPCType<CorruptedTBot>(), 0, 0f, 0f, 0f, 0f, 255);
 				}
-				if (target.type == base.mod.NPCType("Android"))
+				if (target.type == ModContent.NPCType<Android>())
 				{
-					NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, base.mod.NPCType("OmegaAndroid"), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, ModContent.NPCType<OmegaAndroid>(), 0, 0f, 0f, 0f, 0f, 255);
 				}
-				if (target.type == base.mod.NPCType("PrototypeSilver"))
+				if (target.type == ModContent.NPCType<PrototypeSilver>())
 				{
-					NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, base.mod.NPCType("OmegaPrototype"), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, ModContent.NPCType<OmegaPrototype>(), 0, 0f, 0f, 0f, 0f, 255);
 				}
-				if (target.type == base.mod.NPCType("SpacePaladin"))
+				if (target.type == ModContent.NPCType<SpacePaladin>())
 				{
-					NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, base.mod.NPCType("OmegaSpacePaladin"), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, ModContent.NPCType<OmegaSpacePaladin>(), 0, 0f, 0f, 0f, 0f, 255);
 				}
 			}
 		}

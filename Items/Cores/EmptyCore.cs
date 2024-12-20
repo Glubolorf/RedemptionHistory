@@ -9,7 +9,7 @@ namespace Redemption.Items.Cores
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Empty Core");
-			base.Tooltip.SetDefault("'Fill with the essence of Epidotra'\nCraft a Challenge Core to do certain challenges\nNot recommended if you want to do a normal playthrough");
+			base.Tooltip.SetDefault("'Fill with the essence of Epidotra'\nCraft a Challenge Core to do certain challenges\nNot recommended if you want to do a normal playthrough\n(Will be reworked)");
 		}
 
 		public override void SetDefaults()

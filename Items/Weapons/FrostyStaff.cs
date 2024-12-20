@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,7 +32,7 @@ namespace Redemption.Items.Weapons
 			base.item.rare = 5;
 			base.item.UseSound = SoundID.Item27;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("SnowyBall");
+			base.item.shoot = ModContent.ProjectileType<SnowyBall>();
 			base.item.shootSpeed = 18f;
 		}
 

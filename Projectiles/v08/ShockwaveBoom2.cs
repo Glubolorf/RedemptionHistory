@@ -29,17 +29,17 @@ namespace Redemption.Projectiles.v08
 			float pulseCount = 1f;
 			float rippleSize = 5f;
 			float speed = 15f;
-			Filters.Scene["Shockwave"].GetShader().UseProgress(progress).UseOpacity(100f * (1f - progress / 3f));
+			Filters.Scene["Redemption:Shockwave"].GetShader().UseProgress(progress).UseOpacity(100f * (1f - progress / 3f));
 			base.projectile.localAI[1] += 1f;
-			if (base.projectile.localAI[1] >= 0f && base.projectile.localAI[1] <= 60f && !Filters.Scene["Shockwave"].IsActive())
+			if (base.projectile.localAI[1] >= 0f && base.projectile.localAI[1] <= 60f && !Filters.Scene["Redemption:Shockwave"].IsActive())
 			{
-				Filters.Scene.Activate("Shockwave", base.projectile.Center, new object[0]).GetShader().UseColor(pulseCount, rippleSize, speed).UseTargetPosition(base.projectile.Center);
+				Filters.Scene.Activate("Redemption:Shockwave", base.projectile.Center, new object[0]).GetShader().UseColor(pulseCount, rippleSize, speed).UseTargetPosition(base.projectile.Center);
 			}
 		}
 
 		public override void Kill(int timeLeft)
 		{
-			Filters.Scene["Shockwave"].Deactivate(new object[0]);
+			Filters.Scene["Redemption:Shockwave"].Deactivate(new object[0]);
 		}
 	}
 }

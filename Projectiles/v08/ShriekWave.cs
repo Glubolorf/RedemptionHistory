@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -51,7 +52,7 @@ namespace Redemption.Projectiles.v08
 				if (Collision.CheckAABBvAABBCollision(base.projectile.position, base.projectile.Size, this.clearCheck.position, this.clearCheck.Size))
 				{
 					this.clearCheck.AddBuff(31, 30, false);
-					this.clearCheck.AddBuff(base.mod.BuffType("StunnedDebuff"), 10, false);
+					this.clearCheck.AddBuff(ModContent.BuffType<StunnedDebuff>(), 10, false);
 				}
 			}
 		}

@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -24,7 +25,7 @@ namespace Redemption.Items.Weapons
 			base.item.value = Item.buyPrice(0, 1, 50, 0);
 			base.item.rare = 7;
 			base.item.autoReuse = false;
-			base.item.shoot = base.mod.ProjectileType("TheInfectedEyePro");
+			base.item.shoot = ModContent.ProjectileType<TheInfectedEyePro>();
 			base.item.noUseGraphic = true;
 			base.item.noMelee = true;
 			base.item.UseSound = SoundID.Item1;

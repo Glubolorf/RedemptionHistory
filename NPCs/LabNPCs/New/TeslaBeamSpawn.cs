@@ -36,7 +36,7 @@ namespace Redemption.NPCs.LabNPCs.New
 		{
 			if (base.projectile.localAI[0] == 0f)
 			{
-				int p = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (base.projectile.ai[0] == 0f) ? 10f : -10f, 0f, base.mod.ProjectileType("TeslaBeam1"), base.projectile.damage, 1f, 255, 0f, 0f);
+				int p = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (base.projectile.ai[0] == 0f) ? 10f : -10f, 0f, ModContent.ProjectileType<TeslaBeam1>(), base.projectile.damage, 1f, 255, 0f, 0f);
 				Main.projectile[p].netUpdate = true;
 				base.projectile.localAI[0] = 1f;
 			}

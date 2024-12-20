@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,7 +27,7 @@ namespace Redemption.Items.Weapons
 			base.item.knockBack = 6f;
 			base.item.value = Item.buyPrice(0, 4, 25, 0);
 			base.item.rare = 6;
-			base.item.shoot = base.mod.ProjectileType("CrowbarPro");
+			base.item.shoot = ModContent.ProjectileType<CrowbarPro>();
 			base.item.noUseGraphic = true;
 			base.item.noMelee = true;
 			base.item.UseSound = SoundID.Item1;

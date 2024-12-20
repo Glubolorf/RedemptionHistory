@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Tiles.Wasteland;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -29,8 +30,8 @@ namespace Redemption.Tiles
 			TileObjectData.newTile.CoordinatePadding = 2;
 			TileObjectData.newTile.AnchorValidTiles = new int[]
 			{
-				base.mod.TileType("DeadRockTile"),
-				base.mod.TileType("DeadGrassTile")
+				ModContent.TileType<DeadRockTile>(),
+				ModContent.TileType<DeadGrassTile>()
 			};
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.DrawFlipHorizontal = true;

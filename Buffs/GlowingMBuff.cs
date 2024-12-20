@@ -18,8 +18,8 @@ namespace Redemption.Buffs
 		public override void Update(Player player, ref int buffIndex)
 		{
 			DruidDamagePlayer.ModPlayer(player);
-			player.lifeRegen += 2;
-			player.manaRegen += 3;
+			player.lifeRegen++;
+			player.manaRegen += 2;
 			player.statDefense += 4;
 			player.allDamage *= 1.05f;
 		}

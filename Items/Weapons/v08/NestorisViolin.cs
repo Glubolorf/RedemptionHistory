@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -28,9 +30,8 @@ namespace Redemption.Items.Weapons.v08
 			base.item.noUseGraphic = true;
 			base.item.noMelee = true;
 			base.item.rare = 8;
-			base.item.UseSound = base.mod.GetLegacySoundSlot(2, "Sounds/Item/TheViolinSound");
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("NestorisViolinProj1");
+			base.item.shoot = ModContent.ProjectileType<NestorisViolinProj1>();
 			base.item.shootSpeed = 25f;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 7;
 		}
@@ -53,6 +54,19 @@ namespace Redemption.Items.Weapons.v08
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
+			if (!Main.dedServ)
+			{
+				float cursorPosFromPlayer = player.Distance(Main.MouseWorld) / (float)(Main.screenHeight / 2 / 24);
+				if (cursorPosFromPlayer > 24f)
+				{
+					cursorPosFromPlayer = 1f;
+				}
+				else
+				{
+					cursorPosFromPlayer = cursorPosFromPlayer / 12f - 1f;
+				}
+				Main.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, base.mod.GetSoundSlot(2, "Sounds/Item/TheViolinSound"), 1f, cursorPosFromPlayer);
+			}
 			float numberProjectiles = 3f;
 			float rotation = MathHelper.ToRadians(15f);
 			position += Vector2.Normalize(new Vector2(speedX, speedY)) * 45f;
@@ -60,7 +74,7 @@ namespace Redemption.Items.Weapons.v08
 			while ((float)i < numberProjectiles)
 			{
 				Vector2 perturbedSpeed = Utils.RotatedBy(new Vector2(speedX, speedY), (double)MathHelper.Lerp(-rotation, rotation, (float)i / (numberProjectiles - 1f)), default(Vector2)) * 0.4f;
-				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X * 0.75f, perturbedSpeed.Y * 0.75f, base.mod.ProjectileType("TheTrueViolin"), damage, knockBack, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X * 0.75f, perturbedSpeed.Y * 0.75f, ModContent.ProjectileType<TheTrueViolin>(), damage, knockBack, player.whoAmI, 0f, 0f);
 				i++;
 			}
 			float numberProjectiles2 = 5f;
@@ -70,7 +84,7 @@ namespace Redemption.Items.Weapons.v08
 			while ((float)j < numberProjectiles2)
 			{
 				Vector2 perturbedSpeed2 = Utils.RotatedBy(new Vector2(speedX, speedY), (double)MathHelper.Lerp(-rotation2, rotation2, (float)j / (numberProjectiles2 - 1f)), default(Vector2)) * 0.4f;
-				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed2.X, perturbedSpeed2.Y, base.mod.ProjectileType("NestoriPro"), damage, knockBack, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed2.X, perturbedSpeed2.Y, ModContent.ProjectileType<NestoriPro>(), damage, knockBack, player.whoAmI, 0f, 0f);
 				j++;
 			}
 			return true;

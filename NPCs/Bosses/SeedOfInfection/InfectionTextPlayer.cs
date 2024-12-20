@@ -8,11 +8,10 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 		public override void ResetEffects()
 		{
 			this.text = false;
-			this.alphaText = 0f;
 		}
 
 		public bool text;
 
-		public float alphaText;
+		public float alphaText = 255f;
 	}
 }

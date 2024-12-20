@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -44,7 +45,7 @@ namespace Redemption.Items.Weapons
 			Vector2 perturbedSpeed = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(2f));
 			speedX = perturbedSpeed.X;
 			speedY = perturbedSpeed.Y;
-			Projectile.NewProjectile(position.X, position.Y, speedX * 1.2f, speedY * 1.2f, base.mod.ProjectileType("GoldArrow"), 25, 5f, player.whoAmI, 0f, 0f);
+			Projectile.NewProjectile(position.X, position.Y, speedX * 1.2f, speedY * 1.2f, ModContent.ProjectileType<GoldArrow>(), 25, 5f, player.whoAmI, 0f, 0f);
 			return true;
 		}
 

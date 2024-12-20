@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -24,7 +25,7 @@ namespace Redemption.Items.Placeable
 			base.item.consumable = true;
 			base.item.rare = 4;
 			base.item.value = Item.sellPrice(0, 5, 0, 0);
-			base.item.createTile = base.mod.TileType("ArchclothBannerTile");
+			base.item.createTile = ModContent.TileType<ArchclothBannerTile>();
 			base.item.placeStyle = 0;
 		}
 

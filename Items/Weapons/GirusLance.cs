@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -38,7 +39,7 @@ namespace Redemption.Items.Weapons
 			base.item.knockBack = 6f;
 			base.item.value = Item.buyPrice(0, 40, 0, 0);
 			base.item.rare = 10;
-			base.item.shoot = base.mod.ProjectileType("GirusLancePro1");
+			base.item.shoot = ModContent.ProjectileType<GirusLancePro1>();
 			base.item.noUseGraphic = true;
 			base.item.noMelee = true;
 			base.item.glowMask = GirusLance.customGlowMask;
@@ -55,7 +56,7 @@ namespace Redemption.Items.Weapons
 			{
 				base.item.damage = 110;
 				base.item.useStyle = 1;
-				base.item.shoot = base.mod.ProjectileType("GirusLancePro2");
+				base.item.shoot = ModContent.ProjectileType<GirusLancePro2>();
 				base.item.shootSpeed = 27f;
 				base.item.noMelee = true;
 			}
@@ -63,7 +64,7 @@ namespace Redemption.Items.Weapons
 			{
 				base.item.damage = 40;
 				base.item.useStyle = 100;
-				base.item.shoot = base.mod.ProjectileType("GirusLancePro1");
+				base.item.shoot = ModContent.ProjectileType<GirusLancePro1>();
 				base.item.shootSpeed = 0f;
 				base.item.noMelee = true;
 			}

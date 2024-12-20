@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -29,7 +30,7 @@ namespace Redemption.Items.Weapons
 			base.item.noMelee = true;
 			base.item.thrown = true;
 			base.item.shootSpeed = 13f;
-			base.item.shoot = base.mod.ProjectileType("ExBarrelPro");
+			base.item.shoot = ModContent.ProjectileType<ExBarrelPro>();
 			base.item.ammo = base.item.type;
 		}
 	}

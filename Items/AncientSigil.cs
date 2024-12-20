@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.NPCs.Bosses.EaglecrestGolem;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -32,12 +33,12 @@ namespace Redemption.Items
 
 		public override bool CanUseItem(Player player)
 		{
-			return Main.dayTime && !NPC.AnyNPCs(base.mod.NPCType("EaglecrestGolemPZ")) && !NPC.AnyNPCs(base.mod.NPCType("EaglecrestGolem")) && !NPC.AnyNPCs(base.mod.NPCType("Ukko"));
+			return Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<EaglecrestGolemPZ>()) && !NPC.AnyNPCs(ModContent.NPCType<EaglecrestGolem>()) && !NPC.AnyNPCs(ModContent.NPCType<Ukko>());
 		}
 
 		public override bool UseItem(Player player)
 		{
-			NPC.SpawnOnPlayer(player.whoAmI, base.mod.NPCType("EaglecrestGolemPZ"));
+			NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<EaglecrestGolemPZ>());
 			Main.PlaySound(15, player.position, 0);
 			return true;
 		}

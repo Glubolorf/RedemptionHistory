@@ -1,4 +1,8 @@
 ﻿using System;
+using Redemption.Items.Armor;
+using Redemption.Items.DruidDamageClass.SeedBags;
+using Redemption.Items.Weapons;
+using Redemption.NPCs.Bosses.SeedOfInfection;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -31,7 +35,7 @@ namespace Redemption.Items
 		{
 			get
 			{
-				return base.mod.NPCType("SoI");
+				return ModContent.NPCType<SoI>();
 			}
 		}
 
@@ -39,22 +43,22 @@ namespace Redemption.Items
 		{
 			if (Main.rand.Next(7) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("InfectedMask"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<InfectedMask>(), 1);
 			}
 			if (Main.rand.Next(3) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("XenomiteGlaive"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<XenomiteGlaive>(), 1);
 			}
 			if (Main.rand.Next(3) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("XenomiteYoyo"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<XenomiteYoyo>(), 1);
 			}
 			if (Main.rand.Next(3) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("XenoCanister"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<XenoCanister>(), 1);
 			}
-			player.QuickSpawnItem(base.mod.ItemType("XenomiteShard"), Main.rand.Next(14, 24));
-			player.QuickSpawnItem(base.mod.ItemType("NecklaceSight"), 1);
+			player.QuickSpawnItem(ModContent.ItemType<XenomiteShard>(), Main.rand.Next(14, 24));
+			player.QuickSpawnItem(ModContent.ItemType<NecklaceSight>(), 1);
 		}
 	}
 }

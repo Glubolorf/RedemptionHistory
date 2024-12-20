@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items.DruidDamageClass;
+using Redemption.NPCs;
+using Redemption.NPCs.v08;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -110,11 +112,11 @@ namespace Redemption.Projectiles
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			if (target.type == base.mod.NPCType("TheSoulless") && target.life <= 0)
+			if (target.type == ModContent.NPCType<TheSoulless>() && target.life <= 0)
 			{
 				Main.NewText("The darkened Night will lose its Sight, Leaving the Light command the Fright, And the Might to the Holy Knight.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 			}
-			if (target.type == base.mod.NPCType("TheSoulless2") && target.life <= 0)
+			if (target.type == ModContent.NPCType<TheSoulless2>() && target.life <= 0)
 			{
 				Main.NewText("Be wary of the sombre tune that pierces the halls. Soon, he will come, soon.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 			}

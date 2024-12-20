@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -32,7 +33,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.rare = 3;
 			base.item.UseSound = SoundID.Item20;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("NoidanNuoli");
+			base.item.shoot = ModContent.ProjectileType<NoidanNuoli>();
 			base.item.shootSpeed = 18f;
 		}
 

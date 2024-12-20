@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Dusts;
+using Redemption.Items;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -13,8 +15,8 @@ namespace Redemption.Tiles
 			Main.tileMergeDirt[(int)base.Type] = true;
 			Main.tileSpelunker[(int)base.Type] = true;
 			Main.tileBlockLight[(int)base.Type] = true;
-			this.dustType = base.mod.DustType("XenoDust");
-			this.drop = base.mod.ItemType("Starlite");
+			this.dustType = ModContent.DustType<XenoDust>();
+			this.drop = ModContent.ItemType<Starlite>();
 			this.minPick = 100;
 			this.mineResist = 2f;
 			this.soundType = 21;

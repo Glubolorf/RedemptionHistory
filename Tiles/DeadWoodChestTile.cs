@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Localization;
@@ -46,7 +47,7 @@ namespace Redemption.Tiles
 				21
 			};
 			this.chest = "Petrified Wood Chest";
-			this.chestDrop = base.mod.ItemType("DeadWoodChest");
+			this.chestDrop = ModContent.ItemType<DeadWoodChest>();
 		}
 
 		public string MapChestName(string name, int i, int j)
@@ -179,7 +180,7 @@ namespace Redemption.Tiles
 				player.showItemIconText = ((Main.chest[chest].name.Length > 0) ? Main.chest[chest].name : "Petrified Wood Chest");
 				if (player.showItemIconText == "Petrified Wood Chest")
 				{
-					player.showItemIcon2 = base.mod.ItemType("DeadWoodChest");
+					player.showItemIcon2 = ModContent.ItemType<DeadWoodChest>();
 					player.showItemIconText = "";
 				}
 			}

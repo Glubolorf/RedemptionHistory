@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -28,11 +29,11 @@ namespace Redemption.Items
 				int maxAccessoryIndex = 5 + player.extraAccessorySlots;
 				for (int i = 3; i < 3 + maxAccessoryIndex; i++)
 				{
-					if (slot != i && player.armor[i].type == base.mod.ItemType("IcarsFrost"))
+					if (slot != i && player.armor[i].type == ModContent.ItemType<IcarsFrost>())
 					{
 						return false;
 					}
-					if (slot != i && player.armor[i].type == base.mod.ItemType("IcarsElements"))
+					if (slot != i && player.armor[i].type == ModContent.ItemType<IcarsElements>())
 					{
 						return false;
 					}
@@ -53,7 +54,7 @@ namespace Redemption.Items
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			player.AddBuff(base.mod.BuffType("FireBlessed"), Main.rand.Next(5, 10), true);
+			player.AddBuff(ModContent.BuffType<FireBlessed>(), Main.rand.Next(5, 10), true);
 		}
 	}
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.NPCs;
+using Redemption.NPCs.Bosses;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,36 +12,32 @@ namespace Redemption.Projectiles
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Egg");
+			base.DisplayName.SetDefault("Chicken Egg");
 		}
 
 		public override void SetDefaults()
 		{
 			base.projectile.width = 16;
-			base.projectile.height = 20;
+			base.projectile.height = 16;
 			base.projectile.friendly = true;
 			base.projectile.penetrate = 1;
 			base.projectile.hostile = false;
 			base.projectile.thrown = true;
 			base.projectile.tileCollide = true;
-			base.projectile.ignoreWater = true;
+			base.projectile.ignoreWater = false;
+			base.projectile.timeLeft = 300;
 		}
 
 		public override void AI()
 		{
-			base.projectile.localAI[0] += 1f;
 			base.projectile.rotation += base.projectile.velocity.X / 40f * (float)base.projectile.direction;
 			Projectile projectile = base.projectile;
 			projectile.velocity.Y = projectile.velocity.Y + 0.3f;
-			if (base.projectile.localAI[0] > 130f)
-			{
-				base.projectile.Kill();
-			}
 		}
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			if ((target.type == base.mod.NPCType("KingChicken") || target.type == base.mod.NPCType("KingChickenT")) && target.life <= 0)
+			if (target.type == ModContent.NPCType<KingChicken>() && target.life <= 0)
 			{
 				string text = "*cluck cluck* What, You egg? *cluck cluck*";
 				Color rarityOrange = Colors.RarityOrange;
@@ -49,11 +47,11 @@ namespace Redemption.Projectiles
 				rarityOrange = Colors.RarityOrange;
 				Main.NewText(text, r, g, rarityOrange.B, false);
 			}
-			if (target.type == base.mod.NPCType("VlitchCleaver") && target.life <= 0)
+			if (target.type == ModContent.NPCType<VlitchCleaver>() && target.life <= 0)
 			{
 				Main.NewText("Excuse me what?", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
 			}
-			if ((target.type == base.mod.NPCType("VlitchWormHead") || target.type == base.mod.NPCType("VlitchWormBody") || target.type == base.mod.NPCType("VlitchWormTail")) && target.life <= 0)
+			if ((target.type == ModContent.NPCType<VlitchWormHead>() || target.type == ModContent.NPCType<VlitchWormBody>() || target.type == ModContent.NPCType<VlitchWormTail>()) && target.life <= 0)
 			{
 				Main.NewText("SLAIN... BY AN EGG!?", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
 			}
@@ -67,7 +65,7 @@ namespace Redemption.Projectiles
 			{
 				if (Main.rand.Next(4) == 0)
 				{
-					int i = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, base.mod.NPCType("Chicken"), 0, 0f, 0f, 0f, 0f, 255);
+					int i = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, ModContent.NPCType<Chicken>(), 0, 0f, 0f, 0f, 0f, 255);
 					if (Main.netMode == 2)
 					{
 						NetMessage.SendData(23, -1, -1, null, i, 0f, 0f, 0f, 0, 0, 0);
@@ -75,7 +73,7 @@ namespace Redemption.Projectiles
 				}
 				if (Main.rand.Next(999) == 0)
 				{
-					int j = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, base.mod.NPCType("RainbowChicken"), 0, 0f, 0f, 0f, 0f, 255);
+					int j = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, ModContent.NPCType<RainbowChicken>(), 0, 0f, 0f, 0f, 0f, 255);
 					if (Main.netMode == 2)
 					{
 						NetMessage.SendData(23, -1, -1, null, j, 0f, 0f, 0f, 0, 0, 0);

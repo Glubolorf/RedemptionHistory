@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -18,7 +19,7 @@ namespace Redemption.Buffs
 			player.statDefense += 18;
 			player.noKnockback = true;
 			RedePlayer modPlayer2 = player.GetModPlayer<RedePlayer>();
-			if (player.ownedProjectileCounts[base.mod.ProjectileType("BlightedShield")] > 0)
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<BlightedShield>()] > 0)
 			{
 				modPlayer2.blightedShield = true;
 			}

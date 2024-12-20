@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.NPCs.Bosses.InfectedEye;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -35,7 +36,7 @@ namespace Redemption.Projectiles.v08
 			}
 			if (Main.myPlayer == base.projectile.owner && Main.rand.Next(20) == 0)
 			{
-				int Proj = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("DribblingOoze"), base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
+				int Proj = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), ModContent.ProjectileType<DribblingOoze>(), base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
 				Main.projectile[Proj].hostile = false;
 				Main.projectile[Proj].friendly = true;
 			}

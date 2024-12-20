@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.LabThings;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -38,7 +39,7 @@ namespace Redemption.Tiles.LabDeco
 			Player localPlayer = Main.LocalPlayer;
 			localPlayer.noThrow = 2;
 			localPlayer.showItemIcon = true;
-			localPlayer.showItemIcon2 = base.mod.ItemType("RadiationPill");
+			localPlayer.showItemIcon2 = ModContent.ItemType<RadiationPill>();
 		}
 
 		public override bool NewRightClick(int i, int j)
@@ -48,14 +49,14 @@ namespace Redemption.Tiles.LabDeco
 			if (Main.tile[left, top].frameX == 0)
 			{
 				Player player = Main.LocalPlayer;
-				player.QuickSpawnItem(base.mod.ItemType("RadiationPill"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<RadiationPill>(), 1);
 				if (Main.rand.Next(40) == 0)
 				{
-					player.QuickSpawnItem(base.mod.ItemType("EmptyMutagen"), 1);
+					player.QuickSpawnItem(ModContent.ItemType<EmptyMutagen>(), 1);
 				}
 				if (Main.rand.Next(4) == 0)
 				{
-					player.QuickSpawnItem(base.mod.ItemType("FirstAidKit"), 1);
+					player.QuickSpawnItem(ModContent.ItemType<FirstAidKit>(), 1);
 				}
 				if (Main.rand.Next(20) == 0)
 				{
@@ -67,7 +68,7 @@ namespace Redemption.Tiles.LabDeco
 				}
 				if (Main.rand.Next(66666) == 0)
 				{
-					player.QuickSpawnItem(base.mod.ItemType("Panacea"), 1);
+					player.QuickSpawnItem(ModContent.ItemType<Panacea>(), 1);
 				}
 			}
 			for (int x = left; x < left + 2; x++)

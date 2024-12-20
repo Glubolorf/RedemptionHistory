@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Armor.Costumes;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -39,7 +40,7 @@ namespace Redemption.NPCs.LabNPCs.New
 		{
 			base.npc.TargetClosest(true);
 			Player player = Main.player[base.npc.target];
-			base.mod.NPCType("MACEProjectHeadA");
+			ModContent.NPCType<MACEProjectHeadA>();
 			if (base.npc.ai[0] == 0f)
 			{
 				base.npc.frameCounter += 1.0;
@@ -56,7 +57,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					}
 					if (base.npc.frame.Y > 522)
 					{
-						if (NPC.AnyNPCs(base.mod.NPCType("MACEProjectHeadA")))
+						if (!BasePlayer.HasChestplate(player, ModContent.ItemType<TBotVanityChestplate>(), true) && !BasePlayer.HasLeggings(player, ModContent.ItemType<TBotVanityLegs>(), true) && !BasePlayer.HasChestplate(player, ModContent.ItemType<AndroidArmour>(), true) && !BasePlayer.HasLeggings(player, ModContent.ItemType<AndroidPants>(), true) && !BasePlayer.HasChestplate(player, ModContent.ItemType<JanitorOutfit>(), true) && !BasePlayer.HasLeggings(player, ModContent.ItemType<JanitorPants>(), true) && !BasePlayer.HasHelmet(player, ModContent.ItemType<TBotEyes_Femi>(), true) && !BasePlayer.HasHelmet(player, ModContent.ItemType<TBotEyes_Masc>(), true) && !BasePlayer.HasHelmet(player, ModContent.ItemType<TBotVanityEyes>(), true) && !BasePlayer.HasHelmet(player, ModContent.ItemType<TBotGoggles_Femi>(), true) && !BasePlayer.HasHelmet(player, ModContent.ItemType<TBotGoggles_Masc>(), true) && !BasePlayer.HasHelmet(player, ModContent.ItemType<TBotVanityGoggles>(), true) && !BasePlayer.HasHelmet(player, ModContent.ItemType<AdamHead>(), true) && !BasePlayer.HasHelmet(player, ModContent.ItemType<OperatorHead>(), true) && !BasePlayer.HasHelmet(player, ModContent.ItemType<VoltHead>(), true) && NPC.AnyNPCs(ModContent.NPCType<MACEProjectHeadA>()))
 						{
 							base.npc.ai[0] += 1f;
 							base.npc.ai[3] = 0f;
@@ -67,7 +68,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					}
 				}
 			}
-			if (NPC.CountNPCS(base.mod.NPCType("MACEControllerIdle")) >= 2 && Main.rand.Next(2) == 0)
+			if (NPC.CountNPCS(ModContent.NPCType<MACEControllerIdle>()) >= 2 && Main.rand.Next(2) == 0)
 			{
 				base.npc.active = false;
 			}
@@ -97,7 +98,7 @@ namespace Redemption.NPCs.LabNPCs.New
 				}
 				if (base.npc.ai[1] >= 4f)
 				{
-					if (!NPC.AnyNPCs(base.mod.NPCType("MACEProjectHeadA")))
+					if (!NPC.AnyNPCs(ModContent.NPCType<MACEProjectHeadA>()))
 					{
 						base.npc.ai[0] = 8f;
 						base.npc.ai[3] = 0f;

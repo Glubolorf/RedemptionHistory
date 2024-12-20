@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -34,7 +35,7 @@ namespace Redemption.Items.Weapons
 			base.item.rare = 5;
 			base.item.UseSound = SoundID.Item103;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("IceTentacle");
+			base.item.shoot = ModContent.ProjectileType<IceTentacle>();
 			base.item.shootSpeed = 30f;
 		}
 

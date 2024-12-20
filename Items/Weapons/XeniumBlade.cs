@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -42,7 +43,7 @@ namespace Redemption.Items.Weapons
 			base.item.UseSound = SoundID.Item60;
 			base.item.autoReuse = true;
 			base.item.value = Item.buyPrice(0, 40, 0, 0);
-			base.item.shoot = base.mod.ProjectileType("XenoShard4");
+			base.item.shoot = ModContent.ProjectileType<XenoShard4>();
 			base.item.shootSpeed = 24f;
 			base.item.glowMask = XeniumBlade.customGlowMask;
 		}

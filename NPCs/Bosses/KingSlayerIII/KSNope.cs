@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -102,7 +103,7 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 				byte g3 = rarityCyan.G;
 				rarityCyan = Colors.RarityCyan;
 				Main.NewText(text3, r3, g3, rarityCyan.B, false);
-				Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 0f), base.mod.ProjectileType("KSExitPro"), 0, 0f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 0f), ModContent.ProjectileType<KSExitPro>(), 0, 0f, 255, 0f, 0f);
 				base.npc.active = false;
 				base.npc.netUpdate = true;
 			}

@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -24,53 +23,32 @@ namespace Redemption.NPCs.Bosses
 			base.projectile.localAI[1] += 1f;
 			if (base.projectile.localAI[1] == 540f)
 			{
-				Main.NewText("...", new Color(255, 32, 32), false);
+				Redemption.ShowText(base.projectile, 0, 0, 100);
 				Redemption.GirusSilence = true;
 			}
 			if (base.projectile.localAI[1] == 640f)
 			{
-				Main.NewText("...Hm?", new Color(255, 32, 32), false);
+				Redemption.ShowText(base.projectile, 0, 1, 260);
 			}
 			if (base.projectile.localAI[1] == 900f)
 			{
-				Main.NewText("Would you look at that, an Overlord Unit has been taken down.", new Color(255, 32, 32), false);
+				Redemption.ShowText(base.projectile, 0, 2, 400);
 			}
 			if (base.projectile.localAI[1] == 1300f)
 			{
-				Main.NewText("What a shame. That one was almost useful.", new Color(255, 32, 32), false);
+				Redemption.ShowText(base.projectile, 0, 3, 300);
 			}
 			if (base.projectile.localAI[1] == 1600f)
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().omegaPower)
-				{
-					Main.NewText("You know, I never expected one of my own to take down an Overlord..?", new Color(255, 32, 32), false);
-				}
-				else
-				{
-					Main.NewText("You know, I never expected someone like you take down an Overlord.", new Color(255, 32, 32), false);
-				}
+				Redemption.ShowText(base.projectile, 0, 4, 300);
 			}
 			if (base.projectile.localAI[1] == 1900f)
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().omegaPower)
-				{
-					Main.NewText("Huh... Very interesting. I never expected this.", new Color(255, 32, 32), false);
-				}
-				else
-				{
-					Main.NewText("Keep on going. It's rather interesting to see you attempt such a feat...", new Color(255, 32, 32), false);
-				}
+				Redemption.ShowText(base.projectile, 0, 5, 300);
 			}
 			if (base.projectile.localAI[1] == 2100f)
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().omegaPower)
-				{
-					Main.NewText("Anyway, carry on your way, my underling. Hmm...", new Color(255, 32, 32), false);
-				}
-				else
-				{
-					Main.NewText("Hehehehe...", new Color(255, 32, 32), false);
-				}
+				Redemption.ShowText(base.projectile, 0, 6, 200);
 			}
 			if (base.projectile.localAI[1] >= 2300f)
 			{

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -37,7 +38,7 @@ namespace Redemption.Items.Weapons
 			base.item.knockBack = 6f;
 			base.item.value = Item.buyPrice(0, 1, 0, 0);
 			base.item.rare = 3;
-			base.item.shoot = base.mod.ProjectileType("XenomiteGlaivePro");
+			base.item.shoot = ModContent.ProjectileType<XenomiteGlaivePro>();
 			base.item.noUseGraphic = true;
 			base.item.noMelee = true;
 			base.item.glowMask = XenomiteGlaive.customGlowMask;

@@ -1,4 +1,6 @@
 ﻿using System;
+using Redemption.Buffs;
+using Redemption.Projectiles.Pets;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -16,8 +18,8 @@ namespace Redemption.Items
 		{
 			base.item.CloneDefaults(669);
 			base.item.rare = 0;
-			base.item.shoot = base.mod.ProjectileType("NebPet");
-			base.item.buffType = base.mod.BuffType("NebPetBuff");
+			base.item.shoot = ModContent.ProjectileType<NebPet>();
+			base.item.buffType = ModContent.BuffType<NebPetBuff>();
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 3;
 		}
 

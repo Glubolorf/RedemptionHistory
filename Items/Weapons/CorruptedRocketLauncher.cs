@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -39,7 +40,7 @@ namespace Redemption.Items.Weapons
 			base.item.UseSound = base.mod.GetLegacySoundSlot(2, "Sounds/Item/Launch1");
 			base.item.value = Item.buyPrice(0, 10, 0, 0);
 			base.item.rare = 10;
-			base.item.shoot = base.mod.ProjectileType("PlasmaBlast1");
+			base.item.shoot = ModContent.ProjectileType<PlasmaBlast1>();
 			base.item.shootSpeed = 19f;
 			base.item.autoReuse = true;
 			base.item.noMelee = true;
@@ -59,14 +60,14 @@ namespace Redemption.Items.Weapons
 				base.item.useTime = 28;
 				base.item.useAnimation = 28;
 				base.item.shootSpeed = 19f;
-				base.item.shoot = base.mod.ProjectileType("PlasmaBlast2");
+				base.item.shoot = ModContent.ProjectileType<PlasmaBlast2>();
 			}
 			else
 			{
 				base.item.damage = 450;
 				base.item.useTime = 28;
 				base.item.useAnimation = 28;
-				base.item.shoot = base.mod.ProjectileType("PlasmaBlast1");
+				base.item.shoot = ModContent.ProjectileType<PlasmaBlast1>();
 				base.item.shootSpeed = 19f;
 			}
 			return base.CanUseItem(player);

@@ -55,7 +55,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 115, 0f, 0f, 100, default(Color), 1.2f);
 				Main.dust[dustIndex].velocity *= 1.9f;
 			}
-			Projectile.NewProjectile(new Vector2(base.projectile.position.X + 8f, base.projectile.position.Y + 12f), base.projectile.velocity, base.mod.ProjectileType("BloodPulse"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+			Projectile.NewProjectile(new Vector2(base.projectile.position.X + 8f, base.projectile.position.Y + 12f), base.projectile.velocity, ModContent.ProjectileType<BloodPulse>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 		}
 	}
 }

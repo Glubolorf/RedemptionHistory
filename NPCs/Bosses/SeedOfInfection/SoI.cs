@@ -1,6 +1,11 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items;
+using Redemption.Items.Armor;
+using Redemption.Items.DruidDamageClass.SeedBags;
+using Redemption.Items.Placeable;
+using Redemption.Items.Weapons;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -37,7 +42,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 			base.npc.noGravity = true;
 			base.npc.noTileCollide = true;
 			base.npc.netAlways = true;
-			this.bossBag = base.mod.ItemType("XenomiteCrystalBag");
+			this.bossBag = ModContent.ItemType<XenomiteCrystalBag>();
 		}
 
 		public override void BossLoot(ref string name, ref int potionType)
@@ -52,7 +57,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 					{
 						for (int j = 0; j < player2.inventory.Length; j++)
 						{
-							if (player2.inventory[j].type == base.mod.ItemType("RedemptionTeller"))
+							if (player2.inventory[j].type == ModContent.ItemType<RedemptionTeller>())
 							{
 								Main.NewText("<Chalice of Alignment> You've awoken the infection now. But don't worry, I'm sure we can handle it!", Color.DarkGoldenrod, false);
 							}
@@ -66,14 +71,14 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 			{
 				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 			}
-			Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(0f, 0f), base.mod.ProjectileType("SoIDeath"), 0, 0f, Main.myPlayer, 0f, 0f);
+			Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(0f, 0f), ModContent.ProjectileType<SoIDeath>(), 0, 0f, Main.myPlayer, 0f, 0f);
 		}
 
 		public override void NPCLoot()
 		{
 			if (Main.rand.Next(10) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("SeedOfInfectionTrophy"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<SeedOfInfectionTrophy>(), 1, false, 0, false, false);
 			}
 			if (Main.expertMode)
 			{
@@ -82,21 +87,21 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 			}
 			if (Main.rand.Next(3) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("XenomiteGlaive"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<XenomiteGlaive>(), 1, false, 0, false, false);
 			}
 			if (Main.rand.Next(7) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("InfectedMask"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<InfectedMask>(), 1, false, 0, false, false);
 			}
 			if (Main.rand.Next(3) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("XenomiteYoyo"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<XenomiteYoyo>(), 1, false, 0, false, false);
 			}
 			if (Main.rand.Next(3) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("XenoCanister"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<XenoCanister>(), 1, false, 0, false, false);
 			}
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("XenomiteShard"), Main.rand.Next(12, 22), false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<XenomiteShard>(), Main.rand.Next(12, 22), false, 0, false, false);
 		}
 
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
@@ -107,7 +112,19 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 
 		public override void AI()
 		{
+			if (!this.title)
+			{
+				Redemption.ShowTitle(base.npc, 12);
+				this.title = true;
+			}
 			Player player = Main.player[base.npc.target];
+			for (int i = this.oldPos.Length - 1; i > 0; i--)
+			{
+				this.oldPos[i] = this.oldPos[i - 1];
+				this.oldrot[i] = this.oldrot[i - 1];
+			}
+			this.oldPos[0] = base.npc.Center;
+			this.oldrot[0] = base.npc.rotation;
 			if (base.npc.target < 0 || base.npc.target == 255 || Main.player[base.npc.target].dead || !Main.player[base.npc.target].active)
 			{
 				base.npc.TargetClosest(true);
@@ -156,18 +173,20 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 					this.freakOutFrame = 0;
 				}
 			}
-			Vector2 ChargePos = new Vector2(player.Center.X, player.Center.Y);
+			new Vector2(player.Center.X, player.Center.Y);
 			Vector2 HighPos = new Vector2((player.Center.X > base.npc.Center.X) ? (player.Center.X - 240f) : (player.Center.X + 240f), player.Center.Y - 50f);
 			new Vector2((player.Center.X > base.npc.Center.X) ? (player.Center.X - 240f) : (player.Center.X + 240f), player.Center.Y + 50f);
 			new Vector2((player.Center.X > base.npc.Center.X) ? (player.Center.X - 140f) : (player.Center.X + 140f), player.Center.Y);
 			Vector2 FarPos = new Vector2((player.Center.X > base.npc.Center.X) ? (player.Center.X - 320f) : (player.Center.X + 320f), player.Center.Y - 25f);
 			Vector2 TopPos = new Vector2(player.Center.X, player.Center.Y - 120f);
+			this.DespawnHandler();
 			if (base.npc.ai[0] == 0f)
 			{
 				this.frameCounters = 0;
 				base.npc.ai[3] = 0f;
 				base.npc.ai[0] = 1f;
 				base.npc.ai[2] = 0f;
+				this.chargeSpeed = 0f;
 				base.npc.ai[1] = (float)Main.rand.Next(8);
 				base.npc.netUpdate = true;
 				return;
@@ -177,11 +196,28 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 				switch ((int)base.npc.ai[1])
 				{
 				case 0:
-					this.chargeSpeed = 7f;
 					base.npc.rotation += 0.09f;
-					this.MoveToVector2(ChargePos);
 					base.npc.ai[2] += 1f;
-					if (base.npc.ai[2] >= 200f)
+					if (base.npc.ai[2] < 40f)
+					{
+						this.chargeSpeed += 0.1f;
+						base.npc.velocity = -base.npc.DirectionTo(player.Center) * this.chargeSpeed;
+					}
+					if (base.npc.ai[2] == 40f)
+					{
+						this.Dash(30);
+					}
+					if (base.npc.ai[2] > 60f && base.npc.ai[2] < 100f)
+					{
+						base.npc.ai[3] = 0f;
+						this.chargeSpeed += 0.1f;
+						base.npc.velocity = -base.npc.DirectionTo(player.Center) * this.chargeSpeed;
+					}
+					if (base.npc.ai[2] == 100f)
+					{
+						this.Dash(30);
+					}
+					if (base.npc.ai[2] >= 120f)
 					{
 						base.npc.ai[3] = 0f;
 						base.npc.ai[0] = 0f;
@@ -200,7 +236,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 						float Speed = 8f;
 						Vector2 vector8 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 						int damage = 12;
-						int type = base.mod.ProjectileType("ShardShot1");
+						int type = ModContent.ProjectileType<ShardShot1>();
 						float rotation = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
 						int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
 						int num55 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0) + -1f, (float)(Math.Sin((double)rotation) * (double)Speed * -1.0) + -1f, type, damage, 0f, 0, 0f, 0f);
@@ -241,17 +277,17 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 					{
 						if (base.npc.life < (int)((float)base.npc.lifeMax * 0.5f))
 						{
-							for (int i = 0; i < 12; i++)
+							for (int j = 0; j < 12; j++)
 							{
-								int p = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("ShardShot2"), 12, 3f, 255, 0f, 0f);
+								int p = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), ModContent.ProjectileType<ShardShot2>(), 12, 3f, 255, 0f, 0f);
 								Main.projectile[p].netUpdate = true;
 							}
 						}
 						else
 						{
-							for (int j = 0; j < 8; j++)
+							for (int k = 0; k < 8; k++)
 							{
-								int p2 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("ShardShot2"), 12, 3f, 255, 0f, 0f);
+								int p2 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), ModContent.ProjectileType<ShardShot2>(), 12, 3f, 255, 0f, 0f);
 								Main.projectile[p2].netUpdate = true;
 							}
 						}
@@ -282,7 +318,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 						float Speed2 = 12f;
 						Vector2 vector9 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 						int damage2 = 13;
-						int type2 = base.mod.ProjectileType("ToxicSludge1");
+						int type2 = ModContent.ProjectileType<ToxicSludge1>();
 						float rotation2 = (float)Math.Atan2((double)(vector9.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector9.X - (player.position.X + (float)player.width * 0.5f)));
 						int num59 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0) + (float)Main.rand.Next(-1, 1), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0) + (float)Main.rand.Next(-1, 1), type2, damage2, 0f, 0, 0f, 0f);
 						int num60 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0) + (float)Main.rand.Next(-1, 1), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0) + (float)Main.rand.Next(-1, 1), type2, damage2, 0f, 0, 0f, 0f);
@@ -299,7 +335,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 						float Speed3 = 10f;
 						Vector2 vector10 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 						int damage3 = 13;
-						int type3 = base.mod.ProjectileType("ToxicSludge1");
+						int type3 = ModContent.ProjectileType<ToxicSludge1>();
 						float rotation3 = (float)Math.Atan2((double)(vector10.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector10.X - (player.position.X + (float)player.width * 0.5f)));
 						int num62 = Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)rotation3) * (double)Speed3 * -1.0) + (float)Main.rand.Next(-1, 1), (float)(Math.Sin((double)rotation3) * (double)Speed3 * -1.0) + (float)Main.rand.Next(-1, 1), type3, damage3, 0f, 0, 0f, 0f);
 						int num63 = Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)rotation3) * (double)Speed3 * -1.0) + (float)Main.rand.Next(-1, 1), (float)(Math.Sin((double)rotation3) * (double)Speed3 * -1.0) + (float)Main.rand.Next(-1, 1), type3, damage3, 0f, 0, 0f, 0f);
@@ -328,13 +364,29 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 						base.npc.netUpdate = true;
 						return;
 					}
-					this.chargeSpeed = 6f;
 					base.npc.rotation += 0.09f;
-					this.MoveToVector2(ChargePos);
 					base.npc.ai[2] += 1f;
+					if (base.npc.ai[2] < 80f)
+					{
+						this.chargeSpeed += 0.07f;
+						base.npc.velocity = -base.npc.DirectionTo(player.Center) * this.chargeSpeed;
+					}
+					if (base.npc.ai[2] == 80f || base.npc.ai[2] == 120f || base.npc.ai[2] == 160f || base.npc.ai[2] == 210f || base.npc.ai[2] == 270f)
+					{
+						this.Dash(20);
+					}
+					if ((base.npc.ai[2] > 90f && base.npc.ai[2] < 120f) || (base.npc.ai[2] > 130f && base.npc.ai[2] < 160f) || (base.npc.ai[2] > 170f && base.npc.ai[2] < 210f) || (base.npc.ai[2] > 220f && base.npc.ai[2] < 270f))
+					{
+						this.chargeSpeed += 0.02f;
+						base.npc.velocity = -base.npc.DirectionTo(player.Center) * this.chargeSpeed;
+					}
+					if (base.npc.ai[2] >= 285f)
+					{
+						base.npc.velocity *= 0f;
+					}
 					if ((base.npc.ai[1] >= 20f || base.npc.ai[1] <= 240f) && Main.rand.Next(10) == 0)
 					{
-						int p3 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-6 + Main.rand.Next(0, 11)), (float)(-6 + Main.rand.Next(0, 11)), base.mod.ProjectileType("XenomiteShot1"), 10, 3f, 255, 0f, 0f);
+						int p3 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-6 + Main.rand.Next(0, 11)), (float)(-6 + Main.rand.Next(0, 11)), ModContent.ProjectileType<XenomiteShot1>(), 10, 3f, 255, 0f, 0f);
 						Main.projectile[p3].netUpdate = true;
 					}
 					if (base.npc.ai[2] >= 300f)
@@ -349,7 +401,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 				case 5:
 					if (base.npc.ai[2] == 0f)
 					{
-						if (NPC.CountNPCS(base.mod.NPCType("SeedGrowth")) <= 2)
+						if (NPC.CountNPCS(ModContent.NPCType<SeedGrowth>()) <= 2)
 						{
 							base.npc.ai[2] = 1f;
 							return;
@@ -367,7 +419,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 						if (base.npc.ai[2] == 30f || base.npc.ai[2] == 60f || base.npc.ai[2] == 90f)
 						{
 							Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
-							int Minion = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("SeedGrowth"), 0, 0f, 0f, 0f, 0f, 255);
+							int Minion = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<SeedGrowth>(), 0, 0f, 0f, 0f, 0f, 255);
 							Main.npc[Minion].netUpdate = true;
 						}
 						if (base.npc.ai[2] >= 130f)
@@ -394,7 +446,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 					base.npc.velocity *= 0f;
 					if ((base.npc.ai[2] >= 30f || base.npc.ai[2] <= 300f) && Main.rand.Next(10) == 0)
 					{
-						int p4 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 15)), (float)(-14 + Main.rand.Next(0, 27)), base.mod.ProjectileType("ToxicSludge1"), 11, 3f, 255, 0f, 0f);
+						int p4 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 15)), (float)(-14 + Main.rand.Next(0, 27)), ModContent.ProjectileType<ToxicSludge1>(), 11, 3f, 255, 0f, 0f);
 						Main.projectile[p4].netUpdate = true;
 					}
 					if (base.npc.ai[2] < 160f)
@@ -431,7 +483,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 						if (base.npc.ai[2] == 70f)
 						{
 							Main.PlaySound(SoundID.Item103, base.npc.position);
-							int p5 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 10f, base.mod.ProjectileType("SeedLaser"), 13, 3f, 255, 0f, 0f);
+							int p5 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 10f, ModContent.ProjectileType<SeedLaser>(), 13, 3f, 255, 0f, 0f);
 							Main.projectile[p5].netUpdate = true;
 						}
 						if (base.npc.ai[2] >= 100f)
@@ -453,6 +505,38 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 				default:
 					return;
 				}
+			}
+		}
+
+		public void Dash(int speed)
+		{
+			Player player = Main.player[base.npc.target];
+			Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
+			int dustType = 74;
+			int pieCut = 16;
+			for (int i = 0; i < pieCut; i++)
+			{
+				int dustID = Dust.NewDust(new Vector2(base.npc.Center.X - 1f, base.npc.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 3f);
+				Main.dust[dustID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(8f, 0f), (float)i / (float)pieCut * 6.28f);
+				Main.dust[dustID].noLight = false;
+				Main.dust[dustID].noGravity = true;
+			}
+			base.npc.ai[3] = 2f;
+			this.chargeSpeed = 0f;
+			base.npc.velocity = base.npc.DirectionTo(player.Center) * (float)speed;
+		}
+
+		private void DespawnHandler()
+		{
+			Player player = Main.player[base.npc.target];
+			if (!player.active || player.dead)
+			{
+				base.npc.velocity = new Vector2(0f, -20f);
+				if (base.npc.timeLeft > 10)
+				{
+					base.npc.timeLeft = 10;
+				}
+				return;
 			}
 		}
 
@@ -492,7 +576,15 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 			Texture2D texture = Main.npcTexture[base.npc.type];
 			Texture2D freakOutAni = base.mod.GetTexture("NPCs/Bosses/SeedOfInfection/SoI_FreakingOut");
 			int spriteDirection = base.npc.spriteDirection;
-			if (base.npc.ai[3] == 0f)
+			if (base.npc.ai[3] == 2f)
+			{
+				for (int i = this.oldPos.Length - 1; i >= 0; i--)
+				{
+					float alpha = 1f - (float)(i + 1) / (float)(this.oldPos.Length + 2);
+					spriteBatch.Draw(texture, this.oldPos[i] - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor * (0.5f * alpha), this.oldrot[i], Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				}
+			}
+			if (base.npc.ai[3] != 1f)
 			{
 				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor * ((float)(255 - base.npc.alpha) / 255f), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
@@ -506,12 +598,16 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 			return false;
 		}
 
-		private Player player;
+		private Vector2[] oldPos = new Vector2[3];
+
+		private float[] oldrot = new float[3];
 
 		public int freakOutFrame;
 
 		public int frameCounters;
 
 		public float chargeSpeed;
+
+		private bool title;
 	}
 }

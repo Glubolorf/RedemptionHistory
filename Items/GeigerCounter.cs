@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.NPCs.Bosses.SeedOfInfection;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -57,7 +58,7 @@ namespace Redemption.Items
 
 		public override bool CanUseItem(Player player)
 		{
-			return !NPC.AnyNPCs(base.mod.NPCType("SoI")) && !NPC.AnyNPCs(base.mod.NPCType("StrangePortal"));
+			return !NPC.AnyNPCs(ModContent.NPCType<SoI>()) && !NPC.AnyNPCs(ModContent.NPCType<StrangePortal>());
 		}
 
 		public override bool UseItem(Player player)

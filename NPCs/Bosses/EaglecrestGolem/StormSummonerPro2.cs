@@ -38,7 +38,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 			base.projectile.localAI[0] += 1f;
 			if (base.projectile.localAI[0] >= 30f)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(0f, 0f), base.mod.ProjectileType("UkkoZap1"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(0f, 0f), ModContent.ProjectileType<UkkoZap1>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 				base.projectile.Kill();
 			}
 		}

@@ -1,4 +1,6 @@
 ﻿using System;
+using Redemption.Buffs;
+using Redemption.Projectiles.Pets;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -16,8 +18,8 @@ namespace Redemption.Items
 		{
 			base.item.CloneDefaults(669);
 			base.item.rare = 7;
-			base.item.shoot = base.mod.ProjectileType("XenomiteElementalPet");
-			base.item.buffType = base.mod.BuffType("XenomiteElementalPetBuff");
+			base.item.shoot = ModContent.ProjectileType<XenomiteElementalPet>();
+			base.item.buffType = ModContent.BuffType<XenomiteElementalPetBuff>();
 		}
 
 		public override void UseStyle(Player player)

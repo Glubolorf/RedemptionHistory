@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -24,11 +25,11 @@ namespace Redemption.Items.Armor.Costumes
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			RedePlayer p = player.GetModPlayer<RedePlayer>();
-			player.buffImmune[base.mod.BuffType("HeavyRadiationDebuff")] = true;
-			player.buffImmune[base.mod.BuffType("RadioactiveFalloutDebuff")] = true;
-			player.buffImmune[base.mod.BuffType("XenomiteDebuff")] = true;
-			player.buffImmune[base.mod.BuffType("XenomiteDebuff2")] = true;
-			player.buffImmune[base.mod.BuffType("BInfectionDebuff")] = true;
+			player.buffImmune[ModContent.BuffType<HeavyRadiationDebuff>()] = true;
+			player.buffImmune[ModContent.BuffType<RadioactiveFalloutDebuff>()] = true;
+			player.buffImmune[ModContent.BuffType<XenomiteDebuff>()] = true;
+			player.buffImmune[ModContent.BuffType<XenomiteDebuff2>()] = true;
+			player.buffImmune[ModContent.BuffType<BInfectionDebuff>()] = true;
 			p.HEVAccessory = true;
 			if (hideVisual)
 			{

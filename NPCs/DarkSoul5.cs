@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.NPCs.Bosses.TheKeeper;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -65,7 +66,7 @@ namespace Redemption.NPCs
 			}
 			base.npc.TargetClosest(true);
 			int boss = (int)base.npc.ai[0];
-			if (boss < 0 || boss >= 200 || !Main.npc[boss].active || Main.npc[boss].type != base.mod.NPCType("TheKeeper"))
+			if (boss < 0 || boss >= 200 || !Main.npc[boss].active || Main.npc[boss].type != ModContent.NPCType<TheKeeper>())
 			{
 				base.npc.active = false;
 				return false;

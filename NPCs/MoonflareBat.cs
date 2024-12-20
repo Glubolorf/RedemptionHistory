@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,7 +30,7 @@ namespace Redemption.NPCs
 			this.aiType = 49;
 			this.animationType = 49;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("MoonflareBatBanner");
+			this.bannerItem = ModContent.ItemType<MoonflareBatBanner>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)

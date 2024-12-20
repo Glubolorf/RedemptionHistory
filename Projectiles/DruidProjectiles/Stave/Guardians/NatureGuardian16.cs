@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ID;
@@ -50,7 +51,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 				}
 			}
 			Player player = Main.player[base.projectile.owner];
-			if (!player.HasBuff(base.mod.BuffType("NatureGuardian16Buff")))
+			if (!player.HasBuff(ModContent.BuffType<NatureGuardian16Buff>()))
 			{
 				base.projectile.Kill();
 			}
@@ -70,7 +71,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 					int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 57, 0f, 0f, 100, default(Color), 1.2f);
 					Main.dust[dustIndex].velocity *= 1.4f;
 				}
-				Projectile.NewProjectile(player.position, Vector2.Zero, base.mod.ProjectileType("HolyAura"), 0, 0f, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(player.position, Vector2.Zero, ModContent.ProjectileType<HolyAura>(), 0, 0f, player.whoAmI, 0f, 0f);
 				Main.PlaySound(SoundID.Item74, base.projectile.position);
 			}
 			base.projectile.velocity.Y = 0f;
@@ -85,10 +86,10 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 					Main.PlaySound(SoundID.Item105, (int)base.projectile.position.X, (int)base.projectile.position.Y);
 					for (int j = -4; j <= 4; j++)
 					{
-						Projectile.NewProjectile(base.projectile.Center, 12f * Utils.RotatedBy(Vector2.UnitX, 0.7853981633974483 * (double)j, default(Vector2)), base.mod.ProjectileType("HolySparkPro1"), 30, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(base.projectile.Center, 12f * Utils.RotatedBy(Vector2.UnitX, 0.7853981633974483 * (double)j, default(Vector2)), ModContent.ProjectileType<HolySparkPro1>(), 30, 3f, Main.myPlayer, 0f, 0f);
 					}
 				}
-				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(15f, Utils.ToRotation(this.target.Center - base.projectile.Center)), base.mod.ProjectileType("HolySparkPro1"), 30, 3f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(15f, Utils.ToRotation(this.target.Center - base.projectile.Center)), ModContent.ProjectileType<HolySparkPro1>(), 30, 3f, Main.myPlayer, 0f, 0f);
 			}
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
 			if (player.dead)

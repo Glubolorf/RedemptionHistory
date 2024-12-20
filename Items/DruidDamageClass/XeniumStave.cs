@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles.DruidProjectiles.Stave;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -40,10 +41,10 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.rare = 11;
 			base.item.UseSound = SoundID.Item117;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("XeniumStavePro");
+			base.item.shoot = ModContent.ProjectileType<XeniumStavePro>();
 			base.item.shootSpeed = 19f;
 			base.item.glowMask = XeniumStave.customGlowMask;
-			this.defaultShoot = base.mod.ProjectileType("XeniumStavePro");
+			this.defaultShoot = ModContent.ProjectileType<XeniumStavePro>();
 			this.singleShotStave = true;
 			this.staveHoldOffset = new Vector2(4f, -10f);
 			this.staveLength = 90.2f;

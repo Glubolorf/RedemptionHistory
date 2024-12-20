@@ -1,6 +1,11 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
+using Redemption.Items;
+using Redemption.Items.Placeable;
+using Redemption.Items.Weapons;
+using Redemption.Items.Weapons.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -38,7 +43,7 @@ namespace Redemption.NPCs.Bosses.InfectedEye
 			base.npc.buffImmune[24] = true;
 			base.npc.buffImmune[20] = true;
 			base.npc.netAlways = true;
-			this.bossBag = base.mod.ItemType("InfectedEyeBag");
+			this.bossBag = ModContent.ItemType<InfectedEyeBag>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -62,7 +67,7 @@ namespace Redemption.NPCs.Bosses.InfectedEye
 		{
 			if (Main.rand.Next(10) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("InfectedEyeTrophy"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<InfectedEyeTrophy>(), 1, false, 0, false, false);
 			}
 			if (Main.expertMode)
 			{
@@ -71,18 +76,18 @@ namespace Redemption.NPCs.Bosses.InfectedEye
 			}
 			if (Main.rand.Next(3) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("XenomiteStaff"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<XenomiteStaff>(), 1, false, 0, false, false);
 			}
 			if (Main.rand.Next(3) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("TheInfectedEye"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<TheInfectedEye>(), 1, false, 0, false, false);
 			}
 			if (Main.rand.Next(3) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("InfectousJavelin"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<InfectousJavelin>(), 1, false, 0, false, false);
 			}
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("Xenomite"), Main.rand.Next(4, 6), false, 0, false, false);
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("AntiXenomiteApplier"), Main.rand.Next(2, 6), false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<Xenomite>(), Main.rand.Next(4, 6), false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<AntiXenomiteApplier>(), Main.rand.Next(2, 6), false, 0, false, false);
 		}
 
 		public override void BossLoot(ref string name, ref int potionType)
@@ -97,7 +102,7 @@ namespace Redemption.NPCs.Bosses.InfectedEye
 					{
 						for (int j = 0; j < player2.inventory.Length; j++)
 						{
-							if (player2.inventory[j].type == base.mod.ItemType("RedemptionTeller"))
+							if (player2.inventory[j].type == ModContent.ItemType<RedemptionTeller>())
 							{
 								Main.NewText("<Chalice of Alignment> Oh... That's only made the Infection worse... Well, it doesn't matter, at least Cthulhu's other eye is no more!", Color.DarkGoldenrod, false);
 							}
@@ -121,6 +126,11 @@ namespace Redemption.NPCs.Bosses.InfectedEye
 
 		public override void AI()
 		{
+			if (!this.title)
+			{
+				Redemption.ShowTitle(base.npc, 8);
+				this.title = true;
+			}
 			if (RedeConfigClient.Instance.classicRedeIE)
 			{
 				this.oldCounter++;
@@ -154,7 +164,7 @@ namespace Redemption.NPCs.Bosses.InfectedEye
 				float Speed = 12f;
 				Vector2 vector8 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 				int damage = 36;
-				int type = base.mod.ProjectileType("ToxicSludge2");
+				int type = ModContent.ProjectileType<ToxicSludge2>();
 				float rotation = (float)Math.Atan2((double)(vector8.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector8.X - (this.player.position.X + (float)this.player.width * 0.5f)));
 				int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0) + (float)Main.rand.Next(-2, 2), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0) + (float)Main.rand.Next(-2, 2), type, damage, 0f, 0, 0f, 0f);
 				Main.projectile[num54].netUpdate = true;
@@ -175,7 +185,7 @@ namespace Redemption.NPCs.Bosses.InfectedEye
 				float Speed2 = 18f;
 				Vector2 vector9 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 				int damage2 = 34;
-				int type2 = base.mod.ProjectileType("XenomiteShot2");
+				int type2 = ModContent.ProjectileType<XenomiteShot2>();
 				float rotation2 = (float)Math.Atan2((double)(vector9.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector9.X - (this.player.position.X + (float)this.player.width * 0.5f)));
 				int num59 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0) + (float)Main.rand.Next(-2, 2), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0) + (float)Main.rand.Next(-2, 2), type2, damage2, 0f, 0, 0f, 0f);
 				int num60 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0) + (float)Main.rand.Next(-2, 2), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0) + (float)Main.rand.Next(-2, 2), type2, damage2, 0f, 0, 0f, 0f);
@@ -234,7 +244,7 @@ namespace Redemption.NPCs.Bosses.InfectedEye
 				float Speed3 = 15f;
 				Vector2 vector12 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 				int damage3 = 36;
-				int type3 = base.mod.ProjectileType("InfectedSpray");
+				int type3 = ModContent.ProjectileType<InfectedSpray>();
 				float rotation5 = (float)Math.Atan2((double)(vector12.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector12.X - (this.player.position.X + (float)this.player.width * 0.5f)));
 				int num64 = Projectile.NewProjectile(vector12.X, vector12.Y, (float)(Math.Cos((double)rotation5) * (double)Speed3 * -1.0) + (float)Main.rand.Next(-2, 2), (float)(Math.Sin((double)rotation5) * (double)Speed3 * -1.0) + (float)Main.rand.Next(-2, 2), type3, damage3, 0f, 0, 0f, 0f);
 				Main.projectile[num64].netUpdate = true;
@@ -245,7 +255,7 @@ namespace Redemption.NPCs.Bosses.InfectedEye
 				{
 					if (base.npc.ai[3] >= 760f && base.npc.ai[3] < 840f && Main.rand.Next(10) == 0)
 					{
-						int projID = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)Main.rand.Next(-12, 12), (float)Main.rand.Next(-12, 12), base.mod.ProjectileType("XenomiteShot2"), 35, 1f, 255, 0f, 0f);
+						int projID = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)Main.rand.Next(-12, 12), (float)Main.rand.Next(-12, 12), ModContent.ProjectileType<XenomiteShot2>(), 35, 1f, 255, 0f, 0f);
 						Main.projectile[projID].netUpdate = true;
 					}
 					if (base.npc.ai[3] >= 900f)
@@ -254,7 +264,7 @@ namespace Redemption.NPCs.Bosses.InfectedEye
 					}
 					if (Main.rand.Next(30) == 0)
 					{
-						int projID2 = Projectile.NewProjectile(base.npc.Center.X + (float)Main.rand.Next(-80, 80), base.npc.Center.Y + (float)Main.rand.Next(-60, 60), 0f, 0f, base.mod.ProjectileType("DribblingOoze"), 30, 1f, 255, 0f, 0f);
+						int projID2 = Projectile.NewProjectile(base.npc.Center.X + (float)Main.rand.Next(-80, 80), base.npc.Center.Y + (float)Main.rand.Next(-60, 60), 0f, 0f, ModContent.ProjectileType<DribblingOoze>(), 30, 1f, 255, 0f, 0f);
 						Main.projectile[projID2].netUpdate = true;
 					}
 				}
@@ -267,9 +277,9 @@ namespace Redemption.NPCs.Bosses.InfectedEye
 			{
 				base.npc.ai[3] = 0f;
 			}
-			if (base.npc.ai[0] % 200f == 3f && NPC.CountNPCS(base.mod.NPCType("XenomiteEye")) <= 3)
+			if (base.npc.ai[0] % 200f == 3f && NPC.CountNPCS(ModContent.NPCType<XenomiteEye>()) <= 3)
 			{
-				int Minion = NPC.NewNPC((int)base.npc.position.X + 80, (int)base.npc.position.Y + 80, base.mod.NPCType("XenomiteEye"), 0, 0f, 0f, 0f, 0f, 255);
+				int Minion = NPC.NewNPC((int)base.npc.position.X + 80, (int)base.npc.position.Y + 80, ModContent.NPCType<XenomiteEye>(), 0, 0f, 0f, 0f, 0f, 255);
 				Main.npc[Minion].netUpdate = true;
 			}
 		}
@@ -322,11 +332,11 @@ namespace Redemption.NPCs.Bosses.InfectedEye
 		{
 			if (Main.rand.Next(2) == 0 || (Main.expertMode && Main.rand.Next(0) == 0))
 			{
-				target.AddBuff(base.mod.BuffType("XenomiteDebuff"), Main.rand.Next(500, 1000), true);
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff>(), Main.rand.Next(500, 1000), true);
 			}
 			if (Main.rand.Next(9) == 0 || (Main.expertMode && Main.rand.Next(7) == 0))
 			{
-				target.AddBuff(base.mod.BuffType("XenomiteDebuff2"), Main.rand.Next(250, 500), true);
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff2>(), Main.rand.Next(250, 500), true);
 			}
 		}
 
@@ -335,5 +345,7 @@ namespace Redemption.NPCs.Bosses.InfectedEye
 		private int oldFrame;
 
 		private int oldCounter;
+
+		private bool title;
 	}
 }

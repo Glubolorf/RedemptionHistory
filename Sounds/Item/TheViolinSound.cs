@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Audio;
-using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Sounds.Item
@@ -12,7 +11,7 @@ namespace Redemption.Sounds.Item
 			soundInstance = base.sound.CreateInstance();
 			soundInstance.Volume = volume * 1f;
 			soundInstance.Pan = pan;
-			soundInstance.Pitch = (float)Main.rand.Next(-5, 6) * 0.05f;
+			soundInstance.Pitch = 0f;
 			return soundInstance;
 		}
 	}

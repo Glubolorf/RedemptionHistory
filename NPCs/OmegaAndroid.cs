@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Placeable.Banners;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +32,7 @@ namespace Redemption.NPCs
 			this.aiType = 140;
 			this.animationType = 140;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("OmegaAndroidBanner");
+			this.bannerItem = ModContent.ItemType<OmegaAndroidBanner>();
 		}
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
@@ -79,13 +81,13 @@ namespace Redemption.NPCs
 					if (base.npc.direction == -1)
 					{
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-						int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 29f, base.npc.position.Y + 21f), new Vector2(-6f, 0f), base.mod.ProjectileType("OmegaARocketFist"), 50, 3f, 255, 0f, 0f);
+						int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 29f, base.npc.position.Y + 21f), new Vector2(-6f, 0f), ModContent.ProjectileType<OmegaARocketFist>(), 50, 3f, 255, 0f, 0f);
 						Main.projectile[p].netUpdate = true;
 					}
 					else
 					{
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-						int p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 11f, base.npc.position.Y + 21f), new Vector2(6f, 0f), base.mod.ProjectileType("OmegaARocketFist"), 50, 3f, 255, 0f, 0f);
+						int p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 11f, base.npc.position.Y + 21f), new Vector2(6f, 0f), ModContent.ProjectileType<OmegaARocketFist>(), 50, 3f, 255, 0f, 0f);
 						Main.projectile[p2].netUpdate = true;
 					}
 				}

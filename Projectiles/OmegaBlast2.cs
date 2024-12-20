@@ -12,7 +12,7 @@ namespace Redemption.Projectiles
 		{
 			get
 			{
-				return "Redemption/Projectiles/OmegaBlast";
+				return "Redemption/NPCs/Bosses/OmegaOblit/OmegaBlast";
 			}
 		}
 

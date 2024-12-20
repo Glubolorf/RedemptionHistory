@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Dusts;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -39,7 +41,7 @@ namespace Redemption.NPCs.LabNPCs
 			{
 				for (int i = 0; i < 25; i++)
 				{
-					int dustIndex = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, base.mod.DustType("SludgeSpoonDust"), 0f, 0f, 100, default(Color), 2f);
+					int dustIndex = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, ModContent.DustType<SludgeSpoonDust>(), 0f, 0f, 100, default(Color), 2f);
 					Main.dust[dustIndex].velocity *= 1.6f;
 				}
 			}
@@ -110,6 +112,18 @@ namespace Redemption.NPCs.LabNPCs
 			}
 		}
 
+		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+		{
+			if (Main.rand.Next(2) == 0 || Main.expertMode)
+			{
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff>(), Main.rand.Next(500, 1000), true);
+			}
+			if (Main.rand.Next(9) == 0 || (Main.expertMode && Main.rand.Next(7) == 0))
+			{
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff2>(), Main.rand.Next(250, 500), true);
+			}
+		}
+
 		private float Magnitude(Vector2 mag)
 		{
 			return (float)Math.Sqrt((double)(mag.X * mag.X + mag.Y * mag.Y));
@@ -118,15 +132,5 @@ namespace Redemption.NPCs.LabNPCs
 		private Player player;
 
 		private float speed;
-
-		private bool targeted;
-
-		private int startTimer;
-
-		private int attackTimer;
-
-		private bool zapzop;
-
-		private int smashTimer;
 	}
 }

@@ -1,6 +1,12 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items;
+using Redemption.Items.Placeable;
 using Redemption.Items.Quest;
+using Redemption.Items.Weapons;
+using Redemption.Items.Weapons.v08;
+using Redemption.NPCs.Minibosses.MossyGoliath;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -44,20 +50,20 @@ namespace Redemption.NPCs.v08
 		{
 			if (RedeQuests.daerelQuests > 9 || RedeQuests.zephosQuests > 9 || (RedeWorld.downedDarkSlime && (RedeQuests.daerelQuests == 9 || RedeQuests.zephosQuests == 9)))
 			{
-				base.npc.Transform(base.mod.NPCType("Daerel3"));
+				base.npc.Transform(ModContent.NPCType<Daerel3>());
 			}
 		}
 
 		public override bool CheckDead()
 		{
 			Main.NewText("Daerel the Wayfarer was knocked unconscious...", Color.Red.R, Color.Red.G, Color.Red.B, false);
-			base.npc.SetDefaults(base.mod.NPCType("Daerel2Unconscious"), -1f);
+			base.npc.SetDefaults(ModContent.NPCType<Daerel2Unconscious>(), -1f);
 			return false;
 		}
 
 		public override bool CanTownNPCSpawn(int numTownNPCs, int money)
 		{
-			return WorldGen.crimson && RedeQuests.ZswordQuest && !NPC.AnyNPCs(base.mod.NPCType("DaerelUnconscious")) && !NPC.AnyNPCs(base.mod.NPCType("Daerel2Unconscious")) && !NPC.AnyNPCs(base.mod.NPCType("Daerel3Unconscious")) && !NPC.AnyNPCs(base.mod.NPCType("Daerel1")) && !NPC.AnyNPCs(base.mod.NPCType("Daerel3"));
+			return false;
 		}
 
 		public override string TownNPCName()
@@ -219,10 +225,10 @@ namespace Redemption.NPCs.v08
 				{
 					if (RedeQuests.daerelQuests == 5 && Main.hardMode)
 					{
-						Main.npcChatCornerItem = base.mod.ItemType("BottledLostSoulIcon");
+						Main.npcChatCornerItem = ModContent.ItemType<BottledLostSoulIcon>();
 						Main.PlaySound(12, -1, -1, 1, 1f, 0f);
-						int Bottle = player.FindItem(base.mod.ItemType("BottledLostSoul"));
-						int Vacuum = player.FindItem(base.mod.ItemType("LostSoulCatcher"));
+						int Bottle = player.FindItem(ModContent.ItemType<BottledLostSoul>());
+						int Vacuum = player.FindItem(ModContent.ItemType<LostSoulCatcher>());
 						if (Bottle >= 0)
 						{
 							player.inventory[Bottle].stack--;
@@ -238,9 +244,9 @@ namespace Redemption.NPCs.v08
 									player.inventory[Vacuum] = new Item();
 								}
 							}
-							Main.npcChatCornerItem = base.mod.ItemType("DaerelRewardBag");
+							Main.npcChatCornerItem = ModContent.ItemType<DaerelRewardBag>();
 							Main.npcChatText = this.Give1Chat();
-							player.QuickSpawnItem(base.mod.ItemType("DaerelRewardBag"), 1);
+							player.QuickSpawnItem(ModContent.ItemType<DaerelRewardBag>(), 1);
 							RedeQuests.daerelQuests++;
 							RedeQuests.DsoulQuest = true;
 							Main.PlaySound(24, -1, -1, 1, 1f, 0f);
@@ -252,9 +258,9 @@ namespace Redemption.NPCs.v08
 					}
 					else if (RedeQuests.daerelQuests == 6 && Main.hardMode)
 					{
-						Main.npcChatCornerItem = base.mod.ItemType("InvisibleCloak");
+						Main.npcChatCornerItem = ModContent.ItemType<InvisibleCloak>();
 						Main.PlaySound(12, -1, -1, 1, 1f, 0f);
-						int Cloak = player.FindItem(base.mod.ItemType("InvisibleCloak"));
+						int Cloak = player.FindItem(ModContent.ItemType<InvisibleCloak>());
 						if (Cloak >= 0)
 						{
 							player.inventory[Cloak].stack--;
@@ -262,9 +268,9 @@ namespace Redemption.NPCs.v08
 							{
 								player.inventory[Cloak] = new Item();
 							}
-							Main.npcChatCornerItem = base.mod.ItemType("DaerelRewardBag");
+							Main.npcChatCornerItem = ModContent.ItemType<DaerelRewardBag>();
 							Main.npcChatText = this.Give2Chat();
-							player.QuickSpawnItem(base.mod.ItemType("DaerelRewardBag"), 1);
+							player.QuickSpawnItem(ModContent.ItemType<DaerelRewardBag>(), 1);
 							RedeQuests.daerelQuests++;
 							RedeQuests.DcloakQuest = true;
 							Main.PlaySound(24, -1, -1, 1, 1f, 0f);
@@ -276,9 +282,9 @@ namespace Redemption.NPCs.v08
 					}
 					else if (RedeQuests.daerelQuests == 7 && Main.hardMode)
 					{
-						Main.npcChatCornerItem = base.mod.ItemType("Parthius");
+						Main.npcChatCornerItem = ModContent.ItemType<Parthius>();
 						Main.PlaySound(12, -1, -1, 1, 1f, 0f);
-						int Parthius = player.FindItem(base.mod.ItemType("Parthius"));
+						int Parthius = player.FindItem(ModContent.ItemType<Parthius>());
 						if (Parthius >= 0)
 						{
 							player.inventory[Parthius].stack--;
@@ -286,9 +292,9 @@ namespace Redemption.NPCs.v08
 							{
 								player.inventory[Parthius] = new Item();
 							}
-							Main.npcChatCornerItem = base.mod.ItemType("DaerelRewardBag");
+							Main.npcChatCornerItem = ModContent.ItemType<DaerelRewardBag>();
 							Main.npcChatText = this.Give3Chat();
-							player.QuickSpawnItem(base.mod.ItemType("DaerelRewardBag"), 1);
+							player.QuickSpawnItem(ModContent.ItemType<DaerelRewardBag>(), 1);
 							RedeQuests.daerelQuests++;
 							RedeQuests.DparthQuest = true;
 							Main.PlaySound(24, -1, -1, 1, 1f, 0f);
@@ -300,9 +306,9 @@ namespace Redemption.NPCs.v08
 					}
 					else if (RedeQuests.daerelQuests == 8 && Main.hardMode)
 					{
-						Main.npcChatCornerItem = base.mod.ItemType("EnchantedMap");
+						Main.npcChatCornerItem = ModContent.ItemType<EnchantedMap>();
 						Main.PlaySound(12, -1, -1, 1, 1f, 0f);
-						int Map = player.FindItem(base.mod.ItemType("EnchantedMap"));
+						int Map = player.FindItem(ModContent.ItemType<EnchantedMap>());
 						if (Map >= 0)
 						{
 							player.inventory[Map].stack--;
@@ -310,9 +316,9 @@ namespace Redemption.NPCs.v08
 							{
 								player.inventory[Map] = new Item();
 							}
-							Main.npcChatCornerItem = base.mod.ItemType("DaerelRewardBag");
+							Main.npcChatCornerItem = ModContent.ItemType<DaerelRewardBag>();
 							Main.npcChatText = this.Give4Chat();
-							player.QuickSpawnItem(base.mod.ItemType("DaerelRewardBag"), 1);
+							player.QuickSpawnItem(ModContent.ItemType<DaerelRewardBag>(), 1);
 							RedeQuests.daerelQuests++;
 							RedeQuests.DmapQuest = true;
 							Main.PlaySound(24, -1, -1, 1, 1f, 0f);
@@ -324,9 +330,9 @@ namespace Redemption.NPCs.v08
 					}
 					else if (RedeQuests.daerelQuests == 9 && Main.hardMode)
 					{
-						Main.npcChatCornerItem = base.mod.ItemType("DarkSteelBow");
+						Main.npcChatCornerItem = ModContent.ItemType<DarkSteelBow>();
 						Main.PlaySound(12, -1, -1, 1, 1f, 0f);
-						int DarkBow = player.FindItem(base.mod.ItemType("DarkSteelBow"));
+						int DarkBow = player.FindItem(ModContent.ItemType<DarkSteelBow>());
 						if (DarkBow >= 0)
 						{
 							player.inventory[DarkBow].stack--;
@@ -334,9 +340,9 @@ namespace Redemption.NPCs.v08
 							{
 								player.inventory[DarkBow] = new Item();
 							}
-							Main.npcChatCornerItem = base.mod.ItemType("DaerelRewardBag");
+							Main.npcChatCornerItem = ModContent.ItemType<DaerelRewardBag>();
 							Main.npcChatText = this.Give5Chat();
-							player.QuickSpawnItem(base.mod.ItemType("DaerelRewardBag"), 3);
+							player.QuickSpawnItem(ModContent.ItemType<DaerelRewardBag>(), 3);
 							RedeQuests.daerelQuests++;
 							RedeQuests.DslimeQuest = true;
 							Main.PlaySound(24, -1, -1, 1, 1f, 0f);
@@ -461,63 +467,63 @@ namespace Redemption.NPCs.v08
 
 		public override void SetupShop(Chest shop, ref int nextSlot)
 		{
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LivingTwig"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<LivingTwig>(), false);
 			nextSlot++;
 			shop.item[nextSlot].SetDefaults(259, false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LeatherPouch"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<LeatherPouch>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("WoodenBuckler"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<WoodenBuckler>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("FlintAndSteel"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<FlintAndSteel>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("BeardedHatchet"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<BeardedHatchet>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("AncientNovicesStaff"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<AncientNovicesStaff>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("WardensBow"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<WardensBow>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("IronfurAmulet"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<IronfurAmulet>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Archcloth"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Archcloth>(), false);
 			nextSlot++;
 			if (NPC.downedBoss1)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("ForestGolemPainting"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<ForestGolemPainting>(), false);
 				nextSlot++;
 			}
 			if (NPC.downedBoss2)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("EaglecrestSpelltome"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<EaglecrestSpelltome>(), false);
 				nextSlot++;
 			}
 			if (RedeQuests.daerelQuests == 9 && Main.hardMode)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("EvilJelly"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<EvilJelly>(), false);
 				nextSlot++;
 			}
 			if (NPC.downedBoss3)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("GathicCryoCrystal"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<GathicCryoCrystal>(), false);
 				nextSlot++;
 			}
 			if (RedeWorld.downedEaglecrestGolem)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("GolemEye"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<GolemEye>(), false);
 				nextSlot++;
 			}
 			if (RedeWorld.downedMossyGoliath)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("MossyWimpGun"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<MossyWimpGun>(), false);
 				nextSlot++;
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("MudMace"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<MudMace>(), false);
 				nextSlot++;
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("TastySteak"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<TastySteak>(), false);
 				nextSlot++;
 			}
 			if (RedeQuests.daerelQuests == 5 && Main.hardMode)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("LostSoulCatcher"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<LostSoulCatcher>(), false);
 				nextSlot++;
 			}
 		}
@@ -537,13 +543,13 @@ namespace Redemption.NPCs.v08
 		public override void DrawTownAttackGun(ref float scale, ref int item, ref int closeness)
 		{
 			scale = 1f;
-			item = base.mod.ItemType("SilverwoodBow");
+			item = ModContent.ItemType<SilverwoodBow>();
 			closeness = 20;
 		}
 
 		public override void TownNPCAttackProj(ref int projType, ref int attackDelay)
 		{
-			projType = base.mod.ProjectileType("SilverwoodArrow");
+			projType = ModContent.ProjectileType<SilverwoodArrowPro>();
 			attackDelay = 1;
 		}
 

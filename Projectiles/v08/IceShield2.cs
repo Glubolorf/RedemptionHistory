@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -28,7 +29,7 @@ namespace Redemption.Projectiles.v08
 		{
 			Player player = Main.player[base.projectile.owner];
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
-			if (!player.HasBuff(base.mod.BuffType("NatureGuardian26Buff")))
+			if (!player.HasBuff(ModContent.BuffType<NatureGuardian26Buff>()))
 			{
 				this.deadTimer++;
 				if (this.deadTimer <= 20)

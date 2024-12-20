@@ -1,6 +1,7 @@
 ﻿using System;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.Minions
 {
@@ -28,7 +29,7 @@ namespace Redemption.Projectiles.Minions
 			base.projectile.tileCollide = false;
 			base.projectile.ignoreWater = true;
 			this.inertia = 30f;
-			this.shoot = base.mod.ProjectileType("Mk3MicrobotPro");
+			this.shoot = ModContent.ProjectileType<Mk3MicrobotPro>();
 			this.shootSpeed = 15f;
 		}
 

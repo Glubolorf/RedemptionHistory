@@ -44,7 +44,7 @@ namespace Redemption.Projectiles
 			base.projectile.localAI[0] += 1f;
 			if (base.projectile.localAI[0] >= 100f)
 			{
-				base.projectile.scale -= 0.02f;
+				base.projectile.scale -= 0.04f;
 			}
 		}
 	}

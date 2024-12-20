@@ -1,6 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
+using Redemption.Items.Placeable.Banners.v08;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,7 +34,7 @@ namespace Redemption.NPCs.v08
 			this.aiType = 524;
 			this.animationType = 524;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("DecayedGhoulBanner");
+			this.bannerItem = ModContent.ItemType<DecayedGhoulBanner>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -52,11 +55,11 @@ namespace Redemption.NPCs.v08
 		{
 			if (Main.rand.Next(2) == 0 || (Main.expertMode && Main.rand.Next(0) == 0))
 			{
-				target.AddBuff(base.mod.BuffType("XenomiteDebuff"), Main.rand.Next(500, 1000), true);
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff>(), Main.rand.Next(500, 1000), true);
 			}
 			if (Main.rand.Next(9) == 0 || (Main.expertMode && Main.rand.Next(7) == 0))
 			{
-				target.AddBuff(base.mod.BuffType("XenomiteDebuff2"), Main.rand.Next(250, 500), true);
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff2>(), Main.rand.Next(250, 500), true);
 			}
 		}
 
@@ -109,7 +112,7 @@ namespace Redemption.NPCs.v08
 					Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/XenomiteGore"), 1f);
 					for (int j = 0; j < 8; j++)
 					{
-						int p = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("GloopBallPro1"), 30, 3f, 255, 0f, 0f);
+						int p = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), ModContent.ProjectileType<GloopBallPro1>(), 30, 3f, 255, 0f, 0f);
 						Main.projectile[p].netUpdate = true;
 					}
 					base.npc.active = false;

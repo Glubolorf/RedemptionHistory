@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.LabDeco;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -46,7 +47,7 @@ namespace Redemption.Tiles.LabDeco
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 64, 32, base.mod.ItemType("LabBed"), 1, false, 0, false, false);
+			Item.NewItem(i * 16, j * 16, 64, 32, ModContent.ItemType<LabBed>(), 1, false, 0, false, false);
 		}
 
 		public override bool NewRightClick(int i, int j)
@@ -79,7 +80,7 @@ namespace Redemption.Tiles.LabDeco
 			Player localPlayer = Main.LocalPlayer;
 			localPlayer.noThrow = 2;
 			localPlayer.showItemIcon = true;
-			localPlayer.showItemIcon2 = base.mod.ItemType("LabBed");
+			localPlayer.showItemIcon2 = ModContent.ItemType<LabBed>();
 		}
 	}
 }

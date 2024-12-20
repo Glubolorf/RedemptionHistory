@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,7 +11,7 @@ namespace Redemption.Items.Weapons.v08
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Ancient Pickaxe Axe");
+			base.DisplayName.SetDefault("Earthbreaker Pickaxe Axe");
 			base.Tooltip.SetDefault("Right-clicking will throw the pickaxe axe, dealing ranged damage");
 		}
 
@@ -31,6 +32,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.shoot = 0;
 			base.item.shootSpeed = 18f;
 			base.item.autoReuse = true;
+			base.item.useTurn = true;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}
 
@@ -48,7 +50,7 @@ namespace Redemption.Items.Weapons.v08
 				base.item.useTime = 6;
 				base.item.pick = 0;
 				base.item.axe = 0;
-				base.item.shoot = base.mod.ProjectileType("AncientPickaxeAxePro");
+				base.item.shoot = ModContent.ProjectileType<AncientPickaxeAxePro>();
 				base.item.ranged = true;
 			}
 			else

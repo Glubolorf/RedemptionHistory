@@ -33,7 +33,7 @@ namespace Redemption.Items.Armor
 
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
-			return body.type == base.mod.ItemType("KeepersChestplate") && legs.type == base.mod.ItemType("KeepersLeggings");
+			return body.type == ModContent.ItemType<KeepersChestplate>() && legs.type == ModContent.ItemType<KeepersLeggings>();
 		}
 
 		public override void UpdateArmorSet(Player player)

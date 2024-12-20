@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,7 +29,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.value = Item.sellPrice(0, 15, 0, 0);
 			base.item.UseSound = SoundID.Item88;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("EaglecrestBoulder");
+			base.item.shoot = ModContent.ProjectileType<EaglecrestBoulder>();
 			base.item.shootSpeed = 12f;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}

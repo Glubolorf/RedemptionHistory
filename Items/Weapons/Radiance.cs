@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,7 +32,7 @@ namespace Redemption.Items.Weapons
 			base.item.UseSound = SoundID.Item73;
 			base.item.autoReuse = true;
 			base.item.noMelee = true;
-			base.item.shoot = base.mod.ProjectileType("HolyFirePro2");
+			base.item.shoot = ModContent.ProjectileType<HolyFirePro2>();
 			base.item.shootSpeed = 20f;
 		}
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -52,7 +53,7 @@ namespace Redemption.Items.DruidDamageClass
 				{
 					if (Main.rand.Next(10) == 0)
 					{
-						Projectile.NewProjectile(new Vector2(player.position.X + Utils.NextFloat(Main.rand, (float)player.width), player.position.Y + Utils.NextFloat(Main.rand, (float)player.height)), new Vector2(0f, 0f), base.mod.ProjectileType("IchorSpark"), 1, 0f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(player.position.X + Utils.NextFloat(Main.rand, (float)player.width), player.position.Y + Utils.NextFloat(Main.rand, (float)player.height)), new Vector2(0f, 0f), ModContent.ProjectileType<IchorSpark>(), 0, 0f, Main.myPlayer, 0f, 0f);
 					}
 				}
 			}

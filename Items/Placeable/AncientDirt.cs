@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -25,14 +26,14 @@ namespace Redemption.Items.Placeable
 			base.item.useTime = 10;
 			base.item.useStyle = 1;
 			base.item.consumable = true;
-			base.item.createTile = base.mod.TileType("AncientDirtTile");
+			base.item.createTile = ModContent.TileType<AncientDirtTile>();
 		}
 
 		public override void ExtractinatorUse(ref int resultType, ref int resultStack)
 		{
 			if (Main.rand.Next(5) == 0)
 			{
-				resultType = base.mod.ItemType("AncientWood");
+				resultType = ModContent.ItemType<AncientWood>();
 				resultStack = 14;
 				return;
 			}

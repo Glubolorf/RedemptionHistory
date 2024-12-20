@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Items.LabThings;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -20,7 +21,7 @@ namespace Redemption.Tiles.LabDeco
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 64, 32, base.mod.ItemType("LabCrate"), 1, false, 0, false, false);
+			Item.NewItem(i * 16, j * 16, 64, 32, ModContent.ItemType<LabCrate>(), 1, false, 0, false, false);
 		}
 	}
 }

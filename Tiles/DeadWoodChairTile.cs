@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -40,7 +41,7 @@ namespace Redemption.Tiles
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 32, 16, base.mod.ItemType("DeadWoodChair"), 1, false, 0, false, false);
+			Item.NewItem(i * 16, j * 16, 32, 16, ModContent.ItemType<DeadWoodChair>(), 1, false, 0, false, false);
 		}
 	}
 }

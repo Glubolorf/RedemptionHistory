@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.NPCs.Bosses.Nebuleus;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -33,7 +34,7 @@ namespace Redemption.Items
 
 		public override bool CanUseItem(Player player)
 		{
-			return !Main.dayTime && !NPC.AnyNPCs(base.mod.NPCType("Nebuleus")) && !NPC.AnyNPCs(base.mod.NPCType("BigNebuleus")) && !NPC.AnyNPCs(base.mod.NPCType("NebuleusClone")) && !NPC.AnyNPCs(base.mod.NPCType("BigNebuleusClone"));
+			return !Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<Nebuleus>()) && !NPC.AnyNPCs(ModContent.NPCType<BigNebuleus>()) && !NPC.AnyNPCs(ModContent.NPCType<NebuleusClone>()) && !NPC.AnyNPCs(ModContent.NPCType<BigNebuleusClone>());
 		}
 
 		public override bool UseItem(Player player)
@@ -68,7 +69,7 @@ namespace Redemption.Items
 			modRecipe.AddIngredient(3467, 20);
 			modRecipe.AddIngredient(1225, 10);
 			modRecipe.AddIngredient(3457, 40);
-			modRecipe.AddIngredient(base.mod.ItemType("GildedStar"), 20);
+			modRecipe.AddIngredient(ModContent.ItemType<GildedStar>(), 20);
 			modRecipe.AddTile(412);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();

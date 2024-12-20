@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -42,7 +44,7 @@ namespace Redemption.Items.Armor.PostML
 
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
-			return body.type == base.mod.ItemType("XeniumBody") && legs.type == base.mod.ItemType("XeniumLeggings");
+			return body.type == ModContent.ItemType<XeniumBody>() && legs.type == ModContent.ItemType<XeniumLeggings>();
 		}
 
 		public override void UpdateArmorSet(Player player)
@@ -53,15 +55,15 @@ namespace Redemption.Items.Armor.PostML
 			{
 				modPlayer2.xeniumBarrier = true;
 				player.endurance += 0.14f;
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().xeniumBarrier && player.ownedProjectileCounts[base.mod.ProjectileType("XeniumShieldPro")] == 0)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().xeniumBarrier && player.ownedProjectileCounts[ModContent.ProjectileType<XeniumShieldPro>()] == 0)
 				{
-					Projectile.NewProjectile(player.position, Vector2.Zero, base.mod.ProjectileType("XeniumShieldPro"), 0, 0f, player.whoAmI, 0f, 0f);
+					Projectile.NewProjectile(player.position, Vector2.Zero, ModContent.ProjectileType<XeniumShieldPro>(), 0, 0f, player.whoAmI, 0f, 0f);
 				}
 			}
-			player.buffImmune[base.mod.BuffType("XenomiteDebuff")] = true;
-			player.buffImmune[base.mod.BuffType("XenomiteDebuff2")] = true;
-			player.buffImmune[base.mod.BuffType("RadioactiveFalloutDebuff")] = true;
-			player.buffImmune[base.mod.BuffType("HeavyRadiationDebuff")] = true;
+			player.buffImmune[ModContent.BuffType<XenomiteDebuff>()] = true;
+			player.buffImmune[ModContent.BuffType<XenomiteDebuff2>()] = true;
+			player.buffImmune[ModContent.BuffType<RadioactiveFalloutDebuff>()] = true;
+			player.buffImmune[ModContent.BuffType<HeavyRadiationDebuff>()] = true;
 			modPlayer2.labWaterImmune = true;
 		}
 

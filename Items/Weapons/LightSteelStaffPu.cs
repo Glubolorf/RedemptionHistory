@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,7 +32,7 @@ namespace Redemption.Items.Weapons
 			base.item.rare = 8;
 			base.item.UseSound = SoundID.Item20;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("LSStaffPuPro");
+			base.item.shoot = ModContent.ProjectileType<LSStaffPuPro>();
 			base.item.shootSpeed = 15f;
 		}
 

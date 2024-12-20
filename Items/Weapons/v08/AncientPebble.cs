@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Projectiles.Minions;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,9 +31,9 @@ namespace Redemption.Items.Weapons.v08
 			base.item.knockBack = 5f;
 			base.item.value = Item.sellPrice(0, 0, 60, 0);
 			base.item.UseSound = SoundID.Item44;
-			base.item.shoot = base.mod.ProjectileType("AncientStoneMinion");
+			base.item.shoot = ModContent.ProjectileType<AncientStoneMinion>();
 			base.item.shootSpeed = 10f;
-			base.item.buffType = base.mod.BuffType("AncientStoneMinionBuff");
+			base.item.buffType = ModContent.BuffType<AncientStoneMinionBuff>();
 			base.item.buffTime = 3600;
 		}
 

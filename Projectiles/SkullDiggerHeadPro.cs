@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.NPCs.Bosses.TheKeeper;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,7 +27,7 @@ namespace Redemption.Projectiles
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			if (target.type == base.mod.NPCType("TheKeeper") && target.life <= 0)
+			if (target.type == ModContent.NPCType<TheKeeper>() && target.life <= 0)
 			{
 				string text = "*Betrayal fills the Keeper's mind*";
 				Color rarityPurple = Colors.RarityPurple;

@@ -7,7 +7,7 @@ namespace Redemption
 {
 	public class BaseWorldGenTex
 	{
-		public static TexGen GetTexGenerator(Texture2D tileTex, Dictionary<Color, int> colorToTile, Texture2D wallTex = null, Dictionary<Color, int> colorToWall = null, Texture2D liquidTex = null, Texture2D slopeTex = null)
+		public static TexGen GetTexGenerator(Texture2D tileTex, Dictionary<Color, int> colorToTile, Texture2D wallTex = null, Dictionary<Color, int> colorToWall = null, Texture2D liquidTex = null, Texture2D slopeTex = null, Texture2D objectTex = null, Dictionary<Color, int> colorToObject = null)
 		{
 			if (BaseWorldGenTex.colorToLiquid == null)
 			{
@@ -40,6 +40,11 @@ namespace Redemption
 			{
 				slopeTex.GetData<Color>(0, new Rectangle?(slopeTex.Bounds), slopeData, 0, slopeTex.Width * slopeTex.Height);
 			}
+			Color[] objectData = (objectTex != null) ? new Color[objectTex.Width * objectTex.Height] : null;
+			if (objectData != null)
+			{
+				objectTex.GetData<Color>(0, new Rectangle?(objectTex.Bounds), objectData, 0, objectTex.Width * objectTex.Height);
+			}
 			int x = 0;
 			int y = 0;
 			TexGen gen = new TexGen(tileTex.Width, tileTex.Height);
@@ -49,11 +54,13 @@ namespace Redemption
 				Color wallColor = (wallTex == null) ? Color.Black : wallData[i];
 				Color liquidColor = (liquidTex == null) ? Color.Black : liquidData[i];
 				Color slopeColor = (slopeTex == null) ? Color.Black : slopeData[i];
+				Color objectColor = (objectTex == null) ? Color.Black : objectData[i];
 				int tileID = colorToTile.ContainsKey(tileColor) ? colorToTile[tileColor] : -1;
 				int wallID = (colorToWall != null && colorToWall.ContainsKey(wallColor)) ? colorToWall[wallColor] : -1;
 				int liquidID = (BaseWorldGenTex.colorToLiquid != null && BaseWorldGenTex.colorToLiquid.ContainsKey(liquidColor)) ? BaseWorldGenTex.colorToLiquid[liquidColor] : -1;
 				int slopeID = (BaseWorldGenTex.colorToSlope != null && BaseWorldGenTex.colorToSlope.ContainsKey(slopeColor)) ? BaseWorldGenTex.colorToSlope[slopeColor] : -1;
-				gen.tileGen[x, y] = new TileInfo(tileID, 0, wallID, liquidID, (liquidID == -1) ? 0 : 255, slopeID, -1);
+				int objectID = (colorToObject != null && colorToObject.ContainsKey(objectColor)) ? colorToObject[objectColor] : 0;
+				gen.tileGen[x, y] = new TileInfo(tileID, 0, wallID, liquidID, (liquidID == -1) ? 0 : 255, slopeID, objectID, -1);
 				x++;
 				if (x >= tileTex.Width)
 				{

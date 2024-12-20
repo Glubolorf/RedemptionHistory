@@ -41,11 +41,11 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 			{
 				if (base.projectile.ai[0] == 1f)
 				{
-					Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(0f, 0f), base.mod.ProjectileType("CloudNightshade3"), 11, 3f, base.projectile.owner, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(0f, 0f), ModContent.ProjectileType<CloudNightshade3>(), 11, 3f, base.projectile.owner, 0f, 0f);
 				}
 				else
 				{
-					Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(0f, 0f), base.mod.ProjectileType("CloudNightshade2"), 11, 3f, base.projectile.owner, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(0f, 0f), ModContent.ProjectileType<CloudNightshade2>(), 11, 3f, base.projectile.owner, 0f, 0f);
 				}
 				for (int i = 0; i < 6; i++)
 				{

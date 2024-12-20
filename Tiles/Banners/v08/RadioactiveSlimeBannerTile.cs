@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.Banners.v08;
+using Redemption.NPCs.v08;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -30,7 +32,7 @@ namespace Redemption.Tiles.Banners.v08
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 48, base.mod.ItemType("RadioactiveSlimeBanner"), 1, false, 0, false, false);
+			Item.NewItem(i * 16, j * 16, 16, 48, ModContent.ItemType<RadioactiveSlimeBanner>(), 1, false, 0, false, false);
 		}
 
 		public override void NearbyEffects(int i, int j, bool closer)
@@ -38,9 +40,9 @@ namespace Redemption.Tiles.Banners.v08
 			if (closer)
 			{
 				Player localPlayer = Main.LocalPlayer;
-				localPlayer.NPCBannerBuff[base.mod.NPCType("RadioactiveSlime")] = true;
-				localPlayer.NPCBannerBuff[base.mod.NPCType("SpikyRadioactiveSlime")] = true;
-				localPlayer.NPCBannerBuff[base.mod.NPCType("NuclearSlime")] = true;
+				localPlayer.NPCBannerBuff[ModContent.NPCType<RadioactiveSlime>()] = true;
+				localPlayer.NPCBannerBuff[ModContent.NPCType<SpikyRadioactiveSlime>()] = true;
+				localPlayer.NPCBannerBuff[ModContent.NPCType<NuclearSlime>()] = true;
 				localPlayer.hasBanner = true;
 			}
 		}

@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.NPCs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -46,9 +47,13 @@ namespace Redemption.Projectiles
 			{
 				base.projectile.alpha -= 5;
 			}
-			if (base.projectile.localAI[0] == 60f)
+			if (base.projectile.localAI[0] == 60f && Main.netMode != 1)
 			{
-				NPC.NewNPC((int)base.projectile.Center.X, (int)base.projectile.Center.Y, base.mod.NPCType("SpaceKeeper"), 0, 0f, 0f, 0f, 0f, 255);
+				int i = NPC.NewNPC((int)base.projectile.Center.X, (int)base.projectile.Center.Y, ModContent.NPCType<SpaceKeeper>(), 0, 0f, 0f, 0f, 0f, 255);
+				if (Main.netMode == 2)
+				{
+					NetMessage.SendData(23, -1, -1, null, i, 0f, 0f, 0f, 0, 0, 0);
+				}
 			}
 			if (base.projectile.localAI[0] >= 120f)
 			{

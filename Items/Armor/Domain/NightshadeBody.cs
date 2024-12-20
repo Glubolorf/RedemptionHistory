@@ -29,7 +29,7 @@ namespace Redemption.Items.Armor.Domain
 		{
 			if (!Main.dayTime)
 			{
-				player.lifeRegen += 3;
+				player.lifeRegen++;
 			}
 		}
 

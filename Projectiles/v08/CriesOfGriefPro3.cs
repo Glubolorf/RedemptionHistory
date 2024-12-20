@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
@@ -65,7 +66,7 @@ namespace Redemption.Projectiles.v08
 			Math.Sqrt((double)(num490 * num490 + num488 * num488));
 			if (base.projectile.position.X < Main.player[num487].position.X + (float)Main.player[num487].width && base.projectile.position.X + (float)base.projectile.width > Main.player[num487].position.X && base.projectile.position.Y < Main.player[num487].position.Y + (float)Main.player[num487].height && base.projectile.position.Y + (float)base.projectile.height > Main.player[num487].position.Y && base.projectile.owner == Main.myPlayer)
 			{
-				Main.player[num487].AddBuff(base.mod.BuffType("BlackenedHeartBuff2"), 300, true);
+				Main.player[num487].AddBuff(ModContent.BuffType<BlackenedHeartBuff2>(), 300, true);
 			}
 			base.projectile.alpha += 5;
 			if (base.projectile.alpha >= 255)
@@ -76,7 +77,7 @@ namespace Redemption.Projectiles.v08
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			target.AddBuff(base.mod.BuffType("BlackenedHeartDebuff"), 260, false);
+			target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), 260, false);
 		}
 	}
 }

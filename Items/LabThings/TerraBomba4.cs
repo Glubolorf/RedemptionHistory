@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -27,7 +28,7 @@ namespace Redemption.Items.LabThings
 			base.item.value = Item.buyPrice(15, 0, 0, 0);
 			base.item.noUseGraphic = true;
 			base.item.noMelee = true;
-			base.item.shoot = base.mod.ProjectileType("TerraBombaPro4");
+			base.item.shoot = ModContent.ProjectileType<TerraBombaPro4>();
 			base.item.shootSpeed = 0f;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}
@@ -46,7 +47,7 @@ namespace Redemption.Items.LabThings
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			Projectile.NewProjectile(new Vector2(player.position.X, player.position.Y + -1300f), new Vector2(speedX, speedY), base.mod.ProjectileType("TerraBombaPro4"), 500, 5f, player.whoAmI, 0f, 0f);
+			Projectile.NewProjectile(new Vector2(player.position.X, player.position.Y + -1300f), new Vector2(speedX, speedY), ModContent.ProjectileType<TerraBombaPro4>(), 500, 5f, player.whoAmI, 0f, 0f);
 			return false;
 		}
 	}

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.Items.Weapons
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
 			base.item.shootSpeed = 20f;
-			base.item.shoot = base.mod.ProjectileType("LightSteelSwordPro");
+			base.item.shoot = ModContent.ProjectileType<LightSteelSwordPro>();
 		}
 
 		public override void AddRecipes()

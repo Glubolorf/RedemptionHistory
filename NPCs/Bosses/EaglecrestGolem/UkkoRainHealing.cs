@@ -41,7 +41,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 					base.projectile.Kill();
 				}
 			}
-			for (int p2 = 0; p2 < Main.npc.Length; p2++)
+			for (int p2 = 0; p2 < 200; p2++)
 			{
 				this.clearCheck2 = Main.npc[p2];
 				if (!this.clearCheck2.immortal && !this.clearCheck2.dontTakeDamage && Collision.CheckAABBvAABBCollision(base.projectile.position, base.projectile.Size, this.clearCheck2.position, this.clearCheck2.Size) && this.clearCheck2.life < this.clearCheck2.lifeMax - 1000)

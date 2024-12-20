@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -27,11 +28,11 @@ namespace Redemption.Items.Weapons
 			base.item.UseSound = SoundID.Item89;
 			base.item.value = Item.sellPrice(0, 5, 0, 0);
 			base.item.rare = 4;
-			base.item.shoot = base.mod.ProjectileType("ExBarrelPro");
+			base.item.shoot = ModContent.ProjectileType<ExBarrelPro>();
 			base.item.shootSpeed = 15f;
 			base.item.autoReuse = true;
 			base.item.noMelee = true;
-			base.item.useAmmo = base.mod.ItemType("ExBarrel");
+			base.item.useAmmo = ModContent.ItemType<ExBarrel>();
 		}
 
 		public override Vector2? HoldoutOffset()

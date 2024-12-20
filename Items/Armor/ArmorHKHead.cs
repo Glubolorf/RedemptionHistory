@@ -30,7 +30,7 @@ namespace Redemption.Items.Armor
 
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
-			return body.type == base.mod.ItemType("ArmorHK") && legs.type == base.mod.ItemType("ArmorHKLeggings");
+			return body.type == ModContent.ItemType<ArmorHK>() && legs.type == ModContent.ItemType<ArmorHKLeggings>();
 		}
 
 		public override void ArmorSetShadows(Player player)

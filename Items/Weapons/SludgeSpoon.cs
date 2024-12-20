@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,7 +29,7 @@ namespace Redemption.Items.Weapons
 			base.item.rare = 7;
 			base.item.UseSound = SoundID.Item1;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("SludgeSpoonPro");
+			base.item.shoot = ModContent.ProjectileType<SludgeSpoonPro>();
 			base.item.shootSpeed = 10f;
 		}
 

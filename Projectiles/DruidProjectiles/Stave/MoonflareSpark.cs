@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Dusts;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
@@ -44,11 +45,11 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave
 		public override void AI()
 		{
 			base.projectile.rotation += 0.09f;
-			int DustID2 = Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, base.mod.DustType("MoonflareDust"), base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 1f);
+			int DustID2 = Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, ModContent.DustType<MoonflareDust>(), base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 1f);
 			Main.dust[DustID2].noGravity = true;
 			if (base.projectile.localAI[0] == 0f)
 			{
-				int dustType = base.mod.DustType("MoonflareDust");
+				int dustType = ModContent.DustType<MoonflareDust>();
 				int pieCut = 8;
 				for (int i = 0; i < pieCut; i++)
 				{

@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,7 +10,7 @@ namespace Redemption.Items.Weapons.v08
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Cursed Thorn Hammer");
+			base.DisplayName.SetDefault("Twinrose Hammer");
 			base.Tooltip.SetDefault("Creates brambles of cursed thorns when hitting an enemy, dealing summon damage");
 		}
 
@@ -27,6 +28,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.value = Item.buyPrice(0, 55, 0, 0);
 			base.item.UseSound = SoundID.Item1;
 			base.item.autoReuse = true;
+			base.item.useTurn = true;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}
 
@@ -40,7 +42,7 @@ namespace Redemption.Items.Weapons.v08
 
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
 		{
-			Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, 0f, base.mod.ProjectileType("ThornSeed2"), base.item.damage, base.item.knockBack, Main.myPlayer, 0f, 0f);
+			Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, 0f, ModContent.ProjectileType<ThornSeed2>(), base.item.damage, base.item.knockBack, Main.myPlayer, 0f, 0f);
 		}
 
 		public override void AddRecipes()

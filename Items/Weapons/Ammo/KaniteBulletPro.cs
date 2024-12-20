@@ -53,8 +53,8 @@ namespace Redemption.Items.Weapons.Ammo
 
 		public override void Kill(int timeLeft)
 		{
-			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, -base.projectile.velocity.X + (float)Main.rand.Next(-4, 4), -base.projectile.velocity.Y + (float)Main.rand.Next(-4, 4), base.mod.ProjectileType("KaniteBulletFragment"), base.projectile.damage / 3, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
-			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, -base.projectile.velocity.X + (float)Main.rand.Next(-4, 4), -base.projectile.velocity.Y + (float)Main.rand.Next(-4, 4), base.mod.ProjectileType("KaniteBulletFragment"), base.projectile.damage / 3, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
+			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, -base.projectile.velocity.X + (float)Main.rand.Next(-4, 4), -base.projectile.velocity.Y + (float)Main.rand.Next(-4, 4), ModContent.ProjectileType<KaniteBulletFragment>(), base.projectile.damage / 3, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
+			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, -base.projectile.velocity.X + (float)Main.rand.Next(-4, 4), -base.projectile.velocity.Y + (float)Main.rand.Next(-4, 4), ModContent.ProjectileType<KaniteBulletFragment>(), base.projectile.damage / 3, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
 		}
 	}
 }

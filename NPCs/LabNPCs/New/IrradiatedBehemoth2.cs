@@ -1,5 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Items.LabThings;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -55,6 +58,18 @@ namespace Redemption.NPCs.LabNPCs.New
 			}
 		}
 
+		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+		{
+			if (Main.rand.Next(2) == 0 || Main.expertMode)
+			{
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff>(), Main.rand.Next(500, 1000), true);
+			}
+			if (Main.rand.Next(9) == 0 || (Main.expertMode && Main.rand.Next(7) == 0))
+			{
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff2>(), Main.rand.Next(250, 500), true);
+			}
+		}
+
 		public override void BossLoot(ref string name, ref int potionType)
 		{
 			potionType = 58;
@@ -69,12 +84,17 @@ namespace Redemption.NPCs.LabNPCs.New
 		{
 			if (!RedeWorld.labAccess3)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ZoneAccessPanel3A"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<ZoneAccessPanel3A>(), 1, false, 0, false, false);
 			}
 		}
 
 		public override void AI()
 		{
+			if (!this.title)
+			{
+				Redemption.ShowTitle(base.npc, 17);
+				this.title = true;
+			}
 			this.Target();
 			this.DespawnHandler();
 			base.npc.frameCounter += 1.0;
@@ -93,9 +113,9 @@ namespace Redemption.NPCs.LabNPCs.New
 			{
 				base.npc.TargetClosest(true);
 			}
-			if (!NPC.AnyNPCs(base.mod.NPCType("IrradiatedBehemothBody")))
+			if (!NPC.AnyNPCs(ModContent.NPCType<IrradiatedBehemothBody>()))
 			{
-				int minion = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y + 30, base.mod.NPCType("IrradiatedBehemothBody"), 0, (float)base.npc.whoAmI, 0f, 0f, 0f, 255);
+				int minion = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y + 30, ModContent.NPCType<IrradiatedBehemothBody>(), 0, (float)base.npc.whoAmI, 0f, 0f, 0f, 255);
 				Main.npc[minion].netUpdate = true;
 			}
 			if (base.npc.ai[1] == 0f)
@@ -134,24 +154,24 @@ namespace Redemption.NPCs.LabNPCs.New
 					float Speed = 8f;
 					Vector2 vector8 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 					int damage = 34;
-					int type = base.mod.ProjectileType("GreenGloopPro3");
+					int type = ModContent.ProjectileType<GreenGloopPro3>();
 					float rotation = (float)Math.Atan2((double)(vector8.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector8.X - (this.player.position.X + (float)this.player.width * 0.5f)));
 					int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0) + (float)Main.rand.Next(-1, 1), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0) + (float)Main.rand.Next(-1, 1), type, damage, 0f, 0, 0f, 0f);
 					Main.projectile[num54].netUpdate = true;
 				}
 				if (base.npc.ai[0] == 180f || base.npc.ai[0] == 300f)
 				{
-					int p = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(0f, 5f), base.mod.ProjectileType("GreenGasPro2"), 34, 3f, 255, 0f, 0f);
-					int p2 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-2f, 5f), base.mod.ProjectileType("GreenGasPro2"), 34, 3f, 255, 0f, 0f);
-					int p3 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(2f, 5f), base.mod.ProjectileType("GreenGasPro2"), 34, 3f, 255, 0f, 0f);
+					int p = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(0f, 5f), ModContent.ProjectileType<GreenGasPro2>(), 34, 3f, 255, 0f, 0f);
+					int p2 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-2f, 5f), ModContent.ProjectileType<GreenGasPro2>(), 34, 3f, 255, 0f, 0f);
+					int p3 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(2f, 5f), ModContent.ProjectileType<GreenGasPro2>(), 34, 3f, 255, 0f, 0f);
 					Main.projectile[p].netUpdate = true;
 					Main.projectile[p2].netUpdate = true;
 					Main.projectile[p3].netUpdate = true;
 				}
 				if (base.npc.ai[0] == 240f)
 				{
-					int p4 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(1f, 5f), base.mod.ProjectileType("GreenGasPro2"), 34, 3f, 255, 0f, 0f);
-					int p5 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-1f, 5f), base.mod.ProjectileType("GreenGasPro2"), 34, 3f, 255, 0f, 0f);
+					int p4 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(1f, 5f), ModContent.ProjectileType<GreenGasPro2>(), 34, 3f, 255, 0f, 0f);
+					int p5 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-1f, 5f), ModContent.ProjectileType<GreenGasPro2>(), 34, 3f, 255, 0f, 0f);
 					Main.projectile[p4].netUpdate = true;
 					Main.projectile[p5].netUpdate = true;
 				}
@@ -161,7 +181,7 @@ namespace Redemption.NPCs.LabNPCs.New
 				}
 				if (base.npc.ai[0] >= 480f && base.npc.ai[0] < 540f && Main.rand.Next(2) == 0)
 				{
-					int p6 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2((float)Main.rand.Next(-2, 2), (float)Main.rand.Next(0, 2)), base.mod.ProjectileType("GreenGloopPro2"), 34, 3f, 255, 0f, 0f);
+					int p6 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2((float)Main.rand.Next(-2, 2), (float)Main.rand.Next(0, 2)), ModContent.ProjectileType<GreenGloopPro2>(), 34, 3f, 255, 0f, 0f);
 					Main.projectile[p6].netUpdate = true;
 				}
 				if (base.npc.ai[0] >= 660f)
@@ -263,5 +283,7 @@ namespace Redemption.NPCs.LabNPCs.New
 		}
 
 		private Player player;
+
+		private bool title;
 	}
 }

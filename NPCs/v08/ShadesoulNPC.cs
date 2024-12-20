@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Items;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,7 +30,7 @@ namespace Redemption.NPCs.v08
 			base.npc.aiStyle = 2;
 			base.npc.alpha = 60;
 			base.npc.noGravity = true;
-			base.npc.catchItem = (short)base.mod.ItemType("Shadesoul");
+			base.npc.catchItem = (short)ModContent.ItemType<Shadesoul>();
 		}
 
 		public override void AI()
@@ -58,12 +60,12 @@ namespace Redemption.NPCs.v08
 
 		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
 		{
-			target.AddBuff(base.mod.BuffType("BlackenedHeartDebuff"), Main.rand.Next(10, 15), true);
+			target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), Main.rand.Next(10, 15), true);
 		}
 
 		public override void NPCLoot()
 		{
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("Shadesoul"), 1, false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<Shadesoul>(), 1, false, 0, false, false);
 		}
 
 		private int deathTimer;

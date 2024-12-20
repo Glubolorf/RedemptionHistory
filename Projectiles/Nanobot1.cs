@@ -27,7 +27,6 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			base.projectile.localAI[0] += 1f;
 			base.projectile.rotation = (float)Math.Atan2((double)base.projectile.velocity.Y, (double)base.projectile.velocity.X) + 1.57f;
 			if (base.projectile.localAI[0] == 0f)
 			{

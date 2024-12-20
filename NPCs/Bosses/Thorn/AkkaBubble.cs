@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.NPCs.Bosses.EaglecrestGolem;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -64,7 +65,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 			}
 			foreach (Projectile proj in Enumerable.Where<Projectile>(Main.projectile, (Projectile x) => x.Hitbox.Intersects(base.projectile.Hitbox)))
 			{
-				if (base.projectile != proj && !this.ZAPPED && proj.type == base.mod.ProjectileType("UkkoElectricBlast2"))
+				if (base.projectile != proj && !this.ZAPPED && proj.type == ModContent.ProjectileType<UkkoElectricBlast2>())
 				{
 					for (int i = 0; i < 7; i++)
 					{

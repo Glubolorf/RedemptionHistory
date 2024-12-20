@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs.Wasteland;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,7 +27,7 @@ namespace Redemption.Items.Weapons.Ammo
 			base.item.height = 24;
 			base.item.value = Item.sellPrice(0, 0, 5, 0);
 			base.item.rare = 7;
-			base.item.buffType = base.mod.BuffType("BileFlaskBuff");
+			base.item.buffType = ModContent.BuffType<BileFlaskBuff>();
 			base.item.buffTime = 52000;
 		}
 
@@ -34,7 +35,7 @@ namespace Redemption.Items.Weapons.Ammo
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
 			modRecipe.AddIngredient(126, 1);
-			modRecipe.AddIngredient(base.mod.ItemType("Bile"), 2);
+			modRecipe.AddIngredient(ModContent.ItemType<Bile>(), 2);
 			modRecipe.AddTile(243);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();

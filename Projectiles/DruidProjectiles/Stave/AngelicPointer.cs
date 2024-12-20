@@ -64,15 +64,15 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave
 
 		public override void Kill(int timeLeft)
 		{
-			Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 14f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-6 + Main.rand.Next(0, 12)), base.mod.ProjectileType("AngelicArrow"), base.projectile.damage / 2, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
-			Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 14f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-6 + Main.rand.Next(0, 12)), base.mod.ProjectileType("AngelicArrow"), base.projectile.damage / 2, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+			Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 14f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-6 + Main.rand.Next(0, 12)), ModContent.ProjectileType<AngelicArrow>(), base.projectile.damage / 2, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+			Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 14f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-6 + Main.rand.Next(0, 12)), ModContent.ProjectileType<AngelicArrow>(), base.projectile.damage / 2, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			if (Main.rand.Next(2) == 0)
 			{
-				Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 14f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-6 + Main.rand.Next(0, 12)), base.mod.ProjectileType("AngelicArrow"), base.projectile.damage / 2, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 14f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-6 + Main.rand.Next(0, 12)), ModContent.ProjectileType<AngelicArrow>(), base.projectile.damage / 2, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			}
 			if (Main.rand.Next(2) == 0)
 			{
-				Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 14f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-6 + Main.rand.Next(0, 12)), base.mod.ProjectileType("AngelicArrow"), base.projectile.damage / 2, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 14f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-6 + Main.rand.Next(0, 12)), ModContent.ProjectileType<AngelicArrow>(), base.projectile.damage / 2, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			}
 			Main.PlaySound(0, (int)base.projectile.position.X, (int)base.projectile.position.Y, 1, 1f, 0f);
 			Vector2 usePos = base.projectile.position;

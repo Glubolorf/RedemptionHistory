@@ -2,6 +2,8 @@
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.LabThings;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -62,7 +64,7 @@ namespace Redemption.NPCs.LabNPCs.New
 		{
 			if (!RedeWorld.labAccess5)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ZoneAccessPanel5A"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<ZoneAccessPanel5A>(), 1, false, 0, false, false);
 			}
 		}
 
@@ -86,6 +88,11 @@ namespace Redemption.NPCs.LabNPCs.New
 				this.landed = reader.ReadBool();
 				this.flying = reader.ReadBool();
 			}
+		}
+
+		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+		{
+			return false;
 		}
 
 		public override void AI()
@@ -243,7 +250,7 @@ namespace Redemption.NPCs.LabNPCs.New
 				{
 					if (!RedeWorld.labAccess5)
 					{
-						Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ZoneAccessPanel5A"), 1, false, 0, false, false);
+						Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<ZoneAccessPanel5A>(), 1, false, 0, false, false);
 					}
 					RedeWorld.downedVolt = true;
 					if (Main.netMode == 2)
@@ -252,7 +259,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					}
 					NPC npc2 = base.npc;
 					npc2.position.Y = npc2.position.Y - 30f;
-					base.npc.SetDefaults(base.mod.NPCType("ProtectorVoltNPC"), -1f);
+					base.npc.SetDefaults(ModContent.NPCType<ProtectorVoltNPC>(), -1f);
 				}
 			}
 			else
@@ -295,7 +302,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					case 0:
 						break;
 					case 1:
-						goto IL_AE2;
+						goto IL_AC1;
 					case 2:
 					{
 						base.npc.ai[2] += 1f;
@@ -311,7 +318,7 @@ namespace Redemption.NPCs.LabNPCs.New
 							float Speed = 10f;
 							Vector2 vector8 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 							int damage = base.npc.damage / 4;
-							int type = base.mod.ProjectileType("ElectricZapPro1");
+							int type = ModContent.ProjectileType<ElectricZapPro1>();
 							float rotation = (float)Math.Atan2((double)(vector8.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector8.X - (this.player.position.X + (float)this.player.width * 0.5f)));
 							int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0) + (float)Main.rand.Next(-2, 2), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0) + (float)Main.rand.Next(-2, 2), type, damage, 0f, 0, 0f, 0f);
 							Main.projectile[num54].netUpdate = true;
@@ -327,9 +334,9 @@ namespace Redemption.NPCs.LabNPCs.New
 							base.npc.ai[1] = 1f;
 							base.npc.ai[2] = 0f;
 							base.npc.netUpdate = true;
-							goto IL_16B8;
+							goto IL_1634;
 						}
-						goto IL_16B8;
+						goto IL_1634;
 					}
 					case 3:
 						base.npc.ai[2] += 1f;
@@ -345,11 +352,11 @@ namespace Redemption.NPCs.LabNPCs.New
 						if (base.npc.ai[2] == 60f)
 						{
 							Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
-							int p = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)((base.npc.spriteDirection == 1) ? 4 : -4), -3f, base.mod.ProjectileType("ElectricOrbPro1"), base.npc.damage / 4, 3f, 255, 0f, 0f);
-							p = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)((base.npc.spriteDirection == 1) ? 6 : -6), -4f, base.mod.ProjectileType("ElectricOrbPro1"), base.npc.damage / 4, 3f, 255, 0f, 0f);
-							p = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)((base.npc.spriteDirection == 1) ? 8 : -8), -5f, base.mod.ProjectileType("ElectricOrbPro1"), base.npc.damage / 4, 3f, 255, 0f, 0f);
-							p = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)((base.npc.spriteDirection == 1) ? 10 : -10), -6f, base.mod.ProjectileType("ElectricOrbPro1"), base.npc.damage / 4, 3f, 255, 0f, 0f);
-							p = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)((base.npc.spriteDirection == 1) ? 12 : -12), -7f, base.mod.ProjectileType("ElectricOrbPro1"), base.npc.damage / 4, 3f, 255, 0f, 0f);
+							int p = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)((base.npc.spriteDirection == 1) ? 4 : -4), -3f, ModContent.ProjectileType<ElectricOrbPro1>(), base.npc.damage / 4, 3f, 255, 0f, 0f);
+							p = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)((base.npc.spriteDirection == 1) ? 6 : -6), -4f, ModContent.ProjectileType<ElectricOrbPro1>(), base.npc.damage / 4, 3f, 255, 0f, 0f);
+							p = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)((base.npc.spriteDirection == 1) ? 8 : -8), -5f, ModContent.ProjectileType<ElectricOrbPro1>(), base.npc.damage / 4, 3f, 255, 0f, 0f);
+							p = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)((base.npc.spriteDirection == 1) ? 10 : -10), -6f, ModContent.ProjectileType<ElectricOrbPro1>(), base.npc.damage / 4, 3f, 255, 0f, 0f);
+							p = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)((base.npc.spriteDirection == 1) ? 12 : -12), -7f, ModContent.ProjectileType<ElectricOrbPro1>(), base.npc.damage / 4, 3f, 255, 0f, 0f);
 							Main.projectile[p].netUpdate = true;
 						}
 						if (base.npc.ai[2] > 170f)
@@ -358,9 +365,9 @@ namespace Redemption.NPCs.LabNPCs.New
 							base.npc.ai[2] = 0f;
 							this.customGunRot = false;
 							base.npc.netUpdate = true;
-							goto IL_16B8;
+							goto IL_1634;
 						}
-						goto IL_16B8;
+						goto IL_1634;
 					case 4:
 						base.npc.ai[2] += 1f;
 						this.customGunRot = true;
@@ -384,7 +391,7 @@ namespace Redemption.NPCs.LabNPCs.New
 						if (base.npc.ai[2] == 60f)
 						{
 							Main.PlaySound(SoundID.Item73, (int)base.npc.position.X, (int)base.npc.position.Y);
-							int p2 = Projectile.NewProjectile((base.npc.spriteDirection == 1) ? (base.npc.Center.X + 78f) : (base.npc.Center.X - 78f), base.npc.Center.Y + 10f, 0f, 0f, base.mod.ProjectileType("TeslaBeamSpawn"), base.npc.damage / 4, 1f, Main.myPlayer, (float)((base.npc.spriteDirection == 1) ? 0 : 1), 0f);
+							int p2 = Projectile.NewProjectile((base.npc.spriteDirection == 1) ? (base.npc.Center.X + 78f) : (base.npc.Center.X - 78f), base.npc.Center.Y + 10f, 0f, 0f, ModContent.ProjectileType<TeslaBeamSpawn>(), base.npc.damage / 4, 1f, Main.myPlayer, (float)((base.npc.spriteDirection == 1) ? 0 : 1), 0f);
 							Main.projectile[p2].netUpdate = true;
 							if (base.npc.spriteDirection == 1)
 							{
@@ -403,13 +410,13 @@ namespace Redemption.NPCs.LabNPCs.New
 							this.stayRight = false;
 							this.customGunRot = false;
 							base.npc.netUpdate = true;
-							goto IL_16B8;
+							goto IL_1634;
 						}
-						goto IL_16B8;
+						goto IL_1634;
 					case 5:
 						if (this.flying)
 						{
-							goto IL_AE2;
+							goto IL_AC1;
 						}
 						base.npc.ai[2] += 1f;
 						this.customGunRot = true;
@@ -431,7 +438,7 @@ namespace Redemption.NPCs.LabNPCs.New
 							Main.PlaySound(SoundID.Item91, (int)base.npc.position.X, (int)base.npc.position.Y);
 							Vector2 vector9 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 							int damage2 = base.npc.damage / 4;
-							int type2 = base.mod.ProjectileType("ElectricZapPro1");
+							int type2 = ModContent.ProjectileType<ElectricZapPro1>();
 							int num55 = Projectile.NewProjectile(vector9.X, vector9.Y, (base.npc.spriteDirection == 1) ? 14f : -14f, 0f, type2, damage2, 0f, 0, 0f, 0f);
 							Main.projectile[num55].netUpdate = true;
 							Main.projectile[num55].tileCollide = false;
@@ -443,9 +450,9 @@ namespace Redemption.NPCs.LabNPCs.New
 							base.npc.ai[2] = 0f;
 							this.customGunRot = false;
 							base.npc.netUpdate = true;
-							goto IL_16B8;
+							goto IL_1634;
 						}
-						goto IL_16B8;
+						goto IL_1634;
 					default:
 						base.npc.ai[2] = 0f;
 						break;
@@ -457,7 +464,7 @@ namespace Redemption.NPCs.LabNPCs.New
 						float Speed2 = 15f;
 						Vector2 vector10 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 						int damage3 = base.npc.damage / 4;
-						int type3 = base.mod.ProjectileType("ElectricZapPro1");
+						int type3 = ModContent.ProjectileType<ElectricZapPro1>();
 						float rotation2 = (float)Math.Atan2((double)(vector10.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector10.X - (this.player.position.X + (float)this.player.width * 0.5f)));
 						int num56 = Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0), type3, damage3, 0f, 0, 0f, 0f);
 						Main.projectile[num56].netUpdate = true;
@@ -469,10 +476,10 @@ namespace Redemption.NPCs.LabNPCs.New
 						base.npc.ai[1] = 1f;
 						base.npc.ai[2] = 0f;
 						base.npc.netUpdate = true;
-						goto IL_16B8;
+						goto IL_1634;
 					}
-					goto IL_16B8;
-					IL_AE2:
+					goto IL_1634;
+					IL_AC1:
 					base.npc.ai[2] += 1f;
 					if (base.npc.ai[2] % 10f == 0f)
 					{
@@ -480,7 +487,7 @@ namespace Redemption.NPCs.LabNPCs.New
 						float Speed3 = 14f;
 						Vector2 vector11 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 						int damage4 = base.npc.damage / 4;
-						int type4 = base.mod.ProjectileType("ElectricZapPro1");
+						int type4 = ModContent.ProjectileType<ElectricZapPro1>();
 						float rotation3 = (float)Math.Atan2((double)(vector11.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector11.X - (this.player.position.X + (float)this.player.width * 0.5f)));
 						int num57 = Projectile.NewProjectile(vector11.X, vector11.Y, (float)(Math.Cos((double)rotation3) * (double)Speed3 * -1.0), (float)(Math.Sin((double)rotation3) * (double)Speed3 * -1.0), type4, damage4, 0f, 0, 0f, 0f);
 						Main.projectile[num57].netUpdate = true;
@@ -495,7 +502,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					}
 				}
 			}
-			IL_16B8:
+			IL_1634:
 			if (base.npc.collideY && base.npc.velocity.Y > 0f && !this.flying && !this.landed)
 			{
 				for (int k = 0; k < 40; k++)
@@ -541,8 +548,12 @@ namespace Redemption.NPCs.LabNPCs.New
 
 		public override bool CheckDead()
 		{
-			base.npc.life = 1;
-			return false;
+			if (Main.netMode == 0)
+			{
+				base.npc.life = 1;
+				return false;
+			}
+			return true;
 		}
 
 		public Vector2 PosPick()
@@ -644,7 +655,7 @@ namespace Redemption.NPCs.LabNPCs.New
 			{
 				new Vector2(base.npc.Center.X, base.npc.Center.Y);
 				int num214 = hopAni.Height / 1;
-				int y6 = num214 * this.singleFrame;
+				int y6 = 0;
 				new Vector2((float)hopAni.Width * 0.5f, (float)hopAni.Height * 0.5f);
 				for (int i = this.oldPos.Length - 1; i >= 0; i--)
 				{
@@ -660,12 +671,12 @@ namespace Redemption.NPCs.LabNPCs.New
 			{
 				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 				int num215 = hopAni.Height / 1;
-				int y7 = num215 * this.singleFrame;
+				int y7 = 0;
 				Main.spriteBatch.Draw(hopAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y7, hopAni.Width, num215)), drawColor, base.npc.rotation, new Vector2((float)hopAni.Width / 2f, (float)num215 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			Vector2 drawCenterG = new Vector2(base.npc.Center.X, base.npc.Center.Y + 6f);
 			int numG = gunAni.Height / 4;
-			int yG = numG * this.gunFrame;
+			int yG = 0;
 			spriteBatch.Draw(gunAni, drawCenterG - Main.screenPosition, new Rectangle?(new Rectangle(0, yG, gunAni.Width, numG)), drawColor, this.customGunRot ? this.gunRot : Utils.ToRotation(base.npc.DirectionTo(Main.player[base.npc.target].Center)), new Vector2((float)gunAni.Width / 2f, (float)numG / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
 			return false;
 		}
@@ -708,10 +719,6 @@ namespace Redemption.NPCs.LabNPCs.New
 		private float[] oldrot = new float[3];
 
 		private bool landed;
-
-		private int singleFrame;
-
-		private int gunFrame;
 
 		public float[] customAI = new float[1];
 

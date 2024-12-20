@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -25,7 +26,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.knockBack = 6.5f;
 			base.item.damage = 14;
 			base.item.noUseGraphic = true;
-			base.item.shoot = base.mod.ProjectileType("CursedRootFlailPro1");
+			base.item.shoot = ModContent.ProjectileType<CursedRootFlailPro1>();
 			base.item.shootSpeed = 30f;
 			base.item.rare = 2;
 			base.item.UseSound = SoundID.Item1;

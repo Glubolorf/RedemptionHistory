@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable
@@ -23,7 +24,7 @@ namespace Redemption.Items.Placeable
 			base.item.consumable = true;
 			base.item.value = 100;
 			base.item.rare = 1;
-			base.item.createTile = base.mod.TileType("PZTrophyTile");
+			base.item.createTile = ModContent.TileType<PZTrophyTile>();
 			base.item.placeStyle = 0;
 		}
 	}

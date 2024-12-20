@@ -39,7 +39,7 @@ namespace Redemption.Items.Armor.Domain
 
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
-			return body.type == base.mod.ItemType("IthonicTabard") && legs.type == base.mod.ItemType("IthonicGreaves");
+			return body.type == ModContent.ItemType<IthonicTabard>() && legs.type == ModContent.ItemType<IthonicGreaves>();
 		}
 
 		public override void UpdateArmorSet(Player player)

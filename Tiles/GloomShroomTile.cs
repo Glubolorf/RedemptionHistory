@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Dusts;
+using Redemption.Items;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -12,8 +14,8 @@ namespace Redemption.Tiles
 			Main.tileSolid[(int)base.Type] = true;
 			Main.tileMergeDirt[(int)base.Type] = true;
 			Main.tileBlockLight[(int)base.Type] = true;
-			this.dustType = base.mod.DustType("ShroomDust1");
-			this.drop = base.mod.ItemType("GloomMushroom");
+			this.dustType = ModContent.DustType<ShroomDust1>();
+			this.drop = ModContent.ItemType<GloomMushroom>();
 			this.minPick = 0;
 			this.mineResist = 1f;
 			base.CreateMapEntryName(null);

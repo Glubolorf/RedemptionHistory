@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Items;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -14,8 +16,8 @@ namespace Redemption.Tiles.Wasteland
 			Main.tileMergeDirt[(int)base.Type] = true;
 			Main.tileBlockLight[(int)base.Type] = true;
 			Main.tileValue[(int)base.Type] = 600;
-			Main.tileMerge[(int)base.Type][base.mod.TileType("DeadRockTile")] = true;
-			this.drop = base.mod.ItemType("Starlite");
+			Main.tileMerge[(int)base.Type][ModContent.TileType<DeadRockTile>()] = true;
+			this.drop = ModContent.ItemType<Starlite>();
 			this.minPick = 180;
 			this.mineResist = 3.5f;
 			this.soundType = 21;
@@ -29,7 +31,7 @@ namespace Redemption.Tiles.Wasteland
 			Player player = Main.LocalPlayer;
 			if ((int)Vector2.Distance(player.Center / 16f, new Vector2((float)i, (float)j)) <= 15)
 			{
-				player.AddBuff(base.mod.BuffType("RadioactiveFalloutDebuff"), Main.rand.Next(10, 20), true);
+				player.AddBuff(ModContent.BuffType<RadioactiveFalloutDebuff>(), Main.rand.Next(10, 20), true);
 			}
 		}
 
@@ -45,7 +47,7 @@ namespace Redemption.Tiles.Wasteland
 		{
 			if (Main.tile[i, j - 1].type == 0 && Main.tile[i, j].active() && Main.rand.Next(4) == 0)
 			{
-				WorldGen.PlaceTile(i, j - 1, base.mod.TileType("StarliteGemTile"), true, false, -1, 0);
+				WorldGen.PlaceTile(i, j - 1, ModContent.TileType<StarliteGemTile>(), true, false, -1, 0);
 				return true;
 			}
 			return false;
@@ -55,22 +57,22 @@ namespace Redemption.Tiles.Wasteland
 		{
 			if (Main.tile[i, j - 1].type == 0 && Main.tile[i, j - 2].type == 0 && Main.rand.Next(6) == 0)
 			{
-				WorldGen.PlaceTile(i, j - 1, base.mod.TileType("DeadRockStalagmitesTile"), true, false, -1, 0);
+				WorldGen.PlaceTile(i, j - 1, ModContent.TileType<DeadRockStalagmitesTile>(), true, false, -1, 0);
 				return true;
 			}
 			if (Main.tile[i, j + 1].type == 0 && Main.tile[i, j + 2].type == 0 && Main.rand.Next(4) == 0)
 			{
-				WorldGen.PlaceTile(i, j + 1, base.mod.TileType("DeadRockStalacmitesTile"), true, false, -1, 0);
+				WorldGen.PlaceTile(i, j + 1, ModContent.TileType<DeadRockStalacmitesTile>(), true, false, -1, 0);
 				return true;
 			}
 			if (Main.tile[i, j - 1].type == 0 && Main.rand.Next(6) == 0)
 			{
-				WorldGen.PlaceTile(i, j - 1, base.mod.TileType("DeadRockStalagmites2Tile"), true, false, -1, 0);
+				WorldGen.PlaceTile(i, j - 1, ModContent.TileType<DeadRockStalagmites2Tile>(), true, false, -1, 0);
 				return true;
 			}
 			if (Main.tile[i, j + 1].type == 0 && Main.rand.Next(4) == 0)
 			{
-				WorldGen.PlaceTile(i, j + 1, base.mod.TileType("DeadRockStalacmites2Tile"), true, false, -1, 0);
+				WorldGen.PlaceTile(i, j + 1, ModContent.TileType<DeadRockStalacmites2Tile>(), true, false, -1, 0);
 				return true;
 			}
 			return false;

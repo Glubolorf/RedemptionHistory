@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.LabDeco;
+using Redemption.NPCs.LabNPCs.New;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -44,7 +46,7 @@ namespace Redemption.Tiles.LabDeco
 		{
 			Player localPlayer = Main.LocalPlayer;
 			RedePlayer redePlayer = (RedePlayer)localPlayer.GetModPlayer(base.mod, "RedePlayer");
-			if ((int)Vector2.Distance(localPlayer.Center / 16f, new Vector2((float)i, (float)j)) <= 100 && Main.netMode == 0 && !NPC.AnyNPCs(base.mod.NPCType("TbotMinibossStart")) && !NPC.AnyNPCs(base.mod.NPCType("TbotMiniboss")) && !NPC.AnyNPCs(base.mod.NPCType("ProtectorVoltNPC")) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface)
+			if ((int)Vector2.Distance(localPlayer.Center / 16f, new Vector2((float)i, (float)j)) <= 100 && Main.netMode == 0 && !NPC.AnyNPCs(ModContent.NPCType<TbotMinibossStart>()) && !NPC.AnyNPCs(ModContent.NPCType<TbotMiniboss>()) && !NPC.AnyNPCs(ModContent.NPCType<ProtectorVoltNPC>()) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface)
 			{
 				Main.tile[i, j];
 				i -= 36;
@@ -52,7 +54,7 @@ namespace Redemption.Tiles.LabDeco
 				j *= 16;
 				if (RedeWorld.downedVolt)
 				{
-					int k = NPC.NewNPC(i, j, base.mod.NPCType("ProtectorVoltNPC"), 0, 0f, 0f, 0f, 0f, 255);
+					int k = NPC.NewNPC(i, j, ModContent.NPCType<ProtectorVoltNPC>(), 0, 0f, 0f, 0f, 0f, 255);
 					if (Main.netMode == 2)
 					{
 						NetMessage.SendData(23, -1, -1, null, k, 0f, 0f, 0f, 0, 0, 0);
@@ -61,7 +63,7 @@ namespace Redemption.Tiles.LabDeco
 				}
 				else
 				{
-					int l = NPC.NewNPC(i, j, base.mod.NPCType("TbotMinibossStart"), 0, 0f, 0f, 0f, 0f, 255);
+					int l = NPC.NewNPC(i, j, ModContent.NPCType<TbotMinibossStart>(), 0, 0f, 0f, 0f, 0f, 255);
 					if (Main.netMode == 2)
 					{
 						NetMessage.SendData(23, -1, -1, null, l, 0f, 0f, 0f, 0, 0, 0);
@@ -72,7 +74,7 @@ namespace Redemption.Tiles.LabDeco
 
 		public override bool NewRightClick(int i, int j)
 		{
-			if (Main.netMode != 0 && !NPC.AnyNPCs(base.mod.NPCType("TbotMinibossStart")) && !NPC.AnyNPCs(base.mod.NPCType("TbotMiniboss")) && !NPC.AnyNPCs(base.mod.NPCType("ProtectorVoltNPC")) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface)
+			if (Main.netMode != 0 && !NPC.AnyNPCs(ModContent.NPCType<TbotMinibossStart>()) && !NPC.AnyNPCs(ModContent.NPCType<TbotMiniboss>()) && !NPC.AnyNPCs(ModContent.NPCType<ProtectorVoltNPC>()) && RedeWorld.downedJanitor && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface)
 			{
 				ModPacket packet = base.mod.GetPacket(256);
 				packet.Write(9);
@@ -89,7 +91,7 @@ namespace Redemption.Tiles.LabDeco
 				Player localPlayer = Main.LocalPlayer;
 				localPlayer.noThrow = 2;
 				localPlayer.showItemIcon = true;
-				localPlayer.showItemIcon2 = base.mod.ItemType("SignDeath");
+				localPlayer.showItemIcon2 = ModContent.ItemType<SignDeath>();
 			}
 		}
 

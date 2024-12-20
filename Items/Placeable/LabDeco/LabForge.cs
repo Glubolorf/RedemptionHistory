@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles.LabDeco;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -25,7 +26,7 @@ namespace Redemption.Items.Placeable.LabDeco
 			base.item.consumable = true;
 			base.item.value = Item.sellPrice(0, 10, 0, 0);
 			base.item.rare = 11;
-			base.item.createTile = base.mod.TileType("LabForgeTile");
+			base.item.createTile = ModContent.TileType<LabForgeTile>();
 			base.item.placeStyle = 0;
 		}
 	}

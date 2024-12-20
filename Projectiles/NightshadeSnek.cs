@@ -45,21 +45,9 @@ namespace Redemption.Projectiles
 			}
 			base.projectile.localAI[0] += 1f;
 			base.projectile.rotation = (float)Math.Atan2((double)base.projectile.velocity.Y, (double)base.projectile.velocity.X) + 1.57f;
-			if (base.projectile.localAI[0] == 30f)
+			if (Main.myPlayer == base.projectile.owner && base.projectile.localAI[0] % 30f == 0f)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 10f, base.projectile.position.Y + 8f), new Vector2(0f, 0f), base.mod.ProjectileType("CloudNightshade"), 11, 3f, base.projectile.owner, 0f, 1f);
-			}
-			if (base.projectile.localAI[0] == 60f)
-			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 10f, base.projectile.position.Y + 8f), new Vector2(0f, 0f), base.mod.ProjectileType("CloudNightshade"), 11, 3f, base.projectile.owner, 0f, 1f);
-			}
-			if (base.projectile.localAI[0] == 90f)
-			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 10f, base.projectile.position.Y + 8f), new Vector2(0f, 0f), base.mod.ProjectileType("CloudNightshade"), 11, 3f, base.projectile.owner, 0f, 1f);
-			}
-			if (base.projectile.localAI[0] == 120f)
-			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 10f, base.projectile.position.Y + 8f), new Vector2(0f, 0f), base.mod.ProjectileType("CloudNightshade"), 11, 3f, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 10f, base.projectile.position.Y + 8f), new Vector2(0f, 0f), ModContent.ProjectileType<CloudNightshade>(), 11, 3f, base.projectile.owner, 0f, 0f);
 			}
 		}
 

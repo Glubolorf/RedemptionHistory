@@ -17,7 +17,7 @@ namespace Redemption.Buffs
 		{
 			player.noKnockback = true;
 			player.shadowDodge = true;
-			player.shadowDodgeTimer = 30;
+			player.shadowDodgeTimer = 10;
 		}
 	}
 }

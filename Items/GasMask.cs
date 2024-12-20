@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -27,7 +28,7 @@ namespace Redemption.Items
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			player.buffImmune[base.mod.BuffType("RadioactiveFalloutDebuff")] = true;
+			player.buffImmune[ModContent.BuffType<RadioactiveFalloutDebuff>()] = true;
 		}
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)

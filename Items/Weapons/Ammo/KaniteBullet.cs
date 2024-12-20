@@ -23,7 +23,7 @@ namespace Redemption.Items.Weapons.Ammo
 			base.item.knockBack = 2f;
 			base.item.value = 1;
 			base.item.rare = 1;
-			base.item.shoot = base.mod.ProjectileType("KaniteBulletPro");
+			base.item.shoot = ModContent.ProjectileType<KaniteBulletPro>();
 			base.item.shootSpeed = 4.25f;
 			base.item.ammo = AmmoID.Bullet;
 		}

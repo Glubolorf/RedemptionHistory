@@ -46,7 +46,7 @@ namespace Redemption.NPCs
 			}
 			if (Main.netMode != 1 && base.npc.life <= 0)
 			{
-				NPC.NewNPC((int)base.npc.position.X + 34, (int)base.npc.position.Y + 20, base.mod.NPCType("Newb"), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.position.X + 34, (int)base.npc.position.Y + 20, ModContent.NPCType<Newb>(), 0, 0f, 0f, 0f, 0f, 255);
 			}
 			RedeWorld.foundNewb = true;
 			if (Main.netMode == 2)
@@ -61,7 +61,7 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.Cavern.Chance * ((!RedeWorld.foundNewb && !NPC.AnyNPCs(base.mod.NPCType("DirtPile"))) ? 0.004f : 0f);
+			return SpawnCondition.Cavern.Chance * ((!RedeWorld.foundNewb && !NPC.AnyNPCs(ModContent.NPCType<DirtPile>())) ? 0.004f : 0f);
 		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Dusts;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -61,7 +62,7 @@ namespace Redemption.Projectiles
 			Main.PlaySound(SoundID.NPCDeath1, base.projectile.position);
 			for (int i = 0; i < 30; i++)
 			{
-				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, base.mod.DustType("SludgeSpoonDust"), 0f, 0f, 100, default(Color), 1.5f);
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, ModContent.DustType<SludgeSpoonDust>(), 0f, 0f, 100, default(Color), 1.5f);
 				Main.dust[dustIndex].velocity *= 1.4f;
 			}
 		}

@@ -1,5 +1,6 @@
 ﻿using System;
 using Redemption.Items.DruidDamageClass;
+using Redemption.Projectiles.DruidProjectiles.Stave.Guardians;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -17,9 +18,7 @@ namespace Redemption.Buffs
 		public override void Update(Player player, ref int buffIndex)
 		{
 			DruidDamagePlayer.ModPlayer(player);
-			RedePlayer modPlayer3 = player.GetModPlayer<RedePlayer>();
-			modPlayer3.staveSpeed += 0.35f;
-			modPlayer3.staveQuadShot = true;
+			player.GetModPlayer<RedePlayer>().staveQuadShot = true;
 			player.nightVision = true;
 			player.detectCreature = true;
 			player.dangerSense = true;
@@ -30,7 +29,7 @@ namespace Redemption.Buffs
 				player.jumpBoost = true;
 			}
 			RedePlayer modPlayer2 = player.GetModPlayer<RedePlayer>();
-			if (player.ownedProjectileCounts[base.mod.ProjectileType("NatureGuardian15")] > 0)
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<NatureGuardian15>()] > 0)
 			{
 				modPlayer2.natureGuardian15 = true;
 			}

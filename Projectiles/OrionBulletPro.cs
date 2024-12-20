@@ -32,7 +32,6 @@ namespace Redemption.Projectiles
 			Dust dust = Main.dust[Dust];
 			dust.velocity.X = 0f;
 			dust.velocity.Y = 0f;
-			base.projectile.localAI[0] += 1f;
 			base.projectile.rotation = (float)Math.Atan2((double)base.projectile.velocity.Y, (double)base.projectile.velocity.X) + 1.57f;
 			if (base.projectile.localAI[0] == 0f)
 			{

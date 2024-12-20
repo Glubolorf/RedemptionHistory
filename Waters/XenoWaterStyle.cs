@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Dusts;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -19,7 +20,7 @@ namespace Redemption.Waters
 
 		public override int GetSplashDust()
 		{
-			return base.mod.DustType("XenoWaterSplash");
+			return ModContent.DustType<XenoWaterSplash>();
 		}
 
 		public override int GetDropletGore()

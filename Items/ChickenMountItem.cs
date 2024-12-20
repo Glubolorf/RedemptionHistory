@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.Mounts;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -22,7 +23,7 @@ namespace Redemption.Items
 			base.item.useTime = 20;
 			base.item.useAnimation = 20;
 			base.item.noMelee = true;
-			base.item.mountType = base.mod.MountType("ChickenMount");
+			base.item.mountType = ModContent.MountType<ChickenMount>();
 			base.item.UseSound = SoundID.Item25;
 		}
 	}

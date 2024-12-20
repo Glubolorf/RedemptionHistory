@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Projectiles.Minions;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,9 +31,9 @@ namespace Redemption.Items.Weapons
 			base.item.value = Item.buyPrice(0, 5, 0, 0);
 			base.item.rare = 7;
 			base.item.UseSound = SoundID.Item44;
-			base.item.shoot = base.mod.ProjectileType("XenomiteHatchling");
+			base.item.shoot = ModContent.ProjectileType<XenomiteHatchling>();
 			base.item.shootSpeed = 8f;
-			base.item.buffType = base.mod.BuffType("XenomiteHatchlingBuff");
+			base.item.buffType = ModContent.BuffType<XenomiteHatchlingBuff>();
 			base.item.buffTime = 3600;
 		}
 

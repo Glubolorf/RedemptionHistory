@@ -1,5 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Dusts;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -38,12 +41,24 @@ namespace Redemption.NPCs.v08
 			{
 				for (int i = 0; i < 25; i++)
 				{
-					int dustIndex2 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, base.mod.DustType("SludgeSpoonDust"), 0f, 0f, 100, default(Color), 3f);
+					int dustIndex2 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, ModContent.DustType<SludgeSpoonDust>(), 0f, 0f, 100, default(Color), 3f);
 					Main.dust[dustIndex2].velocity *= 4.6f;
 				}
 			}
-			int dustIndex3 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, base.mod.DustType("SludgeSpoonDust"), 0f, 0f, 100, default(Color), 2f);
+			int dustIndex3 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, ModContent.DustType<SludgeSpoonDust>(), 0f, 0f, 100, default(Color), 2f);
 			Main.dust[dustIndex3].velocity *= 1.6f;
+		}
+
+		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+		{
+			if (Main.rand.Next(2) == 0 || Main.expertMode)
+			{
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff>(), Main.rand.Next(500, 1000), true);
+			}
+			if (Main.rand.Next(9) == 0 || (Main.expertMode && Main.rand.Next(7) == 0))
+			{
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff2>(), Main.rand.Next(250, 500), true);
+			}
 		}
 
 		public override void AI()
@@ -56,7 +71,7 @@ namespace Redemption.NPCs.v08
 			{
 				for (int i = 0; i < 6; i++)
 				{
-					int p = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-4 + Main.rand.Next(0, 5)), (float)(-1 + Main.rand.Next(-4, 0)), base.mod.ProjectileType("RSlimeSpikePro1"), 20, 3f, 255, 0f, 0f);
+					int p = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-4 + Main.rand.Next(0, 5)), (float)(-1 + Main.rand.Next(-4, 0)), ModContent.ProjectileType<RSlimeSpikePro1>(), 20, 3f, 255, 0f, 0f);
 					Main.projectile[p].netUpdate = true;
 				}
 				this.spike = false;

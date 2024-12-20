@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -53,7 +55,7 @@ namespace Redemption.NPCs
 		public override void BossLoot(ref string name, ref int potionType)
 		{
 			Player player3 = Main.player[base.npc.target];
-			potionType = base.mod.ItemType("AncientGoldCoin");
+			potionType = ModContent.ItemType<AncientGoldCoin>();
 			if (!RedeWorld.downedSunkenCaptain)
 			{
 				for (int i = 0; i < 255; i++)
@@ -63,7 +65,7 @@ namespace Redemption.NPCs
 					{
 						for (int j = 0; j < player2.inventory.Length; j++)
 						{
-							if (player2.inventory[j].type == base.mod.ItemType("RedemptionTeller"))
+							if (player2.inventory[j].type == ModContent.ItemType<RedemptionTeller>())
 							{
 								Main.NewText("<Chalice of Alignment> That was spooky. I hate ghosts.", Color.DarkGoldenrod, false);
 							}
@@ -81,6 +83,11 @@ namespace Redemption.NPCs
 
 		public override void AI()
 		{
+			if (!this.title)
+			{
+				Redemption.ShowTitle(base.npc, 22);
+				this.title = true;
+			}
 			this.sunkenTimer++;
 			if (this.sunkenTimer == 1)
 			{
@@ -122,31 +129,31 @@ namespace Redemption.NPCs
 			{
 				base.npc.dontTakeDamage = false;
 			}
-			if (Main.rand.Next(250) == 0 && this.sunkenTimer > 120 && NPC.CountNPCS(base.mod.NPCType("SunkenDeckhand")) <= 4)
+			if (Main.rand.Next(250) == 0 && this.sunkenTimer > 120 && NPC.CountNPCS(ModContent.NPCType<SunkenDeckhand>()) <= 4)
 			{
-				int minion = NPC.NewNPC((int)(base.npc.position.X + Utils.NextFloat(Main.rand, (float)base.npc.width)), (int)(base.npc.position.Y + Utils.NextFloat(Main.rand, (float)base.npc.width)), base.mod.NPCType("SunkenDeckhand"), 0, 0f, 0f, 0f, 0f, 255);
+				int minion = NPC.NewNPC((int)(base.npc.position.X + Utils.NextFloat(Main.rand, (float)base.npc.width)), (int)(base.npc.position.Y + Utils.NextFloat(Main.rand, (float)base.npc.width)), ModContent.NPCType<SunkenDeckhand>(), 0, 0f, 0f, 0f, 0f, 255);
 				Main.npc[minion].netUpdate = true;
 			}
-			if (Main.rand.Next(250) == 0 && this.sunkenTimer > 120 && NPC.CountNPCS(base.mod.NPCType("SunkenParrot")) <= 2)
+			if (Main.rand.Next(250) == 0 && this.sunkenTimer > 120 && NPC.CountNPCS(ModContent.NPCType<SunkenParrot>()) <= 2)
 			{
-				int minion2 = NPC.NewNPC((int)(base.npc.position.X + Utils.NextFloat(Main.rand, (float)base.npc.width)), (int)(base.npc.position.Y + Utils.NextFloat(Main.rand, (float)base.npc.width)), base.mod.NPCType("SunkenParrot"), 0, 0f, 0f, 0f, 0f, 255);
+				int minion2 = NPC.NewNPC((int)(base.npc.position.X + Utils.NextFloat(Main.rand, (float)base.npc.width)), (int)(base.npc.position.Y + Utils.NextFloat(Main.rand, (float)base.npc.width)), ModContent.NPCType<SunkenParrot>(), 0, 0f, 0f, 0f, 0f, 255);
 				Main.npc[minion2].netUpdate = true;
 			}
 			if (Main.rand.Next(80) == 0 && Main.netMode != 1)
 			{
-				Projectile.NewProjectile(new Vector2(base.npc.position.X + 26f, base.npc.position.Y + 42f), new Vector2(2f, 0f), base.mod.ProjectileType("Fog1"), 0, 0f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 26f, base.npc.position.Y + 42f), new Vector2(2f, 0f), ModContent.ProjectileType<Fog1>(), 0, 0f, 255, 0f, 0f);
 			}
 			if (Main.rand.Next(80) == 0 && Main.netMode != 1)
 			{
-				Projectile.NewProjectile(new Vector2(base.npc.position.X + 26f, base.npc.position.Y + 42f), new Vector2(-2f, 0f), base.mod.ProjectileType("Fog2"), 0, 0f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 26f, base.npc.position.Y + 42f), new Vector2(-2f, 0f), ModContent.ProjectileType<Fog2>(), 0, 0f, 255, 0f, 0f);
 			}
 			if (Main.rand.Next(80) == 0 && Main.netMode != 1)
 			{
-				Projectile.NewProjectile(new Vector2(base.npc.position.X + 26f, base.npc.position.Y + 24f), new Vector2(2f, 0f), base.mod.ProjectileType("Fog3"), 0, 0f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 26f, base.npc.position.Y + 24f), new Vector2(2f, 0f), ModContent.ProjectileType<Fog3>(), 0, 0f, 255, 0f, 0f);
 			}
 			if (Main.rand.Next(80) == 0 && Main.netMode != 1)
 			{
-				Projectile.NewProjectile(new Vector2(base.npc.position.X + 26f, base.npc.position.Y + 24f), new Vector2(-2f, 0f), base.mod.ProjectileType("Fog4"), 0, 0f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 26f, base.npc.position.Y + 24f), new Vector2(-2f, 0f), ModContent.ProjectileType<Fog4>(), 0, 0f, 255, 0f, 0f);
 			}
 		}
 
@@ -158,16 +165,18 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			for (int i = 0; i < Main.npc.Length; i++)
+			for (int i = 0; i < 200; i++)
 			{
 				if (Main.npc[i].boss)
 				{
 					return 0f;
 				}
 			}
-			return SpawnCondition.Ocean.Chance * ((!RedeWorld.downedSunkenCaptain && !NPC.AnyNPCs(base.mod.NPCType("SunkenCaptain")) && Main.moonPhase == 0 && !Main.dayTime) ? 0.3f : 0f);
+			return SpawnCondition.Ocean.Chance * ((!RedeWorld.downedSunkenCaptain && !NPC.AnyNPCs(ModContent.NPCType<SunkenCaptain>()) && Main.moonPhase == 0 && !Main.dayTime) ? 0.3f : 0f);
 		}
 
 		private int sunkenTimer;
+
+		private bool title;
 	}
 }

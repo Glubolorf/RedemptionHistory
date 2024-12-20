@@ -44,7 +44,7 @@ namespace Redemption.Projectiles.v08
 			}
 			if (Main.rand.Next(10) == 0)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.Center.X + (float)Main.rand.Next(-26, 26), base.projectile.Center.Y + (float)Main.rand.Next(-12, 12)), new Vector2(0f, 0f), base.mod.ProjectileType("RadiactiveRainPro"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(new Vector2(base.projectile.Center.X + (float)Main.rand.Next(-26, 26), base.projectile.Center.Y + (float)Main.rand.Next(-12, 12)), new Vector2(0f, 0f), ModContent.ProjectileType<RadiactiveRainPro>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			}
 		}
 

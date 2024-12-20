@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.Minions.HoloMinions;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -17,7 +18,7 @@ namespace Redemption.Buffs
 		public override void Update(Player player, ref int buffIndex)
 		{
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
-			if (player.ownedProjectileCounts[base.mod.ProjectileType("HoloProjector")] > 0 || player.ownedProjectileCounts[base.mod.ProjectileType("HoloMinion1")] > 0 || player.ownedProjectileCounts[base.mod.ProjectileType("HoloMinion2")] > 0 || player.ownedProjectileCounts[base.mod.ProjectileType("HoloMinion3")] > 0 || player.ownedProjectileCounts[base.mod.ProjectileType("HoloMinion4")] > 0)
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<HoloProjector>()] > 0 || player.ownedProjectileCounts[ModContent.ProjectileType<HoloMinion1>()] > 0 || player.ownedProjectileCounts[ModContent.ProjectileType<HoloMinion2>()] > 0 || player.ownedProjectileCounts[ModContent.ProjectileType<HoloMinion3>()] > 0 || player.ownedProjectileCounts[ModContent.ProjectileType<HoloMinion4>()] > 0)
 			{
 				modPlayer.holoMinion = true;
 			}

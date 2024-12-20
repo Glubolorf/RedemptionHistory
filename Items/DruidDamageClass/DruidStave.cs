@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -48,10 +49,11 @@ namespace Redemption.Items.DruidDamageClass
 				})));
 				if (!RedeConfigClient.Instance.NoGuardianInfo)
 				{
-					tooltips.Insert(tooltipLocation2 + 2, new TooltipLine(base.mod, "GuardianInfo", "[c/71ee8d: -Guardian Info -]"));
+					tooltips.Insert(tooltipLocation2 + 2, new TooltipLine(base.mod, "GuardianInfo", "[c/71ee8d: -Guardian Info-]"));
 					tooltips.Insert(tooltipLocation2 + 3, new TooltipLine(base.mod, "GuardianType", "[c/a0db98:Type:] " + this.guardianType));
 					tooltips.Insert(tooltipLocation2 + 4, new TooltipLine(base.mod, "SpecialAbilities", "[c/98dbc3:Special Ability:] " + this.guardianAbility));
 					tooltips.Insert(tooltipLocation2 + 5, new TooltipLine(base.mod, "Effects", "[c/98c1db:Effects:] " + this.guardianEffects));
+					tooltips.Insert(tooltipLocation2 + 6, new TooltipLine(base.mod, "---", "[c/71ee8d: --------]"));
 				}
 			}
 		}
@@ -86,15 +88,15 @@ namespace Redemption.Items.DruidDamageClass
 					base.item.buffType = this.guardianBuffID;
 					base.item.buffTime = (int)((float)this.guardianTime * (Main.LocalPlayer.GetModPlayer<RedePlayer>().longerGuardians ? 1.5f : 1f) * base.item.GetGlobalItem<RedeItem>().prefixLifetimeModifier);
 					base.item.shoot = this.guardianProjectileID;
-					if (!player.HasBuff(base.mod.BuffType("GuardianCooldownDebuff")))
+					if (!player.HasBuff(ModContent.BuffType<GuardianCooldownDebuff>()))
 					{
 						if (Main.LocalPlayer.GetModPlayer<RedePlayer>().guardianCooldownReduce)
 						{
-							player.AddBuff(base.mod.BuffType("GuardianCooldownDebuff"), 2700, true);
+							player.AddBuff(ModContent.BuffType<GuardianCooldownDebuff>(), 2700, true);
 						}
 						else
 						{
-							player.AddBuff(base.mod.BuffType("GuardianCooldownDebuff"), 3600, true);
+							player.AddBuff(ModContent.BuffType<GuardianCooldownDebuff>(), 3600, true);
 						}
 						return true;
 					}

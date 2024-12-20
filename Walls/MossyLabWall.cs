@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -10,7 +11,7 @@ namespace Redemption.Walls
 		public override void SetDefaults()
 		{
 			Main.wallHouse[(int)base.Type] = false;
-			this.drop = base.mod.ItemType("LabPlatingWall");
+			this.drop = ModContent.ItemType<LabPlatingWall>();
 			base.AddMapEntry(new Color(100, 130, 100), null);
 		}
 

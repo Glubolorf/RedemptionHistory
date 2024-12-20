@@ -36,7 +36,11 @@ namespace Redemption.Items.Datalogs
 
 		public override void AI()
 		{
-			Vector2 ShipSpawn = new Vector2((float)Main.maxTilesX * 0.65f * 16f, (float)Main.maxTilesY * 0.3f * 16f);
+			this.ShipSpawn = new Vector2((float)Main.maxTilesX * 0.65f * 16f, (float)Main.maxTilesY * 0.3f * 16f);
+			if (Main.dungeonX < Main.maxTilesX / 2)
+			{
+				this.ShipSpawn = new Vector2((float)Main.maxTilesX * 0.35f * 16f, (float)Main.maxTilesY * 0.3f * 16f);
+			}
 			Player player = Main.player[base.projectile.owner];
 			if (!player.GetModPlayer<RadarEffect>().effect)
 			{
@@ -47,7 +51,7 @@ namespace Redemption.Items.Datalogs
 			PlayerPoint.X = player.Center.X - (float)(base.projectile.width / 2);
 			PlayerPoint.Y = player.Center.Y - (float)(base.projectile.height / 2) + player.gfxOffY - 60f;
 			base.projectile.Center = PlayerPoint;
-			BaseAI.LookAt(ShipSpawn, base.projectile, 2, 0f, 0f, true);
+			BaseAI.LookAt(this.ShipSpawn, base.projectile, 2, 0f, 0f, true);
 			base.projectile.direction = 1;
 		}
 
@@ -68,6 +72,8 @@ namespace Redemption.Items.Datalogs
 			BaseDrawing.DrawTexture(sb, Main.projectileTexture[base.projectile.type], 0, base.projectile.position, base.projectile.width, base.projectile.height, base.projectile.scale, base.projectile.rotation, -1, 1, frame, new Color?(base.projectile.GetAlpha(ColorUtils.COLOR_GLOWPULSE)), false, default(Vector2));
 			return false;
 		}
+
+		public Vector2 ShipSpawn;
 
 		public float auraPercent;
 

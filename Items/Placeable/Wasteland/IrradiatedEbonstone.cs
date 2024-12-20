@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles.Wasteland;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -23,7 +24,7 @@ namespace Redemption.Items.Placeable.Wasteland
 			base.item.useStyle = 1;
 			base.item.value = Item.buyPrice(0, 0, 1, 0);
 			base.item.consumable = true;
-			base.item.createTile = base.mod.TileType("IrradiatedEbonstoneTile");
+			base.item.createTile = ModContent.TileType<IrradiatedEbonstoneTile>();
 		}
 	}
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using Redemption.NPCs.Bosses.EaglecrestGolem;
+using Redemption.NPCs.Bosses.Thorn;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -39,13 +41,13 @@ namespace Redemption.Items
 		public override void RightClick(Player player)
 		{
 			base.item.consumable = true;
-			player.QuickSpawnItem(base.mod.ItemType("LifeFruitOfThorns"), 1);
-			player.QuickSpawnItem(base.mod.ItemType("AncientSigil"), 1);
+			player.QuickSpawnItem(ModContent.ItemType<LifeFruitOfThorns>(), 1);
+			player.QuickSpawnItem(ModContent.ItemType<AncientSigil>(), 1);
 		}
 
 		public override bool CanUseItem(Player player)
 		{
-			return Main.dayTime && !NPC.AnyNPCs(base.mod.NPCType("EaglecrestGolemPZ")) && !NPC.AnyNPCs(base.mod.NPCType("EaglecrestGolem")) && RedeWorld.downedThorn && !NPC.AnyNPCs(base.mod.NPCType("Thorn")) && !NPC.AnyNPCs(base.mod.NPCType("ThornPZ")) && !NPC.AnyNPCs(base.mod.NPCType("Ukko")) && !NPC.AnyNPCs(base.mod.NPCType("Akka"));
+			return Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<EaglecrestGolemPZ>()) && !NPC.AnyNPCs(ModContent.NPCType<EaglecrestGolem>()) && RedeWorld.downedThorn && !NPC.AnyNPCs(ModContent.NPCType<Thorn>()) && !NPC.AnyNPCs(ModContent.NPCType<ThornPZ>()) && !NPC.AnyNPCs(ModContent.NPCType<Ukko>()) && !NPC.AnyNPCs(ModContent.NPCType<Akka>());
 		}
 
 		public override void AddRecipes()
@@ -59,8 +61,8 @@ namespace Redemption.Items
 
 		public override bool UseItem(Player player)
 		{
-			NPC.SpawnOnPlayer(player.whoAmI, base.mod.NPCType("EaglecrestGolemPZ"));
-			NPC.SpawnOnPlayer(player.whoAmI, base.mod.NPCType("ThornPZ"));
+			NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<EaglecrestGolemPZ>());
+			NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<ThornPZ>());
 			Main.PlaySound(15, player.position, 0);
 			return true;
 		}

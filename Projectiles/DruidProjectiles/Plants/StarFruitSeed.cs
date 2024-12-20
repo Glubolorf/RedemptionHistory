@@ -1,6 +1,7 @@
 ﻿using System;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.DruidProjectiles.Plants
 {
@@ -21,7 +22,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 			base.projectile.tileCollide = true;
 			base.projectile.ignoreWater = true;
 			base.projectile.timeLeft = 200;
-			this.plantID = base.mod.ProjectileType("StarfruitPlant");
+			this.plantID = ModContent.ProjectileType<StarfruitPlant>();
 		}
 
 		public override void AI()

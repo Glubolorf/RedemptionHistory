@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.NPCs.v08;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -33,7 +34,7 @@ namespace Redemption.Items
 
 		public override bool CanUseItem(Player player)
 		{
-			return !Main.dayTime && !NPC.AnyNPCs(base.mod.NPCType("CorruptedCopter1"));
+			return !Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<CorruptedCopter1>());
 		}
 
 		public override bool UseItem(Player player)

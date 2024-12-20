@@ -42,10 +42,9 @@ namespace Redemption.Projectiles
 					base.projectile.frame = 0;
 				}
 			}
-			base.projectile.localAI[0] += 1f;
-			base.projectile.alpha = (int)base.projectile.localAI[0] * 4;
+			base.projectile.alpha += 10;
 			base.projectile.rotation += 0.06f;
-			base.projectile.velocity *= 0.8f;
+			base.projectile.velocity *= 0.96f;
 		}
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

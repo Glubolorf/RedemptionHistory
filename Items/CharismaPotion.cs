@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,7 +27,7 @@ namespace Redemption.Items
 			base.item.maxStack = 30;
 			base.item.value = Item.sellPrice(0, 8, 0, 0);
 			base.item.rare = 3;
-			base.item.buffType = base.mod.BuffType("CharismaPotionBuff");
+			base.item.buffType = ModContent.BuffType<CharismaPotionBuff>();
 			base.item.buffTime = 36000;
 		}
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.ModLoader;
@@ -34,173 +35,109 @@ namespace Redemption.Items.Quest
 
 		public override TagCompound Save()
 		{
-			bool z = false;
-			bool z2 = false;
-			bool z3 = false;
-			bool z4 = false;
-			bool z5 = false;
-			bool z6 = false;
-			bool z7 = false;
-			bool z8 = false;
-			bool z9 = false;
-			bool d = false;
-			bool d2 = false;
-			bool d3 = false;
-			bool d4 = false;
-			bool d5 = false;
-			bool d6 = false;
-			bool d7 = false;
-			bool d8 = false;
-			bool d9 = false;
+			List<string> quests = new List<string>();
 			if (RedeQuests.ZchickenQuest)
 			{
-				z = true;
+				quests.Add("zep1");
 			}
 			if (RedeQuests.ZskullQuest)
 			{
-				z2 = true;
+				quests.Add("zep2");
 			}
 			if (RedeQuests.ZdishQuest)
 			{
-				z3 = true;
+				quests.Add("zep3");
 			}
 			if (RedeQuests.ZvepdorQuest)
 			{
-				z4 = true;
+				quests.Add("zep4");
 			}
 			if (RedeQuests.ZswordQuest)
 			{
-				z5 = true;
+				quests.Add("zep5");
 			}
 			if (RedeQuests.ZsoulQuest)
 			{
-				z6 = true;
+				quests.Add("zep6");
 			}
 			if (RedeQuests.ZsheathQuest)
 			{
-				z7 = true;
+				quests.Add("zep7");
 			}
 			if (RedeQuests.ZzweiQuest)
 			{
-				z8 = true;
+				quests.Add("zep8");
 			}
 			if (RedeQuests.ZpotionQuest)
 			{
-				z9 = true;
+				quests.Add("zep9");
 			}
 			if (RedeQuests.DnecklaceQuest)
 			{
-				d = true;
+				quests.Add("dae1");
 			}
 			if (RedeQuests.DbackpackQuest)
 			{
-				d2 = true;
+				quests.Add("dae2");
 			}
 			if (RedeQuests.DkitQuest)
 			{
-				d3 = true;
+				quests.Add("dae3");
 			}
 			if (RedeQuests.DpotionQuest)
 			{
-				d4 = true;
+				quests.Add("dae4");
 			}
 			if (RedeQuests.DsoulQuest)
 			{
-				d5 = true;
+				quests.Add("dae6");
 			}
 			if (RedeQuests.DcloakQuest)
 			{
-				d6 = true;
+				quests.Add("dae7");
 			}
 			if (RedeQuests.DparthQuest)
 			{
-				d7 = true;
+				quests.Add("dae8");
 			}
 			if (RedeQuests.DmapQuest)
 			{
-				d8 = true;
+				quests.Add("dae9");
 			}
 			if (RedeQuests.DslimeQuest)
 			{
-				d9 = true;
+				quests.Add("dae10");
 			}
 			TagCompound tagCompound = new TagCompound();
+			tagCompound.Add("quests", quests);
 			tagCompound.Add("zepQuests", RedeQuests.zephosQuests);
 			tagCompound.Add("daeQuests", RedeQuests.daerelQuests);
-			tagCompound.Add("zep1", z);
-			tagCompound.Add("zep2", z2);
-			tagCompound.Add("zep3", z3);
-			tagCompound.Add("zep4", z4);
-			tagCompound.Add("zep5", z5);
-			tagCompound.Add("zep6", z6);
-			tagCompound.Add("zep7", z7);
-			tagCompound.Add("zep8", z8);
-			tagCompound.Add("zep9", z9);
-			tagCompound.Add("dae1", d);
-			tagCompound.Add("dae2", d2);
-			tagCompound.Add("dae3", d3);
-			tagCompound.Add("dae4", d4);
-			tagCompound.Add("dae6", d5);
-			tagCompound.Add("dae7", d6);
-			tagCompound.Add("dae8", d7);
-			tagCompound.Add("dae9", d8);
-			tagCompound.Add("dae10", d9);
 			return tagCompound;
 		}
 
 		public override void Load(TagCompound tag)
 		{
+			IList<string> list = tag.GetList<string>("quests");
 			RedeQuests.zephosQuests = tag.GetInt("zepQuests");
 			RedeQuests.daerelQuests = tag.GetInt("daeQuests");
-			RedeQuests.ZchickenQuest = tag.GetBool("zep1");
-			RedeQuests.ZskullQuest = tag.GetBool("zep2");
-			RedeQuests.ZdishQuest = tag.GetBool("zep3");
-			RedeQuests.ZvepdorQuest = tag.GetBool("zep4");
-			RedeQuests.ZswordQuest = tag.GetBool("zep5");
-			RedeQuests.ZsoulQuest = tag.GetBool("zep6");
-			RedeQuests.ZsheathQuest = tag.GetBool("zep7");
-			RedeQuests.ZzweiQuest = tag.GetBool("zep8");
-			RedeQuests.ZpotionQuest = tag.GetBool("zep9");
-			RedeQuests.DnecklaceQuest = tag.GetBool("dae1");
-			RedeQuests.DbackpackQuest = tag.GetBool("dae2");
-			RedeQuests.DkitQuest = tag.GetBool("dae3");
-			RedeQuests.DpotionQuest = tag.GetBool("dae4");
-			RedeQuests.DsoulQuest = tag.GetBool("dae6");
-			RedeQuests.DcloakQuest = tag.GetBool("dae7");
-			RedeQuests.DparthQuest = tag.GetBool("dae8");
-			RedeQuests.DmapQuest = tag.GetBool("dae9");
-			RedeQuests.DslimeQuest = tag.GetBool("dae10");
-		}
-
-		public override void LoadLegacy(BinaryReader reader)
-		{
-			int loadVersion = reader.ReadInt32();
-			if (loadVersion == 0)
-			{
-				BitsByte questFlags = reader.ReadByte();
-				RedeQuests.ZchickenQuest = questFlags[0];
-				RedeQuests.ZskullQuest = questFlags[1];
-				RedeQuests.ZdishQuest = questFlags[2];
-				RedeQuests.ZvepdorQuest = questFlags[3];
-				RedeQuests.ZswordQuest = questFlags[4];
-				RedeQuests.DnecklaceQuest = questFlags[5];
-				RedeQuests.DbackpackQuest = questFlags[6];
-				RedeQuests.DkitQuest = questFlags[7];
-				BitsByte questFlags2 = reader.ReadByte();
-				RedeQuests.DpotionQuest = questFlags2[0];
-				RedeQuests.ZsoulQuest = questFlags2[1];
-				RedeQuests.DsoulQuest = questFlags2[2];
-				RedeQuests.ZzweiQuest = questFlags2[3];
-				RedeQuests.DcloakQuest = questFlags2[4];
-				RedeQuests.DparthQuest = questFlags2[5];
-				RedeQuests.DmapQuest = questFlags2[6];
-				RedeQuests.DslimeQuest = questFlags2[7];
-				BitsByte questFlags3 = reader.ReadByte();
-				RedeQuests.ZsheathQuest = questFlags3[0];
-				RedeQuests.ZpotionQuest = questFlags3[1];
-				return;
-			}
-			base.mod.Logger.Debug("Redemption: Unknown loadVersion: " + loadVersion);
+			RedeQuests.ZchickenQuest = list.Contains("zep1");
+			RedeQuests.ZskullQuest = list.Contains("zep2");
+			RedeQuests.ZdishQuest = list.Contains("zep3");
+			RedeQuests.ZvepdorQuest = list.Contains("zep4");
+			RedeQuests.ZswordQuest = list.Contains("zep5");
+			RedeQuests.ZsoulQuest = list.Contains("zep6");
+			RedeQuests.ZsheathQuest = list.Contains("zep7");
+			RedeQuests.ZzweiQuest = list.Contains("zep8");
+			RedeQuests.ZpotionQuest = list.Contains("zep9");
+			RedeQuests.DnecklaceQuest = list.Contains("dae1");
+			RedeQuests.DbackpackQuest = list.Contains("dae2");
+			RedeQuests.DkitQuest = list.Contains("dae3");
+			RedeQuests.DpotionQuest = list.Contains("dae4");
+			RedeQuests.DsoulQuest = list.Contains("dae6");
+			RedeQuests.DcloakQuest = list.Contains("dae7");
+			RedeQuests.DparthQuest = list.Contains("dae8");
+			RedeQuests.DmapQuest = list.Contains("dae9");
+			RedeQuests.DslimeQuest = list.Contains("dae10");
 		}
 
 		public override void NetSend(BinaryWriter writer)

@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable;
+using Redemption.NPCs.Bosses.KingSlayerIII;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -46,14 +48,14 @@ namespace Redemption.Tiles.SlayerShip
 			{
 				if (Main.netMode == 0)
 				{
-					if (!NPC.AnyNPCs(base.mod.NPCType("KS3Sitting")) && RedeWorld.downedSlayer && !RedeWorld.downedVlitch3 && !RedeWorld.downedNebuleus && !NPC.AnyNPCs(base.mod.NPCType("KSEntrance")))
+					if (!NPC.AnyNPCs(ModContent.NPCType<KS3Sitting>()) && RedeWorld.downedSlayer && !RedeWorld.downedVlitch3 && !RedeWorld.downedNebuleus && !NPC.AnyNPCs(ModContent.NPCType<KSEntrance>()))
 					{
 						Main.tile[i, j];
 						i += 2;
 						i *= 16;
 						j += 5;
 						j *= 16;
-						int k = NPC.NewNPC(i + 1, j + 1, base.mod.NPCType("KS3Sitting"), 0, 0f, 0f, 0f, 0f, 255);
+						int k = NPC.NewNPC(i + 1, j + 1, ModContent.NPCType<KS3Sitting>(), 0, 0f, 0f, 0f, 0f, 255);
 						if (Main.netMode == 2)
 						{
 							NetMessage.SendData(23, -1, -1, null, k, 0f, 0f, 0f, 0, 0, 0);
@@ -61,7 +63,7 @@ namespace Redemption.Tiles.SlayerShip
 						}
 					}
 				}
-				else if (!NPC.AnyNPCs(base.mod.NPCType("KS3Sitting")) && RedeWorld.downedSlayer && !RedeWorld.downedVlitch3 && !RedeWorld.downedNebuleus && !NPC.AnyNPCs(base.mod.NPCType("KSEntrance")))
+				else if (!NPC.AnyNPCs(ModContent.NPCType<KS3Sitting>()) && RedeWorld.downedSlayer && !RedeWorld.downedVlitch3 && !RedeWorld.downedNebuleus && !NPC.AnyNPCs(ModContent.NPCType<KSEntrance>()))
 				{
 					ModPacket packet = base.mod.GetPacket(256);
 					packet.Write(16);
@@ -78,7 +80,7 @@ namespace Redemption.Tiles.SlayerShip
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 32, 16, base.mod.ItemType("SlayerChairTile"), 1, false, 0, false, false);
+			Item.NewItem(i * 16, j * 16, 32, 16, ModContent.ItemType<SlayerChair>(), 1, false, 0, false, false);
 		}
 
 		public override bool CanExplode(int i, int j)

@@ -94,7 +94,7 @@ namespace Redemption.Projectiles.v08
 				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.Bottom.Y), base.projectile.width, 2, 6, 0f, 0f, 100, default(Color), 3f);
 				Main.dust[dustIndex].velocity *= 1f;
 			}
-			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, base.mod.ProjectileType("MoltenDropletPro"), base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
+			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, ModContent.ProjectileType<MoltenDropletPro>(), base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
 		}
 	}
 }

@@ -37,7 +37,7 @@ namespace Redemption.NPCs.LabNPCs.New
 			base.npc.TargetClosest(true);
 			Player player = Main.player[base.npc.target];
 			int boss = (int)base.npc.ai[0];
-			if (boss < 0 || boss >= 200 || !Main.npc[boss].active || Main.npc[boss].type != base.mod.NPCType("MACEProjectHeadA"))
+			if (boss < 0 || boss >= 200 || !Main.npc[boss].active || Main.npc[boss].type != ModContent.NPCType<MACEProjectHeadA>())
 			{
 				base.npc.velocity.X = 0f;
 				base.npc.velocity.Y = 0f;
@@ -55,7 +55,5 @@ namespace Redemption.NPCs.LabNPCs.New
 		{
 			return false;
 		}
-
-		private int craneFrame;
 	}
 }

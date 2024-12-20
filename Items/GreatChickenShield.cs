@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -25,7 +27,7 @@ namespace Redemption.Items
 			base.item.useTurn = false;
 			base.item.noUseGraphic = true;
 			base.item.noMelee = true;
-			base.item.shoot = base.mod.ProjectileType("GreatChickenShieldPro2");
+			base.item.shoot = ModContent.ProjectileType<GreatChickenShieldPro2>();
 			base.item.shootSpeed = 0f;
 			base.item.width = 30;
 			base.item.height = 38;
@@ -35,10 +37,10 @@ namespace Redemption.Items
 
 		public override void HoldItem(Player player)
 		{
-			player.AddBuff(base.mod.BuffType("ChickenShieldBuff"), 4, true);
-			if (player.ownedProjectileCounts[base.mod.ProjectileType("GreatChickenShieldPro1")] == 0)
+			player.AddBuff(ModContent.BuffType<ChickenShieldBuff>(), 4, true);
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<GreatChickenShieldPro1>()] == 0)
 			{
-				Projectile.NewProjectile(player.position, Vector2.Zero, base.mod.ProjectileType("GreatChickenShieldPro1"), 0, 0f, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(player.position, Vector2.Zero, ModContent.ProjectileType<GreatChickenShieldPro1>(), 0, 0f, player.whoAmI, 0f, 0f);
 			}
 		}
 	}

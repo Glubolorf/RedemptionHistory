@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable.LabDeco;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -19,7 +20,7 @@ namespace Redemption.Tiles.LabDeco
 			base.CreateMapEntryName(null);
 			base.AddMapEntry(new Color(200, 255, 255), null);
 			this.animationFrameHeight = 90;
-			this.drop = base.mod.ItemType("ElectricHazard");
+			this.drop = ModContent.ItemType<ElectricHazard>();
 		}
 
 		public override void AnimateTile(ref int frame, ref int frameCounter)

@@ -1,4 +1,6 @@
 ﻿using System;
+using Redemption.Buffs;
+using Redemption.Projectiles.Minions;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -33,7 +35,7 @@ namespace Redemption.Items.Armor
 
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
-			return body.type == base.mod.ItemType("LivingWoodBody") && legs.type == base.mod.ItemType("LivingWoodLeggings");
+			return body.type == ModContent.ItemType<LivingWoodBody>() && legs.type == ModContent.ItemType<LivingWoodLeggings>();
 		}
 
 		public override void UpdateArmorSet(Player player)
@@ -42,23 +44,23 @@ namespace Redemption.Items.Armor
 			player.buffImmune[20] = true;
 			if (player.whoAmI == Main.myPlayer)
 			{
-				if (player.FindBuffIndex(base.mod.BuffType("BirdMinionBuff")) == -1)
+				if (player.FindBuffIndex(ModContent.BuffType<BirdMinionBuff>()) == -1)
 				{
-					player.AddBuff(base.mod.BuffType("BirdMinionBuff"), 3600, true);
+					player.AddBuff(ModContent.BuffType<BirdMinionBuff>(), 3600, true);
 				}
-				if (player.ownedProjectileCounts[base.mod.ProjectileType("BirdMinion1")] < 1 && player.ownedProjectileCounts[base.mod.ProjectileType("BirdMinion2")] < 1 && player.ownedProjectileCounts[base.mod.ProjectileType("BirdMinion3")] < 1)
+				if (player.ownedProjectileCounts[ModContent.ProjectileType<BirdMinion1>()] < 1 && player.ownedProjectileCounts[ModContent.ProjectileType<BirdMinion2>()] < 1 && player.ownedProjectileCounts[ModContent.ProjectileType<BirdMinion3>()] < 1)
 				{
 					if (Main.rand.Next(3) == 0)
 					{
-						Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, -1f, base.mod.ProjectileType("BirdMinion3"), 10, 4f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, -1f, ModContent.ProjectileType<BirdMinion3>(), 10, 4f, Main.myPlayer, 0f, 0f);
 						return;
 					}
 					if (Main.rand.Next(3) == 1)
 					{
-						Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, -1f, base.mod.ProjectileType("BirdMinion2"), 10, 4f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, -1f, ModContent.ProjectileType<BirdMinion2>(), 10, 4f, Main.myPlayer, 0f, 0f);
 						return;
 					}
-					Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, -1f, base.mod.ProjectileType("BirdMinion1"), 10, 4f, Main.myPlayer, 0f, 0f);
+					Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, -1f, ModContent.ProjectileType<BirdMinion1>(), 10, 4f, Main.myPlayer, 0f, 0f);
 				}
 			}
 		}

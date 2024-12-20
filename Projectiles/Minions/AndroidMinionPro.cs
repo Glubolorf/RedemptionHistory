@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -73,7 +74,7 @@ namespace Redemption.Projectiles.Minions
 					}
 				}
 			}
-			bool flag27 = base.projectile.type == base.mod.ProjectileType("AndroidMinionPro");
+			bool flag27 = base.projectile.type == ModContent.ProjectileType<AndroidMinionPro>();
 			Player player = Main.player[base.projectile.owner];
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
 			if (flag27)
@@ -87,7 +88,7 @@ namespace Redemption.Projectiles.Minions
 					base.projectile.timeLeft = 2;
 				}
 			}
-			if (player.dead || !player.HasBuff(base.mod.BuffType("AndroidMinionBuff")))
+			if (player.dead || !player.HasBuff(ModContent.BuffType<AndroidMinionBuff>()))
 			{
 				base.projectile.Kill();
 			}
@@ -185,7 +186,7 @@ namespace Redemption.Projectiles.Minions
 					Vector2 value19 = vector46 - base.projectile.Center;
 					value19.Normalize();
 					value19 *= 16f;
-					int proj2 = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, value19.X, value19.Y, base.mod.ProjectileType("AndroidMinionFistPro"), base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
+					int proj2 = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, value19.X, value19.Y, ModContent.ProjectileType<AndroidMinionFistPro>(), base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
 					Main.projectile[proj2].netUpdate = true;
 					base.projectile.netUpdate = true;
 				}

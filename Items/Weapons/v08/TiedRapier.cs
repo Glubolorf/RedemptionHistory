@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.noUseGraphic = true;
 			base.item.noMelee = true;
 			base.item.rare = 11;
-			base.item.shoot = base.mod.ProjType("TiedRapierPro");
+			base.item.shoot = ModContent.ProjectileType<TiedRapierPro>();
 			base.item.shootSpeed = 4f;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 6;
 		}

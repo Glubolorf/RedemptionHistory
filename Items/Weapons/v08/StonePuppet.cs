@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Projectiles.Minions;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,9 +30,9 @@ namespace Redemption.Items.Weapons.v08
 			base.item.knockBack = 2f;
 			base.item.value = Item.sellPrice(0, 15, 0, 0);
 			base.item.UseSound = SoundID.Item44;
-			base.item.shoot = base.mod.ProjectileType("EaglecrestMinion");
+			base.item.shoot = ModContent.ProjectileType<EaglecrestMinion>();
 			base.item.shootSpeed = 10f;
-			base.item.buffType = base.mod.BuffType("EaglecrestMinionBuff");
+			base.item.buffType = ModContent.BuffType<EaglecrestMinionBuff>();
 			base.item.buffTime = 3600;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}

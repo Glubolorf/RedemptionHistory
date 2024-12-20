@@ -1,5 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Dusts;
+using Redemption.Items;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -14,8 +17,8 @@ namespace Redemption.Tiles
 			Main.tileSpelunker[(int)base.Type] = true;
 			Main.tileBlockLight[(int)base.Type] = true;
 			Main.tileValue[(int)base.Type] = 600;
-			this.dustType = base.mod.DustType("XenoDust");
-			this.drop = base.mod.ItemType("XenomiteShard");
+			this.dustType = ModContent.DustType<XenoDust>();
+			this.drop = ModContent.ItemType<XenomiteShard>();
 			this.minPick = 30;
 			this.mineResist = 1.5f;
 			this.soundType = 21;
@@ -29,7 +32,7 @@ namespace Redemption.Tiles
 			Player player = Main.LocalPlayer;
 			if ((int)Vector2.Distance(player.Center / 16f, new Vector2((float)i, (float)j)) <= 2)
 			{
-				player.AddBuff(base.mod.BuffType("XenomiteDebuff"), Main.rand.Next(10, 20), true);
+				player.AddBuff(ModContent.BuffType<XenomiteDebuff>(), Main.rand.Next(10, 20), true);
 			}
 		}
 

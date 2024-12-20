@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs.Wasteland;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
@@ -72,7 +73,7 @@ namespace Redemption.Projectiles.v08
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			target.immune[base.projectile.owner] = 6;
-			target.AddBuff(base.mod.BuffType("BileDebuff"), 600, false);
+			target.AddBuff(ModContent.BuffType<BileDebuff>(), 600, false);
 		}
 	}
 }

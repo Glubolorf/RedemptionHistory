@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -27,7 +28,7 @@ namespace Redemption.Items.Weapons
 			base.item.damage = 17;
 			base.item.scale = 1f;
 			base.item.noUseGraphic = true;
-			base.item.shoot = base.mod.ProjectileType("SiriusPro");
+			base.item.shoot = ModContent.ProjectileType<SiriusPro>();
 			base.item.shootSpeed = 14f;
 			base.item.UseSound = SoundID.Item1;
 			base.item.melee = true;

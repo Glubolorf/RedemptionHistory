@@ -56,7 +56,7 @@ namespace Redemption.Items.Weapons
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			Projectile.NewProjectile(position.X, position.Y, speedX * 2f, speedY * 2f, base.mod.ProjectileType("XeniumSpearPro2"), damage * 2, knockBack, player.whoAmI, 0f, 0f);
+			Projectile.NewProjectile(position.X, position.Y, speedX * 2f, speedY * 2f, ModContent.ProjectileType<XeniumSpearPro2>(), damage * 2, knockBack, player.whoAmI, 0f, 0f);
 			return true;
 		}
 

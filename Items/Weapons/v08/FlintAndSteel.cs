@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.v08;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -27,7 +28,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.rare = 0;
 			base.item.UseSound = SoundID.Item17;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("FireSpark1");
+			base.item.shoot = ModContent.ProjectileType<FireSpark1>();
 			base.item.shootSpeed = 6f;
 		}
 	}

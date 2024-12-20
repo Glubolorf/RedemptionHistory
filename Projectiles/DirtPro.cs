@@ -27,14 +27,9 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			base.projectile.localAI[0] += 1f;
 			base.projectile.rotation += 0.06f;
 			Projectile projectile = base.projectile;
 			projectile.velocity.Y = projectile.velocity.Y + 0.3f;
-			if (base.projectile.localAI[0] > 130f)
-			{
-				base.projectile.Kill();
-			}
 		}
 
 		public override bool OnTileCollide(Vector2 oldVelocity)

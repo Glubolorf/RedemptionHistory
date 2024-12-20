@@ -34,7 +34,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 			base.projectile.localAI[0] += 1f;
 			if (base.projectile.localAI[0] == 5f)
 			{
-				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, base.mod.ProjectileType("CosmosChain3"), base.projectile.damage, base.projectile.knockBack, 255, 0f, 0f);
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, ModContent.ProjectileType<CosmosChain3>(), base.projectile.damage, base.projectile.knockBack, 255, 0f, 0f);
 			}
 		}
 

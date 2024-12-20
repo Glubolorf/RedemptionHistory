@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -11,7 +12,7 @@ namespace Redemption.Walls
 		{
 			Main.wallHouse[(int)base.Type] = true;
 			this.dustType = 78;
-			this.drop = base.mod.ItemType("AncientWoodWall");
+			this.drop = ModContent.ItemType<AncientWoodWall>();
 			base.AddMapEntry(new Color(150, 150, 150), null);
 		}
 

@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Dusts;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -66,23 +68,23 @@ namespace Redemption.NPCs.Bosses
 			this.DespawnHandler();
 			if (Main.rand.Next(6) == 0)
 			{
-				Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, base.mod.DustType("VlitchFlame"), 0f, 0f, 0, default(Color), 1f);
+				Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, ModContent.DustType<VlitchFlame>(), 0f, 0f, 0, default(Color), 1f);
 			}
 			base.npc.ai[1] += 1f;
 			if (base.npc.ai[1] == 80f)
 			{
-				int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(0f, -8f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(0f, 8f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-8f, 0f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(8f, 0f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+				int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(0f, -8f), ModContent.ProjectileType<VlitchLaserPro>(), 60, 3f, 255, 0f, 0f);
+				p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(0f, 8f), ModContent.ProjectileType<VlitchLaserPro>(), 60, 3f, 255, 0f, 0f);
+				p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-8f, 0f), ModContent.ProjectileType<VlitchLaserPro>(), 60, 3f, 255, 0f, 0f);
+				p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(8f, 0f), ModContent.ProjectileType<VlitchLaserPro>(), 60, 3f, 255, 0f, 0f);
 				Main.projectile[p].netUpdate = true;
 			}
 			if (base.npc.ai[1] == 160f)
 			{
-				int p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(6f, 6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(6f, -6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-6f, 6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-6f, -6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+				int p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(6f, 6f), ModContent.ProjectileType<VlitchLaserPro>(), 60, 3f, 255, 0f, 0f);
+				p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(6f, -6f), ModContent.ProjectileType<VlitchLaserPro>(), 60, 3f, 255, 0f, 0f);
+				p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-6f, 6f), ModContent.ProjectileType<VlitchLaserPro>(), 60, 3f, 255, 0f, 0f);
+				p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-6f, -6f), ModContent.ProjectileType<VlitchLaserPro>(), 60, 3f, 255, 0f, 0f);
 				Main.projectile[p2].netUpdate = true;
 				base.npc.ai[1] = 0f;
 			}
@@ -92,18 +94,18 @@ namespace Redemption.NPCs.Bosses
 				base.npc.ai[2] += 1f;
 				if (base.npc.ai[2] == 40f)
 				{
-					int p3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(0f, -8f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-					p3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(0f, 8f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-					p3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-8f, 0f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-					p3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(8f, 0f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+					int p3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(0f, -8f), ModContent.ProjectileType<VlitchLaserPro>(), 60, 3f, 255, 0f, 0f);
+					p3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(0f, 8f), ModContent.ProjectileType<VlitchLaserPro>(), 60, 3f, 255, 0f, 0f);
+					p3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-8f, 0f), ModContent.ProjectileType<VlitchLaserPro>(), 60, 3f, 255, 0f, 0f);
+					p3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(8f, 0f), ModContent.ProjectileType<VlitchLaserPro>(), 60, 3f, 255, 0f, 0f);
 					Main.projectile[p3].netUpdate = true;
 				}
 				if (base.npc.ai[2] == 80f)
 				{
-					int p4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(6f, 6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-					p4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(6f, -6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-					p4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-6f, 6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-					p4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-6f, -6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+					int p4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(6f, 6f), ModContent.ProjectileType<VlitchLaserPro>(), 60, 3f, 255, 0f, 0f);
+					p4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(6f, -6f), ModContent.ProjectileType<VlitchLaserPro>(), 60, 3f, 255, 0f, 0f);
+					p4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-6f, 6f), ModContent.ProjectileType<VlitchLaserPro>(), 60, 3f, 255, 0f, 0f);
+					p4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-6f, -6f), ModContent.ProjectileType<VlitchLaserPro>(), 60, 3f, 255, 0f, 0f);
 					Main.projectile[p4].netUpdate = true;
 					base.npc.ai[2] = 0f;
 				}

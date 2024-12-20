@@ -46,12 +46,12 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 			base.projectile.rotation = 1.5708f;
 			if (base.projectile.localAI[0] == 1f)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 260f, base.projectile.position.Y - 512f), base.projectile.velocity, base.mod.ProjectileType("UkkoZap3"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 260f, base.projectile.position.Y - 512f), base.projectile.velocity, ModContent.ProjectileType<UkkoZap3>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			}
 			if (base.projectile.localAI[0] == 36f)
 			{
 				Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Zap1").WithVolume(0.9f).WithPitchVariance(0.1f), -1, -1);
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 12f, base.projectile.position.Y + 12f), base.projectile.velocity, base.mod.ProjectileType("UkkoZap2"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 12f, base.projectile.position.Y + 12f), base.projectile.velocity, ModContent.ProjectileType<UkkoZap2>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			}
 		}
 	}

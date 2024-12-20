@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items;
+using Redemption.Items.Placeable.LabDeco;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -91,84 +93,80 @@ namespace Redemption.Tiles.LabDeco
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 32, 32, base.mod.ItemType("LabChest"), 1, false, 0, false, false);
+			Item.NewItem(i * 16, j * 16, 32, 32, ModContent.ItemType<LabChest>(), 1, false, 0, false, false);
 			Chest.DestroyChest(i, j);
 		}
 
 		public override bool NewRightClick(int i, int j)
 		{
-			Player player = Main.player[Main.myPlayer];
-			Item[] inventory = player.inventory;
-			for (int k = 0; k < inventory.Length; k++)
+			Player player = Main.LocalPlayer;
+			if (Main.LocalPlayer.HasItem(ModContent.ItemType<Keycard2>()))
 			{
-				if (inventory[k].type == base.mod.ItemType("Keycard2"))
+				Tile tile = Main.tile[i, j];
+				Main.mouseRightRelease = false;
+				int left = i;
+				int top = j;
+				if (tile.frameX % 36 != 0)
 				{
-					Tile tile = Main.tile[i, j];
-					Main.mouseRightRelease = false;
-					int left = i;
-					int top = j;
-					if (tile.frameX % 36 != 0)
+					left--;
+				}
+				if (tile.frameY != 0)
+				{
+					top--;
+				}
+				if (player.sign >= 0)
+				{
+					Main.PlaySound(11, -1, -1, 1, 1f, 0f);
+					player.sign = -1;
+					Main.editSign = false;
+					Main.npcChatText = "";
+				}
+				if (Main.editChest)
+				{
+					Main.PlaySound(12, -1, -1, 1, 1f, 0f);
+					Main.editChest = false;
+					Main.npcChatText = "";
+				}
+				if (player.editedChestName)
+				{
+					NetMessage.SendData(33, -1, -1, null, player.chest, 1f, 0f, 0f, 0, 0, 0);
+					player.editedChestName = false;
+				}
+				if (Main.netMode == 1)
+				{
+					if (left == player.chestX && top == player.chestY && player.chest >= 0)
 					{
-						left--;
-					}
-					if (tile.frameY != 0)
-					{
-						top--;
-					}
-					if (player.sign >= 0)
-					{
+						player.chest = -1;
+						Recipe.FindRecipes();
 						Main.PlaySound(11, -1, -1, 1, 1f, 0f);
-						player.sign = -1;
-						Main.editSign = false;
-						Main.npcChatText = "";
 					}
-					if (Main.editChest)
+					else
 					{
-						Main.PlaySound(12, -1, -1, 1, 1f, 0f);
-						Main.editChest = false;
-						Main.npcChatText = "";
+						NetMessage.SendData(31, -1, -1, null, left, (float)top, 0f, 0f, 0, 0, 0);
+						Main.stackSplit = 600;
 					}
-					if (player.editedChestName)
+				}
+				else
+				{
+					int chest = Chest.FindChest(left, top);
+					if (chest >= 0)
 					{
-						NetMessage.SendData(33, -1, -1, null, player.chest, 1f, 0f, 0f, 0, 0, 0);
-						player.editedChestName = false;
-					}
-					if (Main.netMode == 1)
-					{
-						if (left == player.chestX && top == player.chestY && player.chest >= 0)
+						Main.stackSplit = 600;
+						if (chest == player.chest)
 						{
 							player.chest = -1;
-							Recipe.FindRecipes();
 							Main.PlaySound(11, -1, -1, 1, 1f, 0f);
 						}
 						else
 						{
-							NetMessage.SendData(31, -1, -1, null, left, (float)top, 0f, 0f, 0, 0, 0);
-							Main.stackSplit = 600;
+							player.chest = chest;
+							Main.playerInventory = true;
+							Main.recBigList = false;
+							player.chestX = left;
+							player.chestY = top;
+							Main.PlaySound((player.chest < 0) ? 10 : 12, -1, -1, 1, 1f, 0f);
 						}
-					}
-					else
-					{
-						int chest = Chest.FindChest(left, top);
-						if (chest >= 0)
-						{
-							Main.stackSplit = 600;
-							if (chest == player.chest)
-							{
-								player.chest = -1;
-								Main.PlaySound(11, -1, -1, 1, 1f, 0f);
-							}
-							else
-							{
-								player.chest = chest;
-								Main.playerInventory = true;
-								Main.recBigList = false;
-								player.chestX = left;
-								player.chestY = top;
-								Main.PlaySound((player.chest < 0) ? 10 : 12, -1, -1, 1, 1f, 0f);
-							}
-							Recipe.FindRecipes();
-						}
+						Recipe.FindRecipes();
 					}
 				}
 			}
@@ -200,7 +198,7 @@ namespace Redemption.Tiles.LabDeco
 				player.showItemIconText = ((Main.chest[chest].name.Length > 0) ? Main.chest[chest].name : "Lab Chest");
 				if (player.showItemIconText == "Lab Chest")
 				{
-					player.showItemIcon2 = base.mod.ItemType("Keycard2");
+					player.showItemIcon2 = ModContent.ItemType<Keycard2>();
 					player.showItemIconText = "";
 				}
 			}

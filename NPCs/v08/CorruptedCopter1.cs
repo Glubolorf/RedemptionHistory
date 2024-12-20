@@ -1,6 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
+using Redemption.NPCs.Bosses.OmegaOblit;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,8 +31,8 @@ namespace Redemption.NPCs.v08
 			base.npc.buffImmune[31] = true;
 			base.npc.buffImmune[39] = true;
 			base.npc.buffImmune[24] = true;
-			base.npc.buffImmune[base.mod.BuffType("UltraFlameDebuff")] = true;
-			base.npc.buffImmune[base.mod.BuffType("EnjoymentDebuff")] = true;
+			base.npc.buffImmune[ModContent.BuffType<UltraFlameDebuff>()] = true;
+			base.npc.buffImmune[ModContent.BuffType<EnjoymentDebuff>()] = true;
 			base.npc.HitSound = SoundID.NPCHit4;
 			base.npc.DeathSound = SoundID.NPCDeath14;
 			base.npc.value = (float)Item.buyPrice(0, 40, 0, 0);
@@ -44,13 +47,13 @@ namespace Redemption.NPCs.v08
 			{
 				if (base.npc.direction == -1)
 				{
-					Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("AttackHovercopterPro"), 50, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, ModContent.ProjectileType<AttackHovercopterPro>(), 50, 3f, 255, 0f, 0f);
 				}
 				else
 				{
-					Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("AttackHovercopterPro2"), 50, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, ModContent.ProjectileType<AttackHovercopterPro2>(), 50, 3f, 255, 0f, 0f);
 				}
-				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("OmegaPilotDroid"), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<OmegaPilotDroid>(), 0, 0f, 0f, 0f, 0f, 255);
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/AttackHovercopterGore6"), 1f);
 				for (int i = 0; i < 25; i++)
 				{
@@ -94,12 +97,8 @@ namespace Redemption.NPCs.v08
 			if (Main.rand.Next(400) == 0)
 			{
 				Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-				int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 32f), new Vector2(0f, -20f), base.mod.ProjectileType("OmegaMissile"), 60, 3f, 255, 0f, 0f);
+				int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 32f), new Vector2(0f, -20f), ModContent.ProjectileType<OmegaMissile>(), 60, 3f, 255, 0f, 0f);
 				Main.projectile[p].netUpdate = true;
-			}
-			if (!this.minigunAttack)
-			{
-				this.attackStart = false;
 			}
 			if (this.minigunAttack)
 			{
@@ -201,8 +200,6 @@ namespace Redemption.NPCs.v08
 		}
 
 		private bool minigunAttack;
-
-		private bool attackStart;
 
 		private int attackTimer;
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -12,7 +13,7 @@ namespace Redemption.Tiles
 			Main.tileSolid[(int)base.Type] = true;
 			Main.tileMergeDirt[(int)base.Type] = true;
 			Main.tileBlockLight[(int)base.Type] = true;
-			this.drop = base.mod.ItemType("AncientDirt");
+			this.drop = ModContent.ItemType<AncientDirt>();
 			base.AddMapEntry(new Color(84, 38, 0), null);
 			base.SetModTree(new AncientTree());
 		}
@@ -25,7 +26,7 @@ namespace Redemption.Tiles
 		public override int SaplingGrowthType(ref int style)
 		{
 			style = 0;
-			return base.mod.TileType("AncientSapling");
+			return ModContent.TileType<AncientSapling>();
 		}
 	}
 }

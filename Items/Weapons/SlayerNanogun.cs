@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -43,7 +44,7 @@ namespace Redemption.Items.Weapons
 			base.item.rare = 9;
 			base.item.UseSound = SoundID.Item40;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("Nanobot1");
+			base.item.shoot = ModContent.ProjectileType<Nanobot1>();
 			base.item.shootSpeed = 10f;
 			base.item.glowMask = SlayerNanogun.customGlowMask;
 		}

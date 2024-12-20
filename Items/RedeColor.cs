@@ -45,6 +45,19 @@ namespace Redemption.Items
 			}
 		}
 
+		public static Color AncientColour
+		{
+			get
+			{
+				return BaseUtility.MultiLerpColor((float)(Main.player[Main.myPlayer].miscCounter % 100) / 100f, new Color[]
+				{
+					new Color(141, 134, 135),
+					new Color(241, 165, 62),
+					new Color(141, 134, 135)
+				});
+			}
+		}
+
 		public static Color COLOR_WHITEFADE1d
 		{
 			get

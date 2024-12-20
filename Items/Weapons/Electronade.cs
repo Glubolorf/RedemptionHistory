@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -30,7 +31,7 @@ namespace Redemption.Items.Weapons
 			base.item.thrown = true;
 			base.item.autoReuse = true;
 			base.item.shootSpeed = 12f;
-			base.item.shoot = base.mod.ProjectileType("ElectronadeFPro");
+			base.item.shoot = ModContent.ProjectileType<ElectronadeFPro>();
 		}
 	}
 }

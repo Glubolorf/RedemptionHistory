@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Dusts;
+using Redemption.NPCs.LabNPCs;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -26,7 +28,7 @@ namespace Redemption.Tiles.LabDeco
 			TileObjectData.newTile.CoordinatePadding = 2;
 			TileObjectData.newTile.AnchorBottom = new AnchorData(11, TileObjectData.newTile.Width, 0);
 			TileObjectData.addTile((int)base.Type);
-			this.dustType = base.mod.DustType("SludgeSpoonDust");
+			this.dustType = ModContent.DustType<SludgeSpoonDust>();
 			this.minPick = 300;
 			this.mineResist = 10f;
 			this.disableSmartCursor = true;
@@ -40,27 +42,15 @@ namespace Redemption.Tiles.LabDeco
 			if (Main.netMode != 1)
 			{
 				float dist = Vector2.Distance(Main.LocalPlayer.Center / 16f, new Vector2((float)i + 0.5f, (float)j + 0.5f));
-				if (dist <= 10f && dist > 1f && Main.rand.Next(100) == 0 && NPC.CountNPCS(base.mod.NPCType("InfectionHive")) == 0)
+				if (dist <= 10f && dist > 1f && Main.rand.Next(100) == 0 && NPC.CountNPCS(ModContent.NPCType<InfectionHive>()) == 0)
 				{
 					i *= 16;
 					j *= 16;
-					int k = NPC.NewNPC(i, j, base.mod.NPCType("InfectionHive"), 0, 0f, 0f, 0f, 0f, 255);
+					int k = NPC.NewNPC(i, j, ModContent.NPCType<InfectionHive>(), 0, 0f, 0f, 0f, 0f, 255);
 					if (Main.netMode == 2)
 					{
 						NetMessage.SendData(23, -1, -1, null, k, 0f, 0f, 0f, 0, 0, 0);
-						return;
 					}
-				}
-			}
-			else
-			{
-				float dist2 = Vector2.Distance(Main.LocalPlayer.Center / 16f, new Vector2((float)i + 0.5f, (float)j + 0.5f));
-				if (dist2 <= 10f && dist2 > 1f && Main.rand.Next(100) == 0 && NPC.CountNPCS(base.mod.NPCType("InfectionHive")) == 0)
-				{
-					Main.tile[i, j];
-					i *= 16;
-					j *= 16;
-					Projectile.NewProjectile((float)i, (float)j, 0f, 0f, base.mod.ProjectileType("InfectionHiveSummonPro"), 0, 0f, 255, 0f, 0f);
 				}
 			}
 		}

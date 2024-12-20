@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.DruidProjectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,7 +30,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.value = Item.buyPrice(0, 1, 75, 0);
 			base.item.noUseGraphic = true;
 			base.item.noMelee = true;
-			base.item.shoot = base.mod.ProjectileType("SeedNade");
+			base.item.shoot = ModContent.ProjectileType<SeedNadePro>();
 			base.item.shootSpeed = 7.5f;
 		}
 

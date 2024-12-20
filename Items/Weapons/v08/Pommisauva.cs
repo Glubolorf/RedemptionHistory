@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -32,13 +33,13 @@ namespace Redemption.Items.Weapons.v08
 			base.item.rare = 3;
 			base.item.UseSound = SoundID.Item20;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("PommisauvaBomb");
-			base.item.shootSpeed = 12f;
+			base.item.shoot = ModContent.ProjectileType<PommisauvaBomb>();
+			base.item.shootSpeed = 6f;
 		}
 
 		public override bool CanUseItem(Player player)
 		{
-			return !player.HasBuff(base.mod.BuffType("NoitaBombCooldown"));
+			return !player.HasBuff(ModContent.BuffType<NoitaBombCooldown>());
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -46,7 +47,7 @@ namespace Redemption.Items.Weapons.v08
 			this.bombCount++;
 			if (this.bombCount >= 3)
 			{
-				player.AddBuff(base.mod.BuffType("NoitaBombCooldown"), 1800, true);
+				player.AddBuff(ModContent.BuffType<NoitaBombCooldown>(), 1800, true);
 				this.bombCount = 0;
 			}
 			return true;

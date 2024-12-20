@@ -121,14 +121,14 @@ namespace Redemption.Projectiles.v08
 				vector15.Normalize();
 				vector15 *= (float)Main.rand.Next(45, 65) * 0.1f;
 				vector15 = Utils.RotatedBy(vector15, (Main.rand.NextDouble() - 0.5) * 1.5707963705062866, default(Vector2));
-				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, vector15.X, vector15.Y, base.mod.ProjectileType("NebulaSparklePro"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, -10f, 0f);
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, vector15.X, vector15.Y, ModContent.ProjectileType<NebulaSparklePro>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, -10f, 0f);
 			}
 		}
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			Main.PlaySound(2, (int)base.projectile.position.X, (int)base.projectile.position.Y, 14, 1f, 0f);
-			int p = Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, 0f, base.mod.ProjectileType("NebulaSparklePro2"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
+			int p = Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, 0f, ModContent.ProjectileType<NebulaSparklePro2>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
 			Main.projectile[p].melee = true;
 			Main.projectile[p].friendly = true;
 			Main.projectile[p].hostile = false;

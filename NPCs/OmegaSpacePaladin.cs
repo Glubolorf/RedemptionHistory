@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,7 +32,7 @@ namespace Redemption.NPCs
 			this.aiType = 425;
 			this.animationType = 425;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("OmegaSpacePaladinBanner");
+			this.bannerItem = ModContent.ItemType<OmegaSpacePaladinBanner>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -63,10 +64,6 @@ namespace Redemption.NPCs
 			if (base.npc.Distance(Main.player[base.npc.target].Center) <= 400f && Main.rand.Next(150) == 0 && !this.minigunAttack)
 			{
 				this.minigunAttack = true;
-			}
-			if (!this.minigunAttack)
-			{
-				this.attackStart = false;
 			}
 			if (this.minigunAttack)
 			{
@@ -116,8 +113,6 @@ namespace Redemption.NPCs
 		}
 
 		private bool minigunAttack;
-
-		private bool attackStart;
 
 		private int attackTimer;
 

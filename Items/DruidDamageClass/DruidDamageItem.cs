@@ -8,6 +8,14 @@ namespace Redemption.Items.DruidDamageClass
 {
 	public abstract class DruidDamageItem : ModItem
 	{
+		public override bool CloneNewInstances
+		{
+			get
+			{
+				return true;
+			}
+		}
+
 		public virtual void SafeSetDefaults()
 		{
 		}
@@ -27,9 +35,9 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.summon = false;
 		}
 
-		public override void GetWeaponDamage(Player player, ref int damage)
+		public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
 		{
-			damage = (int)((float)damage * DruidDamagePlayer.ModPlayer(player).druidDamage + 5E-06f);
+			mult *= DruidDamagePlayer.ModPlayer(player).druidDamage;
 		}
 
 		public override void GetWeaponKnockback(Player player, ref float knockback)

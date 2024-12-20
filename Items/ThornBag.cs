@@ -1,4 +1,8 @@
 ﻿using System;
+using Redemption.Items.Armor.PostML;
+using Redemption.Items.DruidDamageClass.SeedBags;
+using Redemption.Items.Weapons.v08;
+using Redemption.NPCs.Bosses.Thorn;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -31,7 +35,7 @@ namespace Redemption.Items
 		{
 			get
 			{
-				return base.mod.NPCType("Thorn");
+				return ModContent.NPCType<Thorn>();
 			}
 		}
 
@@ -39,26 +43,26 @@ namespace Redemption.Items
 		{
 			if (Main.rand.Next(7) == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("ThornMask"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<ThornMask>(), 1);
 			}
 			int num = Main.rand.Next(4);
 			if (num == 0)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("CursedGrassSword"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<CursedGrassSword>(), 1);
 			}
 			if (num == 1)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("CursedThornBow"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<CursedThornBow>(), 1);
 			}
 			if (num == 2)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("RootTendril"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<RootTendril>(), 1);
 			}
 			if (num == 3)
 			{
-				player.QuickSpawnItem(base.mod.ItemType("ThornSeedBag"), 1);
+				player.QuickSpawnItem(ModContent.ItemType<ThornSeedBag>(), 1);
 			}
-			player.QuickSpawnItem(base.mod.ItemType("CircletOfBrambles"), 1);
+			player.QuickSpawnItem(ModContent.ItemType<CircletOfBrambles>(), 1);
 		}
 	}
 }

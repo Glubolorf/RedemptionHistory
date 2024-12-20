@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.DruidProjectiles.Plants
 {
@@ -56,7 +57,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 			base.projectile.localAI[0] += 1f;
 			if (this.IsOnNativeTerrain ? (base.projectile.localAI[0] % 9f == 0f) : (base.projectile.localAI[0] % 15f == 0f && base.projectile.frame >= 4))
 			{
-				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-12 + Main.rand.Next(0, 24)), (float)(-12 + Main.rand.Next(0, 14)), base.mod.ProjectileType("AdamantiteSparkPro"), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-12 + Main.rand.Next(0, 24)), (float)(-12 + Main.rand.Next(0, 14)), ModContent.ProjectileType<AdamantiteSparkPro>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
 			}
 		}
 

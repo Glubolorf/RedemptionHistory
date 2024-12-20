@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -162,12 +163,12 @@ namespace Redemption.NPCs.LabNPCs.New
 						int dustIndex2 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 31, 0f, 0f, 100, default(Color), 2f);
 						Main.dust[dustIndex2].velocity *= 2.6f;
 					}
-					int p = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y + 31f), new Vector2(10f, 0f), base.mod.ProjectileType("MACEShock1"), 35, 3f, 255, 0f, 0f);
-					p = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y + 31f), new Vector2(10f, 0f), base.mod.ProjectileType("MACEShock2"), 35, 3f, 255, 0f, 0f);
-					p = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y + 31f), new Vector2(10f, 0f), base.mod.ProjectileType("MACEShock3"), 35, 3f, 255, 0f, 0f);
-					p = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y + 31f), new Vector2(-10f, 0f), base.mod.ProjectileType("MACEShock1"), 35, 3f, 255, 0f, 0f);
-					p = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y + 31f), new Vector2(-10f, 0f), base.mod.ProjectileType("MACEShock2"), 35, 3f, 255, 0f, 0f);
-					p = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y + 31f), new Vector2(-10f, 0f), base.mod.ProjectileType("MACEShock3"), 35, 3f, 255, 0f, 0f);
+					int p = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y + 31f), new Vector2(10f, 0f), ModContent.ProjectileType<MACEShock1>(), 35, 3f, 255, 0f, 0f);
+					p = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y + 31f), new Vector2(10f, 0f), ModContent.ProjectileType<MACEShock2>(), 35, 3f, 255, 0f, 0f);
+					p = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y + 31f), new Vector2(10f, 0f), ModContent.ProjectileType<MACEShock3>(), 35, 3f, 255, 0f, 0f);
+					p = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y + 31f), new Vector2(-10f, 0f), ModContent.ProjectileType<MACEShock1>(), 35, 3f, 255, 0f, 0f);
+					p = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y + 31f), new Vector2(-10f, 0f), ModContent.ProjectileType<MACEShock2>(), 35, 3f, 255, 0f, 0f);
+					p = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y + 31f), new Vector2(-10f, 0f), ModContent.ProjectileType<MACEShock3>(), 35, 3f, 255, 0f, 0f);
 					Main.projectile[p].netUpdate = true;
 					this.landed = true;
 					base.npc.netUpdate = true;

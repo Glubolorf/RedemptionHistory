@@ -53,7 +53,7 @@ namespace Redemption.Projectiles.DruidProjectiles.WorldStave
 			projectile4.velocity.Y = projectile4.velocity.Y + 1f;
 			if (base.projectile.localAI[0] == 100f)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 58f, base.projectile.position.Y + 70f), base.projectile.velocity, base.mod.ProjectileType("FireForcePro1"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 58f, base.projectile.position.Y + 70f), base.projectile.velocity, ModContent.ProjectileType<FireForcePro1>(), base.projectile.damage, 0f, base.projectile.owner, (float)base.projectile.whoAmI, 0f);
 			}
 			if (base.projectile.localAI[0] >= 1000f)
 			{

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -73,7 +74,7 @@ namespace Redemption.Items.Weapons
 			}
 			if (player.altFunctionUse == 2)
 			{
-				Projectile.NewProjectile(position.X, position.Y, speedX, speedY, base.mod.ProjectileType("FlakPro"), 200, 9f, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(position.X, position.Y, speedX, speedY, ModContent.ProjectileType<FlakPro>(), 200, 9f, player.whoAmI, 0f, 0f);
 				int numberProjectiles = 2;
 				for (int i = 0; i < numberProjectiles; i++)
 				{

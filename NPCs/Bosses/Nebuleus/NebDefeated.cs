@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.Nebuleus
@@ -55,76 +55,38 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 			{
 				if (base.projectile.localAI[0] == 60f)
 				{
-					string text = "It's always the same, isn't it.";
-					Color rarityPink = Colors.RarityPink;
-					byte r = rarityPink.R;
-					rarityPink = Colors.RarityPink;
-					byte g = rarityPink.G;
-					rarityPink = Colors.RarityPink;
-					Main.NewText(text, r, g, rarityPink.B, false);
+					Redemption.ShowText(base.projectile, 3, 21, 200);
 					Redemption.GirusSilence = true;
 				}
-				if (base.projectile.localAI[0] == 160f)
+				if (base.projectile.localAI[0] == 260f)
 				{
-					string text2 = "Even when I try my hardest... I'm still a failure.";
-					Color rarityPink = Colors.RarityPink;
-					byte r2 = rarityPink.R;
-					rarityPink = Colors.RarityPink;
-					byte g2 = rarityPink.G;
-					rarityPink = Colors.RarityPink;
-					Main.NewText(text2, r2, g2, rarityPink.B, false);
+					Redemption.ShowText(base.projectile, 3, 22, 200);
 				}
-				if (base.projectile.localAI[0] == 310f)
+				if (base.projectile.localAI[0] == 460f)
 				{
-					string text3 = "You've made me realise, I'm not strong enough. I give up. Don't expect me to come back.";
-					Color rarityPink = Colors.RarityPink;
-					byte r3 = rarityPink.R;
-					rarityPink = Colors.RarityPink;
-					byte g3 = rarityPink.G;
-					rarityPink = Colors.RarityPink;
-					Main.NewText(text3, r3, g3, rarityPink.B, false);
+					Redemption.ShowText(base.projectile, 3, 23, 200);
 				}
-				if (base.projectile.localAI[0] == 420f)
+				if (base.projectile.localAI[0] == 660f)
 				{
-					string text4 = "But... If the Demigod ever notices you, and comes for you...";
-					Color rarityPink = Colors.RarityPink;
-					byte r4 = rarityPink.R;
-					rarityPink = Colors.RarityPink;
-					byte g4 = rarityPink.G;
-					rarityPink = Colors.RarityPink;
-					Main.NewText(text4, r4, g4, rarityPink.B, false);
+					Redemption.ShowText(base.projectile, 3, 24, 140);
 				}
-				if (base.projectile.localAI[0] == 600f)
+				if (base.projectile.localAI[0] == 800f)
 				{
-					string text5 = "Don't tell him I'm still alive, It would be best for him to believe that robot had killed me...";
-					Color rarityPink = Colors.RarityPink;
-					byte r5 = rarityPink.R;
-					rarityPink = Colors.RarityPink;
-					byte g5 = rarityPink.G;
-					rarityPink = Colors.RarityPink;
-					Main.NewText(text5, r5, g5, rarityPink.B, false);
+					Redemption.ShowText(base.projectile, 3, 25, 200);
 				}
-				if (base.projectile.localAI[0] == 900f)
+				if (base.projectile.localAI[0] == 1000f)
 				{
-					string text6 = "And I'm too ashamed to face him.";
-					Color rarityPink = Colors.RarityPink;
-					byte r6 = rarityPink.R;
-					rarityPink = Colors.RarityPink;
-					byte g6 = rarityPink.G;
-					rarityPink = Colors.RarityPink;
-					Main.NewText(text6, r6, g6, rarityPink.B, false);
+					Redemption.ShowText(base.projectile, 3, 26, 280);
 				}
-				if (base.projectile.localAI[0] == 1200f)
+				if (base.projectile.localAI[0] == 1280f)
 				{
-					string text7 = "Well, this is goodbye forever, Terrarian.";
-					Color rarityPink = Colors.RarityPink;
-					byte r7 = rarityPink.R;
-					rarityPink = Colors.RarityPink;
-					byte g7 = rarityPink.G;
-					rarityPink = Colors.RarityPink;
-					Main.NewText(text7, r7, g7, rarityPink.B, false);
+					Redemption.ShowText(base.projectile, 3, 27, 200);
 				}
-				if (base.projectile.localAI[0] >= 1300f)
+				if (base.projectile.localAI[0] == 1480f)
+				{
+					Redemption.ShowText(base.projectile, 3, 28, 180);
+				}
+				if (base.projectile.localAI[0] >= 1660f)
 				{
 					base.projectile.Kill();
 				}
@@ -146,7 +108,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 
 		public override void Kill(int timeLeft)
 		{
-			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, base.mod.ProjectileType("NebDefeated2"), 0, 3f, 255, 0f, 0f);
+			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, ModContent.ProjectileType<NebDefeated2>(), 0, 3f, 255, 0f, 0f);
 			if (Main.netMode == 2)
 			{
 				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
@@ -162,7 +124,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 						CombatText.NewText(player2.getRect(), Color.Red, "-4", true, false);
 						for (int j = 0; j < player2.inventory.Length; j++)
 						{
-							if (player2.inventory[j].type == base.mod.ItemType("RedemptionTeller"))
+							if (player2.inventory[j].type == ModContent.ItemType<RedemptionTeller>())
 							{
 								Main.NewText("<Chalice of Alignment> ... You... Oh no... I don't know if you can redeem yourself from that.", Color.DarkGoldenrod, false);
 							}

@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
@@ -41,7 +42,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 				this.clearCheck = Main.player[p];
 				if (Collision.CheckAABBvAABBCollision(base.projectile.position, base.projectile.Size, this.clearCheck.position, this.clearCheck.Size))
 				{
-					this.clearCheck.AddBuff(base.mod.BuffType("HealShroomBuff"), 1800, false);
+					this.clearCheck.AddBuff(ModContent.BuffType<HealShroomBuff>(), 1800, false);
 				}
 			}
 		}

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -40,7 +41,7 @@ namespace Redemption.Items.Weapons
 			base.item.UseSound = base.mod.GetLegacySoundSlot(2, "Sounds/Item/Launch2");
 			base.item.value = Item.buyPrice(0, 10, 0, 0);
 			base.item.rare = 11;
-			base.item.shoot = base.mod.ProjectileType("XenoShard5");
+			base.item.shoot = ModContent.ProjectileType<XenoShard5>();
 			base.item.shootSpeed = 50f;
 			base.item.autoReuse = true;
 			base.item.noMelee = true;
@@ -62,7 +63,7 @@ namespace Redemption.Items.Weapons
 			}
 			else
 			{
-				base.item.shoot = base.mod.ProjectileType("XenoShard5");
+				base.item.shoot = ModContent.ProjectileType<XenoShard5>();
 				base.item.shootSpeed = 50f;
 				base.item.useAmmo = 0;
 			}

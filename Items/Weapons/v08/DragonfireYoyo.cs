@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -24,7 +25,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.value = Item.buyPrice(0, 1, 5, 0);
 			base.item.rare = 3;
 			base.item.autoReuse = false;
-			base.item.shoot = base.mod.ProjectileType("DragonfireYoyoPro");
+			base.item.shoot = ModContent.ProjectileType<DragonfireYoyoPro>();
 			base.item.noUseGraphic = true;
 			base.item.noMelee = true;
 			base.item.UseSound = SoundID.Item1;
@@ -33,7 +34,7 @@ namespace Redemption.Items.Weapons.v08
 		public override void AddRecipes()
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(base.mod.ItemType("DragonLeadBar"), 6);
+			modRecipe.AddIngredient(ModContent.ItemType<DragonLeadBar>(), 6);
 			modRecipe.AddIngredient(175, 6);
 			modRecipe.AddTile(77);
 			modRecipe.SetResult(this, 1);

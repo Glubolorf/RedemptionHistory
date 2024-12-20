@@ -42,7 +42,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 			{
 				Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 6, base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 0, default(Color), 1f);
 			}
-			for (int p = 0; p < Main.npc.Length; p++)
+			for (int p = 0; p < 200; p++)
 			{
 				this.clearCheck = Main.npc[p];
 				if (!this.clearCheck.immortal && !this.clearCheck.dontTakeDamage && Collision.CheckAABBvAABBCollision(base.projectile.position, base.projectile.Size, this.clearCheck.position, this.clearCheck.Size))

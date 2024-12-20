@@ -1,4 +1,6 @@
 ﻿using System;
+using Redemption.Buffs;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,7 +31,7 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 			base.item.autoReuse = true;
 			base.item.UseSound = SoundID.Item1;
 			base.item.value = Item.sellPrice(0, 55, 0, 0);
-			base.item.shoot = base.mod.ProjectileType("ShadeboundPro");
+			base.item.shoot = ModContent.ProjectileType<ShadeboundPro>();
 			this.spiritWeapon = true;
 			this.minSpiritLevel = 5;
 			this.maxSpiritLevel = 7;
@@ -103,7 +105,7 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 
 		public override void HoldItem(Player player)
 		{
-			player.AddBuff(base.mod.BuffType("ShadeboundBuff"), 4, true);
+			player.AddBuff(ModContent.BuffType<ShadeboundBuff>(), 4, true);
 		}
 
 		public override void AddRecipes()

@@ -40,8 +40,8 @@ namespace Redemption.Projectiles.v08
 				base.projectile.damage = 550;
 				base.projectile.knockBack = 15f;
 				this.Convert((int)base.projectile.Center.X / 16, (int)base.projectile.Center.Y / 16, 200);
-				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, base.mod.ProjectileType("PlutoniumBoom"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
-				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, base.mod.ProjectileType("ShockwaveBoom2"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, ModContent.ProjectileType<PlutoniumBoom>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, ModContent.ProjectileType<ShockwaveBoom2>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
 			}
 			else if (Main.rand.Next(2) == 0)
 			{

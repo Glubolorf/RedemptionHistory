@@ -1,7 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.DruidProjectiles.Stave;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
@@ -29,9 +31,9 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
 			base.item.noMelee = true;
-			base.item.shoot = base.mod.ProjectileType("MiniThornBall1");
+			base.item.shoot = ModContent.ProjectileType<MiniThornBall1>();
 			base.item.shootSpeed = 12f;
-			this.defaultShoot = base.mod.ProjectileType("MiniThornBall1");
+			this.defaultShoot = ModContent.ProjectileType<MiniThornBall1>();
 			this.singleShotStave = true;
 			this.staveHoldOffset = new Vector2(4f, -10f);
 			this.staveLength = 74.2f;

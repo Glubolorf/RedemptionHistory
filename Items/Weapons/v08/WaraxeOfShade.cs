@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -32,12 +33,12 @@ namespace Redemption.Items.Weapons.v08
 
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
 		{
-			target.AddBuff(base.mod.BuffType("BlackenedHeartDebuff"), 120, false);
+			target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), 120, false);
 		}
 
 		public override void HoldItem(Player player)
 		{
-			player.AddBuff(base.mod.BuffType("BlackenedHeartBuff2"), 4, true);
+			player.AddBuff(ModContent.BuffType<BlackenedHeartBuff2>(), 4, true);
 		}
 
 		public override void AddRecipes()

@@ -1,5 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Dusts;
+using Redemption.NPCs.LabNPCs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -13,7 +16,7 @@ namespace Redemption.Tiles
 			Main.tileBouncy[(int)base.Type] = true;
 			Main.tileMergeDirt[(int)base.Type] = true;
 			Main.tileBlockLight[(int)base.Type] = true;
-			this.dustType = base.mod.DustType("SludgeSpoonDust");
+			this.dustType = ModContent.DustType<SludgeSpoonDust>();
 			this.minPick = 225;
 			this.mineResist = 4f;
 			base.CreateMapEntryName(null).SetDefault("Hardened Sludge");
@@ -24,7 +27,7 @@ namespace Redemption.Tiles
 		{
 			if (closer)
 			{
-				Main.LocalPlayer.AddBuff(base.mod.BuffType("XenomiteDebuff"), Main.rand.Next(10, 20), true);
+				Main.LocalPlayer.AddBuff(ModContent.BuffType<XenomiteDebuff>(), Main.rand.Next(10, 20), true);
 			}
 		}
 
@@ -34,7 +37,7 @@ namespace Redemption.Tiles
 			{
 				i *= 16;
 				j *= 16;
-				NPC.NewNPC(i, j, base.mod.NPCType("SludgyBlob"), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC(i, j, ModContent.NPCType<SludgyBlob>(), 0, 0f, 0f, 0f, 0f, 255);
 			}
 		}
 

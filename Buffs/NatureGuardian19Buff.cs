@@ -1,5 +1,6 @@
 ﻿using System;
 using Redemption.Items.DruidDamageClass;
+using Redemption.Projectiles.DruidProjectiles.Stave.Guardians;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -25,7 +26,7 @@ namespace Redemption.Buffs
 			p.fasterSeedbags = true;
 			p.fasterSpirits = true;
 			RedePlayer modPlayer2 = player.GetModPlayer<RedePlayer>();
-			if (player.ownedProjectileCounts[base.mod.ProjectileType("NatureGuardian19")] > 0)
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<NatureGuardian19>()] > 0)
 			{
 				modPlayer2.natureGuardian9 = true;
 			}

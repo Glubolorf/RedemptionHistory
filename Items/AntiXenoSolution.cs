@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -15,11 +16,11 @@ namespace Redemption.Items
 
 		public override void SetDefaults()
 		{
-			base.item.shoot = base.mod.ProjectileType("AntiXenoSolutionPro") - 145;
+			base.item.shoot = ModContent.ProjectileType<AntiXenoSolutionPro>() - 145;
 			base.item.ammo = AmmoID.Solution;
 			base.item.width = 10;
 			base.item.height = 12;
-			base.item.value = Item.buyPrice(0, 0, 50, 0);
+			base.item.value = Item.buyPrice(0, 0, 10, 0);
 			base.item.rare = 7;
 			base.item.maxStack = 999;
 			base.item.consumable = true;

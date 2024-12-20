@@ -18,7 +18,6 @@ namespace Redemption.Items.Weapons.v08
 		{
 			base.item.thrown = true;
 			base.item.shootSpeed = 25f;
-			base.item.crit = 4;
 			base.item.damage = 245;
 			base.item.knockBack = 5f;
 			base.item.useStyle = 1;

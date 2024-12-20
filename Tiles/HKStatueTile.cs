@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -53,7 +54,7 @@ namespace Redemption.Tiles
 			if (num <= 30)
 			{
 				Redemption.templeOfHeroes = true;
-				player.AddBuff(base.mod.BuffType("HKStatueBuff"), 10, true);
+				player.AddBuff(ModContent.BuffType<HKStatueBuff>(), 10, true);
 			}
 			if (num > 30)
 			{

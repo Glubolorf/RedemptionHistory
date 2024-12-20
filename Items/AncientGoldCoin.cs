@@ -9,7 +9,7 @@ namespace Redemption.Items
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Ancient Gold Coin");
-			base.Tooltip.SetDefault("'A plain gold coin, these were originally Gathuram's currency until they started to use brass'\nCan be given to a certain Undead");
+			base.Tooltip.SetDefault("Can be given to a certain Undead as currency");
 		}
 
 		public override void SetDefaults()

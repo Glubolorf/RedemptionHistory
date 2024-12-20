@@ -20,7 +20,7 @@ namespace Redemption.Buffs
 			}
 			player.allDamage += 0.05f;
 			player.statDefense += 4;
-			if (player.HasBuff(base.mod.BuffType("OblitBuff2")) || player.HasBuff(base.mod.BuffType("OblitBuff3")) || player.HasBuff(base.mod.BuffType("OblitBuff4")) || player.HasBuff(base.mod.BuffType("OblitBuff5")))
+			if (player.HasBuff(ModContent.BuffType<OblitBuff2>()) || player.HasBuff(ModContent.BuffType<OblitBuff3>()) || player.HasBuff(ModContent.BuffType<OblitBuff4>()) || player.HasBuff(ModContent.BuffType<OblitBuff5>()))
 			{
 				player.DelBuff(buffIndex);
 				buffIndex--;

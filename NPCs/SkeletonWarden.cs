@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,7 +30,7 @@ namespace Redemption.NPCs
 			this.aiType = 111;
 			this.animationType = 110;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("SkeletonWardenBanner");
+			this.bannerItem = ModContent.ItemType<SkeletonWardenBanner>();
 		}
 
 		public override void AI()

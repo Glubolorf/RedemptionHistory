@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
+using Redemption.Items.Placeable.Banners.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -34,7 +36,7 @@ namespace Redemption.NPCs.v08
 			base.npc.npcSlots = 1f;
 			base.npc.netAlways = true;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("IrradiatedWorldFeederBanner");
+			this.bannerItem = ModContent.ItemType<IrradiatedWorldFeederBanner>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -58,11 +60,11 @@ namespace Redemption.NPCs.v08
 				int randomWormLength = Main.rand.Next(12, 16);
 				for (int i = 0; i < randomWormLength; i++)
 				{
-					latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("IrradiatedWorldFeederBody"), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
+					latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<IrradiatedWorldFeederBody>(), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
 					Main.npc[latestNPC].realLife = base.npc.whoAmI;
 					Main.npc[latestNPC].ai[3] = (float)base.npc.whoAmI;
 				}
-				latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("IrradiatedWorldFeederTail"), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
+				latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<IrradiatedWorldFeederTail>(), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
 				Main.npc[latestNPC].realLife = base.npc.whoAmI;
 				Main.npc[latestNPC].ai[3] = (float)base.npc.whoAmI;
 				base.npc.ai[0] = 1f;
@@ -328,11 +330,11 @@ namespace Redemption.NPCs.v08
 		{
 			if (Main.rand.Next(2) == 0 || Main.expertMode)
 			{
-				target.AddBuff(base.mod.BuffType("XenomiteDebuff"), Main.rand.Next(500, 750), true);
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff>(), Main.rand.Next(500, 750), true);
 			}
 			if (Main.rand.Next(14) == 0 || (Main.expertMode && Main.rand.Next(9) == 0))
 			{
-				target.AddBuff(base.mod.BuffType("XenomiteDebuff2"), Main.rand.Next(50, 100), true);
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff2>(), Main.rand.Next(50, 100), true);
 			}
 		}
 	}

@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Dusts;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -34,14 +36,14 @@ namespace Redemption.Projectiles.v08
 			Main.PlaySound(SoundID.NPCHit54, base.projectile.position);
 			for (int i = 0; i < 5; i++)
 			{
-				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, base.mod.DustType("VoidFlame"), 0f, 0f, 100, default(Color), 1.2f);
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, ModContent.DustType<VoidFlame>(), 0f, 0f, 100, default(Color), 1.2f);
 				Main.dust[dustIndex].velocity *= 1.9f;
 			}
 		}
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			target.AddBuff(base.mod.BuffType("BlackenedHeartDebuff"), 120, false);
+			target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), 120, false);
 		}
 	}
 }

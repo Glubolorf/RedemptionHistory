@@ -45,7 +45,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					Main.dust[dustID].noLight = false;
 					Main.dust[dustID].noGravity = true;
 				}
-				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-4 + Main.rand.Next(0, 8)), (float)(-4 + Main.rand.Next(0, 8)), base.mod.ProjectileType("NebulaStar"), 50, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-4 + Main.rand.Next(0, 8)), (float)(-4 + Main.rand.Next(0, 8)), ModContent.ProjectileType<NebulaStar>(), 50, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			}
 		}
 	}

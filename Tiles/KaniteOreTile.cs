@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -15,7 +16,7 @@ namespace Redemption.Tiles
 			Main.tileBlockLight[(int)base.Type] = true;
 			Main.tileValue[(int)base.Type] = 210;
 			this.dustType = 80;
-			this.drop = base.mod.ItemType("KaniteOre");
+			this.drop = ModContent.ItemType<KaniteOre>();
 			this.minPick = 30;
 			this.mineResist = 1.2f;
 			this.soundType = 21;

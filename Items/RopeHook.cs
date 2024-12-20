@@ -16,7 +16,7 @@ namespace Redemption.Items
 		{
 			base.item.CloneDefaults(1236);
 			base.item.shootSpeed = 16f;
-			base.item.shoot = base.mod.ProjectileType("RopeHookProjectile");
+			base.item.shoot = ModContent.ProjectileType<RopeHookProjectile>();
 			base.item.value = Item.buyPrice(0, 1, 25, 0);
 		}
 

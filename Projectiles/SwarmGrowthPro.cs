@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -114,7 +115,7 @@ namespace Redemption.Projectiles
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.AddBuff(base.mod.BuffType("BInfectionDebuff"), 300, false);
+			target.AddBuff(ModContent.BuffType<BInfectionDebuff>(), 300, false);
 		}
 	}
 }

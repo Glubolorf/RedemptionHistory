@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
@@ -28,10 +29,10 @@ namespace Redemption.Items.Cores
 			RedePlayer modPlayer2 = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
 			player.statLifeMax2 += 50;
 			player.thorns = 1f;
-			player.buffImmune[base.mod.BuffType("XenomiteDebuff")] = true;
-			player.buffImmune[base.mod.BuffType("XenomiteDebuff2")] = true;
-			player.buffImmune[base.mod.BuffType("RadioactiveFalloutDebuff")] = true;
-			if (modPlayer2.ZoneXeno || modPlayer2.ZoneEvilXeno)
+			player.buffImmune[ModContent.BuffType<XenomiteDebuff>()] = true;
+			player.buffImmune[ModContent.BuffType<XenomiteDebuff2>()] = true;
+			player.buffImmune[ModContent.BuffType<RadioactiveFalloutDebuff>()] = true;
+			if (modPlayer2.ZoneXeno || modPlayer2.ZoneEvilXeno || modPlayer2.ZoneEvilXeno2)
 			{
 				modPlayer.druidDamage *= 1.1f;
 				player.magicDamage *= 1.1f;

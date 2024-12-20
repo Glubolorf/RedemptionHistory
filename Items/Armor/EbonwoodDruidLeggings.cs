@@ -32,7 +32,7 @@ namespace Redemption.Items.Armor
 			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
 			druidDamagePlayer.druidDamage += 0.03f;
 			druidDamagePlayer.druidCrit += 2;
-			player.manaRegen += 2;
+			player.manaRegen++;
 		}
 
 		public override void AddRecipes()

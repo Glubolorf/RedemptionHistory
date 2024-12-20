@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
+using Redemption.Items.LabThings;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -55,7 +57,7 @@ namespace Redemption.NPCs.LabNPCs.New
 			{
 				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 			}
-			int defeated = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y + 8, base.mod.NPCType("JanitorBotDefeated"), 0, 0f, 0f, 0f, 0f, 255);
+			int defeated = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y + 8, ModContent.NPCType<JanitorBotDefeated>(), 0, 0f, 0f, 0f, 0f, 255);
 			Main.npc[defeated].netUpdate = true;
 		}
 
@@ -63,7 +65,7 @@ namespace Redemption.NPCs.LabNPCs.New
 		{
 			if (!RedeWorld.labAccess1)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ZoneAccessPanel1A"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<ZoneAccessPanel1A>(), 1, false, 0, false, false);
 			}
 		}
 
@@ -112,7 +114,7 @@ namespace Redemption.NPCs.LabNPCs.New
 						float Speed = 8f;
 						Vector2 vector8 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 						int damage = 16;
-						int type = base.mod.ProjectileType("JanitorMopPro2");
+						int type = ModContent.ProjectileType<JanitorMopPro2>();
 						float rotation = (float)Math.Atan2((double)(vector8.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector8.X - (this.player.position.X + (float)this.player.width * 0.5f)));
 						int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
 						Main.projectile[num54].netUpdate = true;
@@ -124,7 +126,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					float Speed2 = 12f;
 					Vector2 vector9 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 					int damage2 = 16;
-					int type2 = base.mod.ProjectileType("JanitorMopPro1");
+					int type2 = ModContent.ProjectileType<JanitorMopPro1>();
 					float rotation2 = (float)Math.Atan2((double)(vector9.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector9.X - (this.player.position.X + (float)this.player.width * 0.5f)));
 					int num55 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0), type2, damage2, 0f, 0, 0f, 0f);
 					Main.projectile[num55].netUpdate = true;
@@ -156,7 +158,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					float Speed3 = 12f;
 					Vector2 vector10 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 					int damage3 = 16;
-					int type3 = base.mod.ProjectileType("JanitorBucketPro");
+					int type3 = ModContent.ProjectileType<JanitorBucketPro>();
 					float rotation3 = (float)Math.Atan2((double)(vector10.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector10.X - (this.player.position.X + (float)this.player.width * 0.5f)));
 					int num56 = Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)rotation3) * (double)Speed3 * -1.0), (float)(Math.Sin((double)rotation3) * (double)Speed3 * -1.0), type3, damage3, 0f, 0, 0f, 0f);
 					Main.projectile[num56].netUpdate = true;
@@ -278,7 +280,7 @@ namespace Redemption.NPCs.LabNPCs.New
 			{
 				base.npc.defense = 0;
 			}
-			if (base.npc.HasBuff(base.mod.BuffType("JanitorStun")) && this.landed && !this.yeetBucket && !this.yeetMop && !this.slip && base.npc.ai[0] != 10f && base.npc.ai[0] != 90f && base.npc.ai[0] != 190f && base.npc.ai[0] != 270f)
+			if (base.npc.HasBuff(ModContent.BuffType<JanitorStun>()) && this.landed && !this.yeetBucket && !this.yeetMop && !this.slip && base.npc.ai[0] != 10f && base.npc.ai[0] != 90f && base.npc.ai[0] != 190f && base.npc.ai[0] != 270f)
 			{
 				this.hitMop = true;
 			}
@@ -448,7 +450,7 @@ namespace Redemption.NPCs.LabNPCs.New
 			{
 				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 				int num214 = hopAni.Height / 1;
-				int y6 = num214 * this.singleFrame;
+				int y6 = 0;
 				Main.spriteBatch.Draw(hopAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, hopAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)hopAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.yeetMop)
@@ -501,7 +503,5 @@ namespace Redemption.NPCs.LabNPCs.New
 		public bool slip;
 
 		public int slipFrame;
-
-		private int singleFrame;
 	}
 }

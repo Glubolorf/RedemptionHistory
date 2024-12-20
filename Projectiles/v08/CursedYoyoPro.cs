@@ -35,7 +35,7 @@ namespace Redemption.Projectiles.v08
 			}
 			if (Main.myPlayer == base.projectile.owner && Main.rand.Next(20) == 0)
 			{
-				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-12 + Main.rand.Next(0, 25)), (float)(-12 + Main.rand.Next(0, 25)), base.mod.ProjectileType("CursedOrbPro1"), base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-12 + Main.rand.Next(0, 25)), (float)(-12 + Main.rand.Next(0, 25)), ModContent.ProjectileType<CursedOrbPro1>(), base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
 			}
 		}
 	}

@@ -1,4 +1,5 @@
 ﻿using System;
+using Terraria;
 
 namespace Redemption
 {
@@ -26,9 +27,14 @@ namespace Redemption
 						{
 							BaseWorldGen.GenerateTile(x3, y3, info.tileID, info.wallID, (info.tileStyle != 0) ? info.tileStyle : ((info.tileID == 4) ? this.torchStyle : ((info.tileID == 19) ? this.platformStyle : 0)), info.tileID > -1, info.liquidAmt == 0, info.slope, false, sync);
 						}
-						if (info.liquidType > -1)
+						if (info.liquidType != -1)
 						{
 							BaseWorldGen.GenerateLiquid(x3, y3, info.liquidType, false, info.liquidAmt, sync);
+						}
+						if (info.objectID != 0)
+						{
+							WorldGen.PlaceObject(x3, y3, info.objectID, false, 0, 0, -1, -1);
+							NetMessage.SendObjectPlacment(-1, x3, y3, info.objectID, 0, 0, -1, -1);
 						}
 					}
 				}

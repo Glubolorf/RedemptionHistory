@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Dusts;
 using Terraria;
 using Terraria.GameContent.Achievements;
 using Terraria.ID;
@@ -14,7 +15,7 @@ namespace Redemption.Items.Weapons.v08
 			base.projectile.width = 16;
 			base.projectile.height = 16;
 			base.projectile.penetrate = -1;
-			base.projectile.timeLeft = 300;
+			base.projectile.timeLeft = 180;
 		}
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -55,8 +56,6 @@ namespace Redemption.Items.Weapons.v08
 				base.projectile.height = 100;
 				base.projectile.position.X = base.projectile.position.X - (float)(base.projectile.width / 2);
 				base.projectile.position.Y = base.projectile.position.Y - (float)(base.projectile.height / 2);
-				base.projectile.damage = 100;
-				base.projectile.knockBack = 10f;
 			}
 			else if (Main.rand.Next(2) == 0)
 			{
@@ -92,7 +91,7 @@ namespace Redemption.Items.Weapons.v08
 		public override void Kill(int timeLeft)
 		{
 			Main.PlaySound(SoundID.Item14, base.projectile.position);
-			Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(0f, 0f), base.mod.ProjectileType("NoitaBombBlast"), base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
+			Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(0f, 0f), ModContent.ProjectileType<NoitaBombBlast>(), base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
 			for (int i = 0; i < 10; i++)
 			{
 				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 31, 0f, 0f, 100, default(Color), 2f);
@@ -100,10 +99,10 @@ namespace Redemption.Items.Weapons.v08
 			}
 			for (int j = 0; j < 80; j++)
 			{
-				int dustIndex2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, base.mod.DustType("NoitaBombDust"), 0f, 0f, 100, default(Color), 3f);
+				int dustIndex2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, ModContent.DustType<NoitaBombDust>(), 0f, 0f, 100, default(Color), 3f);
 				Main.dust[dustIndex2].noGravity = true;
 				Main.dust[dustIndex2].velocity *= 5f;
-				dustIndex2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, base.mod.DustType("NoitaBombDust"), 0f, 0f, 100, default(Color), 2f);
+				dustIndex2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, ModContent.DustType<NoitaBombDust>(), 0f, 0f, 100, default(Color), 2f);
 				Main.dust[dustIndex2].velocity *= 3f;
 			}
 			for (int g = 0; g < 2; g++)

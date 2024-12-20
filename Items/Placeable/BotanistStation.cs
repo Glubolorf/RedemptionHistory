@@ -1,4 +1,6 @@
 ﻿using System;
+using Redemption.Items.DruidDamageClass;
+using Redemption.Tiles;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -25,7 +27,7 @@ namespace Redemption.Items.Placeable
 			base.item.rare = 6;
 			base.item.consumable = true;
 			base.item.value = Item.sellPrice(0, 2, 0, 0);
-			base.item.createTile = base.mod.TileType("BotanistStationTile");
+			base.item.createTile = ModContent.TileType<BotanistStationTile>();
 			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}
 
@@ -36,7 +38,7 @@ namespace Redemption.Items.Placeable
 			modRecipe.AddIngredient(549, 5);
 			modRecipe.AddIngredient(548, 5);
 			modRecipe.AddIngredient(547, 5);
-			modRecipe.AddIngredient(base.mod.ItemType("SoulOfBloom"), 15);
+			modRecipe.AddIngredient(ModContent.ItemType<SoulOfBloom>(), 15);
 			modRecipe.AddTile(134);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();

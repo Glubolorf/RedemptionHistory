@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,7 +27,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.maxStack = 30;
 			base.item.value = Item.sellPrice(0, 0, 5, 0);
 			base.item.rare = 1;
-			base.item.buffType = base.mod.BuffType("DruidEssenceBuff");
+			base.item.buffType = ModContent.BuffType<DruidEssenceBuff>();
 			base.item.buffTime = 10800;
 			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 		}

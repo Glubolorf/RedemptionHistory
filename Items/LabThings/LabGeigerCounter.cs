@@ -24,9 +24,9 @@ namespace Redemption.Items.LabThings
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			player.GetModPlayer<GeigerEffect>().effect = true;
-			if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[base.mod.ProjectileType("LabPointer")] < 1)
+			if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[ModContent.ProjectileType<LabPointer>()] < 1)
 			{
-				Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, -1f, base.mod.ProjectileType("LabPointer"), 0, 0f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, -1f, ModContent.ProjectileType<LabPointer>(), 0, 0f, Main.myPlayer, 0f, 0f);
 			}
 		}
 	}

@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -26,7 +27,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave.Guardians
 		public override void AI()
 		{
 			Player player = Main.player[base.projectile.owner];
-			if (!player.HasBuff(base.mod.BuffType("NatureGuardian7Buff")))
+			if (!player.HasBuff(ModContent.BuffType<NatureGuardian7Buff>()))
 			{
 				base.projectile.Kill();
 			}

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -40,7 +41,7 @@ namespace Redemption.Items.Weapons
 			base.item.UseSound = SoundID.Item11;
 			base.item.value = Item.buyPrice(0, 10, 0, 0);
 			base.item.rare = 10;
-			base.item.shoot = base.mod.ProjectileType("BlackGloopBall");
+			base.item.shoot = ModContent.ProjectileType<BlackGloopBall>();
 			base.item.shootSpeed = 20f;
 			base.item.autoReuse = true;
 			base.item.noMelee = true;

@@ -70,11 +70,11 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 				{
 					if (base.projectile.spriteDirection == 1)
 					{
-						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 14f, base.projectile.position.Y + 36f), new Vector2(-6f, 0f), base.mod.ProjectileType("SpiritFlameCorrupt"), base.projectile.damage, (float)((int)base.projectile.knockBack), base.projectile.owner, 0f, 1f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 14f, base.projectile.position.Y + 36f), new Vector2(-6f, 0f), ModContent.ProjectileType<SpiritFlameCorrupt>(), base.projectile.damage, (float)((int)base.projectile.knockBack), base.projectile.owner, 0f, 1f);
 					}
 					else
 					{
-						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 60f, base.projectile.position.Y + 36f), new Vector2(6f, 0f), base.mod.ProjectileType("SpiritFlameCorrupt"), base.projectile.damage, (float)((int)base.projectile.knockBack), base.projectile.owner, 0f, 1f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 60f, base.projectile.position.Y + 36f), new Vector2(6f, 0f), ModContent.ProjectileType<SpiritFlameCorrupt>(), base.projectile.damage, (float)((int)base.projectile.knockBack), base.projectile.owner, 0f, 1f);
 					}
 				}
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritExtras == 1)
@@ -87,11 +87,11 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 						perturbedSpeed *= scale;
 						if (base.projectile.spriteDirection == 1)
 						{
-							Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 36f, perturbedSpeed.X, perturbedSpeed.Y, base.mod.ProjectileType("SpiritFlameCorrupt"), base.projectile.damage, (float)((int)base.projectile.knockBack), base.projectile.owner, 0f, 1f);
+							Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 36f, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<SpiritFlameCorrupt>(), base.projectile.damage, (float)((int)base.projectile.knockBack), base.projectile.owner, 0f, 1f);
 						}
 						else
 						{
-							Projectile.NewProjectile(base.projectile.position.X + 60f, base.projectile.position.Y + 36f, perturbedSpeed.X, perturbedSpeed.Y, base.mod.ProjectileType("SpiritFlameCorrupt"), base.projectile.damage, (float)((int)base.projectile.knockBack), base.projectile.owner, 0f, 1f);
+							Projectile.NewProjectile(base.projectile.position.X + 60f, base.projectile.position.Y + 36f, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<SpiritFlameCorrupt>(), base.projectile.damage, (float)((int)base.projectile.knockBack), base.projectile.owner, 0f, 1f);
 						}
 					}
 				}
@@ -105,11 +105,11 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 						perturbedSpeed2 *= scale2;
 						if (base.projectile.spriteDirection == 1)
 						{
-							Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 36f, perturbedSpeed2.X, perturbedSpeed2.Y, base.mod.ProjectileType("SpiritFlameCorrupt"), base.projectile.damage, (float)((int)base.projectile.knockBack), base.projectile.owner, 0f, 1f);
+							Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 36f, perturbedSpeed2.X, perturbedSpeed2.Y, ModContent.ProjectileType<SpiritFlameCorrupt>(), base.projectile.damage, (float)((int)base.projectile.knockBack), base.projectile.owner, 0f, 1f);
 						}
 						else
 						{
-							Projectile.NewProjectile(base.projectile.position.X + 60f, base.projectile.position.Y + 36f, perturbedSpeed2.X, perturbedSpeed2.Y, base.mod.ProjectileType("SpiritFlameCorrupt"), base.projectile.damage, (float)((int)base.projectile.knockBack), base.projectile.owner, 0f, 1f);
+							Projectile.NewProjectile(base.projectile.position.X + 60f, base.projectile.position.Y + 36f, perturbedSpeed2.X, perturbedSpeed2.Y, ModContent.ProjectileType<SpiritFlameCorrupt>(), base.projectile.damage, (float)((int)base.projectile.knockBack), base.projectile.owner, 0f, 1f);
 						}
 					}
 				}
@@ -123,11 +123,11 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 						perturbedSpeed3 *= scale3;
 						if (base.projectile.spriteDirection == 1)
 						{
-							Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 36f, perturbedSpeed3.X, perturbedSpeed3.Y, base.mod.ProjectileType("SpiritFlameCorrupt"), base.projectile.damage, (float)((int)base.projectile.knockBack), base.projectile.owner, 0f, 1f);
+							Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 36f, perturbedSpeed3.X, perturbedSpeed3.Y, ModContent.ProjectileType<SpiritFlameCorrupt>(), base.projectile.damage, (float)((int)base.projectile.knockBack), base.projectile.owner, 0f, 1f);
 						}
 						else
 						{
-							Projectile.NewProjectile(base.projectile.position.X + 60f, base.projectile.position.Y + 36f, perturbedSpeed3.X, perturbedSpeed3.Y, base.mod.ProjectileType("SpiritFlameCorrupt"), base.projectile.damage, (float)((int)base.projectile.knockBack), base.projectile.owner, 0f, 1f);
+							Projectile.NewProjectile(base.projectile.position.X + 60f, base.projectile.position.Y + 36f, perturbedSpeed3.X, perturbedSpeed3.Y, ModContent.ProjectileType<SpiritFlameCorrupt>(), base.projectile.damage, (float)((int)base.projectile.knockBack), base.projectile.owner, 0f, 1f);
 						}
 					}
 				}

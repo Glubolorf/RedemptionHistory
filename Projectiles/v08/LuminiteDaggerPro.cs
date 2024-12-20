@@ -60,7 +60,7 @@ namespace Redemption.Projectiles.v08
 		public override void Kill(int timeLeft)
 		{
 			Main.PlaySound(0, (int)base.projectile.position.X, (int)base.projectile.position.Y, 1, 1f, 0f);
-			Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(-base.projectile.velocity.X, -base.projectile.velocity.Y), base.mod.ProjectileType("LuminiteDaggerPhantom"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+			Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(-base.projectile.velocity.X, -base.projectile.velocity.Y), ModContent.ProjectileType<LuminiteDaggerPhantom>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			Vector2 usePos = base.projectile.position;
 			Vector2 rotVector = Utils.ToRotationVector2(base.projectile.rotation - MathHelper.ToRadians(90f));
 			usePos += rotVector * 16f;

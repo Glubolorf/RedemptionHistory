@@ -1,5 +1,4 @@
 ﻿using System;
-using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Items
@@ -19,22 +18,6 @@ namespace Redemption.Items
 			base.item.height = 30;
 			base.item.uniqueStack = true;
 			base.item.rare = -11;
-		}
-
-		public override bool IsQuestFish()
-		{
-			return true;
-		}
-
-		public override bool IsAnglerQuestAvailable()
-		{
-			return RedeWorld.downedInfectedEye && Main.hardMode;
-		}
-
-		public override void AnglerQuestChat(ref string description, ref string catchLocation)
-		{
-			description = "So, I went fishing in the Wasteland, and I wanted to get one of those weird green fishes. Then, I saw a weird, yellow one with yellow crystals! I want to do something with it. Get it to me!";
-			catchLocation = "Caught in the Wasteland.";
 		}
 	}
 }

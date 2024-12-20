@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.NPCs.Bosses.Thorn;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -34,7 +35,7 @@ namespace Redemption.Projectiles.v08
 
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			int proj = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y - 36f, 0f, 0f, base.mod.ProjectileType("BigThorns"), base.projectile.damage, 1f, base.projectile.owner, 1f, 0f);
+			int proj = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y - 36f, 0f, 0f, ModContent.ProjectileType<BigThorns>(), base.projectile.damage, 1f, base.projectile.owner, 1f, 0f);
 			Main.projectile[proj].hostile = false;
 			Main.projectile[proj].friendly = true;
 			Main.projectile[proj].melee = true;

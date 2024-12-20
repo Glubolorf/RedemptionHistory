@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles.DruidProjectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -66,7 +67,10 @@ namespace Redemption.Projectiles
 				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 235, 0f, 0f, 100, default(Color), 1.5f);
 				Main.dust[dustIndex].velocity *= 1.9f;
 			}
-			Projectile.NewProjectile(base.projectile.position.X + 25f, base.projectile.position.Y + 25f, 0f, 0f, base.mod.ProjectileType("BloodPulse"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+			if (Main.myPlayer == base.projectile.owner)
+			{
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, ModContent.ProjectileType<BloodPulse>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
+			}
 		}
 
 		public static short customGlowMask;

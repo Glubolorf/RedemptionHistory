@@ -1,4 +1,6 @@
 ﻿using System;
+using Redemption.Buffs;
+using Redemption.Projectiles.Minions;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -39,7 +41,7 @@ namespace Redemption.Items.Armor
 
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
-			return body.type == base.mod.ItemType("GirusHeavyBody4") && legs.type == base.mod.ItemType("GirusHeavyLeggings4");
+			return body.type == ModContent.ItemType<GirusHeavyBody4>() && legs.type == ModContent.ItemType<GirusHeavyLeggings4>();
 		}
 
 		public override void UpdateArmorSet(Player player)
@@ -51,13 +53,13 @@ namespace Redemption.Items.Armor
 			player.aggro += 10;
 			if (player.whoAmI == Main.myPlayer)
 			{
-				if (player.FindBuffIndex(base.mod.BuffType("CorruptedCopterBuff")) == -1)
+				if (player.FindBuffIndex(ModContent.BuffType<CorruptedCopterBuff>()) == -1)
 				{
-					player.AddBuff(base.mod.BuffType("CorruptedCopterBuff"), 3600, true);
+					player.AddBuff(ModContent.BuffType<CorruptedCopterBuff>(), 3600, true);
 				}
-				if (player.ownedProjectileCounts[base.mod.ProjectileType("CorruptedCopter")] < 1)
+				if (player.ownedProjectileCounts[ModContent.ProjectileType<CorruptedCopter>()] < 1)
 				{
-					Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, -1f, base.mod.ProjectileType("CorruptedCopter"), 20, 2f, Main.myPlayer, 0f, 0f);
+					Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, -1f, ModContent.ProjectileType<CorruptedCopter>(), 20, 2f, Main.myPlayer, 0f, 0f);
 				}
 			}
 		}

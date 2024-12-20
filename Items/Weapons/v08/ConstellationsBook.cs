@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -28,16 +29,16 @@ namespace Redemption.Items.Weapons.v08
 			base.item.value = Item.buyPrice(1, 0, 0, 0);
 			base.item.UseSound = base.mod.GetLegacySoundSlot(2, "Sounds/Item/WorldTree1");
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("ConstellationsStar");
+			base.item.shoot = ModContent.ProjectileType<ConstellationsStar>();
 			base.item.shootSpeed = 0f;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 3;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			Projectile.NewProjectile(new Vector2(player.position.X + (float)Main.rand.Next(-600, 600), player.position.Y + (float)Main.rand.Next(-600, 600)), new Vector2(speedX, speedY), base.mod.ProjectileType("ConstellationsStar"), damage, knockBack, player.whoAmI, 0f, 0f);
-			Projectile.NewProjectile(new Vector2(player.position.X + (float)Main.rand.Next(-600, 600), player.position.Y + (float)Main.rand.Next(-600, 600)), new Vector2(speedX, speedY), base.mod.ProjectileType("ConstellationsStar"), damage, knockBack, player.whoAmI, 0f, 0f);
-			Projectile.NewProjectile(new Vector2(player.position.X + (float)Main.rand.Next(-600, 600), player.position.Y + (float)Main.rand.Next(-600, 600)), new Vector2(speedX, speedY), base.mod.ProjectileType("ConstellationsStar"), damage, knockBack, player.whoAmI, 0f, 0f);
+			Projectile.NewProjectile(new Vector2(player.position.X + (float)Main.rand.Next(-600, 600), player.position.Y + (float)Main.rand.Next(-600, 600)), new Vector2(speedX, speedY), ModContent.ProjectileType<ConstellationsStar>(), damage, knockBack, player.whoAmI, 0f, 0f);
+			Projectile.NewProjectile(new Vector2(player.position.X + (float)Main.rand.Next(-600, 600), player.position.Y + (float)Main.rand.Next(-600, 600)), new Vector2(speedX, speedY), ModContent.ProjectileType<ConstellationsStar>(), damage, knockBack, player.whoAmI, 0f, 0f);
+			Projectile.NewProjectile(new Vector2(player.position.X + (float)Main.rand.Next(-600, 600), player.position.Y + (float)Main.rand.Next(-600, 600)), new Vector2(speedX, speedY), ModContent.ProjectileType<ConstellationsStar>(), damage, knockBack, player.whoAmI, 0f, 0f);
 			return false;
 		}
 	}

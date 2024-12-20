@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,7 +29,7 @@ namespace Redemption.Items.Weapons
 			base.item.knockBack = 6f;
 			base.item.melee = true;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("DNAPro1");
+			base.item.shoot = ModContent.ProjectileType<DNAPro1>();
 			base.item.shootSpeed = 6f;
 			base.item.useTurn = true;
 		}
@@ -38,7 +39,7 @@ namespace Redemption.Items.Weapons
 			Projectile.NewProjectile(shootPos.X, shootPos.Y, speedX, speedY, projType, damage, knockback, player.whoAmI, 0f, 0f);
 			for (int i = 0; i < 2; i++)
 			{
-				Projectile.NewProjectile(shootPos.X, shootPos.Y, speedX * 1f, speedY * 1f, (i == 0) ? base.mod.ProjectileType("DNAPro2") : base.mod.ProjectileType("DNAPro3"), damage, knockback, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(shootPos.X, shootPos.Y, speedX * 1f, speedY * 1f, (i == 0) ? ModContent.ProjectileType<DNAPro2>() : ModContent.ProjectileType<DNAPro3>(), damage, knockback, player.whoAmI, 0f, 0f);
 			}
 			return false;
 		}

@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -33,7 +34,7 @@ namespace Redemption.Items.Weapons
 
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
 		{
-			target.AddBuff(base.mod.BuffType("LaceratedDebuff"), 600, false);
+			target.AddBuff(ModContent.BuffType<LaceratedDebuff>(), 600, false);
 		}
 	}
 }

@@ -4,6 +4,8 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Redemption.Items.DruidDamageClass;
 using Redemption.Items.DruidDamageClass.SeedBags;
+using Redemption.Items.Weapons;
+using Redemption.Prefixes;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.Utilities;
@@ -102,6 +104,10 @@ namespace Redemption.Items
 					{
 						line2.overrideColor = new Color?(new Color(255, 195, 0));
 					}
+					else if (this.redeRarity == 8)
+					{
+						line2.overrideColor = new Color?(RedeColor.AncientColour);
+					}
 				}
 			}
 		}
@@ -113,37 +119,37 @@ namespace Redemption.Items
 				switch (Main.rand.Next(16))
 				{
 				case 0:
-					return (int)base.mod.PrefixType("Old");
+					return (int)ModContent.PrefixType<OldPrefix>();
 				case 1:
-					return (int)base.mod.PrefixType("Wild");
+					return (int)ModContent.PrefixType<WildPrefix>();
 				case 2:
-					return (int)base.mod.PrefixType("Blighted");
+					return (int)ModContent.PrefixType<BlightedPrefix>();
 				case 3:
-					return (int)base.mod.PrefixType("Dry");
+					return (int)ModContent.PrefixType<DryPrefix>();
 				case 4:
-					return (int)base.mod.PrefixType("Fruitful");
+					return (int)ModContent.PrefixType<FruitfulPrefix>();
 				case 5:
-					return (int)base.mod.PrefixType("Lively");
+					return (int)ModContent.PrefixType<LivelyPrefix>();
 				case 6:
-					return (int)base.mod.PrefixType("Prickly");
+					return (int)ModContent.PrefixType<PricklyPrefix>();
 				case 7:
-					return (int)base.mod.PrefixType("Rotten");
+					return (int)ModContent.PrefixType<RottenPrefix>();
 				case 8:
-					return (int)base.mod.PrefixType("Blooming");
+					return (int)ModContent.PrefixType<BloomingPrefix>();
 				case 9:
-					return (int)base.mod.PrefixType("Enchanted");
+					return (int)ModContent.PrefixType<EnchantedPrefix>();
 				case 10:
-					return (int)base.mod.PrefixType("Mesmerizing");
+					return (int)ModContent.PrefixType<MesmerizingPrefix>();
 				case 11:
-					return (int)base.mod.PrefixType("Forgotten");
+					return (int)ModContent.PrefixType<ForgottenPrefix>();
 				case 12:
-					return (int)base.mod.PrefixType("Blessed");
+					return (int)ModContent.PrefixType<BlessedPrefix>();
 				case 13:
-					return (int)base.mod.PrefixType("Exotic");
+					return (int)ModContent.PrefixType<ExoticPrefix>();
 				case 14:
-					return (int)base.mod.PrefixType("Mother Nature's");
+					return (int)ModContent.PrefixType<MotherNaturePrefix>();
 				case 15:
-					return (int)base.mod.PrefixType("Dryad's");
+					return (int)ModContent.PrefixType<DryadPrefix>();
 				}
 			}
 			return base.ChoosePrefix(item, rand);
@@ -165,13 +171,18 @@ namespace Redemption.Items
 			this.prefixLifetimeModifier = reader.ReadSingle();
 		}
 
+		public override bool CanUseItem(Item item, Player player)
+		{
+			return (item.type != 1326 || !player.GetModPlayer<RedePlayer>().ZoneLab || RedeWorld.downedPatientZero) && base.CanUseItem(item, player);
+		}
+
 		public override void OnCraft(Item item, Recipe recipe)
 		{
-			if (item.type == base.mod.ItemType("Loreholder"))
+			if (item.type == ModContent.ItemType<Loreholder>())
 			{
 				Main.NewText("<Loreholder> Who awakens me from my slumber?", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 			}
-			if (item.type == base.mod.ItemType("RedemptionTeller"))
+			if (item.type == ModContent.ItemType<RedemptionTeller>())
 			{
 				Main.NewText("<Chalice of Alignment> Greetings, I am the Chalice of Alignment, and I believe any action can be redeemed.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 			}

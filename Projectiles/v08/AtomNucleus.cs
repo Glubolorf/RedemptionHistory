@@ -79,10 +79,10 @@ namespace Redemption.Projectiles.v08
 
 		public override void Kill(int timeLeft)
 		{
-			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)Main.rand.Next(-10, 10), (float)Main.rand.Next(-10, 10), base.mod.ProjectileType("AtomNucleus2"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
-			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)Main.rand.Next(-10, 10), (float)Main.rand.Next(-10, 10), base.mod.ProjectileType("AtomNucleus2"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)Main.rand.Next(-10, 10), (float)Main.rand.Next(-10, 10), ModContent.ProjectileType<AtomNucleus2>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)Main.rand.Next(-10, 10), (float)Main.rand.Next(-10, 10), ModContent.ProjectileType<AtomNucleus2>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			Main.PlaySound(SoundID.Item14, base.projectile.position);
-			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, base.mod.ProjectileType("DamagePro6"), base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
+			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, ModContent.ProjectileType<DamagePro6>(), base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
 			for (int i = 0; i < 15; i++)
 			{
 				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 31, 0f, 0f, 100, default(Color), 5f);

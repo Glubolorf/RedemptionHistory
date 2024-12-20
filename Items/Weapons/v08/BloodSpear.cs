@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.autoReuse = true;
 			base.item.noUseGraphic = true;
 			base.item.noMelee = true;
-			base.item.shoot = base.mod.ProjType("BloodSpearPro1");
+			base.item.shoot = ModContent.ProjectileType<BloodSpearPro1>();
 			base.item.shootSpeed = 4f;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}
@@ -48,7 +49,7 @@ namespace Redemption.Items.Weapons.v08
 				Vector2 perturbedSpeed = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(5f));
 				float scale = 1f - Utils.NextFloat(Main.rand) * 0.4f;
 				perturbedSpeed *= scale;
-				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X * 4f, perturbedSpeed.Y * 4f, base.mod.ProjectileType("BloodOrbPro1"), damage, knockBack, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X * 4f, perturbedSpeed.Y * 4f, ModContent.ProjectileType<BloodOrbPro1>(), damage, knockBack, player.whoAmI, 0f, 0f);
 			}
 			return true;
 		}

@@ -40,7 +40,7 @@ namespace Redemption.Projectiles.v08
 			{
 				base.projectile.velocity = -Vector2.UnitY;
 			}
-			if (base.projectile.type != base.mod.ProjectileType("TeslaLaser") || !Main.projectile[(int)base.projectile.ai[1]].active || Main.projectile[(int)base.projectile.ai[1]].type != base.mod.ProjectileType("TeslaCoilStaffPro"))
+			if (base.projectile.type != ModContent.ProjectileType<TeslaLaser>() || !Main.projectile[(int)base.projectile.ai[1]].active || Main.projectile[(int)base.projectile.ai[1]].type != ModContent.ProjectileType<TeslaCoilStaffPro>())
 			{
 				base.projectile.Kill();
 				return;

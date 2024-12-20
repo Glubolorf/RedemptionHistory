@@ -13,7 +13,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Breastplate of the Fallen");
-			base.Tooltip.SetDefault("Increases life regen\nIncreases max life by 50");
+			base.Tooltip.SetDefault("Increases life regen\nIncreases max life by 25");
 		}
 
 		public override void SetDefaults()
@@ -27,7 +27,7 @@ namespace Redemption.Items.Armor
 
 		public override void UpdateEquip(Player player)
 		{
-			player.lifeRegen += 3;
+			player.lifeRegen++;
 			player.statLifeMax2 += 25;
 		}
 

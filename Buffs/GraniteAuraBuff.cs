@@ -23,7 +23,7 @@ namespace Redemption.Buffs
 			player.rangedCrit += 8;
 			player.thrownCrit += 8;
 			druidDamagePlayer.druidCrit += 8;
-			player.manaRegen += 8;
+			player.manaRegen += 4;
 		}
 	}
 }

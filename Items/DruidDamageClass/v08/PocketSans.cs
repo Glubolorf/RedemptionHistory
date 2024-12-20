@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.Items.DruidDamageClass.v08
 			base.item.autoReuse = true;
 			base.item.UseSound = SoundID.Item1;
 			base.item.value = Item.sellPrice(1, 1, 1, 1);
-			base.item.shoot = base.mod.ProjectileType("badtimekid");
+			base.item.shoot = ModContent.ProjectileType<badtimekid>();
 		}
 
 		public override void AddRecipes()

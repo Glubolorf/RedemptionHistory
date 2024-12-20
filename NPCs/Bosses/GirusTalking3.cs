@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -24,63 +23,52 @@ namespace Redemption.NPCs.Bosses
 			base.projectile.localAI[1] += 1f;
 			if (base.projectile.localAI[1] == 600f)
 			{
-				Main.NewText("Welp, so much for that prototype.", new Color(255, 32, 32), false);
+				Redemption.ShowText(base.projectile, 2, 0, 200);
 				Redemption.GirusSilence = true;
 			}
-			if (base.projectile.localAI[1] == 1000f)
+			if (base.projectile.localAI[1] == 800f)
 			{
-				Main.NewText("I've noted the flaws so I can perfect the design.", new Color(255, 32, 32), false);
+				Redemption.ShowText(base.projectile, 2, 1, 300);
 			}
 			if (base.projectile.localAI[1] == 1100f)
 			{
-				Main.NewText("...", new Color(255, 32, 32), false);
+				Redemption.ShowText(base.projectile, 2, 2, 150);
 			}
-			if (base.projectile.localAI[1] == 1400f)
+			if (base.projectile.localAI[1] == 1250f)
 			{
-				Main.NewText("Say, you would've now defeated every Overlord I had.", new Color(255, 32, 32), false);
+				Redemption.ShowText(base.projectile, 2, 3, 300);
 			}
-			if (base.projectile.localAI[1] == 1760f)
+			if (base.projectile.localAI[1] == 1550f)
 			{
-				Main.NewText("Well, bad or good news depending on you, that statement is now false.", new Color(255, 32, 32), false);
+				Redemption.ShowText(base.projectile, 2, 4, 300);
 			}
-			if (base.projectile.localAI[1] == 1900f)
+			if (base.projectile.localAI[1] == 1850f)
 			{
-				Main.NewText("One more has joined the ranks, and they are now contesting for YOUR place.", new Color(255, 32, 32), false);
+				Redemption.ShowText(base.projectile, 2, 5, 300);
 			}
-			if (base.projectile.localAI[1] == 2200f)
+			if (base.projectile.localAI[1] == 2150f)
 			{
-				if (RedeWorld.downedSlayer)
-				{
-					Main.NewText("I think you two have already met.", new Color(255, 32, 32), false);
-				}
-				else if (RedeWorld.deathBySlayer)
-				{
-					Main.NewText("Now's your chance to gain revenge on them.", new Color(255, 32, 32), false);
-				}
-				else
-				{
-					Main.NewText("I don't think you two have met.", new Color(255, 32, 32), false);
-				}
+				Redemption.ShowText(base.projectile, 2, 6, 250);
 			}
-			if (base.projectile.localAI[1] == 2600f)
+			if (base.projectile.localAI[1] == 2400f)
 			{
-				Main.NewText("So.", new Color(255, 32, 32), false);
+				Redemption.ShowText(base.projectile, 2, 7, 100);
 			}
-			if (base.projectile.localAI[1] == 2800f)
+			if (base.projectile.localAI[1] == 2500f)
 			{
-				Main.NewText("I'll be watching you two fighting.", new Color(255, 32, 32), false);
+				Redemption.ShowText(base.projectile, 2, 8, 200);
 			}
-			if (base.projectile.localAI[1] == 3100f)
+			if (base.projectile.localAI[1] == 2700f)
 			{
-				Main.NewText("I want the strongest to be on my side.", new Color(255, 32, 32), false);
+				Redemption.ShowText(base.projectile, 2, 9, 220);
 			}
-			if (base.projectile.localAI[1] == 3350f)
+			if (base.projectile.localAI[1] == 2920f)
 			{
-				Main.NewText("Good luck.", new Color(255, 32, 32), false);
+				Redemption.ShowText(base.projectile, 2, 10, 120);
 			}
-			if (base.projectile.localAI[1] >= 3600f)
+			if (base.projectile.localAI[1] >= 3040f)
 			{
-				Main.NewText("You'll need it.", new Color(255, 32, 32), false);
+				Redemption.ShowText(base.projectile, 2, 11, 160);
 				base.projectile.Kill();
 			}
 		}

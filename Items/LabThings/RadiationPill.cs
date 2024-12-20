@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs.Wasteland;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.Items.LabThings
 
 		public override bool CanUseItem(Player player)
 		{
-			return !player.HasBuff(base.mod.BuffType("PillSickness"));
+			return !player.HasBuff(ModContent.BuffType<PillSickness>());
 		}
 
 		public override bool UseItem(Player player)
@@ -40,18 +41,18 @@ namespace Redemption.Items.LabThings
 				player.GetModPlayer<RedePlayer>().irradiatedEffect = 0;
 				player.GetModPlayer<RedePlayer>().irradiatedLevel = 0;
 				player.GetModPlayer<RedePlayer>().irradiatedTimer = 0;
-				player.AddBuff(base.mod.BuffType("PillSickness"), Main.rand.Next(3600, 7200), true);
+				player.AddBuff(ModContent.BuffType<PillSickness>(), Main.rand.Next(3600, 7200), true);
 				player.AddBuff(33, Main.rand.Next(3600, 7200), true);
-				player.ClearBuff(base.mod.BuffType("HeadacheDebuff"));
-				player.ClearBuff(base.mod.BuffType("NauseaDebuff"));
-				player.ClearBuff(base.mod.BuffType("FatigueDebuff"));
-				player.ClearBuff(base.mod.BuffType("FeverDebuff"));
-				player.ClearBuff(base.mod.BuffType("HairLossDebuff"));
-				player.ClearBuff(base.mod.BuffType("SkinBurnDebuff"));
+				player.ClearBuff(ModContent.BuffType<HeadacheDebuff>());
+				player.ClearBuff(ModContent.BuffType<NauseaDebuff>());
+				player.ClearBuff(ModContent.BuffType<FatigueDebuff>());
+				player.ClearBuff(ModContent.BuffType<FeverDebuff>());
+				player.ClearBuff(ModContent.BuffType<HairLossDebuff>());
+				player.ClearBuff(ModContent.BuffType<SkinBurnDebuff>());
 			}
 			else
 			{
-				player.AddBuff(base.mod.BuffType("PillSickness"), Main.rand.Next(3600, 7200), true);
+				player.AddBuff(ModContent.BuffType<PillSickness>(), Main.rand.Next(3600, 7200), true);
 			}
 			return true;
 		}

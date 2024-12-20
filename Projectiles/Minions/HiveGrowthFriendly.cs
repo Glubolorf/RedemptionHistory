@@ -36,7 +36,7 @@ namespace Redemption.Projectiles.Minions
 
 		public override void AI()
 		{
-			bool flag20 = base.projectile.type == base.mod.ProjectileType("HiveGrowthFriendly");
+			bool flag20 = base.projectile.type == ModContent.ProjectileType<HiveGrowthFriendly>();
 			Player player = Main.player[base.projectile.owner];
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
 			if (flag20)
@@ -73,12 +73,12 @@ namespace Redemption.Projectiles.Minions
 				}
 			}
 			base.projectile.localAI[0] += 1f;
-			bool projMax = player.ownedProjectileCounts[base.mod.ProjectileType("HiveGrowthFriendly")] <= 5;
+			bool projMax = player.ownedProjectileCounts[ModContent.ProjectileType<HiveGrowthFriendly>()] <= 5;
 			if (base.projectile.localAI[0] >= 600f)
 			{
 				if (projMax && base.projectile.ai[0] != 1f && Main.myPlayer == base.projectile.owner)
 				{
-					Projectile.NewProjectile(player.position.X + (float)(player.width / 2), player.position.Y + (float)(player.height / 2), 0f, 0f, base.mod.ProjectileType("HiveGrowthFriendly"), 200, 1f, player.whoAmI, 1f, 0f);
+					Projectile.NewProjectile(player.position.X + (float)(player.width / 2), player.position.Y + (float)(player.height / 2), 0f, 0f, ModContent.ProjectileType<HiveGrowthFriendly>(), 200, 1f, player.whoAmI, 1f, 0f);
 				}
 				base.projectile.localAI[0] = 0f;
 			}
@@ -86,10 +86,6 @@ namespace Redemption.Projectiles.Minions
 			float num528 = base.projectile.position.Y;
 			float num529 = 900f;
 			bool flag19 = false;
-			if (base.projectile.ai[1] == 0f)
-			{
-				bool friendly = base.projectile.friendly;
-			}
 			if (base.projectile.ai[0] == 0f)
 			{
 				for (int num530 = 0; num530 < 200; num530++)

@@ -5,6 +5,14 @@ namespace Redemption.Projectiles
 {
 	public class DamagePro1 : ModProjectile
 	{
+		public override string Texture
+		{
+			get
+			{
+				return "Redemption/Projectiles/DamagePro";
+			}
+		}
+
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("a swift stab");

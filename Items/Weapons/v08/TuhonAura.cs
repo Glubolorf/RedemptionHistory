@@ -32,7 +32,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.UseSound = SoundID.Item1;
 			base.item.autoReuse = false;
 			base.item.useTurn = true;
-			base.item.shoot = base.mod.ProjectileType("TuhonAuraPro");
+			base.item.shoot = ModContent.ProjectileType<TuhonAuraPro>();
 			base.item.shootSpeed = 14f;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}

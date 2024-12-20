@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.DruidProjectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 			base.item.UseSound = SoundID.NPCDeath6.WithVolume(0.5f);
 			base.item.noMelee = true;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("SpiritBunnyPro");
+			base.item.shoot = ModContent.ProjectileType<SpiritBunnyPro>();
 			base.item.shootSpeed = 11f;
 			this.spiritWeapon = true;
 			this.minSpiritLevel = 1;
@@ -89,41 +90,41 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 		{
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritLevel == 0)
 			{
-				type = base.mod.ProjectileType("NoSpiritPro");
+				type = ModContent.ProjectileType<NoSpiritPro>();
 			}
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritLevel == 1 || Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritLevel == 2)
 			{
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().corruptedTalisman)
 				{
-					type = base.mod.ProjectileType("SpiritBunnyCorruptPro");
+					type = ModContent.ProjectileType<SpiritBunnyCorruptPro>();
 				}
 				else if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloodedTalisman)
 				{
-					type = base.mod.ProjectileType("SpiritBunnyCrimsonPro");
+					type = ModContent.ProjectileType<SpiritBunnyCrimsonPro>();
 				}
 				else
 				{
-					type = base.mod.ProjectileType("SpiritBunnyPro");
+					type = ModContent.ProjectileType<SpiritBunnyPro>();
 				}
 			}
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritLevel == 3 || Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritLevel == 4)
 			{
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().corruptedTalisman)
 				{
-					type = base.mod.ProjectileType("SpiritBunnyCorruptPro2");
+					type = ModContent.ProjectileType<SpiritBunnyCorruptPro2>();
 				}
 				else if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloodedTalisman)
 				{
-					type = base.mod.ProjectileType("SpiritBunnyCrimsonPro2");
+					type = ModContent.ProjectileType<SpiritBunnyCrimsonPro2>();
 				}
 				else
 				{
-					type = base.mod.ProjectileType("SpiritBunnyPro2");
+					type = ModContent.ProjectileType<SpiritBunnyPro2>();
 				}
 			}
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritLevel >= 5)
 			{
-				type = base.mod.ProjectileType("SpiritBunnyPro3");
+				type = ModContent.ProjectileType<SpiritBunnyPro3>();
 				speedX *= 1.4f;
 				speedY *= 1.4f;
 			}

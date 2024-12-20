@@ -54,12 +54,12 @@ namespace Redemption.NPCs.LabNPCs.New
 			base.npc.frame.Y = 164;
 			if (RedeWorld.pzUS)
 			{
-				int p = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y + 2f), new Vector2(0f, 0f), base.mod.ProjectileType("PZ2HideTheAAA"), 0, 0f, 255, 0f, 0f);
+				int p = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y + 2f), new Vector2(0f, 0f), ModContent.ProjectileType<PZ2HideTheAAA>(), 0, 0f, 255, 0f, 0f);
 				Main.projectile[p].netUpdate = true;
 				base.npc.SetDefaults(ModContent.NPCType<PZ2Fight>(), -1f);
 				return;
 			}
-			if ((NPC.CountNPCS(base.mod.NPCType("PZ2Eyelid")) >= 2 && Main.rand.Next(2) == 0) || RedeWorld.downedPatientZero)
+			if ((NPC.CountNPCS(ModContent.NPCType<PZ2Eyelid>()) >= 2 && Main.rand.Next(2) == 0) || RedeWorld.downedPatientZero)
 			{
 				base.npc.active = false;
 			}
@@ -109,7 +109,7 @@ namespace Redemption.NPCs.LabNPCs.New
 			Main.spriteBatch.Draw(coverAni, drawCenterD - Main.screenPosition, new Rectangle?(new Rectangle(0, y6D, coverAni.Width, num214D)), drawColor, base.npc.rotation, new Vector2((float)coverAni.Width / 2f, (float)num214D / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			Vector2 drawCenterA = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 			int num214A = eyeAni.Height / 1;
-			int y6A = num214A * this.eyeFrame;
+			int y6A = 0;
 			Main.spriteBatch.Draw(eyeAni, drawCenterA - Main.screenPosition, new Rectangle?(new Rectangle(0, y6A, eyeAni.Width, num214A)), drawColor, Utils.ToRotation(base.npc.DirectionTo(Main.player[base.npc.target].Center)), new Vector2((float)eyeAni.Width / 2f, (float)num214A / 2f), base.npc.scale, SpriteEffects.None, 0f);
 			Main.spriteBatch.Draw(eyeGlow, drawCenterA - Main.screenPosition, new Rectangle?(new Rectangle(0, y6A, eyeAni.Width, num214A)), base.npc.GetAlpha(Color.White), Utils.ToRotation(base.npc.DirectionTo(Main.player[base.npc.target].Center)), new Vector2((float)eyeAni.Width / 2f, (float)num214A / 2f), base.npc.scale, SpriteEffects.None, 0f);
 			spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
@@ -117,8 +117,6 @@ namespace Redemption.NPCs.LabNPCs.New
 		}
 
 		private int bodyFrame;
-
-		private int eyeFrame;
 
 		private int coverFrame;
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -48,7 +49,7 @@ namespace Redemption.Projectiles.v08
 			}
 			Player player = Main.player[base.projectile.owner];
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
-			if (!player.HasBuff(base.mod.BuffType("AncientMirrorBuff")))
+			if (!player.HasBuff(ModContent.BuffType<AncientMirrorBuff>()))
 			{
 				base.projectile.Kill();
 			}
@@ -80,7 +81,7 @@ namespace Redemption.Projectiles.v08
 					}
 					for (int j = 0; j < 12; j++)
 					{
-						Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("GlassShardPro1"), 200, 1f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), ModContent.ProjectileType<GlassShardPro1>(), 200, 1f, Main.myPlayer, 0f, 0f);
 					}
 					base.projectile.Kill();
 				}

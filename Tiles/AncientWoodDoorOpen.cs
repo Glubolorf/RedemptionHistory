@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -71,7 +72,7 @@ namespace Redemption.Tiles
 			{
 				11
 			};
-			this.closeDoorID = base.mod.TileType("AncientWoodDoorClosed");
+			this.closeDoorID = ModContent.TileType<AncientWoodDoorClosed>();
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -81,7 +82,7 @@ namespace Redemption.Tiles
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 32, 48, base.mod.ItemType("AncientWoodDoor"), 1, false, 0, false, false);
+			Item.NewItem(i * 16, j * 16, 32, 48, ModContent.ItemType<AncientWoodDoor>(), 1, false, 0, false, false);
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,7 +30,7 @@ namespace Redemption.Items.Weapons
 			base.item.rare = 9;
 			base.item.UseSound = SoundID.Item21;
 			base.item.autoReuse = false;
-			base.item.shoot = base.mod.ProjectileType("AncientBoulder");
+			base.item.shoot = ModContent.ProjectileType<AncientBoulder>();
 			base.item.shootSpeed = 7f;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 5;
 		}

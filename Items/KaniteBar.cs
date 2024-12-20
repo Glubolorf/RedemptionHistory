@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles.Bars;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -25,7 +26,7 @@ namespace Redemption.Items
 			base.item.useTime = 10;
 			base.item.useStyle = 1;
 			base.item.consumable = true;
-			base.item.createTile = base.mod.TileType("KaniteBarTile");
+			base.item.createTile = ModContent.TileType<KaniteBarTile>();
 		}
 
 		public override void AddRecipes()

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -47,7 +48,7 @@ namespace Redemption.Tiles
 				88
 			};
 			this.dresser = "Petrified Dresser";
-			this.dresserDrop = base.mod.ItemType("DeadWoodDresser");
+			this.dresserDrop = ModContent.ItemType<DeadWoodDresser>();
 		}
 
 		public override bool HasSmartInteract()
@@ -174,7 +175,7 @@ namespace Redemption.Tiles
 				}
 				if (player.showItemIconText == this.chest)
 				{
-					player.showItemIcon2 = base.mod.ItemType("DeadWoodDresser");
+					player.showItemIcon2 = ModContent.ItemType<DeadWoodDresser>();
 					player.showItemIconText = "";
 				}
 			}
@@ -216,7 +217,7 @@ namespace Redemption.Tiles
 				}
 				if (player.showItemIconText == this.chest)
 				{
-					player.showItemIcon2 = base.mod.ItemType("DeadWoodDresser");
+					player.showItemIcon2 = ModContent.ItemType<DeadWoodDresser>();
 					player.showItemIconText = "";
 				}
 			}

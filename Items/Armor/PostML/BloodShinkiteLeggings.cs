@@ -28,11 +28,7 @@ namespace Redemption.Items.Armor.PostML
 		public override void UpdateEquip(Player player)
 		{
 			player.moveSpeed *= 1.4f;
-			player.meleeDamage *= 1.1f;
-			player.rangedDamage *= 1.1f;
-			player.magicDamage *= 1.1f;
-			player.minionDamage *= 1.1f;
-			player.thrownDamage *= 1.1f;
+			player.allDamage *= 1.1f;
 			player.meleeCrit += 10;
 			player.meleeSpeed *= 1.1f;
 			player.fireWalk = true;

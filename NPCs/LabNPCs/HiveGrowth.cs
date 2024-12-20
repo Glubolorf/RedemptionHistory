@@ -1,5 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Dusts;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -39,7 +42,7 @@ namespace Redemption.NPCs.LabNPCs
 			{
 				for (int i = 0; i < 25; i++)
 				{
-					int dustIndex = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, base.mod.DustType("SludgeSpoonDust"), 0f, 0f, 100, default(Color), 2f);
+					int dustIndex = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, ModContent.DustType<SludgeSpoonDust>(), 0f, 0f, 100, default(Color), 2f);
 					Main.dust[dustIndex].velocity *= 1.6f;
 				}
 			}
@@ -95,8 +98,8 @@ namespace Redemption.NPCs.LabNPCs
 					{
 						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Zap1").WithVolume(0.8f).WithPitchVariance(0f), -1, -1);
 					}
-					int p = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("EyeFlashPro"), 40, 3f, 255, 0f, 0f);
-					int p2 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("EyeFlashProH"), 40, 3f, 255, 0f, 0f);
+					int p = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, ModContent.ProjectileType<EyeFlashPro>(), 40, 3f, 255, 0f, 0f);
+					int p2 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, ModContent.ProjectileType<EyeFlashProH>(), 40, 3f, 255, 0f, 0f);
 					Main.projectile[p].netUpdate = true;
 					Main.projectile[p2].netUpdate = true;
 				}
@@ -104,7 +107,6 @@ namespace Redemption.NPCs.LabNPCs
 				{
 					this.targeted = false;
 					this.attackTimer = 0;
-					this.smashTimer = 0;
 					this.startTimer = 140;
 					base.npc.noTileCollide = true;
 				}
@@ -156,6 +158,18 @@ namespace Redemption.NPCs.LabNPCs
 			}
 		}
 
+		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+		{
+			if (Main.rand.Next(2) == 0 || Main.expertMode)
+			{
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff>(), Main.rand.Next(500, 1000), true);
+			}
+			if (Main.rand.Next(9) == 0 || (Main.expertMode && Main.rand.Next(7) == 0))
+			{
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff2>(), Main.rand.Next(250, 500), true);
+			}
+		}
+
 		private float Magnitude(Vector2 mag)
 		{
 			return (float)Math.Sqrt((double)(mag.X * mag.X + mag.Y * mag.Y));
@@ -170,7 +184,5 @@ namespace Redemption.NPCs.LabNPCs
 		private int startTimer;
 
 		private int attackTimer;
-
-		private int smashTimer;
 	}
 }

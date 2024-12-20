@@ -35,7 +35,7 @@ namespace Redemption.Projectiles.v08
 
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			Projectile.NewProjectile(base.projectile.Center, base.projectile.velocity, base.mod.ProjectileType("HolyGroundPro2"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
+			Projectile.NewProjectile(base.projectile.Center, base.projectile.velocity, ModContent.ProjectileType<HolyGroundPro2>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 			return true;
 		}
 	}

@@ -15,8 +15,8 @@ namespace Redemption.Buffs
 
 		public override void Update(Player player, ref int buffIndex)
 		{
-			player.lifeRegen += 8;
-			player.manaRegen += 8;
+			player.lifeRegen += 4;
+			player.manaRegen += 4;
 			player.statDefense += 12;
 			player.allDamage *= 1.1f;
 		}

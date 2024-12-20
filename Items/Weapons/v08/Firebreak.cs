@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,7 +29,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.UseSound = SoundID.Item71;
 			base.item.autoReuse = false;
 			base.item.useTurn = true;
-			base.item.shoot = base.mod.ProjectileType("FirebreakPro1");
+			base.item.shoot = ModContent.ProjectileType<FirebreakPro1>();
 			base.item.shootSpeed = 15f;
 			base.item.rare = 3;
 		}
@@ -85,7 +86,7 @@ namespace Redemption.Items.Weapons.v08
 				num76 *= num77;
 				float speedX2 = num75 + (float)Main.rand.Next(-50, 51) * 0.02f;
 				float speedY2 = num76 + (float)Main.rand.Next(-50, 51) * 0.02f;
-				int projectile = Projectile.NewProjectile(vector2.X, vector2.Y, speedX2, speedY2, base.mod.ProjectileType("FirebreakPro1"), num73, num74, i, 0f, (float)Main.rand.Next(10));
+				int projectile = Projectile.NewProjectile(vector2.X, vector2.Y, speedX2, speedY2, ModContent.ProjectileType<FirebreakPro1>(), num73, num74, i, 0f, (float)Main.rand.Next(10));
 				Main.projectile[projectile].tileCollide = false;
 				Main.projectile[projectile].melee = true;
 				Main.projectile[projectile].timeLeft = 200;
@@ -97,8 +98,8 @@ namespace Redemption.Items.Weapons.v08
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
 			modRecipe.AddIngredient(175, 8);
-			modRecipe.AddIngredient(base.mod.ItemType("DragonLeadBar"), 4);
-			modRecipe.AddIngredient(base.mod.ItemType("DarkShard"), 2);
+			modRecipe.AddIngredient(ModContent.ItemType<DragonLeadBar>(), 4);
+			modRecipe.AddIngredient(ModContent.ItemType<DarkShard>(), 2);
 			modRecipe.AddTile(16);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();

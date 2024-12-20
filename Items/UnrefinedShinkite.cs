@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -24,7 +25,7 @@ namespace Redemption.Items
 			base.item.useTime = 10;
 			base.item.useStyle = 1;
 			base.item.consumable = true;
-			base.item.createTile = base.mod.TileType("ShinkiteTile");
+			base.item.createTile = ModContent.TileType<ShinkiteTile>();
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}
 	}

@@ -1,4 +1,6 @@
 ﻿using System;
+using Redemption.Items.Armor.Costumes;
+using Redemption.Items.LabThings;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -66,7 +68,7 @@ namespace Redemption.NPCs.LabNPCs.New
 			base.npc.velocity.X = 0f;
 			base.npc.dontTakeDamage = true;
 			base.npc.immune[255] = 30;
-			if ((NPC.CountNPCS(base.mod.NPCType("JanitorBotCleaning")) >= 2 && Main.rand.Next(2) == 0) || RedeWorld.downedJanitor)
+			if ((NPC.CountNPCS(ModContent.NPCType<JanitorBotCleaning>()) >= 2 && Main.rand.Next(2) == 0) || RedeWorld.downedJanitor)
 			{
 				base.npc.active = false;
 			}
@@ -80,34 +82,65 @@ namespace Redemption.NPCs.LabNPCs.New
 			}
 			if (base.npc.ai[0] == 1f)
 			{
-				base.npc.ai[1] += 1f;
-				if (base.npc.ai[1] >= 30f && base.npc.ai[1] < 120f)
+				if (((BasePlayer.HasChestplate(player, ModContent.ItemType<TBotVanityChestplate>(), true) && BasePlayer.HasLeggings(player, ModContent.ItemType<TBotVanityLegs>(), true)) || (BasePlayer.HasChestplate(player, ModContent.ItemType<AndroidArmour>(), true) && BasePlayer.HasLeggings(player, ModContent.ItemType<AndroidPants>(), true)) || (BasePlayer.HasChestplate(player, ModContent.ItemType<JanitorOutfit>(), true) && BasePlayer.HasLeggings(player, ModContent.ItemType<JanitorPants>(), true))) && (BasePlayer.HasHelmet(player, ModContent.ItemType<TBotEyes_Femi>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotEyes_Masc>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotVanityEyes>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotGoggles_Femi>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotGoggles_Masc>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<TBotVanityGoggles>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<AdamHead>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<OperatorHead>(), true) || BasePlayer.HasHelmet(player, ModContent.ItemType<VoltHead>(), true)))
 				{
-					this.looking = true;
-				}
-				else if (base.npc.ai[1] >= 240f)
-				{
-					this.looking = true;
+					base.npc.ai[1] += 1f;
+					if (base.npc.ai[1] >= 30f)
+					{
+						this.looking = true;
+					}
+					if (base.npc.ai[1] == 30f && !RedeConfigClient.Instance.NoCombatText)
+					{
+						CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "...Why did you have to barge in through the ventilation shaft?", true, false);
+					}
+					if (base.npc.ai[1] == 240f && !RedeConfigClient.Instance.NoCombatText)
+					{
+						CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "Lost your access card huh? Have mine and get out of my sight.", true, false);
+					}
+					if (base.npc.ai[1] >= 400f)
+					{
+						CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "*Grumbles* Those darn careless bots losing their cards...", true, false);
+						RedeWorld.downedJanitor = true;
+						if (!RedeWorld.labAccess1)
+						{
+							Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<ZoneAccessPanel1A>(), 1, false, 0, false, false);
+						}
+						base.npc.SetDefaults(ModContent.NPCType<JanitorBotDefeated>(), -1f);
+						return;
+					}
 				}
 				else
 				{
-					this.looking = false;
-				}
-				if (base.npc.ai[1] == 30f && !RedeConfigClient.Instance.NoCombatText)
-				{
-					CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "Oi! Don't go there, the floor's wet.", true, false);
-				}
-				if (base.npc.ai[1] == 180f && !RedeConfigClient.Instance.NoCombatText)
-				{
-					CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "...", false, false);
-				}
-				if (base.npc.ai[1] == 280f && !RedeConfigClient.Instance.NoCombatText)
-				{
-					CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "Wait... You're a trespasser!", true, false);
-				}
-				if (base.npc.ai[1] >= 400f)
-				{
-					base.npc.SetDefaults(base.mod.NPCType("JanitorBot"), -1f);
+					base.npc.ai[1] += 1f;
+					if (base.npc.ai[1] >= 30f && base.npc.ai[1] < 120f)
+					{
+						this.looking = true;
+					}
+					else if (base.npc.ai[1] >= 240f)
+					{
+						this.looking = true;
+					}
+					else
+					{
+						this.looking = false;
+					}
+					if (base.npc.ai[1] == 30f && !RedeConfigClient.Instance.NoCombatText)
+					{
+						CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "Oi! Don't go there, the floor's wet.", true, false);
+					}
+					if (base.npc.ai[1] == 180f && !RedeConfigClient.Instance.NoCombatText)
+					{
+						CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "...", false, false);
+					}
+					if (base.npc.ai[1] == 280f && !RedeConfigClient.Instance.NoCombatText)
+					{
+						CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "Wait... You're a trespasser!", true, false);
+					}
+					if (base.npc.ai[1] >= 400f)
+					{
+						Redemption.ShowTitle(base.npc, 15);
+						base.npc.SetDefaults(ModContent.NPCType<JanitorBot>(), -1f);
+					}
 				}
 			}
 		}

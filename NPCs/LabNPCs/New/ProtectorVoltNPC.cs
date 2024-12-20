@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Armor.Costumes;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -118,7 +119,7 @@ namespace Redemption.NPCs.LabNPCs.New
 			string CorruptBotT = "Corrupted T-Bots?";
 			string HistoryT = "Why follow Girus?";
 			string TeochromeT = "Teochrome?";
-			string ChallengeT = "Rematch!";
+			string ChallengeT = "Challenge!";
 			button = SwitchInfoT;
 			if (ProtectorVoltNPC.ChatNumber == 0)
 			{
@@ -219,7 +220,7 @@ namespace Redemption.NPCs.LabNPCs.New
 			{
 				if ((ProtectorVoltNPC.ChatNumber == 8 && !RedeWorld.downedMACE) || (ProtectorVoltNPC.ChatNumber == 9 && RedeWorld.downedMACE))
 				{
-					base.npc.Transform(base.mod.NPCType("TbotMiniboss"));
+					base.npc.Transform(ModContent.NPCType<TbotMiniboss>());
 					return;
 				}
 				Main.npcChatText = ProtectorVoltNPC.ChitChat();
@@ -279,14 +280,35 @@ namespace Redemption.NPCs.LabNPCs.New
 
 		public override string GetChat()
 		{
+			Player player = Main.player[Main.myPlayer];
 			ModLoader.GetMod("Grealm");
 			ModLoader.GetMod("AAMod");
 			ModLoader.GetMod("Calamity");
 			ModLoader.GetMod("ThoriumMod");
-			WeightedRandom<string> weightedRandom = new WeightedRandom<string>();
-			weightedRandom.Add("You wish to talk? I accept your request.", 1.0);
-			weightedRandom.Add("What is it you need?", 1.0);
-			return weightedRandom;
+			WeightedRandom<string> chat = new WeightedRandom<string>();
+			if (BasePlayer.HasChestplate(player, ModContent.ItemType<AndroidArmour>(), true) && BasePlayer.HasLeggings(player, ModContent.ItemType<AndroidPants>(), true))
+			{
+				chat.Add("Promoted to a soldier? Welcome. I'm your commander. At ease.", 1.0);
+				chat.Add("Regular check-ups on your non-lethal tesla weapons are advised. You do not want to overload an insurgent in front of Girus. Obedient mindless slave are better than scrap metal, she says.", 1.0);
+				chat.Add("See an insurgent while patrolling? Do not engage alone. They have lethal weaponry. We don't. Get backup.", 1.0);
+			}
+			else
+			{
+				chat.Add("You wish to talk? I accept your request.", 1.0);
+				chat.Add("What is it you need?", 1.0);
+			}
+			if (BasePlayer.HasHelmet(player, ModContent.ItemType<VoltHead>(), true))
+			{
+				chat.Add("Had your eye augmented? Very useful. You've also lost your jaw, like me. Hopefully not as dramatically as I. Torn off by the leader of Alpha.", 1.0);
+				chat.Add("Your jaw... It's gone. Hopefully not torn off violently. Really hope I don't face HIM again without a squad... *Shudders*", 1.0);
+			}
+			if (BasePlayer.HasHelmet(player, ModContent.ItemType<AdamHead>(), true))
+			{
+				chat.Add("*Visibly shaken* O-oh it's just you. Y-you startled me r-really bad...", 1.0);
+				chat.Add("*He looks really anxious.*", 1.0);
+				chat.Add("*He looks very uncomfortable.*", 1.0);
+			}
+			return chat;
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
@@ -296,7 +318,7 @@ namespace Redemption.NPCs.LabNPCs.New
 			int spriteDirection = base.npc.spriteDirection;
 			Vector2 drawCenterG = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 			int numG = gunAni.Height / 1;
-			int yG = numG * this.gunFrame;
+			int yG = 0;
 			spriteBatch.Draw(gunAni, drawCenterG - Main.screenPosition, new Rectangle?(new Rectangle(0, yG, gunAni.Width, numG)), drawColor, this.gunRot, new Vector2((float)gunAni.Width / 2f, (float)numG / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
 			spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			return false;
@@ -327,8 +349,6 @@ namespace Redemption.NPCs.LabNPCs.New
 		public static bool Challenge;
 
 		public static int ChatNumber;
-
-		private int gunFrame;
 
 		private float gunRot;
 	}

@@ -69,8 +69,8 @@ namespace Redemption.Projectiles.v08
 		{
 			if (target.life <= 0)
 			{
-				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-3 + Main.rand.Next(0, 7)), (float)(-3 + Main.rand.Next(0, 7)), base.mod.ProjectileType("CursedOrbPro2"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
-				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-3 + Main.rand.Next(0, 7)), (float)(-3 + Main.rand.Next(0, 7)), base.mod.ProjectileType("CursedOrbPro2"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-3 + Main.rand.Next(0, 7)), (float)(-3 + Main.rand.Next(0, 7)), ModContent.ProjectileType<CursedOrbPro2>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-3 + Main.rand.Next(0, 7)), (float)(-3 + Main.rand.Next(0, 7)), ModContent.ProjectileType<CursedOrbPro2>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 				base.projectile.Kill();
 			}
 			int dustType = 75;

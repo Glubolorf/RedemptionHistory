@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -32,14 +33,14 @@ namespace Redemption.NPCs
 			this.animationType = 316;
 			base.npc.alpha = 100;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("WanderingSoulBanner");
+			this.bannerItem = ModContent.ItemType<WanderingSoulBanner>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
 		{
 			if (Main.netMode != 1 && base.npc.life <= 0)
 			{
-				NPC.NewNPC((int)base.npc.position.X + 38, (int)base.npc.position.Y + 32, base.mod.NPCType("LostSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.position.X + 38, (int)base.npc.position.Y + 32, ModContent.NPCType<LostSoul2>(), 0, 0f, 0f, 0f, 0f, 255);
 			}
 		}
 

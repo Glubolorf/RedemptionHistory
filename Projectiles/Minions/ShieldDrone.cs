@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -75,7 +76,7 @@ namespace Redemption.Projectiles.Minions
 			}
 			Player player = Main.player[base.projectile.owner];
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
-			if (player.dead || !player.HasBuff(base.mod.BuffType("ShieldDroneBuff")))
+			if (player.dead || !player.HasBuff(ModContent.BuffType<ShieldDroneBuff>()))
 			{
 				modPlayer.shieldDrone = false;
 				base.projectile.Kill();
@@ -94,7 +95,7 @@ namespace Redemption.Projectiles.Minions
 			base.projectile.localAI[1] += 1f;
 			for (int i = 0; i < 200; i++)
 			{
-				if (Main.projectile[i].active && !Main.projectile[i].friendly && Main.projectile[i].type != base.mod.ProjectileType("ShieldDrone") && Main.projectile[i].hostile)
+				if (Main.projectile[i].active && !Main.projectile[i].friendly && Main.projectile[i].type != ModContent.ProjectileType<ShieldDrone>() && Main.projectile[i].hostile)
 				{
 					Rectangle rectangle = new Rectangle((int)Main.projectile[i].position.X, (int)Main.projectile[i].position.Y, Main.projectile[i].width, Main.projectile[i].height);
 					Rectangle rectangle2 = new Rectangle((int)base.projectile.position.X, (int)base.projectile.position.Y, base.projectile.width, base.projectile.height);
@@ -102,7 +103,7 @@ namespace Redemption.Projectiles.Minions
 					{
 						for (int j = 0; j < 3; j++)
 						{
-							int p = Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(base.projectile.Center - player.Center) + Utils.NextFloat(Main.rand, -0.05f, 0.05f)), base.mod.ProjectileType("GirusDischarge"), 180, 3f, Main.myPlayer, 0f, 0f);
+							int p = Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(base.projectile.Center - player.Center) + Utils.NextFloat(Main.rand, -0.05f, 0.05f)), ModContent.ProjectileType<GirusDischarge>(), 180, 3f, Main.myPlayer, 0f, 0f);
 							Main.projectile[p].netUpdate = true;
 						}
 						Main.projectile[i].velocity *= -1f;
@@ -134,7 +135,7 @@ namespace Redemption.Projectiles.Minions
 						this.LookInDirection(-playerFalseMag);
 						float distFromPlayer = 60f;
 						float distTrueMag = Vector2.Distance(Main.projectile[i].Center, player.Center);
-						if (((Main.projectile[i].velocity.X > 0f && distFalseMag.X < 0f) || (Main.projectile[i].velocity.X < 0f && distFalseMag.X > 0f && Main.projectile[i].type != base.mod.ProjectileType("ShieldDrone")) || Math.Abs(Main.projectile[i].velocity.X) < 1f) && ((Main.projectile[i].velocity.Y > 0f && distFalseMag.Y < 0f) || (Main.projectile[i].velocity.Y < 0f && distFalseMag.Y > 0f) || Math.Abs(Main.projectile[i].velocity.Y) < 1f) && base.projectile.localAI[1] % 20f == 0f)
+						if (((Main.projectile[i].velocity.X > 0f && distFalseMag.X < 0f) || (Main.projectile[i].velocity.X < 0f && distFalseMag.X > 0f && Main.projectile[i].type != ModContent.ProjectileType<ShieldDrone>()) || Math.Abs(Main.projectile[i].velocity.X) < 1f) && ((Main.projectile[i].velocity.Y > 0f && distFalseMag.Y < 0f) || (Main.projectile[i].velocity.Y < 0f && distFalseMag.Y > 0f) || Math.Abs(Main.projectile[i].velocity.Y) < 1f) && base.projectile.localAI[1] % 20f == 0f)
 						{
 							this.moveTo = new Vector2(distFalseMag.X * distFromPlayer / distTrueMag, distFalseMag.Y * distFromPlayer / distTrueMag);
 						}

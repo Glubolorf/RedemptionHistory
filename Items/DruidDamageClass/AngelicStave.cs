@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.DruidProjectiles.Stave;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,8 +31,8 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.UseSound = SoundID.Item43;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
-			base.item.shoot = base.mod.ProjectileType("AngelicPointer");
-			this.defaultShoot = base.mod.ProjectileType("AngelicPointer");
+			base.item.shoot = ModContent.ProjectileType<AngelicPointer>();
+			this.defaultShoot = ModContent.ProjectileType<AngelicPointer>();
 			this.singleShotStave = true;
 			this.staveHoldOffset = new Vector2(4f, -10f);
 			this.staveLength = 58.2f;

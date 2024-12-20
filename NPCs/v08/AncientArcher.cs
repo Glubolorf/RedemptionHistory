@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -34,10 +36,10 @@ namespace Redemption.NPCs.v08
 		{
 			if (RedeWorld.downedEaglecrestGolemPZ)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("AncientPowerCore"), Main.rand.Next(1, 3), false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<AncientPowerCore>(), Main.rand.Next(1, 3), false, 0, false, false);
 				return;
 			}
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("AncientCoreF"), Main.rand.Next(1, 3), false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<AncientCoreF>(), Main.rand.Next(1, 3), false, 0, false, false);
 		}
 
 		public override void AI()
@@ -112,7 +114,7 @@ namespace Redemption.NPCs.v08
 						float Speed = 18f;
 						Vector2 vector8 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 						int damage = 55;
-						int type = base.mod.ProjectileType("AncientShot");
+						int type = ModContent.ProjectileType<AncientShot>();
 						float rotation = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
 						int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
 						Main.projectile[num54].netUpdate = true;
@@ -146,7 +148,7 @@ namespace Redemption.NPCs.v08
 						float Speed2 = 21f;
 						Vector2 vector9 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 						int damage2 = 55;
-						int type2 = base.mod.ProjectileType("AncientShot");
+						int type2 = ModContent.ProjectileType<AncientShot>();
 						float rotation2 = (float)Math.Atan2((double)(vector9.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector9.X - (player.position.X + (float)player.width * 0.5f)));
 						int num55 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0), type2, damage2, 0f, 0, 0f, 0f);
 						Main.projectile[num55].netUpdate = true;
@@ -184,7 +186,7 @@ namespace Redemption.NPCs.v08
 			{
 				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 				int num214 = hopAni.Height / 1;
-				int y6 = num214 * this.hopFrame;
+				int y6 = 0;
 				Main.spriteBatch.Draw(hopAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, hopAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)hopAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.shoot)
@@ -215,7 +217,7 @@ namespace Redemption.NPCs.v08
 			{
 				if (Main.netMode != 1 && base.npc.life <= 0)
 				{
-					NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("LostSoul3"), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<LostSoul3>(), 0, 0f, 0f, 0f, 0f, 255);
 				}
 				for (int i = 0; i < 20; i++)
 				{
@@ -234,8 +236,6 @@ namespace Redemption.NPCs.v08
 
 		private bool hop;
 
-		private int hopFrame;
-
 		private bool shoot;
 
 		private int shootFrame;
@@ -249,7 +249,5 @@ namespace Redemption.NPCs.v08
 		private int shootCounter;
 
 		private int shootTimer;
-
-		private int shootAirTimer;
 	}
 }

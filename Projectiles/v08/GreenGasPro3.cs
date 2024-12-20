@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs.Wasteland;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
@@ -37,7 +38,7 @@ namespace Redemption.Projectiles.v08
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			target.AddBuff(base.mod.BuffType("BioweaponDebuff"), 600, false);
+			target.AddBuff(ModContent.BuffType<BioweaponDebuff>(), 600, false);
 		}
 	}
 }

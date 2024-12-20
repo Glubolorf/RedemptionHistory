@@ -25,6 +25,7 @@ namespace Redemption
 		JanitorBotNPCS,
 		VoltNPCS,
 		TurretS,
-		OperatorNPCS
+		OperatorNPCS,
+		SoullessBoss
 	}
 }

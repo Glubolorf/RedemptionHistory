@@ -1,7 +1,11 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Projectiles.DruidProjectiles.Stave;
+using Redemption.Projectiles.DruidProjectiles.Stave.Guardians;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
@@ -27,10 +31,10 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.UseSound = SoundID.Item43;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
-			this.defaultShoot = base.mod.ProjectileType("ExpandingMirror");
+			this.defaultShoot = ModContent.ProjectileType<ExpandingMirror>();
 			base.item.shootSpeed = 2f;
-			this.guardianBuffID = base.mod.BuffType("NatureGuardian13Buff");
-			this.guardianProjectileID = base.mod.ProjectileType("NatureGuardian13");
+			this.guardianBuffID = ModContent.BuffType<NatureGuardian13Buff>();
+			this.guardianProjectileID = ModContent.ProjectileType<NatureGuardian13>();
 			this.guardianTime = 1800;
 			this.singleShotStave = true;
 			this.staveHoldOffset = new Vector2(4f, -15f);

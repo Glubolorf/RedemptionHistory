@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -38,7 +39,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.knockBack = 6f;
 			base.item.value = Item.buyPrice(0, 2, 50, 0);
 			base.item.rare = 7;
-			base.item.shoot = base.mod.ProjectileType("InfectousJavelinPro");
+			base.item.shoot = ModContent.ProjectileType<InfectousJavelinPro>();
 			base.item.shootSpeed = 19f;
 			base.item.UseSound = SoundID.Item1;
 			base.item.autoReuse = true;

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Placeable;
 using Terraria.ModLoader;
 
 namespace Redemption.Tiles
@@ -26,7 +27,7 @@ namespace Redemption.Tiles
 
 		public override int DropWood()
 		{
-			return this.mod.ItemType("DeadWood");
+			return ModContent.ItemType<DeadWood>();
 		}
 
 		public override Texture2D GetTexture()

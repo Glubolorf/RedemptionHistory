@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -43,10 +45,10 @@ namespace Redemption.NPCs.v08
 		{
 			if (RedeWorld.downedThornPZ)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CursedThorns"), Main.rand.Next(1, 3), false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<CursedThorns>(), Main.rand.Next(1, 3), false, 0, false, false);
 				return;
 			}
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CursedThornsF"), Main.rand.Next(1, 3), false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<CursedThornsF>(), Main.rand.Next(1, 3), false, 0, false, false);
 		}
 
 		public override void AI()
@@ -58,7 +60,7 @@ namespace Redemption.NPCs.v08
 				float Speed = 20f;
 				Vector2 vector8 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 				int damage = 45;
-				int type = base.mod.ProjectileType("CursedThornPro1");
+				int type = ModContent.ProjectileType<CursedThornPro1>();
 				float rotation = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
 				int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
 				Main.projectile[num54].netUpdate = true;

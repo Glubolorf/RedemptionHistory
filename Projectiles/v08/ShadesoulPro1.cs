@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Dusts;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -56,7 +57,7 @@ namespace Redemption.Projectiles.v08
 				base.projectile.velocity = (10f * base.projectile.velocity + move) / 11f;
 				this.AdjustMagnitude(ref base.projectile.velocity);
 			}
-			int dust = Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, base.mod.DustType("VoidFlame"), 0f, 0f, 0, default(Color), 1f);
+			int dust = Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, ModContent.DustType<VoidFlame>(), 0f, 0f, 0, default(Color), 1f);
 			Main.dust[dust].velocity /= 2f;
 		}
 

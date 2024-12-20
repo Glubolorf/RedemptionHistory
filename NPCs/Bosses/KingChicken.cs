@@ -1,6 +1,10 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items;
+using Redemption.Items.Armor;
+using Redemption.Items.Placeable;
+using Redemption.Items.Weapons;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,7 +33,7 @@ namespace Redemption.NPCs.Bosses
 			this.aiType = 46;
 			this.animationType = 46;
 			base.npc.boss = true;
-			this.bossBag = base.mod.ItemType("KingChickenBag");
+			this.bossBag = ModContent.ItemType<KingChickenBag>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -46,6 +50,11 @@ namespace Redemption.NPCs.Bosses
 
 		public override void AI()
 		{
+			if (!this.title)
+			{
+				Redemption.ShowTitle(base.npc, 14);
+				this.title = true;
+			}
 			if (this.peckPeck)
 			{
 				this.peckCounter++;
@@ -193,7 +202,7 @@ namespace Redemption.NPCs.Bosses
 					{
 						for (int j = 0; j < player2.inventory.Length; j++)
 						{
-							if (player2.inventory[j].type == base.mod.ItemType("RedemptionTeller"))
+							if (player2.inventory[j].type == ModContent.ItemType<RedemptionTeller>())
 							{
 								Main.NewText("<Chalice of Alignment> ... Hehe.", Color.DarkGoldenrod, false);
 							}
@@ -213,9 +222,9 @@ namespace Redemption.NPCs.Bosses
 		{
 			if (Main.rand.Next(10) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("KingChickenTrophy"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<KingChickenTrophy>(), 1, false, 0, false, false);
 			}
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ChickenEgg"), Main.rand.Next(4, 6), false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<ChickenEgg>(), Main.rand.Next(4, 6), false, 0, false, false);
 			if (Main.expertMode)
 			{
 				base.npc.DropBossBags();
@@ -223,17 +232,17 @@ namespace Redemption.NPCs.Bosses
 			}
 			if (Main.rand.Next(7) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("KingChickenMask"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<KingChickenMask>(), 1, false, 0, false, false);
 			}
 			if (Main.rand.Next(10) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CrownOfTheKing"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<CrownOfTheKing>(), 1, false, 0, false, false);
 			}
 			if (Main.rand.Next(3) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("EggStaff"), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<EggStaff>(), 1, false, 0, false, false);
 			}
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("Grain"), 1, false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<Grain>(), 1, false, 0, false, false);
 			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 264, 1, false, 0, false, false);
 		}
 
@@ -274,5 +283,7 @@ namespace Redemption.NPCs.Bosses
 		private int cluckTimer;
 
 		private int timer;
+
+		private bool title;
 	}
 }

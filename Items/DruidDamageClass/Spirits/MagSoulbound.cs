@@ -1,4 +1,6 @@
 ﻿using System;
+using Redemption.Buffs;
+using Redemption.Projectiles.DruidProjectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -17,7 +19,7 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 		{
 			base.item.shootSpeed = 11f;
 			base.item.crit = 4;
-			base.item.damage = 12;
+			base.item.damage = 10;
 			base.item.knockBack = 0f;
 			base.item.useStyle = 1;
 			base.item.useAnimation = 24;
@@ -30,7 +32,7 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 			base.item.autoReuse = false;
 			base.item.UseSound = SoundID.Item1;
 			base.item.value = Item.sellPrice(0, 0, 90, 50);
-			base.item.shoot = base.mod.ProjectileType("MagSoulboundPro");
+			base.item.shoot = ModContent.ProjectileType<MagSoulboundPro>();
 			this.spiritWeapon = true;
 			this.minSpiritLevel = 0;
 			this.maxSpiritLevel = 3;
@@ -97,7 +99,7 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 
 		public override void HoldItem(Player player)
 		{
-			player.AddBuff(base.mod.BuffType("SoulboundBuff"), 4, true);
+			player.AddBuff(ModContent.BuffType<SoulboundBuff>(), 4, true);
 		}
 
 		public override void AddRecipes()

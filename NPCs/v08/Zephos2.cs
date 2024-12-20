@@ -1,8 +1,13 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
+using Redemption.Items;
+using Redemption.Items.Placeable;
 using Redemption.Items.Quest;
 using Redemption.Items.Weapons;
+using Redemption.Items.Weapons.v08;
+using Redemption.NPCs.Minibosses.MossyGoliath;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -46,20 +51,20 @@ namespace Redemption.NPCs.v08
 		{
 			if (RedeQuests.daerelQuests > 9 || RedeQuests.zephosQuests > 9 || (RedeWorld.downedDarkSlime && (RedeQuests.daerelQuests == 9 || RedeQuests.zephosQuests == 9)))
 			{
-				base.npc.Transform(base.mod.NPCType("Zephos3"));
+				base.npc.Transform(ModContent.NPCType<Zephos3>());
 			}
 		}
 
 		public override bool CheckDead()
 		{
 			Main.NewText("Zephos the Wayfarer was knocked unconscious...", Color.Red.R, Color.Red.G, Color.Red.B, false);
-			base.npc.SetDefaults(base.mod.NPCType("Zep2Unconscious"), -1f);
+			base.npc.SetDefaults(ModContent.NPCType<Zep2Unconscious>(), -1f);
 			return false;
 		}
 
 		public override bool CanTownNPCSpawn(int numTownNPCs, int money)
 		{
-			return !WorldGen.crimson && !NPC.AnyNPCs(base.mod.NPCType("ZepUnconscious")) && !NPC.AnyNPCs(base.mod.NPCType("Zep2Unconscious")) && !NPC.AnyNPCs(base.mod.NPCType("Zep3Unconscious")) && !NPC.AnyNPCs(base.mod.NPCType("Zephos1")) && !NPC.AnyNPCs(base.mod.NPCType("Zephos3"));
+			return false;
 		}
 
 		public override string TownNPCName()
@@ -197,7 +202,7 @@ namespace Redemption.NPCs.v08
 					if (Main.LocalPlayer.BuyItemOld(2500))
 					{
 						Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 37, 1f, 0f);
-						Main.LocalPlayer.AddBuff(base.mod.BuffType("Sharpen2Buff"), 36000, true);
+						Main.LocalPlayer.AddBuff(ModContent.BuffType<Sharpen2Buff>(), 36000, true);
 						return;
 					}
 					Main.npcChatText = Zephos2.NoCoinsChat();
@@ -209,7 +214,7 @@ namespace Redemption.NPCs.v08
 					if (Main.LocalPlayer.BuyItemOld(8000))
 					{
 						Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 37, 1f, 0f);
-						Main.LocalPlayer.AddBuff(base.mod.BuffType("ShineArmour2Buff"), 36000, true);
+						Main.LocalPlayer.AddBuff(ModContent.BuffType<ShineArmour2Buff>(), 36000, true);
 						return;
 					}
 					Main.npcChatText = Zephos2.NoCoinsChat();
@@ -220,10 +225,10 @@ namespace Redemption.NPCs.v08
 				{
 					if (RedeQuests.zephosQuests == 5 && Main.hardMode)
 					{
-						Main.npcChatCornerItem = base.mod.ItemType("BottledLostSoulIcon");
+						Main.npcChatCornerItem = ModContent.ItemType<BottledLostSoulIcon>();
 						Main.PlaySound(12, -1, -1, 1, 1f, 0f);
-						int Bottle = player.FindItem(base.mod.ItemType("BottledLostSoul"));
-						int Vacuum = player.FindItem(base.mod.ItemType("LostSoulCatcher"));
+						int Bottle = player.FindItem(ModContent.ItemType<BottledLostSoul>());
+						int Vacuum = player.FindItem(ModContent.ItemType<LostSoulCatcher>());
 						if (Bottle >= 0)
 						{
 							player.inventory[Bottle].stack--;
@@ -239,9 +244,9 @@ namespace Redemption.NPCs.v08
 									player.inventory[Vacuum] = new Item();
 								}
 							}
-							Main.npcChatCornerItem = base.mod.ItemType("ZephosRewardBag");
+							Main.npcChatCornerItem = ModContent.ItemType<ZephosRewardBag>();
 							Main.npcChatText = this.Give1Chat();
-							player.QuickSpawnItem(base.mod.ItemType("ZephosRewardBag"), 1);
+							player.QuickSpawnItem(ModContent.ItemType<ZephosRewardBag>(), 1);
 							RedeQuests.zephosQuests++;
 							RedeQuests.ZsoulQuest = true;
 							Main.PlaySound(24, -1, -1, 1, 1f, 0f);
@@ -253,10 +258,10 @@ namespace Redemption.NPCs.v08
 					}
 					else if (RedeQuests.zephosQuests == 6 && Main.hardMode)
 					{
-						Main.npcChatCornerItem = base.mod.ItemType("AdamantiteSheath");
+						Main.npcChatCornerItem = ModContent.ItemType<AdamantiteSheath>();
 						Main.PlaySound(12, -1, -1, 1, 1f, 0f);
-						int Sheath = player.FindItem(base.mod.ItemType("AdamantiteSheath"));
-						int Sheath2 = player.FindItem(base.mod.ItemType("TitaniumSwordSheath"));
+						int Sheath = player.FindItem(ModContent.ItemType<AdamantiteSheath>());
+						int Sheath2 = player.FindItem(ModContent.ItemType<TitaniumSwordSheath>());
 						if (Sheath >= 0 || Sheath2 >= 0)
 						{
 							if (Sheath >= 0)
@@ -275,9 +280,9 @@ namespace Redemption.NPCs.v08
 									player.inventory[Sheath2] = new Item();
 								}
 							}
-							Main.npcChatCornerItem = base.mod.ItemType("ZephosRewardBag");
+							Main.npcChatCornerItem = ModContent.ItemType<ZephosRewardBag>();
 							Main.npcChatText = this.Give2Chat();
-							player.QuickSpawnItem(base.mod.ItemType("ZephosRewardBag"), 1);
+							player.QuickSpawnItem(ModContent.ItemType<ZephosRewardBag>(), 1);
 							RedeQuests.zephosQuests++;
 							RedeQuests.ZsheathQuest = true;
 							Main.PlaySound(24, -1, -1, 1, 1f, 0f);
@@ -289,9 +294,9 @@ namespace Redemption.NPCs.v08
 					}
 					else if (RedeQuests.zephosQuests == 7 && Main.hardMode)
 					{
-						Main.npcChatCornerItem = base.mod.ItemType("Zweihander");
+						Main.npcChatCornerItem = ModContent.ItemType<Zweihander>();
 						Main.PlaySound(12, -1, -1, 1, 1f, 0f);
-						int Zweihander = player.FindItem(base.mod.ItemType("Zweihander"));
+						int Zweihander = player.FindItem(ModContent.ItemType<Zweihander>());
 						if (Zweihander >= 0)
 						{
 							player.inventory[Zweihander].stack--;
@@ -299,9 +304,9 @@ namespace Redemption.NPCs.v08
 							{
 								player.inventory[Zweihander] = new Item();
 							}
-							Main.npcChatCornerItem = base.mod.ItemType("ZephosRewardBag");
+							Main.npcChatCornerItem = ModContent.ItemType<ZephosRewardBag>();
 							Main.npcChatText = this.Give3Chat();
-							player.QuickSpawnItem(base.mod.ItemType("ZephosRewardBag"), 1);
+							player.QuickSpawnItem(ModContent.ItemType<ZephosRewardBag>(), 1);
 							RedeQuests.zephosQuests++;
 							RedeQuests.ZzweiQuest = true;
 							Main.PlaySound(24, -1, -1, 1, 1f, 0f);
@@ -313,9 +318,9 @@ namespace Redemption.NPCs.v08
 					}
 					else if (RedeQuests.zephosQuests == 8 && Main.hardMode)
 					{
-						Main.npcChatCornerItem = base.mod.ItemType("CouragePotion");
+						Main.npcChatCornerItem = ModContent.ItemType<CouragePotion>();
 						Main.PlaySound(12, -1, -1, 1, 1f, 0f);
-						int Potion = player.FindItem(base.mod.ItemType("CouragePotion"));
+						int Potion = player.FindItem(ModContent.ItemType<CouragePotion>());
 						if (Potion >= 0)
 						{
 							player.inventory[Potion].stack--;
@@ -323,9 +328,9 @@ namespace Redemption.NPCs.v08
 							{
 								player.inventory[Potion] = new Item();
 							}
-							Main.npcChatCornerItem = base.mod.ItemType("ZephosRewardBag");
+							Main.npcChatCornerItem = ModContent.ItemType<ZephosRewardBag>();
 							Main.npcChatText = this.Give4Chat();
-							player.QuickSpawnItem(base.mod.ItemType("ZephosRewardBag"), 1);
+							player.QuickSpawnItem(ModContent.ItemType<ZephosRewardBag>(), 1);
 							RedeQuests.zephosQuests++;
 							RedeQuests.ZpotionQuest = true;
 							Main.PlaySound(24, -1, -1, 1, 1f, 0f);
@@ -337,9 +342,9 @@ namespace Redemption.NPCs.v08
 					}
 					else if (RedeQuests.zephosQuests == 9 && Main.hardMode)
 					{
-						Main.npcChatCornerItem = base.mod.ItemType("MythrilsBane");
+						Main.npcChatCornerItem = ModContent.ItemType<MythrilsBane>();
 						Main.PlaySound(12, -1, -1, 1, 1f, 0f);
-						int Bane = player.FindItem(base.mod.ItemType("MythrilsBane"));
+						int Bane = player.FindItem(ModContent.ItemType<MythrilsBane>());
 						if (Bane >= 0)
 						{
 							player.inventory[Bane].stack--;
@@ -347,9 +352,9 @@ namespace Redemption.NPCs.v08
 							{
 								player.inventory[Bane] = new Item();
 							}
-							Main.npcChatCornerItem = base.mod.ItemType("ZephosRewardBag");
+							Main.npcChatCornerItem = ModContent.ItemType<ZephosRewardBag>();
 							Main.npcChatText = this.Give5Chat();
-							player.QuickSpawnItem(base.mod.ItemType("ZephosRewardBag"), 3);
+							player.QuickSpawnItem(ModContent.ItemType<ZephosRewardBag>(), 3);
 							RedeQuests.zephosQuests++;
 							RedeQuests.DslimeQuest = true;
 							Main.PlaySound(24, -1, -1, 1, 1f, 0f);
@@ -468,63 +473,63 @@ namespace Redemption.NPCs.v08
 
 		public override void SetupShop(Chest shop, ref int nextSlot)
 		{
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LivingTwig"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<LivingTwig>(), false);
 			nextSlot++;
 			shop.item[nextSlot].SetDefaults(259, false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LeatherPouch"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<LeatherPouch>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("WoodenBuckler"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<WoodenBuckler>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("FlintAndSteel"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<FlintAndSteel>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("BeardedHatchet"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<BeardedHatchet>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("AncientNovicesStaff"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<AncientNovicesStaff>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("NoblesSword"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<NoblesSword>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("IronfurAmulet"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<IronfurAmulet>(), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Archcloth"), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<Archcloth>(), false);
 			nextSlot++;
 			if (NPC.downedBoss1)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("ForestGolemPainting"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<ForestGolemPainting>(), false);
 				nextSlot++;
 			}
 			if (NPC.downedBoss2)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("EaglecrestSpelltome"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<EaglecrestSpelltome>(), false);
 				nextSlot++;
 			}
 			if (RedeQuests.zephosQuests == 9 && Main.hardMode)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("EvilJelly"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<EvilJelly>(), false);
 				nextSlot++;
 			}
 			if (NPC.downedBoss3)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("GathicCryoCrystal"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<GathicCryoCrystal>(), false);
 				nextSlot++;
 			}
 			if (RedeWorld.downedEaglecrestGolem)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("GolemEye"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<GolemEye>(), false);
 				nextSlot++;
 			}
 			if (RedeWorld.downedMossyGoliath)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("MossyWimpGun"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<MossyWimpGun>(), false);
 				nextSlot++;
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("MudMace"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<MudMace>(), false);
 				nextSlot++;
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("TastySteak"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<TastySteak>(), false);
 				nextSlot++;
 			}
 			if (RedeQuests.zephosQuests == 5 && Main.hardMode)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("LostSoulCatcher"), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<LostSoulCatcher>(), false);
 				nextSlot++;
 			}
 		}

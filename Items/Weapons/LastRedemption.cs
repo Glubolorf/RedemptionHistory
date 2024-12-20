@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Buffs;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -42,7 +44,7 @@ namespace Redemption.Items.Weapons
 			base.item.UseSound = SoundID.Item71;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
-			base.item.shoot = base.mod.ProjectileType("LastRPro1");
+			base.item.shoot = ModContent.ProjectileType<LastRPro1>();
 			base.item.shootSpeed = 10f;
 			base.item.glowMask = LastRedemption.customGlowMask;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 7;
@@ -58,13 +60,13 @@ namespace Redemption.Items.Weapons
 			if (player.altFunctionUse == 2)
 			{
 				base.item.UseSound = SoundID.Item71;
-				base.item.shoot = base.mod.ProjectileType("LastRPro3");
+				base.item.shoot = ModContent.ProjectileType<LastRPro3>();
 				base.item.shootSpeed = 18f;
 			}
 			else
 			{
 				base.item.UseSound = SoundID.Item122;
-				base.item.shoot = base.mod.ProjectileType("LastRPro1");
+				base.item.shoot = ModContent.ProjectileType<LastRPro1>();
 				base.item.shootSpeed = 10f;
 			}
 			return NPC.downedMoonlord && RedeWorld.downedVlitch1 && RedeWorld.downedVlitch2 && RedeWorld.downedVlitch3;
@@ -124,7 +126,7 @@ namespace Redemption.Items.Weapons
 					num76 *= num77;
 					float speedX2 = num75 + (float)Main.rand.Next(-50, 51) * 0.02f;
 					float speedY2 = num76 + (float)Main.rand.Next(-50, 51) * 0.02f;
-					int projectile = Projectile.NewProjectile(vector2.X, vector2.Y, speedX2, speedY2, base.mod.ProjectileType("LastRPro3"), num73, num74, i, 0f, (float)Main.rand.Next(10));
+					int projectile = Projectile.NewProjectile(vector2.X, vector2.Y, speedX2, speedY2, ModContent.ProjectileType<LastRPro3>(), num73, num74, i, 0f, (float)Main.rand.Next(10));
 					Main.projectile[projectile].tileCollide = false;
 					Main.projectile[projectile].ranged = false;
 					Main.projectile[projectile].magic = true;
@@ -137,10 +139,10 @@ namespace Redemption.Items.Weapons
 
 		public override void HoldItem(Player player)
 		{
-			player.AddBuff(base.mod.BuffType("RedemptiveEmbraceBuff"), 4, true);
-			if (player.ownedProjectileCounts[base.mod.ProjectileType("LastRPro4")] == 0)
+			player.AddBuff(ModContent.BuffType<RedemptiveEmbraceBuff>(), 4, true);
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<LastRPro4>()] == 0)
 			{
-				Projectile.NewProjectile(player.position, Vector2.Zero, base.mod.ProjectileType("LastRPro4"), 0, 0f, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(player.position, Vector2.Zero, ModContent.ProjectileType<LastRPro4>(), 0, 0f, player.whoAmI, 0f, 0f);
 			}
 		}
 

@@ -35,12 +35,12 @@ namespace Redemption.NPCs
 		{
 			if (Main.netMode != 1 && base.npc.life <= 0)
 			{
-				NPC.NewNPC((int)base.npc.position.X + 30, (int)base.npc.position.Y + 55, base.mod.NPCType("DarkSoul"), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.position.X + 30, (int)base.npc.position.Y + 55, ModContent.NPCType<DarkSoul>(), 0, 0f, 0f, 0f, 0f, 255);
 			}
-			NPC.NewNPC((int)base.npc.position.X, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul"), 0, 0f, 0f, 0f, 0f, 255);
-			NPC.NewNPC((int)base.npc.position.X - 20, (int)base.npc.position.Y + 10, base.mod.NPCType("DarkSoul"), 0, 0f, 0f, 0f, 0f, 255);
-			NPC.NewNPC((int)base.npc.position.X + 20, (int)base.npc.position.Y, base.mod.NPCType("DarkSoul"), 0, 0f, 0f, 0f, 0f, 255);
-			NPC.NewNPC((int)base.npc.position.X - 30, (int)base.npc.position.Y + 60, base.mod.NPCType("DarkSoul"), 0, 0f, 0f, 0f, 0f, 255);
+			NPC.NewNPC((int)base.npc.position.X, (int)base.npc.position.Y + 70, ModContent.NPCType<DarkSoul>(), 0, 0f, 0f, 0f, 0f, 255);
+			NPC.NewNPC((int)base.npc.position.X - 20, (int)base.npc.position.Y + 10, ModContent.NPCType<DarkSoul>(), 0, 0f, 0f, 0f, 0f, 255);
+			NPC.NewNPC((int)base.npc.position.X + 20, (int)base.npc.position.Y, ModContent.NPCType<DarkSoul>(), 0, 0f, 0f, 0f, 0f, 255);
+			NPC.NewNPC((int)base.npc.position.X - 30, (int)base.npc.position.Y + 60, ModContent.NPCType<DarkSoul>(), 0, 0f, 0f, 0f, 0f, 255);
 			Main.NewText("Ka senkar'ned Nyht il olv Ii's Syht, Lite'nin ka Lyht exum ka Fryht, Eui ka Myht ut ka Holy Knight.", Color.DarkGray.R, Color.DarkGray.G, Color.DarkGray.B, false);
 		}
 

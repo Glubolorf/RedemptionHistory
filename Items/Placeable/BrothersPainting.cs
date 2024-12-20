@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable
@@ -23,7 +24,7 @@ namespace Redemption.Items.Placeable
 			base.item.consumable = true;
 			base.item.value = 100;
 			base.item.rare = 6;
-			base.item.createTile = base.mod.TileType("BrothersPaintingTile");
+			base.item.createTile = ModContent.TileType<BrothersPaintingTile>();
 			base.item.placeStyle = 0;
 		}
 	}

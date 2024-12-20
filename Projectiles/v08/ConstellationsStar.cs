@@ -118,7 +118,7 @@ namespace Redemption.Projectiles.v08
 					base.projectile.netUpdate = true;
 					if (base.projectile.owner == Main.myPlayer)
 					{
-						Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, vector137.X * 15f, vector137.Y * 15f, base.mod.ProjectileType("ConstBlast"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, (float)base.projectile.whoAmI);
+						Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, vector137.X * 15f, vector137.Y * 15f, ModContent.ProjectileType<ConstBlast>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, (float)base.projectile.whoAmI);
 					}
 				}
 			}

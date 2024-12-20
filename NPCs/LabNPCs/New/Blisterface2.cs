@@ -1,6 +1,10 @@
 ﻿using System;
 using System.IO;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Items;
+using Redemption.Items.LabThings;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -68,16 +72,16 @@ namespace Redemption.NPCs.LabNPCs.New
 			{
 				if (!RedeWorld.labAccess4)
 				{
-					Item.NewItem((int)player.position.X, (int)player.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ZoneAccessPanel4A"), 1, false, 0, false, false);
+					Item.NewItem((int)player.position.X, (int)player.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<ZoneAccessPanel4A>(), 1, false, 0, false, false);
 				}
-				Item.NewItem((int)player.position.X, (int)player.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("Keycard2"), 1, false, 0, false, false);
+				Item.NewItem((int)player.position.X, (int)player.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<Keycard2>(), 1, false, 0, false, false);
 				return;
 			}
 			if (!RedeWorld.labAccess4)
 			{
-				Item.NewItem((int)player.position.X, (int)player.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ZoneAccessPanel4A"), 1, false, 0, false, false);
+				Item.NewItem((int)player.position.X, (int)player.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<ZoneAccessPanel4A>(), 1, false, 0, false, false);
 			}
-			Item.NewItem((int)player.position.X, (int)player.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("Keycard2"), 1, false, 0, false, false);
+			Item.NewItem((int)player.position.X, (int)player.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<Keycard2>(), 1, false, 0, false, false);
 		}
 
 		public override void SendExtraAI(BinaryWriter writer)
@@ -106,6 +110,11 @@ namespace Redemption.NPCs.LabNPCs.New
 
 		public override void AI()
 		{
+			if (!this.title)
+			{
+				Redemption.ShowTitle(base.npc, 18);
+				this.title = true;
+			}
 			base.npc.frameCounter += 1.0;
 			if (base.npc.frameCounter >= 30.0)
 			{
@@ -169,22 +178,22 @@ namespace Redemption.NPCs.LabNPCs.New
 					base.npc.noTileCollide = false;
 					if (Main.rand.Next(75) == 0)
 					{
-						int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 34f, base.npc.position.Y + 22f), new Vector2(0f, 0f), base.mod.ProjectileType("BlisterBubblePro1"), 50, 3f, 255, 0f, 0f);
+						int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 34f, base.npc.position.Y + 22f), new Vector2(0f, 0f), ModContent.ProjectileType<BlisterBubblePro1>(), 50, 3f, 255, 0f, 0f);
 						Main.projectile[p].netUpdate = true;
 					}
 					if (Main.rand.Next(75) == 0)
 					{
-						int p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 72f, base.npc.position.Y + 18f), new Vector2(0f, 0f), base.mod.ProjectileType("BlisterBubblePro1"), 50, 3f, 255, 0f, 0f);
+						int p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 72f, base.npc.position.Y + 18f), new Vector2(0f, 0f), ModContent.ProjectileType<BlisterBubblePro1>(), 50, 3f, 255, 0f, 0f);
 						Main.projectile[p2].netUpdate = true;
 					}
 					if (Main.rand.Next(75) == 0)
 					{
-						int p3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 52f, base.npc.position.Y + 32f), new Vector2(0f, 0f), base.mod.ProjectileType("BlisterBubblePro1"), 50, 3f, 255, 0f, 0f);
+						int p3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 52f, base.npc.position.Y + 32f), new Vector2(0f, 0f), ModContent.ProjectileType<BlisterBubblePro1>(), 50, 3f, 255, 0f, 0f);
 						Main.projectile[p3].netUpdate = true;
 					}
-					if (NPC.CountNPCS(base.mod.NPCType("Blisterling2")) <= 6 && Main.rand.Next(250) == 0)
+					if (NPC.CountNPCS(ModContent.NPCType<Blisterling2>()) <= 6 && Main.rand.Next(250) == 0)
 					{
-						int minion = NPC.NewNPC((int)base.npc.position.X + 66, (int)base.npc.position.Y + 36, base.mod.NPCType("Blisterling2"), 0, 0f, 0f, 0f, 0f, 255);
+						int minion = NPC.NewNPC((int)base.npc.position.X + 66, (int)base.npc.position.Y + 36, ModContent.NPCType<Blisterling2>(), 0, 0f, 0f, 0f, 0f, 255);
 						Main.npc[minion].netUpdate = true;
 						return;
 					}
@@ -222,12 +231,12 @@ namespace Redemption.NPCs.LabNPCs.New
 						{
 							if (base.npc.direction == -1)
 							{
-								int p4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 78f, base.npc.position.Y + 34f), new Vector2((float)(-6 + Main.rand.Next(-6, 0)), (float)(-2 + Main.rand.Next(0, 4))), base.mod.ProjectileType("BlisterBubblePro2"), 50, 3f, 255, 0f, 0f);
+								int p4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 78f, base.npc.position.Y + 34f), new Vector2((float)(-6 + Main.rand.Next(-6, 0)), (float)(-2 + Main.rand.Next(0, 4))), ModContent.ProjectileType<BlisterBubblePro2>(), 50, 3f, 255, 0f, 0f);
 								Main.projectile[p4].netUpdate = true;
 							}
 							else
 							{
-								int p5 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 24f, base.npc.position.Y + 34f), new Vector2((float)(6 + Main.rand.Next(0, 6)), (float)(-2 + Main.rand.Next(0, 4))), base.mod.ProjectileType("BlisterBubblePro2"), 50, 3f, 255, 0f, 0f);
+								int p5 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 24f, base.npc.position.Y + 34f), new Vector2((float)(6 + Main.rand.Next(0, 6)), (float)(-2 + Main.rand.Next(0, 4))), ModContent.ProjectileType<BlisterBubblePro2>(), 50, 3f, 255, 0f, 0f);
 								Main.projectile[p5].netUpdate = true;
 							}
 							this.spamTimer = 0;
@@ -261,11 +270,11 @@ namespace Redemption.NPCs.LabNPCs.New
 		{
 			if (Main.rand.Next(2) == 0 || (Main.expertMode && Main.rand.Next(0) == 0))
 			{
-				target.AddBuff(base.mod.BuffType("XenomiteDebuff"), Main.rand.Next(500, 1000), true);
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff>(), Main.rand.Next(500, 1000), true);
 			}
 			if (Main.rand.Next(9) == 0 || (Main.expertMode && Main.rand.Next(7) == 0))
 			{
-				target.AddBuff(base.mod.BuffType("XenomiteDebuff2"), Main.rand.Next(250, 500), true);
+				target.AddBuff(ModContent.BuffType<XenomiteDebuff2>(), Main.rand.Next(250, 500), true);
 			}
 		}
 
@@ -281,5 +290,7 @@ namespace Redemption.NPCs.LabNPCs.New
 		private bool jumpAttack;
 
 		private int spamTimer;
+
+		private bool title;
 	}
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Projectiles.Minions;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -32,9 +34,9 @@ namespace Redemption.Items.Weapons.v08
 			base.item.knockBack = 2f;
 			base.item.value = Item.sellPrice(0, 10, 0, 0);
 			base.item.UseSound = SoundID.Item44;
-			base.item.shoot = base.mod.ProjectileType("AndroidMinionPro");
+			base.item.shoot = ModContent.ProjectileType<AndroidMinionPro>();
 			base.item.shootSpeed = 10f;
-			base.item.buffType = base.mod.BuffType("AndroidMinionBuff");
+			base.item.buffType = ModContent.BuffType<AndroidMinionBuff>();
 			base.item.buffTime = 3600;
 		}
 

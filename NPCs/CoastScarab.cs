@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Dusts;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,6 +14,7 @@ namespace Redemption.NPCs
 		{
 			base.DisplayName.SetDefault("Coast Scarab");
 			Main.npcFrameCount[base.npc.type] = 2;
+			NPCID.Sets.TownCritter[base.npc.type] = true;
 		}
 
 		public override void SetDefaults()
@@ -29,7 +32,7 @@ namespace Redemption.NPCs
 			this.animationType = 219;
 			base.npc.dontTakeDamageFromHostiles = false;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("CoastScarabBanner");
+			this.bannerItem = ModContent.ItemType<CoastScarabBanner>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -53,7 +56,7 @@ namespace Redemption.NPCs
 		{
 			if (base.npc.wet && Main.rand.Next(20) == 0)
 			{
-				int sparkle = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height / 2, base.mod.DustType("NoidanSauvaDust"), base.npc.velocity.X * 0f, base.npc.velocity.Y * 0f, 20, default(Color), 1f);
+				int sparkle = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height / 2, ModContent.DustType<NoidanSauvaDust>(), base.npc.velocity.X * 0f, base.npc.velocity.Y * 0f, 20, default(Color), 1f);
 				Main.dust[sparkle].noGravity = true;
 			}
 		}

@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,6 +15,7 @@ namespace Redemption.NPCs.Varients
 		{
 			base.DisplayName.SetDefault("Chicken?");
 			Main.npcFrameCount[base.npc.type] = 7;
+			NPCID.Sets.TownCritter[base.npc.type] = true;
 		}
 
 		public override void SetDefaults()
@@ -30,7 +33,8 @@ namespace Redemption.NPCs.Varients
 			this.animationType = 46;
 			base.npc.dontTakeDamageFromHostiles = false;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("ChickenBanner");
+			this.bannerItem = ModContent.ItemType<ChickenBanner>();
+			base.npc.catchItem = (short)ModContent.ItemType<ChickenVlitchItem>();
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -148,7 +152,5 @@ namespace Redemption.NPCs.Varients
 		private bool cluckCluck;
 
 		private int cluckTimer;
-
-		private bool change;
 	}
 }

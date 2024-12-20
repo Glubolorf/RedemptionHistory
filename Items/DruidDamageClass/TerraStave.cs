@@ -1,5 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
+using Redemption.Projectiles.DruidProjectiles.Stave;
+using Redemption.Projectiles.DruidProjectiles.Stave.Guardians;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,11 +31,11 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.UseSound = SoundID.Item43;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
-			base.item.shoot = base.mod.ProjectileType("TerraBallPro");
+			base.item.shoot = ModContent.ProjectileType<TerraBallPro>();
 			base.item.shootSpeed = 17f;
-			this.defaultShoot = base.mod.ProjectileType("TerraBallPro");
-			this.guardianBuffID = base.mod.BuffType("NatureGuardian19Buff");
-			this.guardianProjectileID = base.mod.ProjectileType("NatureGuardian19");
+			this.defaultShoot = ModContent.ProjectileType<TerraBallPro>();
+			this.guardianBuffID = ModContent.BuffType<NatureGuardian19Buff>();
+			this.guardianProjectileID = ModContent.ProjectileType<NatureGuardian19>();
 			this.guardianTime = 1200;
 			this.singleShotStave = true;
 			this.staveHoldOffset = new Vector2(4f, -10f);

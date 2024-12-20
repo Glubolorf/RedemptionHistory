@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles.DruidProjectiles.Plants;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -42,7 +43,7 @@ namespace Redemption.Items.DruidDamageClass.SeedBags
 			base.item.noMelee = true;
 			base.item.noUseGraphic = true;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("GloopContainerPro");
+			base.item.shoot = ModContent.ProjectileType<GloopContainerPro>();
 			base.item.shootSpeed = 18f;
 			base.item.glowMask = GloopContainer.customGlowMask;
 		}

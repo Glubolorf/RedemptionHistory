@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.Placeable;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -50,7 +51,7 @@ namespace Redemption.Tiles
 			{
 				10
 			};
-			this.openDoorID = base.mod.TileType("DeadWoodDoorOpen");
+			this.openDoorID = ModContent.TileType<DeadWoodDoorOpen>();
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -60,7 +61,7 @@ namespace Redemption.Tiles
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 16, 48, base.mod.ItemType("DeadWoodDoor"), 1, false, 0, false, false);
+			Item.NewItem(i * 16, j * 16, 16, 48, ModContent.ItemType<DeadWoodDoor>(), 1, false, 0, false, false);
 		}
 	}
 }

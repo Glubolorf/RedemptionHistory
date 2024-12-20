@@ -161,19 +161,19 @@ namespace Redemption.Projectiles.v08
 				{
 				case 0:
 					Main.PlaySound(SoundID.Item5, base.projectile.position);
-					Projectile.NewProjectile(vector2.X, vector2.Y, SpeedX, SpeedY, base.mod.ProjectileType("AncientSparkPro1"), base.projectile.damage, 1f, player.whoAmI, 0f, 0f);
+					Projectile.NewProjectile(vector2.X, vector2.Y, SpeedX, SpeedY, ModContent.ProjectileType<AncientSparkPro1>(), base.projectile.damage, 1f, player.whoAmI, 0f, 0f);
 					return;
 				case 1:
 					Main.PlaySound(SoundID.Item5, base.projectile.position);
-					Projectile.NewProjectile(vector2.X, vector2.Y, SpeedX * 1.5f, SpeedY * 1.5f, base.mod.ProjectileType("AncientSparkPro1"), base.projectile.damage * 6, 1f, player.whoAmI, 0f, 0f);
+					Projectile.NewProjectile(vector2.X, vector2.Y, SpeedX * 1.5f, SpeedY * 1.5f, ModContent.ProjectileType<AncientSparkPro1>(), base.projectile.damage * 6, 1f, player.whoAmI, 0f, 0f);
 					return;
 				case 2:
 					Main.PlaySound(SoundID.Item5, base.projectile.position);
-					Projectile.NewProjectile(vector2.X, vector2.Y, SpeedX * 2f, SpeedY * 2f, base.mod.ProjectileType("AncientSparkPro1"), base.projectile.damage * 16, 1f, player.whoAmI, 0f, 0f);
+					Projectile.NewProjectile(vector2.X, vector2.Y, SpeedX * 2f, SpeedY * 2f, ModContent.ProjectileType<AncientSparkPro1>(), base.projectile.damage * 16, 1f, player.whoAmI, 0f, 0f);
 					return;
 				case 3:
 					Main.PlaySound(SoundID.Item5, base.projectile.position);
-					Projectile.NewProjectile(vector2.X, vector2.Y, SpeedX * 3f, SpeedY * 3f, base.mod.ProjectileType("AncientSparkPro1"), base.projectile.damage * 30, 1f, player.whoAmI, 0f, 0f);
+					Projectile.NewProjectile(vector2.X, vector2.Y, SpeedX * 3f, SpeedY * 3f, ModContent.ProjectileType<AncientSparkPro1>(), base.projectile.damage * 30, 1f, player.whoAmI, 0f, 0f);
 					break;
 				default:
 					return;

@@ -55,7 +55,7 @@ namespace Redemption.Projectiles.v08
 				dust.velocity.Y = dust.velocity.Y * -8f;
 			}
 			Main.PlaySound(SoundID.Item14, base.projectile.position);
-			Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y - 36f), Vector2.Zero, base.mod.ProjectileType("MoltenShock"), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
+			Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y - 36f), Vector2.Zero, ModContent.ProjectileType<MoltenShock>(), base.projectile.damage, 0f, base.projectile.owner, 0f, 0f);
 		}
 	}
 }

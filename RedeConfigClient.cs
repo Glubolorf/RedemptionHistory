@@ -25,9 +25,9 @@ namespace Redemption
 		[Tooltip("Disables combat text, the text that appears above an enemies head, e.g. when a chicken pecks the ground")]
 		public bool NoCombatText;
 
-		[Label("Disable Empty Core")]
-		[Tooltip("New players won't have an Empty Core in their inventory")]
-		public bool NoStarterCore;
+		[Label("Enable Challenge Cores")]
+		[Tooltip("Newly created players will have an Empty Core in their inventory, these were used as challenges but their execution was poor")]
+		public bool StarterCore;
 
 		[Label("SHUT UP KING SLAYER NO ONE CARES")]
 		[Tooltip("Disables all boss dialogue from the mod (Don't use while a boss is alive)")]
@@ -52,5 +52,9 @@ namespace Redemption
 		[Label("Disable Nature Guardian Info")]
 		[Tooltip("Disables the ---Guardian Info--- tooltip and contents under it, so you won't know what guardians do what!")]
 		public bool NoGuardianInfo;
+
+		[Label("Enable Zelda-Styled Boss Titles")]
+		[Tooltip("Enables the Legend of Zelda-style boss introduction text for bosses. (Thanks to Ancients Awakened for the code)")]
+		public bool BossIntroText;
 	}
 }

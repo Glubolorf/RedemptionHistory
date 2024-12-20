@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -9,7 +10,7 @@ namespace Redemption.Projectiles.Mounts
 		public override void SetDefaults()
 		{
 			base.mountData.spawnDust = 0;
-			base.mountData.buff = base.mod.BuffType("ChickenMountBuff");
+			base.mountData.buff = ModContent.BuffType<ChickenMountBuff>();
 			base.mountData.heightBoost = 3;
 			base.mountData.fallDamage = 0.5f;
 			base.mountData.runSpeed = 12f;

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Dusts;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -11,7 +12,7 @@ namespace Redemption.NPCs.Bosses
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Vlitch Gigipede");
+			base.DisplayName.SetDefault("Vlitch Gigapede");
 		}
 
 		public override void SetDefaults()
@@ -88,33 +89,33 @@ namespace Redemption.NPCs.Bosses
 
 		public override void AI()
 		{
-			if (NPC.AnyNPCs(base.mod.NPCType("VlitchCore1")))
+			if (NPC.AnyNPCs(ModContent.NPCType<VlitchCore1>()))
 			{
 				base.npc.dontTakeDamage = true;
 			}
-			if (NPC.AnyNPCs(base.mod.NPCType("VlitchCore2")))
+			if (NPC.AnyNPCs(ModContent.NPCType<VlitchCore2>()))
 			{
 				base.npc.dontTakeDamage = true;
 			}
-			if (NPC.AnyNPCs(base.mod.NPCType("VlitchCore3")))
+			if (NPC.AnyNPCs(ModContent.NPCType<VlitchCore3>()))
 			{
 				base.npc.dontTakeDamage = true;
 			}
-			if (!NPC.AnyNPCs(base.mod.NPCType("VlitchCore1")) && !NPC.AnyNPCs(base.mod.NPCType("VlitchCore2")) && !NPC.AnyNPCs(base.mod.NPCType("VlitchCore3")))
+			if (!NPC.AnyNPCs(ModContent.NPCType<VlitchCore1>()) && !NPC.AnyNPCs(ModContent.NPCType<VlitchCore2>()) && !NPC.AnyNPCs(ModContent.NPCType<VlitchCore3>()))
 			{
 				base.npc.dontTakeDamage = false;
 			}
-			if (base.npc.ai[0] % 500f == 3f && NPC.CountNPCS(base.mod.NPCType("CorruptedWormHead")) <= 4)
+			if (base.npc.ai[0] % 500f == 3f && NPC.CountNPCS(ModContent.NPCType<CorruptedWormHead>()) <= 4)
 			{
-				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("CorruptedWormHead"), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<CorruptedWormHead>(), 0, 0f, 0f, 0f, 0f, 255);
 			}
 			float[] ai = base.npc.ai;
 			int num = 0;
 			float num2 = ai[num];
 			ai[num] = num2 + 1f;
-			if (num2 >= 400f && NPC.CountNPCS(base.mod.NPCType("CorruptedProbe")) <= 2)
+			if (num2 >= 400f && NPC.CountNPCS(ModContent.NPCType<CorruptedProbe>()) <= 2)
 			{
-				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("CorruptedProbe"), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<CorruptedProbe>(), 0, 0f, 0f, 0f, 0f, 255);
 				base.npc.ai[0] = 0f;
 			}
 			if (base.npc.ai[3] > 0f)
@@ -138,9 +139,9 @@ namespace Redemption.NPCs.Bosses
 			}
 			if (Main.rand.Next(2) == 0)
 			{
-				Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, base.mod.DustType("VlitchFlame"), 0f, 0f, 0, default(Color), 1f);
+				Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, ModContent.DustType<VlitchFlame>(), 0f, 0f, 0, default(Color), 1f);
 			}
-			if ((double)base.npc.ai[1] < (double)Main.npc.Length)
+			if ((double)base.npc.ai[1] < 200.0)
 			{
 				Vector2 npcCenter = new Vector2(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
 				float dirX = Main.npc[(int)base.npc.ai[1]].position.X + (float)(Main.npc[(int)base.npc.ai[1]].width / 2) - npcCenter.X;

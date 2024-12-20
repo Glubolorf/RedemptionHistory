@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.v08;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -22,7 +23,7 @@ namespace Redemption.Items.Weapons.Ammo
 			base.item.consumable = true;
 			base.item.knockBack = 2.3f;
 			base.item.value = 70;
-			base.item.shoot = base.mod.ProjectileType("CursedThornDartPro");
+			base.item.shoot = ModContent.ProjectileType<CursedThornDartPro>();
 			base.item.shootSpeed = 4f;
 			base.item.ammo = AmmoID.Dart;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;

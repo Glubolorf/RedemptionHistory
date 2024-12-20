@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,9 +29,9 @@ namespace Redemption.Items.Weapons.v08
 			base.item.knockBack = 2f;
 			base.item.value = Item.sellPrice(0, 20, 0, 0);
 			base.item.UseSound = SoundID.Item44;
-			base.item.shoot = base.mod.ProjectileType("Ukkonen");
+			base.item.shoot = ModContent.ProjectileType<Ukkonen>();
 			base.item.shootSpeed = 10f;
-			base.item.buffType = base.mod.BuffType("UkkonenBuff");
+			base.item.buffType = ModContent.BuffType<UkkonenBuff>();
 			base.item.buffTime = 3600;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}

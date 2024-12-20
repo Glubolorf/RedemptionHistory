@@ -1,7 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles.DruidProjectiles.Stave;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
@@ -27,9 +29,9 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.UseSound = SoundID.Item43;
 			base.item.autoReuse = false;
 			base.item.useTurn = true;
-			base.item.shoot = base.mod.ProjectileType("NightSpirit");
+			base.item.shoot = ModContent.ProjectileType<NightSpirit>();
 			base.item.shootSpeed = 15f;
-			this.defaultShoot = base.mod.ProjectileType("NightSpirit");
+			this.defaultShoot = ModContent.ProjectileType<NightSpirit>();
 			this.singleShotStave = false;
 			this.staveHoldOffset = new Vector2(4f, -10f);
 			this.staveLength = 78.2f;
@@ -102,7 +104,7 @@ namespace Redemption.Items.DruidDamageClass
 				num76 *= num77;
 				float speedX2 = num75 + (float)Main.rand.Next(-50, 51) * 0.02f;
 				float speedY2 = num76 + (float)Main.rand.Next(-50, 51) * 0.02f;
-				int projectile = Projectile.NewProjectile(vector2.X, vector2.Y, speedX2, speedY2, base.mod.ProjectileType("NightSpirit"), num73, num74, i, 0f, (float)Main.rand.Next(10));
+				int projectile = Projectile.NewProjectile(vector2.X, vector2.Y, speedX2, speedY2, ModContent.ProjectileType<NightSpirit>(), num73, num74, i, 0f, (float)Main.rand.Next(10));
 				Main.projectile[projectile].tileCollide = true;
 				Main.projectile[projectile].ranged = false;
 				Main.projectile[projectile].magic = false;

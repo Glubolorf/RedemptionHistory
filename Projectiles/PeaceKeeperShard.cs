@@ -15,6 +15,7 @@ namespace Redemption.Projectiles
 			base.projectile.CloneDefaults(94);
 			this.aiType = 94;
 			base.projectile.ranged = true;
+			base.projectile.magic = false;
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -34,15 +35,15 @@ namespace Redemption.Items.Weapons.v08
 		{
 			if (target.life <= 0)
 			{
-				player.AddBuff(base.mod.BuffType("SoulbladeBuff"), 18000, true);
+				player.AddBuff(ModContent.BuffType<SoulbladeBuff>(), 18000, true);
 			}
 		}
 
 		public override void AddRecipes()
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(base.mod.ItemType("ForgottenSword"), 1);
-			modRecipe.AddIngredient(base.mod.ItemType("SmallLostSoul"), 2);
+			modRecipe.AddIngredient(ModContent.ItemType<ForgottenSword>(), 1);
+			modRecipe.AddIngredient(ModContent.ItemType<SmallLostSoul>(), 2);
 			modRecipe.AddTile(16);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();

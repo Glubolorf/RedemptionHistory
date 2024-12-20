@@ -12,7 +12,7 @@ namespace Redemption.Items.Cores
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Girus Core");
-			base.Tooltip.SetDefault("'The corrupted machine controls you'\n[c/64ff64:-Strengths-]\n5% damage reduction\nYou transform into an Omega Android\nYou will drip red sludge that hardens on a tile and deals contact damage\nYou are immune to Bleeding, Confusion, Poisoned, On Fire!, Venom, Burning and Electrified\n+8 defence\n8% increase to all damage\nYour exoskeleton allows increased jump height and movement speed\nYou are immune to knockback\n[c/ff6464:-Weaknesses-]\nYou regen less life\nYou will explode in water\nYou will slowly malfunction in rain while on the surface\nYour attack and defense will decrease the lower your life is");
+			base.Tooltip.SetDefault("'The corrupted machine controls you'\n[c/64ff64:-Strengths-]\n5% damage reduction\nYou transform into an Omega Android\nYou are immune to Bleeding, Confusion, Poisoned, On Fire!, Venom, Burning and Electrified\n8% increase to all damage\nYour exoskeleton allows increased jump height and movement speed\nYou are immune to knockback\n[c/ff6464:-Weaknesses-]\nYou regen less life\nYou will explode in water\nYou will slowly malfunction in rain while on the surface\nYour attack and defense will decrease the lower your life is");
 			Main.RegisterItemAnimation(base.item.type, new DrawAnimationVertical(5, 8));
 		}
 
@@ -29,13 +29,8 @@ namespace Redemption.Items.Cores
 		{
 			RedePlayer p = player.GetModPlayer<RedePlayer>();
 			DruidDamagePlayer modPlayer = DruidDamagePlayer.ModPlayer(player);
-			p.omegaAccessory = true;
-			if (hideVisual)
-			{
-				p.omegaHideVanity = true;
-			}
+			p.omegaPower = true;
 			player.endurance *= 1.05f;
-			player.statDefense += 8;
 			player.jumpBoost = true;
 			player.moveSpeed += 25f;
 			player.buffImmune[30] = true;
@@ -53,16 +48,6 @@ namespace Redemption.Items.Cores
 			player.minionDamage *= 1.08f;
 			player.rangedDamage *= 1.08f;
 			player.thrownDamage *= 1.08f;
-			if (Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y) > 1f && !player.rocketFrame)
-			{
-				for (int i = 0; i < 1; i++)
-				{
-					if (Main.rand.Next(50) == 0)
-					{
-						Projectile.NewProjectile(new Vector2(player.position.X + Utils.NextFloat(Main.rand, (float)player.width), player.position.Y + Utils.NextFloat(Main.rand, (float)player.height)), new Vector2(0f, 0f), base.mod.ProjectileType("RedSludge"), 10, 0f, Main.myPlayer, 0f, 0f);
-					}
-				}
-			}
 			if (player.wet && !player.lavaWet && !player.honeyWet && !p.hazmatPower && !p.HEVPower)
 			{
 				player.lifeRegen -= 1000;
@@ -135,14 +120,6 @@ namespace Redemption.Items.Cores
 				player.thrownDamage *= 0.8f;
 				player.statDefense -= 4;
 			}
-		}
-
-		public override void AddRecipes()
-		{
-			ModRecipe modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "EmptyCore", 1);
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
 		}
 	}
 }

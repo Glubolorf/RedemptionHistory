@@ -20,7 +20,7 @@ namespace Redemption.NPCs.Minibosses.MossyGoliath
 			base.item.useAnimation = 20;
 			base.item.reuseDelay = 50;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("WimpScreech");
+			base.item.shoot = ModContent.ProjectileType<WimpScreech>();
 			base.item.shootSpeed = 5f;
 			base.item.UseSound = base.mod.GetLegacySoundSlot(2, "Sounds/Item/Roar1Item");
 			base.item.ranged = true;

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.DruidDamageClass.DruidS;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -15,7 +16,7 @@ namespace Redemption.Tiles
 			Main.tileBlockLight[(int)base.Type] = true;
 			Main.tileValue[(int)base.Type] = 660;
 			this.dustType = 68;
-			this.drop = base.mod.ItemType("ScarlionOre");
+			this.drop = ModContent.ItemType<ScarlionOre>();
 			this.minPick = 200;
 			this.mineResist = 3f;
 			this.soundType = 21;

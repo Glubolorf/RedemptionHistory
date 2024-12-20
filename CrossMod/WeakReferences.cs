@@ -14,13 +14,19 @@ using Redemption.Items.Placeable;
 using Redemption.Items.Weapons;
 using Redemption.Items.Weapons.v08;
 using Redemption.NPCs;
+using Redemption.NPCs.Bosses;
 using Redemption.NPCs.Bosses.EaglecrestGolem;
+using Redemption.NPCs.Bosses.InfectedEye;
+using Redemption.NPCs.Bosses.KingSlayerIII;
 using Redemption.NPCs.Bosses.Nebuleus;
 using Redemption.NPCs.Bosses.OmegaOblit;
+using Redemption.NPCs.Bosses.SeedOfInfection;
+using Redemption.NPCs.Bosses.TheKeeper;
 using Redemption.NPCs.Bosses.Thorn;
 using Redemption.NPCs.ChickenInvasion;
 using Redemption.NPCs.LabNPCs;
 using Redemption.NPCs.LabNPCs.New;
+using Redemption.NPCs.v08;
 using Terraria.ModLoader;
 
 namespace Redemption.CrossMod
@@ -72,8 +78,8 @@ namespace Redemption.CrossMod
 				});
 				yabhb.Call(new object[]
 				{
-					"hbSetFillDecoOffsetSmall",
-					16
+					"hbSetFillDecoOffset",
+					4
 				});
 				yabhb.Call(new object[]
 				{
@@ -113,8 +119,8 @@ namespace Redemption.CrossMod
 				});
 				yabhb.Call(new object[]
 				{
-					"hbSetFillDecoOffsetSmall",
-					16
+					"hbSetFillDecoOffset",
+					4
 				});
 				yabhb.Call(new object[]
 				{
@@ -154,8 +160,8 @@ namespace Redemption.CrossMod
 				});
 				yabhb.Call(new object[]
 				{
-					"hbSetFillDecoOffsetSmall",
-					16
+					"hbSetFillDecoOffset",
+					4
 				});
 				yabhb.Call(new object[]
 				{
@@ -195,8 +201,8 @@ namespace Redemption.CrossMod
 				});
 				yabhb.Call(new object[]
 				{
-					"hbSetFillDecoOffsetSmall",
-					16
+					"hbSetFillDecoOffset",
+					4
 				});
 				yabhb.Call(new object[]
 				{
@@ -236,8 +242,8 @@ namespace Redemption.CrossMod
 				});
 				yabhb.Call(new object[]
 				{
-					"hbSetFillDecoOffsetSmall",
-					16
+					"hbSetFillDecoOffset",
+					4
 				});
 				yabhb.Call(new object[]
 				{
@@ -277,8 +283,8 @@ namespace Redemption.CrossMod
 				});
 				yabhb.Call(new object[]
 				{
-					"hbSetFillDecoOffsetSmall",
-					16
+					"hbSetFillDecoOffset",
+					4
 				});
 				yabhb.Call(new object[]
 				{
@@ -318,8 +324,8 @@ namespace Redemption.CrossMod
 				});
 				yabhb.Call(new object[]
 				{
-					"hbSetFillDecoOffsetSmall",
-					16
+					"hbSetFillDecoOffset",
+					4
 				});
 				yabhb.Call(new object[]
 				{
@@ -360,8 +366,8 @@ namespace Redemption.CrossMod
 				});
 				yabhb.Call(new object[]
 				{
-					"hbSetFillDecoOffsetSmall",
-					16
+					"hbSetFillDecoOffset",
+					4
 				});
 				yabhb.Call(new object[]
 				{
@@ -401,8 +407,8 @@ namespace Redemption.CrossMod
 				});
 				yabhb.Call(new object[]
 				{
-					"hbSetFillDecoOffsetSmall",
-					16
+					"hbSetFillDecoOffset",
+					4
 				});
 				yabhb.Call(new object[]
 				{
@@ -442,8 +448,8 @@ namespace Redemption.CrossMod
 				});
 				yabhb.Call(new object[]
 				{
-					"hbSetFillDecoOffsetSmall",
-					16
+					"hbSetFillDecoOffset",
+					4
 				});
 				yabhb.Call(new object[]
 				{
@@ -483,8 +489,8 @@ namespace Redemption.CrossMod
 				});
 				yabhb.Call(new object[]
 				{
-					"hbSetFillDecoOffsetSmall",
-					16
+					"hbSetFillDecoOffset",
+					4
 				});
 				yabhb.Call(new object[]
 				{
@@ -524,15 +530,13 @@ namespace Redemption.CrossMod
 				});
 				yabhb.Call(new object[]
 				{
-					"hbSetFillDecoOffsetSmall",
-					16
+					"hbSetFillDecoOffset",
+					4
 				});
 				yabhb.Call(new object[]
 				{
-					"hbFinishMultiple",
-					Redemption.inst.NPCType("VlitchWormHead"),
-					Redemption.inst.NPCType("VlitchWormBody"),
-					Redemption.inst.NPCType("VlitchWormTail")
+					"hbFinishSingle",
+					Redemption.inst.NPCType("VlitchWormHead")
 				});
 				yabhb.Call(new object[]
 				{
@@ -567,14 +571,13 @@ namespace Redemption.CrossMod
 				});
 				yabhb.Call(new object[]
 				{
-					"hbSetFillDecoOffsetSmall",
-					16
+					"hbSetFillDecoOffset",
+					4
 				});
 				yabhb.Call(new object[]
 				{
-					"hbFinishPhases",
-					Redemption.inst.NPCType("OmegaOblitIdle"),
-					Redemption.inst.NPCType("OmegaOblitDamaged")
+					"hbFinishSingle",
+					Redemption.inst.NPCType("OO")
 				});
 				yabhb.Call(new object[]
 				{
@@ -609,8 +612,8 @@ namespace Redemption.CrossMod
 				});
 				yabhb.Call(new object[]
 				{
-					"hbSetFillDecoOffsetSmall",
-					16
+					"hbSetFillDecoOffset",
+					4
 				});
 				yabhb.Call(new object[]
 				{
@@ -650,8 +653,8 @@ namespace Redemption.CrossMod
 				});
 				yabhb.Call(new object[]
 				{
-					"hbSetFillDecoOffsetSmall",
-					16
+					"hbSetFillDecoOffset",
+					4
 				});
 				yabhb.Call(new object[]
 				{
@@ -691,8 +694,8 @@ namespace Redemption.CrossMod
 				});
 				yabhb.Call(new object[]
 				{
-					"hbSetFillDecoOffsetSmall",
-					16
+					"hbSetFillDecoOffset",
+					4
 				});
 				yabhb.Call(new object[]
 				{
@@ -732,8 +735,8 @@ namespace Redemption.CrossMod
 				});
 				yabhb.Call(new object[]
 				{
-					"hbSetFillDecoOffsetSmall",
-					16
+					"hbSetFillDecoOffset",
+					4
 				});
 				yabhb.Call(new object[]
 				{
@@ -773,8 +776,8 @@ namespace Redemption.CrossMod
 				});
 				yabhb.Call(new object[]
 				{
-					"hbSetFillDecoOffsetSmall",
-					16
+					"hbSetFillDecoOffset",
+					4
 				});
 				yabhb.Call(new object[]
 				{
@@ -814,8 +817,8 @@ namespace Redemption.CrossMod
 				});
 				yabhb.Call(new object[]
 				{
-					"hbSetFillDecoOffsetSmall",
-					16
+					"hbSetFillDecoOffset",
+					4
 				});
 				yabhb.Call(new object[]
 				{
@@ -872,6 +875,11 @@ namespace Redemption.CrossMod
 					"RegisterHealthBarMini",
 					Redemption.inst.NPCType("KingChicken")
 				});
+				yabhb.Call(new object[]
+				{
+					"RegisterHealthBarMini",
+					Redemption.inst.NPCType("MansionWraith")
+				});
 			}
 		}
 
@@ -885,7 +893,7 @@ namespace Redemption.CrossMod
 				object[] array = new object[14];
 				array[0] = "AddBoss";
 				array[1] = 0f;
-				array[2] = mod.NPCType("KingChicken");
+				array[2] = ModContent.NPCType<KingChicken>();
 				array[3] = mod;
 				array[4] = "The Mighty King Chicken";
 				array[5] = new Func<bool>(() => RedeWorld.downedKingChicken);
@@ -915,7 +923,7 @@ namespace Redemption.CrossMod
 				object[] array2 = new object[14];
 				array2[0] = "AddMiniBoss";
 				array2[1] = 0.3f;
-				array2[2] = mod.NPCType("SunkenCaptain");
+				array2[2] = ModContent.NPCType<SunkenCaptain>();
 				array2[3] = mod;
 				array2[4] = "Sunken Captain";
 				array2[5] = new Func<bool>(() => RedeWorld.downedSunkenCaptain);
@@ -969,7 +977,7 @@ namespace Redemption.CrossMod
 				object[] array4 = new object[13];
 				array4[0] = "AddBoss";
 				array4[1] = 1.5f;
-				array4[2] = mod.NPCType("Thorn");
+				array4[2] = ModContent.NPCType<Thorn>();
 				array4[3] = mod;
 				array4[4] = "Thorn, Bane of the Forest";
 				array4[5] = new Func<bool>(() => RedeWorld.downedThorn);
@@ -989,7 +997,7 @@ namespace Redemption.CrossMod
 					ModContent.ItemType<RootTendril>(),
 					ModContent.ItemType<ThornSeedBag>()
 				};
-				array4[9] = "Use a [i:" + ModContent.ItemType<HeartOfTheThorns>() + "] at day.";
+				array4[9] = "Use a [i:" + ModContent.ItemType<HeartOfTheThorns>() + "] at day. Can be crafted or found growing on grass.";
 				array4[11] = "Redemption/CrossMod/BossChecklist/Thorn";
 				array4[12] = "Redemption/NPCs/Bosses/Thorn/Thorn_Head_Boss";
 				mod5.Call(array4);
@@ -997,7 +1005,7 @@ namespace Redemption.CrossMod
 				object[] array5 = new object[13];
 				array5[0] = "AddBoss";
 				array5[1] = 2.4f;
-				array5[2] = mod.NPCType("TheKeeper");
+				array5[2] = ModContent.NPCType<TheKeeper>();
 				array5[3] = mod;
 				array5[4] = "The Keeper";
 				array5[5] = new Func<bool>(() => RedeWorld.downedTheKeeper);
@@ -1040,7 +1048,7 @@ namespace Redemption.CrossMod
 				object[] array6 = new object[14];
 				array6[0] = "AddMiniBoss";
 				array6[1] = 2.41f;
-				array6[2] = mod.NPCType("SkullDigger");
+				array6[2] = ModContent.NPCType<SkullDigger>();
 				array6[3] = mod;
 				array6[4] = "Skull Digger";
 				array6[5] = new Func<bool>(() => RedeWorld.downedSkullDigger);
@@ -1062,7 +1070,7 @@ namespace Redemption.CrossMod
 				object[] array7 = new object[13];
 				array7[0] = "AddBoss";
 				array7[1] = 3.48f;
-				array7[2] = mod.NPCType("SoI");
+				array7[2] = ModContent.NPCType<SoI>();
 				array7[3] = mod;
 				array7[4] = "Seed of Infection";
 				array7[5] = new Func<bool>(() => RedeWorld.downedXenomiteCrystal);
@@ -1090,7 +1098,7 @@ namespace Redemption.CrossMod
 				object[] array8 = new object[13];
 				array8[0] = "AddMiniBoss";
 				array8[1] = 4.1f;
-				array8[2] = mod.NPCType("EaglecrestGolem");
+				array8[2] = ModContent.NPCType<EaglecrestGolem>();
 				array8[3] = mod;
 				array8[4] = "Eaglecrest Golem";
 				array8[5] = new Func<bool>(() => RedeWorld.downedEaglecrestGolem);
@@ -1114,7 +1122,7 @@ namespace Redemption.CrossMod
 				object[] array9 = new object[14];
 				array9[0] = "AddBoss";
 				array9[1] = 6.25f;
-				array9[2] = mod.NPCType("InfectedEye");
+				array9[2] = ModContent.NPCType<InfectedEye>();
 				array9[3] = mod;
 				array9[4] = "Infected Eye";
 				array9[5] = new Func<bool>(() => RedeWorld.downedInfectedEye);
@@ -1139,7 +1147,7 @@ namespace Redemption.CrossMod
 				};
 				array9[9] = "Use a [i:" + ModContent.ItemType<XenoEye>() + "] at night, requires the Seed of Infection to be defeated.";
 				array9[11] = "Redemption/CrossMod/BossChecklist/InfectedEye";
-				array9[12] = "Redemption/NPCs/Bosses/SeedOfInfection/InfectedEye_Head_Boss";
+				array9[12] = "Redemption/NPCs/Bosses/InfectedEye/InfectedEye_Head_Boss";
 				array9[13] = new Func<bool>(() => RedeWorld.downedXenomiteCrystal);
 				mod10.Call(array9);
 				Mod mod11 = bossChecklist;
@@ -1204,7 +1212,7 @@ namespace Redemption.CrossMod
 				object[] array11 = new object[13];
 				array11[0] = "AddBoss";
 				array11[1] = 9.99999f;
-				array11[2] = mod.NPCType("KSEntrance");
+				array11[2] = ModContent.NPCType<KSEntrance>();
 				array11[3] = mod;
 				array11[4] = "King Slayer III";
 				array11[5] = new Func<bool>(() => RedeWorld.downedSlayer);
@@ -1236,7 +1244,7 @@ namespace Redemption.CrossMod
 				object[] array12 = new object[14];
 				array12[0] = "AddBoss";
 				array12[1] = 11.5f;
-				array12[2] = mod.NPCType("VlitchCleaver");
+				array12[2] = ModContent.NPCType<VlitchCleaver>();
 				array12[3] = mod;
 				array12[4] = "1st Vlitch Overlord";
 				array12[5] = new Func<bool>(() => RedeWorld.downedVlitch1);
@@ -1267,7 +1275,7 @@ namespace Redemption.CrossMod
 				object[] array13 = new object[14];
 				array13[0] = "AddBoss";
 				array13[1] = 11.9f;
-				array13[2] = mod.NPCType("VlitchWormHead");
+				array13[2] = ModContent.NPCType<VlitchWormHead>();
 				array13[3] = mod;
 				array13[4] = "2nd Vlitch Overlord";
 				array13[5] = new Func<bool>(() => RedeWorld.downedVlitch2);
@@ -1301,11 +1309,7 @@ namespace Redemption.CrossMod
 				object[] array14 = new object[14];
 				array14[0] = "AddBoss";
 				array14[1] = 14.05f;
-				array14[2] = new List<int>
-				{
-					ModContent.NPCType<OmegaOblitIdle>(),
-					ModContent.NPCType<OmegaOblitDamaged>()
-				};
+				array14[2] = ModContent.NPCType<OO>();
 				array14[3] = mod;
 				array14[4] = "3rd Vlitch Overlord";
 				array14[5] = new Func<bool>(() => RedeWorld.downedVlitch3);
@@ -1332,7 +1336,7 @@ namespace Redemption.CrossMod
 				};
 				array14[9] = "Use an [i:" + ModContent.ItemType<OmegaRadar>() + "] at night.";
 				array14[11] = "Redemption/CrossMod/BossChecklist/Overlord3";
-				array14[12] = "Redemption/NPCs/Bosses/OmegaOblit/OmegaOblitIdle_Head_Boss";
+				array14[12] = "Redemption/NPCs/Bosses/OmegaOblit/OO_Head_Boss";
 				array14[13] = new Func<bool>(() => RedeWorld.downedXenomiteCrystal);
 				mod15.Call(array14);
 				Mod mod16 = bossChecklist;
@@ -1511,35 +1515,35 @@ namespace Redemption.CrossMod
 			Mod censusMod = ModLoader.GetMod("Census");
 			if (censusMod != null)
 			{
-				Mod mod = Redemption.inst;
+				Redemption inst = Redemption.inst;
 				censusMod.Call(new object[]
 				{
 					"TownNPCCondition",
-					mod.NPCType("Zephos1"),
+					ModContent.NPCType<Zephos1>(),
 					"Have a suitable house in a Corruption world"
 				});
 				censusMod.Call(new object[]
 				{
 					"TownNPCCondition",
-					mod.NPCType("Daerel1"),
+					ModContent.NPCType<Daerel1>(),
 					"Have a suitable house in a Crimson world"
 				});
 				censusMod.Call(new object[]
 				{
 					"TownNPCCondition",
-					mod.NPCType("Fallen"),
+					ModContent.NPCType<Fallen>(),
 					"Defeat the Keeper and have a suitable house"
 				});
 				censusMod.Call(new object[]
 				{
 					"TownNPCCondition",
-					mod.NPCType("Newb"),
+					ModContent.NPCType<Newb>(),
 					"Find the Suspicious Dirt Pile in the caverns"
 				});
 				censusMod.Call(new object[]
 				{
 					"TownNPCCondition",
-					mod.NPCType("TBot"),
+					ModContent.NPCType<TBot>(),
 					"Defeat the Infected Eye and have a suitable house"
 				});
 			}

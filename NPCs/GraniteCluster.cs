@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -56,7 +57,7 @@ namespace Redemption.NPCs
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 261, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
 			if (Main.netMode != 1 && base.npc.life <= 0)
 			{
-				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("LostSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<LostSoul2>(), 0, 0f, 0f, 0f, 0f, 255);
 			}
 		}
 
@@ -111,13 +112,8 @@ namespace Redemption.NPCs
 			}
 			if (Main.rand.Next(50) == 0)
 			{
-				int p = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 357, 15, 3f, 255, 0f, 0f);
+				int p = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), ModContent.ProjectileType<ElectricZapPro1>(), 15, 3f, 255, 0f, 0f);
 				Main.projectile[p].netUpdate = true;
-			}
-			if (Main.rand.Next(50) == 0)
-			{
-				int p2 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 435, 15, 3f, 255, 0f, 0f);
-				Main.projectile[p2].netUpdate = true;
 			}
 		}
 
@@ -130,7 +126,7 @@ namespace Redemption.NPCs
 		{
 			if (Main.rand.Next(1) == 0 || (Main.expertMode && Main.rand.Next(0) == 0))
 			{
-				target.AddBuff(144, 60, true);
+				target.AddBuff(144, 30, true);
 			}
 		}
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles.Wasteland;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -25,7 +26,7 @@ namespace Redemption.Items.LabThings
 			base.item.rare = 10;
 			base.item.value = 40000;
 			base.item.consumable = true;
-			base.item.createTile = base.mod.TileType("SolidCoriumTile");
+			base.item.createTile = ModContent.TileType<SolidCoriumTile>();
 		}
 
 		public override void HoldItem(Player player)

@@ -3,18 +3,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Graphics.Effects;
-using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Redemption.NPCs.Bosses.Nebuleus
 {
 	public class StarGodSky2 : CustomSky
 	{
-		public override void OnLoad()
-		{
-			StarGodSky2.SkyTex = ModLoader.GetMod("Redemption").GetTexture("NPCs/Bosses/Nebuleus/StarGodSky2");
-		}
-
 		public override void Update(GameTime gameTime)
 		{
 			if (this.Active)
@@ -32,13 +26,14 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 
 		public override void Draw(SpriteBatch spriteBatch, float minDepth, float maxDepth)
 		{
+			Texture2D SkyTex = this.mod.GetTexture("NPCs/Bosses/Nebuleus/StarGodSky2");
 			if (maxDepth >= 3.4028235E+38f && minDepth < 3.4028235E+38f)
 			{
 				this.Rotation -= 0.0016f;
 				if (!Main.dayTime)
 				{
 					Vector2 SkyPos = new Vector2((float)(Main.screenWidth / 2), (float)(Main.screenHeight / 2));
-					spriteBatch.Draw(StarGodSky2.SkyTex, SkyPos, null, new Color(120, 120, 120), this.Rotation, new Vector2((float)(StarGodSky2.SkyTex.Width >> 1), (float)(StarGodSky2.SkyTex.Height >> 1)), 2f, SpriteEffects.None, 1f);
+					spriteBatch.Draw(SkyTex, SkyPos, null, new Color(120, 120, 120), this.Rotation, new Vector2((float)(SkyTex.Width >> 1), (float)(SkyTex.Height >> 1)), 2f, SpriteEffects.None, 1f);
 					double num66 = Main.time / 32400.0;
 					int screenWidth = Main.screenWidth;
 					int width = Main.moonTexture[Main.moonType].Width;
@@ -56,25 +51,6 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					white2.A = (byte)((float)white2.A * num65);
 				}
 			}
-		}
-
-		private bool UpdateStarGodIndex()
-		{
-			int StarGodType2 = ModLoader.GetMod("Redemption").NPCType("BigNebuleus");
-			if (this.StarGodIndex2 >= 0 && Main.npc[this.StarGodIndex2].active && Main.npc[this.StarGodIndex2].type == this.StarGodIndex2)
-			{
-				return true;
-			}
-			this.StarGodIndex2 = -1;
-			for (int i = 0; i < Main.npc.Length; i++)
-			{
-				if (Main.npc[i].active && Main.npc[i].type == StarGodType2)
-				{
-					this.StarGodIndex2 = i;
-					break;
-				}
-			}
-			return this.StarGodIndex2 != -1;
 		}
 
 		public override float GetCloudAlpha()
@@ -103,15 +79,13 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 			return this.Active || this.Intensity > 0.001f;
 		}
 
-		public static Texture2D SkyTex;
-
 		public bool Active;
 
 		public float Intensity;
 
-		private int StarGodIndex2 = -1;
-
 		private UnifiedRandom _random = new UnifiedRandom();
+
+		private readonly Redemption mod = Redemption.inst;
 
 		public float Rotation;
 	}

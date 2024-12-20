@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Redemption.Projectiles.DruidProjectiles.Plants
 {
@@ -78,11 +79,11 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 			base.projectile.localAI[0] += 1f;
 			if (base.projectile.localAI[0] % 60f == 0f && base.projectile.frame >= 4)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 20f, base.projectile.position.Y + 12f), base.projectile.velocity, base.mod.ProjectileType("PollenCloud2"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 20f, base.projectile.position.Y + 12f), base.projectile.velocity, ModContent.ProjectileType<PollenCloud2>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			}
 			if (base.projectile.localAI[0] % 20f == 0f && base.projectile.frame >= 4 && this.IsOnNativeTerrain)
 			{
-				Projectile.NewProjectile(base.projectile.Center, new Vector2(0f, 0f), base.mod.ProjectileType("BurningAura"), 0, 0f, base.projectile.owner, 0f, 0f);
+				Projectile.NewProjectile(base.projectile.Center, new Vector2(0f, 0f), ModContent.ProjectileType<BurningAura>(), 0, 0f, base.projectile.owner, 0f, 0f);
 			}
 		}
 

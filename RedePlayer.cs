@@ -4,11 +4,24 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs;
+using Redemption.Buffs.Wasteland;
+using Redemption.Dusts;
 using Redemption.Items;
 using Redemption.Items.Armor.Costumes;
 using Redemption.Items.Cores;
 using Redemption.Items.DruidDamageClass;
 using Redemption.Items.LabThings;
+using Redemption.NPCs;
+using Redemption.NPCs.Bosses.EaglecrestGolem;
+using Redemption.NPCs.Bosses.Nebuleus;
+using Redemption.NPCs.Bosses.Thorn;
+using Redemption.NPCs.ChickenInvasion;
+using Redemption.NPCs.v08;
+using Redemption.Projectiles;
+using Redemption.Projectiles.DruidProjectiles;
+using Redemption.Projectiles.DruidProjectiles.Stave;
+using Redemption.Projectiles.v08;
+using Redemption.Walls;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Events;
@@ -51,19 +64,6 @@ namespace Redemption
 			this.galaxyHeart = boost.Contains("galaxyHeart");
 		}
 
-		public override void LoadLegacy(BinaryReader reader)
-		{
-			int loadVersion = reader.ReadInt32();
-			if (loadVersion == 0)
-			{
-				BitsByte flags = reader.ReadByte();
-				this.medKit = flags[0];
-				this.galaxyHeart = flags[1];
-				return;
-			}
-			base.mod.Logger.Debug("Redemption: Unknown loadVersion: " + loadVersion);
-		}
-
 		public override void PostUpdateMiscEffects()
 		{
 			base.player.statLifeMax2 += (this.medKit ? 50 : 0) + (this.galaxyHeart ? 50 : 0);
@@ -91,7 +91,7 @@ namespace Redemption
 				{
 					Main.rainTexture = rainOriginal;
 				}
-				else if (Main.raining && (this.ZoneXeno || this.ZoneEvilXeno))
+				else if (Main.raining && (this.ZoneXeno || this.ZoneEvilXeno || this.ZoneEvilXeno2))
 				{
 					Main.rainTexture = rain2;
 				}
@@ -100,7 +100,7 @@ namespace Redemption
 					Main.rainTexture = rainOriginal;
 				}
 			}
-			if (this.ZoneXeno || this.ZoneEvilXeno)
+			if (this.ZoneXeno || this.ZoneEvilXeno || this.ZoneEvilXeno2)
 			{
 				if (base.player.GetModPlayer<MullerEffect>().effect && Main.rand.Next(200) == 0 && !Main.dedServ)
 				{
@@ -110,9 +110,9 @@ namespace Redemption
 				{
 					if (base.player.ZoneOverworldHeight || base.player.ZoneSkyHeight)
 					{
-						base.player.AddBuff(base.mod.BuffType("HeavyRadiationDebuff"), 2, true);
+						base.player.AddBuff(ModContent.BuffType<HeavyRadiationDebuff>(), 2, true);
 					}
-					if (Main.rand.Next(80000) == 0 && base.player.GetModPlayer<RedePlayer>().irradiatedLevel == 0)
+					if (Main.rand.Next(80000) == 0 && base.player.GetModPlayer<RedePlayer>().irradiatedLevel == 0 && !this.HEVPower && !this.hazmatPower)
 					{
 						base.player.GetModPlayer<RedePlayer>().irradiatedLevel++;
 					}
@@ -124,14 +124,14 @@ namespace Redemption
 				{
 					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Muller1").WithVolume(0.9f).WithPitchVariance(0.1f), base.player.position);
 				}
-				if (Main.rand.Next(80000) == 0 && base.player.GetModPlayer<RedePlayer>().irradiatedLevel == 0)
+				if (Main.rand.Next(80000) == 0 && base.player.GetModPlayer<RedePlayer>().irradiatedLevel == 0 && !this.HEVPower && !this.hazmatPower)
 				{
 					base.player.GetModPlayer<RedePlayer>().irradiatedLevel++;
 				}
 				Point point = Utils.ToTileCoordinates(base.player.position);
-				if (!RedeWorld.labSafe && ((int)Main.tile[point.X, point.Y].wall == base.mod.WallType("HardenedlyHardenedSludgeWallTile") || (int)Main.tile[point.X, point.Y].wall == base.mod.WallType("HardenedSludgeWallTile") || (int)Main.tile[point.X, point.Y].wall == base.mod.WallType("LabWallTileUnsafe") || (int)Main.tile[point.X, point.Y].wall == base.mod.WallType("VentWallTile")))
+				if (!RedeWorld.labSafe && ((int)Main.tile[point.X, point.Y].wall == ModContent.WallType<HardenedlyHardenedSludgeWallTile>() || (int)Main.tile[point.X, point.Y].wall == ModContent.WallType<HardenedSludgeWallTile>() || (int)Main.tile[point.X, point.Y].wall == ModContent.WallType<LabWallTileUnsafe>() || (int)Main.tile[point.X, point.Y].wall == ModContent.WallType<VentWallTile>()))
 				{
-					base.player.AddBuff(base.mod.BuffType("IntruderAlertDebuff"), 60, true);
+					base.player.AddBuff(ModContent.BuffType<IntruderAlertDebuff>(), 60, true);
 				}
 			}
 			if (this.irradiatedLevel == 1)
@@ -156,7 +156,7 @@ namespace Redemption
 				{
 					if (Main.rand.Next(800) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("HeadacheDebuff"), 120, true);
+						base.player.AddBuff(ModContent.BuffType<HeadacheDebuff>(), 120, true);
 					}
 				}
 				else if (this.irradiatedTimer >= 40000 && this.irradiatedTimer < 48000)
@@ -164,11 +164,11 @@ namespace Redemption
 					this.irradiatedEffect = 1;
 					if (Main.rand.Next(2000) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("FatigueDebuff"), 800, true);
+						base.player.AddBuff(ModContent.BuffType<FatigueDebuff>(), 800, true);
 					}
 					if (Main.rand.Next(12000) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("NauseaDebuff"), 1200, true);
+						base.player.AddBuff(ModContent.BuffType<NauseaDebuff>(), 1200, true);
 					}
 				}
 				else if (this.irradiatedTimer >= 48000 && this.irradiatedTimer < 52000)
@@ -176,15 +176,15 @@ namespace Redemption
 					this.irradiatedEffect = 2;
 					if (Main.rand.Next(400) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("FatigueDebuff"), 800, true);
+						base.player.AddBuff(ModContent.BuffType<FatigueDebuff>(), 800, true);
 					}
 					if (Main.rand.Next(400) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("NauseaDebuff"), 1200, true);
+						base.player.AddBuff(ModContent.BuffType<NauseaDebuff>(), 1200, true);
 					}
 					if (Main.rand.Next(80000) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("HairLossDebuff"), 60000, true);
+						base.player.AddBuff(ModContent.BuffType<HairLossDebuff>(), 60000, true);
 					}
 				}
 				else if (this.irradiatedTimer >= 52000 && this.irradiatedTimer < 58000)
@@ -192,21 +192,21 @@ namespace Redemption
 					this.irradiatedEffect = 3;
 					if (Main.rand.Next(400) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("HairLossDebuff"), 60000, true);
+						base.player.AddBuff(ModContent.BuffType<HairLossDebuff>(), 60000, true);
 					}
 					if (Main.rand.Next(400) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("SkinBurnDebuff"), 60000, true);
+						base.player.AddBuff(ModContent.BuffType<SkinBurnDebuff>(), 60000, true);
 					}
 					if (Main.rand.Next(4000) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("FeverDebuff"), 60000, true);
+						base.player.AddBuff(ModContent.BuffType<FeverDebuff>(), 60000, true);
 					}
 				}
 				else if (this.irradiatedTimer >= 58000)
 				{
 					this.irradiatedEffect = 4;
-					base.player.AddBuff(base.mod.BuffType("RadiationDebuff"), 5, true);
+					base.player.AddBuff(ModContent.BuffType<RadiationDebuff>(), 5, true);
 				}
 			}
 			else if (this.irradiatedLevel == 2)
@@ -231,7 +231,7 @@ namespace Redemption
 				{
 					if (Main.rand.Next(800) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("HeadacheDebuff"), 120, true);
+						base.player.AddBuff(ModContent.BuffType<HeadacheDebuff>(), 120, true);
 					}
 				}
 				else if (this.irradiatedTimer >= 38000 && this.irradiatedTimer < 46000)
@@ -239,11 +239,11 @@ namespace Redemption
 					this.irradiatedEffect = 1;
 					if (Main.rand.Next(2000) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("FatigueDebuff"), 800, true);
+						base.player.AddBuff(ModContent.BuffType<FatigueDebuff>(), 800, true);
 					}
 					if (Main.rand.Next(10000) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("NauseaDebuff"), 1200, true);
+						base.player.AddBuff(ModContent.BuffType<NauseaDebuff>(), 1200, true);
 					}
 				}
 				else if (this.irradiatedTimer >= 46000 && this.irradiatedTimer < 50000)
@@ -251,15 +251,15 @@ namespace Redemption
 					this.irradiatedEffect = 2;
 					if (Main.rand.Next(400) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("FatigueDebuff"), 800, true);
+						base.player.AddBuff(ModContent.BuffType<FatigueDebuff>(), 800, true);
 					}
 					if (Main.rand.Next(400) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("NauseaDebuff"), 1200, true);
+						base.player.AddBuff(ModContent.BuffType<NauseaDebuff>(), 1200, true);
 					}
 					if (Main.rand.Next(50000) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("HairLossDebuff"), 60000, true);
+						base.player.AddBuff(ModContent.BuffType<HairLossDebuff>(), 60000, true);
 					}
 				}
 				else if (this.irradiatedTimer >= 50000 && this.irradiatedTimer < 56000)
@@ -267,21 +267,21 @@ namespace Redemption
 					this.irradiatedEffect = 3;
 					if (Main.rand.Next(400) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("HairLossDebuff"), 60000, true);
+						base.player.AddBuff(ModContent.BuffType<HairLossDebuff>(), 60000, true);
 					}
 					if (Main.rand.Next(400) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("SkinBurnDebuff"), 60000, true);
+						base.player.AddBuff(ModContent.BuffType<SkinBurnDebuff>(), 60000, true);
 					}
 					if (Main.rand.Next(4000) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("FeverDebuff"), 60000, true);
+						base.player.AddBuff(ModContent.BuffType<FeverDebuff>(), 60000, true);
 					}
 				}
 				else if (this.irradiatedTimer >= 56000)
 				{
 					this.irradiatedEffect = 4;
-					base.player.AddBuff(base.mod.BuffType("RadiationDebuff"), 5, true);
+					base.player.AddBuff(ModContent.BuffType<RadiationDebuff>(), 5, true);
 				}
 			}
 			else if (this.irradiatedLevel == 3)
@@ -315,7 +315,7 @@ namespace Redemption
 				{
 					if (Main.rand.Next(800) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("HeadacheDebuff"), 120, true);
+						base.player.AddBuff(ModContent.BuffType<HeadacheDebuff>(), 120, true);
 					}
 				}
 				else if (this.irradiatedTimer >= 34000 && this.irradiatedTimer < 42000)
@@ -323,11 +323,11 @@ namespace Redemption
 					this.irradiatedEffect = 1;
 					if (Main.rand.Next(2000) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("FatigueDebuff"), 800, true);
+						base.player.AddBuff(ModContent.BuffType<FatigueDebuff>(), 800, true);
 					}
 					if (Main.rand.Next(5000) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("NauseaDebuff"), 1200, true);
+						base.player.AddBuff(ModContent.BuffType<NauseaDebuff>(), 1200, true);
 					}
 				}
 				else if (this.irradiatedTimer >= 42000 && this.irradiatedTimer < 46000)
@@ -335,19 +335,19 @@ namespace Redemption
 					this.irradiatedEffect = 2;
 					if (Main.rand.Next(400) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("FatigueDebuff"), 800, true);
+						base.player.AddBuff(ModContent.BuffType<FatigueDebuff>(), 800, true);
 					}
 					if (Main.rand.Next(400) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("NauseaDebuff"), 1200, true);
+						base.player.AddBuff(ModContent.BuffType<NauseaDebuff>(), 1200, true);
 					}
 					if (Main.rand.Next(30000) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("HairLossDebuff"), 60000, true);
+						base.player.AddBuff(ModContent.BuffType<HairLossDebuff>(), 60000, true);
 					}
 					if (Main.rand.Next(400) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("SkinBurnDebuff"), 60000, true);
+						base.player.AddBuff(ModContent.BuffType<SkinBurnDebuff>(), 60000, true);
 					}
 				}
 				else if (this.irradiatedTimer >= 46000 && this.irradiatedTimer < 49000)
@@ -355,21 +355,21 @@ namespace Redemption
 					this.irradiatedEffect = 3;
 					if (Main.rand.Next(400) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("HairLossDebuff"), 60000, true);
+						base.player.AddBuff(ModContent.BuffType<HairLossDebuff>(), 60000, true);
 					}
 					if (Main.rand.Next(400) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("SkinBurnDebuff"), 60000, true);
+						base.player.AddBuff(ModContent.BuffType<SkinBurnDebuff>(), 60000, true);
 					}
 					if (Main.rand.Next(4000) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("FeverDebuff"), 60000, true);
+						base.player.AddBuff(ModContent.BuffType<FeverDebuff>(), 60000, true);
 					}
 				}
 				else if (this.irradiatedTimer >= 49000)
 				{
 					this.irradiatedEffect = 4;
-					base.player.AddBuff(base.mod.BuffType("RadiationDebuff"), 5, true);
+					base.player.AddBuff(ModContent.BuffType<RadiationDebuff>(), 5, true);
 				}
 			}
 			else if (this.irradiatedLevel == 4)
@@ -406,7 +406,7 @@ namespace Redemption
 				{
 					if (Main.rand.Next(800) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("HeadacheDebuff"), 120, true);
+						base.player.AddBuff(ModContent.BuffType<HeadacheDebuff>(), 120, true);
 					}
 				}
 				else if (this.irradiatedTimer >= 34000 && this.irradiatedTimer < 38000)
@@ -414,11 +414,11 @@ namespace Redemption
 					this.irradiatedEffect = 1;
 					if (Main.rand.Next(2000) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("FatigueDebuff"), 800, true);
+						base.player.AddBuff(ModContent.BuffType<FatigueDebuff>(), 800, true);
 					}
 					if (Main.rand.Next(2000) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("NauseaDebuff"), 1200, true);
+						base.player.AddBuff(ModContent.BuffType<NauseaDebuff>(), 1200, true);
 					}
 				}
 				else if (this.irradiatedTimer >= 38000 && this.irradiatedTimer < 40000)
@@ -426,19 +426,19 @@ namespace Redemption
 					this.irradiatedEffect = 2;
 					if (Main.rand.Next(400) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("FatigueDebuff"), 800, true);
+						base.player.AddBuff(ModContent.BuffType<FatigueDebuff>(), 800, true);
 					}
 					if (Main.rand.Next(400) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("NauseaDebuff"), 1200, true);
+						base.player.AddBuff(ModContent.BuffType<NauseaDebuff>(), 1200, true);
 					}
 					if (Main.rand.Next(2000) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("HairLossDebuff"), 60000, true);
+						base.player.AddBuff(ModContent.BuffType<HairLossDebuff>(), 60000, true);
 					}
 					if (Main.rand.Next(400) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("SkinBurnDebuff"), 60000, true);
+						base.player.AddBuff(ModContent.BuffType<SkinBurnDebuff>(), 60000, true);
 					}
 				}
 				else if (this.irradiatedTimer >= 40000 && this.irradiatedTimer < 41000)
@@ -446,21 +446,21 @@ namespace Redemption
 					this.irradiatedEffect = 3;
 					if (Main.rand.Next(400) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("HairLossDebuff"), 60000, true);
+						base.player.AddBuff(ModContent.BuffType<HairLossDebuff>(), 60000, true);
 					}
 					if (Main.rand.Next(400) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("SkinBurnDebuff"), 60000, true);
+						base.player.AddBuff(ModContent.BuffType<SkinBurnDebuff>(), 60000, true);
 					}
 					if (Main.rand.Next(400) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("FeverDebuff"), 60000, true);
+						base.player.AddBuff(ModContent.BuffType<FeverDebuff>(), 60000, true);
 					}
 				}
 				else if (this.irradiatedTimer >= 41000)
 				{
 					this.irradiatedEffect = 4;
-					base.player.AddBuff(base.mod.BuffType("RadiationDebuff"), 5, true);
+					base.player.AddBuff(ModContent.BuffType<RadiationDebuff>(), 5, true);
 				}
 			}
 			else if (this.irradiatedLevel == 5)
@@ -497,7 +497,7 @@ namespace Redemption
 				{
 					if (Main.rand.Next(400) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("HeadacheDebuff"), 120, true);
+						base.player.AddBuff(ModContent.BuffType<HeadacheDebuff>(), 120, true);
 					}
 				}
 				else if (this.irradiatedTimer >= 28000 && this.irradiatedTimer < 30000)
@@ -505,11 +505,11 @@ namespace Redemption
 					this.irradiatedEffect = 1;
 					if (Main.rand.Next(300) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("FatigueDebuff"), 800, true);
+						base.player.AddBuff(ModContent.BuffType<FatigueDebuff>(), 800, true);
 					}
 					if (Main.rand.Next(300) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("NauseaDebuff"), 1200, true);
+						base.player.AddBuff(ModContent.BuffType<NauseaDebuff>(), 1200, true);
 					}
 				}
 				else if (this.irradiatedTimer >= 30000 && this.irradiatedTimer < 31000)
@@ -517,19 +517,19 @@ namespace Redemption
 					this.irradiatedEffect = 2;
 					if (Main.rand.Next(400) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("FatigueDebuff"), 800, true);
+						base.player.AddBuff(ModContent.BuffType<FatigueDebuff>(), 800, true);
 					}
 					if (Main.rand.Next(400) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("NauseaDebuff"), 1200, true);
+						base.player.AddBuff(ModContent.BuffType<NauseaDebuff>(), 1200, true);
 					}
 					if (Main.rand.Next(400) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("HairLossDebuff"), 60000, true);
+						base.player.AddBuff(ModContent.BuffType<HairLossDebuff>(), 60000, true);
 					}
 					if (Main.rand.Next(400) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("SkinBurnDebuff"), 60000, true);
+						base.player.AddBuff(ModContent.BuffType<SkinBurnDebuff>(), 60000, true);
 					}
 				}
 				else if (this.irradiatedTimer >= 31000 && this.irradiatedTimer < 32000)
@@ -537,36 +537,36 @@ namespace Redemption
 					this.irradiatedEffect = 3;
 					if (Main.rand.Next(400) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("HairLossDebuff"), 60000, true);
+						base.player.AddBuff(ModContent.BuffType<HairLossDebuff>(), 60000, true);
 					}
 					if (Main.rand.Next(400) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("SkinBurnDebuff"), 60000, true);
+						base.player.AddBuff(ModContent.BuffType<SkinBurnDebuff>(), 60000, true);
 					}
 					if (Main.rand.Next(400) == 0)
 					{
-						base.player.AddBuff(base.mod.BuffType("FeverDebuff"), 60000, true);
+						base.player.AddBuff(ModContent.BuffType<FeverDebuff>(), 60000, true);
 					}
 				}
 				else if (this.irradiatedTimer >= 32000)
 				{
 					this.irradiatedEffect = 4;
-					base.player.AddBuff(base.mod.BuffType("RadiationDebuff"), 5, true);
+					base.player.AddBuff(ModContent.BuffType<RadiationDebuff>(), 5, true);
 				}
 			}
 			else if (this.irradiatedLevel > 5)
 			{
 				this.irradiatedLevel = 5;
 			}
-			if (this.spiritWyvern1 && !base.player.HasBuff(base.mod.BuffType("SpiritWyvernBuff")))
+			if (this.spiritWyvern1 && !base.player.HasBuff(ModContent.BuffType<SpiritWyvernBuff>()))
 			{
 				this.spiritWyvern1 = false;
 			}
-			if (this.spiritWyvern2 && !base.player.HasBuff(base.mod.BuffType("SpiritDragonBuff")))
+			if (this.spiritWyvern2 && !base.player.HasBuff(ModContent.BuffType<SpiritDragonBuff>()))
 			{
 				this.spiritWyvern2 = false;
 			}
-			if (base.player.HasBuff(base.mod.BuffType("HKStatueBuff")))
+			if (base.player.HasBuff(ModContent.BuffType<HKStatueBuff>()))
 			{
 				this.foundHall = true;
 			}
@@ -636,27 +636,33 @@ namespace Redemption
 			}
 		}
 
+		public void ModKeyDoubleTap(int keyDir)
+		{
+			bool reversedUpDownArmorSetBonuses = Main.ReversedUpDownArmorSetBonuses;
+		}
+
 		public override void UpdateBiomeVisuals()
 		{
-			bool useFireC = NPC.AnyNPCs(base.mod.NPCType("NebuleusClone"));
-			bool useFire2C = NPC.AnyNPCs(base.mod.NPCType("BigNebuleusClone"));
-			bool useFire = NPC.AnyNPCs(base.mod.NPCType("Nebuleus"));
+			bool useFireC = NPC.AnyNPCs(ModContent.NPCType<NebuleusClone>());
+			bool useFire2C = NPC.AnyNPCs(ModContent.NPCType<BigNebuleusClone>());
+			bool useFire = NPC.AnyNPCs(ModContent.NPCType<Nebuleus>());
 			base.player.ManageSpecialBiomeVisuals("Redemption:Nebuleus", useFire || useFireC, default(Vector2));
-			bool useFire2 = NPC.AnyNPCs(base.mod.NPCType("BigNebuleus"));
+			bool useFire2 = NPC.AnyNPCs(ModContent.NPCType<BigNebuleus>());
 			base.player.ManageSpecialBiomeVisuals("Redemption:BigNebuleus", useFire2 || useFire2C, default(Vector2));
-			bool useFire3 = NPC.AnyNPCs(base.mod.NPCType("Ukko"));
+			bool useFire3 = NPC.AnyNPCs(ModContent.NPCType<Ukko>());
 			base.player.ManageSpecialBiomeVisuals("Redemption:Ukko", useFire3, default(Vector2));
-			base.player.ManageSpecialBiomeVisuals("Redemption:XenoSky", this.ZoneXeno || this.ZoneEvilXeno, base.player.Center);
-			if (!this.ZoneXeno && !this.ZoneEvilXeno)
+			base.player.ManageSpecialBiomeVisuals("Redemption:XenoSky", this.ZoneXeno || this.ZoneEvilXeno || this.ZoneEvilXeno2, base.player.Center);
+			if (!this.ZoneXeno && !this.ZoneEvilXeno && !this.ZoneEvilXeno2)
 			{
-				base.player.HasBuff(base.mod.BuffType("RadiationDebuff"));
+				base.player.HasBuff(ModContent.BuffType<RadiationDebuff>());
 			}
 		}
 
 		public override void UpdateBiomes()
 		{
 			this.ZoneXeno = (RedeWorld.xenoBiome > 75);
-			this.ZoneEvilXeno = (RedeWorld.evilXenoBiome > 50);
+			this.ZoneEvilXeno = (RedeWorld.evilXenoBiome > 40);
+			this.ZoneEvilXeno2 = (RedeWorld.evilXenoBiome2 > 40);
 			this.ZoneLab = (RedeWorld.labBiome > 200);
 			this.ZoneSlayer = (RedeWorld.slayerBiome > 75);
 		}
@@ -664,7 +670,7 @@ namespace Redemption
 		public override bool CustomBiomesMatch(Player other)
 		{
 			RedePlayer modOther = other.GetModPlayer<RedePlayer>();
-			return this.ZoneXeno == modOther.ZoneXeno && this.ZoneEvilXeno == modOther.ZoneEvilXeno && this.ZoneLab == modOther.ZoneLab && this.ZoneSlayer == modOther.ZoneSlayer;
+			return this.ZoneXeno == modOther.ZoneXeno && this.ZoneEvilXeno == modOther.ZoneEvilXeno && this.ZoneEvilXeno2 == modOther.ZoneEvilXeno2 && this.ZoneLab == modOther.ZoneLab && this.ZoneSlayer == modOther.ZoneSlayer;
 		}
 
 		public override void CopyCustomBiomesTo(Player other)
@@ -672,6 +678,7 @@ namespace Redemption
 			RedePlayer modPlayer = other.GetModPlayer<RedePlayer>();
 			modPlayer.ZoneXeno = this.ZoneXeno;
 			modPlayer.ZoneEvilXeno = this.ZoneEvilXeno;
+			modPlayer.ZoneEvilXeno2 = this.ZoneEvilXeno2;
 			modPlayer.ZoneLab = this.ZoneLab;
 			modPlayer.ZoneSlayer = this.ZoneSlayer;
 		}
@@ -682,13 +689,14 @@ namespace Redemption
 			flags[0] = this.ZoneXeno;
 			flags[1] = this.ZoneLab;
 			flags[2] = this.ZoneEvilXeno;
-			flags[3] = this.ZoneSlayer;
+			flags[3] = this.ZoneEvilXeno2;
+			flags[4] = this.ZoneSlayer;
 			writer.Write(flags);
 		}
 
 		public override Texture2D GetMapBackgroundImage()
 		{
-			if (this.ZoneXeno || this.ZoneEvilXeno)
+			if (this.ZoneXeno || this.ZoneEvilXeno || this.ZoneEvilXeno2)
 			{
 				return base.mod.GetTexture("XenoBiomeMapBackground");
 			}
@@ -705,7 +713,8 @@ namespace Redemption
 			this.ZoneXeno = flags[0];
 			this.ZoneLab = flags[1];
 			this.ZoneEvilXeno = flags[2];
-			this.ZoneSlayer = flags[3];
+			this.ZoneEvilXeno2 = flags[3];
+			this.ZoneSlayer = flags[4];
 		}
 
 		public override void OnRespawn(Player player)
@@ -713,7 +722,7 @@ namespace Redemption
 			if (this.heartEmblem)
 			{
 				player.statLife = player.statLifeMax2 / 100 * 75;
-				player.AddBuff(base.mod.BuffType("HeartEmblemBuff"), 1800, true);
+				player.AddBuff(ModContent.BuffType<HeartEmblemBuff>(), 1800, true);
 			}
 		}
 
@@ -755,8 +764,6 @@ namespace Redemption
 			RedePlayer.reflectProjs = false;
 			this.creationBonus = false;
 			this.druidBane = false;
-			this.omegaAccessoryPrevious = this.omegaAccessory;
-			this.omegaAccessory = (this.omegaHideVanity = (this.omegaForceVanity = (this.omegaPower = false)));
 			this.chickenAccessoryPrevious = this.chickenAccessory;
 			this.chickenAccessory = (this.chickenHideVanity = (this.chickenForceVanity = (this.chickenPower = false)));
 			this.bloomingLuck = false;
@@ -790,6 +797,7 @@ namespace Redemption
 			this.natureGuardian25 = false;
 			this.natureGuardian26 = false;
 			this.natureGuardian27 = false;
+			this.natureGuardian28 = false;
 			this.hazmatAccessoryPrevious = this.hazmatAccessory;
 			this.hazmatAccessory = (this.hazmatHideVanity = (this.hazmatForceVanity = (this.hazmatPower = false)));
 			this.skeletonFriendly = false;
@@ -870,9 +878,7 @@ namespace Redemption
 			this.spiritGolemCross = false;
 			this.lacerated = false;
 			this.ukkonenMinion = false;
-			this.dreamsong = false;
 			this.cursedThornSet = false;
-			this.shadowBinder = false;
 			this.xenomiteSet = false;
 			this.corruptedXenomiteSet = false;
 			this.seedLifeTime = 1f;
@@ -880,6 +886,11 @@ namespace Redemption
 			this.girusSniperDrone = false;
 			this.shieldDrone = false;
 			this.jellyfishDrone = false;
+			this.moonStaves = false;
+			this.omegaPower = false;
+			this.halPet = false;
+			this.tiedPet = false;
+			this.tbotEyes = false;
 		}
 
 		public void ModDashMovement()
@@ -1039,7 +1050,7 @@ namespace Redemption
 				if (flag)
 				{
 					base.player.velocity.X = 16.9f * (float)num9;
-					Point point = Utils.ToTileCoordinates(base.player.Center + new Vector2((float)(num9 * base.player.width / 2 + 2), base.player.gravDir * -(float)base.player.height / 2f + base.player.gravDir * 2f));
+					Point point = Utils.ToTileCoordinates(base.player.Center + new Vector2((float)(num9 * base.player.width / 2 + 2), base.player.gravDir * (float)(-(float)base.player.height) / 2f + base.player.gravDir * 2f));
 					Point point2 = Utils.ToTileCoordinates(base.player.Center + new Vector2((float)(num9 * base.player.width / 2 + 2), 0f));
 					if (WorldGen.SolidOrSlopedTile(point.X, point.Y) || WorldGen.SolidOrSlopedTile(point2.X, point2.Y))
 					{
@@ -1172,11 +1183,6 @@ namespace Redemption
 			}
 		}
 
-		public void ModKeyDoubleTap(int keyDir)
-		{
-			bool reversedUpDownArmorSetBonuses = Main.ReversedUpDownArmorSetBonuses;
-		}
-
 		public override void UpdateDead()
 		{
 			this.enjoyment = false;
@@ -1226,7 +1232,7 @@ namespace Redemption
 				base.player.lifeRegenTime = 0;
 				base.player.lifeRegen -= 20;
 			}
-			if ((this.ZoneLab || this.ZoneXeno || this.ZoneEvilXeno) && base.player.wet && !this.hazmatPower && !this.labWaterImmune && !base.player.lavaWet && !base.player.honeyWet)
+			if ((this.ZoneLab || this.ZoneXeno || this.ZoneEvilXeno || this.ZoneEvilXeno2) && base.player.wet && !this.hazmatPower && !this.labWaterImmune && !base.player.lavaWet && !base.player.honeyWet)
 			{
 				if (base.player.lifeRegen > 10)
 				{
@@ -1279,15 +1285,6 @@ namespace Redemption
 				player4.velocity.Y = player4.velocity.Y * 0.4f;
 				base.player.statDefense -= 99;
 			}
-			if (this.ZoneLab && base.player.chaosState && !RedeWorld.downedPatientZero)
-			{
-				if (base.player.lifeRegen > 0)
-				{
-					base.player.lifeRegen = 0;
-				}
-				base.player.lifeRegenTime = 0;
-				base.player.lifeRegen -= 2000;
-			}
 			if (this.bileDebuff)
 			{
 				if (base.player.lifeRegen > 0)
@@ -1320,10 +1317,10 @@ namespace Redemption
 
 		public override void SetupStartInventory(IList<Item> items)
 		{
-			if (!RedeConfigClient.Instance.NoStarterCore)
+			if (RedeConfigClient.Instance.StarterCore)
 			{
 				Item item = new Item();
-				item.SetDefaults(base.mod.ItemType("EmptyCore"), false);
+				item.SetDefaults(ModContent.ItemType<EmptyCore>(), false);
 				item.stack = 1;
 				items.Add(item);
 			}
@@ -1333,31 +1330,18 @@ namespace Redemption
 		{
 			for (int i = 13; i < 18 + base.player.extraAccessorySlots; i++)
 			{
-				if (base.player.armor[i].type == ModContent.ItemType<OmegaCore>())
-				{
-					this.omegaHideVanity = false;
-					this.omegaForceVanity = true;
-				}
-			}
-			for (int j = 13; j < 18 + base.player.extraAccessorySlots; j++)
-			{
-				if (base.player.armor[j].type == ModContent.ItemType<CrownOfTheKing>())
-				{
-					this.chickenHideVanity = false;
-					this.chickenForceVanity = true;
-				}
-			}
-			for (int k = 13; k < 18 + base.player.extraAccessorySlots; k++)
-			{
-				if (base.player.armor[k].type == ModContent.ItemType<HazmatSuit>())
+				Item item = base.player.armor[i];
+				if (item.type == ModContent.ItemType<HazmatSuit>())
 				{
 					this.hazmatHideVanity = false;
 					this.hazmatForceVanity = true;
 				}
-			}
-			for (int l = 13; l < 18 + base.player.extraAccessorySlots; l++)
-			{
-				if (base.player.armor[l].type == ModContent.ItemType<HEVSuit>())
+				if (item.type == ModContent.ItemType<CrownOfTheKing>())
+				{
+					this.chickenHideVanity = false;
+					this.chickenForceVanity = true;
+				}
+				if (item.type == ModContent.ItemType<HEVSuit>())
 				{
 					this.HEVHideVanity = false;
 					this.HEVForceVanity = true;
@@ -1367,10 +1351,6 @@ namespace Redemption
 
 		public override void UpdateEquips(ref bool wallSpeedBuff, ref bool tileSpeedBuff, ref bool tileRangeBuff)
 		{
-			if (this.omegaAccessory)
-			{
-				base.player.AddBuff(ModContent.BuffType<Omega>(), 60, true);
-			}
 			if (this.chickenAccessory)
 			{
 				base.player.AddBuff(ModContent.BuffType<ChickenCrownBuff>(), 60, true);
@@ -1396,12 +1376,6 @@ namespace Redemption
 
 		public override void FrameEffects()
 		{
-			if ((this.omegaPower || this.omegaForceVanity) && !this.omegaHideVanity)
-			{
-				base.player.legs = base.mod.GetEquipSlot("OmegaLegs", 2);
-				base.player.body = base.mod.GetEquipSlot("OmegaBody", 1);
-				base.player.head = base.mod.GetEquipSlot("OmegaHead", 0);
-			}
 			if ((this.chickenPower || this.chickenForceVanity) && !this.chickenHideVanity)
 			{
 				base.player.legs = base.mod.GetEquipSlot("ChickenLegs", 2);
@@ -1490,7 +1464,7 @@ namespace Redemption
 					Main.playerDrawDust.Add(dust7);
 				}
 			}
-			if (base.player.HasBuff(base.mod.BuffType("SoulboundBuff")) && Main.rand.Next(5) == 0 && drawInfo.shadow == 0f)
+			if (base.player.HasBuff(ModContent.BuffType<SoulboundBuff>()) && Main.rand.Next(5) == 0 && drawInfo.shadow == 0f)
 			{
 				int dust8 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 20, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
 				Main.dust[dust8].noGravity = true;
@@ -1499,9 +1473,9 @@ namespace Redemption
 				dust17.velocity.Y = dust17.velocity.Y - 0.5f;
 				Main.playerDrawDust.Add(dust8);
 			}
-			if (base.player.HasBuff(base.mod.BuffType("ShadeboundBuff")) && Main.rand.Next(5) == 0 && drawInfo.shadow == 0f)
+			if (base.player.HasBuff(ModContent.BuffType<ShadeboundBuff>()) && Main.rand.Next(5) == 0 && drawInfo.shadow == 0f)
 			{
-				int dust9 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, base.mod.DustType("VoidFlame"), base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.8f);
+				int dust9 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, ModContent.DustType<VoidFlame>(), base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.8f);
 				Main.dust[dust9].noGravity = true;
 				Main.dust[dust9].velocity *= 1.8f;
 				Dust dust18 = Main.dust[dust9];
@@ -1514,6 +1488,14 @@ namespace Redemption
 		{
 			RedePlayer.MiscEffectsFront.visible = true;
 			layers.Insert(0, RedePlayer.MiscEffectsFront);
+		}
+
+		public override void OnEnterWorld(Player player)
+		{
+			if (!Redemption.musicPackLoaded)
+			{
+				Main.NewText("Also download 'Mod of Redemption: Music Pack' from the Mod Browser or perish.", 244, 71, byte.MaxValue, false);
+			}
 		}
 
 		public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
@@ -1542,13 +1524,13 @@ namespace Redemption
 
 		public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
 		{
-			if (base.player.HasBuff(base.mod.BuffType("BioweaponFlaskBuff")))
+			if (base.player.HasBuff(ModContent.BuffType<BioweaponFlaskBuff>()))
 			{
-				target.AddBuff(base.mod.BuffType("BioweaponDebuff"), 900, false);
+				target.AddBuff(ModContent.BuffType<BioweaponDebuff>(), 900, false);
 			}
-			if (base.player.HasBuff(base.mod.BuffType("BileFlaskBuff")))
+			if (base.player.HasBuff(ModContent.BuffType<BileFlaskBuff>()))
 			{
-				target.AddBuff(base.mod.BuffType("BileDebuff"), 900, false);
+				target.AddBuff(ModContent.BuffType<BileDebuff>(), 900, false);
 			}
 		}
 
@@ -1556,7 +1538,7 @@ namespace Redemption
 		{
 			if (this.bloodyCollar && Main.rand.Next(5) == 0)
 			{
-				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 0f, 0f, base.mod.ProjectileType("BloodPulse"), 50, 0f, base.player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 0f, 0f, ModContent.ProjectileType<BloodPulse>(), 50, 0f, base.player.whoAmI, 0f, 0f);
 			}
 			if (this.charisma)
 			{
@@ -1573,138 +1555,125 @@ namespace Redemption
 			}
 			if (this.eldritchRoot && target.life <= 0)
 			{
-				base.player.AddBuff(base.mod.BuffType("EldritchRootBuff"), 180, true);
+				base.player.AddBuff(ModContent.BuffType<EldritchRootBuff>(), 180, true);
 			}
 			if (this.powerSurgeSet && Main.rand.Next(10) == 0)
 			{
-				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 1f, -3f, base.mod.ProjectileType("EnergyOrb1"), 200, 0f, Main.myPlayer, 0f, 0f);
-				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 0f, -1f, base.mod.ProjectileType("EnergyOrb1"), 200, 0f, Main.myPlayer, 0f, 0f);
-				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 2f, -5f, base.mod.ProjectileType("EnergyOrb1"), 200, 0f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 1f, -3f, ModContent.ProjectileType<EnergyOrb1>(), 200, 0f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 0f, -1f, ModContent.ProjectileType<EnergyOrb1>(), 200, 0f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 2f, -5f, ModContent.ProjectileType<EnergyOrb1>(), 200, 0f, Main.myPlayer, 0f, 0f);
 			}
 			if (this.bloodShinkiteSet && Main.rand.Next(4) == 0)
 			{
-				Projectile.NewProjectile(target.Center.X, target.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)Main.rand.Next(-11, 0), base.mod.ProjectileType("BloodOrbPro3"), 0, 0f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(target.Center.X, target.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)Main.rand.Next(-11, 0), ModContent.ProjectileType<BloodOrbPro3>(), 0, 0f, Main.myPlayer, 0f, 0f);
 			}
 			if (this.cursedShinkiteSet && Main.rand.Next(6) == 0)
 			{
-				Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, 0f, base.mod.ProjectileType("CursedExp"), 100, 0f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, 0f, ModContent.ProjectileType<CursedExp>(), 100, 0f, Main.myPlayer, 0f, 0f);
 			}
 			if (this.smallShadeSet)
 			{
-				target.AddBuff(base.mod.BuffType("BlackenedHeartDebuff"), 300, false);
+				target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), 300, false);
 			}
 			if (this.oblitDrive && Main.rand.Next(10) == 0)
 			{
-				if (!base.player.HasBuff(base.mod.BuffType("OblitBuff1")) && !base.player.HasBuff(base.mod.BuffType("OblitBuff2")) && !base.player.HasBuff(base.mod.BuffType("OblitBuff3")) && !base.player.HasBuff(base.mod.BuffType("OblitBuff4")) && !base.player.HasBuff(base.mod.BuffType("OblitBuff5")))
+				if (!base.player.HasBuff(ModContent.BuffType<OblitBuff1>()) && !base.player.HasBuff(ModContent.BuffType<OblitBuff2>()) && !base.player.HasBuff(ModContent.BuffType<OblitBuff3>()) && !base.player.HasBuff(ModContent.BuffType<OblitBuff4>()) && !base.player.HasBuff(ModContent.BuffType<OblitBuff5>()))
 				{
-					base.player.AddBuff(base.mod.BuffType("OblitBuff1"), 600, true);
+					base.player.AddBuff(ModContent.BuffType<OblitBuff1>(), 600, true);
 				}
-				else if (base.player.HasBuff(base.mod.BuffType("OblitBuff1")))
+				else if (base.player.HasBuff(ModContent.BuffType<OblitBuff1>()))
 				{
-					base.player.AddBuff(base.mod.BuffType("OblitBuff2"), 600, true);
+					base.player.AddBuff(ModContent.BuffType<OblitBuff2>(), 600, true);
 				}
-				else if (base.player.HasBuff(base.mod.BuffType("OblitBuff2")))
+				else if (base.player.HasBuff(ModContent.BuffType<OblitBuff2>()))
 				{
-					base.player.AddBuff(base.mod.BuffType("OblitBuff3"), 600, true);
+					base.player.AddBuff(ModContent.BuffType<OblitBuff3>(), 600, true);
 				}
-				else if (base.player.HasBuff(base.mod.BuffType("OblitBuff3")))
+				else if (base.player.HasBuff(ModContent.BuffType<OblitBuff3>()))
 				{
-					base.player.AddBuff(base.mod.BuffType("OblitBuff4"), 600, true);
+					base.player.AddBuff(ModContent.BuffType<OblitBuff4>(), 600, true);
 				}
-				else if (base.player.HasBuff(base.mod.BuffType("OblitBuff4")))
+				else if (base.player.HasBuff(ModContent.BuffType<OblitBuff4>()))
 				{
-					base.player.AddBuff(base.mod.BuffType("OblitBuff5"), 600, true);
+					base.player.AddBuff(ModContent.BuffType<OblitBuff5>(), 600, true);
 				}
-				else if (base.player.HasBuff(base.mod.BuffType("OblitBuff5")))
+				else if (base.player.HasBuff(ModContent.BuffType<OblitBuff5>()))
 				{
-					base.player.AddBuff(base.mod.BuffType("OblitBuff5"), 600, true);
+					base.player.AddBuff(ModContent.BuffType<OblitBuff5>(), 600, true);
 				}
 			}
-			if (this.wispSet && target.life <= 0 && target.lifeMax > 5 && Main.rand.Next(10) == 0 && target.type != 288 && target.type != base.mod.NPCType("LostSoul1") && target.type != base.mod.NPCType("LostSoul2") && target.type != base.mod.NPCType("LostSoul3") && target.type != base.mod.NPCType("SmallShadesoulNPC") && target.type != base.mod.NPCType("ShadesoulNPC"))
+			if (this.wispSet && target.life <= 0 && target.lifeMax > 5 && Main.rand.Next(10) == 0 && target.type != 288 && target.type != ModContent.NPCType<LostSoul1>() && target.type != ModContent.NPCType<LostSoul2>() && target.type != ModContent.NPCType<LostSoul3>() && target.type != ModContent.NPCType<SmallShadesoulNPC>() && target.type != ModContent.NPCType<ShadesoulNPC>())
 			{
 				NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, 288, 0, 0f, 0f, 0f, 0f, 255);
 			}
-			if (base.player.HasBuff(base.mod.BuffType("SoulboundBuff")))
+			if (base.player.HasBuff(ModContent.BuffType<SoulboundBuff>()))
 			{
 				if (this.spiritLevel == 0)
 				{
-					if (target.life <= 0 && target.lifeMax > 5 && Main.rand.Next(15) == 0 && target.type != 288 && target.type != base.mod.NPCType("LostSoul1") && target.type != base.mod.NPCType("LostSoul2") && target.type != base.mod.NPCType("LostSoul3") && target.type != base.mod.NPCType("SmallShadesoulNPC") && target.type != base.mod.NPCType("ShadesoulNPC"))
+					if (target.life <= 0 && target.lifeMax > 5 && Main.rand.Next(15) == 0 && target.type != 288 && target.type != ModContent.NPCType<LostSoul1>() && target.type != ModContent.NPCType<LostSoul2>() && target.type != ModContent.NPCType<LostSoul3>() && target.type != ModContent.NPCType<SmallShadesoulNPC>() && target.type != ModContent.NPCType<ShadesoulNPC>())
 					{
-						NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, base.mod.NPCType("LostSoul1"), 0, 0f, 0f, 0f, 0f, 255);
+						NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, ModContent.NPCType<LostSoul1>(), 0, 0f, 0f, 0f, 0f, 255);
 					}
 				}
 				else if (this.spiritLevel == 1)
 				{
-					if (target.life <= 0 && target.lifeMax > 5 && Main.rand.Next(10) == 0 && target.type != 288 && target.type != base.mod.NPCType("LostSoul1") && target.type != base.mod.NPCType("LostSoul2") && target.type != base.mod.NPCType("LostSoul3") && target.type != base.mod.NPCType("SmallShadesoulNPC") && target.type != base.mod.NPCType("ShadesoulNPC"))
+					if (target.life <= 0 && target.lifeMax > 5 && Main.rand.Next(10) == 0 && target.type != 288 && target.type != ModContent.NPCType<LostSoul1>() && target.type != ModContent.NPCType<LostSoul2>() && target.type != ModContent.NPCType<LostSoul3>() && target.type != ModContent.NPCType<SmallShadesoulNPC>() && target.type != ModContent.NPCType<ShadesoulNPC>())
 					{
-						NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, base.mod.NPCType("LostSoul1"), 0, 0f, 0f, 0f, 0f, 255);
+						NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, ModContent.NPCType<LostSoul1>(), 0, 0f, 0f, 0f, 0f, 255);
 					}
 				}
 				else if (this.spiritLevel == 2)
 				{
-					if (target.life <= 0 && target.lifeMax > 5 && Main.rand.Next(6) == 0 && target.type != 288 && target.type != base.mod.NPCType("LostSoul1") && target.type != base.mod.NPCType("LostSoul2") && target.type != base.mod.NPCType("LostSoul3") && target.type != base.mod.NPCType("SmallShadesoulNPC") && target.type != base.mod.NPCType("ShadesoulNPC"))
+					if (target.life <= 0 && target.lifeMax > 5 && Main.rand.Next(6) == 0 && target.type != 288 && target.type != ModContent.NPCType<LostSoul1>() && target.type != ModContent.NPCType<LostSoul2>() && target.type != ModContent.NPCType<LostSoul3>() && target.type != ModContent.NPCType<SmallShadesoulNPC>() && target.type != ModContent.NPCType<ShadesoulNPC>())
 					{
-						NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, base.mod.NPCType("LostSoul1"), 0, 0f, 0f, 0f, 0f, 255);
+						NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, ModContent.NPCType<LostSoul1>(), 0, 0f, 0f, 0f, 0f, 255);
 					}
 				}
-				else if (this.spiritLevel >= 3 && target.life <= 0 && target.lifeMax > 5 && Main.rand.Next(4) == 0 && target.type != 288 && target.type != base.mod.NPCType("LostSoul1") && target.type != base.mod.NPCType("LostSoul2") && target.type != base.mod.NPCType("LostSoul3") && target.type != base.mod.NPCType("SmallShadesoulNPC") && target.type != base.mod.NPCType("ShadesoulNPC"))
+				else if (this.spiritLevel >= 3 && target.life <= 0 && target.lifeMax > 5 && Main.rand.Next(4) == 0 && target.type != 288 && target.type != ModContent.NPCType<LostSoul1>() && target.type != ModContent.NPCType<LostSoul2>() && target.type != ModContent.NPCType<LostSoul3>() && target.type != ModContent.NPCType<SmallShadesoulNPC>() && target.type != ModContent.NPCType<ShadesoulNPC>())
 				{
-					NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, base.mod.NPCType("LostSoul1"), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, ModContent.NPCType<LostSoul1>(), 0, 0f, 0f, 0f, 0f, 255);
 				}
 			}
-			if (base.player.HasBuff(base.mod.BuffType("ShadeboundBuff")))
+			if (base.player.HasBuff(ModContent.BuffType<ShadeboundBuff>()))
 			{
 				if (this.spiritLevel == 5)
 				{
-					if (target.life <= 0 && target.lifeMax > 5 && Main.rand.Next(10) == 0 && target.type != 288 && target.type != base.mod.NPCType("LostSoul1") && target.type != base.mod.NPCType("LostSoul2") && target.type != base.mod.NPCType("LostSoul3") && target.type != base.mod.NPCType("SmallShadesoulNPC") && target.type != base.mod.NPCType("ShadesoulNPC"))
+					if (target.life <= 0 && target.lifeMax > 5 && Main.rand.Next(10) == 0 && target.type != 288 && target.type != ModContent.NPCType<LostSoul1>() && target.type != ModContent.NPCType<LostSoul2>() && target.type != ModContent.NPCType<LostSoul3>() && target.type != ModContent.NPCType<SmallShadesoulNPC>() && target.type != ModContent.NPCType<ShadesoulNPC>())
 					{
-						NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, base.mod.NPCType("SmallShadesoulNPC"), 0, 0f, 0f, 0f, 0f, 255);
+						NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, ModContent.NPCType<SmallShadesoulNPC>(), 0, 0f, 0f, 0f, 0f, 255);
 					}
 				}
 				else if (this.spiritLevel == 6)
 				{
-					if (target.life <= 0 && target.lifeMax > 5 && Main.rand.Next(6) == 0 && target.type != 288 && target.type != base.mod.NPCType("LostSoul1") && target.type != base.mod.NPCType("LostSoul2") && target.type != base.mod.NPCType("LostSoul3") && target.type != base.mod.NPCType("SmallShadesoulNPC") && target.type != base.mod.NPCType("ShadesoulNPC"))
+					if (target.life <= 0 && target.lifeMax > 5 && Main.rand.Next(6) == 0 && target.type != 288 && target.type != ModContent.NPCType<LostSoul1>() && target.type != ModContent.NPCType<LostSoul2>() && target.type != ModContent.NPCType<LostSoul3>() && target.type != ModContent.NPCType<SmallShadesoulNPC>() && target.type != ModContent.NPCType<ShadesoulNPC>())
 					{
-						NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, base.mod.NPCType("SmallShadesoulNPC"), 0, 0f, 0f, 0f, 0f, 255);
+						NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, ModContent.NPCType<SmallShadesoulNPC>(), 0, 0f, 0f, 0f, 0f, 255);
 					}
 				}
-				else if (this.spiritLevel >= 7 && target.life <= 0 && target.lifeMax > 5 && Main.rand.Next(3) == 0 && target.type != 288 && target.type != base.mod.NPCType("LostSoul1") && target.type != base.mod.NPCType("LostSoul2") && target.type != base.mod.NPCType("LostSoul3") && target.type != base.mod.NPCType("SmallShadesoulNPC") && target.type != base.mod.NPCType("ShadesoulNPC"))
+				else if (this.spiritLevel >= 7 && target.life <= 0 && target.lifeMax > 5 && Main.rand.Next(3) == 0 && target.type != 288 && target.type != ModContent.NPCType<LostSoul1>() && target.type != ModContent.NPCType<LostSoul2>() && target.type != ModContent.NPCType<LostSoul3>() && target.type != ModContent.NPCType<SmallShadesoulNPC>() && target.type != ModContent.NPCType<ShadesoulNPC>())
 				{
-					NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, base.mod.NPCType("SmallShadesoulNPC"), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, ModContent.NPCType<SmallShadesoulNPC>(), 0, 0f, 0f, 0f, 0f, 255);
 				}
 			}
-			if (target.life <= 0 && (proj.type == base.mod.ProjectileType("NightSoulPro1") || proj.type == base.mod.ProjectileType("LightSoulPro1")))
+			if (target.life <= 0 && (proj.type == ModContent.ProjectileType<NightSoulPro1>() || proj.type == ModContent.ProjectileType<LightSoulPro1>()))
 			{
-				base.player.AddBuff(base.mod.BuffType("SoulStaveBuff"), 3600, true);
+				base.player.AddBuff(ModContent.BuffType<SoulStaveBuff>(), 3600, true);
 			}
 			if (this.cursedThornSet && crit)
 			{
-				Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, 0f, base.mod.ProjectileType("AkkaSeedF"), 400, 3f, Main.myPlayer, 0f, 0f);
-			}
-			if (this.shadowBinder && target.life <= 0 && target.lifeMax >= 5000)
-			{
-				for (int index = 0; index < 10; index++)
-				{
-					Dust dust = Dust.NewDustDirect(new Vector2(target.position.X, target.position.Y), target.width, target.height, 20, 0f, 0f, 100, default(Color), 2f);
-					dust.velocity = -base.player.DirectionTo(dust.position) * 20f;
-					dust.noGravity = true;
-				}
-				if (this.shadowBinderCharge < 1000)
-				{
-					this.shadowBinderCharge++;
-				}
+				Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, 0f, ModContent.ProjectileType<AkkaSeedF>(), 400, 3f, Main.myPlayer, 0f, 0f);
 			}
 			if (this.xenomiteSet && crit && Main.rand.Next(2) == 0)
 			{
 				for (int i = 0; i < 6; i++)
 				{
-					int p = Projectile.NewProjectile(new Vector2(base.player.Center.X, base.player.Center.Y), RedeHelper.PolarVector(15f + Utils.NextFloat(Main.rand, -4f, 4f), Utils.ToRotation(Main.MouseWorld - base.player.Center) + Utils.NextFloat(Main.rand, -0.1f, 0.1f)), base.mod.ProjectileType("XenoYoyoShard"), 30, 3f, Main.myPlayer, 0f, 0f);
+					int p = Projectile.NewProjectile(new Vector2(base.player.Center.X, base.player.Center.Y), RedeHelper.PolarVector(15f + Utils.NextFloat(Main.rand, -4f, 4f), Utils.ToRotation(Main.MouseWorld - base.player.Center) + Utils.NextFloat(Main.rand, -0.1f, 0.1f)), ModContent.ProjectileType<XenoYoyoShard>(), 30, 3f, Main.myPlayer, 0f, 0f);
 					Main.projectile[p].melee = false;
 				}
 			}
 			if (this.corruptedXenomiteSet && crit)
 			{
-				Projectile.NewProjectile(new Vector2(base.player.Center.X, base.player.Center.Y), RedeHelper.PolarVector(20f, Utils.ToRotation(Main.MouseWorld - base.player.Center)), base.mod.ProjectileType("PhantomDagger"), 140, 3f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.player.Center.X, base.player.Center.Y), RedeHelper.PolarVector(20f, Utils.ToRotation(Main.MouseWorld - base.player.Center)), ModContent.ProjectileType<PhantomDagger>(), 140, 3f, Main.myPlayer, 0f, 0f);
 			}
 		}
 
@@ -1712,7 +1681,7 @@ namespace Redemption
 		{
 			if (this.bloodyCollar && Main.rand.Next(5) == 0)
 			{
-				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 0f, 0f, base.mod.ProjectileType("BloodPulse"), 50, 0f, base.player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 0f, 0f, ModContent.ProjectileType<BloodPulse>(), 50, 0f, base.player.whoAmI, 0f, 0f);
 			}
 			if (this.charisma)
 			{
@@ -1729,85 +1698,72 @@ namespace Redemption
 			}
 			if (this.eldritchRoot && target.life <= 0)
 			{
-				base.player.AddBuff(base.mod.BuffType("EldritchRootBuff"), 180, true);
+				base.player.AddBuff(ModContent.BuffType<EldritchRootBuff>(), 180, true);
 			}
 			if (this.powerSurgeSet && Main.rand.Next(10) == 0)
 			{
-				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 1f, -3f, base.mod.ProjectileType("EnergyOrb1"), 200, 0f, Main.myPlayer, 0f, 0f);
-				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 0f, -1f, base.mod.ProjectileType("EnergyOrb1"), 200, 0f, Main.myPlayer, 0f, 0f);
-				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 2f, -5f, base.mod.ProjectileType("EnergyOrb1"), 200, 0f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 1f, -3f, ModContent.ProjectileType<EnergyOrb1>(), 200, 0f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 0f, -1f, ModContent.ProjectileType<EnergyOrb1>(), 200, 0f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 2f, -5f, ModContent.ProjectileType<EnergyOrb1>(), 200, 0f, Main.myPlayer, 0f, 0f);
 			}
 			if (this.bloodShinkiteSet && Main.rand.Next(4) == 0)
 			{
-				Projectile.NewProjectile(target.Center.X, target.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("BloodOrbPro3"), 0, 0f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(target.Center.X, target.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), ModContent.ProjectileType<BloodOrbPro3>(), 0, 0f, Main.myPlayer, 0f, 0f);
 			}
 			if (this.cursedShinkiteSet && Main.rand.Next(6) == 0)
 			{
-				Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, 0f, base.mod.ProjectileType("CursedExp"), 100, 0f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, 0f, ModContent.ProjectileType<CursedExp>(), 100, 0f, Main.myPlayer, 0f, 0f);
 			}
 			if (this.smallShadeSet)
 			{
-				target.AddBuff(base.mod.BuffType("BlackenedHeartDebuff"), 300, false);
+				target.AddBuff(ModContent.BuffType<BlackenedHeartDebuff>(), 300, false);
 			}
 			if (this.oblitDrive && Main.rand.Next(10) == 0)
 			{
-				if (!base.player.HasBuff(base.mod.BuffType("OblitBuff1")) && !base.player.HasBuff(base.mod.BuffType("OblitBuff2")) && !base.player.HasBuff(base.mod.BuffType("OblitBuff3")) && !base.player.HasBuff(base.mod.BuffType("OblitBuff4")) && !base.player.HasBuff(base.mod.BuffType("OblitBuff5")))
+				if (!base.player.HasBuff(ModContent.BuffType<OblitBuff1>()) && !base.player.HasBuff(ModContent.BuffType<OblitBuff2>()) && !base.player.HasBuff(ModContent.BuffType<OblitBuff3>()) && !base.player.HasBuff(ModContent.BuffType<OblitBuff4>()) && !base.player.HasBuff(ModContent.BuffType<OblitBuff5>()))
 				{
-					base.player.AddBuff(base.mod.BuffType("OblitBuff1"), 600, true);
+					base.player.AddBuff(ModContent.BuffType<OblitBuff1>(), 600, true);
 				}
-				else if (base.player.HasBuff(base.mod.BuffType("OblitBuff1")))
+				else if (base.player.HasBuff(ModContent.BuffType<OblitBuff1>()))
 				{
-					base.player.AddBuff(base.mod.BuffType("OblitBuff2"), 600, true);
-					base.player.DelBuff(base.mod.BuffType("OblitBuff1"));
+					base.player.AddBuff(ModContent.BuffType<OblitBuff2>(), 600, true);
+					base.player.DelBuff(ModContent.BuffType<OblitBuff1>());
 				}
-				else if (base.player.HasBuff(base.mod.BuffType("OblitBuff2")))
+				else if (base.player.HasBuff(ModContent.BuffType<OblitBuff2>()))
 				{
-					base.player.AddBuff(base.mod.BuffType("OblitBuff3"), 600, true);
-					base.player.DelBuff(base.mod.BuffType("OblitBuff2"));
+					base.player.AddBuff(ModContent.BuffType<OblitBuff3>(), 600, true);
+					base.player.DelBuff(ModContent.BuffType<OblitBuff2>());
 				}
-				else if (base.player.HasBuff(base.mod.BuffType("OblitBuff3")))
+				else if (base.player.HasBuff(ModContent.BuffType<OblitBuff3>()))
 				{
-					base.player.AddBuff(base.mod.BuffType("OblitBuff4"), 600, true);
-					base.player.DelBuff(base.mod.BuffType("OblitBuff3"));
+					base.player.AddBuff(ModContent.BuffType<OblitBuff4>(), 600, true);
+					base.player.DelBuff(ModContent.BuffType<OblitBuff3>());
 				}
-				else if (base.player.HasBuff(base.mod.BuffType("OblitBuff4")))
+				else if (base.player.HasBuff(ModContent.BuffType<OblitBuff4>()))
 				{
-					base.player.AddBuff(base.mod.BuffType("OblitBuff5"), 600, true);
-					base.player.DelBuff(base.mod.BuffType("OblitBuff4"));
+					base.player.AddBuff(ModContent.BuffType<OblitBuff5>(), 600, true);
+					base.player.DelBuff(ModContent.BuffType<OblitBuff4>());
 				}
-				else if (base.player.HasBuff(base.mod.BuffType("OblitBuff5")))
+				else if (base.player.HasBuff(ModContent.BuffType<OblitBuff5>()))
 				{
-					base.player.AddBuff(base.mod.BuffType("OblitBuff5"), 600, true);
+					base.player.AddBuff(ModContent.BuffType<OblitBuff5>(), 600, true);
 				}
 			}
 			if (this.wispSet && target.life <= 0 && Main.rand.Next(10) == 0 && target.type != 288)
 			{
 				NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, 288, 0, 0f, 0f, 0f, 0f, 255);
 			}
-			if (this.shadowBinder && target.life <= 0 && target.lifeMax >= 5000)
-			{
-				for (int index = 0; index < 10; index++)
-				{
-					Dust dust = Dust.NewDustDirect(new Vector2(target.position.X, target.position.Y), target.width, target.height, 20, 0f, 0f, 100, default(Color), 2f);
-					dust.velocity = -base.player.DirectionTo(dust.position) * 20f;
-					dust.noGravity = true;
-				}
-				if (this.shadowBinderCharge < 1000)
-				{
-					this.shadowBinderCharge++;
-				}
-			}
 			if (this.xenomiteSet && crit && Main.rand.Next(2) == 0)
 			{
 				for (int i = 0; i < 6; i++)
 				{
-					int p = Projectile.NewProjectile(new Vector2(base.player.Center.X, base.player.Center.Y), RedeHelper.PolarVector(15f + Utils.NextFloat(Main.rand, -4f, 4f), Utils.ToRotation(Main.MouseWorld - base.player.Center) + Utils.NextFloat(Main.rand, -0.1f, 0.1f)), base.mod.ProjectileType("XenoYoyoShard"), 30, 3f, Main.myPlayer, 0f, 0f);
+					int p = Projectile.NewProjectile(new Vector2(base.player.Center.X, base.player.Center.Y), RedeHelper.PolarVector(15f + Utils.NextFloat(Main.rand, -4f, 4f), Utils.ToRotation(Main.MouseWorld - base.player.Center) + Utils.NextFloat(Main.rand, -0.1f, 0.1f)), ModContent.ProjectileType<XenoYoyoShard>(), 30, 3f, Main.myPlayer, 0f, 0f);
 					Main.projectile[p].melee = false;
 				}
 			}
 			if (this.corruptedXenomiteSet && crit)
 			{
-				Projectile.NewProjectile(new Vector2(base.player.Center.X, base.player.Center.Y), RedeHelper.PolarVector(20f, Utils.ToRotation(Main.MouseWorld - base.player.Center)), base.mod.ProjectileType("PhantomDagger"), 140, 3f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.player.Center.X, base.player.Center.Y), RedeHelper.PolarVector(20f, Utils.ToRotation(Main.MouseWorld - base.player.Center)), ModContent.ProjectileType<PhantomDagger>(), 140, 3f, Main.myPlayer, 0f, 0f);
 			}
 		}
 
@@ -1825,75 +1781,75 @@ namespace Redemption
 
 		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
 		{
-			if (base.player.FindBuffIndex(base.mod.BuffType("XenomiteDebuff")) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-			{
-				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got infected");
-			}
-			if (base.player.FindBuffIndex(base.mod.BuffType("XenomiteDebuff2")) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-			{
-				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got heavily infected");
-			}
-			if (base.player.FindBuffIndex(base.mod.BuffType("RadioactiveFalloutDebuff")) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-			{
-				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " forgot to wear a gas mask");
-			}
-			if (base.player.FindBuffIndex(base.mod.BuffType("DisgustingDebuff")) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-			{
-				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got diddily darn egg'd");
-			}
-			if (base.player.FindBuffIndex(base.mod.BuffType("DruidsBane")) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-			{
-				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " was baned by the druids");
-			}
-			if (base.player.FindBuffIndex(base.mod.BuffType("EnjoymentDebuff")) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-			{
-				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " finally discovered happiness");
-			}
-			if (base.player.FindBuffIndex(base.mod.BuffType("GloomShroomDebuff")) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-			{
-				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got gloomed");
-			}
-			if (base.player.FindBuffIndex(base.mod.BuffType("UltraFlameDebuff")) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-			{
-				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got melted to the bone");
-			}
-			if (base.player.FindBuffIndex(base.mod.BuffType("XenomiteSkullDebuff")) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-			{
-				damageSource = PlayerDeathReason.ByCustomReason("The lab's defensive systems overwhelmed " + base.player.name + " with intense energy");
-			}
-			if (base.player.FindBuffIndex(base.mod.BuffType("HazardLaserDebuff")) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+			if (base.player.FindBuffIndex(ModContent.BuffType<HazardLaserDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
 			{
 				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got lasered!");
 			}
-			if (base.player.FindBuffIndex(base.mod.BuffType("BlackenedHeartDebuff")) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-			{
-				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " became soulless");
-			}
-			if (base.player.FindBuffIndex(base.mod.BuffType("HolyFireDebuff")) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-			{
-				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " was too glorious");
-			}
-			if (base.player.FindBuffIndex(base.mod.BuffType("BInfectionDebuff")) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+			if (base.player.FindBuffIndex(ModContent.BuffType<XenomiteDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
 			{
 				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got infected");
 			}
-			if (damageSource.SourceNPCIndex >= 0 && Main.npc[damageSource.SourceNPCIndex].type == base.mod.NPCType("AJollyMadman"))
+			if (base.player.FindBuffIndex(ModContent.BuffType<XenomiteDebuff2>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+			{
+				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got heavily infected");
+			}
+			if (base.player.FindBuffIndex(ModContent.BuffType<RadioactiveFalloutDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+			{
+				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " forgot to wear a gas mask");
+			}
+			if (base.player.FindBuffIndex(ModContent.BuffType<DisgustingDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+			{
+				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got diddily darn egg'd");
+			}
+			if (base.player.FindBuffIndex(ModContent.BuffType<DruidsBane>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+			{
+				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " was baned by the druids");
+			}
+			if (base.player.FindBuffIndex(ModContent.BuffType<EnjoymentDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+			{
+				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " finally discovered happiness");
+			}
+			if (base.player.FindBuffIndex(ModContent.BuffType<GloomShroomDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+			{
+				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got gloomed");
+			}
+			if (base.player.FindBuffIndex(ModContent.BuffType<UltraFlameDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+			{
+				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got melted to the bone");
+			}
+			if (base.player.FindBuffIndex(ModContent.BuffType<XenomiteSkullDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+			{
+				damageSource = PlayerDeathReason.ByCustomReason("The lab's defensive systems overwhelmed " + base.player.name + " with intense energy");
+			}
+			if (base.player.FindBuffIndex(ModContent.BuffType<BlackenedHeartDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+			{
+				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " became soulless");
+			}
+			if (base.player.FindBuffIndex(ModContent.BuffType<HolyFireDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+			{
+				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " was too glorious");
+			}
+			if (base.player.FindBuffIndex(ModContent.BuffType<BInfectionDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
+			{
+				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got infected");
+			}
+			if (damageSource.SourceNPCIndex >= 0 && Main.npc[damageSource.SourceNPCIndex].type == ModContent.NPCType<AJollyMadman>())
 			{
 				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " became hollow");
 			}
-			if (damageSource.SourceNPCIndex >= 0 && Main.npc[damageSource.SourceNPCIndex].type == base.mod.NPCType("Blobble"))
+			if (damageSource.SourceNPCIndex >= 0 && Main.npc[damageSource.SourceNPCIndex].type == ModContent.NPCType<Blobble>())
 			{
 				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got blobble'd!");
 			}
-			if (damageSource.SourceNPCIndex >= 0 && Main.npc[damageSource.SourceNPCIndex].type == base.mod.NPCType("ChickenCultist"))
+			if (damageSource.SourceNPCIndex >= 0 && Main.npc[damageSource.SourceNPCIndex].type == ModContent.NPCType<ChickenCultist>())
 			{
 				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got pecked to death");
 			}
-			if (damageSource.SourceNPCIndex >= 0 && Main.npc[damageSource.SourceNPCIndex].type == base.mod.NPCType("ChickenMan"))
+			if (damageSource.SourceNPCIndex >= 0 && Main.npc[damageSource.SourceNPCIndex].type == ModContent.NPCType<ChickenMan>())
 			{
 				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got pecked to death");
 			}
-			if (damageSource.SourceNPCIndex >= 0 && Main.npc[damageSource.SourceNPCIndex].type == base.mod.NPCType("ShieldedChickenMan"))
+			if (damageSource.SourceNPCIndex >= 0 && Main.npc[damageSource.SourceNPCIndex].type == ModContent.NPCType<ShieldedChickenMan>())
 			{
 				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got pecked to death");
 			}
@@ -1925,59 +1881,52 @@ namespace Redemption
 					Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
 				}
 			}
-			if (this.omegaPower)
+			if (this.omegaPower && base.player.wet && !base.player.lavaWet && !base.player.honeyWet)
 			{
-				if (base.player.wet && !base.player.lavaWet && !base.player.honeyWet)
+				Main.PlaySound(SoundID.Item14, base.player.position);
+				for (int k = 0; k < 30; k++)
 				{
-					Main.PlaySound(SoundID.Item14, base.player.position);
-					for (int k = 0; k < 30; k++)
-					{
-						int dustIndex5 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y), base.player.width, base.player.height, 31, 0f, 0f, 100, default(Color), 5f);
-						Main.dust[dustIndex5].velocity *= 1.4f;
-					}
-					for (int l = 0; l < 40; l++)
-					{
-						int dustIndex6 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y), base.player.width, base.player.height, 6, 0f, 0f, 100, default(Color), 3f);
-						Main.dust[dustIndex6].noGravity = true;
-						Main.dust[dustIndex6].velocity *= 5f;
-						dustIndex6 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y), base.player.width, base.player.height, 6, 0f, 0f, 100, default(Color), 2f);
-						Main.dust[dustIndex6].velocity *= 3f;
-					}
-					for (int g2 = 0; g2 < 2; g2++)
-					{
-						int goreIndex2 = Gore.NewGore(new Vector2(base.player.position.X + (float)(base.player.width / 2) - 24f, base.player.position.Y + (float)(base.player.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-						Main.gore[goreIndex2].scale = 1.5f;
-						Main.gore[goreIndex2].velocity.X = Main.gore[goreIndex2].velocity.X + 1.5f;
-						Main.gore[goreIndex2].velocity.Y = Main.gore[goreIndex2].velocity.Y + 1.5f;
-						goreIndex2 = Gore.NewGore(new Vector2(base.player.position.X + (float)(base.player.width / 2) - 24f, base.player.position.Y + (float)(base.player.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-						Main.gore[goreIndex2].scale = 1.5f;
-						Main.gore[goreIndex2].velocity.X = Main.gore[goreIndex2].velocity.X - 1.5f;
-						Main.gore[goreIndex2].velocity.Y = Main.gore[goreIndex2].velocity.Y + 1.5f;
-						goreIndex2 = Gore.NewGore(new Vector2(base.player.position.X + (float)(base.player.width / 2) - 24f, base.player.position.Y + (float)(base.player.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-						Main.gore[goreIndex2].scale = 1.5f;
-						Main.gore[goreIndex2].velocity.X = Main.gore[goreIndex2].velocity.X + 1.5f;
-						Main.gore[goreIndex2].velocity.Y = Main.gore[goreIndex2].velocity.Y - 1.5f;
-						goreIndex2 = Gore.NewGore(new Vector2(base.player.position.X + (float)(base.player.width / 2) - 24f, base.player.position.Y + (float)(base.player.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-						Main.gore[goreIndex2].scale = 1.5f;
-						Main.gore[goreIndex2].velocity.X = Main.gore[goreIndex2].velocity.X - 1.5f;
-						Main.gore[goreIndex2].velocity.Y = Main.gore[goreIndex2].velocity.Y - 1.5f;
-					}
+					int dustIndex5 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y), base.player.width, base.player.height, 31, 0f, 0f, 100, default(Color), 5f);
+					Main.dust[dustIndex5].velocity *= 1.4f;
 				}
-				Gore.NewGore(base.player.position, base.player.velocity, base.mod.GetGoreSlot("Gores/v08/GirusCoreGore1"), 1f);
-				Gore.NewGore(base.player.position, base.player.velocity, base.mod.GetGoreSlot("Gores/v08/GirusCoreGore1"), 1f);
-				Gore.NewGore(base.player.position, base.player.velocity, base.mod.GetGoreSlot("Gores/v08/GirusCoreGore2"), 1f);
-				Gore.NewGore(base.player.position, base.player.velocity, base.mod.GetGoreSlot("Gores/v08/GirusCoreGore3"), 1f);
+				for (int l = 0; l < 40; l++)
+				{
+					int dustIndex6 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y), base.player.width, base.player.height, 6, 0f, 0f, 100, default(Color), 3f);
+					Main.dust[dustIndex6].noGravity = true;
+					Main.dust[dustIndex6].velocity *= 5f;
+					dustIndex6 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y), base.player.width, base.player.height, 6, 0f, 0f, 100, default(Color), 2f);
+					Main.dust[dustIndex6].velocity *= 3f;
+				}
+				for (int g2 = 0; g2 < 2; g2++)
+				{
+					int goreIndex2 = Gore.NewGore(new Vector2(base.player.position.X + (float)(base.player.width / 2) - 24f, base.player.position.Y + (float)(base.player.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+					Main.gore[goreIndex2].scale = 1.5f;
+					Main.gore[goreIndex2].velocity.X = Main.gore[goreIndex2].velocity.X + 1.5f;
+					Main.gore[goreIndex2].velocity.Y = Main.gore[goreIndex2].velocity.Y + 1.5f;
+					goreIndex2 = Gore.NewGore(new Vector2(base.player.position.X + (float)(base.player.width / 2) - 24f, base.player.position.Y + (float)(base.player.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+					Main.gore[goreIndex2].scale = 1.5f;
+					Main.gore[goreIndex2].velocity.X = Main.gore[goreIndex2].velocity.X - 1.5f;
+					Main.gore[goreIndex2].velocity.Y = Main.gore[goreIndex2].velocity.Y + 1.5f;
+					goreIndex2 = Gore.NewGore(new Vector2(base.player.position.X + (float)(base.player.width / 2) - 24f, base.player.position.Y + (float)(base.player.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+					Main.gore[goreIndex2].scale = 1.5f;
+					Main.gore[goreIndex2].velocity.X = Main.gore[goreIndex2].velocity.X + 1.5f;
+					Main.gore[goreIndex2].velocity.Y = Main.gore[goreIndex2].velocity.Y - 1.5f;
+					goreIndex2 = Gore.NewGore(new Vector2(base.player.position.X + (float)(base.player.width / 2) - 24f, base.player.position.Y + (float)(base.player.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+					Main.gore[goreIndex2].scale = 1.5f;
+					Main.gore[goreIndex2].velocity.X = Main.gore[goreIndex2].velocity.X - 1.5f;
+					Main.gore[goreIndex2].velocity.Y = Main.gore[goreIndex2].velocity.Y - 1.5f;
+				}
 			}
-			if (this.ksShieldGenerator && base.player.FindBuffIndex(base.mod.BuffType("KSShieldCooldown")) == -1)
+			if (this.ksShieldGenerator && base.player.FindBuffIndex(ModContent.BuffType<KSShieldCooldown>()) == -1)
 			{
 				base.player.statLife = 100;
 				base.player.HealEffect(100, true);
 				base.player.immune = true;
-				base.player.AddBuff(base.mod.BuffType("KSShieldBuff"), 3600, true);
-				base.player.AddBuff(base.mod.BuffType("KSShieldCooldown"), 36000, true);
-				if (base.player.ownedProjectileCounts[base.mod.ProjectileType("KSShieldPro")] == 0)
+				base.player.AddBuff(ModContent.BuffType<KSShieldBuff>(), 3600, true);
+				base.player.AddBuff(ModContent.BuffType<KSShieldCooldown>(), 36000, true);
+				if (base.player.ownedProjectileCounts[ModContent.ProjectileType<KSShieldPro>()] == 0)
 				{
-					Projectile.NewProjectile(base.player.position, Vector2.Zero, base.mod.ProjectileType("KSShieldPro"), 0, 0f, base.player.whoAmI, 0f, 0f);
+					Projectile.NewProjectile(base.player.position, Vector2.Zero, ModContent.ProjectileType<KSShieldPro>(), 0, 0f, base.player.whoAmI, 0f, 0f);
 				}
 				Main.PlaySound(SoundID.Item93, base.player.position);
 				return false;
@@ -1999,7 +1948,7 @@ namespace Redemption
 
 		public override void PostUpdate()
 		{
-			if (base.player.ZoneSandstorm && (this.ZoneXeno || this.ZoneEvilXeno))
+			if (base.player.ZoneSandstorm && (this.ZoneXeno || this.ZoneEvilXeno || this.ZoneEvilXeno2))
 			{
 				RedePlayer.EmitDust();
 			}
@@ -2011,7 +1960,7 @@ namespace Redemption
 					int dustIndex = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y), base.player.width, base.player.height, 269, 0f, 0f, 100, default(Color), 3f);
 					Main.dust[dustIndex].velocity *= 5.4f;
 				}
-				base.player.AddBuff(base.mod.BuffType("PowerSurgeBuff"), 420, true);
+				base.player.AddBuff(ModContent.BuffType<PowerSurgeBuff>(), 420, true);
 				this.powerSurgeCharge = 0;
 			}
 		}
@@ -2143,19 +2092,19 @@ namespace Redemption
 			{
 				return;
 			}
-			if ((this.ZoneXeno || this.ZoneEvilXeno) && liquidType == 0 && questFish == base.mod.ItemType("XenChomper") && Main.rand.Next(1) == 0)
+			if ((this.ZoneXeno || this.ZoneEvilXeno || this.ZoneEvilXeno2) && liquidType == 0 && questFish == ModContent.ItemType<XenChomper>() && Main.rand.Next(2) == 0)
 			{
-				caughtType = base.mod.ItemType("XenChomper");
+				caughtType = ModContent.ItemType<XenChomper>();
 			}
 			if (this.ZoneLab && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && Main.rand.Next(6) == 0)
 			{
-				caughtType = base.mod.ItemType("LabCrate");
+				caughtType = ModContent.ItemType<LabCrate>();
 			}
 		}
 
 		public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
 		{
-			if (this.omegaAccessory)
+			if (this.omegaPower)
 			{
 				Dust.NewDust(new Vector2(base.player.position.X - base.player.velocity.X * 2f, base.player.position.Y - 2f - base.player.velocity.Y * 2f), base.player.width, base.player.height, 226, 0f, 0f, 100, default(Color), 2f);
 			}
@@ -2165,8 +2114,10 @@ namespace Redemption
 			}
 			if (this.golemWateringCan)
 			{
-				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 483, 20, 1f, Main.myPlayer, 0f, 0f);
-				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 483, 20, 1f, Main.myPlayer, 0f, 0f);
+				for (int i = 0; i < 2; i++)
+				{
+					Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 483, 20, 1f, Main.myPlayer, 0f, 0f);
+				}
 				if (this.moreSeeds)
 				{
 					Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 483, 20, 1f, Main.myPlayer, 0f, 0f);
@@ -2174,62 +2125,53 @@ namespace Redemption
 			}
 			if (this.skeletonCan)
 			{
-				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("BoneSeed"), 10, 1f, Main.myPlayer, 0f, 0f);
-				if (Main.rand.Next(2) == 0)
+				for (int j = 0; j < Main.rand.Next(1, 2); j++)
 				{
-					Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("BoneSeed"), 10, 1f, Main.myPlayer, 0f, 0f);
+					Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), ModContent.ProjectileType<BoneSeed>(), 10, 1f, Main.myPlayer, 0f, 0f);
 				}
 				if (this.moreSeeds)
 				{
-					Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("BoneSeed"), 10, 1f, Main.myPlayer, 0f, 0f);
+					Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), ModContent.ProjectileType<BoneSeed>(), 10, 1f, Main.myPlayer, 0f, 0f);
 				}
 			}
 			if (this.spiritChicken)
 			{
-				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("SpiritChickenPro"), 9, 1f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), ModContent.ProjectileType<SpiritChickenPro>(), 9, 1f, Main.myPlayer, 0f, 0f);
 			}
 			if (this.spiritSkull1)
 			{
-				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("SpiritSkullPro"), 12, 1f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), ModContent.ProjectileType<SpiritSkullPro>(), 12, 1f, Main.myPlayer, 0f, 0f);
 			}
 			if (this.taintedNecklace)
 			{
-				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("CorruptSoul"), 50, 1f, Main.myPlayer, 0f, 0f);
-				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("CorruptSoul"), 50, 1f, Main.myPlayer, 0f, 0f);
-				if (Main.rand.Next(2) == 0)
+				for (int k = 0; k < Main.rand.Next(2, 5); k++)
 				{
-					Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("CorruptSoul"), 50, 1f, Main.myPlayer, 0f, 0f);
-				}
-				if (Main.rand.Next(2) == 0)
-				{
-					Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("CorruptSoul"), 50, 1f, Main.myPlayer, 0f, 0f);
-				}
-				if (Main.rand.Next(4) == 0)
-				{
-					Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("CorruptSoul"), 50, 1f, Main.myPlayer, 0f, 0f);
+					Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), ModContent.ProjectileType<CorruptSoul>(), 50, 1f, Main.myPlayer, 0f, 0f);
 				}
 			}
 			if (this.xeniumDischarge && Main.rand.Next(4) == 0)
 			{
-				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 0f, 0f, base.mod.ProjectileType("XeniumDischarge"), 0, 0f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 0f, 0f, ModContent.ProjectileType<XeniumDischarge>(), 0, 0f, Main.myPlayer, 0f, 0f);
 			}
 			if (this.spiritChicken2)
 			{
-				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("EtherealChickenPro"), 300, 1f, Main.myPlayer, 0f, 0f);
-				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("EtherealChickenPro"), 300, 1f, Main.myPlayer, 0f, 0f);
+				for (int l = 0; l < 2; l++)
+				{
+					Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), ModContent.ProjectileType<EtherealChickenPro>(), 300, 1f, Main.myPlayer, 0f, 0f);
+				}
 			}
 			if (this.shadeSet && Main.rand.Next(3) == 0)
 			{
 				int pieCut = 16;
-				for (int i = 0; i < pieCut; i++)
+				for (int m = 0; m < pieCut; m++)
 				{
-					int projID = Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 0f, 0f, base.mod.ProjectileType("CriesOfGriefPro3"), 400, 0f, Main.myPlayer, 0f, 0f);
-					Main.projectile[projID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(8f, 0f), (float)i / (float)pieCut * 6.28f);
+					int projID = Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 0f, 0f, ModContent.ProjectileType<CriesOfGriefPro3>(), 400, 0f, Main.myPlayer, 0f, 0f);
+					Main.projectile[projID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(8f, 0f), (float)m / (float)pieCut * 6.28f);
 				}
 			}
 			if (this.thornCirclet)
 			{
-				for (int j = 0; j < 6; j++)
+				for (int n = 0; n < 6; n++)
 				{
 					int Proj = Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 55, 20, 1f, Main.myPlayer, 0f, 0f);
 					Main.projectile[Proj].hostile = false;
@@ -2239,7 +2181,7 @@ namespace Redemption
 			}
 			if (this.thornCrown)
 			{
-				for (int k = 0; k < 6; k++)
+				for (int i2 = 0; i2 < 6; i2++)
 				{
 					int Proj2 = Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 484, 200, 1f, Main.myPlayer, 0f, 0f);
 					Main.projectile[Proj2].hostile = false;
@@ -2272,6 +2214,8 @@ namespace Redemption
 		public bool ZoneXeno;
 
 		public bool ZoneEvilXeno;
+
+		public bool ZoneEvilXeno2;
 
 		public bool heartEmblem;
 
@@ -2324,16 +2268,6 @@ namespace Redemption
 		public bool creationBonus;
 
 		public static bool reflectProjs = false;
-
-		public bool omegaAccessoryPrevious;
-
-		public bool omegaAccessory;
-
-		public bool omegaHideVanity;
-
-		public bool omegaForceVanity;
-
-		public bool omegaPower;
 
 		public bool druidBane;
 
@@ -2408,6 +2342,8 @@ namespace Redemption
 		public bool natureGuardian26;
 
 		public bool natureGuardian27;
+
+		public bool natureGuardian28;
 
 		public bool ZoneLab;
 
@@ -2603,15 +2539,9 @@ namespace Redemption
 
 		public bool ukkonenMinion;
 
-		public bool dreamsong;
-
 		public bool cursedThornSet;
 
 		public int powerSurgeCharge;
-
-		public bool shadowBinder;
-
-		public int shadowBinderCharge;
 
 		public bool xenomiteSet;
 
@@ -2627,6 +2557,16 @@ namespace Redemption
 
 		public bool jellyfishDrone;
 
+		public bool moonStaves;
+
+		public bool omegaPower;
+
+		public bool halPet;
+
+		public bool tiedPet;
+
+		public bool tbotEyes;
+
 		public static readonly PlayerLayer MiscEffectsFront = new PlayerLayer("Redemption", "MiscEffectsFront", PlayerLayer.MiscEffectsFront, delegate(PlayerDrawInfo drawInfo)
 		{
 			if (drawInfo.shadow != 0f)
@@ -2636,7 +2576,7 @@ namespace Redemption
 			Player drawPlayer = drawInfo.drawPlayer;
 			Mod mod = ModLoader.GetMod("Redemption");
 			drawPlayer.GetModPlayer<RedePlayer>();
-			if (drawPlayer.HasBuff(mod.BuffType("EarthbindDebuff")))
+			if (drawPlayer.HasBuff(ModContent.BuffType<EarthbindDebuff>()))
 			{
 				Texture2D texture = mod.GetTexture("NPCs/Bosses/Thorn/AkkaEarthbindEffect");
 				int drawX = (int)(drawInfo.position.X + (float)drawPlayer.width / 2f - Main.screenPosition.X);

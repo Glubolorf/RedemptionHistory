@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -27,7 +28,7 @@ namespace Redemption.Items.Weapons
 			base.item.damage = 25;
 			base.item.scale = 1f;
 			base.item.noUseGraphic = true;
-			base.item.shoot = base.mod.ProjectileType("SkullDiggerHeadPro");
+			base.item.shoot = ModContent.ProjectileType<SkullDiggerHeadPro>();
 			base.item.shootSpeed = 32f;
 			base.item.UseSound = SoundID.Item1;
 			base.item.melee = true;

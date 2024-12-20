@@ -14,7 +14,7 @@ namespace Redemption.Items
 		{
 			base.item.CloneDefaults(1236);
 			base.item.shootSpeed = 16f;
-			base.item.shoot = base.mod.ProjectileType("KaniteHookProjectile");
+			base.item.shoot = ModContent.ProjectileType<KaniteHookProjectile>();
 		}
 
 		public override void AddRecipes()

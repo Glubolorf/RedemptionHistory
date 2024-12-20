@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.v08;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -23,7 +24,7 @@ namespace Redemption.Items.Weapons.Ammo
 			base.item.knockBack = 3f;
 			base.item.value = 17;
 			base.item.rare = 7;
-			base.item.shoot = base.mod.ProjectileType("BileArrowPro");
+			base.item.shoot = ModContent.ProjectileType<BileArrowPro>();
 			base.item.shootSpeed = 4.25f;
 			base.item.ammo = AmmoID.Arrow;
 		}

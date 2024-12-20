@@ -49,19 +49,19 @@ namespace Redemption.Projectiles.Minions.HoloMinions
 				int minionChoice = Main.rand.Next(7);
 				if (minionChoice == 0)
 				{
-					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y - 40f, 0f, 0f, base.mod.ProjectileType("HoloMinion1"), base.projectile.damage, 5f, Main.myPlayer, 0f, 0f);
+					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y - 40f, 0f, 0f, ModContent.ProjectileType<HoloMinion1>(), base.projectile.damage, 5f, Main.myPlayer, 0f, 0f);
 				}
 				if (minionChoice == 1 || minionChoice == 4)
 				{
-					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y - 40f, 0f, 0f, base.mod.ProjectileType("HoloMinion2"), base.projectile.damage, 5f, Main.myPlayer, 0f, 0f);
+					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y - 40f, 0f, 0f, ModContent.ProjectileType<HoloMinion2>(), base.projectile.damage, 5f, Main.myPlayer, 0f, 0f);
 				}
 				if (minionChoice == 2 || minionChoice == 5)
 				{
-					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y - 40f, 0f, 0f, base.mod.ProjectileType("HoloMinion3"), base.projectile.damage, 5f, Main.myPlayer, 0f, 0f);
+					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y - 40f, 0f, 0f, ModContent.ProjectileType<HoloMinion3>(), base.projectile.damage, 5f, Main.myPlayer, 0f, 0f);
 				}
 				if (minionChoice == 3 || minionChoice == 6)
 				{
-					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y - 40f, 0f, 0f, base.mod.ProjectileType("HoloMinion4"), base.projectile.damage, 5f, Main.myPlayer, 0f, 0f);
+					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y - 40f, 0f, 0f, ModContent.ProjectileType<HoloMinion4>(), base.projectile.damage, 5f, Main.myPlayer, 0f, 0f);
 				}
 			}
 			if (base.projectile.localAI[0] == 60f)

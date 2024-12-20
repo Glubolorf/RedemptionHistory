@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -15,7 +16,7 @@ namespace Redemption.Tiles.Wasteland
 			Main.tileBlockLight[(int)base.Type] = false;
 			Main.tileLighted[(int)base.Type] = true;
 			this.dustType = 61;
-			this.drop = base.mod.ItemType("XenomiteShard");
+			this.drop = ModContent.ItemType<XenomiteShard>();
 			ModTranslation name = base.CreateMapEntryName(null);
 			name.SetDefault("Xenomite");
 			base.AddMapEntry(new Color(54, 193, 59), name);

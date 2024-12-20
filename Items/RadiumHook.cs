@@ -14,7 +14,7 @@ namespace Redemption.Items
 		{
 			base.item.CloneDefaults(1800);
 			base.item.shootSpeed = 20f;
-			base.item.shoot = base.mod.ProjectileType("RadiumHookProjectile");
+			base.item.shoot = ModContent.ProjectileType<RadiumHookProjectile>();
 		}
 	}
 }

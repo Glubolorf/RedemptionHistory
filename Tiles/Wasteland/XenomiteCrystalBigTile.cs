@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -37,7 +38,7 @@ namespace Redemption.Tiles.Wasteland
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 32, 32, base.mod.ItemType("Xenomite"), Main.rand.Next(3, 6), false, 0, false, false);
+			Item.NewItem(i * 16, j * 16, 32, 32, ModContent.ItemType<Xenomite>(), Main.rand.Next(3, 6), false, 0, false, false);
 		}
 
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

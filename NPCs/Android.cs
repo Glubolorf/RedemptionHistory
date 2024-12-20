@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Placeable.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Redemption.NPCs
 			this.aiType = 140;
 			this.animationType = 140;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("AndroidBanner");
+			this.bannerItem = ModContent.ItemType<AndroidBanner>();
 		}
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
@@ -61,7 +62,7 @@ namespace Redemption.NPCs
 				int num = Main.rand.Next(100);
 				if (num == 0)
 				{
-					base.npc.SetDefaults(base.mod.NPCType("Apidroid"), -1f);
+					base.npc.SetDefaults(ModContent.NPCType<Apidroid>(), -1f);
 					this.change = true;
 				}
 				if (num >= 1)

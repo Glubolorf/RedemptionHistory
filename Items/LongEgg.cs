@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.v08;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -29,7 +30,7 @@ namespace Redemption.Items
 			base.item.noMelee = true;
 			base.item.thrown = true;
 			base.item.shootSpeed = 18f;
-			base.item.shoot = base.mod.ProjectileType("LongEggPro");
+			base.item.shoot = ModContent.ProjectileType<LongEggPro>();
 		}
 	}
 }

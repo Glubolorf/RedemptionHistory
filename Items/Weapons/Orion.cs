@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -44,7 +45,7 @@ namespace Redemption.Items.Weapons
 			if (player.altFunctionUse == 2)
 			{
 				base.item.mana = 15;
-				base.item.shoot = base.mod.ProjectileType("OrionBulletPro");
+				base.item.shoot = ModContent.ProjectileType<OrionBulletPro>();
 				base.item.shootSpeed = 16f;
 				base.item.useAmmo = 0;
 			}

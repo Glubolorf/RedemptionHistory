@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -35,12 +36,12 @@ namespace Redemption.Items
 			int num = Main.rand.Next(2);
 			if (num == 0)
 			{
-				base.item.buffType = base.mod.BuffType("BlackenedHeartBuff");
+				base.item.buffType = ModContent.BuffType<BlackenedHeartBuff>();
 				base.item.buffTime = 18000;
 			}
 			if (num == 1)
 			{
-				base.item.buffType = base.mod.BuffType("BlackenedHeartDebuff");
+				base.item.buffType = ModContent.BuffType<BlackenedHeartDebuff>();
 				base.item.buffTime = 18000;
 			}
 			return true;
@@ -48,7 +49,7 @@ namespace Redemption.Items
 
 		public override bool CanUseItem(Player player)
 		{
-			return !player.HasBuff(base.mod.BuffType("BlackenedHeartBuff")) && !player.HasBuff(base.mod.BuffType("BlackenedHeartDebuff"));
+			return !player.HasBuff(ModContent.BuffType<BlackenedHeartBuff>()) && !player.HasBuff(ModContent.BuffType<BlackenedHeartDebuff>());
 		}
 	}
 }

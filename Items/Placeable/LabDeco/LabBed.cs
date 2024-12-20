@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles.LabDeco;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable.LabDeco
@@ -23,7 +24,7 @@ namespace Redemption.Items.Placeable.LabDeco
 			base.item.rare = 6;
 			base.item.consumable = true;
 			base.item.value = 6000;
-			base.item.createTile = base.mod.TileType("LabBedTile");
+			base.item.createTile = ModContent.TileType<LabBedTile>();
 		}
 
 		public override void AddRecipes()

@@ -1520,7 +1520,7 @@ namespace Redemption
 				if (p.velocity.X < 0f)
 				{
 					p.spriteDirection = -1;
-					p.rotation = (float)Math.Atan2(-(double)p.velocity.Y, -(double)p.velocity.X) - 1.57f;
+					p.rotation = (float)Math.Atan2((double)(-(double)p.velocity.Y), (double)(-(double)p.velocity.X)) - 1.57f;
 				}
 				else
 				{
@@ -4656,7 +4656,7 @@ namespace Redemption
 			playerCenterY -= npcCenter.Y;
 			float dist = (float)Math.Sqrt((double)(playerCenterX * playerCenterX + playerCenterY * playerCenterY));
 			isDigging = canMove;
-			if (npc.ai[1] > 0f && npc.ai[1] < (float)Main.npc.Length)
+			if (npc.ai[1] > 0f && npc.ai[1] < 200f)
 			{
 				try
 				{
@@ -5739,7 +5739,7 @@ namespace Redemption
 					tickUpdater = 0f;
 					if (doorCounter >= (float)doorCounterMax)
 					{
-						npc.velocity.X = 0.5f * -(float)npc.direction;
+						npc.velocity.X = 0.5f * (float)(-(float)npc.direction);
 						doorBeatCounter += 1f;
 						doorCounter = 0f;
 						bool attemptOpenDoor = false;
@@ -5942,77 +5942,54 @@ namespace Redemption
 					parsedDamage = Main.DamageVar((float)dmgAmt);
 				}
 				player.Hurt(PlayerDeathReason.ByOther(-1), parsedDamage, hitDirection, false, false, false, 0);
-				if (Main.netMode != 0)
+				return;
+			}
+			Player subPlayer;
+			if ((subPlayer = (damager as Player)) != null)
+			{
+				int parsedDamage2 = dmgAmt;
+				if (dmgVariation)
 				{
-					NetMessage.SendData(26, -1, -1, PlayerDeathReason.LegacyDefault().GetDeathText(player.name), player.whoAmI, (float)hitDirection, 1f, knockback, parsedDamage, 0, 0);
+					parsedDamage2 = Main.DamageVar((float)dmgAmt);
+				}
+				player.Hurt(PlayerDeathReason.ByPlayer(subPlayer.whoAmI), parsedDamage2, hitDirection, true, false, false, 0);
+				subPlayer.attackCD = (int)((float)subPlayer.itemAnimationMax * 0.33f);
+				return;
+			}
+			if (damager is Projectile)
+			{
+				Projectile p = (Projectile)damager;
+				if (p.friendly)
+				{
+					int parsedDamage3 = dmgAmt;
+					if (dmgVariation)
+					{
+						parsedDamage3 = Main.DamageVar((float)dmgAmt);
+					}
+					player.Hurt(PlayerDeathReason.ByProjectile(p.owner, p.whoAmI), parsedDamage3, hitDirection, true, false, false, 0);
+					p.playerImmune[player.whoAmI] = 40;
+					return;
+				}
+				if (p.hostile)
+				{
+					int parsedDamage4 = dmgAmt;
+					if (dmgVariation)
+					{
+						parsedDamage4 = Main.DamageVar((float)dmgAmt);
+					}
+					player.Hurt(PlayerDeathReason.ByProjectile(-1, p.whoAmI), parsedDamage4, hitDirection, false, false, false, 0);
 					return;
 				}
 			}
-			else
+			else if (damager is NPC)
 			{
-				if (damager is Player)
+				NPC npc = (NPC)damager;
+				int parsedDamage5 = dmgAmt;
+				if (dmgVariation)
 				{
-					Player subPlayer = (Player)damager;
-					int parsedDamage2 = dmgAmt;
-					if (dmgVariation)
-					{
-						parsedDamage2 = Main.DamageVar((float)dmgAmt);
-					}
-					player.Hurt(PlayerDeathReason.ByPlayer(subPlayer.whoAmI), parsedDamage2, hitDirection, true, false, false, 0);
-					if (Main.netMode != 0)
-					{
-						NetMessage.SendData(26, -1, -1, PlayerDeathReason.ByPlayer(subPlayer.whoAmI).GetDeathText(player.name), player.whoAmI, (float)hitDirection, 1f, knockback, parsedDamage2, 0, 0);
-					}
-					subPlayer.attackCD = (int)((float)subPlayer.itemAnimationMax * 0.33f);
-					return;
+					parsedDamage5 = Main.DamageVar((float)dmgAmt);
 				}
-				if (damager is Projectile)
-				{
-					Projectile p = (Projectile)damager;
-					if (p.friendly)
-					{
-						int parsedDamage3 = dmgAmt;
-						if (dmgVariation)
-						{
-							parsedDamage3 = Main.DamageVar((float)dmgAmt);
-						}
-						player.Hurt(PlayerDeathReason.ByProjectile(p.owner, p.whoAmI), parsedDamage3, hitDirection, true, false, false, 0);
-						if (Main.netMode != 0)
-						{
-							NetMessage.SendData(26, -1, -1, PlayerDeathReason.ByProjectile(p.owner, p.whoAmI).GetDeathText(player.name), player.whoAmI, (float)hitDirection, 1f, knockback, parsedDamage3, 0, 0);
-						}
-						p.playerImmune[player.whoAmI] = 40;
-						return;
-					}
-					if (p.hostile)
-					{
-						int parsedDamage4 = dmgAmt;
-						if (dmgVariation)
-						{
-							parsedDamage4 = Main.DamageVar((float)dmgAmt);
-						}
-						player.Hurt(PlayerDeathReason.ByProjectile(-1, p.whoAmI), parsedDamage4, hitDirection, false, false, false, 0);
-						if (Main.netMode != 0)
-						{
-							NetMessage.SendData(26, -1, -1, PlayerDeathReason.ByProjectile(p.owner, p.whoAmI).GetDeathText(player.name), player.whoAmI, (float)hitDirection, 1f, knockback, parsedDamage4, 0, 0);
-							return;
-						}
-					}
-				}
-				else if (damager is NPC)
-				{
-					NPC npc = (NPC)damager;
-					int parsedDamage5 = dmgAmt;
-					if (dmgVariation)
-					{
-						parsedDamage5 = Main.DamageVar((float)dmgAmt);
-					}
-					player.Hurt(PlayerDeathReason.ByNPC(npc.whoAmI), parsedDamage5, hitDirection, false, false, false, 0);
-					if (Main.netMode != 0)
-					{
-						NetMessage.SendData(26, -1, -1, PlayerDeathReason.ByNPC(npc.whoAmI).GetDeathText(player.name), player.whoAmI, (float)hitDirection, 1f, knockback, parsedDamage5, 0, 0);
-					}
-				}
+				player.Hurt(PlayerDeathReason.ByNPC(npc.whoAmI), parsedDamage5, hitDirection, false, false, false, 0);
 			}
 		}
 
@@ -6262,7 +6239,7 @@ namespace Redemption
 		public static int[] GetNPCsInBox(Rectangle rect, int npcType = -1, int[] npcsToExclude = null, Func<NPC, bool> CanAdd = null)
 		{
 			List<int> allNPCs = new List<int>();
-			for (int i = 0; i < Main.npc.Length; i++)
+			for (int i = 0; i < 200; i++)
 			{
 				NPC npc = Main.npc[i];
 				if (npc != null && npc.active && npc.life > 0 && (npcType == -1 || npc.type == npcType) && npc.type != 488 && rect.Intersects(npc.Hitbox))
@@ -6296,7 +6273,7 @@ namespace Redemption
 		public static int GetNPC(Vector2 center, int npcType = -1, int[] npcsToExclude = null, float distance = -1f, Func<NPC, bool> CanAdd = null)
 		{
 			int currentNPC = -1;
-			for (int i = 0; i < Main.npc.Length; i++)
+			for (int i = 0; i < 200; i++)
 			{
 				NPC npc = Main.npc[i];
 				if (npc != null && npc.active && npc.life > 0 && (npcType == -1 || npc.type == npcType) && npc.type != 488 && (distance == -1f || npc.Distance(center) < distance))
@@ -6331,7 +6308,7 @@ namespace Redemption
 		public static int[] GetNPCs(Vector2 center, int npcType = -1, int[] npcsToExclude = null, float distance = 500f, Func<NPC, bool> CanAdd = null)
 		{
 			List<int> allNPCs = new List<int>();
-			for (int i = 0; i < Main.npc.Length; i++)
+			for (int i = 0; i < 200; i++)
 			{
 				NPC npc = Main.npc[i];
 				if (npc != null && npc.active && npc.life > 0 && (npcType == -1 || npc.type == npcType) && npc.type != 488 && (distance == -1f || npc.Distance(center) < distance))

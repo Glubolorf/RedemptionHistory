@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -30,7 +31,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.UseSound = base.mod.GetLegacySoundSlot(2, "Sounds/Item/AlarmItem");
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
-			base.item.shoot = base.mod.ProjectileType("PlutoniumNukePro");
+			base.item.shoot = ModContent.ProjectileType<PlutoniumNukePro>();
 			base.item.shootSpeed = 15f;
 		}
 
@@ -86,7 +87,7 @@ namespace Redemption.Items.Weapons.v08
 				num76 *= num77;
 				float speedX2 = num75 + (float)Main.rand.Next(-50, 51) * 0.02f;
 				float speedY2 = num76 + (float)Main.rand.Next(-50, 51) * 0.02f;
-				Projectile.NewProjectile(vector2.X, vector2.Y, speedX2, speedY2, base.mod.ProjectileType("PlutoniumNukePro"), num73, num74, i, 0f, (float)Main.rand.Next(10));
+				Projectile.NewProjectile(vector2.X, vector2.Y, speedX2, speedY2, ModContent.ProjectileType<PlutoniumNukePro>(), num73, num74, i, 0f, (float)Main.rand.Next(10));
 			}
 			return false;
 		}

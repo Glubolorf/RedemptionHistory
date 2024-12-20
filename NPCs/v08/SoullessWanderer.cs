@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Dusts;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -38,10 +40,10 @@ namespace Redemption.NPCs.v08
 		{
 			if (Main.netMode != 1 && base.npc.life <= 0)
 			{
-				NPC.NewNPC((int)base.npc.Center.X + Main.rand.Next(-12, 12), (int)base.npc.position.Y + Main.rand.Next(-42, 0), base.mod.NPCType("SmallShadesoulNPC"), 0, 0f, 0f, 0f, 0f, 255);
+				NPC.NewNPC((int)base.npc.Center.X + Main.rand.Next(-12, 12), (int)base.npc.position.Y + Main.rand.Next(-42, 0), ModContent.NPCType<SmallShadesoulNPC>(), 0, 0f, 0f, 0f, 0f, 255);
 				if (Main.rand.Next(4) == 0)
 				{
-					NPC.NewNPC((int)base.npc.Center.X + Main.rand.Next(-12, 12), (int)base.npc.position.Y + Main.rand.Next(-42, 0), base.mod.NPCType("ShadesoulNPC"), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)base.npc.Center.X + Main.rand.Next(-12, 12), (int)base.npc.position.Y + Main.rand.Next(-42, 0), ModContent.NPCType<ShadesoulNPC>(), 0, 0f, 0f, 0f, 0f, 255);
 				}
 			}
 		}
@@ -52,11 +54,11 @@ namespace Redemption.NPCs.v08
 			{
 				for (int i = 0; i < 40; i++)
 				{
-					int dustIndex2 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, base.mod.DustType("VoidFlame"), 0f, 0f, 100, default(Color), 2f);
+					int dustIndex2 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, ModContent.DustType<VoidFlame>(), 0f, 0f, 100, default(Color), 2f);
 					Main.dust[dustIndex2].velocity *= 2.6f;
 				}
 			}
-			int dustIndex3 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, base.mod.DustType("VoidFlame"), 0f, 0f, 100, default(Color), 1f);
+			int dustIndex3 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, ModContent.DustType<VoidFlame>(), 0f, 0f, 100, default(Color), 1f);
 			Main.dust[dustIndex3].velocity *= 1.6f;
 		}
 
@@ -67,12 +69,12 @@ namespace Redemption.NPCs.v08
 				int num55 = Main.rand.Next(3);
 				if (num55 == 0)
 				{
-					base.npc.SetDefaults(base.mod.NPCType("SoullessAssassin"), -1f);
+					base.npc.SetDefaults(ModContent.NPCType<SoullessAssassin>(), -1f);
 					this.change = true;
 				}
 				if (num55 == 1)
 				{
-					base.npc.SetDefaults(base.mod.NPCType("SoullessDueller"), -1f);
+					base.npc.SetDefaults(ModContent.NPCType<SoullessDueller>(), -1f);
 					this.change = true;
 				}
 				if (num55 >= 2)
@@ -171,7 +173,7 @@ namespace Redemption.NPCs.v08
 						float Speed = 16f;
 						Vector2 vector8 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 						int damage = 55;
-						int type = base.mod.ProjectileType("ShadeJavelinPro1");
+						int type = ModContent.ProjectileType<ShadeJavelinPro1>();
 						float rotation = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
 						int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0) + (float)Main.rand.Next(-1, 1), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0) + (float)Main.rand.Next(-1, 1), type, damage, 0f, 0, 0f, 0f);
 						Main.projectile[num54].netUpdate = true;
@@ -206,7 +208,7 @@ namespace Redemption.NPCs.v08
 			{
 				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 				int num214 = hopAni.Height / 1;
-				int y6 = num214 * this.hopFrame;
+				int y6 = 0;
 				Main.spriteBatch.Draw(hopAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, hopAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)hopAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.throwAttack)
@@ -220,8 +222,6 @@ namespace Redemption.NPCs.v08
 		}
 
 		private bool hop;
-
-		private int hopFrame;
 
 		private bool throwAttack;
 

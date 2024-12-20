@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Dusts;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -36,15 +37,15 @@ namespace Redemption.NPCs.LabNPCs.New
 			Main.PlaySound(SoundID.NPCDeath1, base.projectile.position);
 			for (int i = 0; i < 30; i++)
 			{
-				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, base.mod.DustType("SludgeSpoonDust"), 0f, 0f, 100, default(Color), 1.5f);
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, ModContent.DustType<SludgeSpoonDust>(), 0f, 0f, 100, default(Color), 1.5f);
 				Main.dust[dustIndex].velocity *= 1.4f;
 			}
 		}
 
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(-base.projectile.velocity.X + (float)Main.rand.Next(-2, 2), -base.projectile.velocity.Y + (float)Main.rand.Next(-2, 2)), base.mod.ProjectileType("CausticTear"), base.projectile.damage / 2, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
-			Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(-base.projectile.velocity.X + (float)Main.rand.Next(-2, 2), -base.projectile.velocity.Y + (float)Main.rand.Next(-2, 2)), base.mod.ProjectileType("CausticTear"), base.projectile.damage / 2, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+			Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(-base.projectile.velocity.X + (float)Main.rand.Next(-2, 2), -base.projectile.velocity.Y + (float)Main.rand.Next(-2, 2)), ModContent.ProjectileType<CausticTear>(), base.projectile.damage / 2, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+			Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(-base.projectile.velocity.X + (float)Main.rand.Next(-2, 2), -base.projectile.velocity.Y + (float)Main.rand.Next(-2, 2)), ModContent.ProjectileType<CausticTear>(), base.projectile.damage / 2, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			base.projectile.Kill();
 			return false;
 		}

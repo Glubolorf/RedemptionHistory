@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.NPCs.Bosses.TheKeeper;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,7 +32,7 @@ namespace Redemption.Items
 
 		public override bool CanUseItem(Player player)
 		{
-			return !Main.dayTime && !NPC.AnyNPCs(base.mod.NPCType("TheKeeper"));
+			return !Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<TheKeeper>());
 		}
 
 		public override bool UseItem(Player player)

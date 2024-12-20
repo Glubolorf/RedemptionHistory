@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Projectiles.Minions;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -17,7 +18,7 @@ namespace Redemption.Buffs
 		public override void Update(Player player, ref int buffIndex)
 		{
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
-			if (player.ownedProjectileCounts[base.mod.ProjectileType("XenomiteEyeS")] > 0)
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<XenomiteEyeS>()] > 0)
 			{
 				modPlayer.xenoMinion = true;
 			}

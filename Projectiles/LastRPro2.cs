@@ -34,7 +34,6 @@ namespace Redemption.Projectiles
 			base.projectile.hostile = false;
 			base.projectile.penetrate = -1;
 			base.projectile.tileCollide = true;
-			base.projectile.timeLeft = 28;
 			base.projectile.glowMask = LastRPro2.customGlowMask;
 		}
 
@@ -51,11 +50,11 @@ namespace Redemption.Projectiles
 				projectile2.frame = num;
 				if (num >= 7)
 				{
+					base.projectile.Kill();
 					base.projectile.frame = 0;
 				}
 			}
-			base.projectile.velocity.X = 0f;
-			base.projectile.velocity.Y = 0f;
+			base.projectile.velocity *= 0f;
 			Lighting.AddLight(base.projectile.Center, (float)(255 - base.projectile.alpha) * 1f / 255f, (float)(255 - base.projectile.alpha) * 1f / 255f, (float)(255 - base.projectile.alpha) * 1f / 255f);
 		}
 

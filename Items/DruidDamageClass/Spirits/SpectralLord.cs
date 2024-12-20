@@ -24,6 +24,8 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 			base.projectile.friendly = false;
 			base.projectile.hostile = false;
 			base.projectile.scale *= 0f;
+			base.projectile.GetGlobalProjectile<DruidProjectile>().druidic = true;
+			base.projectile.GetGlobalProjectile<DruidProjectile>().fromStave = false;
 		}
 
 		public override void AI()
@@ -52,18 +54,6 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 			if (base.projectile.alpha >= 255)
 			{
 				base.projectile.Kill();
-			}
-		}
-
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
-		{
-			Player player = Main.player[base.projectile.owner];
-			int critChance = player.HeldItem.crit;
-			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref critChance);
-			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref critChance);
-			if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
-			{
-				crit = true;
 			}
 		}
 	}

@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Redemption.Projectiles;
+using Redemption.Projectiles.DruidProjectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,7 +12,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Angelic Fan");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Born from ashes of the undead'\nThrows a cluster of Druid Daggers\nDruid Daggers tossed from the Angelic Fan unleash life-stealing clouds");
+			base.Tooltip.SetDefault("'Born from ashes of the undead'\nThrows a cluster of Druid Daggers\nDruid Daggers tossed from the Angelic Fan unleash life-stealing clouds");
 		}
 
 		public override void SafeSetDefaults()

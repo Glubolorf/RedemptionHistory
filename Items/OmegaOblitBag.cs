@@ -50,6 +50,12 @@ namespace Redemption.Items
 
 		public override void OpenBossBag(Player player)
 		{
+			if (Main.rand.Next(20) == 0)
+			{
+				player.QuickSpawnItem(base.mod.ItemType("IntruderMask"), 1);
+				player.QuickSpawnItem(base.mod.ItemType("IntruderArmour"), 1);
+				player.QuickSpawnItem(base.mod.ItemType("IntruderPants"), 1);
+			}
 			if (Main.rand.Next(14) == 0)
 			{
 				player.QuickSpawnItem(base.mod.ItemType("GirusMask"), 1);

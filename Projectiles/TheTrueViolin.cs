@@ -15,7 +15,7 @@ namespace Redemption.Projectiles
 			base.projectile.CloneDefaults(78);
 			this.aiType = 78;
 			base.projectile.penetrate = 4;
-			base.projectile.melee = true;
+			base.projectile.magic = true;
 		}
 	}
 }

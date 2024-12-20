@@ -33,7 +33,7 @@ namespace Redemption.Projectiles.Minions.HoloMinions
 			this.inertia = 35f;
 			base.projectile.aiStyle = 66;
 			this.aiType = 533;
-			base.projectile.damage = 250;
+			base.projectile.damage = 200;
 		}
 
 		public override bool MinionContactDamage()

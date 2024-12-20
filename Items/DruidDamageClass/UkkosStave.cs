@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class UkkosStave : DruidDamageItem
+	public class UkkosStave : DruidStave
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Ukko's Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Finnish him!'\nOnly usable after all Mech Bosses has been defeated\nSummons a giant Lightning Bolt at cursor point\nRight-clicking will shoot out a Lightning Blast\n[c/ffc300:Legendary]");
+			base.Tooltip.SetDefault("'Finnish him!'\nOnly usable after Moonlord has been defeated\nSummons a giant Lightning Bolt at cursor point\nRight-clicking will shoot out a Lightning Blast\n[c/ffc300:Legendary]");
 		}
 
 		public override void SafeSetDefaults()
@@ -24,15 +21,19 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.crit = 40;
 			base.item.useTime = 40;
 			base.item.useAnimation = 40;
-			base.item.useStyle = 1;
 			base.item.knockBack = 5f;
 			base.item.value = Item.buyPrice(0, 20, 0, 0);
-			base.item.rare = 11;
-			base.item.UseSound = SoundID.Item1;
+			base.item.rare = 8;
+			base.item.UseSound = SoundID.Item43;
 			base.item.noMelee = true;
 			base.item.autoReuse = true;
 			base.item.shoot = base.mod.ProjectileType("UkkosLightning");
 			base.item.shootSpeed = 0f;
+			this.defaultShoot = base.mod.ProjectileType("UkkosLightning");
+			this.singleShotStave = false;
+			this.staveHoldOffset = new Vector2(4f, -10f);
+			this.staveLength = 76.2f;
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 7;
 		}
 
 		public override bool AltFunctionUse(Player player)
@@ -63,43 +64,13 @@ namespace Redemption.Items.DruidDamageClass
 			return NPC.downedMoonlord;
 		}
 
-		public override float UseTimeMultiplier(Player player)
+		protected override bool SpecialShootPattern(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().fasterStaves)
+			if (player.altFunctionUse != 2)
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
-				{
-					return 1.45f;
-				}
-				return 1.15f;
+				position = Main.MouseWorld;
 			}
-			else
-			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
-				{
-					return 1.35f;
-				}
-				return 1f;
-			}
-		}
-
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
-			if (player.altFunctionUse == 2)
-			{
-				return true;
-			}
-			position = Main.MouseWorld;
 			return true;
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> tooltips)
-		{
-			Color transparent = Color.Transparent;
-			if (base.item.modItem != null && base.item.modItem.mod == ModLoader.GetMod("Redemption"))
-			{
-				Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName")).overrideColor = new Color?(new Color(255, 195, 0));
-			}
 		}
 	}
 }

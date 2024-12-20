@@ -25,7 +25,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.channel = true;
 			Item.sellPrice(0, 0, 60, 0);
 			base.item.noMelee = true;
-			base.item.shootSpeed = 12f;
+			base.item.shootSpeed = 6f;
 			base.item.noUseGraphic = true;
 			base.item.rare = 3;
 		}

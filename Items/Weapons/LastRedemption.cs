@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -47,6 +45,7 @@ namespace Redemption.Items.Weapons
 			base.item.shoot = base.mod.ProjectileType("LastRPro1");
 			base.item.shootSpeed = 10f;
 			base.item.glowMask = LastRedemption.customGlowMask;
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 7;
 		}
 
 		public override bool AltFunctionUse(Player player)
@@ -142,15 +141,6 @@ namespace Redemption.Items.Weapons
 			if (player.ownedProjectileCounts[base.mod.ProjectileType("LastRPro4")] == 0)
 			{
 				Projectile.NewProjectile(player.position, Vector2.Zero, base.mod.ProjectileType("LastRPro4"), 0, 0f, player.whoAmI, 0f, 0f);
-			}
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> tooltips)
-		{
-			Color transparent = Color.Transparent;
-			if (base.item.modItem != null && base.item.modItem.mod == ModLoader.GetMod("Redemption"))
-			{
-				Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName")).overrideColor = new Color?(new Color(255, 195, 0));
 			}
 		}
 

@@ -9,15 +9,15 @@ namespace Redemption.Items.Armor.Garlands
 	{
 		0
 	})]
-	public class Garland5 : ModItem
+	public class Garland5 : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Adamantite Garland");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n14% increased druidic damage\n8% increased druidic critical strike chance");
+			base.Tooltip.SetDefault("14% increased druidic damage\n8% increased druidic critical strike chance");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 24;
 			base.item.height = 20;
@@ -47,7 +47,7 @@ namespace Redemption.Items.Armor.Garlands
 		{
 			player.setBonus = "Staves swing faster, Throws seedbags faster, Spirits shoot faster";
 			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.fasterStaves = true;
+			redePlayer.staveSpeed += 0.05f;
 			redePlayer.fasterSeedbags = true;
 			redePlayer.fasterSpirits = true;
 		}

@@ -14,7 +14,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Infected Thornshield");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n-2 defense\nDouble tap a direction to dash\n14% increased druidic critical strike chance\nInflicts Infection upon dashing into an enemy\nReleases acid-like sparks as you move");
+			base.Tooltip.SetDefault("\n-2 defense\nDouble tap a direction to dash\n14% increased druidic critical strike chance\nInflicts Infection upon dashing into an enemy\nReleases acid-like sparks as you move");
 		}
 
 		public override void SafeSetDefaults()

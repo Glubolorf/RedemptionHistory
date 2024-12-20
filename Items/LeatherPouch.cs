@@ -1,18 +1,19 @@
 ﻿using System;
+using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Items
 {
-	public class LeatherPouch : ModItem
+	public class LeatherPouch : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Leather Pouch");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nUsed to craft Seedbags");
+			base.Tooltip.SetDefault("Used to craft Seedbags");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 26;

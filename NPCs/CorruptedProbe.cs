@@ -133,14 +133,14 @@ namespace Redemption.NPCs
 			return !Main.LocalPlayer.GetModPlayer<RedePlayer>().omegaPower;
 		}
 
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			SpriteEffects spriteEffects = SpriteEffects.None;
-			if (base.npc.spriteDirection == 1)
-			{
-				spriteEffects = SpriteEffects.FlipHorizontally;
-			}
-			spriteBatch.Draw(base.mod.GetTexture("NPCs/CorruptedProbe_Glow"), new Vector2(base.npc.Center.X - Main.screenPosition.X, base.npc.Center.Y - Main.screenPosition.Y), new Rectangle?(base.npc.frame), Color.White, base.npc.rotation, new Vector2((float)base.npc.width * 0.5f, (float)base.npc.height * 0.5f), 1f, spriteEffects, 0f);
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D glowMask = base.mod.GetTexture("NPCs/CorruptedProbe_Glow");
+			SpriteEffects effects = (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+			spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			spriteBatch.Draw(glowMask, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, effects, 0f);
+			return false;
 		}
 
 		private int flyAwayTimer;

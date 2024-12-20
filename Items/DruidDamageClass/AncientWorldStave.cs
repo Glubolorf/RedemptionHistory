@@ -9,7 +9,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Ancient World Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nSummon an Ancient Obelisk at your cursor point\nThe obelisk emits a force-field that increases player's defence and endurance when near\nCan only place one at a time");
+			base.Tooltip.SetDefault("Summon an Ancient Obelisk at your cursor point\nThe obelisk emits a force-field that increases player's defence and endurance when near\nCan only place one at a time");
 			Item.staff[base.item.type] = true;
 		}
 

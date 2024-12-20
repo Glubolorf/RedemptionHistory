@@ -7,6 +7,14 @@ namespace Redemption.Projectiles
 {
 	public class XenomiteEyePro : ModProjectile
 	{
+		public override string Texture
+		{
+			get
+			{
+				return "Redemption/Projectiles/XenomiteLaser";
+			}
+		}
+
 		public override void SetStaticDefaults()
 		{
 			if (Main.netMode != 2)
@@ -16,7 +24,7 @@ namespace Redemption.Projectiles
 				{
 					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Projectiles/XenomiteLaser");
 				XenomiteEyePro.customGlowMask = (short)(glowMasks.Length - 1);
 				Main.glowMaskTexture = glowMasks;
 			}

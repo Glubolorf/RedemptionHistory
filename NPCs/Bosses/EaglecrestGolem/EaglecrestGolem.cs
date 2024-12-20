@@ -30,22 +30,15 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 			base.npc.DeathSound = SoundID.NPCDeath43;
 			base.npc.lavaImmune = true;
 			base.npc.boss = true;
-			if (RedeConfigClient.Instance.AntiAntti)
-			{
-				this.music = 5;
-				return;
-			}
-			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossForest1");
 		}
 
 		public override void BossLoot(ref string name, ref int potionType)
 		{
-			Player player = Main.player[base.npc.target];
+			Player player3 = Main.player[base.npc.target];
 			potionType = 188;
 			if (!RedeWorld.downedEaglecrestGolem)
 			{
 				RedeWorld.redemptionPoints++;
-				CombatText.NewText(player.getRect(), Color.Gold, "+1", true, false);
 				for (int i = 0; i < 255; i++)
 				{
 					Player player2 = Main.player[i];
@@ -58,6 +51,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 								Main.NewText("<Chalice of Alignment> Living stones? Never seen that before.", Color.DarkGoldenrod, false);
 							}
 						}
+						CombatText.NewText(player2.getRect(), Color.Gold, "+1", true, false);
 					}
 				}
 			}

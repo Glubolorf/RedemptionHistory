@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,6 +29,7 @@ namespace Redemption.Projectiles.v08
 			base.projectile.extraUpdates = 1;
 			ProjectileID.Sets.TrailCacheLength[base.projectile.type] = 5;
 			ProjectileID.Sets.TrailingMode[base.projectile.type] = 0;
+			base.projectile.GetGlobalProjectile<DruidProjectile>().druidic = true;
 		}
 
 		public override void AI()
@@ -38,13 +40,6 @@ namespace Redemption.Projectiles.v08
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
 			Player player = Main.player[base.projectile.owner];
-			int critChance = player.HeldItem.crit;
-			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref critChance);
-			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref critChance);
-			if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
-			{
-				crit = true;
-			}
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritExtras >= 3)
 			{
 				Projectile.NewProjectile(base.projectile.position.X + Utils.NextFloat(Main.rand, (float)base.projectile.width), base.projectile.position.Y + Utils.NextFloat(Main.rand, (float)base.projectile.height), (float)(-4 + Main.rand.Next(0, 8)), (float)(-4 + Main.rand.Next(0, 8)), base.mod.ProjectileType("ShadesoulPro1"), base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 1f);

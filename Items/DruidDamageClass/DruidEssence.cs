@@ -5,15 +5,15 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class DruidEssence : ModItem
+	public class DruidEssence : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Druid Essence");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n5% increased druidic damage and critical strike chance");
+			base.Tooltip.SetDefault("5% increased druidic damage and critical strike chance");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.UseSound = SoundID.Item3;
 			base.item.useStyle = 2;

@@ -17,7 +17,7 @@ namespace Redemption.Projectiles.v08
 				{
 					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Projectiles/v08/" + base.GetType().Name + "_Glow");
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Projectiles/v08/" + base.GetType().Name);
 				NoidanNuoli.customGlowMask = (short)(glowMasks.Length - 1);
 				Main.glowMaskTexture = glowMasks;
 			}

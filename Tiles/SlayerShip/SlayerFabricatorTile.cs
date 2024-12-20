@@ -35,8 +35,9 @@ namespace Redemption.Tiles.SlayerShip
 			this.minPick = 500;
 			this.mineResist = 15f;
 			this.disableSmartCursor = true;
-			base.CreateMapEntryName(null);
-			base.AddMapEntry(new Color(190, 190, 230), null);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Cyber Fabricator");
+			base.AddMapEntry(new Color(190, 190, 230), name);
 			this.animationFrameHeight = 72;
 		}
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -32,23 +31,13 @@ namespace Redemption.Items.Weapons.v08
 			base.item.autoReuse = true;
 			base.item.shoot = base.mod.ProjectileType("BoneChickenPro");
 			base.item.shootSpeed = 7f;
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
 			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, 0f, 0f);
 			return true;
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> list)
-		{
-			foreach (TooltipLine line2 in list)
-			{
-				if (line2.mod == "Terraria" && line2.Name == "ItemName")
-				{
-					line2.overrideColor = new Color?(new Color(0, 255, 200));
-				}
-			}
 		}
 	}
 }

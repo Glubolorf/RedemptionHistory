@@ -9,15 +9,15 @@ namespace Redemption.Items.Armor
 	{
 		1
 	})]
-	public class GloomDruidCapplate : ModItem
+	public class GloomDruidCapplate : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Gloom Capplate");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n5% increased druidic damage\n8% increased druidic critical strike chance\nThrows seedbags faster");
+			base.Tooltip.SetDefault("5% increased druidic damage\n8% increased druidic critical strike chance\nThrows seedbags faster");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 30;
 			base.item.height = 22;

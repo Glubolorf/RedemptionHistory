@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -20,8 +18,8 @@ namespace Redemption.Items.Weapons
 		{
 			base.item.damage = 300;
 			base.item.melee = true;
-			base.item.width = 82;
-			base.item.height = 82;
+			base.item.width = 72;
+			base.item.height = 72;
 			base.item.useTime = 30;
 			base.item.useAnimation = 30;
 			base.item.useStyle = 1;
@@ -30,6 +28,7 @@ namespace Redemption.Items.Weapons
 			base.item.rare = 11;
 			base.item.UseSound = SoundID.Item7;
 			base.item.autoReuse = true;
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 6;
 		}
 
 		public override bool CanUseItem(Player player)
@@ -37,19 +36,8 @@ namespace Redemption.Items.Weapons
 			return NPC.downedPlantBoss;
 		}
 
-		public override void ModifyTooltips(List<TooltipLine> tooltips)
-		{
-			Color transparent = Color.Transparent;
-			if (base.item.modItem != null && base.item.modItem.mod == ModLoader.GetMod("Redemption"))
-			{
-				Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName")).overrideColor = new Color?(new Color(170, 0, 255));
-			}
-		}
-
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
 		{
-			target.AddBuff(24, 400, false);
-			target.AddBuff(20, 400, false);
 			target.AddBuff(44, 400, false);
 			target.AddBuff(153, 400, false);
 			target.AddBuff(69, 400, false);

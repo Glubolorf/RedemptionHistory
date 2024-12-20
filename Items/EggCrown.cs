@@ -12,6 +12,7 @@ namespace Redemption.Items
 		{
 			base.DisplayName.SetDefault("Egg Crown");
 			base.Tooltip.SetDefault("'Summons a legendary being...'\nOnly usable at day");
+			ItemID.Sets.SortingPriorityBossSpawns[base.item.type] = 13;
 		}
 
 		public override void SetDefaults()

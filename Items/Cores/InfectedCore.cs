@@ -10,7 +10,7 @@ namespace Redemption.Items.Cores
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Infected Core");
-			base.Tooltip.SetDefault("'Carnivorous crystals grow inside you'\n[c/64ff64:-Strengths-]\n+50 increased max life\nYou are immune to the Infection and Radioactive Fallout\nYou are a lot stronger in the Wasteland, greatly increasing all stats\nYou deal damage to any enemy that hits you\n[c/ff6464:-Weaknesses-]\nMovement speed is reduced, unless you are in the Wasteland\nYou are constantly blind, unless you are in the Wasteland");
+			base.Tooltip.SetDefault("'Carnivorous crystals grow inside you'\n[c/64ff64:-Strengths-]\n+50 increased max life\nYou are immune to the Infection, Radioactive Fallout and Radiation Poisoning\nYou are a lot stronger in the Wasteland, greatly increasing all stats\nYou deal damage to any enemy that hits you\n[c/ff6464:-Weaknesses-]\nMovement speed is reduced, unless you are in the Wasteland\nYou are constantly blind, unless you are in the Wasteland");
 		}
 
 		public override void SetDefaults()
@@ -46,10 +46,15 @@ namespace Redemption.Items.Cores
 				player.moveSpeed += 50f;
 				player.jumpBoost = true;
 				player.blind = false;
-				return;
 			}
-			player.blind = true;
-			player.moveSpeed *= 0.85f;
+			else
+			{
+				player.blind = true;
+				player.moveSpeed *= 0.85f;
+			}
+			player.GetModPlayer<RedePlayer>().irradiatedEffect = 0;
+			player.GetModPlayer<RedePlayer>().irradiatedLevel = 0;
+			player.GetModPlayer<RedePlayer>().irradiatedTimer = 0;
 		}
 
 		public override void AddRecipes()

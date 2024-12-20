@@ -9,15 +9,15 @@ namespace Redemption.Items.Armor
 	{
 		1
 	})]
-	public class BloomDruidBody : ModItem
+	public class BloomDruidBody : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Blossom Druid's Leaf Chestplate");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n15% increased druidic damage\n15% increased druidic critical strike chance\nStaves swing faster\nThrows seedbags faster");
+			base.Tooltip.SetDefault("15% increased druidic damage\n15% increased druidic critical strike chance\nStaves swing faster\nThrows seedbags faster");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 38;
 			base.item.height = 38;
@@ -32,7 +32,7 @@ namespace Redemption.Items.Armor
 			druidDamagePlayer.druidDamage += 0.15f;
 			druidDamagePlayer.druidCrit += 15;
 			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.fasterStaves = true;
+			redePlayer.staveSpeed += 0.05f;
 			redePlayer.fasterSeedbags = true;
 		}
 

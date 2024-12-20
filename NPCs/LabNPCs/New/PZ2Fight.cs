@@ -49,7 +49,6 @@ namespace Redemption.NPCs.LabNPCs.New
 			base.npc.boss = true;
 			base.npc.noTileCollide = false;
 			base.npc.netAlways = true;
-			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/LabBossMusic2");
 		}
 
 		public override void HitEffect(int hitDirection, double damage)

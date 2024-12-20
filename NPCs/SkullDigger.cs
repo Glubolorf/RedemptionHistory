@@ -36,7 +36,6 @@ namespace Redemption.NPCs
 			base.npc.alpha = 255;
 			base.npc.boss = true;
 			base.npc.netAlways = true;
-			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/SilentCaverns");
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -65,12 +64,11 @@ namespace Redemption.NPCs
 		public override void BossLoot(ref string name, ref int potionType)
 		{
 			base.npc.TargetClosest(true);
-			Player player = Main.player[base.npc.target];
+			Player player3 = Main.player[base.npc.target];
 			potionType = base.mod.ItemType("DarkShard");
 			if (!RedeWorld.downedSkullDigger)
 			{
 				RedeWorld.redemptionPoints -= 3;
-				CombatText.NewText(player.getRect(), Color.Red, "-3", true, false);
 				for (int i = 0; i < 255; i++)
 				{
 					Player player2 = Main.player[i];
@@ -83,6 +81,7 @@ namespace Redemption.NPCs
 								Main.NewText("<Chalice of Alignment> Oh... Oh damn...", Color.DarkGoldenrod, false);
 							}
 						}
+						CombatText.NewText(player2.getRect(), Color.Red, "-3", true, false);
 					}
 				}
 			}
@@ -266,7 +265,7 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			for (int i = 0; i < 200; i++)
+			for (int i = 0; i < Main.npc.Length; i++)
 			{
 				if (Main.npc[i].boss)
 				{

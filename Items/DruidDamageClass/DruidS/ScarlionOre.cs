@@ -1,18 +1,17 @@
 ﻿using System;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass.DruidS
 {
-	public class ScarlionOre : ModItem
+	public class ScarlionOre : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Scarlion Ore");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Blood Ruby'");
+			base.Tooltip.SetDefault("'Blood Ruby'");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 24;
 			base.item.height = 24;

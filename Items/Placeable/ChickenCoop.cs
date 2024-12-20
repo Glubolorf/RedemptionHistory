@@ -9,6 +9,7 @@ namespace Redemption.Items.Placeable
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Chicken Coop");
+			base.Tooltip.SetDefault("Occasionally spawns chicken eggs");
 		}
 
 		public override void SetDefaults()

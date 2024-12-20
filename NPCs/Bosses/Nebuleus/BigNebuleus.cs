@@ -20,7 +20,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 
 		public override void SetDefaults()
 		{
-			base.npc.lifeMax = 350000;
+			base.npc.lifeMax = 450000;
 			base.npc.defense = 170;
 			base.npc.damage = 200;
 			base.npc.width = 82;
@@ -32,20 +32,13 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 			base.npc.noGravity = true;
 			base.npc.boss = true;
 			base.npc.netAlways = true;
-			if (RedeConfigClient.Instance.AntiAntti)
-			{
-				this.music = 38;
-			}
-			else
-			{
-				this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossStarGod2");
-			}
 			base.npc.noTileCollide = false;
 			this.bossBag = base.mod.ItemType("NebBag");
 		}
 
 		public override void NPCLoot()
 		{
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ThankYouLetter"), 1, false, 0, false, false);
 			if (Main.rand.Next(10) == 0)
 			{
 				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("NebuleusTrophy"), 1, false, 0, false, false);
@@ -506,7 +499,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					int p11 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout9"), 0, 1f, Main.myPlayer, 0f, 0f);
 					Main.projectile[p11].netUpdate = true;
 				}
-				if (base.npc.ai[3] == 60f || base.npc.ai[3] == 80f || base.npc.ai[3] == 100f || base.npc.ai[3] == 120f)
+				if (base.npc.ai[3] == 60f || base.npc.ai[3] == 70f || base.npc.ai[3] == 80f || base.npc.ai[3] == 90f)
 				{
 					Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
 					float Speed = 26f;
@@ -517,7 +510,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
 					Main.projectile[num54].netUpdate = true;
 				}
-				if (base.npc.ai[3] >= 150f)
+				if (base.npc.ai[3] >= 95f)
 				{
 					base.npc.ai[3] = 0f;
 					base.npc.ai[1] = 0f;
@@ -541,42 +534,42 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					int Minion = NPC.NewNPC((int)base.npc.Center.X - 100, (int)base.npc.Center.Y + 100, base.mod.NPCType("NebEye1"), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion].netUpdate = true;
 				}
-				if (base.npc.ai[3] == 55f)
+				if (base.npc.ai[3] == 53f)
 				{
 					int Minion2 = NPC.NewNPC((int)base.npc.Center.X - 100, (int)base.npc.Center.Y - 100, base.mod.NPCType("NebEye1"), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion2].netUpdate = true;
 				}
-				if (base.npc.ai[3] == 60f)
+				if (base.npc.ai[3] == 56f)
 				{
 					int Minion3 = NPC.NewNPC((int)base.npc.Center.X + 100, (int)base.npc.Center.Y - 100, base.mod.NPCType("NebEye1"), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion3].netUpdate = true;
 				}
-				if (base.npc.ai[3] == 65f)
+				if (base.npc.ai[3] == 59f)
 				{
 					int Minion4 = NPC.NewNPC((int)base.npc.Center.X + 100, (int)base.npc.Center.Y + 100, base.mod.NPCType("NebEye1"), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion4].netUpdate = true;
 				}
-				if (base.npc.ai[3] == 70f)
+				if (base.npc.ai[3] == 61f)
 				{
 					int Minion5 = NPC.NewNPC((int)base.npc.Center.X + 200, (int)base.npc.Center.Y, base.mod.NPCType("NebEye1"), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion5].netUpdate = true;
 				}
-				if (base.npc.ai[3] == 75f)
+				if (base.npc.ai[3] == 64f)
 				{
 					int Minion6 = NPC.NewNPC((int)base.npc.Center.X - 200, (int)base.npc.Center.Y, base.mod.NPCType("NebEye1"), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion6].netUpdate = true;
 				}
-				if (base.npc.ai[3] == 80f)
+				if (base.npc.ai[3] == 67f)
 				{
 					int Minion7 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y + 200, base.mod.NPCType("NebEye1"), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion7].netUpdate = true;
 				}
-				if (base.npc.ai[3] == 85f)
+				if (base.npc.ai[3] == 70f)
 				{
 					int Minion8 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y - 200, base.mod.NPCType("NebEye1"), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion8].netUpdate = true;
 				}
-				if (base.npc.ai[3] >= 140f)
+				if (base.npc.ai[3] >= 100f)
 				{
 					base.npc.ai[3] = 0f;
 					base.npc.ai[1] = 0f;
@@ -615,7 +608,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 						Main.projectile[projID5].netUpdate = true;
 					}
 				}
-				if (base.npc.ai[3] >= 150f)
+				if (base.npc.ai[3] >= 120f)
 				{
 					base.npc.ai[3] = 0f;
 					base.npc.ai[1] = 0f;
@@ -649,7 +642,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					Main.projectile[num56].netUpdate = true;
 					Main.projectile[num57].netUpdate = true;
 				}
-				if (base.npc.ai[3] >= 140f)
+				if (base.npc.ai[3] >= 110f)
 				{
 					base.npc.ai[3] = 0f;
 					base.npc.ai[1] = 0f;
@@ -692,7 +685,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 						Main.projectile[num65].netUpdate = true;
 					}
 				}
-				if (base.npc.ai[3] >= 140f)
+				if (base.npc.ai[3] >= 120f)
 				{
 					base.npc.ai[3] = 0f;
 					base.npc.ai[1] = 0f;
@@ -709,7 +702,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					int p17 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout11"), 0, 1f, Main.myPlayer, 0f, 0f);
 					Main.projectile[p17].netUpdate = true;
 				}
-				if (base.npc.ai[3] >= 60f && base.npc.ai[3] <= 120f && Main.rand.Next(15) == 0)
+				if (base.npc.ai[3] >= 60f && base.npc.ai[3] <= 90f && Main.rand.Next(8) == 0)
 				{
 					Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 8, 1f, 0f);
 					int A3 = Main.rand.Next(-200, 200) * 6;
@@ -717,7 +710,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					int p18 = Projectile.NewProjectile(player.Center.X + (float)A3, player.Center.Y + (float)B3, 2f, 6f, base.mod.ProjectileType("CrystalStarPro1"), 50, 1f, Main.myPlayer, 0f, 0f);
 					Main.projectile[p18].netUpdate = true;
 				}
-				if (base.npc.ai[3] >= 160f)
+				if (base.npc.ai[3] >= 100f)
 				{
 					base.npc.ai[3] = 0f;
 					base.npc.ai[1] = 0f;

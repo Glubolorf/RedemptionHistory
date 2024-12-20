@@ -23,7 +23,7 @@ namespace Redemption.Projectiles
 			base.projectile.friendly = true;
 			base.projectile.tileCollide = true;
 			base.projectile.ignoreWater = true;
-			base.projectile.timeLeft = 2;
+			base.projectile.timeLeft = 8;
 			base.projectile.alpha = 255;
 		}
 
@@ -40,6 +40,15 @@ namespace Redemption.Projectiles
 					int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 0, 0f, 0f, 100, default(Color), 1.2f);
 					Main.dust[dustIndex].velocity *= 1.9f;
 				}
+			}
+		}
+
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		{
+			int targetHitBox = target.width + target.height;
+			if (target.velocity.X != 0f && target.velocity.Y != 0f && targetHitBox < 200 && !target.noGravity)
+			{
+				target.velocity.Y = -10f * target.knockBackResist;
 			}
 		}
 	}

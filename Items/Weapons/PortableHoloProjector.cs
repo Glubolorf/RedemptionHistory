@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -17,7 +16,7 @@ namespace Redemption.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 300;
+			base.item.damage = 250;
 			base.item.summon = true;
 			base.item.mana = 25;
 			base.item.width = 38;
@@ -33,17 +32,7 @@ namespace Redemption.Items.Weapons
 			base.item.shootSpeed = 0f;
 			base.item.buffType = base.mod.BuffType("HoloMinionBuff");
 			base.item.buffTime = 3600;
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> list)
-		{
-			foreach (TooltipLine line2 in list)
-			{
-				if (line2.mod == "Terraria" && line2.Name == "ItemName")
-				{
-					line2.overrideColor = new Color?(new Color(0, 255, 200));
-				}
-			}
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}
 
 		public override bool AltFunctionUse(Player player)

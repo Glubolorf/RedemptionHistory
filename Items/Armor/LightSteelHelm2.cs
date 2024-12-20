@@ -13,7 +13,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Shining Hikarite Headgear");
-			base.Tooltip.SetDefault("4% increased magic and minion damage\n+4 max minions");
+			base.Tooltip.SetDefault("4% increased magic and minion damage\n+2 max minions");
 		}
 
 		public override void SetDefaults()
@@ -29,7 +29,7 @@ namespace Redemption.Items.Armor
 		{
 			player.magicDamage *= 1.04f;
 			player.minionDamage *= 1.04f;
-			player.maxMinions += 4;
+			player.maxMinions += 2;
 		}
 
 		public override void ArmorSetShadows(Player player)

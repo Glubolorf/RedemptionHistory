@@ -9,15 +9,15 @@ namespace Redemption.Items.Armor.FlowerCrowns
 	{
 		0
 	})]
-	public class FlowerCrowns8_2 : ModItem
+	public class FlowerCrowns8_2 : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Dusk Flower Crown");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Purple and orange, dusk shimmers'\nHas a chance to throw an extra seed");
+			base.Tooltip.SetDefault("'Purple and orange, dusk shimmers'\nHas a chance to throw an extra seed");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 20;
 			base.item.height = 10;
@@ -44,7 +44,7 @@ namespace Redemption.Items.Armor.FlowerCrowns
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
 		{
-			drawAltHair = true;
+			drawHair = true;
 		}
 
 		public override void AddRecipes()

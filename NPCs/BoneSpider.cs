@@ -39,7 +39,7 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.Cavern.Chance * 0.1f;
+			return SpawnCondition.Cavern.Chance * ((!RedeConfigClient.Instance.NoSpidersInMyTerrariaMod) ? 0.1f : 0f);
 		}
 
 		public override bool CanHitPlayer(Player target, ref int cooldownSlot)

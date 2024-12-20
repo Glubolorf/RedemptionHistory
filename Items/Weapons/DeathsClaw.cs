@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -26,12 +24,12 @@ namespace Redemption.Items.Weapons
 			}
 			base.item.glowMask = DeathsClaw.customGlowMask;
 			base.DisplayName.SetDefault("Death's Claw");
-			base.Tooltip.SetDefault("'A burning scythe created in the underworld...'\n[c/1c4dff:Rare]");
+			base.Tooltip.SetDefault("'A burning scythe created in the underworld...'\nSlain enemies will explode into fireballs, the amount of fireballs depending on the size of the enemy\n[c/1c4dff:Rare]");
 		}
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 26;
+			base.item.damage = 17;
 			base.item.melee = true;
 			base.item.width = 56;
 			base.item.height = 56;
@@ -44,28 +42,39 @@ namespace Redemption.Items.Weapons
 			base.item.UseSound = SoundID.Item71;
 			base.item.autoReuse = true;
 			base.item.glowMask = DeathsClaw.customGlowMask;
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 5;
 		}
 
 		public override void MeleeEffects(Player player, Rectangle hitbox)
 		{
-			if (Main.rand.Next(1) == 0)
-			{
-				Dust.NewDust(new Vector2((float)hitbox.X, (float)hitbox.Y), hitbox.Width, hitbox.Height, 6, 0f, 0f, 0, default(Color), 1f);
-			}
+			Dust.NewDust(new Vector2((float)hitbox.X, (float)hitbox.Y), hitbox.Width, hitbox.Height, 6, 0f, 0f, 0, default(Color), 1f);
 		}
 
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
 		{
-			target.AddBuff(24, 600, false);
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> tooltips)
-		{
-			Color transparent = Color.Transparent;
-			if (base.item.modItem != null && base.item.modItem.mod == ModLoader.GetMod("Redemption"))
+			if (target.life <= 0)
 			{
-				Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName")).overrideColor = new Color?(new Color(0, 120, 255));
+				int targetHitBox = target.width + target.height;
+				if (targetHitBox < 350)
+				{
+					for (int i = 0; i < targetHitBox / 25; i++)
+					{
+						int proj = Projectile.NewProjectile(target.Center.X, target.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), 15, base.item.damage, 3f, Main.myPlayer, 0f, 0f);
+						Main.projectile[proj].hostile = false;
+						Main.projectile[proj].friendly = true;
+					}
+				}
+				else
+				{
+					for (int j = 0; j < 15; j++)
+					{
+						int proj2 = Projectile.NewProjectile(target.Center.X, target.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), 15, base.item.damage, 3f, Main.myPlayer, 0f, 0f);
+						Main.projectile[proj2].hostile = false;
+						Main.projectile[proj2].friendly = true;
+					}
+				}
 			}
+			target.AddBuff(24, 600, false);
 		}
 
 		public static short customGlowMask;

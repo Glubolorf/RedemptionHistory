@@ -2,6 +2,7 @@
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.NPCs.Bosses.EaglecrestGolem;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,17 +30,9 @@ namespace Redemption.NPCs.Bosses.Thorn
 			base.npc.DeathSound = SoundID.NPCDeath1;
 			base.npc.knockBackResist = 0f;
 			base.npc.alpha = 0;
-			base.npc.noGravity = false;
+			base.npc.noGravity = true;
 			base.npc.boss = true;
 			base.npc.netAlways = true;
-			if (RedeConfigClient.Instance.AntiAntti)
-			{
-				this.music = 5;
-			}
-			else
-			{
-				this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossForest1");
-			}
 			base.npc.noTileCollide = false;
 			this.bossBag = base.mod.ItemType("ThornPZBag");
 		}
@@ -109,6 +102,8 @@ namespace Redemption.NPCs.Bosses.Thorn
 				writer.Write(this.customAI[2]);
 				writer.Write(this.customAI[3]);
 				writer.Write(this.teleportTimer);
+				writer.Write(this.transformTimer);
+				writer.Write(this.transformTimer2);
 				writer.Write(this.beginFight);
 				writer.Write(this.teleport);
 				writer.Write(this.attacking);
@@ -127,6 +122,8 @@ namespace Redemption.NPCs.Bosses.Thorn
 				this.customAI[2] = reader.ReadFloat();
 				this.customAI[3] = reader.ReadFloat();
 				this.teleportTimer = reader.ReadInt32();
+				this.transformTimer = reader.ReadInt32();
+				this.transformTimer2 = reader.ReadInt32();
 				this.beginFight = reader.ReadBool();
 				this.teleport = reader.ReadBool();
 				this.attacking = reader.ReadBool();
@@ -200,92 +197,191 @@ namespace Redemption.NPCs.Bosses.Thorn
 			{
 				base.npc.spriteDirection = -1;
 			}
-			if (this.customAI[1] != 1f)
+			if (base.npc.life <= (int)((float)base.npc.lifeMax * 0.5f) || RedeUkkoAkka.begin)
 			{
-				this.customAI[3] += 1f;
-			}
-			if (this.customAI[3] == 1f)
-			{
-				this.teleport = true;
-				base.npc.netUpdate = true;
-			}
-			if (this.customAI[3] == 2f)
-			{
-				base.npc.alpha = 0;
-				base.npc.netUpdate = true;
-			}
-			if (this.customAI[1] == 1f)
-			{
-				switch (Main.rand.Next(6))
+				if (NPC.AnyNPCs(base.mod.NPCType("EaglecrestGolemPZ")))
 				{
-				case 0:
-					this.customAI[2] = 1f;
-					break;
-				case 1:
-					this.customAI[2] = 2f;
-					break;
-				case 2:
-					this.customAI[2] = 3f;
-					break;
-				case 3:
-					this.customAI[2] = 4f;
-					break;
-				case 4:
-					this.customAI[2] = 5f;
-					break;
-				case 5:
-					this.customAI[2] = 6f;
-					break;
-				}
-				this.customAI[1] = 0f;
-				this.customAI[0] = 0f;
-				base.npc.netUpdate = true;
-			}
-			if (this.customAI[2] == 1f)
-			{
-				this.attacking = true;
-				this.customAI[0] += 1f;
-				if (base.npc.life < (int)((float)base.npc.lifeMax * 0.5f))
-				{
-					if (this.customAI[0] == 30f)
+					this.transformCounter++;
+					if (this.transformCounter > 30)
 					{
-						int p = Projectile.NewProjectile(player.Center.X + 500f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 45, 1f, Main.myPlayer, 0f, 0f);
-						int p2 = Projectile.NewProjectile(player.Center.X + -500f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 45, 1f, Main.myPlayer, 0f, 0f);
-						Main.projectile[p].netUpdate = true;
-						Main.projectile[p2].netUpdate = true;
+						this.transformFrame++;
+						this.transformCounter = 0;
 					}
-					if (this.customAI[0] == 40f)
+					if (this.transformFrame >= 11)
 					{
-						int p3 = Projectile.NewProjectile(player.Center.X + 400f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 45, 1f, Main.myPlayer, 0f, 0f);
-						int p4 = Projectile.NewProjectile(player.Center.X + -400f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 45, 1f, Main.myPlayer, 0f, 0f);
-						Main.projectile[p3].netUpdate = true;
+						this.transformFrame = 10;
+					}
+					RedeUkkoAkka.begin = true;
+					this.attacking = false;
+					this.appearing = false;
+					this.disappearing = false;
+					base.npc.noTileCollide = true;
+					base.npc.noGravity = true;
+					for (int i = 0; i < 2; i++)
+					{
+						int dustIndex = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 1f);
+						Main.dust[dustIndex].velocity *= 1.2f;
+					}
+					if (base.npc.life < base.npc.lifeMax - 500)
+					{
+						base.npc.life += 500;
+					}
+					if (!RedeConfigClient.Instance.NoBossText)
+					{
+						this.transformTimer2++;
+						if (this.transformTimer2 == 10)
+						{
+							int p = Projectile.NewProjectile(player.Center.X - 60f, player.Center.Y + 300f, 0f, 0f, base.mod.ProjectileType("Text1"), 0, 0f, Main.myPlayer, 0f, 0f);
+							Main.projectile[p].netUpdate = true;
+						}
+						if (this.transformTimer2 == 110)
+						{
+							int p2 = Projectile.NewProjectile(player.Center.X + 60f, player.Center.Y + 200f, 0f, 0f, base.mod.ProjectileType("Text2"), 0, 0f, Main.myPlayer, 0f, 0f);
+							Main.projectile[p2].netUpdate = true;
+						}
+						if (this.transformTimer2 == 210)
+						{
+							int p3 = Projectile.NewProjectile(player.Center.X, player.Center.Y + 100f, 0f, 0f, base.mod.ProjectileType("Text3"), 0, 0f, Main.myPlayer, 0f, 0f);
+							Main.projectile[p3].netUpdate = true;
+						}
+					}
+				}
+				if (this.transformTimer == 0)
+				{
+					if (NPC.AnyNPCs(base.mod.NPCType("EaglecrestGolemPZ")))
+					{
+						base.npc.velocity.Y = 0f;
+						base.npc.velocity.X = 0f;
+						base.npc.alpha += 10;
+						if (base.npc.alpha >= 255)
+						{
+							if (Main.netMode != 1)
+							{
+								Vector2 newPos = new Vector2(300f, 20f);
+								base.npc.Center = Main.player[base.npc.target].Center + newPos;
+								base.npc.netUpdate = true;
+							}
+							this.transformTimer++;
+							return;
+						}
+					}
+				}
+				else
+				{
+					if (base.npc.velocity.Y <= -0.6f)
+					{
+						base.npc.velocity.Y = -0.6f;
+					}
+					NPC npc2 = base.npc;
+					npc2.velocity.Y = npc2.velocity.Y - 0.1f;
+					base.npc.alpha -= 10;
+					this.transformTimer++;
+					if (this.transformTimer == 355)
+					{
+						int p4 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("TransitionUkko"), 0, 1f, Main.myPlayer, 0f, 0f);
 						Main.projectile[p4].netUpdate = true;
 					}
-					if (this.customAI[0] == 50f)
+					if (this.transformTimer >= 380)
 					{
-						int p5 = Projectile.NewProjectile(player.Center.X + 300f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 45, 1f, Main.myPlayer, 0f, 0f);
-						int p6 = Projectile.NewProjectile(player.Center.X + -300f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 45, 1f, Main.myPlayer, 0f, 0f);
+						for (int j = 0; j < 30; j++)
+						{
+							int dustIndex2 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 3f);
+							Main.dust[dustIndex2].velocity *= 5.2f;
+						}
+						base.npc.velocity.Y = 0f;
+						base.npc.velocity.X = 0f;
+						Main.NewText("Akka, Ancient God of Nature has awoken...", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B, false);
+						base.npc.SetDefaults(base.mod.NPCType("Akka"), -1f);
+						return;
+					}
+				}
+			}
+			else
+			{
+				if (this.customAI[1] != 1f)
+				{
+					this.customAI[3] += 1f;
+				}
+				if (this.customAI[3] == 1f)
+				{
+					this.teleport = true;
+					base.npc.netUpdate = true;
+				}
+				if (this.customAI[3] == 2f)
+				{
+					base.npc.alpha = 0;
+					base.npc.netUpdate = true;
+				}
+				if (this.customAI[1] == 1f)
+				{
+					switch (Main.rand.Next(6))
+					{
+					case 0:
+						this.customAI[2] = 1f;
+						break;
+					case 1:
+						this.customAI[2] = 2f;
+						break;
+					case 2:
+						this.customAI[2] = 3f;
+						break;
+					case 3:
+						this.customAI[2] = 4f;
+						break;
+					case 4:
+						this.customAI[2] = 5f;
+						break;
+					case 5:
+						this.customAI[2] = 6f;
+						break;
+					}
+					this.customAI[1] = 0f;
+					this.customAI[0] = 0f;
+					base.npc.netUpdate = true;
+				}
+				if (this.customAI[2] == 1f)
+				{
+					this.attacking = true;
+					this.customAI[0] += 1f;
+					if (this.customAI[0] == 30f)
+					{
+						int p5 = Projectile.NewProjectile(player.Center.X + 500f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 26, 1f, Main.myPlayer, 0f, 0f);
+						int p6 = Projectile.NewProjectile(player.Center.X + -500f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 26, 1f, Main.myPlayer, 0f, 0f);
 						Main.projectile[p5].netUpdate = true;
 						Main.projectile[p6].netUpdate = true;
 					}
-					if (this.customAI[0] == 60f)
+					if (this.customAI[0] == 40f)
 					{
-						int p7 = Projectile.NewProjectile(player.Center.X + 200f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 45, 1f, Main.myPlayer, 0f, 0f);
-						int p8 = Projectile.NewProjectile(player.Center.X + -200f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 45, 1f, Main.myPlayer, 0f, 0f);
+						int p7 = Projectile.NewProjectile(player.Center.X + 400f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 26, 1f, Main.myPlayer, 0f, 0f);
+						int p8 = Projectile.NewProjectile(player.Center.X + -400f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 26, 1f, Main.myPlayer, 0f, 0f);
 						Main.projectile[p7].netUpdate = true;
 						Main.projectile[p8].netUpdate = true;
 					}
-					if (this.customAI[0] == 70f)
+					if (this.customAI[0] == 50f)
 					{
-						int p9 = Projectile.NewProjectile(player.Center.X + 100f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 45, 1f, Main.myPlayer, 0f, 0f);
-						int p10 = Projectile.NewProjectile(player.Center.X + -100f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 45, 1f, Main.myPlayer, 0f, 0f);
+						int p9 = Projectile.NewProjectile(player.Center.X + 300f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 26, 1f, Main.myPlayer, 0f, 0f);
+						int p10 = Projectile.NewProjectile(player.Center.X + -300f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 26, 1f, Main.myPlayer, 0f, 0f);
 						Main.projectile[p9].netUpdate = true;
 						Main.projectile[p10].netUpdate = true;
 					}
+					if (this.customAI[0] == 60f)
+					{
+						int p11 = Projectile.NewProjectile(player.Center.X + 200f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 26, 1f, Main.myPlayer, 0f, 0f);
+						int p12 = Projectile.NewProjectile(player.Center.X + -200f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 26, 1f, Main.myPlayer, 0f, 0f);
+						Main.projectile[p11].netUpdate = true;
+						Main.projectile[p12].netUpdate = true;
+					}
+					if (this.customAI[0] == 70f)
+					{
+						int p13 = Projectile.NewProjectile(player.Center.X + 100f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 26, 1f, Main.myPlayer, 0f, 0f);
+						int p14 = Projectile.NewProjectile(player.Center.X + -100f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 26, 1f, Main.myPlayer, 0f, 0f);
+						Main.projectile[p13].netUpdate = true;
+						Main.projectile[p14].netUpdate = true;
+					}
 					if (this.customAI[0] == 80f)
 					{
-						int p11 = Projectile.NewProjectile(player.Center.X + 0f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 45, 1f, Main.myPlayer, 0f, 0f);
-						Main.projectile[p11].netUpdate = true;
+						int p15 = Projectile.NewProjectile(player.Center.X + 0f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 26, 1f, Main.myPlayer, 0f, 0f);
+						Main.projectile[p15].netUpdate = true;
 					}
 					if (this.customAI[0] >= 160f)
 					{
@@ -297,106 +393,38 @@ namespace Redemption.NPCs.Bosses.Thorn
 						base.npc.netUpdate = true;
 					}
 				}
-				else
+				else if (this.customAI[2] == 2f)
 				{
-					if (this.customAI[0] == 30f)
+					this.customAI[0] += 1f;
+					if (this.customAI[0] == 60f || this.customAI[0] == 90f || this.customAI[0] == 120f || this.customAI[0] == 150f || this.customAI[0] == 180f)
 					{
-						int p12 = Projectile.NewProjectile(player.Center.X + 500f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 45, 1f, Main.myPlayer, 0f, 0f);
-						int p13 = Projectile.NewProjectile(player.Center.X + -500f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 45, 1f, Main.myPlayer, 0f, 0f);
-						Main.projectile[p12].netUpdate = true;
-						Main.projectile[p13].netUpdate = true;
-					}
-					if (this.customAI[0] == 50f)
-					{
-						int p14 = Projectile.NewProjectile(player.Center.X + 400f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 45, 1f, Main.myPlayer, 0f, 0f);
-						int p15 = Projectile.NewProjectile(player.Center.X + -400f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 45, 1f, Main.myPlayer, 0f, 0f);
-						Main.projectile[p14].netUpdate = true;
-						Main.projectile[p15].netUpdate = true;
-					}
-					if (this.customAI[0] == 70f)
-					{
-						int p16 = Projectile.NewProjectile(player.Center.X + 300f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 45, 1f, Main.myPlayer, 0f, 0f);
-						int p17 = Projectile.NewProjectile(player.Center.X + -300f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 45, 1f, Main.myPlayer, 0f, 0f);
-						Main.projectile[p16].netUpdate = true;
-						Main.projectile[p17].netUpdate = true;
-					}
-					if (this.customAI[0] == 90f)
-					{
-						int p18 = Projectile.NewProjectile(player.Center.X + 200f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 45, 1f, Main.myPlayer, 0f, 0f);
-						int p19 = Projectile.NewProjectile(player.Center.X + -200f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 45, 1f, Main.myPlayer, 0f, 0f);
-						Main.projectile[p18].netUpdate = true;
-						Main.projectile[p19].netUpdate = true;
-					}
-					if (this.customAI[0] == 110f)
-					{
-						int p20 = Projectile.NewProjectile(player.Center.X + 100f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 45, 1f, Main.myPlayer, 0f, 0f);
-						int p21 = Projectile.NewProjectile(player.Center.X + -100f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 45, 1f, Main.myPlayer, 0f, 0f);
-						Main.projectile[p20].netUpdate = true;
-						Main.projectile[p21].netUpdate = true;
-					}
-					if (this.customAI[0] == 130f)
-					{
-						int p22 = Projectile.NewProjectile(player.Center.X + 0f, player.Center.Y - 200f, 0f, 0f, base.mod.ProjectileType("ThornSeed"), 45, 1f, Main.myPlayer, 0f, 0f);
-						Main.projectile[p22].netUpdate = true;
+						float Speed = 24f;
+						Vector2 vector8 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+						int damage = 27;
+						int type = base.mod.ProjectileType("CursedThornPro6");
+						float rotation = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
+						int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
+						Main.projectile[num54].netUpdate = true;
 					}
 					if (this.customAI[0] >= 200f)
 					{
 						this.customAI[0] = 0f;
 						this.customAI[2] = 0f;
 						this.teleportTimer = 0;
-						this.attacking = false;
 						this.teleport = true;
 						base.npc.netUpdate = true;
 					}
 				}
-			}
-			else if (this.customAI[2] == 2f)
-			{
-				this.customAI[0] += 1f;
-				if (base.npc.life < (int)((float)base.npc.lifeMax * 0.5f))
+				else if (this.customAI[2] == 3f)
 				{
-					if (this.customAI[0] == 60f || this.customAI[0] == 90f || this.customAI[0] == 120f || this.customAI[0] == 150f || this.customAI[0] == 180f)
-					{
-						float Speed = 24f;
-						Vector2 vector8 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
-						int damage = 46;
-						int type = base.mod.ProjectileType("CursedThornPro6");
-						float rotation = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
-						int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
-						Main.projectile[num54].netUpdate = true;
-					}
-				}
-				else if (this.customAI[0] == 40f || this.customAI[0] == 60f || this.customAI[0] == 80f || this.customAI[0] == 100f)
-				{
-					float Speed2 = 16f;
-					Vector2 vector9 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
-					int damage2 = 46;
-					int type2 = base.mod.ProjectileType("CursedThornPro6");
-					float rotation2 = (float)Math.Atan2((double)(vector9.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector9.X - (player.position.X + (float)player.width * 0.5f)));
-					int num55 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0), type2, damage2, 0f, 0, 0f, 0f);
-					Main.projectile[num55].netUpdate = true;
-				}
-				if (this.customAI[0] >= 200f)
-				{
-					this.customAI[0] = 0f;
-					this.customAI[2] = 0f;
-					this.teleportTimer = 0;
-					this.teleport = true;
-					base.npc.netUpdate = true;
-				}
-			}
-			else if (this.customAI[2] == 3f)
-			{
-				this.customAI[0] += 1f;
-				if (base.npc.life < (int)((float)base.npc.lifeMax * 0.5f))
-				{
+					this.customAI[0] += 1f;
 					if (this.customAI[0] == 60f || this.customAI[0] == 100f)
 					{
 						int pieCut = 8;
-						for (int i = 0; i < pieCut; i++)
+						for (int k = 0; k < pieCut; k++)
 						{
-							int projID = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, 55, 45, 3f, 255, 0f, 0f);
-							Main.projectile[projID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)i / (float)pieCut * 6.28f);
+							int projID = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, 55, 26, 3f, 255, 0f, 0f);
+							Main.projectile[projID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)k / (float)pieCut * 6.28f);
 							Main.projectile[projID].netUpdate = true;
 							Main.projectile[projID].timeLeft = 180;
 						}
@@ -404,10 +432,10 @@ namespace Redemption.NPCs.Bosses.Thorn
 					if (this.customAI[0] == 80f || this.customAI[0] == 120f)
 					{
 						int pieCut2 = 16;
-						for (int j = 0; j < pieCut2; j++)
+						for (int l = 0; l < pieCut2; l++)
 						{
-							int projID2 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, 55, 45, 3f, 255, 0f, 0f);
-							Main.projectile[projID2].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)j / (float)pieCut2 * 6.28f);
+							int projID2 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, 55, 26, 3f, 255, 0f, 0f);
+							Main.projectile[projID2].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)l / (float)pieCut2 * 6.28f);
 							Main.projectile[projID2].netUpdate = true;
 							Main.projectile[projID2].timeLeft = 180;
 						}
@@ -421,54 +449,18 @@ namespace Redemption.NPCs.Bosses.Thorn
 						base.npc.netUpdate = true;
 					}
 				}
-				else
+				else if (this.customAI[2] == 4f)
 				{
-					if (this.customAI[0] == 40f || this.customAI[0] == 120f)
-					{
-						int pieCut3 = 8;
-						for (int k = 0; k < pieCut3; k++)
-						{
-							int projID3 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, 55, 45, 3f, 255, 0f, 0f);
-							Main.projectile[projID3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)k / (float)pieCut3 * 6.28f);
-							Main.projectile[projID3].netUpdate = true;
-							Main.projectile[projID3].timeLeft = 180;
-						}
-					}
-					if (this.customAI[0] == 80f)
-					{
-						int pieCut4 = 16;
-						for (int l = 0; l < pieCut4; l++)
-						{
-							int projID4 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, 55, 45, 3f, 255, 0f, 0f);
-							Main.projectile[projID4].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)l / (float)pieCut4 * 6.28f);
-							Main.projectile[projID4].netUpdate = true;
-							Main.projectile[projID4].timeLeft = 180;
-						}
-					}
-					if (this.customAI[0] >= 220f)
-					{
-						this.customAI[0] = 0f;
-						this.customAI[2] = 0f;
-						this.teleportTimer = 0;
-						this.teleport = true;
-						base.npc.netUpdate = true;
-					}
-				}
-			}
-			else if (this.customAI[2] == 4f)
-			{
-				this.customAI[0] += 1f;
-				if (base.npc.life < (int)((float)base.npc.lifeMax * 0.5f))
-				{
+					this.customAI[0] += 1f;
 					if (this.customAI[0] >= 50f && this.customAI[0] <= 160f && Main.rand.Next(2) == 0)
 					{
-						float Speed3 = 17f;
-						Vector2 vector10 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-						int damage3 = 45;
-						int type3 = ModContent.ProjectileType<LifeThornPro2>();
-						float rotation3 = (float)Math.Atan2((double)(vector10.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector10.X - (player.position.X + (float)player.width * 0.5f)));
-						int num56 = Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)rotation3) * (double)Speed3 * -1.0) + (float)Main.rand.Next(-1, 1), (float)(Math.Sin((double)rotation3) * (double)Speed3 * -1.0) + (float)Main.rand.Next(-1, 1), type3, damage3, 0f, 0, (float)base.npc.whoAmI, 0f);
-						Main.projectile[num56].netUpdate = true;
+						float Speed2 = 17f;
+						Vector2 vector9 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
+						int damage2 = 25;
+						int type2 = ModContent.ProjectileType<LifeThornPro2>();
+						float rotation2 = (float)Math.Atan2((double)(vector9.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector9.X - (player.position.X + (float)player.width * 0.5f)));
+						int num55 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0) + (float)Main.rand.Next(-1, 1), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0) + (float)Main.rand.Next(-1, 1), type2, damage2, 0f, 0, (float)base.npc.whoAmI, 0f);
+						Main.projectile[num55].netUpdate = true;
 					}
 					if (this.customAI[0] >= 260f)
 					{
@@ -479,19 +471,41 @@ namespace Redemption.NPCs.Bosses.Thorn
 						base.npc.netUpdate = true;
 					}
 				}
-				else
+				else if (this.customAI[2] == 5f)
 				{
-					if (this.customAI[0] >= 50f && this.customAI[0] <= 120f && Main.rand.Next(2) == 0)
+					this.customAI[0] += 1f;
+					if (this.customAI[0] == 60f)
 					{
-						float Speed4 = 17f;
-						Vector2 vector11 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-						int damage4 = 45;
-						int type4 = ModContent.ProjectileType<LifeThornPro2>();
-						float rotation4 = (float)Math.Atan2((double)(vector11.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector11.X - (player.position.X + (float)player.width * 0.5f)));
-						int num57 = Projectile.NewProjectile(vector11.X, vector11.Y, (float)(Math.Cos((double)rotation4) * (double)Speed4 * -1.0) + (float)Main.rand.Next(-1, 1), (float)(Math.Sin((double)rotation4) * (double)Speed4 * -1.0) + (float)Main.rand.Next(-1, 1), type4, damage4, 0f, 0, (float)base.npc.whoAmI, 0f);
-						Main.projectile[num57].netUpdate = true;
+						if (NPC.AnyNPCs(base.mod.NPCType("ManaBarrierPro2")))
+						{
+							this.customAI[0] = 0f;
+							this.customAI[2] = 0f;
+							this.teleportTimer = 0;
+							this.teleport = true;
+							base.npc.netUpdate = true;
+						}
+						else
+						{
+							int dustType = 20;
+							int pieCut3 = 16;
+							for (int m = 0; m < pieCut3; m++)
+							{
+								int dustID = Dust.NewDust(new Vector2(base.npc.Center.X - 1f, base.npc.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 3f);
+								Main.dust[dustID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)m / (float)pieCut3 * 6.28f);
+								Main.dust[dustID].noLight = false;
+								Main.dust[dustID].noGravity = true;
+							}
+							float distance = 2f;
+							float n = 0.4f;
+							for (int count = 0; count < 1; count++)
+							{
+								Vector2 spawn = base.npc.Center + distance * Utils.ToRotationVector2((float)count * n);
+								int Minion = NPC.NewNPC((int)spawn.X, (int)spawn.Y, base.mod.NPCType("ManaBarrierPro2"), 0, (float)base.npc.whoAmI, 0f, (float)count, 0f, 255);
+								Main.npc[Minion].netUpdate = true;
+							}
+						}
 					}
-					if (this.customAI[0] >= 200f)
+					if (this.customAI[0] >= 120f)
 					{
 						this.customAI[0] = 0f;
 						this.customAI[2] = 0f;
@@ -500,161 +514,96 @@ namespace Redemption.NPCs.Bosses.Thorn
 						base.npc.netUpdate = true;
 					}
 				}
-			}
-			else if (this.customAI[2] == 5f)
-			{
-				this.customAI[0] += 1f;
-				if (this.customAI[0] == 60f)
+				else if (this.customAI[2] == 6f)
 				{
-					if (NPC.AnyNPCs(base.mod.NPCType("ManaBarrierPro2")))
+					this.customAI[0] += 1f;
+					if (base.npc.life < (int)((float)base.npc.lifeMax * 0.75f))
 					{
-						this.customAI[0] = 0f;
-						this.customAI[2] = 0f;
-						this.teleportTimer = 0;
-						this.teleport = true;
-						base.npc.netUpdate = true;
+						if (this.customAI[0] == 50f || this.customAI[0] == 55f || this.customAI[0] == 60f || this.customAI[0] == 65f || this.customAI[0] == 70f || this.customAI[0] == 75f || this.customAI[0] == 80f || this.customAI[0] == 85f || this.customAI[0] == 90f || this.customAI[0] == 95f)
+						{
+							int p16 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, base.mod.ProjectileType("SlashFlashPro"), 26, 3f, 255, 0f, 0f);
+							Main.projectile[p16].netUpdate = true;
+						}
+						if (this.customAI[0] >= 160f)
+						{
+							this.customAI[0] = 0f;
+							this.customAI[2] = 0f;
+							this.teleportTimer = 0;
+							this.teleport = true;
+							base.npc.netUpdate = true;
+						}
 					}
 					else
 					{
-						int dustType = 20;
-						int pieCut5 = 16;
-						for (int m = 0; m < pieCut5; m++)
+						if (this.customAI[0] == 50f || this.customAI[0] == 70f || this.customAI[0] == 90f || this.customAI[0] == 120f || this.customAI[0] == 160f || this.customAI[0] == 220f)
 						{
-							int dustID = Dust.NewDust(new Vector2(base.npc.Center.X - 1f, base.npc.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 3f);
-							Main.dust[dustID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)m / (float)pieCut5 * 6.28f);
-							Main.dust[dustID].noLight = false;
-							Main.dust[dustID].noGravity = true;
+							int p17 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, base.mod.ProjectileType("SlashFlashPro"), 26, 3f, 255, 0f, 0f);
+							Main.projectile[p17].netUpdate = true;
 						}
-						float distance = 2f;
-						float n = 0.4f;
-						for (int count = 0; count < 1; count++)
+						if (this.customAI[0] >= 270f)
 						{
-							Vector2 spawn = base.npc.Center + distance * Utils.ToRotationVector2((float)count * n);
-							int Minion = NPC.NewNPC((int)spawn.X, (int)spawn.Y, base.mod.NPCType("ManaBarrierPro2"), 0, (float)base.npc.whoAmI, 0f, (float)count, 0f, 255);
-							Main.npc[Minion].netUpdate = true;
+							this.customAI[0] = 0f;
+							this.customAI[2] = 0f;
+							this.teleportTimer = 0;
+							this.teleport = true;
+							base.npc.netUpdate = true;
 						}
 					}
 				}
-				if (this.customAI[0] >= 120f)
+				for (int i2 = 0; i2 < 3; i2++)
 				{
-					this.customAI[0] = 0f;
-					this.customAI[2] = 0f;
-					this.teleportTimer = 0;
-					this.teleport = true;
-					base.npc.netUpdate = true;
+					int dustIndex3 = Dust.NewDust(base.npc.BottomLeft, base.npc.width, 1, 163, 0f, 0f, 100, default(Color), 1.5f);
+					Dust dust = Main.dust[dustIndex3];
+					dust.velocity.Y = dust.velocity.Y * 0f;
+					Dust dust2 = Main.dust[dustIndex3];
+					dust2.velocity.X = dust2.velocity.X * 0f;
+					Main.dust[dustIndex3].noGravity = true;
 				}
-			}
-			else if (this.customAI[2] == 6f)
-			{
-				this.customAI[0] += 1f;
-				if (base.npc.life < (int)((float)base.npc.lifeMax * 0.5f))
+				if (this.teleport)
 				{
-					if (this.customAI[0] == 50f || this.customAI[0] == 55f || this.customAI[0] == 60f || this.customAI[0] == 65f || this.customAI[0] == 70f || this.customAI[0] == 75f || this.customAI[0] == 80f || this.customAI[0] == 85f || this.customAI[0] == 90f || this.customAI[0] == 95f)
+					this.teleportTimer++;
+					if (this.teleportTimer >= 2 && this.teleportTimer <= 33)
 					{
-						int p23 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, base.mod.ProjectileType("SlashFlashPro"), 45, 3f, 255, 0f, 0f);
-						Main.projectile[p23].netUpdate = true;
+						this.disappearing = true;
 					}
-					if (this.customAI[0] >= 160f)
+					if (this.teleportTimer == 33 && Main.netMode != 1)
 					{
-						this.customAI[0] = 0f;
-						this.customAI[2] = 0f;
+						int num56 = Main.rand.Next(2);
+						if (num56 == 0)
+						{
+							Vector2 newPos2 = new Vector2((float)Main.rand.Next(-400, -250), (float)Main.rand.Next(-200, 50));
+							base.npc.Center = Main.player[base.npc.target].Center + newPos2;
+							base.npc.netUpdate = true;
+						}
+						if (num56 == 1)
+						{
+							Vector2 newPos3 = new Vector2((float)Main.rand.Next(250, 400), (float)Main.rand.Next(-200, 50));
+							base.npc.Center = Main.player[base.npc.target].Center + newPos3;
+							base.npc.netUpdate = true;
+						}
+					}
+					if (this.teleportTimer >= 35 && this.teleportTimer <= 71)
+					{
+						this.appearing = true;
+						this.disappearing = false;
+					}
+					if (this.teleportTimer > 71)
+					{
+						this.appearing = false;
+						this.disappearing = false;
+						this.attacking = false;
+						this.teleport = false;
 						this.teleportTimer = 0;
-						this.teleport = true;
+						this.customAI[1] = 1f;
+						base.npc.netUpdate = true;
+						this.attackFrame = 0;
+						this.appearFrame = 0;
+						this.disappearFrame = 0;
+						this.disappearCounter = 0;
+						this.appearCounter = 0;
+						this.attackCounter = 0;
 						base.npc.netUpdate = true;
 					}
-				}
-				else
-				{
-					if (this.customAI[0] == 50f || this.customAI[0] == 70f || this.customAI[0] == 90f || this.customAI[0] == 120f || this.customAI[0] == 160f || this.customAI[0] == 220f)
-					{
-						int p24 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, base.mod.ProjectileType("SlashFlashPro"), 45, 3f, 255, 0f, 0f);
-						Main.projectile[p24].netUpdate = true;
-					}
-					if (this.customAI[0] >= 270f)
-					{
-						this.customAI[0] = 0f;
-						this.customAI[2] = 0f;
-						this.teleportTimer = 0;
-						this.teleport = true;
-						base.npc.netUpdate = true;
-					}
-				}
-			}
-			if (this.teleport)
-			{
-				this.teleportTimer++;
-				if (this.teleportTimer >= 2 && this.teleportTimer <= 33)
-				{
-					this.disappearing = true;
-				}
-				if (this.teleportTimer == 33)
-				{
-					if (base.npc.ai[2] != 0f && base.npc.ai[3] != 0f)
-					{
-						base.npc.position.X = base.npc.ai[2] * 16f - (float)(base.npc.width / 2) + 8f;
-						base.npc.position.Y = base.npc.ai[3] * 16f - (float)base.npc.height;
-						base.npc.velocity.X = 0f;
-						base.npc.velocity.Y = 0f;
-						base.npc.ai[2] = 0f;
-						base.npc.ai[3] = 0f;
-					}
-					base.npc.ai[0] = 1f;
-					int playerTilePositionX = (int)Main.player[base.npc.target].position.X / 16;
-					int playerTilePositionY = (int)Main.player[base.npc.target].position.Y / 16;
-					int npcTilePositionX = (int)base.npc.position.X / 16;
-					int npcTilePositionY = (int)base.npc.position.Y / 16;
-					int playerTargetShift = 30;
-					int num58 = 0;
-					for (int s = 0; s < 100; s++)
-					{
-						num58++;
-						int nearPlayerX = Main.rand.Next(playerTilePositionX - playerTargetShift, playerTilePositionX + playerTargetShift);
-						for (int num59 = Main.rand.Next(playerTilePositionY - playerTargetShift, playerTilePositionY + playerTargetShift); num59 < playerTilePositionY + playerTargetShift; num59++)
-						{
-							if ((nearPlayerX < playerTilePositionX - 12 || nearPlayerX > playerTilePositionX + 12) && (num59 < npcTilePositionY - 1 || num59 > npcTilePositionY + 1 || nearPlayerX < npcTilePositionX - 1 || nearPlayerX > npcTilePositionX + 1) && Main.tile[nearPlayerX, num59].nactive())
-							{
-								bool flag5 = true;
-								if (Main.tile[nearPlayerX, num59 - 1].lava())
-								{
-									flag5 = false;
-								}
-								if (flag5 && Main.tileSolid[(int)Main.tile[nearPlayerX, num59].type] && !Collision.SolidTiles(nearPlayerX - 1, nearPlayerX + 1, num59 - 4, num59 - 1))
-								{
-									base.npc.ai[1] = 20f;
-									base.npc.ai[2] = (float)nearPlayerX;
-									base.npc.ai[3] = (float)num59 - 1f;
-									break;
-								}
-							}
-						}
-						base.npc.netUpdate = true;
-					}
-					if (base.npc.ai[1] > 0f)
-					{
-						base.npc.ai[1] -= 1f;
-					}
-				}
-				if (this.teleportTimer >= 35 && this.teleportTimer <= 71)
-				{
-					this.appearing = true;
-					this.disappearing = false;
-				}
-				if (this.teleportTimer > 71)
-				{
-					this.appearing = false;
-					this.disappearing = false;
-					this.attacking = false;
-					this.teleport = false;
-					this.teleportTimer = 0;
-					this.customAI[1] = 1f;
-					base.npc.netUpdate = true;
-					this.attackFrame = 0;
-					this.appearFrame = 0;
-					this.disappearFrame = 0;
-					this.disappearCounter = 0;
-					this.appearCounter = 0;
-					this.attackCounter = 0;
-					base.npc.netUpdate = true;
 				}
 			}
 		}
@@ -674,6 +623,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 			Texture2D attackAni = base.mod.GetTexture("NPCs/Bosses/Thorn/ThornAttack1");
 			Texture2D appearAni = base.mod.GetTexture("NPCs/Bosses/Thorn/ThornAppear");
 			Texture2D disappearAni = base.mod.GetTexture("NPCs/Bosses/Thorn/ThornDisappear");
+			Texture2D transformAni = base.mod.GetTexture("NPCs/Bosses/Thorn/Thorn_Transform");
 			int spriteDirection = base.npc.spriteDirection;
 			if (!this.attacking && !this.appearing && !this.disappearing)
 			{
@@ -699,6 +649,13 @@ namespace Redemption.NPCs.Bosses.Thorn
 				int num216 = disappearAni.Height / 11;
 				int y8 = num216 * this.disappearFrame;
 				Main.spriteBatch.Draw(disappearAni, drawCenter3 - Main.screenPosition, new Rectangle?(new Rectangle(0, y8, disappearAni.Width, num216)), drawColor, base.npc.rotation, new Vector2((float)disappearAni.Width / 2f, (float)num216 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			}
+			if (RedeUkkoAkka.begin)
+			{
+				Vector2 drawCenter4 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num217 = transformAni.Height / 11;
+				int y9 = num217 * this.transformFrame;
+				Main.spriteBatch.Draw(transformAni, drawCenter4 - Main.screenPosition, new Rectangle?(new Rectangle(0, y9, transformAni.Width, num217)), drawColor * ((float)(255 - base.npc.alpha) / 255f), base.npc.rotation, new Vector2((float)transformAni.Width / 2f, (float)num217 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
 		}
@@ -730,6 +687,10 @@ namespace Redemption.NPCs.Bosses.Thorn
 
 		public float[] customAI = new float[4];
 
+		public int transformTimer;
+
+		public int transformTimer2;
+
 		public static Texture2D glowTex;
 
 		private bool beginFight;
@@ -755,5 +716,9 @@ namespace Redemption.NPCs.Bosses.Thorn
 		private int appearCounter;
 
 		private int disappearCounter;
+
+		private int transformCounter;
+
+		private int transformFrame;
 	}
 }

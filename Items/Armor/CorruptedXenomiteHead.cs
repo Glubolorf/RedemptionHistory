@@ -13,7 +13,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Corrupted Xenomite Headgear");
-			base.Tooltip.SetDefault("6% increased magic and minion damage\n+5 max minions");
+			base.Tooltip.SetDefault("6% increased magic and minion damage\n+2 max minions");
 		}
 
 		public override void SetDefaults()
@@ -29,7 +29,7 @@ namespace Redemption.Items.Armor
 		{
 			player.magicDamage *= 1.06f;
 			player.minionDamage *= 1.06f;
-			player.maxMinions += 5;
+			player.maxMinions += 2;
 		}
 
 		public override void ArmorSetShadows(Player player)
@@ -44,9 +44,9 @@ namespace Redemption.Items.Armor
 
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "+200 max mana, greatly increased movement speed, and increased mana regen.";
+			player.setBonus = "+50 max mana, greatly increased movement speed, and increased mana regen.";
 			player.AddBuff(11, 2, true);
-			player.statManaMax2 += 200;
+			player.statManaMax2 += 50;
 			player.moveSpeed += 8f;
 			player.manaRegen += 10;
 		}

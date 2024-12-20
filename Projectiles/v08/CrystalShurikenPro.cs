@@ -14,6 +14,7 @@ namespace Redemption.Projectiles.v08
 
 		public override void SetDefaults()
 		{
+			base.projectile.thrown = true;
 			base.projectile.width = 30;
 			base.projectile.height = 30;
 			base.projectile.aiStyle = -1;
@@ -54,14 +55,6 @@ namespace Redemption.Projectiles.v08
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			Player player = Main.player[base.projectile.owner];
-			int critChance = player.HeldItem.crit;
-			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref critChance);
-			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref critChance);
-			if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
-			{
-				crit = true;
-			}
 			Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 26f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 90, 4, 1f, base.projectile.owner, 0f, 1f);
 			Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 26f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 90, 4, 1f, base.projectile.owner, 0f, 1f);
 			Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 26f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 90, 4, 1f, base.projectile.owner, 0f, 1f);

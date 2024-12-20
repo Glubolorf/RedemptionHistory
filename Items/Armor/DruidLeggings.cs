@@ -9,15 +9,15 @@ namespace Redemption.Items.Armor
 	{
 		2
 	})]
-	public class DruidLeggings : ModItem
+	public class DruidLeggings : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Forest Druid's Leggings");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n6% increased druidic damage\nThrows seedbags faster");
+			base.Tooltip.SetDefault("6% increased druidic damage\nThrows seedbags faster");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 16;

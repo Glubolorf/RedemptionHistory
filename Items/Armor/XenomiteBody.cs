@@ -13,7 +13,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Xenomite Breastplate");
-			base.Tooltip.SetDefault("+50 max mana\n10% increased magic damage");
+			base.Tooltip.SetDefault("+15 max mana\n10% increased magic damage");
 		}
 
 		public override void SetDefaults()
@@ -27,7 +27,7 @@ namespace Redemption.Items.Armor
 
 		public override void UpdateEquip(Player player)
 		{
-			player.statManaMax2 += 50;
+			player.statManaMax2 += 15;
 			player.magicDamage *= 1.1f;
 		}
 

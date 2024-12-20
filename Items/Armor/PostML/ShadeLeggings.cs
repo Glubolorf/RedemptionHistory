@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
@@ -11,20 +9,22 @@ namespace Redemption.Items.Armor.PostML
 	{
 		2
 	})]
-	public class ShadeLeggings : ModItem
+	public class ShadeLeggings : DruidDamageSpirit
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Shade Greaves");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n40% increased movement speed\n10% increased druidic damage\n15% increased druidic critical strike chance\nDecreased falling speed\nIncreases spirits summoned by 1\n[c/bdffff:Spirit Level +2]");
+			base.Tooltip.SetDefault("40% increased movement speed\n10% increased druidic damage\n15% increased druidic critical strike chance\nDecreased falling speed\nIncreases spirits summoned by 1\n[c/bdffff:Spirit Level +2]");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 20;
 			base.item.value = Item.sellPrice(0, 20, 0, 0);
 			base.item.defense = 26;
+			this.spiritWeapon = false;
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 2;
 		}
 
 		public override void UpdateEquip(Player player)
@@ -37,17 +37,6 @@ namespace Redemption.Items.Armor.PostML
 			redePlayer.spiritExtras++;
 			player.slowFall = true;
 			redePlayer.spiritLevel += 2;
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> list)
-		{
-			foreach (TooltipLine line2 in list)
-			{
-				if (line2.mod == "Terraria" && line2.Name == "ItemName")
-				{
-					line2.overrideColor = new Color?(RedeColor.SoullessColour);
-				}
-			}
 		}
 
 		public override void AddRecipes()

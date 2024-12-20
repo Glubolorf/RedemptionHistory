@@ -8,15 +8,15 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 	{
 		2
 	})]
-	public class ScarletLeggings : ModItem
+	public class ScarletLeggings : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Scarlet Leggings");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n5% increased druidic damage\n5% increased druidic critical strike chance");
+			base.Tooltip.SetDefault("5% increased druidic damage\n5% increased druidic critical strike chance");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 18;

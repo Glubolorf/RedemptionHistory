@@ -9,15 +9,15 @@ namespace Redemption.Items.Armor
 	{
 		2
 	})]
-	public class UVLeggings : ModItem
+	public class UVLeggings : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("UV Leggings");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n11% increased druidic damage\nSpirits shoot faster\n40+ max life\nIncreased movement speed at daytime\nIncreased jump height at nighttime");
+			base.Tooltip.SetDefault("11% increased druidic damage\nSpirits shoot faster\n40+ max life\nIncreased movement speed at daytime\nIncreased jump height at nighttime");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 16;

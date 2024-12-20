@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
@@ -11,20 +9,22 @@ namespace Redemption.Items.Armor.PostML
 	{
 		1
 	})]
-	public class ShadeBody : ModItem
+	public class ShadeBody : DruidDamageSpirit
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Shadeplate");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n+50 max life and mana\n10% increased druidic damage\nSpirits shoot faster\n8% increased damage reduction\n[c/bdffff:Spirit Level +2]");
+			base.Tooltip.SetDefault("+50 max life and mana\n10% increased druidic damage\nSpirits shoot faster\n8% increased damage reduction\n[c/bdffff:Spirit Level +2]");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 38;
 			base.item.height = 32;
 			base.item.value = Item.sellPrice(0, 25, 0, 0);
 			base.item.defense = 26;
+			this.spiritWeapon = false;
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 2;
 		}
 
 		public override void UpdateEquip(Player player)
@@ -36,17 +36,6 @@ namespace Redemption.Items.Armor.PostML
 			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
 			redePlayer.fasterSpirits = true;
 			redePlayer.spiritLevel += 2;
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> list)
-		{
-			foreach (TooltipLine line2 in list)
-			{
-				if (line2.mod == "Terraria" && line2.Name == "ItemName")
-				{
-					line2.overrideColor = new Color?(RedeColor.SoullessColour);
-				}
-			}
 		}
 
 		public override void AddRecipes()

@@ -12,6 +12,7 @@ namespace Redemption.Tiles.SlayerShip
 			Main.tileSolid[(int)base.Type] = true;
 			Main.tileMergeDirt[(int)base.Type] = true;
 			Main.tileBlockLight[(int)base.Type] = true;
+			Main.tileValue[(int)base.Type] = 650;
 			this.dustType = 226;
 			this.drop = base.mod.ItemType("Cyberscrap");
 			this.minPick = 200;

@@ -4,21 +4,22 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass.Spirits
 {
-	public class SacredCross : ModItem
+	public class SacredCross : DruidDamageSpirit
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Sacred Cross");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n7% increased druidic damage\nIncreases spirits summoned by 2\n[c/bdffff:Spirit Level +3]");
+			base.Tooltip.SetDefault("7% increased druidic damage\nIncreases spirits summoned by 2\n[c/bdffff:Spirit Level +3]");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 38;
 			base.item.height = 48;
 			base.item.value = Item.sellPrice(0, 1, 80, 0);
 			base.item.rare = 5;
 			base.item.accessory = true;
+			this.spiritWeapon = false;
 		}
 
 		public override void AddRecipes()

@@ -28,7 +28,7 @@ namespace Redemption.Items
 			ModRecipe modRecipe = new ModRecipe(base.mod);
 			modRecipe.AddIngredient(1225, 2);
 			modRecipe.AddIngredient(null, "PureIron", 2);
-			modRecipe.AddIngredient(1508, 4);
+			modRecipe.AddIngredient(1508, 1);
 			modRecipe.AddTile(133);
 			modRecipe.SetResult(this, 2);
 			modRecipe.AddRecipe();

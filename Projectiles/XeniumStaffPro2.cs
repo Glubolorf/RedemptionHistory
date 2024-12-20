@@ -4,6 +4,14 @@ namespace Redemption.Projectiles
 {
 	public class XeniumStaffPro2 : XeniumStaffPro1
 	{
+		public override string Texture
+		{
+			get
+			{
+				return "Redemption/Projectiles/XeniumStaffPro1";
+			}
+		}
+
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Xenium Laser");

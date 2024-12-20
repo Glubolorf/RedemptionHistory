@@ -4,15 +4,15 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class LargeSeedPouch : ModItem
+	public class LargeSeedPouch : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Large Seed Pouch");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nHas a chance to throw an extra seed");
+			base.Tooltip.SetDefault("Has a chance to throw an extra seed");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 26;
 			base.item.height = 34;

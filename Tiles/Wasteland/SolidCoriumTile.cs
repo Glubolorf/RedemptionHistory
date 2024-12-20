@@ -14,6 +14,7 @@ namespace Redemption.Tiles.Wasteland
 			Main.tileMergeDirt[(int)base.Type] = true;
 			Main.tileBlockLight[(int)base.Type] = true;
 			Main.tileLighted[(int)base.Type] = true;
+			Main.tileValue[(int)base.Type] = 900;
 			this.dustType = 6;
 			this.drop = base.mod.ItemType("Corium");
 			this.minPick = 500;

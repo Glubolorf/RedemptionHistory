@@ -9,15 +9,15 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 	{
 		0
 	})]
-	public class SapphireGarland : ModItem
+	public class SapphireGarland : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Sapphire Garland");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n5% increased druidic damage\n5% increased druidic critical strike chance");
+			base.Tooltip.SetDefault("5% increased druidic damage\n5% increased druidic critical strike chance");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 20;
 			base.item.height = 12;
@@ -55,7 +55,7 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
 		{
-			drawAltHair = true;
+			drawHair = true;
 		}
 
 		public override void AddRecipes()

@@ -38,7 +38,6 @@ namespace Redemption.NPCs.Bosses.KingSlayerIIIClone
 			base.npc.boss = true;
 			base.npc.aiStyle = 0;
 			base.npc.netAlways = true;
-			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossSlayer");
 			base.npc.noGravity = true;
 			base.npc.noTileCollide = true;
 			this.bossBag = base.mod.ItemType("SlayerBag");

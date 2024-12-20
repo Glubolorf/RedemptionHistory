@@ -31,7 +31,7 @@ namespace Redemption.Items
 		{
 			get
 			{
-				return base.mod.NPCType("XenomiteCrystalPhase2");
+				return base.mod.NPCType("SoI");
 			}
 		}
 

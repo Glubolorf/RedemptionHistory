@@ -13,6 +13,7 @@ namespace Redemption.Tiles
 			Main.tileMergeDirt[(int)base.Type] = true;
 			Main.tileSpelunker[(int)base.Type] = true;
 			Main.tileBlockLight[(int)base.Type] = true;
+			Main.tileValue[(int)base.Type] = 320;
 			this.dustType = 6;
 			this.drop = base.mod.ItemType("DragonLeadChunk");
 			this.minPick = 100;

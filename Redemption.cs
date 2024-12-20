@@ -4,10 +4,14 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.ChickenArmy;
+using Redemption.CrossMod;
 using Redemption.Items;
 using Redemption.Items.Armor.Costumes;
 using Redemption.Items.Cores;
+using Redemption.NPCs.Bosses.EaglecrestGolem;
 using Redemption.NPCs.Bosses.Nebuleus;
+using Redemption.NPCs.Bosses.SeedOfInfection;
+using ReLogic.Graphics;
 using Terraria;
 using Terraria.GameContent.UI;
 using Terraria.Graphics.Effects;
@@ -49,42 +53,6 @@ namespace Redemption
 			}
 			if (Main.myPlayer != -1 && !Main.gameMenu)
 			{
-				if (ChickWorld.chickArmy)
-				{
-					if (RedeWorld.downedPatientZero)
-					{
-						if (RedeConfigClient.Instance.AntiAntti)
-						{
-							music = 35;
-							priority = 5;
-						}
-						else
-						{
-							music = base.GetSoundSlot(51, "Sounds/Music/ChickenInvasion1");
-							priority = 5;
-						}
-					}
-					else
-					{
-						music = base.GetSoundSlot(51, "Sounds/Music/BossKingChicken");
-						priority = 5;
-					}
-				}
-				if (Main.player[Main.myPlayer].active && (Main.player[Main.myPlayer].GetModPlayer<RedePlayer>().ZoneXeno || Main.player[Main.myPlayer].GetModPlayer<RedePlayer>().ZoneEvilXeno))
-				{
-					music = base.GetSoundSlot(51, "Sounds/Music/XenoCaves");
-					priority = 3;
-				}
-				if (Main.player[Main.myPlayer].active && Main.player[Main.myPlayer].GetModPlayer<RedePlayer>().ZoneLab)
-				{
-					music = base.GetSoundSlot(51, "Sounds/Music/LabMusic");
-					priority = 3;
-				}
-				if (Main.player[Main.myPlayer].active && Main.player[Main.myPlayer].GetModPlayer<RedePlayer>().ZoneSlayer && RedeWorld.downedSlayer)
-				{
-					music = base.GetSoundSlot(51, "Sounds/Music/SlayerShipMusic");
-					priority = 3;
-				}
 				if (Redemption.GirusSilence)
 				{
 					music = base.GetSoundSlot(51, "Sounds/Music/silence");
@@ -94,6 +62,16 @@ namespace Redemption
 				{
 					music = base.GetSoundSlot(51, "Sounds/Music/HallofHeroes");
 					priority = 3;
+				}
+				if (Redemption.emptyHallActive)
+				{
+					music = base.GetSoundSlot(51, "Sounds/Music/Empty");
+					priority = 4;
+				}
+				if (Redemption.soullessBiomeActive)
+				{
+					music = base.GetSoundSlot(51, "Sounds/Music/Soulless");
+					priority = 4;
 				}
 				if (Main.player[Main.myPlayer].active)
 				{
@@ -233,10 +211,6 @@ namespace Redemption
 			}
 			if (!Main.dedServ)
 			{
-				Redemption.EmptyTexture = base.GetTexture("Empty");
-			}
-			if (!Main.dedServ)
-			{
 				base.AddEquipTexture(null, 2, "ArchclothRobe_Legs", "Redemption/Items/Armor/ArchclothRobe_Legs", "", "");
 				base.AddEquipTexture(null, 2, "HallamRobes_Legs", "Redemption/Items/Armor/HallamRobes_Legs", "", "");
 				base.AddEquipTexture(null, 2, "NebuleusVanity_Legs", "Redemption/Items/Armor/PostML/NebuleusVanity_Legs", "", "");
@@ -252,34 +226,54 @@ namespace Redemption
 				base.AddEquipTexture(new HEVHead(), null, 0, "HEVHead", "Redemption/Items/Armor/Costumes/HEVSuit_Head", "", "");
 				base.AddEquipTexture(new HEVBody(), null, 1, "HEVBody", "Redemption/Items/Armor/Costumes/HEVSuit_Body", "Redemption/Items/Armor/Costumes/HEVSuit_Arms", "");
 				base.AddEquipTexture(new HEVLegs(), null, 2, "HEVLegs", "Redemption/Items/Armor/Costumes/HEVSuit_Legs", "", "");
-				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/XenoCaves"), base.ItemType("WastelandBox"), base.TileType("WastelandBoxTile"), 0);
-				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/BossXeno1"), base.ItemType("XenomiteCrystalBox"), base.TileType("XenomiteCrystalBoxTile"), 0);
-				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/BossXeno2"), base.ItemType("InfectedEyeBox"), base.TileType("InfectedEyeBoxTile"), 0);
-				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/BossSlayer"), base.ItemType("KSBox"), base.TileType("KSBoxTile"), 0);
-				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/BossVlitch1"), base.ItemType("VlitchBox"), base.TileType("VlitchBoxTile"), 0);
-				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/BossKeeper"), base.ItemType("KeeperBox"), base.TileType("KeeperBoxTile"), 0);
-				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/BossVlitch2"), base.ItemType("VlitchBox2"), base.TileType("VlitchBoxTile2"), 0);
-				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/LabMusic"), base.ItemType("LabMusicBox"), base.TileType("LabMusicBoxTile"), 0);
-				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/LabBossMusic"), base.ItemType("LabBossMusicBox"), base.TileType("LabBossMusicBoxTile"), 0);
-				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/LabBossMusic2"), base.ItemType("PZMusicBox"), base.TileType("PZMusicBoxTile"), 0);
 				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/HallofHeroes"), base.ItemType("HallOfHeroesBox"), base.TileType("HallOfHeroesBoxTile"), 0);
-				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/BossStarGod1"), base.ItemType("NebBox"), base.TileType("NebBoxTile"), 0);
-				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/BossStarGod2"), base.ItemType("NebBox2"), base.TileType("NebBox2Tile"), 0);
-				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/BossForest1"), base.ItemType("ForestBossBox"), base.TileType("ForestBossBoxTile"), 0);
-				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/ChickenInvasion1"), base.ItemType("ChickenInvasionBox"), base.TileType("ChickenInvasionBoxTile"), 0);
+				Redemption.EmptyTexture = base.GetTexture("Empty");
 				Redemption.PremultiplyTexture(base.GetTexture("Backgrounds/fog"));
+				Redemption.boom = base.GetTexture("TransitionTex");
+				Redemption.PremultiplyTexture(Redemption.boom);
+				Redemption.dancingLight = base.GetTexture("NPCs/Bosses/EaglecrestGolem/UkkoDancingLights");
+				Redemption.PremultiplyTexture(Redemption.dancingLight);
+				Redemption.warningTex1 = base.GetTexture("NPCs/Bosses/Thorn/AkkaIslandWarning");
+				Redemption.PremultiplyTexture(Redemption.warningTex1);
+				Redemption.healingSpiritTex = base.GetTexture("NPCs/Bosses/Thorn/AkkaHealingSpirit");
+				Redemption.PremultiplyTexture(Redemption.healingSpiritTex);
+				Redemption.ukkoBlast = base.GetTexture("NPCs/Bosses/EaglecrestGolem/UkkoElectricBlast");
+				Redemption.PremultiplyTexture(Redemption.ukkoBlast);
+				Redemption.forcefield1 = base.GetTexture("Projectiles/DruidProjectiles/WorldStave/AncientForcefieldPro1");
+				Redemption.PremultiplyTexture(Redemption.forcefield1);
+				Redemption.forcefield2 = base.GetTexture("Projectiles/DruidProjectiles/WorldStave/AncientForcefieldPro2");
+				Redemption.PremultiplyTexture(Redemption.forcefield2);
+				Redemption.forcefield3 = base.GetTexture("Projectiles/DruidProjectiles/WorldStave/CaveAura");
+				Redemption.PremultiplyTexture(Redemption.forcefield3);
+				Redemption.forcefield4 = base.GetTexture("Projectiles/DruidProjectiles/WorldStave/FireForcePro1");
+				Redemption.PremultiplyTexture(Redemption.forcefield4);
+				Redemption.forcefield5 = base.GetTexture("Projectiles/DruidProjectiles/WorldStave/FreezeForcePro1");
+				Redemption.PremultiplyTexture(Redemption.forcefield5);
+				Redemption.forcefield6 = base.GetTexture("Projectiles/DruidProjectiles/WorldStave/MartianForcefieldPro1");
+				Redemption.PremultiplyTexture(Redemption.forcefield6);
+				Redemption.forcefield7 = base.GetTexture("Projectiles/DruidProjectiles/WorldStave/SunAura");
+				Redemption.PremultiplyTexture(Redemption.forcefield7);
 				Filters.Scene["Redemption:Nebuleus"] = new Filter(new StarGodSkyData("FilterMiniTower").UseColor(0.3f, 0f, 0.4f).UseOpacity(0.5f), 4);
 				SkyManager.Instance["Redemption:Nebuleus"] = new StarGodSky();
 				Filters.Scene["Redemption:BigNebuleus"] = new Filter(new StarGodSkyData2("FilterMiniTower").UseColor(0.3f, 0f, 0.4f).UseOpacity(0.5f), 4);
 				SkyManager.Instance["Redemption:BigNebuleus"] = new StarGodSky2();
+				Filters.Scene["Redemption:Ukko"] = new Filter(new UkkoClouds1Data("FilterMiniTower").UseColor(0.1f, 0.1f, 0f).UseOpacity(0.65f), 4);
+				SkyManager.Instance["Redemption:Ukko"] = new UkkoClouds1();
+				UkkoClouds1.boltTexture = ModLoader.GetMod("Redemption").GetTexture("NPCs/Bosses/EaglecrestGolem/UkkoSkyBolt");
+				UkkoClouds1.flashTexture = ModLoader.GetMod("Redemption").GetTexture("NPCs/Bosses/EaglecrestGolem/UkkoSkyFlash");
+				UkkoClouds1.BeamTexture = ModLoader.GetMod("Redemption").GetTexture("NPCs/Bosses/EaglecrestGolem/UkkoSkyBeam");
+				Redemption.PremultiplyTexture(base.GetTexture("NPCs/Bosses/EaglecrestGolem/UkkoSkyBeam"));
+				Redemption.PremultiplyTexture(base.GetTexture("NPCs/Bosses/EaglecrestGolem/UkkoClouds1"));
 				StarGodSky.SkyTex = ModLoader.GetMod("Redemption").GetTexture("NPCs/Bosses/Nebuleus/StarGodSky");
 				StarGodSky2.SkyTex = ModLoader.GetMod("Redemption").GetTexture("NPCs/Bosses/Nebuleus/StarGodSky2");
+				UkkoClouds1.CloudTex = ModLoader.GetMod("Redemption").GetTexture("NPCs/Bosses/EaglecrestGolem/UkkoClouds1");
 				Ref<Effect> screenRef = new Ref<Effect>(base.GetEffect("Effects/Shockwave"));
 				Filters.Scene["Shockwave"] = new Filter(new ScreenShaderData(screenRef, "Shockwave"), 4);
 				Filters.Scene["Shockwave"].Load();
 			}
 			Redemption.FaceCustomCurrencyID = CustomCurrencyManager.RegisterCurrency(new CustomCurrency(ModContent.ItemType<AncientGoldCoin>(), 999L));
 			Filters.Scene["Redemption:XenoSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0.2f, 0f).UseOpacity(0.4f), 3);
+			Filters.Scene["Redemption:SoullessSky"] = new Filter(new ScreenShaderData("FilterMiniTower").UseColor(0f, 0f, 0f).UseOpacity(0.6f), 3);
 			ModTranslation text = base.CreateTranslation("DruidicOre");
 			text.SetDefault("Druidic energy courses through the world's ore...");
 			base.AddTranslation(text);
@@ -323,13 +317,7 @@ namespace Redemption
 			text.SetDefault("Cursed rocks of crimson form in the ash of the Underworld...");
 			base.AddTranslation(text);
 			text = base.CreateTranslation("PatientZeroMessage3");
-			text.SetDefault("Cosmic creatures fill the skies...");
-			base.AddTranslation(text);
-			text = base.CreateTranslation("PatientZeroMessage4");
-			text.SetDefault("The forest's curse awakens...");
-			base.AddTranslation(text);
-			text = base.CreateTranslation("PatientZeroMessage5");
-			text.SetDefault("Beings of the Ancient Times roam the caverns...");
+			text.SetDefault("Powerful creatures roam the forests, caverns, and skies...");
 			base.AddTranslation(text);
 			text = base.CreateTranslation("GirusHide");
 			text.SetDefault("Thought you could hide from me?");
@@ -339,6 +327,7 @@ namespace Redemption
 		public override void Unload()
 		{
 			this.CleanupStaticArrays();
+			Redemption.boom = null;
 			Redemption.inst = null;
 		}
 
@@ -360,6 +349,10 @@ namespace Redemption
 				Redemption.precachedTextures.Clear();
 				StarGodSky.SkyTex = null;
 				StarGodSky2.SkyTex = null;
+				UkkoClouds1.CloudTex = null;
+				UkkoClouds1.boltTexture = null;
+				UkkoClouds1.flashTexture = null;
+				UkkoClouds1.BeamTexture = null;
 			}
 		}
 
@@ -379,6 +372,25 @@ namespace Redemption
 					layers.Insert(index, ChickThing);
 				}
 			}
+			if (Main.player[Main.myPlayer].GetModPlayer<InfectionTextPlayer>().text)
+			{
+				int textLayer = layers.FindIndex((GameInterfaceLayer layer) => layer.Name.Equals("Vanilla: Inventory"));
+				LegacyGameInterfaceLayer computerState = new LegacyGameInterfaceLayer("Redemption: UI", delegate()
+				{
+					this.DrawInfectionText();
+					return true;
+				}, 1);
+				layers.Insert(textLayer, computerState);
+			}
+		}
+
+		private void DrawInfectionText()
+		{
+			float alpha = Main.player[Main.myPlayer].GetModPlayer<InfectionTextPlayer>().alphaText;
+			string text = "The Infection shall begin...";
+			Vector2 textSize = Main.fontDeathText.MeasureString(text);
+			float textPositionLeft = (float)(Main.screenWidth / 2) - textSize.X / 2f;
+			DynamicSpriteFontExtensionMethods.DrawString(Main.spriteBatch, Main.fontDeathText, text, new Vector2(textPositionLeft, (float)(Main.screenHeight / 2 - 300)), Color.Green * ((float)Color.Green.A / alpha), 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 		}
 
 		public void DrawChick(SpriteBatch spriteBatch)
@@ -450,9 +462,10 @@ namespace Redemption
 
 		public override void PostSetupContent()
 		{
-			Mod bossChecklist = ModLoader.GetMod("BossChecklist");
-			bool mod = ModLoader.GetMod("FKBossHealthBar") != null;
-			bool mod2 = ModLoader.GetMod("CalamityMod") != null;
+			WeakReferences.PerformModSupport();
+			ModLoader.GetMod("BossChecklist");
+			Mod yabhb = ModLoader.GetMod("FKBossHealthBar");
+			Mod Calamity = ModLoader.GetMod("CalamityMod");
 			Mod Thorium = ModLoader.GetMod("ThoriumMod");
 			Mod Spirit = ModLoader.GetMod("SpiritMod");
 			Mod Fargos = ModLoader.GetMod("Fargowiltas");
@@ -462,7 +475,119 @@ namespace Redemption
 			Mod CheatSheet = ModLoader.GetMod("CheatSheet");
 			Mod HEROsMod = ModLoader.GetMod("HEROsMod");
 			Mod AA = ModLoader.GetMod("AAMod");
-			if (mod2)
+			Mod fargos = ModLoader.GetMod("Fargowiltas");
+			if (fargos != null)
+			{
+				Mod mod = fargos;
+				object[] array = new object[6];
+				array[0] = "AddSummon";
+				array[1] = 0f;
+				array[2] = "Redemption";
+				array[3] = "EggCrown";
+				array[4] = new Func<bool>(() => RedeWorld.downedKingChicken);
+				array[5] = 40000;
+				mod.Call(array);
+				Mod mod2 = fargos;
+				object[] array2 = new object[6];
+				array2[0] = "AddSummon";
+				array2[1] = 1.5f;
+				array2[2] = "Redemption";
+				array2[3] = "HeartOfTheThorns";
+				array2[4] = new Func<bool>(() => RedeWorld.downedThorn);
+				array2[5] = 60000;
+				mod2.Call(array2);
+				Mod mod3 = fargos;
+				object[] array3 = new object[6];
+				array3[0] = "AddSummon";
+				array3[1] = 2.4f;
+				array3[2] = "Redemption";
+				array3[3] = "MysteriousTabletCorrupt";
+				array3[4] = new Func<bool>(() => RedeWorld.downedTheKeeper && !WorldGen.crimson);
+				array3[5] = 80000;
+				mod3.Call(array3);
+				Mod mod4 = fargos;
+				object[] array4 = new object[6];
+				array4[0] = "AddSummon";
+				array4[1] = 2.4f;
+				array4[2] = "Redemption";
+				array4[3] = "MysteriousTabletCrimson";
+				array4[4] = new Func<bool>(() => RedeWorld.downedTheKeeper && WorldGen.crimson);
+				array4[5] = 80000;
+				mod4.Call(array4);
+				Mod mod5 = fargos;
+				object[] array5 = new object[6];
+				array5[0] = "AddSummon";
+				array5[1] = 3.48f;
+				array5[2] = "Redemption";
+				array5[3] = "GeigerCounter";
+				array5[4] = new Func<bool>(() => RedeWorld.downedXenomiteCrystal);
+				array5[5] = 100000;
+				mod5.Call(array5);
+				Mod mod6 = fargos;
+				object[] array6 = new object[6];
+				array6[0] = "AddSummon";
+				array6[1] = 6.25f;
+				array6[2] = "Redemption";
+				array6[3] = "XenoEye";
+				array6[4] = new Func<bool>(() => RedeWorld.downedInfectedEye);
+				array6[5] = 250000;
+				mod6.Call(array6);
+				Mod mod7 = fargos;
+				object[] array7 = new object[6];
+				array7[0] = "AddSummon";
+				array7[1] = 9.99999f;
+				array7[2] = "Redemption";
+				array7[3] = "KingSummon";
+				array7[4] = new Func<bool>(() => RedeWorld.downedSlayer);
+				array7[5] = 400000;
+				mod7.Call(array7);
+				Mod mod8 = fargos;
+				object[] array8 = new object[6];
+				array8[0] = "AddSummon";
+				array8[1] = 11.5f;
+				array8[2] = "Redemption";
+				array8[3] = "CorruptedHeroSword";
+				array8[4] = new Func<bool>(() => RedeWorld.downedVlitch1);
+				array8[5] = 600000;
+				mod8.Call(array8);
+				Mod mod9 = fargos;
+				object[] array9 = new object[6];
+				array9[0] = "AddSummon";
+				array9[1] = 12.8f;
+				array9[2] = "Redemption";
+				array9[3] = "CorruptedWormMedallion";
+				array9[4] = new Func<bool>(() => RedeWorld.downedVlitch2);
+				array9[5] = 600000;
+				mod9.Call(array9);
+				Mod mod10 = fargos;
+				object[] array10 = new object[6];
+				array10[0] = "AddSummon";
+				array10[1] = 14.05f;
+				array10[2] = "Redemption";
+				array10[3] = "OmegaRadar";
+				array10[4] = new Func<bool>(() => RedeWorld.downedVlitch3);
+				array10[5] = 1000000;
+				mod10.Call(array10);
+				Mod mod11 = fargos;
+				object[] array11 = new object[6];
+				array11[0] = "AddSummon";
+				array11[1] = 14.7f;
+				array11[2] = "Redemption";
+				array11[3] = "SigilOfThorns";
+				array11[4] = new Func<bool>(() => RedeWorld.downedEaglecrestGolemPZ && RedeWorld.downedThornPZ);
+				array11[5] = 4000000;
+				mod11.Call(array11);
+				Mod mod12 = fargos;
+				object[] array12 = new object[6];
+				array12[0] = "AddSummon";
+				array12[1] = 15.5f;
+				array12[2] = "Redemption";
+				array12[3] = "NebSummon";
+				array12[4] = new Func<bool>(() => RedeWorld.downedNebuleus);
+				array12[5] = 10000000;
+				mod12.Call(array12);
+			}
+			if (Calamity != null)
 			{
 				Redemption.calamityLoaded = true;
 			}
@@ -502,7 +627,7 @@ namespace Redemption
 			{
 				Redemption.AALoaded = true;
 			}
-			if (mod)
+			if (yabhb != null)
 			{
 				this.Call(new object[]
 				{
@@ -528,223 +653,6 @@ namespace Redemption
 				{
 					"RegisterHealthBarMini",
 					Redemption.inst.NPCType("TrojanChicken")
-				});
-			}
-			if (bossChecklist != null)
-			{
-				Mod mod3 = bossChecklist;
-				object[] array = new object[5];
-				array[0] = "AddMiniBossWithInfo";
-				array[1] = "The Mighty King Chicken";
-				array[2] = 0f;
-				array[3] = new Func<bool>(() => RedeWorld.downedKingChicken);
-				array[4] = "Use an [i:" + ModContent.ItemType<EggCrown>() + "] at day";
-				mod3.Call(array);
-				Mod mod4 = bossChecklist;
-				object[] array2 = new object[6];
-				array2[0] = "AddMiniBossWithInfo";
-				array2[1] = "Sunken Captain";
-				array2[2] = 0.3f;
-				array2[3] = new Func<bool>(() => RedeWorld.downedSunkenCaptain);
-				array2[4] = "Wait by the sea on a full moon.";
-				array2[5] = new Func<bool>(() => RedeWorld.downedSunkenCaptain);
-				mod4.Call(array2);
-				Mod mod5 = bossChecklist;
-				object[] array3 = new object[6];
-				array3[0] = "AddEventWithInfo";
-				array3[1] = "Chicken Invasion";
-				array3[2] = 0.5f;
-				array3[3] = new Func<bool>(() => RedeWorld.downedChickenInv);
-				array3[4] = "Use a [i:" + ModContent.ItemType<ChickenContract>() + "] at day.";
-				array3[5] = new Func<bool>(() => RedeWorld.downedKingChicken);
-				mod5.Call(array3);
-				Mod mod6 = bossChecklist;
-				object[] array4 = new object[5];
-				array4[0] = "AddBossWithInfo";
-				array4[1] = "Thorn, Bane of the Forest";
-				array4[2] = 1.5f;
-				array4[3] = new Func<bool>(() => RedeWorld.downedThorn);
-				array4[4] = "Use a [i:" + ModContent.ItemType<HeartOfTheThorns>() + "] at day";
-				mod6.Call(array4);
-				Mod mod7 = bossChecklist;
-				object[] array5 = new object[5];
-				array5[0] = "AddBossWithInfo";
-				array5[1] = "The Keeper";
-				array5[2] = 2.4f;
-				array5[3] = new Func<bool>(() => RedeWorld.downedTheKeeper);
-				array5[4] = string.Concat(new object[]
-				{
-					"Use a [i:",
-					ModContent.ItemType<MysteriousTabletCorrupt>(),
-					"] or [i:",
-					ModContent.ItemType<MysteriousTabletCrimson>(),
-					"] at night"
-				});
-				mod7.Call(array5);
-				Mod mod8 = bossChecklist;
-				object[] array6 = new object[6];
-				array6[0] = "AddMiniBossWithInfo";
-				array6[1] = "Skull Digger";
-				array6[2] = 2.41f;
-				array6[3] = new Func<bool>(() => RedeWorld.downedSkullDigger);
-				array6[4] = "Roams the caverns, seeking revenge...";
-				array6[5] = new Func<bool>(() => RedeWorld.downedSkullDigger);
-				mod8.Call(array6);
-				Mod mod9 = bossChecklist;
-				object[] array7 = new object[5];
-				array7[0] = "AddMiniBossWithInfo";
-				array7[1] = "Strange Portal";
-				array7[2] = 3.48f;
-				array7[3] = new Func<bool>(() => RedeWorld.downedStrangePortal);
-				array7[4] = "Use an [i:" + ModContent.ItemType<UnstableCrystal>() + "]";
-				mod9.Call(array7);
-				Mod mod10 = bossChecklist;
-				object[] array8 = new object[5];
-				array8[0] = "AddBossWithInfo";
-				array8[1] = "Xenomite Crystal";
-				array8[2] = 3.481f;
-				array8[3] = new Func<bool>(() => RedeWorld.downedXenomiteCrystal);
-				array8[4] = "Use a [i:" + ModContent.ItemType<GeigerCounter>() + "], dropped by the Strange Portal. Begins the Infection storyline";
-				mod10.Call(array8);
-				Mod mod11 = bossChecklist;
-				object[] array9 = new object[5];
-				array9[0] = "AddMiniBossWithInfo";
-				array9[1] = "Eaglecrest Golem";
-				array9[2] = 4.1f;
-				array9[3] = new Func<bool>(() => RedeWorld.downedEaglecrestGolem);
-				array9[4] = "Naturally spawns at day after Eater of Worlds/Brain of Cthulhu is defeated";
-				mod11.Call(array9);
-				Mod mod12 = bossChecklist;
-				object[] array10 = new object[6];
-				array10[0] = "AddBossWithInfo";
-				array10[1] = "Infected Eye";
-				array10[2] = 6.25f;
-				array10[3] = new Func<bool>(() => RedeWorld.downedInfectedEye);
-				array10[4] = "Use a [i:" + ModContent.ItemType<XenoEye>() + "] at night, requires the Xenomite Crystal to be defeated";
-				array10[5] = new Func<bool>(() => RedeWorld.downedXenomiteCrystal);
-				mod12.Call(array10);
-				Mod mod13 = bossChecklist;
-				object[] array11 = new object[5];
-				array11[0] = "AddBossWithInfo";
-				array11[1] = "The Abandoned Lab";
-				array11[2] = 9.1f;
-				array11[3] = new Func<bool>(() => RedeWorld.downedIBehemoth);
-				array11[4] = "Find the Abandoned Lab far below the surface, defeat the first 3 minibosses within. Requires all mech bosses to be defeated. [i:" + ModContent.ItemType<LabHelpMessage>() + "]";
-				mod13.Call(array11);
-				Mod mod14 = bossChecklist;
-				object[] array12 = new object[5];
-				array12[0] = "AddBossWithInfo";
-				array12[1] = "King Slayer III";
-				array12[2] = 9.99999f;
-				array12[3] = new Func<bool>(() => RedeWorld.downedSlayer);
-				array12[4] = "Use a [i:" + ModContent.ItemType<KingSummon>() + "] at day. (Although I would recommend fighting at a later point in the game)";
-				mod14.Call(array12);
-				Mod mod15 = bossChecklist;
-				object[] array13 = new object[6];
-				array13[0] = "AddBossWithInfo";
-				array13[1] = "1st Vlitch Overlord";
-				array13[2] = 11.5f;
-				array13[3] = new Func<bool>(() => RedeWorld.downedVlitch1);
-				array13[4] = "Use a [i:" + ModContent.ItemType<CorruptedHeroSword>() + "] at night";
-				array13[5] = new Func<bool>(() => RedeWorld.downedXenomiteCrystal);
-				mod15.Call(array13);
-				Mod mod16 = bossChecklist;
-				object[] array14 = new object[6];
-				array14[0] = "AddBossWithInfo";
-				array14[1] = "2nd Vlitch Overlord";
-				array14[2] = 13.5f;
-				array14[3] = new Func<bool>(() => RedeWorld.downedVlitch2);
-				array14[4] = "Use a [i:" + ModContent.ItemType<CorruptedWormMedallion>() + "] at night";
-				array14[5] = new Func<bool>(() => RedeWorld.downedXenomiteCrystal);
-				mod16.Call(array14);
-				Mod mod17 = bossChecklist;
-				object[] array15 = new object[6];
-				array15[0] = "AddBossWithInfo";
-				array15[1] = "3rd Vlitch Overlord";
-				array15[2] = 14.05f;
-				array15[3] = new Func<bool>(() => RedeWorld.downedVlitch3);
-				array15[4] = "Use an [i:" + ModContent.ItemType<OmegaRadar>() + "] at night";
-				array15[5] = new Func<bool>(() => RedeWorld.downedXenomiteCrystal);
-				mod17.Call(array15);
-				Mod mod18 = bossChecklist;
-				object[] array16 = new object[5];
-				array16[0] = "AddBossWithInfo";
-				array16[1] = "Patient Zero";
-				array16[2] = 14.5f;
-				array16[3] = new Func<bool>(() => RedeWorld.downedPatientZero);
-				array16[4] = "Use a lunar pickaxe to mine the hardened sludge in the Abandoned Lab to explore further. Beware what awaits beyond.";
-				mod18.Call(array16);
-				Mod mod19 = bossChecklist;
-				object[] array17 = new object[6];
-				array17[0] = "AddEventWithInfo";
-				array17[1] = "King Chicken's Royal Army";
-				array17[2] = 14.55f;
-				array17[3] = new Func<bool>(() => RedeWorld.downedChickenInvPZ);
-				array17[4] = "Use a [i:" + ModContent.ItemType<ChickenContract>() + "] at day after Patient Zero is defeated.";
-				array17[5] = new Func<bool>(() => RedeWorld.downedKingChicken);
-				mod19.Call(array17);
-				Mod mod20 = bossChecklist;
-				object[] array18 = new object[5];
-				array18[0] = "AddBossWithInfo";
-				array18[1] = "Thorn & Eaglecrest Rematch";
-				array18[2] = 14.7f;
-				array18[3] = new Func<bool>(() => RedeWorld.downedThornPZ && RedeWorld.downedEaglecrestGolemPZ);
-				array18[4] = string.Concat(new object[]
-				{
-					"Use an [i:",
-					ModContent.ItemType<AncientSigil>(),
-					"] & [i:",
-					ModContent.ItemType<LifeFruitOfThorns>(),
-					"] at day."
-				});
-				mod20.Call(array18);
-				Mod mod21 = bossChecklist;
-				object[] array19 = new object[5];
-				array19[0] = "AddBossWithInfo";
-				array19[1] = "Nebuleus, Angel of the Cosmos";
-				array19[2] = 15.5f;
-				array19[3] = new Func<bool>(() => RedeWorld.downedNebuleus);
-				array19[4] = "Use an [i:" + ModContent.ItemType<NebSummon>() + "] at night";
-				mod21.Call(array19);
-			}
-			Mod censusMod = ModLoader.GetMod("Census");
-			if (censusMod != null)
-			{
-				censusMod.Call(new object[]
-				{
-					"TownNPCCondition",
-					base.NPCType("Squire"),
-					"Have a suitable house"
-				});
-				censusMod.Call(new object[]
-				{
-					"TownNPCCondition",
-					base.NPCType("Fallen"),
-					"Defeat the Keeper and have a suitable house"
-				});
-				censusMod.Call(new object[]
-				{
-					"TownNPCCondition",
-					base.NPCType("Newb"),
-					"Find the Suspicious Dirt Pile in the caverns"
-				});
-				censusMod.Call(new object[]
-				{
-					"TownNPCCondition",
-					base.NPCType("TBot"),
-					"Defeat the Infected Eye and have a suitable house"
-				});
-				censusMod.Call(new object[]
-				{
-					"TownNPCCondition",
-					base.NPCType("Slicer"),
-					"Defeat the Dark Slime miniboss, which spawns very rarely on the surface after all mech bosses are defeated"
-				});
-				censusMod.Call(new object[]
-				{
-					"TownNPCCondition",
-					base.NPCType("DHunter"),
-					"Defeat the Dark Slime and Plantera, and have a suitable house"
 				});
 			}
 		}
@@ -1168,7 +1076,7 @@ namespace Redemption
 				}
 				int npcID = NPC.NewNPC((int)npcCenter.X, (int)npcCenter.Y, bossType, 0, 0f, 0f, 0f, 0f, 255);
 				Main.npc[npcID].Center = npcCenter;
-				Main.npc[npcID].netUpdate = true;
+				Main.npc[npcID].netUpdate2 = true;
 				if (spawnMessage)
 				{
 					string npcName = (!string.IsNullOrEmpty(Main.npc[npcID].GivenName)) ? Main.npc[npcID].GivenName : overrideDisplayName;
@@ -1180,30 +1088,33 @@ namespace Redemption
 					{
 						if (Main.netMode == 0)
 						{
-							Main.NewText(npcName + " have awoken!", 175, 75, byte.MaxValue, false);
-							return;
+							if (Main.netMode != 1)
+							{
+								BaseUtility.Chat(npcName + " have awoken!", 175, 75, byte.MaxValue, false);
+								return;
+							}
 						}
-						if (Main.netMode == 2)
+						else if (Main.netMode == 2)
 						{
 							NetMessage.BroadcastChatMessage(NetworkText.FromLiteral(npcName + " have awoken!"), new Color(175, 75, 255), -1);
 							return;
 						}
 					}
-					else
+					else if (Main.netMode == 0)
 					{
-						if (Main.netMode == 0)
+						if (Main.netMode != 1)
 						{
-							Main.NewText(Language.GetTextValue("Announcement.HasAwoken", npcName), 175, 75, byte.MaxValue, false);
+							BaseUtility.Chat(Language.GetTextValue("Announcement.HasAwoken", npcName), 175, 75, byte.MaxValue, false);
 							return;
 						}
-						if (Main.netMode == 2)
+					}
+					else if (Main.netMode == 2)
+					{
+						NetMessage.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasAwoken", new object[]
 						{
-							NetMessage.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasAwoken", new object[]
-							{
-								NetworkText.FromLiteral(npcName)
-							}), new Color(175, 75, 255), -1);
-							return;
-						}
+							NetworkText.FromLiteral(npcName)
+						}), new Color(175, 75, 255), -1);
+						return;
 					}
 				}
 			}
@@ -1226,6 +1137,30 @@ namespace Redemption
 
 		public const string customEventName = "Chicken Army";
 
+		public static Texture2D boom;
+
+		public static Texture2D dancingLight;
+
+		public static Texture2D warningTex1;
+
+		public static Texture2D healingSpiritTex;
+
+		public static Texture2D ukkoBlast;
+
+		public static Texture2D forcefield1;
+
+		public static Texture2D forcefield2;
+
+		public static Texture2D forcefield3;
+
+		public static Texture2D forcefield4;
+
+		public static Texture2D forcefield5;
+
+		public static Texture2D forcefield6;
+
+		public static Texture2D forcefield7;
+
 		public static int customEvent;
 
 		public static int FaceCustomCurrencyID;
@@ -1235,6 +1170,10 @@ namespace Redemption
 		public static Redemption inst = null;
 
 		public static bool templeOfHeroes;
+
+		public static bool emptyHallActive;
+
+		public static bool soullessBiomeActive;
 
 		public static IDictionary<string, Texture2D> Textures = null;
 

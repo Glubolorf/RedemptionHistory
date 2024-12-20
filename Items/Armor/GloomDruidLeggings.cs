@@ -9,15 +9,15 @@ namespace Redemption.Items.Armor
 	{
 		2
 	})]
-	public class GloomDruidLeggings : ModItem
+	public class GloomDruidLeggings : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Gloom Leggings");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n5% increased druidic damage\nLife regen slightly increased\nMana regen slightly increased");
+			base.Tooltip.SetDefault("5% increased druidic damage\nLife regen slightly increased\nMana regen slightly increased");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 16;

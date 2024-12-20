@@ -11,7 +11,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Bow of the Blind Seamstress");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nShoots an arrow dealing druidic damage\nRight-clicking shoots an arrow dealing ranged damage\nWhen shooting, you have a chance to summon a damaging Forest Soul around you");
+			base.Tooltip.SetDefault("Shoots an arrow dealing druidic damage\nRight-clicking shoots an arrow dealing ranged damage\nWhen shooting, you have a chance to summon a damaging Forest Soul around you");
 		}
 
 		public override void SafeSetDefaults()

@@ -13,6 +13,7 @@ namespace Redemption.Tiles
 			Main.tileMergeDirt[(int)base.Type] = true;
 			Main.tileSpelunker[(int)base.Type] = true;
 			Main.tileBlockLight[(int)base.Type] = true;
+			Main.tileValue[(int)base.Type] = 600;
 			this.dustType = base.mod.DustType("XenoDust");
 			this.drop = base.mod.ItemType("XenomiteShard");
 			this.minPick = 30;

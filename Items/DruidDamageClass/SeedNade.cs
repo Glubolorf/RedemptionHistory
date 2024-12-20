@@ -10,7 +10,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Seed Grenade");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nExplodes into random seeds\nLarge Seed Pouch increases the number of seeds");
+			base.Tooltip.SetDefault("Explodes into random seeds\nLarge Seed Pouch increases the number of seeds");
 		}
 
 		public override void SafeSetDefaults()

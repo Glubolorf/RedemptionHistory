@@ -8,6 +8,14 @@ namespace Redemption.Projectiles
 {
 	public class DarkSoulPro3 : ModProjectile
 	{
+		public override string Texture
+		{
+			get
+			{
+				return "Redemption/Projectiles/DarkSoulPro1";
+			}
+		}
+
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Dark Soul");

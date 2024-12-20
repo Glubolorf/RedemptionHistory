@@ -24,33 +24,55 @@ namespace Redemption.NPCs.Bosses
 			base.projectile.localAI[1] += 1f;
 			if (base.projectile.localAI[1] == 540f)
 			{
-				Main.NewText("Hm? Something took down that good-for-nothing robotic blade I corrupted a few decades ago?", new Color(255, 32, 32), false);
+				Main.NewText("...", new Color(255, 32, 32), false);
 				Redemption.GirusSilence = true;
 			}
-			if (base.projectile.localAI[1] == 700f)
+			if (base.projectile.localAI[1] == 640f)
 			{
-				Main.NewText("Haha, knew it was such a weak being!", new Color(255, 32, 32), false);
+				Main.NewText("...Hm?", new Color(255, 32, 32), false);
 			}
-			if (base.projectile.localAI[1] == 1200f)
+			if (base.projectile.localAI[1] == 900f)
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().omegaPower)
-				{
-					Main.NewText("You, little android! Gongratulations, you defeated the weakest of the 'Overlords'!", new Color(255, 32, 32), false);
-				}
-				else
-				{
-					Main.NewText("You, little organic thing! Gongratulations, you defeated the weakest of the 'Overlords'!", new Color(255, 32, 32), false);
-				}
+				Main.NewText("Would you look at that, an Overlord Unit has been taken down.", new Color(255, 32, 32), false);
+			}
+			if (base.projectile.localAI[1] == 1300f)
+			{
+				Main.NewText("What a shame. That one was almost useful.", new Color(255, 32, 32), false);
 			}
 			if (base.projectile.localAI[1] == 1600f)
 			{
-				Main.NewText("All of them are a bunch of useless, good for nothing minions of mine who do my bidding!", new Color(255, 32, 32), false);
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().omegaPower)
+				{
+					Main.NewText("You know, I never expected one of my own to take down an Overlord..?", new Color(255, 32, 32), false);
+				}
+				else
+				{
+					Main.NewText("You know, I never expected someone like you take down an Overlord.", new Color(255, 32, 32), false);
+				}
 			}
 			if (base.projectile.localAI[1] == 1900f)
 			{
-				Main.NewText("Let's see if you have what it takes to take them all down... Hehehehe...", new Color(255, 32, 32), false);
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().omegaPower)
+				{
+					Main.NewText("Huh... Very interesting. I never expected this.", new Color(255, 32, 32), false);
+				}
+				else
+				{
+					Main.NewText("Keep on going. It's rather interesting to see you attempt such a feat...", new Color(255, 32, 32), false);
+				}
 			}
 			if (base.projectile.localAI[1] == 2100f)
+			{
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().omegaPower)
+				{
+					Main.NewText("Anyway, carry on your way, my underling. Hmm...", new Color(255, 32, 32), false);
+				}
+				else
+				{
+					Main.NewText("Hehehehe...", new Color(255, 32, 32), false);
+				}
+			}
+			if (base.projectile.localAI[1] >= 2300f)
 			{
 				base.projectile.Kill();
 			}

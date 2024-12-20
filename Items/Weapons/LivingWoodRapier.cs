@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -32,15 +30,7 @@ namespace Redemption.Items.Weapons
 			base.item.autoReuse = true;
 			base.item.shoot = base.mod.ProjectileType("LeafPro");
 			base.item.shootSpeed = 16f;
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> tooltips)
-		{
-			Color transparent = Color.Transparent;
-			if (base.item.modItem != null && base.item.modItem.mod == ModLoader.GetMod("Redemption"))
-			{
-				Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName")).overrideColor = new Color?(new Color(0, 120, 255));
-			}
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 5;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

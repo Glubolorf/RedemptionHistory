@@ -6,65 +6,34 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class GreatSkiesStave : DruidDamageItem
+	public class GreatSkiesStave : DruidStave
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Great Skies Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nLunges the user forward with great force");
+			base.Tooltip.SetDefault("Casts a blast of wind that can push both enemies or players");
 		}
 
 		public override void SafeSetDefaults()
 		{
-			base.item.damage = 57;
+			base.item.damage = 47;
 			base.item.width = 60;
 			base.item.height = 60;
 			base.item.useTime = 38;
 			base.item.useAnimation = 38;
-			base.item.useStyle = 1;
 			base.item.crit = 4;
-			base.item.knockBack = 11f;
+			base.item.knockBack = 0f;
 			base.item.value = Item.sellPrice(0, 2, 25, 0);
 			base.item.rare = 5;
 			base.item.UseSound = SoundID.Item1;
 			base.item.autoReuse = false;
 			base.item.useTurn = true;
-		}
-
-		public override bool UseItem(Player player)
-		{
-			player.AddBuff(base.mod.BuffType("GSSBuff"), 20, true);
-			Vector2 MyVelocity = Utils.SafeNormalize(Main.MouseWorld - player.Center, -Vector2.UnitY) * 8f;
-			player.velocity += MyVelocity;
-			return true;
-		}
-
-		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
-		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().burnStaves)
-			{
-				target.AddBuff(24, 180, false);
-			}
-		}
-
-		public override float UseTimeMultiplier(Player player)
-		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().fasterStaves)
-			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
-				{
-					return 1.45f;
-				}
-				return 1.15f;
-			}
-			else
-			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
-				{
-					return 1.35f;
-				}
-				return 1f;
-			}
+			base.item.shoot = base.mod.ProjectileType("GreatGust");
+			base.item.shootSpeed = 8f;
+			this.defaultShoot = base.mod.ProjectileType("GreatGust");
+			this.singleShotStave = true;
+			this.staveHoldOffset = new Vector2(4f, -10f);
+			this.staveLength = 60.2f;
 		}
 
 		public override void AddRecipes()

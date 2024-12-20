@@ -4,15 +4,15 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class PouchBelt : ModItem
+	public class PouchBelt : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Pouch Belt");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n8% increased druidic damage\n2% increased druidic critical strike chance");
+			base.Tooltip.SetDefault("8% increased druidic damage\n2% increased druidic critical strike chance");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 30;
 			base.item.height = 24;

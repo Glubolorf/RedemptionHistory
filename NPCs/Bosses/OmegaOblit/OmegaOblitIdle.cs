@@ -42,7 +42,6 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 			base.npc.noTileCollide = true;
 			base.npc.HitSound = SoundID.NPCHit42;
 			base.npc.DeathSound = SoundID.NPCDeath14;
-			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossVlitch2");
 			this.bossBag = base.mod.ItemType("OmegaOblitBag");
 		}
 

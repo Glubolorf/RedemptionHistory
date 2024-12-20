@@ -6,12 +6,12 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class CrystalStave : DruidDamageItem
+	public class CrystalStave : DruidStave
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Crystal Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nShoots clusters of crystal shards");
+			base.Tooltip.SetDefault("Shoots clusters of crystal shards");
 		}
 
 		public override void SafeSetDefaults()
@@ -21,7 +21,6 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.height = 48;
 			base.item.useTime = 29;
 			base.item.useAnimation = 29;
-			base.item.useStyle = 1;
 			base.item.crit = 4;
 			base.item.knockBack = 7f;
 			base.item.value = Item.sellPrice(0, 1, 10, 0);
@@ -31,37 +30,13 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.useTurn = true;
 			base.item.shoot = 94;
 			base.item.shootSpeed = 19f;
+			this.defaultShoot = 94;
+			this.singleShotStave = false;
+			this.staveHoldOffset = new Vector2(4f, -10f);
+			this.staveLength = 46.2f;
 		}
 
-		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
-		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().burnStaves)
-			{
-				target.AddBuff(24, 180, false);
-			}
-		}
-
-		public override float UseTimeMultiplier(Player player)
-		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().fasterStaves)
-			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
-				{
-					return 1.45f;
-				}
-				return 1.15f;
-			}
-			else
-			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
-				{
-					return 1.35f;
-				}
-				return 1f;
-			}
-		}
-
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		protected override bool SpecialShootPattern(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
 			int numberProjectiles = 3 + Main.rand.Next(3);
 			for (int i = 0; i < numberProjectiles; i++)

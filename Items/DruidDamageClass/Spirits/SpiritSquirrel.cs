@@ -6,12 +6,12 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass.Spirits
 {
-	public class SpiritSquirrel : DruidDamageItem
+	public class SpiritSquirrel : DruidDamageSpirit
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Spirit Squirrel in a Bottle");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\nReleases a spirit squirrel that runs on the ground\n[c/c0bdff:Minimum Spirit Level: 0]\n[c/bdffe4:Maximum Spirit Level: 3]");
+			base.Tooltip.SetDefault("Releases a spirit squirrel that runs on the ground");
 		}
 
 		public override void SafeSetDefaults()
@@ -32,6 +32,9 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 			base.item.autoReuse = true;
 			base.item.shoot = base.mod.ProjectileType("SpiritSquirrelPro");
 			base.item.shootSpeed = 7f;
+			this.spiritWeapon = true;
+			this.minSpiritLevel = 0;
+			this.maxSpiritLevel = 3;
 		}
 
 		public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)

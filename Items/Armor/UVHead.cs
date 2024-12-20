@@ -10,15 +10,15 @@ namespace Redemption.Items.Armor
 	{
 		0
 	})]
-	public class UVHead : ModItem
+	public class UVHead : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("UV Headgear");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n11% increased druidic damage\nStaves swing faster\n60+ max life");
+			base.Tooltip.SetDefault("11% increased druidic damage\nStaves swing faster\n60+ max life");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 22;
@@ -30,7 +30,7 @@ namespace Redemption.Items.Armor
 		public override void UpdateEquip(Player player)
 		{
 			DruidDamagePlayer.ModPlayer(player).druidDamage += 0.11f;
-			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).fasterStaves = true;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).staveSpeed += 0.05f;
 			player.statLifeMax2 += 60;
 		}
 
@@ -57,15 +57,15 @@ namespace Redemption.Items.Armor
 
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "Goes into Defensive Mode at daytime - Greatly boosting defence and endurance\nGoes into Offensive Mode at nighttime - Greatly boosting druidic attack and crit";
+			player.setBonus = "Goes into Defensive Mode at daytime - Greatly boosting defence and endurance\nGoes into Offensive Mode at nighttime - Greatly boosting druidic damage and crit";
 			if (Main.dayTime)
 			{
-				player.statDefense += 30;
-				player.endurance += 0.15f;
+				player.statDefense += 10;
+				player.endurance += 0.06f;
 				return;
 			}
 			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
-			druidDamagePlayer.druidDamage += 0.3f;
+			druidDamagePlayer.druidDamage += 0.1f;
 			druidDamagePlayer.druidCrit += 15;
 		}
 

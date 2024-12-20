@@ -1,24 +1,26 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass.Spirits
 {
-	public class SpiritualGuide : ModItem
+	public class SpiritualGuide : DruidDamageSpirit
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Spiritual Guide");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n'You are filled with balance...'\nIncreases spirits summoned by 3\nSpirits home in on enemies\n[c/bdffff:Spirit Level +4]");
+			base.Tooltip.SetDefault("'You are filled with balance...'\nSummons a Spirit Golem head that circles around you, shooting bolts at enemies\nIncreases spirits summoned by 3\nSpirits home in on enemies\n[c/bdffff:Spirit Level +4]");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 34;
 			base.item.height = 56;
 			base.item.value = Item.sellPrice(0, 4, 50, 0);
 			base.item.rare = 7;
 			base.item.accessory = true;
+			this.spiritWeapon = false;
 		}
 
 		public override void AddRecipes()
@@ -74,6 +76,11 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 			redePlayer.spiritLevel += 4;
 			redePlayer.spiritExtras += 3;
 			redePlayer.spiritHoming = true;
+			redePlayer.spiritGolemCross = true;
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritGolemCross && player.ownedProjectileCounts[base.mod.ProjectileType("SpiritGolemHead")] == 0)
+			{
+				Projectile.NewProjectile(player.position, Vector2.Zero, base.mod.ProjectileType("SpiritGolemHead"), 50, 0f, player.whoAmI, 0f, 0f);
+			}
 		}
 	}
 }

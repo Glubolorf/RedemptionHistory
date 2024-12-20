@@ -44,6 +44,17 @@ namespace Redemption.NPCs
 			{
 				base.npc.spriteDirection = -1;
 			}
+			if (this.exoticCheck == 0)
+			{
+				if (Main.rand.Next(1000000) == 0)
+				{
+					this.exoticCheck = 2;
+				}
+				else
+				{
+					this.exoticCheck = 1;
+				}
+			}
 			if (base.npc.velocity.Y == 0f)
 			{
 				this.hop = false;
@@ -175,24 +186,48 @@ namespace Redemption.NPCs
 			Texture2D texture = Main.npcTexture[base.npc.type];
 			Texture2D hopAni = base.mod.GetTexture("NPCs/ForestNymphHop");
 			Texture2D slashAni = base.mod.GetTexture("NPCs/ForestNymphSlash");
+			Texture2D exoticAni = base.mod.GetTexture("NPCs/ForestNymph_Exotic");
+			Texture2D exoticHopAni = base.mod.GetTexture("NPCs/ForestNymphHop_Exotic");
+			Texture2D exoticSlashAni = base.mod.GetTexture("NPCs/ForestNymphSlash_Exotic");
 			int spriteDirection = base.npc.spriteDirection;
 			if (!this.hop && !this.slashAttack)
 			{
-				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				if (this.exoticCheck != 2)
+				{
+					spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				}
+				else
+				{
+					spriteBatch.Draw(exoticAni, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				}
 			}
 			if (this.hop)
 			{
 				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 				int num214 = hopAni.Height / 1;
 				int y6 = num214 * this.hopFrame;
-				Main.spriteBatch.Draw(hopAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, hopAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)hopAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				if (this.exoticCheck != 2)
+				{
+					Main.spriteBatch.Draw(hopAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, hopAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)hopAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				}
+				else
+				{
+					Main.spriteBatch.Draw(exoticHopAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, exoticHopAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)exoticHopAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				}
 			}
 			if (this.slashAttack)
 			{
 				Vector2 drawCenter2 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 				int num215 = slashAni.Height / 5;
 				int y7 = num215 * this.slashFrame;
-				Main.spriteBatch.Draw(slashAni, drawCenter2 - Main.screenPosition, new Rectangle?(new Rectangle(0, y7, slashAni.Width, num215)), drawColor, base.npc.rotation, new Vector2((float)slashAni.Width / 2f, (float)num215 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				if (this.exoticCheck != 2)
+				{
+					Main.spriteBatch.Draw(slashAni, drawCenter2 - Main.screenPosition, new Rectangle?(new Rectangle(0, y7, slashAni.Width, num215)), drawColor, base.npc.rotation, new Vector2((float)slashAni.Width / 2f, (float)num215 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				}
+				else
+				{
+					Main.spriteBatch.Draw(exoticSlashAni, drawCenter2 - Main.screenPosition, new Rectangle?(new Rectangle(0, y7, exoticSlashAni.Width, num215)), drawColor, base.npc.rotation, new Vector2((float)exoticSlashAni.Width / 2f, (float)num215 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				}
 			}
 			return false;
 		}
@@ -226,5 +261,7 @@ namespace Redemption.NPCs
 		private int slashCounter;
 
 		private int regenTimer;
+
+		public int exoticCheck;
 	}
 }

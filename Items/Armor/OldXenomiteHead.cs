@@ -44,7 +44,7 @@ namespace Redemption.Items.Armor
 		public override void UpdateArmorSet(Player player)
 		{
 			player.setBonus = "You are immune to the Xenomite Infection and Radioactive Fallout\nThe armour emits light";
-			player.AddBuff(11, 2, true);
+			Lighting.AddLight(player.Center, 0.5f, 1f, 0.5f);
 			player.buffImmune[base.mod.BuffType("XenomiteDebuff")] = true;
 			player.buffImmune[base.mod.BuffType("XenomiteDebuff2")] = true;
 			player.buffImmune[base.mod.BuffType("RadioactiveFalloutDebuff")] = true;

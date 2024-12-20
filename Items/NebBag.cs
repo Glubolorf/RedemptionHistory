@@ -31,7 +31,7 @@ namespace Redemption.Items
 		{
 			get
 			{
-				return base.mod.NPCType("Nebuleus");
+				return base.mod.NPCType("BigNebuleus");
 			}
 		}
 

@@ -26,7 +26,7 @@ namespace Redemption.Buffs
 			player.statManaMax2 += 50;
 			player.moveSpeed += 50f;
 			player.longInvince = true;
-			modPlayer3.rapidStave = true;
+			modPlayer3.staveSpeed += 0.35f;
 			modPlayer3.staveQuadShot = true;
 			modPlayer3.staveScatterShot = true;
 			RedePlayer modPlayer2 = player.GetModPlayer<RedePlayer>();

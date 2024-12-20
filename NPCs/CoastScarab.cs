@@ -49,6 +49,15 @@ namespace Redemption.NPCs
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 273, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
 		}
 
+		public override void AI()
+		{
+			if (base.npc.wet && Main.rand.Next(20) == 0)
+			{
+				int sparkle = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height / 2, base.mod.DustType("NoidanSauvaDust"), base.npc.velocity.X * 0f, base.npc.velocity.Y * 0f, 20, default(Color), 1f);
+				Main.dust[sparkle].noGravity = true;
+			}
+		}
+
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
 			return SpawnCondition.Ocean.Chance * 0.4f;

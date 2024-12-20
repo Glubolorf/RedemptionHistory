@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.NPCs
 {
+	[AutoloadBossHead]
 	public class SunkenCaptain : ModNPC
 	{
 		public override void SetStaticDefaults()
@@ -51,11 +52,10 @@ namespace Redemption.NPCs
 
 		public override void BossLoot(ref string name, ref int potionType)
 		{
-			Player player = Main.player[base.npc.target];
+			Player player3 = Main.player[base.npc.target];
 			potionType = base.mod.ItemType("AncientGoldCoin");
 			if (!RedeWorld.downedSunkenCaptain)
 			{
-				CombatText.NewText(player.getRect(), Color.Gray, "+0", true, false);
 				for (int i = 0; i < 255; i++)
 				{
 					Player player2 = Main.player[i];
@@ -68,6 +68,7 @@ namespace Redemption.NPCs
 								Main.NewText("<Chalice of Alignment> That was spooky. I hate ghosts.", Color.DarkGoldenrod, false);
 							}
 						}
+						CombatText.NewText(player2.getRect(), Color.Gray, "+0", true, false);
 					}
 				}
 			}
@@ -157,7 +158,7 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			for (int i = 0; i < 200; i++)
+			for (int i = 0; i < Main.npc.Length; i++)
 			{
 				if (Main.npc[i].boss)
 				{

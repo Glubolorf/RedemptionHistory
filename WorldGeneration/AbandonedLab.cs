@@ -581,7 +581,8 @@ namespace Redemption.WorldGeneration
 			int[] LabChestLoot = new int[]
 			{
 				mod.ItemType("FloppyDisk1"),
-				mod.ItemType("FloppyDisk3")
+				mod.ItemType("FloppyDisk3"),
+				mod.ItemType("FloppyDisk3_1")
 			};
 			int[] LabChestLoot2 = new int[]
 			{

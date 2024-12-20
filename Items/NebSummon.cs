@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
@@ -15,6 +14,7 @@ namespace Redemption.Items
 			base.DisplayName.SetDefault("Galaxy Stone");
 			base.Tooltip.SetDefault("Summons Nebuleus, Angel of the Cosmos\nOnly usable at night\nNot consumable");
 			Main.RegisterItemAnimation(base.item.type, new DrawAnimationVertical(4, 8));
+			ItemID.Sets.SortingPriorityBossSpawns[base.item.type] = 13;
 		}
 
 		public override void SetDefaults()
@@ -28,11 +28,12 @@ namespace Redemption.Items
 			base.item.useStyle = 4;
 			base.item.consumable = false;
 			base.item.noUseGraphic = true;
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}
 
 		public override bool CanUseItem(Player player)
 		{
-			return !Main.dayTime && !NPC.AnyNPCs(base.mod.NPCType("Nebuleus"));
+			return !Main.dayTime && !NPC.AnyNPCs(base.mod.NPCType("Nebuleus")) && !NPC.AnyNPCs(base.mod.NPCType("BigNebuleus"));
 		}
 
 		public override bool UseItem(Player player)
@@ -53,17 +54,6 @@ namespace Redemption.Items
 				Main.PlaySound(15, player.position, 0);
 			}
 			return true;
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> list)
-		{
-			foreach (TooltipLine line2 in list)
-			{
-				if (line2.mod == "Terraria" && line2.Name == "ItemName")
-				{
-					line2.overrideColor = new Color?(new Color(0, 255, 200));
-				}
-			}
 		}
 
 		public override void AddRecipes()

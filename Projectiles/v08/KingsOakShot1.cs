@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -18,18 +19,9 @@ namespace Redemption.Projectiles.v08
 			this.aiType = 24;
 			base.projectile.penetrate = 1;
 			base.projectile.timeLeft = 200;
-		}
-
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
-		{
-			Player player = Main.player[base.projectile.owner];
-			int critChance = player.HeldItem.crit;
-			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref critChance);
-			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref critChance);
-			if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
-			{
-				crit = true;
-			}
+			base.projectile.thrown = false;
+			base.projectile.GetGlobalProjectile<DruidProjectile>().druidic = true;
+			base.projectile.GetGlobalProjectile<DruidProjectile>().fromStave = true;
 		}
 
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)

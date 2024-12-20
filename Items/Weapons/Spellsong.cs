@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -47,20 +45,12 @@ namespace Redemption.Items.Weapons
 			base.item.shoot = base.mod.ProjectileType("SpellsongPro1");
 			base.item.shootSpeed = 10f;
 			base.item.glowMask = Spellsong.customGlowMask;
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 6;
 		}
 
 		public override bool CanUseItem(Player player)
 		{
 			return NPC.downedPlantBoss;
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> tooltips)
-		{
-			Color transparent = Color.Transparent;
-			if (base.item.modItem != null && base.item.modItem.mod == ModLoader.GetMod("Redemption"))
-			{
-				Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName")).overrideColor = new Color?(new Color(170, 0, 255));
-			}
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

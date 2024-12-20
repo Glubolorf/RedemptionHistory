@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -22,6 +23,8 @@ namespace Redemption.Projectiles.v08
 			base.projectile.ignoreWater = true;
 			base.projectile.tileCollide = false;
 			base.projectile.timeLeft = 60;
+			base.projectile.GetGlobalProjectile<DruidProjectile>().druidic = true;
+			base.projectile.GetGlobalProjectile<DruidProjectile>().fromStave = true;
 		}
 
 		public override void AI()

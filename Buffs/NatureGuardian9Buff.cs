@@ -17,7 +17,7 @@ namespace Redemption.Buffs
 		public override void Update(Player player, ref int buffIndex)
 		{
 			DruidDamagePlayer.ModPlayer(player);
-			player.GetModPlayer<RedePlayer>().rapidStave = true;
+			player.GetModPlayer<RedePlayer>().staveSpeed += 0.35f;
 			if (player.ZoneCrimson)
 			{
 				player.moveSpeed += 5f;

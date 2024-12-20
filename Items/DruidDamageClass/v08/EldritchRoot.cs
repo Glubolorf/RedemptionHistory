@@ -1,18 +1,17 @@
 ﻿using System;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass.v08
 {
-	public class EldritchRoot : ModItem
+	public class EldritchRoot : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Eldritch Root");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Nature can reap, too.'\nIncreased life regen after killing an enemy\nDruidic damage increased by 15% when below 50% health");
+			base.Tooltip.SetDefault("'Nature can reap, too.'\nIncreased life regen after killing an enemy\nDruidic damage increased by 15% when below 50% health");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 26;

@@ -9,15 +9,15 @@ namespace Redemption.Items.Armor
 	{
 		1
 	})]
-	public class DruidBody : ModItem
+	public class DruidBody : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Forest Druid's Tunic");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n12% increased druidic damage\n12% increased druidic critical strike chance\nStaves swing faster");
+			base.Tooltip.SetDefault("12% increased druidic damage\n12% increased druidic critical strike chance\nStaves swing faster");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 26;
 			base.item.height = 20;
@@ -31,7 +31,7 @@ namespace Redemption.Items.Armor
 			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
 			druidDamagePlayer.druidDamage += 0.12f;
 			druidDamagePlayer.druidCrit += 12;
-			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).fasterStaves = true;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).staveSpeed += 0.05f;
 		}
 
 		public override void AddRecipes()

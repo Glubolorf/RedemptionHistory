@@ -9,21 +9,22 @@ namespace Redemption.Items.Armor
 	{
 		2
 	})]
-	public class SoulLeggings : ModItem
+	public class SoulLeggings : DruidDamageSpirit
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Lost Soul's Leggings");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n5% increased druidic damage\n2% damage reduction\nDecreased falling speed");
+			base.Tooltip.SetDefault("5% increased druidic damage\n2% damage reduction\nDecreased falling speed");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 18;
 			base.item.value = 50;
 			base.item.rare = 1;
 			base.item.defense = 2;
+			this.spiritWeapon = false;
 		}
 
 		public override void UpdateEquip(Player player)

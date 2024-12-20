@@ -4,15 +4,15 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class PowerCellWristband : ModItem
+	public class PowerCellWristband : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Power Cell Wristband");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Fueled with the sun itself'\n10% increased druidic damage\n10% increased druidic critical strike chance");
+			base.Tooltip.SetDefault("'Fueled with the sun itself'\n10% increased druidic damage\n10% increased druidic critical strike chance");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 24;
 			base.item.height = 12;

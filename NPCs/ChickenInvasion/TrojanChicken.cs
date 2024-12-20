@@ -24,14 +24,12 @@ namespace Redemption.NPCs.ChickenInvasion
 				base.npc.lifeMax = 60000;
 				base.npc.damage = 100;
 				base.npc.defense = 17;
-				this.music = base.mod.GetSoundSlot(51, "Sounds/Music/ChickenInvasion1");
 			}
 			else
 			{
 				base.npc.lifeMax = 1200;
 				base.npc.damage = 20;
 				base.npc.defense = 7;
-				this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossKingChicken");
 			}
 			base.npc.knockBackResist = 0f;
 			base.npc.value = (float)Item.buyPrice(0, 1, 25, 0);

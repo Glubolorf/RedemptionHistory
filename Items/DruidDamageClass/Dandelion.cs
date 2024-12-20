@@ -10,7 +10,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Giant Dandelion");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nCasts down Giant Dandelion Seeds from the sky");
+			base.Tooltip.SetDefault("Casts down Giant Dandelion Seeds from the sky");
 		}
 
 		public override void SafeSetDefaults()

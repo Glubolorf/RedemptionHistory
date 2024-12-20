@@ -4,15 +4,15 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class LotusHorseshoe2 : ModItem
+	public class LotusHorseshoe2 : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Lotus Horseshoe");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n10% increased druidic damage\nNegates fall damage\nGrants immunity to fire blocks\nHas a chance to throw an extra seed");
+			base.Tooltip.SetDefault("10% increased druidic damage\nNegates fall damage\nGrants immunity to fire blocks\nHas a chance to throw an extra seed");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 30;
 			base.item.height = 30;

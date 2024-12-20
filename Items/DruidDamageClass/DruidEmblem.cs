@@ -1,18 +1,17 @@
 ﻿using System;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class DruidEmblem : ModItem
+	public class DruidEmblem : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Druid Emblem");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n15% increased druidic damage");
+			base.Tooltip.SetDefault("15% increased druidic damage");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 28;
 			base.item.height = 28;

@@ -14,6 +14,7 @@ namespace Redemption.Items
 			base.DisplayName.SetDefault("Omega Radar");
 			base.Tooltip.SetDefault("Summons one of Vlitch's Overlords\n'Feel the sense of frustration, prepare for obliteration'\nOnly usable at night\nOnly usable after the first 2 Vlitch Overlords are defeated\nNot consumable");
 			Main.RegisterItemAnimation(base.item.type, new DrawAnimationVertical(5, 4));
+			ItemID.Sets.SortingPriorityBossSpawns[base.item.type] = 13;
 		}
 
 		public override void SetDefaults()
@@ -33,7 +34,7 @@ namespace Redemption.Items
 
 		public override bool CanUseItem(Player player)
 		{
-			return !Main.dayTime && !NPC.AnyNPCs(base.mod.NPCType("OmegaOblitIdle")) && RedeWorld.downedVlitch1 && RedeWorld.downedVlitch2;
+			return !Main.dayTime && !NPC.AnyNPCs(base.mod.NPCType("OmegaOblitIdle")) && !NPC.AnyNPCs(base.mod.NPCType("OmegaOblitDamaged")) && RedeWorld.downedVlitch1 && RedeWorld.downedVlitch2;
 		}
 
 		public override bool UseItem(Player player)

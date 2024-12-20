@@ -9,21 +9,22 @@ namespace Redemption.Items.Armor
 	{
 		0
 	})]
-	public class Soul2Head : ModItem
+	public class Soul2Head : DruidDamageSpirit
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Wandering Soul's Head");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n6% increased druidic damage\n3% damage reduction\n4% increased druidic critical strike chance\nIncreased night vision\n[c/bdffff:Spirit Level +1]");
+			base.Tooltip.SetDefault("6% increased druidic damage\n3% damage reduction\n4% increased druidic critical strike chance\nIncreased night vision\n[c/bdffff:Spirit Level +1]");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 20;
 			base.item.value = 500;
 			base.item.rare = 4;
 			base.item.defense = 6;
+			this.spiritWeapon = false;
 		}
 
 		public override void UpdateEquip(Player player)

@@ -34,7 +34,6 @@ namespace Redemption.NPCs.LabNPCs.New
 			base.npc.alpha = 255;
 			base.npc.boss = true;
 			base.npc.netAlways = true;
-			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/LabBossMusic");
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -66,6 +65,7 @@ namespace Redemption.NPCs.LabNPCs.New
 				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ZoneAccessPanel2A"), 1, false, 0, false, false);
 			}
 			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("FloppyDisk2"), 1, false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("FloppyDisk2_1"), 1, false, 0, false, false);
 		}
 
 		public override void SendExtraAI(BinaryWriter writer)

@@ -9,15 +9,15 @@ namespace Redemption.Items.Armor
 	{
 		2
 	})]
-	public class IceDruidLeggings : ModItem
+	public class IceDruidLeggings : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Coldblooded Druid's Leggings");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n2% increased druidic crit\nImmune to chilled");
+			base.Tooltip.SetDefault("2% increased druidic crit\nImmune to chilled");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 18;

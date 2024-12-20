@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -18,12 +16,12 @@ namespace Redemption.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 5;
+			base.item.damage = 7;
 			base.item.melee = true;
 			base.item.width = 26;
 			base.item.height = 22;
-			base.item.useTime = 5;
-			base.item.useAnimation = 5;
+			base.item.useTime = 10;
+			base.item.useAnimation = 10;
 			base.item.useStyle = 1;
 			base.item.knockBack = 1f;
 			base.item.value = Item.buyPrice(0, 10, 0, 0);
@@ -31,20 +29,19 @@ namespace Redemption.Items.Weapons
 			base.item.UseSound = SoundID.Item1;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
+			base.item.shoot = base.mod.ProjectileType("AkiClawPro");
+			base.item.shootSpeed = 15f;
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 5;
 		}
 
-		public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
+		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			target.AddBuff(30, 300, false);
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> tooltips)
-		{
-			Color transparent = Color.Transparent;
-			if (base.item.modItem != null && base.item.modItem.mod == ModLoader.GetMod("Redemption"))
+			if (Main.rand.Next(5) == 0)
 			{
-				Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName")).overrideColor = new Color?(new Color(0, 120, 255));
+				Main.PlaySound(SoundID.Item71, player.position);
+				Projectile.NewProjectile(position.X, position.Y, speedX, speedY, base.mod.ProjectileType("AkiClawPro"), damage * 2, 7f, player.whoAmI, 0f, 0f);
 			}
+			return false;
 		}
 	}
 }

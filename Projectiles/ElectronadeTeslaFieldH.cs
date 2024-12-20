@@ -6,6 +6,14 @@ namespace Redemption.Projectiles
 {
 	public class ElectronadeTeslaFieldH : ModProjectile
 	{
+		public override string Texture
+		{
+			get
+			{
+				return "Redemption/Projectiles/ElectronadeTeslaField";
+			}
+		}
+
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Tesla Field");

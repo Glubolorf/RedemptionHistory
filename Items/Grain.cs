@@ -15,6 +15,7 @@ namespace Redemption.Items
 		public override void SetDefaults()
 		{
 			base.item.CloneDefaults(2420);
+			base.item.value = 0;
 			base.item.shoot = base.mod.ProjectileType("ChickenPet");
 			base.item.buffType = base.mod.BuffType("ChickenBuff");
 		}

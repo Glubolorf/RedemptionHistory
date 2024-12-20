@@ -34,7 +34,6 @@ namespace Redemption.NPCs.LabNPCs.New
 			base.npc.noTileCollide = true;
 			base.npc.netAlways = true;
 			base.npc.behindTiles = true;
-			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/LabBossMusic");
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -118,14 +117,12 @@ namespace Redemption.NPCs.LabNPCs.New
 						}
 					}
 					base.npc.alpha -= 4;
-					base.npc.dontTakeDamage = true;
 					base.npc.netUpdate = true;
 				}
 				if (base.npc.ai[0] > 120f)
 				{
 					base.npc.ai[1] = 1f;
 					base.npc.ai[0] = 0f;
-					base.npc.dontTakeDamage = false;
 					base.npc.netUpdate = true;
 				}
 			}

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Redemption.Projectiles.Minions.StarSerpentMinion;
 using Terraria;
@@ -33,17 +32,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.buffType = base.mod.BuffType("StarSerpentBuff");
 			base.item.summon = true;
 			base.item.value = Item.sellPrice(1, 0, 0, 0);
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> list)
-		{
-			foreach (TooltipLine line2 in list)
-			{
-				if (line2.mod == "Terraria" && line2.Name == "ItemName")
-				{
-					line2.overrideColor = new Color?(RedeColor.NebColour);
-				}
-			}
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 3;
 		}
 
 		public override bool AltFunctionUse(Player player)

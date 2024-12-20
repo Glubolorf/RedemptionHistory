@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -20,6 +21,8 @@ namespace Redemption.Projectiles.v08
 			base.projectile.hostile = false;
 			base.projectile.friendly = true;
 			base.projectile.timeLeft = 70;
+			base.projectile.thrown = false;
+			base.projectile.GetGlobalProjectile<DruidProjectile>().druidic = true;
 		}
 
 		public override void Kill(int timeLeft)

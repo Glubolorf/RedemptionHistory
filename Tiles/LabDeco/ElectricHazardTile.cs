@@ -13,12 +13,13 @@ namespace Redemption.Tiles.LabDeco
 			Main.tileMergeDirt[(int)base.Type] = false;
 			Main.tileLighted[(int)base.Type] = true;
 			this.dustType = 226;
-			this.minPick = 500;
-			this.mineResist = 3f;
+			this.minPick = 310;
+			this.mineResist = 7f;
 			this.soundType = 21;
 			base.CreateMapEntryName(null);
 			base.AddMapEntry(new Color(200, 255, 255), null);
 			this.animationFrameHeight = 90;
+			this.drop = base.mod.ItemType("ElectricHazard");
 		}
 
 		public override void AnimateTile(ref int frame, ref int frameCounter)

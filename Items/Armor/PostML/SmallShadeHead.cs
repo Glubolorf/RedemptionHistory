@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
@@ -11,20 +9,21 @@ namespace Redemption.Items.Armor.PostML
 	{
 		0
 	})]
-	public class SmallShadeHead : ModItem
+	public class SmallShadeHead : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Small Shadehead");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n10% increased druidic damage\n15% increased druidic critical strike chance\n4% increased damage reduction\nThrows seedbags faster");
+			base.Tooltip.SetDefault("10% increased druidic damage\n15% increased druidic critical strike chance\n4% increased damage reduction\nThrows seedbags faster");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 20;
 			base.item.height = 28;
 			base.item.value = Item.sellPrice(0, 25, 0, 0);
 			base.item.defense = 26;
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 2;
 		}
 
 		public override void UpdateEquip(Player player)
@@ -55,17 +54,6 @@ namespace Redemption.Items.Armor.PostML
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
 		{
 			drawHair = (drawAltHair = false);
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> list)
-		{
-			foreach (TooltipLine line2 in list)
-			{
-				if (line2.mod == "Terraria" && line2.Name == "ItemName")
-				{
-					line2.overrideColor = new Color?(RedeColor.SoullessColour);
-				}
-			}
 		}
 
 		public override void AddRecipes()

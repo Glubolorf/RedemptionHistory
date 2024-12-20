@@ -8,6 +8,14 @@ namespace Redemption.Projectiles
 {
 	public class PlasmaBlast2 : ModProjectile
 	{
+		public override string Texture
+		{
+			get
+			{
+				return "Redemption/Projectiles/PlasmaBlast1";
+			}
+		}
+
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Plasma Blast");

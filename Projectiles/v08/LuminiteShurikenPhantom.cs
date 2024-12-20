@@ -18,7 +18,7 @@ namespace Redemption.Projectiles.v08
 				{
 					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Projectiles/v08/" + base.GetType().Name + "_Glow");
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Projectiles/v08/" + base.GetType().Name);
 				LuminiteShurikenPhantom.customGlowMask = (short)(glowMasks.Length - 1);
 				Main.glowMaskTexture = glowMasks;
 			}
@@ -27,6 +27,7 @@ namespace Redemption.Projectiles.v08
 
 		public override void SetDefaults()
 		{
+			base.projectile.thrown = true;
 			base.projectile.width = 34;
 			base.projectile.height = 34;
 			base.projectile.aiStyle = -1;

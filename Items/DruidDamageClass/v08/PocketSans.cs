@@ -10,7 +10,7 @@ namespace Redemption.Items.DruidDamageClass.v08
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Pocket Sans");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Bad times all around'\nThrows a strange skull with unfathomable power");
+			base.Tooltip.SetDefault("'Bad times all around'\nThrows a strange skull with unfathomable power");
 		}
 
 		public override void SafeSetDefaults()

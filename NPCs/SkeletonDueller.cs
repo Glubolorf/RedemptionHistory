@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Quest;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -35,12 +36,15 @@ namespace Redemption.NPCs
 
 		public override void AI()
 		{
+			base.npc.TargetClosest(true);
+			Player player = Main.player[base.npc.target];
 			if (!this.change)
 			{
-				int num = Main.rand.Next(500);
-				if (num == 0)
+				int VepdorGear = player.FindItem(base.mod.ItemType("VepdorHat"));
+				int changeChoice = Main.rand.Next(500);
+				if ((RedeQuests.zephosQuests == 3) ? (changeChoice >= 300 && VepdorGear < 0) : (changeChoice == 0))
 				{
-					if (RedeWorld.downedTheKeeper)
+					if (RedeWorld.downedTheKeeper && !NPC.AnyNPCs(base.mod.NPCType("Vepdor")))
 					{
 						base.npc.SetDefaults(base.mod.NPCType("Vepdor"), -1f);
 						this.change = true;
@@ -50,7 +54,7 @@ namespace Redemption.NPCs
 						this.change = true;
 					}
 				}
-				if (num >= 1)
+				if (changeChoice >= 1)
 				{
 					this.change = true;
 				}

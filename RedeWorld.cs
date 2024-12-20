@@ -48,6 +48,7 @@ namespace Redemption
 			RedeWorld.evilXenoBiome = tileCounts[base.mod.TileType("DeadGrassTileCorruption")] + tileCounts[base.mod.TileType("DeadGrassTileCrimson")] + tileCounts[base.mod.TileType("IrradiatedCrimstoneTile")] + tileCounts[base.mod.TileType("IrradiatedEbonstoneTile")];
 			RedeWorld.labBiome = tileCounts[base.mod.TileType("LabTileUnsafe")];
 			RedeWorld.slayerBiome = tileCounts[base.mod.TileType("SlayerShipPanelTile")];
+			RedeWorld.soullessBiome = tileCounts[base.mod.TileType("ShadestoneTile")];
 		}
 
 		public override void ResetNearbyTileEffects()
@@ -56,6 +57,7 @@ namespace Redemption
 			RedeWorld.evilXenoBiome = 0;
 			RedeWorld.labBiome = 0;
 			RedeWorld.slayerBiome = 0;
+			RedeWorld.soullessBiome = 0;
 		}
 
 		public override void PostUpdate()
@@ -218,8 +220,6 @@ namespace Redemption
 				string key7 = "Mods.Redemption.PatientZeroMessage1";
 				string key8 = "Mods.Redemption.PatientZeroMessage2";
 				string key9 = "Mods.Redemption.PatientZeroMessage3";
-				string key10 = "Mods.Redemption.PatientZeroMessage4";
-				string key11 = "Mods.Redemption.PatientZeroMessage5";
 				Color messageColor7 = Color.Gold;
 				if (Main.netMode == 2)
 				{
@@ -238,7 +238,7 @@ namespace Redemption
 				{
 					Main.NewText(Language.GetTextValue(key8), messageColor8, false);
 				}
-				Color messageColor9 = Color.HotPink;
+				Color messageColor9 = Color.ForestGreen;
 				if (Main.netMode == 2)
 				{
 					NetMessage.BroadcastChatMessage(NetworkText.FromKey(key9, new object[0]), messageColor9, -1);
@@ -246,24 +246,6 @@ namespace Redemption
 				else if (Main.netMode == 0)
 				{
 					Main.NewText(Language.GetTextValue(key9), messageColor9, false);
-				}
-				Color messageColor10 = Color.ForestGreen;
-				if (Main.netMode == 2)
-				{
-					NetMessage.BroadcastChatMessage(NetworkText.FromKey(key10, new object[0]), messageColor10, -1);
-				}
-				else if (Main.netMode == 0)
-				{
-					Main.NewText(Language.GetTextValue(key10), messageColor10, false);
-				}
-				Color messageColor11 = Color.Orange;
-				if (Main.netMode == 2)
-				{
-					NetMessage.BroadcastChatMessage(NetworkText.FromKey(key11, new object[0]), messageColor11, -1);
-				}
-				else if (Main.netMode == 0)
-				{
-					Main.NewText(Language.GetTextValue(key11), messageColor11, false);
 				}
 				int x = Main.maxTilesX;
 				int y = Main.maxTilesY;
@@ -293,15 +275,15 @@ namespace Redemption
 				{
 					if (Main.rand.Next(3) == 0)
 					{
-						string key12 = "Mods.Redemption.GirusHide";
-						Color messageColor12 = new Color(255, 32, 32);
+						string key10 = "Mods.Redemption.GirusHide";
+						Color messageColor10 = new Color(255, 32, 32);
 						if (Main.netMode == 2)
 						{
-							NetMessage.BroadcastChatMessage(NetworkText.FromKey(key12, new object[0]), messageColor12, -1);
+							NetMessage.BroadcastChatMessage(NetworkText.FromKey(key10, new object[0]), messageColor10, -1);
 						}
 						else if (Main.netMode == 0)
 						{
-							Main.NewText(Language.GetTextValue(key12), messageColor12, false);
+							Main.NewText(Language.GetTextValue(key10), messageColor10, false);
 						}
 						Redemption.SpawnBoss(player, "CorruptedCopter1", false, 0, 0, "", false);
 					}
@@ -315,13 +297,15 @@ namespace Redemption
 				int drone = NPC.NewNPC((int)player.Center.X + A, (int)player.Center.Y + A, base.mod.NPCType("LabSentryDrone"), 0, 0f, 0f, 0f, 0f, 255);
 				Main.npc[drone].netUpdate = true;
 			}
-			if (RedeWorld.golemLure && !player.HasBuff(base.mod.BuffType("GolemSpelltomeBuff")))
+			if ((RedeWorld.golemLure && !player.HasBuff(base.mod.BuffType("GolemSpelltomeBuff"))) || NPC.AnyNPCs(base.mod.NPCType("EaglecrestGolem")))
 			{
 				RedeWorld.golemLure = false;
+				player.ClearBuff(base.mod.BuffType("GolemSpelltomeBuff"));
 			}
-			if (RedeWorld.darkSlimeLure && !player.HasBuff(base.mod.BuffType("EvilJellyBuff")))
+			if ((RedeWorld.darkSlimeLure && !player.HasBuff(base.mod.BuffType("EvilJellyBuff"))) || NPC.AnyNPCs(base.mod.NPCType("EvilJelly")))
 			{
 				RedeWorld.darkSlimeLure = false;
+				player.ClearBuff(base.mod.BuffType("EvilJellyBuff"));
 			}
 		}
 
@@ -622,6 +606,10 @@ namespace Redemption
 			RedeWorld.voltBegin = false;
 			RedeWorld.pzUS = false;
 			RedeWorld.maceUS = false;
+			RedeWorld.zephosDownedTimer = 0;
+			RedeWorld.daerelDownedTimer = 0;
+			RedeWorld.tbotDownedTimer = 0;
+			RedeWorld.downedMossyGoliath = false;
 		}
 
 		public override TagCompound Save()
@@ -855,6 +843,10 @@ namespace Redemption
 			{
 				downed.Add("MPUS");
 			}
+			if (RedeWorld.downedMossyGoliath)
+			{
+				downed.Add("MossyGoliath");
+			}
 			TagCompound tagCompound = new TagCompound();
 			tagCompound.Add("downed", downed);
 			tagCompound.Add("sapphiron", sapp);
@@ -885,6 +877,9 @@ namespace Redemption
 			tagCompound.Add("redePoints", RedeWorld.redemptionPoints);
 			tagCompound.Add("slayRep", RedeWorld.slayerRep);
 			tagCompound.Add("voltBeginFight", voltB);
+			tagCompound.Add("tbotDowned", RedeWorld.tbotDownedTimer);
+			tagCompound.Add("zephosDowned", RedeWorld.zephosDownedTimer);
+			tagCompound.Add("daerelDowned", RedeWorld.daerelDownedTimer);
 			return tagCompound;
 		}
 
@@ -946,6 +941,10 @@ namespace Redemption
 			RedeWorld.voltBegin = tag.GetBool("voltBeginFight");
 			RedeWorld.pzUS = list.Contains("PUS");
 			RedeWorld.maceUS = list.Contains("MPUS");
+			RedeWorld.daerelDownedTimer = tag.GetInt("daerelDowned");
+			RedeWorld.tbotDownedTimer = tag.GetInt("tbotDowned");
+			RedeWorld.zephosDownedTimer = tag.GetInt("zephosDowned");
+			RedeWorld.downedMossyGoliath = list.Contains("MossyGoliath");
 		}
 
 		public override void LoadLegacy(BinaryReader reader)
@@ -1007,6 +1006,7 @@ namespace Redemption
 				RedeWorld.downedJanitor = flags6[5];
 				RedeWorld.downedVolt = flags6[6];
 				RedeWorld.voltBegin = flags6[7];
+				RedeWorld.downedMossyGoliath = reader.ReadByte()[0];
 				return;
 			}
 			base.mod.Logger.Debug("Redemption: Unknown loadVersion: " + loadVersion);
@@ -1077,10 +1077,14 @@ namespace Redemption
 			BitsByte flags7 = default(BitsByte);
 			flags7[0] = RedeWorld.pzUS;
 			flags7[1] = RedeWorld.maceUS;
+			flags7[2] = RedeWorld.downedMossyGoliath;
 			writer.Write(flags7);
 			writer.Write(RedeWorld.redemptionPoints);
 			writer.Write(RedeWorld.girusCloakTimer);
 			writer.Write(RedeWorld.slayerRep);
+			writer.Write(RedeWorld.zephosDownedTimer);
+			writer.Write(RedeWorld.daerelDownedTimer);
+			writer.Write(RedeWorld.tbotDownedTimer);
 		}
 
 		public override void NetReceive(BinaryReader reader)
@@ -1142,9 +1146,13 @@ namespace Redemption
 			BitsByte flags7 = reader.ReadByte();
 			RedeWorld.pzUS = flags7[0];
 			RedeWorld.maceUS = flags7[1];
+			RedeWorld.downedMossyGoliath = flags7[2];
 			RedeWorld.redemptionPoints = reader.ReadInt32();
 			RedeWorld.girusCloakTimer = reader.ReadInt32();
 			RedeWorld.slayerRep = reader.ReadInt32();
+			RedeWorld.daerelDownedTimer = reader.ReadInt32();
+			RedeWorld.zephosDownedTimer = reader.ReadInt32();
+			RedeWorld.tbotDownedTimer = reader.ReadInt32();
 		}
 
 		private const int saveVersion = 0;
@@ -1204,6 +1212,14 @@ namespace Redemption
 		public static bool golemLure;
 
 		public static bool darkSlimeLure;
+
+		public static int zephosDownedTimer;
+
+		public static int daerelDownedTimer;
+
+		public static int tbotDownedTimer;
+
+		public static int soullessBiome;
 
 		public static bool downedKingChicken;
 
@@ -1280,5 +1296,7 @@ namespace Redemption
 		public static bool pzUS;
 
 		public static bool maceUS;
+
+		public static bool downedMossyGoliath;
 	}
 }

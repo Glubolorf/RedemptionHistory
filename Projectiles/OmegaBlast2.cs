@@ -8,6 +8,14 @@ namespace Redemption.Projectiles
 {
 	public class OmegaBlast2 : ModProjectile
 	{
+		public override string Texture
+		{
+			get
+			{
+				return "Redemption/Projectiles/OmegaBlast";
+			}
+		}
+
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Omega Blast");

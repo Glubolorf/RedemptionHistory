@@ -4,15 +4,14 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass.DruidS
 {
-	public class ScarletBar : ModItem
+	public class ScarletBar : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Scarlet Bar");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 30;
 			base.item.height = 24;

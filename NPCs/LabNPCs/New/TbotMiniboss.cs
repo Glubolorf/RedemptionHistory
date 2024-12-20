@@ -34,7 +34,6 @@ namespace Redemption.NPCs.LabNPCs.New
 			base.npc.aiStyle = -1;
 			base.npc.boss = true;
 			base.npc.netAlways = true;
-			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/LabBossMusic");
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -197,21 +196,25 @@ namespace Redemption.NPCs.LabNPCs.New
 					{
 						if (base.npc.ai[2] == 10f && !RedeConfigClient.Instance.NoCombatText)
 						{
-							CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "Enough.", true, false);
+							CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "Wait.", true, false);
 						}
-						if (base.npc.ai[2] == 90f && !RedeConfigClient.Instance.NoCombatText)
+						if (base.npc.ai[2] == 100f && !RedeConfigClient.Instance.NoCombatText)
 						{
-							CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "You've proven your strength, and can keep yourself safe.", true, false);
+							CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "I am recieving a transmission.", true, false);
 						}
 						if (base.npc.ai[2] == 290f && !RedeConfigClient.Instance.NoCombatText)
 						{
-							CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "I wish you best of luck, for whatever it is you are searching.", true, false);
+							CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "...", true, false);
 						}
 						if (base.npc.ai[2] == 450f && !RedeConfigClient.Instance.NoCombatText)
 						{
-							CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "Do not enter Sector Zero.", true, false);
+							CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "This appears to have been a misunderstanding, you're allowed through.", true, false);
 						}
-						if (base.npc.ai[2] >= 600f)
+						if (base.npc.ai[2] == 600f && !RedeConfigClient.Instance.NoCombatText)
+						{
+							CombatText.NewText(base.npc.getRect(), Colors.RarityYellow, "My apologies. Move along.", true, false);
+						}
+						if (base.npc.ai[2] >= 720f)
 						{
 							this.customAI[0] += 1f;
 						}
@@ -292,7 +295,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					case 0:
 						break;
 					case 1:
-						goto IL_AA5;
+						goto IL_AE2;
 					case 2:
 					{
 						base.npc.ai[2] += 1f;
@@ -324,9 +327,9 @@ namespace Redemption.NPCs.LabNPCs.New
 							base.npc.ai[1] = 1f;
 							base.npc.ai[2] = 0f;
 							base.npc.netUpdate = true;
-							goto IL_167B;
+							goto IL_16B8;
 						}
-						goto IL_167B;
+						goto IL_16B8;
 					}
 					case 3:
 						base.npc.ai[2] += 1f;
@@ -355,9 +358,9 @@ namespace Redemption.NPCs.LabNPCs.New
 							base.npc.ai[2] = 0f;
 							this.customGunRot = false;
 							base.npc.netUpdate = true;
-							goto IL_167B;
+							goto IL_16B8;
 						}
-						goto IL_167B;
+						goto IL_16B8;
 					case 4:
 						base.npc.ai[2] += 1f;
 						this.customGunRot = true;
@@ -400,13 +403,13 @@ namespace Redemption.NPCs.LabNPCs.New
 							this.stayRight = false;
 							this.customGunRot = false;
 							base.npc.netUpdate = true;
-							goto IL_167B;
+							goto IL_16B8;
 						}
-						goto IL_167B;
+						goto IL_16B8;
 					case 5:
 						if (this.flying)
 						{
-							goto IL_AA5;
+							goto IL_AE2;
 						}
 						base.npc.ai[2] += 1f;
 						this.customGunRot = true;
@@ -440,9 +443,9 @@ namespace Redemption.NPCs.LabNPCs.New
 							base.npc.ai[2] = 0f;
 							this.customGunRot = false;
 							base.npc.netUpdate = true;
-							goto IL_167B;
+							goto IL_16B8;
 						}
-						goto IL_167B;
+						goto IL_16B8;
 					default:
 						base.npc.ai[2] = 0f;
 						break;
@@ -466,10 +469,10 @@ namespace Redemption.NPCs.LabNPCs.New
 						base.npc.ai[1] = 1f;
 						base.npc.ai[2] = 0f;
 						base.npc.netUpdate = true;
-						goto IL_167B;
+						goto IL_16B8;
 					}
-					goto IL_167B;
-					IL_AA5:
+					goto IL_16B8;
+					IL_AE2:
 					base.npc.ai[2] += 1f;
 					if (base.npc.ai[2] % 10f == 0f)
 					{
@@ -492,7 +495,7 @@ namespace Redemption.NPCs.LabNPCs.New
 					}
 				}
 			}
-			IL_167B:
+			IL_16B8:
 			if (base.npc.collideY && base.npc.velocity.Y > 0f && !this.flying && !this.landed)
 			{
 				for (int k = 0; k < 40; k++)

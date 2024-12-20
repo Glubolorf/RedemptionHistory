@@ -7,6 +7,14 @@ namespace Redemption.Projectiles.v08
 {
 	public class BloodOrbPro2 : ModProjectile
 	{
+		public override string Texture
+		{
+			get
+			{
+				return "Redemption/Projectiles/v08/BloodOrbPro1";
+			}
+		}
+
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Blood Orb");

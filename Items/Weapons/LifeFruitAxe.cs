@@ -38,7 +38,7 @@ namespace Redemption.Items.Weapons
 
 		public override void HoldItem(Player player)
 		{
-			player.AddBuff(48, 4, true);
+			player.AddBuff(58, 4, true);
 		}
 
 		public override void AddRecipes()
@@ -50,6 +50,13 @@ namespace Redemption.Items.Weapons
 			modRecipe.AddTile(134);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.AddIngredient(null, "LifeCrystalWaraxe2", 1);
+			modRecipe2.AddIngredient(1291, 1);
+			modRecipe2.AddIngredient(1006, 18);
+			modRecipe2.AddTile(134);
+			modRecipe2.SetResult(this, 1);
+			modRecipe2.AddRecipe();
 		}
 	}
 }

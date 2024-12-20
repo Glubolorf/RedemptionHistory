@@ -62,6 +62,10 @@ namespace Redemption.Projectiles
 				else
 				{
 					this.movementFactor += 2.1f;
+					if (Main.rand.Next(30) == 0)
+					{
+						Projectile.NewProjectile(base.projectile.Center, base.projectile.velocity * 3f, base.mod.ProjectileType("PeaceBeam"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
+					}
 				}
 			}
 			base.projectile.position += base.projectile.velocity * this.movementFactor;
@@ -73,10 +77,6 @@ namespace Redemption.Projectiles
 			if (base.projectile.spriteDirection == -1)
 			{
 				base.projectile.rotation -= MathHelper.ToRadians(90f);
-			}
-			if (Main.rand.Next(6) == 0)
-			{
-				Projectile.NewProjectile(base.projectile.Center, base.projectile.velocity, base.mod.ProjectileType("PeaceKeeperShard"), 4, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			}
 		}
 	}

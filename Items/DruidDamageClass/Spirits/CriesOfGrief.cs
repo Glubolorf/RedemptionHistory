@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
@@ -8,12 +7,12 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass.Spirits
 {
-	public class CriesOfGrief : DruidDamageItem
+	public class CriesOfGrief : DruidDamageSpirit
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Cries of Grief");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\nReleases cries of grief that have a chance to deal double damage\nGets buffed from soul-related armoury");
+			base.Tooltip.SetDefault("Releases cries of grief that have a chance to deal double damage\nGets buffed from soul-related armoury");
 			Main.RegisterItemAnimation(base.item.type, new DrawAnimationVertical(10, 3));
 		}
 
@@ -35,6 +34,8 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 			base.item.autoReuse = true;
 			base.item.shoot = base.mod.ProjectileType("CriesOfGriefPro2");
 			base.item.shootSpeed = 15f;
+			this.spiritWeapon = false;
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 2;
 		}
 
 		public override bool CanUseItem(Player player)
@@ -119,17 +120,6 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 				}
 			}
 			return false;
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> list)
-		{
-			foreach (TooltipLine line2 in list)
-			{
-				if (line2.mod == "Terraria" && line2.Name == "ItemName")
-				{
-					line2.overrideColor = new Color?(RedeColor.SoullessColour);
-				}
-			}
 		}
 
 		public override void AddRecipes()

@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
@@ -13,7 +9,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Forest Nymph's Sickle");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nHitting an enemy will drain a tenth of the damage dealt\nOnly usable after Eye of Cthulhu has been defeated\n[c/1c4dff:Rare]");
+			base.Tooltip.SetDefault("Hitting an enemy will drain a tenth of the damage dealt\nOnly usable after Eye of Cthulhu has been defeated\n[c/1c4dff:Rare]");
 		}
 
 		public override void SafeSetDefaults()
@@ -33,6 +29,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.useTurn = true;
 			base.item.shoot = base.mod.ProjectileType("ForestSicklePro4");
 			base.item.shootSpeed = 7f;
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 5;
 		}
 
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
@@ -44,15 +41,6 @@ namespace Redemption.Items.DruidDamageClass
 		public override bool CanUseItem(Player player)
 		{
 			return NPC.downedBoss1;
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> tooltips)
-		{
-			Color transparent = Color.Transparent;
-			if (base.item.modItem != null && base.item.modItem.mod == ModLoader.GetMod("Redemption"))
-			{
-				Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName")).overrideColor = new Color?(new Color(0, 120, 255));
-			}
 		}
 	}
 }

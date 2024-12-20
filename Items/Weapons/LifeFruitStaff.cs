@@ -37,7 +37,7 @@ namespace Redemption.Items.Weapons
 
 		public override void HoldItem(Player player)
 		{
-			player.AddBuff(48, 4, true);
+			player.AddBuff(58, 4, true);
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -64,6 +64,13 @@ namespace Redemption.Items.Weapons
 			modRecipe.AddTile(134);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.AddIngredient(null, "LifeCrystalStaff2", 1);
+			modRecipe2.AddIngredient(1291, 1);
+			modRecipe2.AddIngredient(1006, 12);
+			modRecipe2.AddTile(134);
+			modRecipe2.SetResult(this, 1);
+			modRecipe2.AddRecipe();
 		}
 	}
 }

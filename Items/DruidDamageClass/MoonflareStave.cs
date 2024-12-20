@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class MoonflareStave : DruidDamageItem
+	public class MoonflareStave : DruidStave
 	{
 		public override void SetStaticDefaults()
 		{
@@ -23,7 +23,7 @@ namespace Redemption.Items.DruidDamageClass
 				Main.glowMaskTexture = glowMasks;
 			}
 			base.DisplayName.SetDefault("Moonflare Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nShoots Moonflare Sparkles\nRight-clicking will summon a Moonflare [c/bee7c9:(25 Second Duration)]\n[c/71ee8d:-Guardian Info-]\n[c/a0db98:Type:] Other\n[c/98dbc3:Special Ability:] Triple-Shot/Glow\n[c/98c1db:Effects:] Staves that shoot a single projectile will shoot 2 more in an arc, Improved vision");
+			base.Tooltip.SetDefault("Shoots Moonflare Sparkles");
 		}
 
 		public override void SafeSetDefaults()
@@ -33,7 +33,6 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.height = 40;
 			base.item.useTime = 33;
 			base.item.useAnimation = 33;
-			base.item.useStyle = 1;
 			base.item.crit = 4;
 			base.item.knockBack = 7f;
 			base.item.value = Item.sellPrice(0, 0, 5, 0);
@@ -44,84 +43,21 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.shoot = base.mod.ProjectileType("MoonflareSpark");
 			base.item.shootSpeed = 14f;
 			base.item.glowMask = MoonflareStave.customGlowMask;
+			this.defaultShoot = base.mod.ProjectileType("MoonflareSpark");
+			this.guardianBuffID = base.mod.BuffType("NatureGuardian6Buff");
+			this.guardianProjectileID = base.mod.ProjectileType("NatureGuardian6");
+			this.guardianTime = 1500;
+			this.singleShotStave = false;
+			this.staveHoldOffset = new Vector2(4f, -10f);
+			this.staveLength = 36.2f;
+			this.guardianName = "Moonflare";
+			this.guardianType = "Other";
+			this.guardianAbility = "Triple-Shot/Glow";
+			this.guardianEffects = "Staves that shoot a single projectile will shoot 2 more in an arc, Improved vision";
 		}
 
-		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
+		protected override bool SpecialShootPattern(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().burnStaves)
-			{
-				target.AddBuff(24, 180, false);
-			}
-		}
-
-		public override bool AltFunctionUse(Player player)
-		{
-			return true;
-		}
-
-		public override bool CanUseItem(Player player)
-		{
-			if (player.altFunctionUse == 2 && player.itemAnimation == 0)
-			{
-				base.item.mana = 1;
-				base.item.buffType = base.mod.BuffType("NatureGuardian6Buff");
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().longerGuardians)
-				{
-					base.item.buffTime = 2100;
-				}
-				else
-				{
-					base.item.buffTime = 1500;
-				}
-				base.item.shoot = base.mod.ProjectileType("NatureGuardian6");
-				return !player.HasBuff(base.mod.BuffType("GuardianCooldownDebuff"));
-			}
-			base.item.mana = 0;
-			base.item.buffType = 0;
-			base.item.buffTime = 0;
-			base.item.shoot = base.mod.ProjectileType("MoonflareSpark");
-			return true;
-		}
-
-		public override void UseStyle(Player player)
-		{
-			if (player.altFunctionUse == 2)
-			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
-				{
-					player.AddBuff(base.mod.BuffType("GuardianCooldownDebuff"), 2700, true);
-					return;
-				}
-				player.AddBuff(base.mod.BuffType("GuardianCooldownDebuff"), 3600, true);
-			}
-		}
-
-		public override float UseTimeMultiplier(Player player)
-		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().fasterStaves)
-			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
-				{
-					return 1.45f;
-				}
-				return 1.15f;
-			}
-			else
-			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
-				{
-					return 1.35f;
-				}
-				return 1f;
-			}
-		}
-
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
-			if (player.altFunctionUse == 2 && player.itemAnimation == 0)
-			{
-				return true;
-			}
 			int numberProjectiles = 2 + Main.rand.Next(2);
 			for (int i = 0; i < numberProjectiles; i++)
 			{

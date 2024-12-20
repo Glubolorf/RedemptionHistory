@@ -12,6 +12,7 @@ namespace Redemption.Items
 		{
 			base.DisplayName.SetDefault("Corrupted Worm Medallion");
 			base.Tooltip.SetDefault("Summons one of Vlitch's Overlords\n'Mechanical shrieks beneath the ground, be wary of the deadly sound'\nOnly usable at night");
+			ItemID.Sets.SortingPriorityBossSpawns[base.item.type] = 13;
 		}
 
 		public override void SetDefaults()

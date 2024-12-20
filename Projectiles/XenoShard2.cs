@@ -7,6 +7,14 @@ namespace Redemption.Projectiles
 {
 	public class XenoShard2 : ModProjectile
 	{
+		public override string Texture
+		{
+			get
+			{
+				return "Redemption/Projectiles/DruidProjectiles/Plants/XenoShard";
+			}
+		}
+
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Xeno Piece");

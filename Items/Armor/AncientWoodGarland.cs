@@ -10,15 +10,15 @@ namespace Redemption.Items.Armor
 	{
 		0
 	})]
-	public class AncientWoodGarland : ModItem
+	public class AncientWoodGarland : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Ancient Wood Garland");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n4% increased druidic damage\n2% increased druidic critical strike chance");
+			base.Tooltip.SetDefault("4% increased druidic damage\n2% increased druidic critical strike chance");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 20;
@@ -60,12 +60,12 @@ namespace Redemption.Items.Armor
 			player.setBonus = "8% increased druidic damage, Staves swing faster, Immune to poison";
 			DruidDamagePlayer.ModPlayer(player).druidDamage += 0.08f;
 			player.buffImmune[20] = true;
-			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).fasterStaves = true;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).staveSpeed += 0.05f;
 		}
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
 		{
-			drawHair = (drawAltHair = false);
+			drawHair = true;
 		}
 
 		public override void AddRecipes()

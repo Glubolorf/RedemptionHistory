@@ -4,15 +4,14 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass.DruidS
 {
-	public class SapphireBar : ModItem
+	public class SapphireBar : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Sapphire Bar");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 30;
 			base.item.height = 24;

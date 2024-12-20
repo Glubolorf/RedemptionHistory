@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class XenomiteStave : DruidDamageItem
+	public class XenomiteStave : DruidStave
 	{
 		public override void SetStaticDefaults()
 		{
@@ -23,7 +23,7 @@ namespace Redemption.Items.DruidDamageClass
 				Main.glowMaskTexture = glowMasks;
 			}
 			base.DisplayName.SetDefault("Xenomite Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nCasts 3 Xenomite Bolts in an arc");
+			base.Tooltip.SetDefault("Casts 3 Xenomite Bolts in an arc");
 		}
 
 		public override void SafeSetDefaults()
@@ -33,17 +33,20 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.height = 58;
 			base.item.useTime = 32;
 			base.item.useAnimation = 32;
-			base.item.useStyle = 1;
 			base.item.crit = 4;
 			base.item.knockBack = 7f;
 			base.item.value = Item.sellPrice(0, 10, 0, 0);
 			base.item.rare = 7;
-			base.item.UseSound = SoundID.Item1;
+			base.item.UseSound = SoundID.Item43;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
 			base.item.shoot = base.mod.ProjectileType("XenoBolt");
 			base.item.shootSpeed = 48f;
 			base.item.glowMask = XenomiteStave.customGlowMask;
+			this.defaultShoot = base.mod.ProjectileType("XenoBolt");
+			this.singleShotStave = false;
+			this.staveHoldOffset = new Vector2(4f, -10f);
+			this.staveLength = 58.2f;
 		}
 
 		public override void AddRecipes()
@@ -56,27 +59,7 @@ namespace Redemption.Items.DruidDamageClass
 			modRecipe.AddRecipe();
 		}
 
-		public override float UseTimeMultiplier(Player player)
-		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().fasterStaves)
-			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
-				{
-					return 1.45f;
-				}
-				return 1.15f;
-			}
-			else
-			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
-				{
-					return 1.35f;
-				}
-				return 1f;
-			}
-		}
-
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		protected override bool SpecialShootPattern(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
 			float numberProjectiles = (float)(3 + Main.rand.Next(1));
 			float rotation = MathHelper.ToRadians(25f);

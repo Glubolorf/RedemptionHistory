@@ -9,15 +9,15 @@ namespace Redemption.Items.Armor
 	{
 		0
 	})]
-	public class IceDruidGarland : ModItem
+	public class IceDruidGarland : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Coldblooded Druid's Garland");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n3% increased druidic damage\n2% increased druidic critical strike chance");
+			base.Tooltip.SetDefault("3% increased druidic damage\n2% increased druidic critical strike chance");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 22;
@@ -47,7 +47,7 @@ namespace Redemption.Items.Armor
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
 		{
-			drawAltHair = true;
+			drawHair = true;
 		}
 
 		public override void AddRecipes()

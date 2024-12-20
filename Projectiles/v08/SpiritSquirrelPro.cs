@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -21,6 +22,7 @@ namespace Redemption.Projectiles.v08
 			base.projectile.friendly = true;
 			base.projectile.timeLeft = 180;
 			base.projectile.penetrate = 2;
+			base.projectile.GetGlobalProjectile<DruidProjectile>().druidic = true;
 		}
 
 		public override bool PreAI()
@@ -72,14 +74,6 @@ namespace Redemption.Projectiles.v08
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			Player player = Main.player[base.projectile.owner];
-			int critChance = player.HeldItem.crit;
-			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref critChance);
-			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref critChance);
-			if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
-			{
-				crit = true;
-			}
 			if (!Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritPierce)
 			{
 				base.projectile.Kill();

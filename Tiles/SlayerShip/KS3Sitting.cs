@@ -104,7 +104,11 @@ namespace Redemption.Tiles.SlayerShip
 			base.npc.velocity.X = (base.npc.velocity.Y = 0f);
 			base.npc.dontTakeDamage = true;
 			base.npc.immune[255] = 30;
-			if (RedeWorld.downedVlitch3)
+			if (RedeWorld.downedVlitch3 || RedeWorld.downedNebuleus)
+			{
+				base.npc.active = false;
+			}
+			if (NPC.CountNPCS(base.mod.NPCType("KS3Sitting")) >= 2 && Main.rand.Next(2) == 0)
 			{
 				base.npc.active = false;
 			}
@@ -189,49 +193,49 @@ namespace Redemption.Tiles.SlayerShip
 				KS3Sitting.AreYouHuman = true;
 				return;
 			}
-			if (KS3Sitting.ChatNumber == 4 && RedeWorld.slayerRep >= 1)
+			if (KS3Sitting.ChatNumber == 4 && RedeWorld.slayerRep >= 1 && Main.LocalPlayer.GetModPlayer<RedePlayer>().foundHall)
 			{
 				button2 = HallT;
 				KS3Sitting.HallOfHeroes = true;
 				return;
 			}
-			if (KS3Sitting.ChatNumber == 5 && RedeWorld.slayerRep >= 1)
+			if ((KS3Sitting.ChatNumber == 5 && RedeWorld.slayerRep >= 1 && Main.LocalPlayer.GetModPlayer<RedePlayer>().foundHall) || (KS3Sitting.ChatNumber == 4 && RedeWorld.slayerRep >= 1 && !Main.LocalPlayer.GetModPlayer<RedePlayer>().foundHall))
 			{
 				button2 = LabT;
 				KS3Sitting.Lab = true;
 				return;
 			}
-			if (KS3Sitting.ChatNumber == 6 && RedeWorld.slayerRep >= 1)
+			if ((KS3Sitting.ChatNumber == 6 && RedeWorld.slayerRep >= 1 && Main.LocalPlayer.GetModPlayer<RedePlayer>().foundHall) || (KS3Sitting.ChatNumber == 5 && RedeWorld.slayerRep >= 1 && !Main.LocalPlayer.GetModPlayer<RedePlayer>().foundHall))
 			{
 				button2 = PlanetT;
 				KS3Sitting.Planet = true;
 				return;
 			}
-			if (KS3Sitting.ChatNumber == 7 && RedeWorld.slayerRep >= 1)
+			if ((KS3Sitting.ChatNumber == 7 && RedeWorld.slayerRep >= 1 && Main.LocalPlayer.GetModPlayer<RedePlayer>().foundHall) || (KS3Sitting.ChatNumber == 6 && RedeWorld.slayerRep >= 1 && !Main.LocalPlayer.GetModPlayer<RedePlayer>().foundHall))
 			{
 				button2 = WastelandT;
 				KS3Sitting.Wasteland = true;
 				return;
 			}
-			if (KS3Sitting.ChatNumber == 8 && RedeWorld.slayerRep >= 1)
+			if ((KS3Sitting.ChatNumber == 8 && RedeWorld.slayerRep >= 1 && Main.LocalPlayer.GetModPlayer<RedePlayer>().foundHall) || (KS3Sitting.ChatNumber == 7 && RedeWorld.slayerRep >= 1 && !Main.LocalPlayer.GetModPlayer<RedePlayer>().foundHall))
 			{
 				button2 = DataT;
 				KS3Sitting.DataLogs = true;
 				return;
 			}
-			if (KS3Sitting.ChatNumber == 9 && RedeWorld.slayerRep == 1)
+			if ((KS3Sitting.ChatNumber == 9 && RedeWorld.slayerRep == 1 && Main.LocalPlayer.GetModPlayer<RedePlayer>().foundHall) || (KS3Sitting.ChatNumber == 8 && RedeWorld.slayerRep >= 1 && !Main.LocalPlayer.GetModPlayer<RedePlayer>().foundHall))
 			{
 				button2 = QuestT;
 				KS3Sitting.Give1 = true;
 				return;
 			}
-			if (KS3Sitting.ChatNumber == 9 && RedeWorld.slayerRep == 2)
+			if ((KS3Sitting.ChatNumber == 9 && RedeWorld.slayerRep == 2 && Main.LocalPlayer.GetModPlayer<RedePlayer>().foundHall) || (KS3Sitting.ChatNumber == 8 && RedeWorld.slayerRep >= 1 && !Main.LocalPlayer.GetModPlayer<RedePlayer>().foundHall))
 			{
 				button2 = QuestT;
 				KS3Sitting.Give2 = true;
 				return;
 			}
-			if (KS3Sitting.ChatNumber == 9 && RedeWorld.slayerRep == 3)
+			if ((KS3Sitting.ChatNumber == 9 && RedeWorld.slayerRep == 3 && Main.LocalPlayer.GetModPlayer<RedePlayer>().foundHall) || (KS3Sitting.ChatNumber == 8 && RedeWorld.slayerRep >= 1 && !Main.LocalPlayer.GetModPlayer<RedePlayer>().foundHall))
 			{
 				button2 = QuestT;
 				KS3Sitting.Give3 = true;
@@ -294,7 +298,7 @@ namespace Redemption.Tiles.SlayerShip
 				Main.PlaySound(12, -1, -1, 1, 1f, 0f);
 				return;
 			}
-			else if (KS3Sitting.ChatNumber == 9 && RedeWorld.slayerRep == 1)
+			else if ((KS3Sitting.ChatNumber == 9 && RedeWorld.slayerRep == 1 && Main.LocalPlayer.GetModPlayer<RedePlayer>().foundHall) || (KS3Sitting.ChatNumber == 8 && RedeWorld.slayerRep == 1 && !Main.LocalPlayer.GetModPlayer<RedePlayer>().foundHall))
 			{
 				Main.PlaySound(12, -1, -1, 1, 1f, 0f);
 				Player player2 = Main.LocalPlayer;
@@ -328,7 +332,7 @@ namespace Redemption.Tiles.SlayerShip
 				Main.PlaySound(12, -1, -1, 1, 1f, 0f);
 				return;
 			}
-			else if (KS3Sitting.ChatNumber == 9 && RedeWorld.slayerRep == 2)
+			else if ((KS3Sitting.ChatNumber == 9 && RedeWorld.slayerRep == 2 && Main.LocalPlayer.GetModPlayer<RedePlayer>().foundHall) || (KS3Sitting.ChatNumber == 8 && RedeWorld.slayerRep == 2 && !Main.LocalPlayer.GetModPlayer<RedePlayer>().foundHall))
 			{
 				Main.PlaySound(12, -1, -1, 1, 1f, 0f);
 				Player player3 = Main.LocalPlayer;
@@ -364,7 +368,7 @@ namespace Redemption.Tiles.SlayerShip
 				Main.PlaySound(12, -1, -1, 1, 1f, 0f);
 				return;
 			}
-			else if (KS3Sitting.ChatNumber == 9 && RedeWorld.slayerRep == 3)
+			else if ((KS3Sitting.ChatNumber == 9 && RedeWorld.slayerRep == 3 && Main.LocalPlayer.GetModPlayer<RedePlayer>().foundHall) || (KS3Sitting.ChatNumber == 8 && RedeWorld.slayerRep == 3 && !Main.LocalPlayer.GetModPlayer<RedePlayer>().foundHall))
 			{
 				Main.PlaySound(12, -1, -1, 1, 1f, 0f);
 				Player player4 = Main.LocalPlayer;
@@ -408,13 +412,13 @@ namespace Redemption.Tiles.SlayerShip
 			}
 			else
 			{
-				if (KS3Sitting.ChatNumber == 9 && RedeWorld.slayerRep >= 4)
+				if ((KS3Sitting.ChatNumber == 9 && RedeWorld.slayerRep >= 4 && Main.LocalPlayer.GetModPlayer<RedePlayer>().foundHall) || (KS3Sitting.ChatNumber == 8 && RedeWorld.slayerRep >= 4 && !Main.LocalPlayer.GetModPlayer<RedePlayer>().foundHall))
 				{
 					Main.npcChatText = this.QuestChat();
 					Main.PlaySound(12, -1, -1, 1, 1f, 0f);
 					return;
 				}
-				if (KS3Sitting.ChatNumber == 8 && RedeWorld.slayerRep >= 4)
+				if ((KS3Sitting.ChatNumber == 8 && RedeWorld.slayerRep >= 4 && Main.LocalPlayer.GetModPlayer<RedePlayer>().foundHall) || (KS3Sitting.ChatNumber == 7 && RedeWorld.slayerRep >= 4 && !Main.LocalPlayer.GetModPlayer<RedePlayer>().foundHall))
 				{
 					shop = true;
 					return;
@@ -630,6 +634,7 @@ namespace Redemption.Tiles.SlayerShip
 				else if (RedeWorld.slayerRep >= 4)
 				{
 					chat.Add("There are 4 members of the Heroes. The first is that damn demigod, honestly he's a chill guy, I just hate how much stronger he is compared to me. The 2nd member is some moron who's supposedly invincible, not once have I seen him get hurt. 3rd is... Well she's probably the most normal out of all of us, but I don't know what she's up to now.", 1.0);
+					chat.Add("... There's something strange about the Demigod's statue... It doesn't look like him. Did someone change it?", 1.0);
 				}
 				else
 				{
@@ -655,7 +660,7 @@ namespace Redemption.Tiles.SlayerShip
 				}
 				else if (RedeWorld.slayerRep >= 4)
 				{
-					chat.Add("The world we are in is called Epidotra, this appears to be just a tiny island on it, so I was lucky for the ship to crash here than in the ocean. The mainland has 5 domains, Anglon, Ithon, Gathuram, Nirin, Erellon, and Thamor. There's another domain which is it's own island called Swaylan, but that's disconnected from the rest of the world.", 1.0);
+					chat.Add("The world we are in is called Epidotra, this appears to be just a tiny island on it, so I was lucky for the ship to crash here than in the ocean. The mainland has 6 domains, Anglon, Ithon, Gathuram, Nirin, Erellon, and Thamor. There's another domain which is it's own island called Swaylan, but that's disconnected from the rest of the world.", 1.0);
 				}
 				else
 				{

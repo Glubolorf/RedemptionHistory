@@ -210,7 +210,7 @@ namespace Redemption.NPCs.v08
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			for (int i = 0; i < 200; i++)
+			for (int i = 0; i < Main.npc.Length; i++)
 			{
 				if (Main.npc[i].boss)
 				{

@@ -10,7 +10,7 @@ namespace Redemption.Items
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Eaglecrest Spelltome");
-			base.Tooltip.SetDefault("Greatly increases the spawnrate of Eaglecrest Golem\nSold by Ragnos after Eater of Worlds/Brain of Cthulhu is defeated");
+			base.Tooltip.SetDefault("Greatly increases the spawnrate of Eaglecrest Golem\nSold by Zephos/Daerel after Eater of Worlds/Brain of Cthulhu is defeated");
 		}
 
 		public override void SetDefaults()

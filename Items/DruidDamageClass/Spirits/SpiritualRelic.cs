@@ -4,21 +4,22 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass.Spirits
 {
-	public class SpiritualRelic : ModItem
+	public class SpiritualRelic : DruidDamageSpirit
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Spiritual Relic");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n3% increased druidic damage\nIncreases spirits summoned by 1\n[c/bdffff:Spirit Level +2]");
+			base.Tooltip.SetDefault("3% increased druidic damage\nIncreases spirits summoned by 1\n[c/bdffff:Spirit Level +2]");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 26;
 			base.item.height = 48;
 			base.item.value = Item.sellPrice(0, 0, 60, 0);
 			base.item.rare = 2;
 			base.item.accessory = true;
+			this.spiritWeapon = false;
 		}
 
 		public override void AddRecipes()

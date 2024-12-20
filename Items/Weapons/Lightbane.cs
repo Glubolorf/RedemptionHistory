@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -44,15 +42,9 @@ namespace Redemption.Items.Weapons
 			base.item.UseSound = SoundID.Item1;
 			base.item.autoReuse = true;
 			base.item.glowMask = Lightbane.customGlowMask;
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> tooltips)
-		{
-			Color transparent = Color.Transparent;
-			if (base.item.modItem != null && base.item.modItem.mod == ModLoader.GetMod("Redemption"))
-			{
-				Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName")).overrideColor = new Color?(new Color(0, 120, 255));
-			}
+			base.item.shoot = 496;
+			base.item.shootSpeed = 10f;
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 5;
 		}
 
 		public override void MeleeEffects(Player player, Rectangle hitbox)
@@ -63,9 +55,18 @@ namespace Redemption.Items.Weapons
 			}
 		}
 
+		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		{
+			if (Main.rand.Next(3) == 0)
+			{
+				Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage * 2, knockBack, player.whoAmI, 0f, 0f);
+			}
+			return false;
+		}
+
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
 		{
-			target.AddBuff(153, 600, false);
+			target.AddBuff(153, 120, false);
 		}
 
 		public static short customGlowMask;

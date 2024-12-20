@@ -4,15 +4,15 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class ForestShacklesMidnight : ModItem
+	public class ForestShacklesMidnight : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Forest Shackles");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Midnight'\n5% increased druidic damage\nForms an spirit skull to aid you upon being attacked");
+			base.Tooltip.SetDefault("'Midnight'\n5% increased druidic damage\nForms a spirit skull to aid you upon being attacked\n[c/bdffff:Spirit Level +1]");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 40;
 			base.item.height = 46;
@@ -55,7 +55,9 @@ namespace Redemption.Items.DruidDamageClass
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			DruidDamagePlayer.ModPlayer(player).druidDamage += 0.05f;
-			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).spiritSkull1 = true;
+			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
+			redePlayer.spiritSkull1 = true;
+			redePlayer.spiritLevel++;
 		}
 	}
 }

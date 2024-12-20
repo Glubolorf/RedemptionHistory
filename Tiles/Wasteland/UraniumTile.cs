@@ -14,6 +14,7 @@ namespace Redemption.Tiles.Wasteland
 			Main.tileMergeDirt[(int)base.Type] = true;
 			Main.tileBlockLight[(int)base.Type] = true;
 			Main.tileLighted[(int)base.Type] = true;
+			Main.tileValue[(int)base.Type] = 660;
 			this.dustType = 226;
 			this.drop = base.mod.ItemType("Uranium");
 			this.minPick = 210;

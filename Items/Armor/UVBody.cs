@@ -9,15 +9,15 @@ namespace Redemption.Items.Armor
 	{
 		1
 	})]
-	public class UVBody : ModItem
+	public class UVBody : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("UV Chestplate");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n11% increased druidic damage\n8% increased druidic critical strike chance\nThrows seedbags faster\nIncreased life regen");
+			base.Tooltip.SetDefault("11% increased druidic damage\n8% increased druidic critical strike chance\nThrows seedbags faster\nIncreased life regen");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 30;
 			base.item.height = 28;

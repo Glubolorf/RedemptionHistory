@@ -11,7 +11,7 @@ namespace Redemption.Items
 		{
 			base.DisplayName.SetDefault("Corrupted Xenomite");
 			base.Tooltip.SetDefault("'Infects mechanical things...'");
-			Main.RegisterItemAnimation(base.item.type, new DrawAnimationVertical(4, 7));
+			Main.RegisterItemAnimation(base.item.type, new DrawAnimationVertical(4, 4));
 		}
 
 		public override void SetDefaults()

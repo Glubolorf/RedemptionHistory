@@ -9,6 +9,14 @@ namespace Redemption.Projectiles
 {
 	public class XenoShard4 : ModProjectile
 	{
+		public override string Texture
+		{
+			get
+			{
+				return "Redemption/Projectiles/XenoShard3";
+			}
+		}
+
 		public override void SetStaticDefaults()
 		{
 			if (Main.netMode != 2)
@@ -18,7 +26,7 @@ namespace Redemption.Projectiles
 				{
 					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Projectiles/XenoShard3");
 				XenoShard4.customGlowMask = (short)(glowMasks.Length - 1);
 				Main.glowMaskTexture = glowMasks;
 			}

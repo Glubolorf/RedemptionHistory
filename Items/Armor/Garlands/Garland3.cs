@@ -9,15 +9,15 @@ namespace Redemption.Items.Armor.Garlands
 	{
 		0
 	})]
-	public class Garland3 : ModItem
+	public class Garland3 : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Mythril Garland");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n12% increased druidic damage\n7% increased druidic critical strike chance");
+			base.Tooltip.SetDefault("12% increased druidic damage\n7% increased druidic critical strike chance");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 20;
 			base.item.height = 20;
@@ -42,13 +42,13 @@ namespace Redemption.Items.Armor.Garlands
 		{
 			player.setBonus = "Staves swing faster, Throws seedbags faster";
 			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.fasterStaves = true;
+			redePlayer.staveSpeed += 0.05f;
 			redePlayer.fasterSeedbags = true;
 		}
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
 		{
-			drawAltHair = true;
+			drawHair = true;
 		}
 
 		public override void AddRecipes()

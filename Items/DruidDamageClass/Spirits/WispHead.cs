@@ -8,21 +8,22 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 	{
 		0
 	})]
-	public class WispHead : ModItem
+	public class WispHead : DruidDamageSpirit
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Wisp's Head");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n12% increased druidic damage\n4% increased druidic critical strike chance\n4% damage reduction\nIncreased night vision\n[c/bdffff:Spirit Level +2]");
+			base.Tooltip.SetDefault("12% increased druidic damage\n4% increased druidic critical strike chance\n4% damage reduction\nIncreased night vision\n[c/bdffff:Spirit Level +2]");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 36;
 			base.item.value = Item.sellPrice(0, 4, 80, 0);
 			base.item.rare = 8;
 			base.item.defense = 7;
+			this.spiritWeapon = false;
 		}
 
 		public override void UpdateEquip(Player player)

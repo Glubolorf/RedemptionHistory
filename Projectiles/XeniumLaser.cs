@@ -18,7 +18,7 @@ namespace Redemption.Projectiles
 				{
 					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name);
 				XeniumLaser.customGlowMask = (short)(glowMasks.Length - 1);
 				Main.glowMaskTexture = glowMasks;
 			}

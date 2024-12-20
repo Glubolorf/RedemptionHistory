@@ -4,15 +4,15 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class LotusHorseshoe3 : ModItem
+	public class LotusHorseshoe3 : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Lotus Horseshoe");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n10% increased druidic damage\nNegates fall damage\nGrants immunity to fire blocks\nForms an spirit skull to aid you upon being attacked");
+			base.Tooltip.SetDefault("10% increased druidic damage\nNegates fall damage\nGrants immunity to fire blocks\nForms an spirit skull to aid you upon being attacked\n[c/bdffff:Spirit Level +1]");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 30;
 			base.item.height = 30;
@@ -55,9 +55,11 @@ namespace Redemption.Items.DruidDamageClass
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			DruidDamagePlayer.ModPlayer(player).druidDamage += 0.1f;
-			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).spiritSkull1 = true;
+			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
+			redePlayer.spiritSkull1 = true;
 			player.noFallDmg = true;
 			player.buffImmune[67] = true;
+			redePlayer.spiritLevel++;
 		}
 	}
 }

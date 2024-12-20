@@ -5,15 +5,15 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.LabThings
 {
-	public class MutagenDruid : ModItem
+	public class MutagenDruid : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Druid's Mutagen");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n15% increased druidic damage\n10% increased druidic critical strike chance");
+			base.Tooltip.SetDefault("15% increased druidic damage\n10% increased druidic critical strike chance");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 28;
 			base.item.height = 36;

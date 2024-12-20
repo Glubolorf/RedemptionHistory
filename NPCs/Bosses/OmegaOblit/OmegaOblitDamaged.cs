@@ -40,7 +40,6 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 			base.npc.noTileCollide = true;
 			base.npc.HitSound = SoundID.NPCHit42;
 			base.npc.DeathSound = SoundID.NPCDeath14;
-			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossVlitch2");
 			this.bossBag = base.mod.ItemType("OmegaOblitBag");
 		}
 
@@ -84,7 +83,6 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 			if (!RedeWorld.downedVlitch3)
 			{
 				RedeWorld.redemptionPoints++;
-				CombatText.NewText(this.player.getRect(), Color.Gold, "+1", true, false);
 				for (int i = 0; i < 255; i++)
 				{
 					Player player2 = Main.player[i];
@@ -97,6 +95,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 								Main.NewText("<Chalice of Alignment> Good job! All Vlitch Overlords have been... Wait...", Color.DarkGoldenrod, false);
 							}
 						}
+						CombatText.NewText(player2.getRect(), Color.Gold, "+1", true, false);
 					}
 				}
 			}

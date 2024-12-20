@@ -12,6 +12,7 @@ namespace Redemption.Items
 		{
 			base.DisplayName.SetDefault("Mysterious Tablet");
 			base.Tooltip.SetDefault("Summons the Keeper\nOnly usable at night");
+			ItemID.Sets.SortingPriorityBossSpawns[base.item.type] = 13;
 		}
 
 		public override void SetDefaults()
@@ -41,7 +42,7 @@ namespace Redemption.Items
 			}
 			else
 			{
-				Redemption.SpawnBoss(player, "TheKeeper", true, new Vector2(player.position.X + (float)Main.rand.Next(1100, 1300), player.position.Y - 0f), "The Keeper", false);
+				Redemption.SpawnBoss(player, "TheKeeper", true, new Vector2(player.position.X + (float)Main.rand.Next(400, 500), player.position.Y - 0f), "The Keeper", false);
 				Main.PlaySound(15, player.position, 0);
 			}
 			return true;

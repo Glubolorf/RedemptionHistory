@@ -32,7 +32,6 @@ namespace Redemption.NPCs.Bosses
 			base.npc.knockBackResist = 0f;
 			base.npc.aiStyle = -1;
 			this.animationType = 83;
-			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossVlitch1");
 			this.bossBag = base.mod.ItemType("VlitchCleaverBag");
 		}
 
@@ -93,7 +92,6 @@ namespace Redemption.NPCs.Bosses
 			if (!RedeWorld.downedVlitch1)
 			{
 				RedeWorld.redemptionPoints++;
-				CombatText.NewText(this.player.getRect(), Color.Gold, "+1", true, false);
 				for (int i = 0; i < 255; i++)
 				{
 					Player player2 = Main.player[i];
@@ -106,6 +104,7 @@ namespace Redemption.NPCs.Bosses
 								Main.NewText("<Chalice of Alignment> The first Vlitch Overlord is gone, only... 2 more to go? Maybe?", Color.DarkGoldenrod, false);
 							}
 						}
+						CombatText.NewText(player2.getRect(), Color.Gold, "+1", true, false);
 					}
 				}
 			}

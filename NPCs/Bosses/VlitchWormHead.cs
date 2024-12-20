@@ -39,7 +39,6 @@ namespace Redemption.NPCs.Bosses
 			base.npc.value = (float)Item.buyPrice(0, 20, 0, 0);
 			base.npc.npcSlots = 1f;
 			base.npc.netAlways = true;
-			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossVlitch1");
 			this.bossBag = base.mod.ItemType("VlitchGigipedeBag");
 		}
 
@@ -87,7 +86,6 @@ namespace Redemption.NPCs.Bosses
 			if (!RedeWorld.downedVlitch2)
 			{
 				RedeWorld.redemptionPoints++;
-				CombatText.NewText(this.player.getRect(), Color.Gold, "+1", true, false);
 				for (int i = 0; i < 255; i++)
 				{
 					Player player2 = Main.player[i];
@@ -100,6 +98,7 @@ namespace Redemption.NPCs.Bosses
 								Main.NewText("<Chalice of Alignment> The second Vlitch Overlord is down! Only 1 more... I think?", Color.DarkGoldenrod, false);
 							}
 						}
+						CombatText.NewText(player2.getRect(), Color.Gold, "+1", true, false);
 					}
 				}
 			}

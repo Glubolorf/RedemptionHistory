@@ -10,6 +10,7 @@ namespace Redemption.Walls
 		public override void SetDefaults()
 		{
 			Main.wallHouse[(int)base.Type] = false;
+			this.drop = base.mod.ItemType("Cyberscrap");
 			base.AddMapEntry(new Color(120, 100, 80), null);
 		}
 

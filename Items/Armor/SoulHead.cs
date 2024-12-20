@@ -9,21 +9,22 @@ namespace Redemption.Items.Armor
 	{
 		0
 	})]
-	public class SoulHead : ModItem
+	public class SoulHead : DruidDamageSpirit
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Lost Soul's Head");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n2% increased druidic damage\n2% damage reduction\n4% increased druidic critical strike chance\n[c/bdffff:Spirit Level +1]");
+			base.Tooltip.SetDefault("2% increased druidic damage\n2% damage reduction\n4% increased druidic critical strike chance\n[c/bdffff:Spirit Level +1]");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 20;
 			base.item.value = 50;
 			base.item.rare = 1;
 			base.item.defense = 4;
+			this.spiritWeapon = false;
 		}
 
 		public override void UpdateEquip(Player player)

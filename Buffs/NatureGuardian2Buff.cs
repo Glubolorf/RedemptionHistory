@@ -21,7 +21,7 @@ namespace Redemption.Buffs
 			druidDamagePlayer.druidDamage += 0.15f;
 			druidDamagePlayer.druidCrit += 15;
 			player.statDefense += 8;
-			p.rapidStave = true;
+			p.staveSpeed += 0.35f;
 			player.dryadWard = true;
 			RedePlayer modPlayer2 = player.GetModPlayer<RedePlayer>();
 			if (player.ownedProjectileCounts[base.mod.ProjectileType("NatureGuardian2")] > 0)

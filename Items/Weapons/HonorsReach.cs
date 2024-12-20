@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Redemption.Projectiles;
 using Terraria;
@@ -36,21 +34,13 @@ namespace Redemption.Items.Weapons
 			base.item.noUseGraphic = true;
 			base.item.melee = true;
 			base.item.autoReuse = true;
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 6;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
 			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, base.mod.ProjectileType("HonorsReach2Pro"), damage, knockBack, player.whoAmI, 0f, 0f);
 			return true;
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> tooltips)
-		{
-			Color transparent = Color.Transparent;
-			if (base.item.modItem != null && base.item.modItem.mod == ModLoader.GetMod("Redemption"))
-			{
-				Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName")).overrideColor = new Color?(new Color(170, 0, 255));
-			}
 		}
 
 		public override bool CanUseItem(Player player)

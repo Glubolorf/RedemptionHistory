@@ -34,7 +34,6 @@ namespace Redemption.NPCs.LabNPCs
 			base.npc.boss = true;
 			base.npc.noTileCollide = false;
 			base.npc.netAlways = true;
-			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/LabBossMusic2");
 			this.bossBag = base.mod.ItemType("PZBag");
 		}
 
@@ -54,12 +53,10 @@ namespace Redemption.NPCs.LabNPCs
 		public override void BossLoot(ref string name, ref int potionType)
 		{
 			base.npc.TargetClosest(true);
-			Player player = Main.player[base.npc.target];
+			Player player3 = Main.player[base.npc.target];
 			potionType = 58;
 			if (!RedeWorld.downedPatientZero)
 			{
-				RedeWorld.redemptionPoints += 3;
-				CombatText.NewText(player.getRect(), Color.Gold, "+3", true, false);
 				for (int i = 0; i < 255; i++)
 				{
 					Player player2 = Main.player[i];
@@ -69,9 +66,10 @@ namespace Redemption.NPCs.LabNPCs
 						{
 							if (player2.inventory[j].type == base.mod.ItemType("RedemptionTeller"))
 							{
-								Main.NewText("<Chalice of Alignment> We did it! We stopped the Infection! High-five! ... Oh, right.", Color.DarkGoldenrod, false);
+								Main.NewText("<Chalice of Alignment> We did it! We stopped the Infection! However, for the looks of things an innocent man died along with it...", Color.DarkGoldenrod, false);
 							}
 						}
+						CombatText.NewText(player2.getRect(), Color.Gray, "+0", true, false);
 					}
 				}
 			}
@@ -93,6 +91,7 @@ namespace Redemption.NPCs.LabNPCs
 				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("PZTrophy"), 1, false, 0, false, false);
 			}
 			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("FloppyDisk7"), 1, false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("FloppyDisk7_1"), 1, false, 0, false, false);
 			if (Main.expertMode)
 			{
 				base.npc.DropBossBags();

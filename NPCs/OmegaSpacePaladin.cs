@@ -78,12 +78,12 @@ namespace Redemption.NPCs
 					{
 						if (base.npc.direction == -1)
 						{
-							int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 26f, base.npc.position.Y + 54f), new Vector2(-6f, 0f), 302, 40, 3f, 255, 0f, 0f);
+							int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 26f, base.npc.position.Y + 54f), new Vector2(-6f, Utils.NextFloat(Main.rand, -1f, 1f)), 302, 40, 3f, 255, 0f, 0f);
 							Main.projectile[p].netUpdate = true;
 						}
 						else
 						{
-							int p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 62f, base.npc.position.Y + 54f), new Vector2(6f, 0f), 302, 40, 3f, 255, 0f, 0f);
+							int p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 62f, base.npc.position.Y + 54f), new Vector2(6f, Utils.NextFloat(Main.rand, -1f, 1f)), 302, 40, 3f, 255, 0f, 0f);
 							Main.projectile[p2].netUpdate = true;
 						}
 					}

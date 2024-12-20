@@ -9,15 +9,15 @@ namespace Redemption.Items.Armor
 	{
 		2
 	})]
-	public class DryadLeggings : ModItem
+	public class DryadLeggings : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Dryad's Leggings");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n2% increased druidic damage\nMana regen slighty increased");
+			base.Tooltip.SetDefault("2% increased druidic damage\nMana regen slighty increased");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 18;

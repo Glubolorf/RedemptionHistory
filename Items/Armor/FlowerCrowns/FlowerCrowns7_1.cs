@@ -9,15 +9,15 @@ namespace Redemption.Items.Armor.FlowerCrowns
 	{
 		0
 	})]
-	public class FlowerCrowns7_1 : ModItem
+	public class FlowerCrowns7_1 : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Dawn Flower Crown");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Dawn brings the light back'\nStaves swing faster");
+			base.Tooltip.SetDefault("'Dawn brings the light back'\nStaves swing faster");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 20;
 			base.item.height = 10;
@@ -28,7 +28,7 @@ namespace Redemption.Items.Armor.FlowerCrowns
 
 		public override void UpdateEquip(Player player)
 		{
-			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).fasterStaves = true;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).staveSpeed += 0.05f;
 		}
 
 		public override bool IsArmorSet(Item head, Item body, Item legs)
@@ -44,7 +44,7 @@ namespace Redemption.Items.Armor.FlowerCrowns
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
 		{
-			drawAltHair = true;
+			drawHair = true;
 		}
 
 		public override void AddRecipes()

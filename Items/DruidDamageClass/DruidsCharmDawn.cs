@@ -4,15 +4,15 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class DruidsCharmDawn : ModItem
+	public class DruidsCharmDawn : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Druid's Charm");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Dawn'\n10% increased druidic damage\nNegates fall damage\nGrants immunity to fire blocks\nStaves swing faster\nStaves will burn targets\n75% decrease to all other damage types");
+			base.Tooltip.SetDefault("'Dawn'\n10% increased druidic damage\nNegates fall damage\nGrants immunity to fire blocks\nStaves swing faster\nStaves will burn targets\n75% decrease to all other damage types");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 30;
 			base.item.height = 52;
@@ -49,7 +49,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.fasterStaves = true;
+			redePlayer.staveSpeed += 0.05f;
 			redePlayer.burnStaves = true;
 			DruidDamagePlayer.ModPlayer(player).druidDamage += 0.1f;
 			player.noFallDmg = true;

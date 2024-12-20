@@ -12,6 +12,7 @@ using Redemption.Items.LabThings;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Events;
+using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -566,6 +567,10 @@ namespace Redemption
 			{
 				this.spiritWyvern2 = false;
 			}
+			if (base.player.HasBuff(base.mod.BuffType("HKStatueBuff")))
+			{
+				this.foundHall = true;
+			}
 			if (base.player.pulley)
 			{
 				this.ModDashMovement();
@@ -638,7 +643,10 @@ namespace Redemption
 			base.player.ManageSpecialBiomeVisuals("Redemption:Nebuleus", useFire, default(Vector2));
 			bool useFire2 = NPC.AnyNPCs(base.mod.NPCType("BigNebuleus"));
 			base.player.ManageSpecialBiomeVisuals("Redemption:BigNebuleus", useFire2, default(Vector2));
+			bool useFire3 = NPC.AnyNPCs(base.mod.NPCType("Ukko"));
+			base.player.ManageSpecialBiomeVisuals("Redemption:Ukko", useFire3, default(Vector2));
 			base.player.ManageSpecialBiomeVisuals("Redemption:XenoSky", this.ZoneXeno || this.ZoneEvilXeno, base.player.Center);
+			base.player.ManageSpecialBiomeVisuals("Redemption:SoullessSky", this.ZoneSoulless, base.player.Center);
 			if (!this.ZoneXeno && !this.ZoneEvilXeno)
 			{
 				base.player.HasBuff(base.mod.BuffType("RadiationDebuff"));
@@ -651,12 +659,13 @@ namespace Redemption
 			this.ZoneEvilXeno = (RedeWorld.evilXenoBiome > 50);
 			this.ZoneLab = (RedeWorld.labBiome > 200);
 			this.ZoneSlayer = (RedeWorld.slayerBiome > 75);
+			this.ZoneSoulless = (RedeWorld.soullessBiome > 75);
 		}
 
 		public override bool CustomBiomesMatch(Player other)
 		{
 			RedePlayer modOther = other.GetModPlayer<RedePlayer>();
-			return this.ZoneXeno == modOther.ZoneXeno && this.ZoneEvilXeno == modOther.ZoneEvilXeno && this.ZoneLab == modOther.ZoneLab && this.ZoneSlayer == modOther.ZoneSlayer;
+			return this.ZoneXeno == modOther.ZoneXeno && this.ZoneEvilXeno == modOther.ZoneEvilXeno && this.ZoneLab == modOther.ZoneLab && this.ZoneSlayer == modOther.ZoneSlayer && this.ZoneSoulless == modOther.ZoneSoulless;
 		}
 
 		public override void CopyCustomBiomesTo(Player other)
@@ -666,6 +675,7 @@ namespace Redemption
 			modPlayer.ZoneEvilXeno = this.ZoneEvilXeno;
 			modPlayer.ZoneLab = this.ZoneLab;
 			modPlayer.ZoneSlayer = this.ZoneSlayer;
+			modPlayer.ZoneSoulless = this.ZoneSoulless;
 		}
 
 		public override void SendCustomBiomes(BinaryWriter writer)
@@ -675,6 +685,7 @@ namespace Redemption
 			flags[1] = this.ZoneLab;
 			flags[2] = this.ZoneEvilXeno;
 			flags[3] = this.ZoneSlayer;
+			flags[4] = this.ZoneSoulless;
 			writer.Write(flags);
 		}
 
@@ -698,6 +709,7 @@ namespace Redemption
 			this.ZoneLab = flags[1];
 			this.ZoneEvilXeno = flags[2];
 			this.ZoneSlayer = flags[3];
+			this.ZoneSoulless = flags[4];
 		}
 
 		public override void OnRespawn(Player player)
@@ -722,7 +734,7 @@ namespace Redemption
 			this.xenoHatchlingMinion = false;
 			this.heartEmblem = false;
 			this.moreSeeds = false;
-			this.fasterStaves = false;
+			this.staveSpeed = 1f;
 			this.fasterSeedbags = false;
 			this.fasterSpirits = false;
 			this.moreSpirits = false;
@@ -807,7 +819,6 @@ namespace Redemption
 			this.longerGuardians = false;
 			this.blightedShield = false;
 			this.holoMinion = false;
-			this.rapidStave = false;
 			this.guardianCooldownReduce = false;
 			this.staveStreamShot = false;
 			this.staveTripleShot = false;
@@ -860,6 +871,9 @@ namespace Redemption
 			this.wispSet = false;
 			this.spiritWyvern1 = false;
 			this.spiritWyvern2 = false;
+			this.spiritGolemCross = false;
+			this.lacerated = false;
+			this.ukkonenMinion = false;
 		}
 
 		public void ModDashMovement()
@@ -1174,6 +1188,7 @@ namespace Redemption
 			Redemption.templeOfHeroes = false;
 			this.bileDebuff = false;
 			this.bioweaponDebuff = false;
+			this.lacerated = false;
 		}
 
 		public override void UpdateBadLifeRegen()
@@ -1285,6 +1300,15 @@ namespace Redemption
 				}
 				base.player.lifeRegenTime = 0;
 				base.player.lifeRegen -= 12;
+			}
+			if (this.lacerated)
+			{
+				if (base.player.lifeRegen > 0)
+				{
+					base.player.lifeRegen = 0;
+				}
+				base.player.lifeRegenTime = 0;
+				base.player.lifeRegen -= 25;
 			}
 		}
 
@@ -1480,6 +1504,12 @@ namespace Redemption
 			}
 		}
 
+		public override void ModifyDrawLayers(List<PlayerLayer> layers)
+		{
+			RedePlayer.MiscEffectsFront.visible = true;
+			layers.Insert(0, RedePlayer.MiscEffectsFront);
+		}
+
 		public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
 		{
 			if (this.vendetta)
@@ -1607,7 +1637,6 @@ namespace Redemption
 					if (target.life <= 0 && target.lifeMax > 5 && Main.rand.Next(10) == 0 && target.type != 288 && target.type != base.mod.NPCType("LostSoul1") && target.type != base.mod.NPCType("LostSoul2") && target.type != base.mod.NPCType("LostSoul3") && target.type != base.mod.NPCType("SmallShadesoulNPC") && target.type != base.mod.NPCType("ShadesoulNPC"))
 					{
 						NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, base.mod.NPCType("SmallShadesoulNPC"), 0, 0f, 0f, 0f, 0f, 255);
-						return;
 					}
 				}
 				else if (this.spiritLevel == 6)
@@ -1615,13 +1644,16 @@ namespace Redemption
 					if (target.life <= 0 && target.lifeMax > 5 && Main.rand.Next(6) == 0 && target.type != 288 && target.type != base.mod.NPCType("LostSoul1") && target.type != base.mod.NPCType("LostSoul2") && target.type != base.mod.NPCType("LostSoul3") && target.type != base.mod.NPCType("SmallShadesoulNPC") && target.type != base.mod.NPCType("ShadesoulNPC"))
 					{
 						NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, base.mod.NPCType("SmallShadesoulNPC"), 0, 0f, 0f, 0f, 0f, 255);
-						return;
 					}
 				}
 				else if (this.spiritLevel >= 7 && target.life <= 0 && target.lifeMax > 5 && Main.rand.Next(3) == 0 && target.type != 288 && target.type != base.mod.NPCType("LostSoul1") && target.type != base.mod.NPCType("LostSoul2") && target.type != base.mod.NPCType("LostSoul3") && target.type != base.mod.NPCType("SmallShadesoulNPC") && target.type != base.mod.NPCType("ShadesoulNPC"))
 				{
 					NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, base.mod.NPCType("SmallShadesoulNPC"), 0, 0f, 0f, 0f, 0f, 255);
 				}
+			}
+			if (target.life <= 0 && (proj.type == base.mod.ProjectileType("NightSoulPro1") || proj.type == base.mod.ProjectileType("LightSoulPro1")))
+			{
+				base.player.AddBuff(base.mod.BuffType("SoulStaveBuff"), 3600, true);
 			}
 		}
 
@@ -1895,6 +1927,14 @@ namespace Redemption
 			{
 				RedePlayer.EmitDust();
 			}
+			if (Redemption.soullessBiomeActive && Main.netMode == 2)
+			{
+				if (!Filters.Scene["MoonLordShake"].IsActive())
+				{
+					Filters.Scene.Activate("MoonLordShake", base.player.position, new object[0]);
+				}
+				Filters.Scene["MoonLordShake"].GetShader().UseIntensity(1f);
+			}
 		}
 
 		public static void EmitDust()
@@ -2158,7 +2198,7 @@ namespace Redemption
 
 		public bool moreSeeds;
 
-		public bool fasterStaves;
+		public float staveSpeed = 1f;
 
 		public bool fasterSeedbags;
 
@@ -2204,7 +2244,7 @@ namespace Redemption
 
 		public bool creationBonus;
 
-		public static bool reflectProjs;
+		public static bool reflectProjs = false;
 
 		public bool omegaAccessoryPrevious;
 
@@ -2350,8 +2390,6 @@ namespace Redemption
 
 		public bool holoMinion;
 
-		public bool rapidStave;
-
 		public bool guardianCooldownReduce;
 
 		public bool staveStreamShot;
@@ -2477,5 +2515,35 @@ namespace Redemption
 		public bool spiritWyvern1;
 
 		public bool spiritWyvern2;
+
+		public bool foundHall;
+
+		public bool spiritGolemCross;
+
+		public bool lacerated;
+
+		public bool ukkonenMinion;
+
+		public bool ZoneSoulless;
+
+		public static readonly PlayerLayer MiscEffectsFront = new PlayerLayer("Redemption", "MiscEffectsFront", PlayerLayer.MiscEffectsFront, delegate(PlayerDrawInfo drawInfo)
+		{
+			if (drawInfo.shadow != 0f)
+			{
+				return;
+			}
+			Player drawPlayer = drawInfo.drawPlayer;
+			Mod mod = ModLoader.GetMod("Redemption");
+			drawPlayer.GetModPlayer<RedePlayer>();
+			if (drawPlayer.HasBuff(mod.BuffType("EarthbindDebuff")))
+			{
+				Texture2D texture = mod.GetTexture("NPCs/Bosses/Thorn/AkkaEarthbindEffect");
+				int drawX = (int)(drawInfo.position.X + (float)drawPlayer.width / 2f - Main.screenPosition.X);
+				int drawY = (int)(drawInfo.position.Y + (float)drawPlayer.height / 2f - Main.screenPosition.Y);
+				DrawData data;
+				data..ctor(texture, new Vector2((float)drawX, (float)drawY), null, Color.White, 0f, new Vector2((float)texture.Width / 2f, (float)texture.Height / 2f), 1f, SpriteEffects.None, 0);
+				Main.playerDrawData.Add(data);
+			}
+		});
 	}
 }

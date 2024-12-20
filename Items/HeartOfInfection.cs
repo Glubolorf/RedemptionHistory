@@ -16,10 +16,11 @@ namespace Redemption.Items
 
 		public override void SetDefaults()
 		{
-			base.item.CloneDefaults(669);
+			base.item.CloneDefaults(1183);
 			base.item.width = 30;
 			base.item.height = 36;
 			base.item.value = Item.sellPrice(0, 8, 25, 0);
+			base.item.noUseGraphic = true;
 			base.item.expert = true;
 			base.item.shoot = base.mod.ProjectileType("HiveGrowthFriendly");
 			base.item.buffType = base.mod.BuffType("HiveGrowthBuff");

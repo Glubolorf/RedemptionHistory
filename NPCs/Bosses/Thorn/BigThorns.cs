@@ -18,7 +18,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 			base.projectile.width = 76;
 			base.projectile.height = 68;
 			base.projectile.penetrate = -1;
-			base.projectile.hostile = true;
+			base.projectile.hostile = false;
 			base.projectile.friendly = false;
 			base.projectile.tileCollide = true;
 			base.projectile.ignoreWater = true;
@@ -40,6 +40,10 @@ namespace Redemption.NPCs.Bosses.Thorn
 				{
 					base.projectile.frame = 7;
 				}
+			}
+			if (base.projectile.frame >= 7 && base.projectile.ai[0] != 1f)
+			{
+				base.projectile.hostile = true;
 			}
 			base.projectile.localAI[0] += 1f;
 			Projectile projectile3 = base.projectile;

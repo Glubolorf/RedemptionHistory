@@ -18,7 +18,7 @@ namespace Redemption.Buffs
 		{
 			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
 			RedePlayer modPlayer3 = player.GetModPlayer<RedePlayer>();
-			modPlayer3.rapidStave = true;
+			modPlayer3.staveSpeed += 0.35f;
 			modPlayer3.staveStreamShot = true;
 			druidDamagePlayer.druidDamage += 0.15f;
 			druidDamagePlayer.druidCrit += 15;

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -34,15 +31,7 @@ namespace Redemption.Items.Weapons
 			base.item.autoReuse = false;
 			base.item.shoot = base.mod.ProjectileType("AncientBoulder");
 			base.item.shootSpeed = 7f;
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> tooltips)
-		{
-			Color transparent = Color.Transparent;
-			if (base.item.modItem != null && base.item.modItem.mod == ModLoader.GetMod("Redemption"))
-			{
-				Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName")).overrideColor = new Color?(new Color(0, 120, 255));
-			}
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 5;
 		}
 	}
 }

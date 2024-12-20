@@ -9,7 +9,7 @@ namespace Redemption.Items.Armor.PostML
 	{
 		0
 	})]
-	public class XeniumGarland : ModItem
+	public class XeniumGarland : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -17,7 +17,7 @@ namespace Redemption.Items.Armor.PostML
 			base.Tooltip.SetDefault("25% increased druidic damage and critical strike chance\nIncreases pickup range for life hearts\nYour Nature Guardians last longer");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 20;
 			base.item.height = 18;

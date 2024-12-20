@@ -32,14 +32,6 @@ namespace Redemption.NPCs.Bosses.Thorn
 			base.npc.noGravity = false;
 			base.npc.boss = true;
 			base.npc.netAlways = true;
-			if (RedeConfigClient.Instance.AntiAntti)
-			{
-				this.music = 5;
-			}
-			else
-			{
-				this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossForest1");
-			}
 			base.npc.noTileCollide = false;
 			this.bossBag = base.mod.ItemType("ThornBag");
 		}
@@ -101,7 +93,6 @@ namespace Redemption.NPCs.Bosses.Thorn
 			if (!RedeWorld.downedThorn)
 			{
 				RedeWorld.redemptionPoints++;
-				CombatText.NewText(this.player.getRect(), Color.Gold, "+1", true, false);
 				for (int i = 0; i < 255; i++)
 				{
 					Player player2 = Main.player[i];
@@ -114,6 +105,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 								Main.NewText("<Chalice of Alignment> Nice work, the forest is safe now.", Color.DarkGoldenrod, false);
 							}
 						}
+						CombatText.NewText(player2.getRect(), Color.Gold, "+1", true, false);
 					}
 				}
 			}
@@ -241,7 +233,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 			}
 			if (this.customAI[1] == 1f)
 			{
-				switch (Main.rand.Next(6))
+				switch (Main.rand.Next(5))
 				{
 				case 0:
 					this.customAI[2] = 1f;
@@ -258,13 +250,30 @@ namespace Redemption.NPCs.Bosses.Thorn
 				case 4:
 					this.customAI[2] = 5f;
 					break;
-				case 5:
-					this.customAI[2] = 6f;
-					break;
 				}
 				this.customAI[1] = 0f;
 				this.customAI[0] = 0f;
 				base.npc.netUpdate = true;
+			}
+			if ((Main.expertMode ? (base.npc.life < (int)((float)base.npc.lifeMax * 0.5f)) : (base.npc.life < (int)((float)base.npc.lifeMax * 0.35f))) && !NPC.AnyNPCs(base.mod.NPCType("ManaBarrierPro")))
+			{
+				int dustType = 20;
+				int pieCut = 16;
+				for (int i = 0; i < pieCut; i++)
+				{
+					int dustID = Dust.NewDust(new Vector2(base.npc.Center.X - 1f, base.npc.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 3f);
+					Main.dust[dustID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)pieCut * 6.28f);
+					Main.dust[dustID].noLight = false;
+					Main.dust[dustID].noGravity = true;
+				}
+				float distance = 2f;
+				float j = 0.4f;
+				for (int count = 0; count < 1; count++)
+				{
+					Vector2 spawn = base.npc.Center + distance * Utils.ToRotationVector2((float)count * j);
+					int Minion = NPC.NewNPC((int)spawn.X, (int)spawn.Y, base.mod.NPCType("ManaBarrierPro"), 0, (float)base.npc.whoAmI, 0f, (float)count, 0f, 255);
+					Main.npc[Minion].netUpdate = true;
+				}
 			}
 			if (this.customAI[2] == 1f)
 			{
@@ -417,22 +426,22 @@ namespace Redemption.NPCs.Bosses.Thorn
 				{
 					if (this.customAI[0] == 60f || this.customAI[0] == 120f)
 					{
-						int pieCut = 4;
-						for (int i = 0; i < pieCut; i++)
+						int pieCut2 = 4;
+						for (int k = 0; k < pieCut2; k++)
 						{
 							int projID = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, 55, 10, 3f, 255, 0f, 0f);
-							Main.projectile[projID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)i / (float)pieCut * 6.28f);
+							Main.projectile[projID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)k / (float)pieCut2 * 6.28f);
 							Main.projectile[projID].netUpdate = true;
 							Main.projectile[projID].timeLeft = 180;
 						}
 					}
 					if (this.customAI[0] == 90f || this.customAI[0] == 150f)
 					{
-						int pieCut2 = 8;
-						for (int j = 0; j < pieCut2; j++)
+						int pieCut3 = 8;
+						for (int l = 0; l < pieCut3; l++)
 						{
 							int projID2 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, 55, 10, 3f, 255, 0f, 0f);
-							Main.projectile[projID2].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)j / (float)pieCut2 * 6.28f);
+							Main.projectile[projID2].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)l / (float)pieCut3 * 6.28f);
 							Main.projectile[projID2].netUpdate = true;
 							Main.projectile[projID2].timeLeft = 180;
 						}
@@ -450,22 +459,22 @@ namespace Redemption.NPCs.Bosses.Thorn
 				{
 					if (this.customAI[0] == 60f)
 					{
-						int pieCut3 = 4;
-						for (int k = 0; k < pieCut3; k++)
+						int pieCut4 = 4;
+						for (int m = 0; m < pieCut4; m++)
 						{
 							int projID3 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, 55, 10, 3f, 255, 0f, 0f);
-							Main.projectile[projID3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)k / (float)pieCut3 * 6.28f);
+							Main.projectile[projID3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)m / (float)pieCut4 * 6.28f);
 							Main.projectile[projID3].netUpdate = true;
 							Main.projectile[projID3].timeLeft = 180;
 						}
 					}
 					if (this.customAI[0] == 100f)
 					{
-						int pieCut4 = 8;
-						for (int l = 0; l < pieCut4; l++)
+						int pieCut5 = 8;
+						for (int n = 0; n < pieCut5; n++)
 						{
 							int projID4 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, 55, 10, 3f, 255, 0f, 0f);
-							Main.projectile[projID4].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)l / (float)pieCut4 * 6.28f);
+							Main.projectile[projID4].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)n / (float)pieCut5 * 6.28f);
 							Main.projectile[projID4].netUpdate = true;
 							Main.projectile[projID4].timeLeft = 180;
 						}
@@ -487,7 +496,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 				{
 					if (this.customAI[0] >= 60f && this.customAI[0] <= 140f && Main.rand.Next(2) == 0)
 					{
-						float Speed3 = 12f;
+						float Speed3 = 9f;
 						Vector2 vector10 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 						int damage3 = 10;
 						int type3 = ModContent.ProjectileType<LifeThornPro>();
@@ -527,49 +536,6 @@ namespace Redemption.NPCs.Bosses.Thorn
 				}
 			}
 			else if (this.customAI[2] == 5f)
-			{
-				this.customAI[0] += 1f;
-				if (this.customAI[0] == 60f)
-				{
-					if (NPC.AnyNPCs(base.mod.NPCType("ManaBarrierPro")))
-					{
-						this.customAI[0] = 0f;
-						this.customAI[2] = 0f;
-						this.teleportTimer = 0;
-						this.teleport = true;
-						base.npc.netUpdate = true;
-					}
-					else
-					{
-						int dustType = 20;
-						int pieCut5 = 16;
-						for (int m = 0; m < pieCut5; m++)
-						{
-							int dustID = Dust.NewDust(new Vector2(base.npc.Center.X - 1f, base.npc.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 3f);
-							Main.dust[dustID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)m / (float)pieCut5 * 6.28f);
-							Main.dust[dustID].noLight = false;
-							Main.dust[dustID].noGravity = true;
-						}
-						float distance = 2f;
-						float n = 0.4f;
-						for (int count = 0; count < 1; count++)
-						{
-							Vector2 spawn = base.npc.Center + distance * Utils.ToRotationVector2((float)count * n);
-							int Minion = NPC.NewNPC((int)spawn.X, (int)spawn.Y, base.mod.NPCType("ManaBarrierPro"), 0, (float)base.npc.whoAmI, 0f, (float)count, 0f, 255);
-							Main.npc[Minion].netUpdate = true;
-						}
-					}
-				}
-				if (this.customAI[0] >= 120f)
-				{
-					this.customAI[0] = 0f;
-					this.customAI[2] = 0f;
-					this.teleportTimer = 0;
-					this.teleport = true;
-					base.npc.netUpdate = true;
-				}
-			}
-			else if (this.customAI[2] == 6f)
 			{
 				this.customAI[0] += 1f;
 				if (base.npc.life < (int)((float)base.npc.lifeMax * 0.5f))
@@ -628,7 +594,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 					int playerTilePositionY = (int)Main.player[base.npc.target].position.Y / 16;
 					int npcTilePositionX = (int)base.npc.position.X / 16;
 					int npcTilePositionY = (int)base.npc.position.Y / 16;
-					int playerTargetShift = 30;
+					int playerTargetShift = 16;
 					int num58 = 0;
 					for (int s = 0; s < 100; s++)
 					{

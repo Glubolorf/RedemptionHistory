@@ -186,7 +186,7 @@ namespace Redemption.NPCs.LabNPCs.New
 			nextSlot++;
 			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabPlatingWall"), false);
 			nextSlot++;
-			if (NPC.downedMoonlord)
+			if (RedeWorld.downedVolt)
 			{
 				shop.item[nextSlot].SetDefaults(base.mod.ItemType("XenoTank"), false);
 				nextSlot++;

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -23,6 +24,7 @@ namespace Redemption.Projectiles.Petridish
 			base.projectile.friendly = true;
 			base.projectile.tileCollide = false;
 			base.projectile.ignoreWater = false;
+			base.projectile.GetGlobalProjectile<DruidProjectile>().druidic = true;
 		}
 
 		public override void AI()
@@ -59,18 +61,6 @@ namespace Redemption.Projectiles.Petridish
 			}
 			Projectile.NewProjectile(base.projectile.position.X + 8f, base.projectile.position.Y + 8f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("Bacteria4"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 			Projectile.NewProjectile(base.projectile.position.X + 8f, base.projectile.position.Y + 8f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("Bacteria5"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
-		}
-
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
-		{
-			Player player = Main.player[base.projectile.owner];
-			int critChance = player.HeldItem.crit;
-			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref critChance);
-			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref critChance);
-			if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
-			{
-				crit = true;
-			}
 		}
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

@@ -33,6 +33,7 @@ namespace Redemption.NPCs
 
 		public override void AI()
 		{
+			Player player = Main.player[base.npc.target];
 			base.npc.TargetClosest(true);
 			Vector2 direction = Main.player[base.npc.target].Center - base.npc.Center;
 			base.npc.rotation = Utils.ToRotation(direction);
@@ -46,6 +47,12 @@ namespace Redemption.NPCs
 				Main.PlaySound(SoundID.NPCDeath39.WithVolume(0.3f), (int)base.npc.position.X, (int)base.npc.position.Y);
 				base.npc.active = false;
 			}
+			if (player.FindItem(base.mod.ItemType("LostSoulCatcher")) >= 0)
+			{
+				base.npc.catchItem = (short)base.mod.ItemType("BottledLostSoul");
+				return;
+			}
+			base.npc.catchItem = (short)base.mod.ItemType("LostSoul");
 		}
 
 		public override void NPCLoot()

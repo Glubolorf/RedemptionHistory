@@ -8,7 +8,7 @@ namespace Redemption.Buffs
 	{
 		public override void SetDefaults()
 		{
-			base.DisplayName.SetDefault("Soulbound");
+			base.DisplayName.SetDefault("Soulbond");
 			base.Description.SetDefault("\"The Spirit Realm calls to you\"");
 			Main.buffNoTimeDisplay[base.Type] = true;
 		}

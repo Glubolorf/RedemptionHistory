@@ -32,14 +32,6 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 			base.npc.noGravity = true;
 			base.npc.boss = true;
 			base.npc.netAlways = true;
-			if (RedeConfigClient.Instance.AntiAntti)
-			{
-				this.music = 38;
-			}
-			else
-			{
-				this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossStarGod1");
-			}
 			base.npc.noTileCollide = false;
 		}
 
@@ -151,7 +143,6 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 				if (!RedeWorld.downedNebuleus)
 				{
 					RedeWorld.redemptionPoints -= 4;
-					CombatText.NewText(this.player.getRect(), Color.Red, "-4", true, false);
 					for (int i = 0; i < 255; i++)
 					{
 						Player player2 = Main.player[i];
@@ -164,6 +155,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 									Main.NewText("<Chalice of Alignment> ... You... Oh no...", Color.DarkGoldenrod, false);
 								}
 							}
+							CombatText.NewText(player2.getRect(), Color.Red, "-4", true, false);
 						}
 					}
 				}
@@ -340,7 +332,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 						}
 						if (this.customAI[0] == 300f)
 						{
-							string text4 = "I fear I may be too late, but your existance has brought a disequilibrium upon this world...";
+							string text4 = "I fear I may be too late, but your existence has brought a disequilibrium upon this world...";
 							Color rarityPink = Colors.RarityPink;
 							byte r4 = rarityPink.R;
 							rarityPink = Colors.RarityPink;
@@ -446,7 +438,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 						}
 						if (this.customAI[0] == 300f)
 						{
-							string text14 = "I fear I may be too late, but your existance has brought a disequilibrium upon this world...";
+							string text14 = "I fear I may be too late, but your existence has brought a disequilibrium upon this world...";
 							Color rarityPink = Colors.RarityPink;
 							byte r14 = rarityPink.R;
 							rarityPink = Colors.RarityPink;
@@ -499,7 +491,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 						}
 						if (this.customAI[0] == 300f)
 						{
-							string text19 = "I fear I may be too late, but your existance has brought a disequilibrium upon this world...";
+							string text19 = "I fear I may be too late, but your existence has brought a disequilibrium upon this world...";
 							Color rarityPink = Colors.RarityPink;
 							byte r19 = rarityPink.R;
 							rarityPink = Colors.RarityPink;
@@ -673,18 +665,12 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 									}
 								}
 							}
-							if (base.npc.ai[3] == 70f || base.npc.ai[3] == 130f)
+							if (base.npc.ai[3] == 40f)
 							{
 								Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 58, 1, false, 0, false, false);
 								Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 58, 1, false, 0, false, false);
-								Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 58, 1, false, 0, false, false);
-								Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 58, 1, false, 0, false, false);
-								Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 58, 1, false, 0, false, false);
-								Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 3453, 1, false, 0, false, false);
-								Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 3454, 1, false, 0, false, false);
-								Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 3455, 1, false, 0, false, false);
 							}
-							if (base.npc.ai[3] > 140f)
+							if (base.npc.ai[3] > 90f)
 							{
 								this.phase2 = true;
 								base.npc.ai[3] = 0f;
@@ -761,18 +747,12 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 									}
 								}
 							}
-							if (base.npc.ai[3] == 70f || base.npc.ai[3] == 130f)
+							if (base.npc.ai[3] == 40f)
 							{
 								Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 58, 1, false, 0, false, false);
 								Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 58, 1, false, 0, false, false);
-								Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 58, 1, false, 0, false, false);
-								Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 58, 1, false, 0, false, false);
-								Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 58, 1, false, 0, false, false);
-								Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 3453, 1, false, 0, false, false);
-								Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 3454, 1, false, 0, false, false);
-								Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 3455, 1, false, 0, false, false);
 							}
-							if (base.npc.ai[3] > 140f)
+							if (base.npc.ai[3] > 90f)
 							{
 								this.phase3 = true;
 								base.npc.ai[3] = 0f;
@@ -859,18 +839,12 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 											}
 										}
 									}
-									if (base.npc.ai[3] == 70f || base.npc.ai[3] == 130f)
+									if (base.npc.ai[3] == 40f)
 									{
 										Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 58, 1, false, 0, false, false);
 										Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 58, 1, false, 0, false, false);
-										Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 58, 1, false, 0, false, false);
-										Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 58, 1, false, 0, false, false);
-										Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 58, 1, false, 0, false, false);
-										Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 3453, 1, false, 0, false, false);
-										Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 3454, 1, false, 0, false, false);
-										Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 3455, 1, false, 0, false, false);
 									}
-									if (base.npc.ai[3] > 140f)
+									if (base.npc.ai[3] > 90f)
 									{
 										this.phase4 = true;
 										base.npc.ai[3] = 0f;
@@ -957,18 +931,12 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 										}
 									}
 								}
-								if (base.npc.ai[3] == 70f || base.npc.ai[3] == 130f)
+								if (base.npc.ai[3] == 30f)
 								{
 									Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 58, 1, false, 0, false, false);
 									Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 58, 1, false, 0, false, false);
-									Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 58, 1, false, 0, false, false);
-									Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 58, 1, false, 0, false, false);
-									Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 58, 1, false, 0, false, false);
-									Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 3453, 1, false, 0, false, false);
-									Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 3454, 1, false, 0, false, false);
-									Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 3455, 1, false, 0, false, false);
 								}
-								if (base.npc.ai[3] > 140f)
+								if (base.npc.ai[3] > 90f)
 								{
 									this.phase4 = true;
 									base.npc.ai[3] = 0f;
@@ -1045,9 +1013,6 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 							Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 58, 1, false, 0, false, false);
 							Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 58, 1, false, 0, false, false);
 							Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 58, 1, false, 0, false, false);
-							Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 58, 1, false, 0, false, false);
-							Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 58, 1, false, 0, false, false);
-							Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 58, 1, false, 0, false, false);
 							Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 3453, 1, false, 0, false, false);
 							Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 3454, 1, false, 0, false, false);
 							Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 3455, 1, false, 0, false, false);
@@ -1057,7 +1022,6 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 							if (base.npc.ai[3] >= 0f)
 							{
 								this.musicChange1 = false;
-								this.musicChange2 = true;
 								base.npc.netUpdate = true;
 							}
 							else
@@ -1096,7 +1060,6 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 							if (base.npc.ai[3] >= 400f)
 							{
 								this.musicChange1 = false;
-								this.musicChange2 = true;
 								base.npc.netUpdate = true;
 							}
 							else
@@ -1184,7 +1147,6 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 							if (base.npc.ai[3] >= 400f)
 							{
 								this.musicChange1 = false;
-								this.musicChange2 = true;
 								base.npc.netUpdate = true;
 							}
 							else
@@ -1248,7 +1210,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					int projID3 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout1"), 0, 1f, Main.myPlayer, 0f, 0f);
 					Main.projectile[projID3].netUpdate = true;
 				}
-				if (base.npc.ai[3] == 60f || base.npc.ai[3] == 120f)
+				if (base.npc.ai[3] == 60f || base.npc.ai[3] == 100f)
 				{
 					Main.PlaySound(SoundID.Item117, (int)base.npc.position.X, (int)base.npc.position.Y);
 					int pieCut3 = 8;
@@ -1259,7 +1221,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 						Main.projectile[projID4].netUpdate = true;
 					}
 				}
-				if (base.npc.ai[3] == 90f)
+				if (base.npc.ai[3] == 80f)
 				{
 					Main.PlaySound(SoundID.Item117, (int)base.npc.position.X, (int)base.npc.position.Y);
 					int pieCut4 = 8;
@@ -1270,7 +1232,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 						Main.projectile[projID5].netUpdate = true;
 					}
 				}
-				if (base.npc.ai[3] >= 220f)
+				if (base.npc.ai[3] >= 160f)
 				{
 					base.npc.ai[3] = 0f;
 					base.npc.ai[1] = 0f;
@@ -1287,7 +1249,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					int p11 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout2"), 0, 1f, Main.myPlayer, 0f, 0f);
 					Main.projectile[p11].netUpdate = true;
 				}
-				if (base.npc.ai[3] >= 60f && base.npc.ai[3] <= 90f && Main.rand.Next(2) == 0)
+				if (base.npc.ai[3] >= 50f && base.npc.ai[3] <= 90f && Main.rand.Next(2) == 0)
 				{
 					Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 8, 1f, 0f);
 					int A = Main.rand.Next(-50, 50);
@@ -1295,7 +1257,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					int p12 = Projectile.NewProjectile(player.Center.X + (float)A, player.Center.Y + (float)B, 0f, 13f, base.mod.ProjectileType("StarFallPro"), 50, 1f, Main.myPlayer, 0f, 0f);
 					Main.projectile[p12].netUpdate = true;
 				}
-				if (base.npc.ai[3] >= 160f)
+				if (base.npc.ai[3] >= 100f)
 				{
 					base.npc.ai[3] = 0f;
 					base.npc.ai[1] = 0f;
@@ -1329,7 +1291,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					Main.projectile[p14].netUpdate = true;
 					Main.projectile[p15].netUpdate = true;
 				}
-				if (base.npc.ai[3] >= 140f)
+				if (base.npc.ai[3] >= 100f)
 				{
 					base.npc.ai[3] = 0f;
 					base.npc.ai[1] = 0f;
@@ -1346,7 +1308,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					int p16 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout4"), 0, 1f, Main.myPlayer, 0f, 0f);
 					Main.projectile[p16].netUpdate = true;
 				}
-				if (base.npc.ai[3] == 80f)
+				if (base.npc.ai[3] == 50f)
 				{
 					Main.PlaySound(SoundID.Item121, (int)base.npc.position.X, (int)base.npc.position.Y);
 					float Speed2 = 7f;
@@ -1360,7 +1322,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					Main.projectile[num54].netUpdate = true;
 					Main.projectile[num55].netUpdate = true;
 				}
-				if (base.npc.ai[3] >= 140f)
+				if (base.npc.ai[3] >= 70f)
 				{
 					base.npc.ai[3] = 0f;
 					base.npc.ai[1] = 0f;
@@ -1377,22 +1339,22 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					int p17 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout5"), 0, 1f, Main.myPlayer, 0f, 0f);
 					Main.projectile[p17].netUpdate = true;
 				}
-				if (base.npc.ai[3] >= 60f && base.npc.ai[3] < 120f)
+				if (base.npc.ai[3] >= 60f && base.npc.ai[3] < 90f)
 				{
-					if (Main.rand.Next(20) == 0)
+					if (Main.rand.Next(15) == 0)
 					{
 						Main.PlaySound(SoundID.Item117, (int)base.npc.position.X, (int)base.npc.position.Y);
 						int p18 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-4 + Main.rand.Next(0, 8)), (float)(-4 + Main.rand.Next(0, 8)), base.mod.ProjectileType("CurvingStar"), 50, 1f, 255, 0f, 0f);
 						Main.projectile[p18].netUpdate = true;
 					}
-					if (Main.rand.Next(20) == 0)
+					if (Main.rand.Next(15) == 0)
 					{
 						Main.PlaySound(SoundID.Item117, (int)base.npc.position.X, (int)base.npc.position.Y);
 						int p19 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-4 + Main.rand.Next(0, 8)), (float)(-4 + Main.rand.Next(0, 8)), base.mod.ProjectileType("CurvingStarO"), 50, 1f, 255, 0f, 0f);
 						Main.projectile[p19].netUpdate = true;
 					}
 				}
-				if (base.npc.ai[3] >= 160f)
+				if (base.npc.ai[3] >= 100f)
 				{
 					base.npc.ai[3] = 0f;
 					base.npc.ai[1] = 0f;
@@ -1494,7 +1456,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					int p27 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout9"), 0, 1f, Main.myPlayer, 0f, 0f);
 					Main.projectile[p27].netUpdate = true;
 				}
-				if (base.npc.ai[3] == 60f || base.npc.ai[3] == 90f || base.npc.ai[3] == 120f || base.npc.ai[3] == 150f)
+				if (base.npc.ai[3] == 50f || base.npc.ai[3] == 70f || base.npc.ai[3] == 90f || base.npc.ai[3] == 110f)
 				{
 					Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
 					float Speed3 = 26f;
@@ -1505,7 +1467,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					int num56 = Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)rotation3) * (double)Speed3 * -1.0), (float)(Math.Sin((double)rotation3) * (double)Speed3 * -1.0), type6, damage3, 0f, 0, 0f, 0f);
 					Main.projectile[num56].netUpdate = true;
 				}
-				if (base.npc.ai[3] >= 150f)
+				if (base.npc.ai[3] >= 115f)
 				{
 					base.npc.ai[3] = 0f;
 					base.npc.ai[1] = 0f;
@@ -1564,7 +1526,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					int Minion8 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y - 200, base.mod.NPCType("NebEye1"), 0, 0f, 0f, 0f, 0f, 255);
 					Main.npc[Minion8].netUpdate = true;
 				}
-				if (base.npc.ai[3] >= 240f)
+				if (base.npc.ai[3] >= 160f)
 				{
 					base.npc.ai[3] = 0f;
 					base.npc.ai[1] = 0f;
@@ -1603,7 +1565,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 						Main.projectile[projID11].netUpdate = true;
 					}
 				}
-				if (base.npc.ai[3] >= 240f)
+				if (base.npc.ai[3] >= 180f)
 				{
 					base.npc.ai[3] = 0f;
 					base.npc.ai[1] = 0f;
@@ -1620,7 +1582,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					int p31 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout3"), 0, 1f, Main.myPlayer, 0f, 0f);
 					Main.projectile[p31].netUpdate = true;
 				}
-				if (base.npc.ai[3] == 60f || base.npc.ai[3] == 70f || base.npc.ai[3] == 80f || base.npc.ai[3] == 90f || base.npc.ai[3] == 100f)
+				if (base.npc.ai[3] == 60f || base.npc.ai[3] == 70f || base.npc.ai[3] == 80f || base.npc.ai[3] == 90f)
 				{
 					Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
 					float Speed4 = 15f;
@@ -1637,7 +1599,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					Main.projectile[num58].netUpdate = true;
 					Main.projectile[num59].netUpdate = true;
 				}
-				if (base.npc.ai[3] >= 140f)
+				if (base.npc.ai[3] >= 100f)
 				{
 					base.npc.ai[3] = 0f;
 					base.npc.ai[1] = 0f;
@@ -1654,7 +1616,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					int p32 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout4"), 0, 1f, Main.myPlayer, 0f, 0f);
 					Main.projectile[p32].netUpdate = true;
 				}
-				if (base.npc.ai[3] == 80f || base.npc.ai[3] == 140f)
+				if (base.npc.ai[3] == 50f || base.npc.ai[3] == 80f)
 				{
 					Main.PlaySound(SoundID.Item121, (int)base.npc.position.X, (int)base.npc.position.Y);
 					float Speed5 = 7f;
@@ -1668,7 +1630,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					Main.projectile[num60].netUpdate = true;
 					Main.projectile[num61].netUpdate = true;
 				}
-				if (base.npc.ai[3] >= 200f)
+				if (base.npc.ai[3] >= 90f)
 				{
 					base.npc.ai[3] = 0f;
 					base.npc.ai[1] = 0f;
@@ -1685,7 +1647,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					int projID12 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout11"), 0, 1f, Main.myPlayer, 0f, 0f);
 					Main.projectile[projID12].netUpdate = true;
 				}
-				if (base.npc.ai[3] >= 60f && base.npc.ai[3] <= 120f && Main.rand.Next(20) == 0)
+				if (base.npc.ai[3] >= 60f && base.npc.ai[3] <= 90f && Main.rand.Next(10) == 0)
 				{
 					Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 8, 1f, 0f);
 					int A3 = Main.rand.Next(-200, 200) * 6;
@@ -1693,7 +1655,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					int p33 = Projectile.NewProjectile(player.Center.X + (float)A3, player.Center.Y + (float)B3, 2f, 6f, base.mod.ProjectileType("CrystalStarPro1"), 50, 1f, Main.myPlayer, 0f, 0f);
 					Main.projectile[p33].netUpdate = true;
 				}
-				if (base.npc.ai[3] >= 160f)
+				if (base.npc.ai[3] >= 100f)
 				{
 					base.npc.ai[3] = 0f;
 					base.npc.ai[1] = 0f;
@@ -1784,17 +1746,6 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 			{
 				this.music = base.mod.GetSoundSlot(51, "Sounds/Music/silence");
 			}
-			if (this.musicChange2)
-			{
-				if (RedeConfigClient.Instance.AntiAntti)
-				{
-					this.music = 38;
-				}
-				else
-				{
-					this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossStarGod2");
-				}
-			}
 			if (Main.expertMode && base.npc.life <= (int)((float)base.npc.lifeMax * 0.07f))
 			{
 				base.npc.immortal = true;
@@ -1850,8 +1801,6 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 		private bool razzleDazzle;
 
 		private bool musicChange1;
-
-		private bool musicChange2;
 
 		private bool phase2;
 

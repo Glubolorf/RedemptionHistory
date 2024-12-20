@@ -110,10 +110,6 @@ namespace Redemption.Items.Weapons
 				{
 					Main.NewText("<Loreholder> Mechanical floating blades that will swing at any living thing, created by Girus.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
-				if (target.type == base.mod.NPCType("CorruptedPaladin"))
-				{
-					Main.NewText("<Loreholder> These are mechanical robots with insane endurance and defence, created by Girus.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
-				}
 				if (target.type == base.mod.NPCType("CorruptedProbe"))
 				{
 					Main.NewText("<Loreholder> Corrupted Probes that shoot lasers at any living thing, the more damaged they are, the more rapid they shoot. Created by Girus.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
@@ -130,13 +126,9 @@ namespace Redemption.Items.Weapons
 				{
 					Main.NewText("<Loreholder> A dangerous worm that consumes all in its path.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
-				if (target.type == base.mod.NPCType("DarkSlime"))
+				if (target.type == base.mod.NPCType("EvilJelly"))
 				{
 					Main.NewText("<Loreholder> A gelatinous mess of dark magic.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
-				}
-				if (target.type == base.mod.NPCType("DarkSlimeling"))
-				{
-					Main.NewText("<Loreholder> A sentient part of the Dark Slime.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
 				if (target.type == base.mod.NPCType("DarkSoul") || target.type == base.mod.NPCType("DarkSoul2") || target.type == base.mod.NPCType("DarkSoul3") || target.type == base.mod.NPCType("DarkSoul4"))
 				{
@@ -180,27 +172,27 @@ namespace Redemption.Items.Weapons
 				}
 				if (target.type == base.mod.NPCType("InfectedCaveBat"))
 				{
-					Main.NewText("<Loreholder> A bat that got infected after the Xenomite Crystal shattered.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+					Main.NewText("<Loreholder> A bat that got infected after the Infection spread.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
 				if (target.type == base.mod.NPCType("InfectedDemonEye"))
 				{
-					Main.NewText("<Loreholder> A demon eye that got infected after the Xenomite Crystal shattered.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+					Main.NewText("<Loreholder> A demon eye that got infected after the Infection spread.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
 				if (target.type == base.mod.NPCType("InfectedDiggerHead") || target.type == base.mod.NPCType("InfectedDiggerBody") || target.type == base.mod.NPCType("InfectedDiggerTail"))
 				{
-					Main.NewText("<Loreholder> A digger that got infected after the Xenomite Crystal shattered.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+					Main.NewText("<Loreholder> A digger that got infected after the Infection spread.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
 				if (target.type == base.mod.NPCType("InfectedGiantBat"))
 				{
-					Main.NewText("<Loreholder> A giant bat that got infected after the Xenomite Crystal shattered.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+					Main.NewText("<Loreholder> A giant bat that got infected after the Infection spread.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
 				if (target.type == base.mod.NPCType("InfectedGiantWormHead") || target.type == base.mod.NPCType("InfectedGiantWormBody") || target.type == base.mod.NPCType("InfectedGiantWormTail"))
 				{
-					Main.NewText("<Loreholder> A giant worm that got infected after the Xenomite Crystal shattered.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+					Main.NewText("<Loreholder> A giant worm that got infected after the Infection spread.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
 				if (target.type == base.mod.NPCType("InfectedZombie"))
 				{
-					Main.NewText("<Loreholder> A zombie that got infected after the Xenomite Crystal shattered.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+					Main.NewText("<Loreholder> A zombie that got infected after the Infection spread.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
 				if (target.type == base.mod.NPCType("LickyLickyCactus"))
 				{
@@ -378,10 +370,6 @@ namespace Redemption.Items.Weapons
 				{
 					Main.NewText("<Loreholder> Infected minions of the Infected Eye.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
-				if (target.type == base.mod.NPCType("XenomiteFragment"))
-				{
-					Main.NewText("<Loreholder> A fragment of the Xenomite Crystal.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
-				}
 				if (target.type == base.mod.NPCType("XenomiteGargantuan"))
 				{
 					Main.NewText("<Loreholder> A bigass golem, infected by the wasteland.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
@@ -389,10 +377,6 @@ namespace Redemption.Items.Weapons
 				if (target.type == base.mod.NPCType("XenomiteGolem"))
 				{
 					Main.NewText("<Loreholder> A golem, infected by the wasteland.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
-				}
-				if (target.type == base.mod.NPCType("XenomitePiece"))
-				{
-					Main.NewText("<Loreholder> A piece of the Xenomite Crystal.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
 				if (target.type == base.mod.NPCType("XenonRoller"))
 				{
@@ -454,9 +438,9 @@ namespace Redemption.Items.Weapons
 				{
 					Main.NewText("<Loreholder> Ouch, hey, that worm's armour is tough!", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
-				if (target.type == base.mod.NPCType("XenomiteCrystalPhase2"))
+				if (target.type == base.mod.NPCType("SoI"))
 				{
-					Main.NewText("<Loreholder> A rather large, sentient Xenomite crystal. Seems to be a part of something larger...", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+					Main.NewText("<Loreholder> A sentient clump of overworldly infection... Hang on, what's it d-", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
 				if (target.type == base.mod.NPCType("KSEntrance"))
 				{
@@ -553,6 +537,18 @@ namespace Redemption.Items.Weapons
 				if (target.type == base.mod.NPCType("PZ2BodyCover"))
 				{
 					Main.NewText("<Loreholder> That was Kari Johansson, the father to all T-Bots and patient zero of the xenomite infection. He's been like that for 200 years, still conscious and alive in that grotesque husk. I can't imagine what it's like being alive but unable to move... Oh wait, I'm a gem stuck in a sword.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+				}
+				if (target.type == base.mod.NPCType("MossyGoliath"))
+				{
+					Main.NewText("<Loreholder> A beast that is native to the muddy rainforests of Epidotra. Very ferocious and dangerous, they tend to hide within mud to ambush possible prey.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+				}
+				if (target.type == base.mod.NPCType("Ukko"))
+				{
+					Main.NewText("<Loreholder> Once the ancient God of Weather, worshipped in Gathuram many eras ago. The title of 'God' was merely given to Ukko by humanity, due to his great power to control the weather. Of course, that was long ago, since then there have been many magic users who were just as powerful, thus the title of 'God' was raised to stronger and stronger beings.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+				}
+				if (target.type == base.mod.NPCType("Akka"))
+				{
+					Main.NewText("<Loreholder> Once the ancient Goddess of Nature, worshipped in Gathuram many eras ago. The title of 'Goddess' was merely given to Akka by humanity, due to her great power to control the earth. Her and Ukko were worshipped, until they eventually were outranked by stronger and stronger beings. 'Twas inevitable, the longer something is around, the more skilled one would be.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
 			}
 		}

@@ -12,7 +12,7 @@ namespace Redemption.Items.DruidDamageClass.v08
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Bile Container");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nSprays a shower of burning acid\nDecreases target's defense and drains life\nRight-clicking yeets the container");
+			base.Tooltip.SetDefault("Sprays a shower of burning acid\nDecreases target's defense and drains life\nRight-clicking yeets the container");
 		}
 
 		public override void SafeSetDefaults()

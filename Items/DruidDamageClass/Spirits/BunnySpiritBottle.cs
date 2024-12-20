@@ -6,12 +6,12 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass.Spirits
 {
-	public class BunnySpiritBottle : DruidDamageItem
+	public class BunnySpiritBottle : DruidDamageSpirit
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Spirit Bunny in a Bottle");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\nReleases a spirit bunny\n[c/c0bdff:Minimum Spirit Level: 1]\n[c/bdffe4:Maximum Spirit Level: 5]");
+			base.Tooltip.SetDefault("Releases a spirit bunny");
 		}
 
 		public override void SafeSetDefaults()
@@ -32,6 +32,9 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 			base.item.autoReuse = true;
 			base.item.shoot = base.mod.ProjectileType("SpiritBunnyPro");
 			base.item.shootSpeed = 11f;
+			this.spiritWeapon = true;
+			this.minSpiritLevel = 1;
+			this.maxSpiritLevel = 5;
 		}
 
 		public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)

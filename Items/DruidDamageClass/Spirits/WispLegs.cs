@@ -8,21 +8,22 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 	{
 		2
 	})]
-	public class WispLegs : ModItem
+	public class WispLegs : DruidDamageSpirit
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Wisp's Leggings");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n8% increased druidic damage\n3% damage reduction\nDecreased falling speed\nIncreased movement speed\n[c/bdffff:Spirit Level +1]");
+			base.Tooltip.SetDefault("8% increased druidic damage\n3% damage reduction\nDecreased falling speed\nIncreased movement speed\n[c/bdffff:Spirit Level +1]");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 14;
 			base.item.height = 24;
 			base.item.value = Item.sellPrice(0, 5, 50, 0);
 			base.item.rare = 8;
 			base.item.defense = 13;
+			this.spiritWeapon = false;
 		}
 
 		public override void UpdateEquip(Player player)

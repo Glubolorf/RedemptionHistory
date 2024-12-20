@@ -9,15 +9,15 @@ namespace Redemption.Items.Armor
 	{
 		0
 	})]
-	public class DragonLeadHelm : ModItem
+	public class DragonLeadHelm : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Dragon-Lead Helm");
-			base.Tooltip.SetDefault("[c/daf73a:---Druid Class---]\n4% increased ranged damage and crit\n7% increased druidic damage and crit");
+			base.Tooltip.SetDefault("4% increased ranged damage and crit\n7% increased druidic damage and crit");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 24;
 			base.item.height = 28;

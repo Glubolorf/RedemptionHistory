@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -32,17 +31,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.autoReuse = true;
 			base.item.shoot = base.mod.ProjectileType("PiercingNebWeaponPro");
 			base.item.shootSpeed = 18f;
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> list)
-		{
-			foreach (TooltipLine line2 in list)
-			{
-				if (line2.mod == "Terraria" && line2.Name == "ItemName")
-				{
-					line2.overrideColor = new Color?(RedeColor.NebColour);
-				}
-			}
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 3;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 shootPos, ref float speedX, ref float speedY, ref int projType, ref int damage, ref float knockback)

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -23,7 +22,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.height = 64;
 			base.item.useTime = 6;
 			base.item.useAnimation = 10;
-			base.item.pick = 300;
+			base.item.pick = 310;
 			base.item.axe = 35;
 			base.item.useStyle = 1;
 			base.item.knockBack = 6f;
@@ -32,6 +31,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.shoot = 0;
 			base.item.shootSpeed = 18f;
 			base.item.autoReuse = true;
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}
 
 		public override bool AltFunctionUse(Player player)
@@ -56,28 +56,17 @@ namespace Redemption.Items.Weapons.v08
 				base.item.noUseGraphic = false;
 				base.item.noMelee = false;
 				base.item.useTime = 6;
-				base.item.pick = 300;
+				base.item.pick = 310;
 				base.item.axe = 35;
 				base.item.shoot = 0;
 				base.item.melee = true;
 			}
-			return base.CanUseItem(player);
+			return player.ownedProjectileCounts[base.item.shoot] < 1;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
 			return player.altFunctionUse == 2;
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> list)
-		{
-			foreach (TooltipLine line2 in list)
-			{
-				if (line2.mod == "Terraria" && line2.Name == "ItemName")
-				{
-					line2.overrideColor = new Color?(new Color(0, 255, 200));
-				}
-			}
 		}
 
 		public override void AddRecipes()

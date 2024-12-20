@@ -36,7 +36,6 @@ namespace Redemption.Prefixes
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus)
 		{
 			damageMult += 0.12f;
-			manaMult += 0.08f;
 		}
 
 		public override void Apply(Item item)

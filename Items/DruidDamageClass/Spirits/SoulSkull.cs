@@ -24,6 +24,8 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 			base.projectile.penetrate = 2;
 			base.projectile.alpha = 60;
 			base.projectile.friendly = true;
+			base.projectile.GetGlobalProjectile<DruidProjectile>().druidic = true;
+			base.projectile.GetGlobalProjectile<DruidProjectile>().fromStave = false;
 		}
 
 		public override void AI()
@@ -91,7 +93,7 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 				bool target = false;
 				for (int j = 0; j < 200; j++)
 				{
-					if (Main.npc[j].active && !Main.npc[j].dontTakeDamage && !Main.npc[j].friendly && Main.npc[j].lifeMax > 5)
+					if (Main.npc[j].active && !Main.npc[j].dontTakeDamage && !Main.npc[j].friendly && Main.npc[j].lifeMax > 5 && !Main.npc[j].immortal)
 					{
 						Vector2 newMove = Main.npc[j].Center - base.projectile.Center;
 						float distanceTo = (float)Math.Sqrt((double)(newMove.X * newMove.X + newMove.Y * newMove.Y));
@@ -137,14 +139,6 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			Player player = Main.player[base.projectile.owner];
-			int critChance = player.HeldItem.crit;
-			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref critChance);
-			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref critChance);
-			if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
-			{
-				crit = true;
-			}
 			if (!Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritPierce)
 			{
 				base.projectile.Kill();

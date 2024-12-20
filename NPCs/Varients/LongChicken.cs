@@ -34,6 +34,11 @@ namespace Redemption.NPCs.Varients
 			base.npc.catchItem = (short)base.mod.ItemType("ChickenItem");
 		}
 
+		public override void NPCLoot()
+		{
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("LongEgg"), 1, false, 0, false, false);
+		}
+
 		public override void HitEffect(int hitDirection, double damage)
 		{
 			if (base.npc.life <= 0)

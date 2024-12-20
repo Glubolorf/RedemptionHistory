@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Armor.PostML
@@ -21,17 +19,7 @@ namespace Redemption.Items.Armor.PostML
 			base.item.width = 26;
 			base.item.height = 22;
 			base.item.vanity = true;
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> list)
-		{
-			foreach (TooltipLine line2 in list)
-			{
-				if (line2.mod == "Terraria" && line2.Name == "ItemName")
-				{
-					line2.overrideColor = new Color?(RedeColor.NebColour);
-				}
-			}
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 3;
 		}
 
 		public override bool DrawHead()

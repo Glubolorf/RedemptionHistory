@@ -12,6 +12,7 @@ namespace Redemption.Items
 		{
 			base.DisplayName.SetDefault("Cyber Tech");
 			base.Tooltip.SetDefault("'He won't go easy on you...'\nSummons King Slayer III\nOnly usable at day\nCan only be used after the Keeper has been defeated\nNot consumable");
+			ItemID.Sets.SortingPriorityBossSpawns[base.item.type] = 13;
 		}
 
 		public override void SetDefaults()
@@ -48,31 +49,21 @@ namespace Redemption.Items
 			}
 			if (RedeWorld.girusTalk3)
 			{
-				Main.NewText("The King Slayer III emerges... ?", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B, false);
+				Main.NewText("King Slayer III emerges... ?", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B, false);
 				Redemption.SpawnBoss(player, "KSEntranceClone", false, new Vector2(player.position.X + (float)Main.rand.Next(100, 200), player.position.Y - 80f), " ", false);
 				Main.PlaySound(15, player.position, 0);
-			}
-			else if (RedeWorld.slayerRep >= 4)
-			{
-				string text2 = "Oh, It's you. Sorry, not interested in fighting.";
-				Color rarityCyan = Colors.RarityCyan;
-				byte r2 = rarityCyan.R;
-				rarityCyan = Colors.RarityCyan;
-				byte g2 = rarityCyan.G;
-				rarityCyan = Colors.RarityCyan;
-				Main.NewText(text2, r2, g2, rarityCyan.B, false);
 			}
 			else
 			{
 				if (AAMod != null && NPC.AnyNPCs(AAMod.NPCType("Rajah")))
 				{
-					Main.NewText("The King Slayer III emerges!", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B, false);
+					Main.NewText("King Slayer III emerges!", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B, false);
 					Redemption.SpawnBoss(player, "KSNope", false, new Vector2(player.position.X + (float)Main.rand.Next(100, 200), player.position.Y - 80f), " ", false);
 					Main.PlaySound(15, player.position, 0);
 					RedeWorld.KSRajahInteraction = true;
 					return true;
 				}
-				Main.NewText("The King Slayer III emerges!", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B, false);
+				Main.NewText("King Slayer III emerges!", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B, false);
 				Redemption.SpawnBoss(player, "KSEntrance", false, new Vector2(player.position.X + (float)Main.rand.Next(100, 200), player.position.Y - 80f), " ", false);
 				Main.PlaySound(15, player.position, 0);
 			}

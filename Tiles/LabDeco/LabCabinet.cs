@@ -65,6 +65,10 @@ namespace Redemption.Tiles.LabDeco
 				{
 					player.QuickSpawnItem(892, 1);
 				}
+				if (Main.rand.Next(66666) == 0)
+				{
+					player.QuickSpawnItem(base.mod.ItemType("Panacea"), 1);
+				}
 			}
 			for (int x = left; x < left + 2; x++)
 			{

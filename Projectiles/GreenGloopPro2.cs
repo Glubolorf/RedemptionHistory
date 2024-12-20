@@ -8,6 +8,14 @@ namespace Redemption.Projectiles
 {
 	public class GreenGloopPro2 : ModProjectile
 	{
+		public override string Texture
+		{
+			get
+			{
+				return "Redemption/Projectiles/GreenGloopPro";
+			}
+		}
+
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Green Gloop");

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,6 +27,7 @@ namespace Redemption.Projectiles.v08
 			base.projectile.tileCollide = true;
 			base.projectile.ignoreWater = true;
 			base.projectile.timeLeft = 200;
+			base.projectile.GetGlobalProjectile<DruidProjectile>().druidic = true;
 		}
 
 		public override void AI()
@@ -50,18 +52,6 @@ namespace Redemption.Projectiles.v08
 			if (base.projectile.localAI[0] >= 60f && Main.myPlayer == base.projectile.owner && Main.rand.Next(4) == 0)
 			{
 				Projectile.NewProjectile(base.projectile.position.X + 6f, base.projectile.position.Y + 6f, (float)(-2 + Main.rand.Next(0, 4)), (float)(-4 + Main.rand.Next(0, 4)), base.mod.ProjectileType("GreenGasPro3"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
-			}
-		}
-
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
-		{
-			Player player = Main.player[base.projectile.owner];
-			int critChance = player.HeldItem.crit;
-			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref critChance);
-			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref critChance);
-			if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
-			{
-				crit = true;
 			}
 		}
 

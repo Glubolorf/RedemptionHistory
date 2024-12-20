@@ -4,15 +4,15 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass.DruidS
 {
-	public class TaintedNecklace : ModItem
+	public class TaintedNecklace : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Tainted Necklace");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Even in it's darkest moment, the corruption refuses to stand still.'\nUpon being attacked, you unleash an storm of hateful spirits around you");
+			base.Tooltip.SetDefault("'Even in it's darkest moment, the corruption refuses to stand still.'\nUpon being attacked, you unleash an storm of hateful spirits around you");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 28;
 			base.item.height = 36;

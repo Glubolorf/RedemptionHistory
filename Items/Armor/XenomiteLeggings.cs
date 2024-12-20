@@ -13,7 +13,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Xenomite Leggings");
-			base.Tooltip.SetDefault("+25 max mana\n5% increased magic damage\n35% increased movement speed");
+			base.Tooltip.SetDefault("+15 max mana\n5% increased magic damage\n35% increased movement speed");
 		}
 
 		public override void SetDefaults()
@@ -29,7 +29,7 @@ namespace Redemption.Items.Armor
 		{
 			player.moveSpeed += 0.35f;
 			player.magicDamage *= 1.05f;
-			player.statManaMax2 += 25;
+			player.statManaMax2 += 15;
 		}
 
 		public override void AddRecipes()

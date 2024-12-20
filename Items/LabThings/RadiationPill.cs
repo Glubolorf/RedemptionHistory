@@ -42,6 +42,12 @@ namespace Redemption.Items.LabThings
 				player.GetModPlayer<RedePlayer>().irradiatedTimer = 0;
 				player.AddBuff(base.mod.BuffType("PillSickness"), Main.rand.Next(3600, 7200), true);
 				player.AddBuff(33, Main.rand.Next(3600, 7200), true);
+				player.ClearBuff(base.mod.BuffType("HeadacheDebuff"));
+				player.ClearBuff(base.mod.BuffType("NauseaDebuff"));
+				player.ClearBuff(base.mod.BuffType("FatigueDebuff"));
+				player.ClearBuff(base.mod.BuffType("FeverDebuff"));
+				player.ClearBuff(base.mod.BuffType("HairLossDebuff"));
+				player.ClearBuff(base.mod.BuffType("SkinBurnDebuff"));
 			}
 			else
 			{

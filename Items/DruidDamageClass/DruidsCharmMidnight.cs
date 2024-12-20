@@ -4,15 +4,15 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class DruidsCharmMidnight : ModItem
+	public class DruidsCharmMidnight : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Druid's Charm");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Midnight'\n10% increased druidic damage\nNegates fall damage\nGrants immunity to fire blocks\nForms an spirit skull to aid you upon being attacked\nSpirits shoot faster\nSpirits pierce through more targets\nSpirits home in on enemies\n75% decrease to all other damage types");
+			base.Tooltip.SetDefault("'Midnight'\n10% increased druidic damage\nNegates fall damage\nGrants immunity to fire blocks\nForms an spirit skull to aid you upon being attacked\nSpirits shoot faster\nSpirits pierce through more targets\nSpirits home in on enemies\n75% decrease to all other damage types\n[c/bdffff:Spirit Level +2]");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 30;
 			base.item.height = 52;
@@ -61,6 +61,7 @@ namespace Redemption.Items.DruidDamageClass
 			player.minionDamage *= 0.25f;
 			player.rangedDamage *= 0.25f;
 			player.thrownDamage *= 0.25f;
+			redePlayer.spiritLevel += 2;
 		}
 
 		public override void AddRecipes()

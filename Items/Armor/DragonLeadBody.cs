@@ -9,15 +9,15 @@ namespace Redemption.Items.Armor
 	{
 		1
 	})]
-	public class DragonLeadBody : ModItem
+	public class DragonLeadBody : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Dragon-Lead Breastplate");
-			base.Tooltip.SetDefault("[c/daf73a:---Druid Class---]\n3% increased ranged damage\n6% increased druidic damage\nStaves swing faster");
+			base.Tooltip.SetDefault("3% increased ranged damage\n6% increased druidic damage\nStaves swing faster");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 34;
 			base.item.height = 22;
@@ -30,7 +30,7 @@ namespace Redemption.Items.Armor
 		{
 			player.rangedDamage *= 1.03f;
 			DruidDamagePlayer.ModPlayer(player).druidDamage += 0.6f;
-			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).fasterStaves = true;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).staveSpeed += 0.05f;
 		}
 
 		public override void AddRecipes()

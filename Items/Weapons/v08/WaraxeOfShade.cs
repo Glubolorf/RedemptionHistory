@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,17 +27,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.value = Item.sellPrice(0, 15, 0, 0);
 			base.item.UseSound = SoundID.Item7;
 			base.item.autoReuse = true;
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> list)
-		{
-			foreach (TooltipLine line2 in list)
-			{
-				if (line2.mod == "Terraria" && line2.Name == "ItemName")
-				{
-					line2.overrideColor = new Color?(RedeColor.SoullessColour);
-				}
-			}
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 2;
 		}
 
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)

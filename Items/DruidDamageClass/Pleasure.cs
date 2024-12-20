@@ -1,16 +1,17 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class Pleasure : DruidDamageItem
+	public class Pleasure : DruidStave
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Pleasure (O-02-98)-W");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'If you look for a pleasure that can not be tolerated, the end reaches the loss of self.'\nAttacks inflict Enjoyment, decreasing life of those hit until death");
+			base.Tooltip.SetDefault("'If you look for a pleasure that can not be tolerated, the end reaches the loss of self.'\nAttacks inflict Enjoyment, decreasing life of those hit until death");
 		}
 
 		public override void SafeSetDefaults()
@@ -20,43 +21,28 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.height = 60;
 			base.item.useTime = 32;
 			base.item.useAnimation = 32;
-			base.item.useStyle = 1;
 			base.item.crit = 4;
-			base.item.knockBack = 7f;
+			base.item.knockBack = 1f;
 			base.item.value = Item.sellPrice(0, 2, 0, 0);
 			base.item.rare = 4;
-			base.item.UseSound = SoundID.Item1;
+			base.item.UseSound = SoundID.Item43;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
+			base.item.shoot = base.mod.ProjectileType("PleasurePro1");
+			base.item.shootSpeed = 15f;
+			this.defaultShoot = base.mod.ProjectileType("PleasurePro1");
+			this.singleShotStave = true;
+			this.staveHoldOffset = new Vector2(4f, -10f);
+			this.staveLength = 60.2f;
 		}
 
-		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
+		protected override bool SpecialShootPattern(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().burnStaves)
+			for (int i = -16; i <= 16; i++)
 			{
-				target.AddBuff(24, 180, false);
+				Projectile.NewProjectile(position, 4f * Utils.RotatedBy(Vector2.UnitX, 0.19634954084936207 * (double)i, default(Vector2)), type, damage, knockBack, Main.myPlayer, 0f, 0f);
 			}
-			target.AddBuff(base.mod.BuffType("EnjoymentDebuff"), 18000, false);
-		}
-
-		public override float UseTimeMultiplier(Player player)
-		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().fasterStaves)
-			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
-				{
-					return 1.45f;
-				}
-				return 1.15f;
-			}
-			else
-			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
-				{
-					return 1.35f;
-				}
-				return 1f;
-			}
+			return false;
 		}
 
 		public override void AddRecipes()

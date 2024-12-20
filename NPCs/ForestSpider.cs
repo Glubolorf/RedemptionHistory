@@ -62,7 +62,7 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.OverworldNightMonster.Chance * ((Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == 2) ? 0.04f : 0f);
+			return SpawnCondition.OverworldNightMonster.Chance * ((!RedeConfigClient.Instance.NoSpidersInMyTerrariaMod && Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == 2) ? 0.04f : 0f);
 		}
 	}
 }

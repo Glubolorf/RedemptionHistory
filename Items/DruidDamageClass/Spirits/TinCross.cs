@@ -4,21 +4,22 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass.Spirits
 {
-	public class TinCross : ModItem
+	public class TinCross : DruidDamageSpirit
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Tin Cross");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n5% increased druidic damage\n[c/bdffff:Spirit Level +1]");
+			base.Tooltip.SetDefault("5% increased druidic damage\n[c/bdffff:Spirit Level +1]");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 38;
 			base.item.value = Item.sellPrice(0, 0, 15, 0);
 			base.item.rare = 1;
 			base.item.accessory = true;
+			this.spiritWeapon = false;
 		}
 
 		public override void AddRecipes()

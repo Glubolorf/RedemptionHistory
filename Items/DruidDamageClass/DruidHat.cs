@@ -8,15 +8,15 @@ namespace Redemption.Items.DruidDamageClass
 	{
 		0
 	})]
-	public class DruidHat : ModItem
+	public class DruidHat : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Druid's Hat");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n15% increased druidic damage");
+			base.Tooltip.SetDefault("15% increased druidic damage");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 34;
 			base.item.value = Item.sellPrice(0, 0, 10, 0);
@@ -37,7 +37,7 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
 		{
-			drawHair = (drawAltHair = true);
+			drawAltHair = true;
 		}
 	}
 }

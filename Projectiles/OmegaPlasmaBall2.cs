@@ -8,6 +8,14 @@ namespace Redemption.Projectiles
 {
 	public class OmegaPlasmaBall2 : ModProjectile
 	{
+		public override string Texture
+		{
+			get
+			{
+				return "Redemption/Projectiles/OmegaPlasmaBall";
+			}
+		}
+
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Omega Plasma Ball");
@@ -70,7 +78,7 @@ namespace Redemption.Projectiles
 			bool target = false;
 			for (int i = 0; i < 200; i++)
 			{
-				if (Main.npc[i].active && !Main.npc[i].dontTakeDamage && !Main.npc[i].friendly && Main.npc[i].lifeMax > 5)
+				if (Main.npc[i].active && !Main.npc[i].dontTakeDamage && !Main.npc[i].friendly && Main.npc[i].lifeMax > 5 && !Main.npc[i].immortal)
 				{
 					Vector2 newMove = Main.npc[i].Center - base.projectile.Center;
 					float distanceTo = (float)Math.Sqrt((double)(newMove.X * newMove.X + newMove.Y * newMove.Y));

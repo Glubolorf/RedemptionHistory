@@ -91,7 +91,7 @@ namespace Redemption.Tiles.SlayerShip
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			Item.NewItem(i * 16, j * 16, 32, 32, base.mod.ItemType("Holochest"), 1, false, 0, false, false);
+			Item.NewItem(i * 16, j * 16, 32, 32, base.mod.ItemType("HolochestItem"), 1, false, 0, false, false);
 			Chest.DestroyChest(i, j);
 		}
 

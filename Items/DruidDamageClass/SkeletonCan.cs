@@ -1,18 +1,17 @@
 ﻿using System;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class SkeletonCan : ModItem
+	public class SkeletonCan : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Skeleton Watering Can");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nTaking damage unleashes a cluster of bone seeds around you\nHaving a Large Seed Pouch will unleash more seeds\n5% increased druidic damage");
+			base.Tooltip.SetDefault("Taking damage unleashes a cluster of bone seeds around you\nHaving a Large Seed Pouch will unleash more seeds\n5% increased druidic damage");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 42;
 			base.item.height = 28;

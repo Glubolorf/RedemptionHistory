@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
@@ -11,20 +9,21 @@ namespace Redemption.Items.Armor.PostML
 	{
 		2
 	})]
-	public class SmallShadeLeggings : ModItem
+	public class SmallShadeLeggings : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Small Shade Greaves");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]40% increased movement speed\n10% increased druidic damage\n15% increased druidic critical strike chance\nStaves swing faster");
+			base.Tooltip.SetDefault("40% increased movement speed\n10% increased druidic damage\n15% increased druidic critical strike chance\nStaves swing faster");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 20;
 			base.item.value = Item.sellPrice(0, 20, 0, 0);
 			base.item.defense = 26;
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 2;
 		}
 
 		public override void UpdateEquip(Player player)
@@ -33,18 +32,7 @@ namespace Redemption.Items.Armor.PostML
 			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
 			druidDamagePlayer.druidDamage += 0.1f;
 			druidDamagePlayer.druidCrit += 15;
-			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).fasterStaves = true;
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> list)
-		{
-			foreach (TooltipLine line2 in list)
-			{
-				if (line2.mod == "Terraria" && line2.Name == "ItemName")
-				{
-					line2.overrideColor = new Color?(RedeColor.SoullessColour);
-				}
-			}
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).staveSpeed += 0.05f;
 		}
 
 		public override bool DrawLegs()

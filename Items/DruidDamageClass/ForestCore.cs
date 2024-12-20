@@ -4,15 +4,14 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class ForestCore : ModItem
+	public class ForestCore : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Forest Core");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 26;
 			base.item.height = 36;

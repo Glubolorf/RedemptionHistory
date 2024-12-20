@@ -33,7 +33,6 @@ namespace Redemption.NPCs.Bosses
 			base.npc.buffImmune[39] = true;
 			base.npc.buffImmune[24] = true;
 			base.npc.boss = true;
-			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossVlitch1");
 			base.npc.noGravity = true;
 			base.npc.noTileCollide = true;
 			this.aiType = 82;

@@ -9,7 +9,7 @@ namespace Redemption.Items
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Icar's Frost");
-			base.Tooltip.SetDefault("'Blesses you with Icar's protection...'\nIncreases defence, life regen and mana regen");
+			base.Tooltip.SetDefault("'Blesses you with Icar's protection...'\nIncreases defense, life regen and mana regen");
 		}
 
 		public override void SetDefaults()

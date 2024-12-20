@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -34,22 +32,12 @@ namespace Redemption.Items.Weapons.v08
 			base.item.rare = 11;
 			base.item.shoot = base.mod.ProjType("TiedRapierPro");
 			base.item.shootSpeed = 4f;
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 6;
 		}
 
 		public override bool CanUseItem(Player player)
 		{
 			return NPC.downedAncientCultist;
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> list)
-		{
-			foreach (TooltipLine line2 in list)
-			{
-				if (line2.mod == "Terraria" && line2.Name == "ItemName")
-				{
-					line2.overrideColor = new Color?(new Color(170, 0, 255));
-				}
-			}
 		}
 	}
 }

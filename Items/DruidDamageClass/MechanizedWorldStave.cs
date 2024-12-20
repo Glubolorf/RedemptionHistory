@@ -10,7 +10,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Mechanized World Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nSummon a Mechanical Abomination at your cursor point\nThe abomination emits a nano-field that increases player's attack and speed when near\nCan only place one at a time");
+			base.Tooltip.SetDefault("Summon a Mechanical Abomination at your cursor point\nThe abomination emits a nano-field that increases player's attack and speed when near\nCan only place one at a time");
 			Item.staff[base.item.type] = true;
 		}
 

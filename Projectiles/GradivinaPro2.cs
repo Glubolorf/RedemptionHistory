@@ -16,7 +16,7 @@ namespace Redemption.Projectiles
 				{
 					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name);
 				GradivinaPro2.customGlowMask = (short)(glowMasks.Length - 1);
 				Main.glowMaskTexture = glowMasks;
 			}
@@ -28,6 +28,7 @@ namespace Redemption.Projectiles
 			base.projectile.CloneDefaults(116);
 			this.aiType = 116;
 			base.projectile.alpha = 0;
+			base.projectile.penetrate = 3;
 			base.projectile.tileCollide = false;
 			base.projectile.timeLeft = 200;
 			base.projectile.glowMask = GradivinaPro2.customGlowMask;

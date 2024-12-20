@@ -10,15 +10,15 @@ namespace Redemption.Items.Armor
 	{
 		0
 	})]
-	public class CreatorHead : ModItem
+	public class CreatorHead : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Creation Druid's Hood");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n9% increased druidic damage\nIncreases maximum mana by 60\nIncreased life and mana regen");
+			base.Tooltip.SetDefault("9% increased druidic damage\nIncreases maximum mana by 60\nIncreased life and mana regen");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 28;
 			base.item.height = 28;

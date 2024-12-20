@@ -5,12 +5,12 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass.Spirits
 {
-	public class MagSoulbound : DruidDamageItem
+	public class MagSoulbound : DruidDamageSpirit
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Magnetic Soulbound");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\nReleases a bond of souls\nHolding this while an enemy is slain has a chance for a Small Lost Soul to spawn from said enemy\nThe higher your Spirit Level, the greater chance of the Small Lost Soul spawning\n[c/c0bdff:Minimum Spirit Level: 0]\n[c/bdffe4:Maximum Spirit Level: 3]");
+			base.DisplayName.SetDefault("Magnetic Soulbond");
+			base.Tooltip.SetDefault("Releases a bond of souls\nHolding this while an enemy is slain has a chance for a Small Lost Soul to spawn from said enemy\nThe higher your Spirit Level, the greater chance of the Small Lost Soul spawning");
 		}
 
 		public override void SafeSetDefaults()
@@ -31,6 +31,9 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 			base.item.UseSound = SoundID.Item1;
 			base.item.value = Item.sellPrice(0, 0, 90, 50);
 			base.item.shoot = base.mod.ProjectileType("MagSoulboundPro");
+			this.spiritWeapon = true;
+			this.minSpiritLevel = 0;
+			this.maxSpiritLevel = 3;
 		}
 
 		public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)

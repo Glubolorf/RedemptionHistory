@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -31,17 +30,7 @@ namespace Redemption.Items.Weapons
 			base.item.shootSpeed = 15f;
 			base.item.autoReuse = true;
 			base.item.noMelee = true;
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> list)
-		{
-			foreach (TooltipLine line2 in list)
-			{
-				if (line2.mod == "Terraria" && line2.Name == "ItemName")
-				{
-					line2.overrideColor = new Color?(new Color(0, 255, 200));
-				}
-			}
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}
 
 		public override bool AltFunctionUse(Player player)

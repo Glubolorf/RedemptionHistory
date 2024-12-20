@@ -1,5 +1,5 @@
 ﻿using System;
-using Redemption.Projectiles;
+using Redemption.Projectiles.DruidProjectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -11,7 +11,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Druid Dagger");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nAny enemy that gets hit is inflicted with a pollen cloud");
+			base.Tooltip.SetDefault("Any enemy that gets hit is inflicted with a pollen cloud");
 		}
 
 		public override void SafeSetDefaults()

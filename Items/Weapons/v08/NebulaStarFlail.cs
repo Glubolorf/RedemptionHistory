@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,17 +11,6 @@ namespace Redemption.Items.Weapons.v08
 		{
 			base.DisplayName.SetDefault("Nebulous Starburst");
 			base.Tooltip.SetDefault("Shoots out Nebula Sparkles");
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> list)
-		{
-			foreach (TooltipLine line2 in list)
-			{
-				if (line2.mod == "Terraria" && line2.Name == "ItemName")
-				{
-					line2.overrideColor = new Color?(RedeColor.NebColour);
-				}
-			}
 		}
 
 		public override void SetDefaults()
@@ -43,6 +30,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.UseSound = SoundID.Item20;
 			base.item.melee = true;
 			base.item.autoReuse = true;
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 3;
 		}
 	}
 }

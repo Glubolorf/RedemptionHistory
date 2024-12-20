@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class CreationHamaxe : ModItem
+	public class CreationHamaxe : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -22,10 +22,9 @@ namespace Redemption.Items.DruidDamageClass
 				Main.glowMaskTexture = glowMasks;
 			}
 			base.DisplayName.SetDefault("Creation Hamaxe");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.damage = 60;
 			base.item.width = 54;

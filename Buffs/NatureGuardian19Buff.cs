@@ -20,11 +20,10 @@ namespace Redemption.Buffs
 			RedePlayer p = player.GetModPlayer<RedePlayer>();
 			druidDamagePlayer.druidDamage += 0.4f;
 			druidDamagePlayer.druidCrit += 40;
-			p.rapidStave = true;
+			p.staveSpeed += 0.4f;
 			p.staveScatterShot = true;
 			p.fasterSeedbags = true;
 			p.fasterSpirits = true;
-			p.fasterStaves = true;
 			RedePlayer modPlayer2 = player.GetModPlayer<RedePlayer>();
 			if (player.ownedProjectileCounts[base.mod.ProjectileType("NatureGuardian19")] > 0)
 			{

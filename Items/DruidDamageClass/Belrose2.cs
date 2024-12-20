@@ -23,7 +23,7 @@ namespace Redemption.Items.DruidDamageClass
 				Main.glowMaskTexture = glowMasks;
 			}
 			base.DisplayName.SetDefault("The Belrose");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Shifting from flesh to blood'\nRight Clicks throws 3 Belroses out like boomerangs");
+			base.Tooltip.SetDefault("'Shifting from flesh to blood'\nRight Clicks throws 3 Belroses out like boomerangs");
 		}
 
 		public override void SafeSetDefaults()

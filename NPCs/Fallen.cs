@@ -8,6 +8,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 
 namespace Redemption.NPCs
 {
@@ -31,14 +32,14 @@ namespace Redemption.NPCs
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Fallen");
-			Main.npcFrameCount[base.npc.type] = 26;
-			NPCID.Sets.ExtraFramesCount[base.npc.type] = 10;
-			NPCID.Sets.AttackFrameCount[base.npc.type] = 5;
+			Main.npcFrameCount[base.npc.type] = 25;
+			NPCID.Sets.ExtraFramesCount[base.npc.type] = 9;
+			NPCID.Sets.AttackFrameCount[base.npc.type] = 4;
 			NPCID.Sets.DangerDetectRange[base.npc.type] = 100;
 			NPCID.Sets.AttackType[base.npc.type] = 3;
 			NPCID.Sets.AttackTime[base.npc.type] = 40;
 			NPCID.Sets.AttackAverageChance[base.npc.type] = 30;
-			NPCID.Sets.HatOffsetY[base.npc.type] = 4;
+			NPCID.Sets.HatOffsetY[base.npc.type] = 14;
 		}
 
 		public override void SetDefaults()
@@ -113,10 +114,6 @@ namespace Redemption.NPCs
 			return "Tenvon";
 		}
 
-		public override void FindFrame(int frameHeight)
-		{
-		}
-
 		public override string GetChat()
 		{
 			for (int i = 0; i < 255; i++)
@@ -133,42 +130,569 @@ namespace Redemption.NPCs
 					}
 				}
 			}
-			if (RedeWorld.keeperSaved && Main.rand.Next(3) == 0)
+			int FallenID = NPC.FindFirstNPC(base.mod.NPCType("Fallen"));
+			if (Main.npc[FallenID].GivenName == "Okvot")
 			{
-				return "You saved the Keeper? Thank you for that, I can't imagine the pain she was feeling. If you need Dark Shards, I'll sell them now for you.";
+				if (RedeWorld.keeperSaved && Main.rand.Next(3) == 0)
+				{
+					return "You saved the Keeper? Thank you for that, I can't imagine the pain she was feeling. If you need Dark Shards, I'll sell them now for you. However, I doubt this is over... Her husband died too, apparently of depression. But he didn't become an undead, his inverted soul made him into something worse.";
+				}
+				switch (Main.rand.Next(9))
+				{
+				case 0:
+					return "I may be undead, but I hope for a world where no tears are shed, and no pain is spread. A world of peace. That is who I was before dying, and despite the undead tendency to be more aggressive, I feel the same as I always have.";
+				case 1:
+					return "Do not worry, human. I bring no hatred where I go, despite my undead look, I won't harm you. And I hope you won't harm me either.";
+				case 2:
+					return "Times may come when you have hardship, maybe you struggle fighting a tough enemy, maybe you feel alone on this island with only enemies everywhere you go, but I'll still be here. Don't let my rotten looks deceive you, young one. I will help you.";
+				case 3:
+					return "The wind sings the longest tune... Do you hear it?";
+				case 4:
+					return "Wanna know what lost souls are? When a living thing dies, it's soul leaves the body, these are Lost Souls. Lost Souls search around the world to look for corpses to infuse with. To ordinary people, Lost Souls are invisible, but some who use magic can see them fade in and out of the Spirit Realm.";
+				case 5:
+					return "Y'know, planting saplings on Ancient Dirt will make Ancient Trees grow! It's like magic!";
+				case 6:
+					return "The size of the Lost Souls depends on the original individual's power, the stronger the Will of the being, the bigger the soul. Once a soul leaves the body, they cannot infuse with it again. On most occasions where a soul fuses, a skeleton will be created. However, if the soul is strong enough, it will form pale-brown flesh on the skeleton, creating a Fallen.";
+				case 7:
+					return "In the lowest level of the Catacombs of Gathuram, the floor is littered with broken bones and puddles of water. Dim blue lights often were visible in this level, and nothing is alive there. So if any were to survive the fall, they would be alone forever.";
+				default:
+					return "My name's Okvot, I usually sell equipment to other Fallen to help them survive in the Catacombs of Gathuram, however, destiny has brought me into the outside world. I hope my junk can be of use to you.";
+				}
 			}
-			switch (Main.rand.Next(8))
+			else if (Main.npc[FallenID].GivenName == "Happins")
 			{
-			case 0:
-				return "Hey there.";
-			case 1:
-				return "Yes?";
-			case 2:
-				return "I don't really like the sunlight, because, I'm undead.";
-			case 3:
-				return "You seem pretty happy to get rid of your Ancient Gold Coins.";
-			case 4:
-				return "What are Lost Souls used for? No idea.";
-			case 5:
-				return "Y'know, planting saplings on Ancient Dirt will make Ancient Trees grow! It's like magic!";
-			case 6:
-				return "I always feel restless... Maybe it's just an Undead thing.";
-			default:
-				return "Greetings.";
+				if (RedeWorld.keeperSaved && Main.rand.Next(3) == 0)
+				{
+					return "You saved the Keeper? That's great to hear, she gave me trouble when she had escaped the catacombs. If you need Dark Shards, I'll sell them now for you.";
+				}
+				switch (Main.rand.Next(9))
+				{
+				case 0:
+					return "In my first few days of becoming Fallen, every other undead tried to kill me. It was a very scary experience, but I escaped the catacombs and now I'm here.";
+				case 1:
+					return "Do you want to know about Pure-Iron? It's an extremely durable metal only found in the southern region of the world, in Gathuram. I am wearing a Pure-Iron helmet right now in fact.";
+				case 2:
+					return "At the start, this whole 'Fallen' thing was a little overwhelming. I didn't want to 'live' with the fact that I had died, even though I'm not 'living', haha. But I'm more accepting of this now, I'm undead, humans hate me, deal with it. Actually, you're a human, right? Why aren't you attacking me?";
+				case 3:
+					return "You want to know about the Warriors of the Iron Realm? They are the domain of Gathuram's primary warriors. They normally wear Pure-Iron armour.";
+				case 4:
+					return "Wanna know what lost souls are? When a living thing dies, it's soul leaves the body, these are Lost Souls. Lost Souls search around the world to look for corpses to infuse with. To ordinary people, Lost Souls are invisible, but some who use magic can see them fade in and out of the Spirit Realm.";
+				case 5:
+					return "Planting saplings on Ancient Dirt will make Ancient Trees grow. Just a tip.";
+				case 6:
+					return "The size of the Lost Souls depends on the original individual's power, the stronger the Will of the being, the bigger the soul. Once a soul leaves the body, they cannot infuse with it again. When the soul has found a worthy vessel, it fuses with it. On most occasions, a skeleton will be created. However, if the soul is strong enough, it will form pale-brown flesh on the skeleton, creating a Fallen.";
+				case 7:
+					return "The Catacombs of Gathuram - where my soul found a vessel - are a seemingly endless network of underground tunnels, crypts, and dungeons spanning all across the Iron Realm. It is considered the largest underground structure in Epidotra.";
+				default:
+					return "Hello, the name's Happins. I used to be a Warrior of the Iron Realm... Until I was killed of course.";
+				}
+			}
+			else
+			{
+				if (RedeWorld.keeperSaved && Main.rand.Next(3) == 0)
+				{
+					return "You saved the Keeper? Bah, I guess that's nice of ya. If you need Dark Shards, I'll sell them now for you.";
+				}
+				switch (Main.rand.Next(9))
+				{
+				case 0:
+					return "I'm not very interested in talking, what ya want?";
+				case 1:
+					return "Darkness... Ha! What a strange term. You humans fear it more than death itself. You cower in the face of the overwhelming shadow of the night. Pitiful creature! It is not the darkness you should fear, but what lurks within it. So, did I spook ya?! Hahaha!";
+				case 2:
+					return "Ya know what Willpower is, right? It's the essence of yer soul! The stronger yer will to live, the bigger the soul. Did you know you can die of depression? Apparently if you have no will to live, your soul can invert! I got a ton'a willpower! I ain't dying anytime soon... Again.";
+				case 3:
+					return "Give me some of ya sweet coins! I got some sweet junk.";
+				case 4:
+					return "Wanna know what lost souls are? When a living thing dies, it's soul leaves the body. Lost Souls look around for corpses to infuse with. For normal people, Lost Souls are invisible, but some who use magic can see them fade in and out of the Spirit Realm.";
+				case 5:
+					return "Did ya know planting saplings on Ancient Dirt will make Ancient Trees grow. How do trees so old even grow? Crazy.";
+				case 6:
+					return "Once a soul leaves the body, they cannot infuse with it again. When the soul has found a worthy vessel, it fuses with it. Most of the time, a skeleton will be made. However, if the soul is strong enough, it will form pale-brown flesh on the skeleton, creating a Fallen. Like me!";
+				case 7:
+					return "Ever been to Spiritpeak Forest? A quarter of the forest is a giant graveyard, meaning there be a staggerin' number of Skeletons, Wandering Souls and Spirits. I used to take walks there when I was still alive.";
+				default:
+					return "M'name is Tenvon, I'm a blacksmith, but I guess I'm here now. I also should mention, I got some junk for sale, if ya interested.";
+				}
 			}
 		}
 
 		public override void SetChatButtons(ref string button, ref string button2)
 		{
 			button = Language.GetTextValue("LegacyInterface.28");
+			button2 = "Repair Fragments";
 		}
 
 		public override void OnChatButtonClicked(bool firstButton, ref bool shop)
 		{
+			Player player = Main.LocalPlayer;
+			player.GetModPlayer<RedePlayer>();
 			if (firstButton)
 			{
 				shop = true;
+				return;
 			}
+			int Frag = player.FindItem(base.mod.ItemType("SwordSlicerFrag1"));
+			int Frag2 = player.FindItem(base.mod.ItemType("SwordSlicerFrag2"));
+			int Frag3 = player.FindItem(base.mod.ItemType("AkisClawFrag1"));
+			int Frag4 = player.FindItem(base.mod.ItemType("AkisClawFrag2"));
+			int Frag5 = player.FindItem(base.mod.ItemType("DeathsClawFrag1"));
+			int Frag6 = player.FindItem(base.mod.ItemType("DeathsClawFrag2"));
+			int Frag7 = player.FindItem(base.mod.ItemType("FalconFrag1"));
+			int Frag8 = player.FindItem(base.mod.ItemType("FalconFrag2"));
+			int Frag9 = player.FindItem(base.mod.ItemType("ForestNymphsSickleFrag1"));
+			int Frag10 = player.FindItem(base.mod.ItemType("ForestNymphsSickleFrag2"));
+			int Frag11 = player.FindItem(base.mod.ItemType("GoldenEdgeFrag1"));
+			int Frag12 = player.FindItem(base.mod.ItemType("GoldenEdgeFrag2"));
+			int Frag13 = player.FindItem(base.mod.ItemType("LightbaneFrag1"));
+			int Frag14 = player.FindItem(base.mod.ItemType("LightbaneFrag2"));
+			int Frag15 = player.FindItem(base.mod.ItemType("LivingWoodRapierFrag1"));
+			int Frag16 = player.FindItem(base.mod.ItemType("LivingWoodRapierFrag2"));
+			int Frag17 = player.FindItem(base.mod.ItemType("PeacekeeperFrag1"));
+			int Frag18 = player.FindItem(base.mod.ItemType("PeacekeeperFrag2"));
+			int Frag19 = player.FindItem(base.mod.ItemType("SilverRapierFrag1"));
+			int Frag20 = player.FindItem(base.mod.ItemType("SilverRapierFrag2"));
+			int Frag21 = player.FindItem(base.mod.ItemType("VictorBattletomeFrag1"));
+			int Frag22 = player.FindItem(base.mod.ItemType("VictorBattletomeFrag2"));
+			int Frag23 = player.FindItem(base.mod.ItemType("SilverwoodBowFrag1"));
+			int Frag24 = player.FindItem(base.mod.ItemType("SilverwoodBowFrag2"));
+			int Frag25 = player.FindItem(base.mod.ItemType("HonorsReachFrag1"));
+			int Frag26 = player.FindItem(base.mod.ItemType("HonorsReachFrag2"));
+			int Frag27 = player.FindItem(base.mod.ItemType("MidnightFrag1"));
+			int Frag28 = player.FindItem(base.mod.ItemType("MidnightFrag2"));
+			int Frag29 = player.FindItem(base.mod.ItemType("SpellsongFrag1"));
+			int Frag30 = player.FindItem(base.mod.ItemType("SpellsongFrag2"));
+			int Frag31 = player.FindItem(base.mod.ItemType("GodslayerFrag1"));
+			int Frag32 = player.FindItem(base.mod.ItemType("GodslayerFrag2"));
+			int Frag33 = player.FindItem(base.mod.ItemType("WhisperwindFrag1"));
+			int Frag34 = player.FindItem(base.mod.ItemType("WhisperwindFrag2"));
+			int Frag35 = player.FindItem(base.mod.ItemType("BlindJusticeFrag1"));
+			int Frag36 = player.FindItem(base.mod.ItemType("BlindJusticeFrag2"));
+			int Frag37 = player.FindItem(base.mod.ItemType("DusksongFrag1"));
+			int Frag38 = player.FindItem(base.mod.ItemType("DusksongFrag2"));
+			int Frag39 = player.FindItem(base.mod.ItemType("SteelSwordFragment1"));
+			int Frag40 = player.FindItem(base.mod.ItemType("SteelSwordFragment2"));
+			int Frag41 = player.FindItem(base.mod.ItemType("TiedsRapierFrag1"));
+			int Frag42 = player.FindItem(base.mod.ItemType("TiedsRapierFrag2"));
+			if (Frag >= 0 && Frag2 >= 0)
+			{
+				player.inventory[Frag].stack--;
+				player.inventory[Frag2].stack--;
+				if (player.inventory[Frag].stack <= 0)
+				{
+					player.inventory[Frag] = new Item();
+				}
+				if (player.inventory[Frag2].stack <= 0)
+				{
+					player.inventory[Frag2] = new Item();
+				}
+				Main.npcChatCornerItem = base.mod.ItemType("SwordSlicer");
+				Main.npcChatText = Fallen.GiveChat();
+				player.QuickSpawnItem(base.mod.ItemType("SwordSlicer"), 1);
+				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
+				return;
+			}
+			if (Frag3 >= 0 && Frag4 >= 0)
+			{
+				player.inventory[Frag3].stack--;
+				player.inventory[Frag4].stack--;
+				if (player.inventory[Frag3].stack <= 0)
+				{
+					player.inventory[Frag3] = new Item();
+				}
+				if (player.inventory[Frag4].stack <= 0)
+				{
+					player.inventory[Frag4] = new Item();
+				}
+				Main.npcChatCornerItem = base.mod.ItemType("AkisClaws");
+				Main.npcChatText = Fallen.GiveChat();
+				player.QuickSpawnItem(base.mod.ItemType("AkisClaws"), 1);
+				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
+				return;
+			}
+			if (Frag5 >= 0 && Frag6 >= 0)
+			{
+				player.inventory[Frag5].stack--;
+				player.inventory[Frag6].stack--;
+				if (player.inventory[Frag5].stack <= 0)
+				{
+					player.inventory[Frag5] = new Item();
+				}
+				if (player.inventory[Frag6].stack <= 0)
+				{
+					player.inventory[Frag6] = new Item();
+				}
+				Main.npcChatCornerItem = base.mod.ItemType("DeathsClaw");
+				Main.npcChatText = Fallen.GiveChat();
+				player.QuickSpawnItem(base.mod.ItemType("DeathsClaw"), 1);
+				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
+				return;
+			}
+			if (Frag7 >= 0 && Frag8 >= 0)
+			{
+				player.inventory[Frag7].stack--;
+				player.inventory[Frag8].stack--;
+				if (player.inventory[Frag7].stack <= 0)
+				{
+					player.inventory[Frag7] = new Item();
+				}
+				if (player.inventory[Frag8].stack <= 0)
+				{
+					player.inventory[Frag8] = new Item();
+				}
+				Main.npcChatCornerItem = base.mod.ItemType("Falcon");
+				Main.npcChatText = Fallen.GiveChat();
+				player.QuickSpawnItem(base.mod.ItemType("Falcon"), 1);
+				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
+				return;
+			}
+			if (Frag9 >= 0 && Frag10 >= 0)
+			{
+				player.inventory[Frag9].stack--;
+				player.inventory[Frag10].stack--;
+				if (player.inventory[Frag9].stack <= 0)
+				{
+					player.inventory[Frag9] = new Item();
+				}
+				if (player.inventory[Frag10].stack <= 0)
+				{
+					player.inventory[Frag10] = new Item();
+				}
+				Main.npcChatCornerItem = base.mod.ItemType("ForestNymphsSickle");
+				Main.npcChatText = Fallen.GiveChat();
+				player.QuickSpawnItem(base.mod.ItemType("ForestNymphsSickle"), 1);
+				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
+				return;
+			}
+			if (Frag11 >= 0 && Frag12 >= 0)
+			{
+				player.inventory[Frag11].stack--;
+				player.inventory[Frag12].stack--;
+				if (player.inventory[Frag11].stack <= 0)
+				{
+					player.inventory[Frag11] = new Item();
+				}
+				if (player.inventory[Frag12].stack <= 0)
+				{
+					player.inventory[Frag12] = new Item();
+				}
+				Main.npcChatCornerItem = base.mod.ItemType("GoldenEdge");
+				Main.npcChatText = Fallen.GiveChat();
+				player.QuickSpawnItem(base.mod.ItemType("GoldenEdge"), 1);
+				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
+				return;
+			}
+			if (Frag13 >= 0 && Frag14 >= 0)
+			{
+				player.inventory[Frag13].stack--;
+				player.inventory[Frag14].stack--;
+				if (player.inventory[Frag13].stack <= 0)
+				{
+					player.inventory[Frag13] = new Item();
+				}
+				if (player.inventory[Frag14].stack <= 0)
+				{
+					player.inventory[Frag14] = new Item();
+				}
+				Main.npcChatCornerItem = base.mod.ItemType("Lightbane");
+				Main.npcChatText = Fallen.GiveChat();
+				player.QuickSpawnItem(base.mod.ItemType("Lightbane"), 1);
+				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
+				return;
+			}
+			if (Frag15 >= 0 && Frag16 >= 0)
+			{
+				player.inventory[Frag15].stack--;
+				player.inventory[Frag16].stack--;
+				if (player.inventory[Frag15].stack <= 0)
+				{
+					player.inventory[Frag15] = new Item();
+				}
+				if (player.inventory[Frag16].stack <= 0)
+				{
+					player.inventory[Frag16] = new Item();
+				}
+				Main.npcChatCornerItem = base.mod.ItemType("LivingWoodRapier");
+				Main.npcChatText = Fallen.GiveChat();
+				player.QuickSpawnItem(base.mod.ItemType("LivingWoodRapier"), 1);
+				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
+				return;
+			}
+			if (Frag17 >= 0 && Frag18 >= 0)
+			{
+				player.inventory[Frag17].stack--;
+				player.inventory[Frag18].stack--;
+				if (player.inventory[Frag17].stack <= 0)
+				{
+					player.inventory[Frag17] = new Item();
+				}
+				if (player.inventory[Frag18].stack <= 0)
+				{
+					player.inventory[Frag18] = new Item();
+				}
+				Main.npcChatCornerItem = base.mod.ItemType("PeaceKeeper");
+				Main.npcChatText = Fallen.GiveChat();
+				player.QuickSpawnItem(base.mod.ItemType("PeaceKeeper"), 1);
+				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
+				return;
+			}
+			if (Frag19 >= 0 && Frag20 >= 0)
+			{
+				player.inventory[Frag19].stack--;
+				player.inventory[Frag20].stack--;
+				if (player.inventory[Frag19].stack <= 0)
+				{
+					player.inventory[Frag19] = new Item();
+				}
+				if (player.inventory[Frag20].stack <= 0)
+				{
+					player.inventory[Frag20] = new Item();
+				}
+				Main.npcChatCornerItem = base.mod.ItemType("SilverRapier");
+				Main.npcChatText = Fallen.GiveChat();
+				player.QuickSpawnItem(base.mod.ItemType("SilverRapier"), 1);
+				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
+				return;
+			}
+			if (Frag21 >= 0 && Frag22 >= 0)
+			{
+				player.inventory[Frag21].stack--;
+				player.inventory[Frag22].stack--;
+				if (player.inventory[Frag21].stack <= 0)
+				{
+					player.inventory[Frag21] = new Item();
+				}
+				if (player.inventory[Frag22].stack <= 0)
+				{
+					player.inventory[Frag22] = new Item();
+				}
+				Main.npcChatCornerItem = base.mod.ItemType("VictorBattletome");
+				Main.npcChatText = Fallen.GiveChat();
+				player.QuickSpawnItem(base.mod.ItemType("VictorBattletome"), 1);
+				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
+				return;
+			}
+			if (Frag23 >= 0 && Frag24 >= 0)
+			{
+				player.inventory[Frag23].stack--;
+				player.inventory[Frag24].stack--;
+				if (player.inventory[Frag23].stack <= 0)
+				{
+					player.inventory[Frag23] = new Item();
+				}
+				if (player.inventory[Frag24].stack <= 0)
+				{
+					player.inventory[Frag24] = new Item();
+				}
+				Main.npcChatCornerItem = base.mod.ItemType("SilverwoodBow");
+				Main.npcChatText = Fallen.GiveChat();
+				player.QuickSpawnItem(base.mod.ItemType("SilverwoodBow"), 1);
+				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
+				return;
+			}
+			if (Frag25 >= 0 && Frag26 >= 0)
+			{
+				player.inventory[Frag25].stack--;
+				player.inventory[Frag26].stack--;
+				if (player.inventory[Frag25].stack <= 0)
+				{
+					player.inventory[Frag25] = new Item();
+				}
+				if (player.inventory[Frag26].stack <= 0)
+				{
+					player.inventory[Frag26] = new Item();
+				}
+				Main.npcChatCornerItem = base.mod.ItemType("HonorsReach");
+				Main.npcChatText = Fallen.GiveChat();
+				player.QuickSpawnItem(base.mod.ItemType("HonorsReach"), 1);
+				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
+				return;
+			}
+			if (Frag27 >= 0 && Frag28 >= 0)
+			{
+				player.inventory[Frag27].stack--;
+				player.inventory[Frag28].stack--;
+				if (player.inventory[Frag27].stack <= 0)
+				{
+					player.inventory[Frag27] = new Item();
+				}
+				if (player.inventory[Frag28].stack <= 0)
+				{
+					player.inventory[Frag28] = new Item();
+				}
+				Main.npcChatCornerItem = base.mod.ItemType("Midnight");
+				Main.npcChatText = Fallen.GiveChat();
+				player.QuickSpawnItem(base.mod.ItemType("Midnight"), 1);
+				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
+				return;
+			}
+			if (Frag29 >= 0 && Frag30 >= 0)
+			{
+				player.inventory[Frag29].stack--;
+				player.inventory[Frag30].stack--;
+				if (player.inventory[Frag29].stack <= 0)
+				{
+					player.inventory[Frag29] = new Item();
+				}
+				if (player.inventory[Frag30].stack <= 0)
+				{
+					player.inventory[Frag30] = new Item();
+				}
+				Main.npcChatCornerItem = base.mod.ItemType("Spellsong");
+				Main.npcChatText = Fallen.GiveChat();
+				player.QuickSpawnItem(base.mod.ItemType("Spellsong"), 1);
+				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
+				return;
+			}
+			if (Frag31 >= 0 && Frag32 >= 0)
+			{
+				player.inventory[Frag31].stack--;
+				player.inventory[Frag32].stack--;
+				if (player.inventory[Frag31].stack <= 0)
+				{
+					player.inventory[Frag31] = new Item();
+				}
+				if (player.inventory[Frag32].stack <= 0)
+				{
+					player.inventory[Frag32] = new Item();
+				}
+				Main.npcChatCornerItem = base.mod.ItemType("Godslayer");
+				Main.npcChatText = Fallen.GiveChat();
+				player.QuickSpawnItem(base.mod.ItemType("Godslayer"), 1);
+				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
+				return;
+			}
+			if (Frag33 >= 0 && Frag34 >= 0)
+			{
+				player.inventory[Frag33].stack--;
+				player.inventory[Frag34].stack--;
+				if (player.inventory[Frag33].stack <= 0)
+				{
+					player.inventory[Frag33] = new Item();
+				}
+				if (player.inventory[Frag34].stack <= 0)
+				{
+					player.inventory[Frag34] = new Item();
+				}
+				Main.npcChatCornerItem = base.mod.ItemType("Whisperwind");
+				Main.npcChatText = Fallen.GiveChat();
+				player.QuickSpawnItem(base.mod.ItemType("Whisperwind"), 1);
+				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
+				return;
+			}
+			if (Frag35 >= 0 && Frag36 >= 0)
+			{
+				player.inventory[Frag35].stack--;
+				player.inventory[Frag36].stack--;
+				if (player.inventory[Frag35].stack <= 0)
+				{
+					player.inventory[Frag35] = new Item();
+				}
+				if (player.inventory[Frag36].stack <= 0)
+				{
+					player.inventory[Frag36] = new Item();
+				}
+				Main.npcChatCornerItem = base.mod.ItemType("BlindJustice");
+				Main.npcChatText = Fallen.GiveChat();
+				player.QuickSpawnItem(base.mod.ItemType("BlindJustice"), 1);
+				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
+				return;
+			}
+			if (Frag37 >= 0 && Frag38 >= 0)
+			{
+				player.inventory[Frag37].stack--;
+				player.inventory[Frag38].stack--;
+				if (player.inventory[Frag37].stack <= 0)
+				{
+					player.inventory[Frag37] = new Item();
+				}
+				if (player.inventory[Frag38].stack <= 0)
+				{
+					player.inventory[Frag38] = new Item();
+				}
+				Main.npcChatCornerItem = base.mod.ItemType("Dusksong");
+				Main.npcChatText = Fallen.GiveChat();
+				player.QuickSpawnItem(base.mod.ItemType("Dusksong"), 1);
+				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
+				return;
+			}
+			if (Frag39 >= 0 && Frag40 >= 0)
+			{
+				player.inventory[Frag39].stack--;
+				player.inventory[Frag40].stack--;
+				if (player.inventory[Frag39].stack <= 0)
+				{
+					player.inventory[Frag39] = new Item();
+				}
+				if (player.inventory[Frag40].stack <= 0)
+				{
+					player.inventory[Frag40] = new Item();
+				}
+				Main.npcChatCornerItem = base.mod.ItemType("HallamSword");
+				Main.npcChatText = Fallen.GiveChat();
+				player.QuickSpawnItem(base.mod.ItemType("HallamSword"), 1);
+				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
+				return;
+			}
+			if (Frag41 >= 0 && Frag42 >= 0)
+			{
+				player.inventory[Frag41].stack--;
+				player.inventory[Frag42].stack--;
+				if (player.inventory[Frag41].stack <= 0)
+				{
+					player.inventory[Frag41] = new Item();
+				}
+				if (player.inventory[Frag42].stack <= 0)
+				{
+					player.inventory[Frag42] = new Item();
+				}
+				Main.npcChatCornerItem = base.mod.ItemType("TiedRapier");
+				Main.npcChatText = Fallen.GiveChat();
+				player.QuickSpawnItem(base.mod.ItemType("TiedRapier"), 1);
+				Main.PlaySound(24, -1, -1, 1, 1f, 0f);
+				return;
+			}
+			Main.npcChatText = Fallen.NoChat();
+			Main.PlaySound(12, -1, -1, 1, 1f, 0f);
+		}
+
+		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+		{
+			int FallenID = NPC.FindFirstNPC(base.mod.NPCType("Fallen"));
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D TenvonAni = base.mod.GetTexture("NPCs/Fallen2");
+			Texture2D HappinsAni = base.mod.GetTexture("NPCs/Fallen3");
+			int spriteDirection = base.npc.spriteDirection;
+			if (Main.npc[FallenID].GivenName == "Okvot")
+			{
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y + 4f);
+				spriteBatch.Draw(texture, drawCenter - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			}
+			else if (Main.npc[FallenID].GivenName == "Tenvon")
+			{
+				Vector2 drawCenter2 = new Vector2(base.npc.Center.X, base.npc.Center.Y + 4f);
+				Main.spriteBatch.Draw(TenvonAni, drawCenter2 - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			}
+			else
+			{
+				Vector2 drawCenter3 = new Vector2(base.npc.Center.X, base.npc.Center.Y + 4f);
+				Main.spriteBatch.Draw(HappinsAni, drawCenter3 - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			}
+			return false;
+		}
+
+		public static string GiveChat()
+		{
+			WeightedRandom<string> weightedRandom = new WeightedRandom<string>();
+			weightedRandom.Add("All done and repaired, here you go.", 1.0);
+			return weightedRandom;
+		}
+
+		public static string NoChat()
+		{
+			WeightedRandom<string> weightedRandom = new WeightedRandom<string>();
+			weightedRandom.Add("You don't seem to have any fragments on your possession.", 1.0);
+			return weightedRandom;
 		}
 
 		public override void SetupShop(Chest shop, ref int nextSlot)
@@ -186,47 +710,47 @@ namespace Redemption.NPCs
 			shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 			nextSlot++;
 			shop.item[nextSlot].SetDefaults(ModContent.ItemType<AncientDirt>(), false);
-			shop.item[nextSlot].shopCustomPrice = new int?(2);
+			shop.item[nextSlot].shopCustomPrice = new int?(1);
 			shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 			nextSlot++;
 			shop.item[nextSlot].SetDefaults(ModContent.ItemType<AncientWood>(), false);
-			shop.item[nextSlot].shopCustomPrice = new int?(3);
+			shop.item[nextSlot].shopCustomPrice = new int?(2);
 			shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 			nextSlot++;
 			shop.item[nextSlot].SetDefaults(ModContent.ItemType<AncientStone>(), false);
-			shop.item[nextSlot].shopCustomPrice = new int?(4);
+			shop.item[nextSlot].shopCustomPrice = new int?(3);
 			shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 			nextSlot++;
 			shop.item[nextSlot].SetDefaults(ModContent.ItemType<MysteriousTabletCorrupt>(), false);
-			shop.item[nextSlot].shopCustomPrice = new int?(20);
+			shop.item[nextSlot].shopCustomPrice = new int?(15);
 			shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 			nextSlot++;
 			shop.item[nextSlot].SetDefaults(ModContent.ItemType<MysteriousTabletCrimson>(), false);
-			shop.item[nextSlot].shopCustomPrice = new int?(20);
+			shop.item[nextSlot].shopCustomPrice = new int?(15);
 			shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 			nextSlot++;
 			shop.item[nextSlot].SetDefaults(ModContent.ItemType<SmallLostSoul>(), false);
-			shop.item[nextSlot].shopCustomPrice = new int?(4);
+			shop.item[nextSlot].shopCustomPrice = new int?(3);
 			shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 			nextSlot++;
 			if (Main.hardMode)
 			{
 				shop.item[nextSlot].SetDefaults(ModContent.ItemType<LostSoul>(), false);
-				shop.item[nextSlot].shopCustomPrice = new int?(8);
+				shop.item[nextSlot].shopCustomPrice = new int?(6);
 				shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 				nextSlot++;
 			}
 			if (Main.hardMode && NPC.downedMoonlord)
 			{
 				shop.item[nextSlot].SetDefaults(ModContent.ItemType<LargeLostSoul>(), false);
-				shop.item[nextSlot].shopCustomPrice = new int?(16);
+				shop.item[nextSlot].shopCustomPrice = new int?(9);
 				shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 				nextSlot++;
 			}
 			if (Main.hardMode && RedeWorld.downedPatientZero)
 			{
 				shop.item[nextSlot].SetDefaults(ModContent.ItemType<SmallShadesoul>(), false);
-				shop.item[nextSlot].shopCustomPrice = new int?(12);
+				shop.item[nextSlot].shopCustomPrice = new int?(6);
 				shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 				nextSlot++;
 			}

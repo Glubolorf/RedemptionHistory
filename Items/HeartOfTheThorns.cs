@@ -11,6 +11,7 @@ namespace Redemption.Items
 		{
 			base.DisplayName.SetDefault("Heart of Thorns");
 			base.Tooltip.SetDefault("Summons Thorn, Bane of the Forest\nOnly usable at day");
+			ItemID.Sets.SortingPriorityBossSpawns[base.item.type] = 13;
 		}
 
 		public override void SetDefaults()

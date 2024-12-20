@@ -6,12 +6,12 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class GrassStave : DruidDamageItem
+	public class GrassStave : DruidStave
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Grass Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nShoots 2 leaves\nRight-clicking will summon a Mud Guardian [c/bee7c9:(20 Second Duration)]\n[c/71ee8d:-Guardian Info-]\n[c/a0db98:Type:] Guardian\n[c/98dbc3:Special Ability:] Ring of Thorns/Scatter-Shot\n[c/98c1db:Effects:] Defence Enhancement/Mana Enhancement/Thorns, Staves that shoot a single projectile will instead shoot a cluster");
+			base.Tooltip.SetDefault("Shoots 2 leaves");
 		}
 
 		public override void SafeSetDefaults()
@@ -21,86 +21,30 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.height = 48;
 			base.item.useTime = 28;
 			base.item.useAnimation = 28;
-			base.item.useStyle = 1;
 			base.item.crit = 4;
 			base.item.knockBack = 7f;
 			base.item.value = Item.sellPrice(0, 0, 54, 30);
 			base.item.rare = 3;
-			base.item.UseSound = SoundID.Item1;
+			base.item.UseSound = SoundID.Item43;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
-			base.item.shoot = 206;
+			base.item.shoot = base.mod.ProjectileType("KingsOakShot2");
 			base.item.shootSpeed = 11f;
-		}
-
-		public override bool AltFunctionUse(Player player)
-		{
-			return true;
-		}
-
-		public override bool CanUseItem(Player player)
-		{
-			if (player.altFunctionUse == 2 && player.itemAnimation == 0)
-			{
-				base.item.mana = 1;
-				base.item.buffType = base.mod.BuffType("NatureGuardian11Buff");
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().longerGuardians)
-				{
-					base.item.buffTime = 1800;
-				}
-				else
-				{
-					base.item.buffTime = 1200;
-				}
-				base.item.shoot = base.mod.ProjectileType("NatureGuardian11");
-				return !player.HasBuff(base.mod.BuffType("GuardianCooldownDebuff"));
-			}
-			base.item.mana = 0;
-			base.item.buffType = 0;
-			base.item.buffTime = 0;
-			base.item.shoot = 206;
-			return true;
-		}
-
-		public override void UseStyle(Player player)
-		{
-			if (player.altFunctionUse == 2)
-			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
-				{
-					player.AddBuff(base.mod.BuffType("GuardianCooldownDebuff"), 2700, true);
-					return;
-				}
-				player.AddBuff(base.mod.BuffType("GuardianCooldownDebuff"), 3600, true);
-			}
-		}
-
-		public override float UseTimeMultiplier(Player player)
-		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().fasterStaves)
-			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
-				{
-					return 1.45f;
-				}
-				return 1.15f;
-			}
-			else
-			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
-				{
-					return 1.35f;
-				}
-				return 1f;
-			}
+			this.defaultShoot = base.mod.ProjectileType("KingsOakShot2");
+			this.guardianBuffID = base.mod.BuffType("NatureGuardian11Buff");
+			this.guardianProjectileID = base.mod.ProjectileType("NatureGuardian11");
+			this.guardianTime = 1200;
+			this.singleShotStave = false;
+			this.staveHoldOffset = new Vector2(4f, -10f);
+			this.staveLength = 48.2f;
+			this.guardianName = "Mud Guardian";
+			this.guardianType = "Guardian";
+			this.guardianAbility = "Ring of Thorns/Scatter-Shot";
+			this.guardianEffects = "Defence Enhancement/Mana Enhancement/Thorns, Staves that shoot a single projectile will instead shoot a cluster";
 		}
 
 		public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().burnStaves)
-			{
-				target.AddBuff(24, 180, false);
-			}
 			target.AddBuff(20, 160, false);
 		}
 
@@ -112,12 +56,8 @@ namespace Redemption.Items.DruidDamageClass
 			}
 		}
 
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		protected override bool SpecialShootPattern(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			if (player.altFunctionUse == 2 && player.itemAnimation == 0)
-			{
-				return true;
-			}
 			int numberProjectiles = 2;
 			for (int i = 0; i < numberProjectiles; i++)
 			{

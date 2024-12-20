@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -19,6 +20,7 @@ namespace Redemption.Projectiles.v08
 			base.projectile.aiStyle = -1;
 			base.projectile.friendly = true;
 			base.projectile.penetrate = 1;
+			base.projectile.GetGlobalProjectile<DruidProjectile>().druidic = true;
 		}
 
 		public override void AI()
@@ -36,14 +38,6 @@ namespace Redemption.Projectiles.v08
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
-			Player player = Main.player[base.projectile.owner];
-			int critChance = player.HeldItem.crit;
-			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref critChance);
-			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref critChance);
-			if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
-			{
-				crit = true;
-			}
 			Projectile.NewProjectile(new Vector2(base.projectile.position.X + 14f, base.projectile.position.Y + 26f), base.projectile.velocity, base.mod.ProjectileType("PollenCloud1"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 		}
 

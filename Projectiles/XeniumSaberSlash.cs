@@ -16,8 +16,8 @@ namespace Redemption.Projectiles
 		{
 			base.projectile.CloneDefaults(595);
 			this.aiType = 595;
-			base.projectile.width = 68;
-			base.projectile.height = 64;
+			base.projectile.width = 136;
+			base.projectile.height = 128;
 			base.projectile.melee = true;
 			base.projectile.friendly = true;
 			base.projectile.ignoreWater = true;

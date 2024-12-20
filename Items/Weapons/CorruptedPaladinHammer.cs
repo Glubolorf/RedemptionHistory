@@ -34,6 +34,17 @@ namespace Redemption.Items.Weapons
 			base.item.glowMask = CorruptedPaladinHammer.customGlowMask;
 		}
 
+		public override void AddRecipes()
+		{
+			ModRecipe modRecipe = new ModRecipe(base.mod);
+			modRecipe.AddIngredient(1513, 1);
+			modRecipe.AddIngredient(null, "CorruptedXenomite", 15);
+			modRecipe.AddIngredient(null, "VlitchBattery", 1);
+			modRecipe.AddTile(null, "XenoForgeTile");
+			modRecipe.SetResult(this, 1);
+			modRecipe.AddRecipe();
+		}
+
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
 			type = base.mod.ProjectileType("CorruptedPaladinHammerPro");

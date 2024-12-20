@@ -39,7 +39,6 @@ namespace Redemption.Prefixes
 			knockbackMult += 0.02f;
 			useTimeMult -= 0.02f;
 			shootSpeedMult += 0.02f;
-			manaMult -= 0.02f;
 			critBonus += 2;
 		}
 

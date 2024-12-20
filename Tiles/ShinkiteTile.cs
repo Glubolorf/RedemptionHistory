@@ -14,6 +14,7 @@ namespace Redemption.Tiles
 			Main.tileMerge[(int)base.Type][57] = true;
 			Main.tileSpelunker[(int)base.Type] = true;
 			Main.tileBlockLight[(int)base.Type] = true;
+			Main.tileValue[(int)base.Type] = 780;
 			this.dustType = 6;
 			this.drop = base.mod.ItemType("UnrefinedShinkite");
 			this.minPick = 300;

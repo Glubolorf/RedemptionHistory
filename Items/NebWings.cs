@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -24,17 +22,7 @@ namespace Redemption.Items
 			base.item.height = 58;
 			base.item.value = Item.sellPrice(0, 10, 0, 0);
 			base.item.accessory = true;
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> list)
-		{
-			foreach (TooltipLine line2 in list)
-			{
-				if (line2.mod == "Terraria" && line2.Name == "ItemName")
-				{
-					line2.overrideColor = new Color?(RedeColor.NebColour);
-				}
-			}
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 3;
 		}
 
 		public override void UpdateAccessory(Player player, bool hideVisual)

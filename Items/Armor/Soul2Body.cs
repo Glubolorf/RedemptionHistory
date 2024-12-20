@@ -9,21 +9,22 @@ namespace Redemption.Items.Armor
 	{
 		1
 	})]
-	public class Soul2Body : ModItem
+	public class Soul2Body : DruidDamageSpirit
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Wandering Soul's Chestplate");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n8% increased druidic damage\n4% increased druidic critical strike chance\n3% damage reduction\nSpirits shoot faster\n[c/bdffff:Spirit Level +1]");
+			base.Tooltip.SetDefault("8% increased druidic damage\n4% increased druidic critical strike chance\n3% damage reduction\nSpirits shoot faster\n[c/bdffff:Spirit Level +1]");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 32;
 			base.item.height = 26;
 			base.item.value = 750;
 			base.item.rare = 4;
 			base.item.defense = 9;
+			this.spiritWeapon = false;
 		}
 
 		public override void UpdateEquip(Player player)
@@ -35,6 +36,11 @@ namespace Redemption.Items.Armor
 			redePlayer.fasterSpirits = true;
 			player.endurance += 0.03f;
 			redePlayer.spiritLevel++;
+		}
+
+		public override bool DrawBody()
+		{
+			return false;
 		}
 
 		public override void AddRecipes()

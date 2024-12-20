@@ -10,15 +10,15 @@ namespace Redemption.Items.Armor
 	{
 		0
 	})]
-	public class GloomDruidCap : ModItem
+	public class GloomDruidCap : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Gloom Mycelium Cap");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n5% increased druidic damage\n40+ max mana\n40+ max life");
+			base.Tooltip.SetDefault("5% increased druidic damage\n40+ max mana\n40+ max life");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 20;
 			base.item.height = 16;
@@ -64,7 +64,7 @@ namespace Redemption.Items.Armor
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
 		{
-			drawAltHair = true;
+			drawHair = true;
 		}
 
 		public override void AddRecipes()

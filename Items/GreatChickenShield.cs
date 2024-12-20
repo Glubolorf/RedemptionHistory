@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
@@ -31,11 +30,7 @@ namespace Redemption.Items
 			base.item.width = 30;
 			base.item.height = 38;
 			base.item.value = Item.buyPrice(0, 12, 0, 0);
-		}
-
-		public override bool CanUseItem(Player player)
-		{
-			return RedeWorld.downedPatientZero;
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}
 
 		public override void HoldItem(Player player)
@@ -44,17 +39,6 @@ namespace Redemption.Items
 			if (player.ownedProjectileCounts[base.mod.ProjectileType("GreatChickenShieldPro1")] == 0)
 			{
 				Projectile.NewProjectile(player.position, Vector2.Zero, base.mod.ProjectileType("GreatChickenShieldPro1"), 0, 0f, player.whoAmI, 0f, 0f);
-			}
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> list)
-		{
-			foreach (TooltipLine line2 in list)
-			{
-				if (line2.mod == "Terraria" && line2.Name == "ItemName")
-				{
-					line2.overrideColor = new Color?(new Color(0, 255, 200));
-				}
 			}
 		}
 	}

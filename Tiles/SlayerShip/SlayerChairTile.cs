@@ -46,7 +46,7 @@ namespace Redemption.Tiles.SlayerShip
 			{
 				if (Main.netMode == 0)
 				{
-					if (!NPC.AnyNPCs(base.mod.NPCType("KS3Sitting")) && RedeWorld.downedSlayer && !RedeWorld.downedVlitch3 && !NPC.AnyNPCs(base.mod.NPCType("KSEntrance")))
+					if (!NPC.AnyNPCs(base.mod.NPCType("KS3Sitting")) && RedeWorld.downedSlayer && !RedeWorld.downedVlitch3 && !RedeWorld.downedNebuleus && !NPC.AnyNPCs(base.mod.NPCType("KSEntrance")))
 					{
 						Main.tile[i, j];
 						i += 2;
@@ -61,7 +61,7 @@ namespace Redemption.Tiles.SlayerShip
 						}
 					}
 				}
-				else if (!NPC.AnyNPCs(base.mod.NPCType("KS3Sitting")) && RedeWorld.downedSlayer && !RedeWorld.downedVlitch3 && !NPC.AnyNPCs(base.mod.NPCType("KSEntrance")))
+				else if (!NPC.AnyNPCs(base.mod.NPCType("KS3Sitting")) && RedeWorld.downedSlayer && !RedeWorld.downedVlitch3 && !RedeWorld.downedNebuleus && !NPC.AnyNPCs(base.mod.NPCType("KSEntrance")))
 				{
 					ModPacket packet = base.mod.GetPacket(256);
 					packet.Write(16);

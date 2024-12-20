@@ -23,6 +23,7 @@ namespace Redemption.Projectiles.v08
 			base.projectile.penetrate = 1;
 			base.projectile.tileCollide = true;
 			base.projectile.timeLeft = 120;
+			base.projectile.extraUpdates = 1;
 		}
 
 		public override void AI()

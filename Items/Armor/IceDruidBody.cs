@@ -9,15 +9,15 @@ namespace Redemption.Items.Armor
 	{
 		1
 	})]
-	public class IceDruidBody : ModItem
+	public class IceDruidBody : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Coldblooded Druid's Chestplate");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n3% increased druidic damage\n2% increased druidic critical strike chance\nThrows seedbags faster");
+			base.Tooltip.SetDefault("3% increased druidic damage\n2% increased druidic critical strike chance\nThrows seedbags faster");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 38;
 			base.item.height = 30;

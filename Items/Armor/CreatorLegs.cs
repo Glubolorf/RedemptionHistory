@@ -9,15 +9,15 @@ namespace Redemption.Items.Armor
 	{
 		2
 	})]
-	public class CreatorLegs : ModItem
+	public class CreatorLegs : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Creation Druid's Leaf Leggings");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n10% increased druidic damage\n10% increased druidic critical strike chance\nIncreases maximum life by 60");
+			base.Tooltip.SetDefault("10% increased druidic damage\n10% increased druidic critical strike chance\nIncreases maximum life by 60");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 18;

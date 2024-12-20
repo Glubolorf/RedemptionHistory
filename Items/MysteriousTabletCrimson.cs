@@ -12,6 +12,7 @@ namespace Redemption.Items
 		{
 			base.DisplayName.SetDefault("Mysterious Tablet");
 			base.Tooltip.SetDefault("Summons the Keeper\nOnly usable at night");
+			ItemID.Sets.SortingPriorityBossSpawns[base.item.type] = 13;
 		}
 
 		public override void SetDefaults()

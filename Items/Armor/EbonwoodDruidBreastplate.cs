@@ -9,15 +9,15 @@ namespace Redemption.Items.Armor
 	{
 		1
 	})]
-	public class EbonwoodDruidBreastplate : ModItem
+	public class EbonwoodDruidBreastplate : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Ebondruid's Chestplate");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n4% increased druidic damage\n2% increased druidic critical strike chance\nStaves swing faster");
+			base.Tooltip.SetDefault("4% increased druidic damage\n2% increased druidic critical strike chance\nStaves swing faster");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 30;
 			base.item.height = 28;
@@ -31,7 +31,7 @@ namespace Redemption.Items.Armor
 			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
 			druidDamagePlayer.druidDamage += 0.04f;
 			druidDamagePlayer.druidCrit += 2;
-			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).fasterStaves = true;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).staveSpeed += 0.05f;
 		}
 
 		public override void AddRecipes()

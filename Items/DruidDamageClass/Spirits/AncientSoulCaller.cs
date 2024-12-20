@@ -6,12 +6,12 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass.Spirits
 {
-	public class AncientSoulCaller : DruidDamageItem
+	public class AncientSoulCaller : DruidDamageSpirit
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Ancient Worshipper's Talisman");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\nSummons a swarm of skulls\nWhen max Spirit Level is reached, summons a Lunatic Vision dealing heavy damage to all nearby enemies [c/bee7c9:(10 Second Cooldown)]\n[c/c0bdff:Minimum Spirit Level: 5]\n[c/bdffe4:Maximum Spirit Level: 10]");
+			base.Tooltip.SetDefault("Summons a swarm of skulls\nWhen max Spirit Level is reached, summons a Lunatic Vision dealing heavy damage to all nearby enemies [c/bee7c9:(10 Second Cooldown)]");
 		}
 
 		public override void SafeSetDefaults()
@@ -32,6 +32,9 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 			base.item.autoReuse = true;
 			base.item.shoot = base.mod.ProjectileType("SoulSkull");
 			base.item.shootSpeed = 26f;
+			this.spiritWeapon = true;
+			this.minSpiritLevel = 5;
+			this.maxSpiritLevel = 10;
 		}
 
 		public override bool CanUseItem(Player player)

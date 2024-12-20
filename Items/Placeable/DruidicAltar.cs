@@ -1,18 +1,19 @@
 ﻿using System;
+using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable
 {
-	public class DruidicAltar : ModItem
+	public class DruidicAltar : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Druidic Altar");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nUsed to make Druid equipment");
+			base.Tooltip.SetDefault("Used to make Druid equipment");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 40;
 			base.item.height = 34;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Redemption.ChickenArmy;
-using Redemption.Projectiles;
+using Redemption.Projectiles.DruidProjectiles;
 using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ID;
@@ -40,6 +40,12 @@ namespace Redemption.NPCs
 			this.bileDebuff = false;
 			this.bioweaponDebuff = false;
 			this.necroGouge = false;
+			this.silverwoodStab = false;
+			this.lacerated = false;
+			this.stoneskin = false;
+			this.barkskin = false;
+			this.gloomShroom = false;
+			this.frozenEnemy = false;
 		}
 
 		public override void UpdateLifeRegen(NPC npc, ref int damage)
@@ -237,6 +243,61 @@ namespace Redemption.NPCs
 					damage = 2;
 				}
 			}
+			if (this.silverwoodStab)
+			{
+				if (npc.lifeRegen > 0)
+				{
+					npc.lifeRegen = 0;
+				}
+				int arrowCount = 0;
+				for (int l = 0; l < 1000; l++)
+				{
+					Projectile p4 = Main.projectile[l];
+					if (p4.active && p4.type == ModContent.ProjectileType<NeedlePro>() && p4.ai[0] == 1f && p4.ai[1] == (float)npc.whoAmI)
+					{
+						arrowCount++;
+					}
+				}
+				npc.lifeRegen -= arrowCount * 7;
+				if (damage < arrowCount * 8)
+				{
+					damage = arrowCount * 8;
+				}
+			}
+			if (this.lacerated)
+			{
+				if (npc.lifeRegen > 0)
+				{
+					npc.lifeRegen = 0;
+				}
+				npc.lifeRegen -= 25;
+				if (damage < 2)
+				{
+					damage = 2;
+				}
+			}
+			if (this.gloomShroom)
+			{
+				if (npc.lifeRegen > 0)
+				{
+					npc.lifeRegen = 0;
+				}
+				npc.lifeRegen -= 5;
+			}
+			if (this.frozenEnemy && !npc.boss)
+			{
+				npc.velocity.X = npc.velocity.X * 0f;
+				npc.velocity.Y = npc.velocity.Y * 0f;
+			}
+		}
+
+		public override bool StrikeNPC(NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+		{
+			if (this.stoneskin || this.barkskin)
+			{
+				damage *= 0.75;
+			}
+			return base.StrikeNPC(npc, ref damage, defense, ref knockback, hitDirection, ref crit);
 		}
 
 		public override void HitEffect(NPC npc, int hitDirection, double damage)
@@ -300,7 +361,7 @@ namespace Redemption.NPCs
 
 		public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot)
 		{
-			return (!Main.LocalPlayer.GetModPlayer<RedePlayer>().skeletonFriendly || (npc.type != 77 && npc.type != -49 && npc.type != -51 && npc.type != -53 && npc.type != -47 && npc.type != 449 && npc.type != 450 && npc.type != 451 && npc.type != 452 && npc.type != 566 && npc.type != 567 && npc.type != 481 && npc.type != 201 && npc.type != -15 && npc.type != 202 && npc.type != 203 && npc.type != 21 && npc.type != 324 && npc.type != 110 && npc.type != 323 && npc.type != 293 && npc.type != 291 && npc.type != 322 && npc.type != -48 && npc.type != -50 && npc.type != -52 && npc.type != -46 && npc.type != 292)) && base.CanHitPlayer(npc, target, ref cooldownSlot);
+			return (!Main.LocalPlayer.GetModPlayer<RedePlayer>().skeletonFriendly || (npc.type != 77 && npc.type != -49 && npc.type != -51 && npc.type != -53 && npc.type != -47 && npc.type != 449 && npc.type != 450 && npc.type != 451 && npc.type != 452 && npc.type != 566 && npc.type != 567 && npc.type != 481 && npc.type != 201 && npc.type != -15 && npc.type != 202 && npc.type != 203 && npc.type != 21 && npc.type != 324 && npc.type != 110 && npc.type != 323 && npc.type != 293 && npc.type != 291 && npc.type != 322 && npc.type != -48 && npc.type != -50 && npc.type != -52 && npc.type != -46 && npc.type != 292 && npc.type != 31 && npc.type != 294 && npc.type != 296 && npc.type != 295)) && base.CanHitPlayer(npc, target, ref cooldownSlot);
 		}
 
 		public override void DrawEffects(NPC npc, ref Color drawColor)
@@ -310,8 +371,8 @@ namespace Redemption.NPCs
 				int dust = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, 243, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default(Color), 1.5f);
 				Main.dust[dust].noGravity = true;
 				Main.dust[dust].velocity *= 1.8f;
-				Dust dust10 = Main.dust[dust];
-				dust10.velocity.Y = dust10.velocity.Y - 0.5f;
+				Dust dust11 = Main.dust[dust];
+				dust11.velocity.Y = dust11.velocity.Y - 0.5f;
 				if (Main.rand.Next(4) == 0)
 				{
 					Main.dust[dust].noGravity = false;
@@ -323,8 +384,8 @@ namespace Redemption.NPCs
 				int dust2 = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, 92, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default(Color), 1.5f);
 				Main.dust[dust2].noGravity = true;
 				Main.dust[dust2].velocity *= 1.8f;
-				Dust dust11 = Main.dust[dust2];
-				dust11.velocity.Y = dust11.velocity.Y - 0.5f;
+				Dust dust12 = Main.dust[dust2];
+				dust12.velocity.Y = dust12.velocity.Y - 0.5f;
 				if (Main.rand.Next(4) == 0)
 				{
 					Main.dust[dust2].noGravity = false;
@@ -336,8 +397,8 @@ namespace Redemption.NPCs
 				int dust3 = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, 163, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default(Color), 1.5f);
 				Main.dust[dust3].noGravity = true;
 				Main.dust[dust3].velocity *= 1.8f;
-				Dust dust12 = Main.dust[dust3];
-				dust12.velocity.Y = dust12.velocity.Y - 0.5f;
+				Dust dust13 = Main.dust[dust3];
+				dust13.velocity.Y = dust13.velocity.Y - 0.5f;
 				if (Main.rand.Next(4) == 0)
 				{
 					Main.dust[dust3].noGravity = false;
@@ -349,8 +410,8 @@ namespace Redemption.NPCs
 				int dust4 = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, 64, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default(Color), 2f);
 				Main.dust[dust4].noGravity = true;
 				Main.dust[dust4].velocity *= 1.8f;
-				Dust dust13 = Main.dust[dust4];
-				dust13.velocity.Y = dust13.velocity.Y - 0.5f;
+				Dust dust14 = Main.dust[dust4];
+				dust14.velocity.Y = dust14.velocity.Y - 0.5f;
 				if (Main.rand.Next(4) == 0)
 				{
 					Main.dust[dust4].noGravity = false;
@@ -362,8 +423,8 @@ namespace Redemption.NPCs
 				int dust5 = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, base.mod.DustType("VoidFlame"), npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default(Color), 1f);
 				Main.dust[dust5].noGravity = true;
 				Main.dust[dust5].velocity *= 1.8f;
-				Dust dust14 = Main.dust[dust5];
-				dust14.velocity.Y = dust14.velocity.Y - 0.5f;
+				Dust dust15 = Main.dust[dust5];
+				dust15.velocity.Y = dust15.velocity.Y - 0.5f;
 				if (Main.rand.Next(4) == 0)
 				{
 					Main.dust[dust5].noGravity = false;
@@ -375,8 +436,8 @@ namespace Redemption.NPCs
 				int dust6 = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, 74, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default(Color), 1.5f);
 				Main.dust[dust6].noGravity = true;
 				Main.dust[dust6].velocity *= 1.8f;
-				Dust dust15 = Main.dust[dust6];
-				dust15.velocity.Y = dust15.velocity.Y - 0.5f;
+				Dust dust16 = Main.dust[dust6];
+				dust16.velocity.Y = dust16.velocity.Y - 0.5f;
 				if (Main.rand.Next(4) == 0)
 				{
 					Main.dust[dust6].noGravity = false;
@@ -390,8 +451,8 @@ namespace Redemption.NPCs
 					int dust7 = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, 74, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default(Color), 1.5f);
 					Main.dust[dust7].noGravity = true;
 					Main.dust[dust7].velocity *= 1.8f;
-					Dust dust16 = Main.dust[dust7];
-					dust16.velocity.Y = dust16.velocity.Y - 0.5f;
+					Dust dust17 = Main.dust[dust7];
+					dust17.velocity.Y = dust17.velocity.Y - 0.5f;
 					if (Main.rand.Next(4) == 0)
 					{
 						Main.dust[dust7].noGravity = false;
@@ -403,8 +464,8 @@ namespace Redemption.NPCs
 					int dust8 = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, 31, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default(Color), 1.5f);
 					Main.dust[dust8].noGravity = true;
 					Main.dust[dust8].velocity *= 1.8f;
-					Dust dust17 = Main.dust[dust8];
-					dust17.velocity.Y = dust17.velocity.Y - 0.5f;
+					Dust dust18 = Main.dust[dust8];
+					dust18.velocity.Y = dust18.velocity.Y - 0.5f;
 					if (Main.rand.Next(4) == 0)
 					{
 						Main.dust[dust8].noGravity = false;
@@ -417,13 +478,19 @@ namespace Redemption.NPCs
 				int dust9 = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, 5, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default(Color), 1.5f);
 				Main.dust[dust9].noGravity = true;
 				Main.dust[dust9].velocity *= 1.8f;
-				Dust dust18 = Main.dust[dust9];
-				dust18.velocity.Y = dust18.velocity.Y - 0.5f;
+				Dust dust19 = Main.dust[dust9];
+				dust19.velocity.Y = dust19.velocity.Y - 0.5f;
 				if (Main.rand.Next(4) == 0)
 				{
 					Main.dust[dust9].noGravity = false;
 					Main.dust[dust9].scale *= 0.5f;
 				}
+			}
+			if (this.frozenEnemy && Main.rand.Next(3) < 3)
+			{
+				Dust dust10 = Dust.NewDustDirect(npc.position, npc.width, npc.height, 80, 0f, 0f, 100, default(Color), 1f);
+				dust10.noGravity = true;
+				dust10.velocity = -npc.DirectionTo(dust10.position);
 			}
 		}
 
@@ -706,5 +773,17 @@ namespace Redemption.NPCs
 		public bool bioweaponDebuff;
 
 		public bool necroGouge;
+
+		public bool silverwoodStab;
+
+		public bool lacerated;
+
+		public bool stoneskin;
+
+		public bool barkskin;
+
+		public bool gloomShroom;
+
+		public bool frozenEnemy;
 	}
 }

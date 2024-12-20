@@ -57,6 +57,14 @@ namespace Redemption.NPCs
 					base.npc.frame.Y = 0;
 				}
 			}
+			if (base.npc.ai[0] == 0f)
+			{
+				if (Main.rand.Next(2) == 0)
+				{
+					base.npc.active = false;
+				}
+				base.npc.ai[0] = 1f;
+			}
 		}
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)

@@ -8,7 +8,7 @@ namespace Redemption.Items.LabThings
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Floppy Disk");
-			base.Tooltip.SetDefault("It reads - [c/d88383:'CORRUPTED: DATA REMOVED]'");
+			base.Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'\n(4/4)");
 		}
 
 		public override void SetDefaults()

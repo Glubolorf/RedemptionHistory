@@ -39,7 +39,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			for (int i = 0; i < 200; i++)
+			for (int i = 0; i < Main.npc.Length; i++)
 			{
 				if (Main.npc[i].boss)
 				{
@@ -48,9 +48,9 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 			}
 			if (RedeWorld.golemLure)
 			{
-				return SpawnCondition.OverworldDay.Chance * ((!RedeWorld.downedEaglecrestGolem && !NPC.AnyNPCs(base.mod.NPCType("EaglecrestGolem")) && !NPC.AnyNPCs(base.mod.NPCType("EaglecrestGolemSleep"))) ? 1f : 0f);
+				return SpawnCondition.OverworldDay.Chance * ((!RedeWorld.downedEaglecrestGolem && !NPC.AnyNPCs(base.mod.NPCType("EaglecrestGolem")) && !NPC.AnyNPCs(base.mod.NPCType("EaglecrestGolemSleep"))) ? 2f : 0f);
 			}
-			return SpawnCondition.OverworldDay.Chance * ((NPC.downedBoss2 && !RedeWorld.downedEaglecrestGolem && !NPC.AnyNPCs(base.mod.NPCType("EaglecrestGolem")) && !NPC.AnyNPCs(base.mod.NPCType("EaglecrestGolemSleep"))) ? 0.01f : 0f);
+			return SpawnCondition.OverworldDay.Chance * ((NPC.downedBoss2 && !RedeWorld.downedEaglecrestGolem && !NPC.AnyNPCs(base.mod.NPCType("EaglecrestGolem")) && !NPC.AnyNPCs(base.mod.NPCType("EaglecrestGolemSleep"))) ? 0.1f : 0f);
 		}
 	}
 }

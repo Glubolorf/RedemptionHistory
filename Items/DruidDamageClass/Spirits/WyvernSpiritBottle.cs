@@ -6,12 +6,12 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass.Spirits
 {
-	public class WyvernSpiritBottle : DruidDamageItem
+	public class WyvernSpiritBottle : DruidDamageSpirit
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Spirit Wyvern in a Bottle");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\nReleases a stationary spirit wyvern at cursor point\nSpirit Level 5 and above releases a flying wyvern\n[c/c0bdff:Minimum Spirit Level: 3]\n[c/bdffe4:Maximum Spirit Level: 7]");
+			base.Tooltip.SetDefault("Releases a stationary spirit wyvern at cursor point\nSpirit Level 5 and above releases a flying wyvern");
 		}
 
 		public override void SafeSetDefaults()
@@ -32,6 +32,9 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 			base.item.autoReuse = true;
 			base.item.shoot = base.mod.ProjectileType("SpiritWyvernPro");
 			base.item.shootSpeed = 0f;
+			this.spiritWeapon = true;
+			this.minSpiritLevel = 3;
+			this.maxSpiritLevel = 7;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

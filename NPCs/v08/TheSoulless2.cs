@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -98,11 +99,41 @@ namespace Redemption.NPCs.v08
 					base.npc.frame.Y = 0;
 				}
 			}
+			if (this.exoticCheck == 0)
+			{
+				if (Main.rand.Next(1000000) == 0)
+				{
+					this.exoticCheck = 2;
+					return;
+				}
+				this.exoticCheck = 1;
+			}
+		}
+
+		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+		{
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D exoticAni = base.mod.GetTexture("NPCs/v08/TheSoulless2_Exotic");
+			Texture2D exoticGlow = base.mod.GetTexture("NPCs/v08/TheSoulless2_Exotic_Glow");
+			int spriteDirection = base.npc.spriteDirection;
+			if (this.exoticCheck != 2)
+			{
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			}
+			else
+			{
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				Main.spriteBatch.Draw(exoticAni, drawCenter - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				Main.spriteBatch.Draw(exoticGlow, drawCenter - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			}
+			return false;
 		}
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
 			return SpawnCondition.Cavern.Chance * (RedeWorld.downedPatientZero ? 0.0003f : 0f);
 		}
+
+		public int exoticCheck;
 	}
 }

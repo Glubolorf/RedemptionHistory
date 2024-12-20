@@ -11,6 +11,7 @@ namespace Redemption.Items
 		{
 			base.DisplayName.SetDefault("Xeno Eye");
 			base.Tooltip.SetDefault("Summons the Infected Eye\nOnly usable at night\n[c/67ff3e:Grows the Infection]");
+			ItemID.Sets.SortingPriorityBossSpawns[base.item.type] = 13;
 		}
 
 		public override void SetDefaults()

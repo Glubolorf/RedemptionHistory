@@ -13,6 +13,7 @@ namespace Redemption.Items
 			base.DisplayName.SetDefault("Hovercopter Radar");
 			base.Tooltip.SetDefault("Calls upon a Girus Attack Hovercopter\nOnly usable at night");
 			Main.RegisterItemAnimation(base.item.type, new DrawAnimationVertical(5, 4));
+			ItemID.Sets.SortingPriorityBossSpawns[base.item.type] = 13;
 		}
 
 		public override void SetDefaults()

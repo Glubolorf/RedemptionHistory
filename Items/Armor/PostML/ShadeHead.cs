@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
@@ -11,20 +9,22 @@ namespace Redemption.Items.Armor.PostML
 	{
 		0
 	})]
-	public class ShadeHead : ModItem
+	public class ShadeHead : DruidDamageSpirit
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Shadehead");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n10% increased druidic damage\n15% increased druidic critical strike chance\n4% increased damage reduction\nSpirits home in on enemies\nSpirits pierce through more targets\n[c/bdffff:Spirit Level +2]");
+			base.Tooltip.SetDefault("10% increased druidic damage\n15% increased druidic critical strike chance\n4% increased damage reduction\nSpirits home in on enemies\nSpirits pierce through more targets\n[c/bdffff:Spirit Level +2]");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 28;
 			base.item.height = 40;
 			base.item.value = Item.sellPrice(0, 25, 0, 0);
 			base.item.defense = 26;
+			this.spiritWeapon = false;
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 2;
 		}
 
 		public override void UpdateEquip(Player player)
@@ -58,17 +58,6 @@ namespace Redemption.Items.Armor.PostML
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
 		{
 			drawHair = (drawAltHair = false);
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> list)
-		{
-			foreach (TooltipLine line2 in list)
-			{
-				if (line2.mod == "Terraria" && line2.Name == "ItemName")
-				{
-					line2.overrideColor = new Color?(RedeColor.SoullessColour);
-				}
-			}
 		}
 
 		public override void AddRecipes()

@@ -4,15 +4,15 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class ForestShacklesDusk : ModItem
+	public class ForestShacklesDusk : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Forest Shackles");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Dusk'\n5% increased druidic damage\nHas a chance to throw an extra seed");
+			base.Tooltip.SetDefault("'Dusk'\n5% increased druidic damage\nHas a chance to throw an extra seed");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 40;
 			base.item.height = 46;

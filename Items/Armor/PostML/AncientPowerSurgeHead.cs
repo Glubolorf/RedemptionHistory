@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -24,6 +22,7 @@ namespace Redemption.Items.Armor.PostML
 			base.item.height = 30;
 			base.item.value = Item.sellPrice(0, 25, 0, 0);
 			base.item.defense = 22;
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}
 
 		public override void UpdateEquip(Player player)
@@ -55,17 +54,6 @@ namespace Redemption.Items.Armor.PostML
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
 		{
 			drawHair = (drawAltHair = false);
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> list)
-		{
-			foreach (TooltipLine line2 in list)
-			{
-				if (line2.mod == "Terraria" && line2.Name == "ItemName")
-				{
-					line2.overrideColor = new Color?(new Color(0, 255, 200));
-				}
-			}
 		}
 
 		public override void AddRecipes()

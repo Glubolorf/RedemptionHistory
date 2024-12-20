@@ -4,13 +4,13 @@ Please remember to update the mod when necessary.
 
 Adds:
 - 1 Mount
-- 153 Buffs
+- 160 Buffs
 - 24 Walls
 - 291 Tiles
-- 301 NPCs (Including bosses & minibosses)
+- 303 NPCs (Including bosses & minibosses)
 - 11 Bosses
 - 11 Minibosses
-- 1104 Items
+- 1116 Items
 
 Latest Major Update:
 - Complete Lab Overhaul

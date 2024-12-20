@@ -7,6 +7,32 @@ namespace Redemption
 {
 	public static class RedeHelper
 	{
+		public static Vector2 PolarVector(float radius, float theta)
+		{
+			return new Vector2((float)Math.Cos((double)theta), (float)Math.Sin((double)theta)) * radius;
+		}
+
+		public static bool ClosestNPC(ref NPC target, float maxDistance, Vector2 position, bool ignoreTiles = false, int overrideTarget = -1)
+		{
+			bool foundTarget = false;
+			if (overrideTarget != -1 && (Main.npc[overrideTarget].Center - position).Length() < maxDistance)
+			{
+				target = Main.npc[overrideTarget];
+				return true;
+			}
+			for (int i = 0; i < Main.npc.Length; i++)
+			{
+				NPC possibleTarget = Main.npc[i];
+				if ((possibleTarget.Center - position).Length() < maxDistance && possibleTarget.active && possibleTarget.chaseable && !possibleTarget.dontTakeDamage && !possibleTarget.friendly && possibleTarget.lifeMax > 5 && !possibleTarget.immortal && (Collision.CanHit(position, 0, 0, possibleTarget.Center, 0, 0) || ignoreTiles))
+				{
+					target = Main.npc[i];
+					foundTarget = true;
+					maxDistance = (target.Center - position).Length();
+				}
+			}
+			return foundTarget;
+		}
+
 		public static byte GetLiquidLevel(int x, int y, RedeHelper.LiquidType liquidType = RedeHelper.LiquidType.Any)
 		{
 			if (x < 0 || x >= Main.maxTilesX)

@@ -24,7 +24,7 @@ namespace Redemption.Items.Weapons
 			}
 			base.item.glowMask = SlayerNanogun.customGlowMask;
 			base.DisplayName.SetDefault("Nanobot Launcher");
-			base.Tooltip.SetDefault("'Nanomachines son'\nFires a barrage of Nanobots that latch onto enemies");
+			base.Tooltip.SetDefault("'Nanomachines, son'\nFires a barrage of Nanobots that latch onto enemies");
 		}
 
 		public override void SetDefaults()

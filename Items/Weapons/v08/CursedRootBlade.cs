@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -31,6 +30,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.useTurn = true;
 			base.item.shootSpeed = 16f;
 			base.item.shoot = 55;
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}
 
 		public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
@@ -38,17 +38,6 @@ namespace Redemption.Items.Weapons.v08
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().thornCrown)
 			{
 				flat += 50f;
-			}
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> list)
-		{
-			foreach (TooltipLine line2 in list)
-			{
-				if (line2.mod == "Terraria" && line2.Name == "ItemName")
-				{
-					line2.overrideColor = new Color?(new Color(0, 255, 200));
-				}
 			}
 		}
 

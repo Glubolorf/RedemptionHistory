@@ -6,6 +6,14 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 {
 	public class Transition : ModProjectile
 	{
+		public override string Texture
+		{
+			get
+			{
+				return "Redemption/TransitionTex";
+			}
+		}
+
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Transition");

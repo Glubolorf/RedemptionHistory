@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
@@ -24,6 +22,7 @@ namespace Redemption.Items.Weapons
 			base.item.rare = 11;
 			base.item.useAnimation = 6;
 			base.item.damage = (int)((double)base.item.damage * 2.0);
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 6;
 		}
 
 		public override bool CanUseItem(Player player)
@@ -35,15 +34,6 @@ namespace Redemption.Items.Weapons
 		{
 			type = base.mod.ProjectileType("MysteriousArtifactPro");
 			return base.Shoot(player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> tooltips)
-		{
-			Color transparent = Color.Transparent;
-			if (base.item.modItem != null && base.item.modItem.mod == ModLoader.GetMod("Redemption"))
-			{
-				Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName")).overrideColor = new Color?(new Color(170, 0, 255));
-			}
 		}
 	}
 }

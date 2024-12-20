@@ -78,7 +78,7 @@ namespace Redemption.NPCs
 
 		public override bool CanTownNPCSpawn(int numTownNPCs, int money)
 		{
-			return true;
+			return false;
 		}
 
 		public override string TownNPCName()
@@ -273,6 +273,11 @@ namespace Redemption.NPCs
 			if (NPC.downedBoss2)
 			{
 				shop.item[nextSlot].SetDefaults(base.mod.ItemType("EaglecrestSpelltome"), false);
+				nextSlot++;
+			}
+			if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
+			{
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("EvilJelly"), false);
 				nextSlot++;
 			}
 			if (NPC.downedBoss3)

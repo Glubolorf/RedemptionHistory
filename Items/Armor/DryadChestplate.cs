@@ -9,15 +9,15 @@ namespace Redemption.Items.Armor
 	{
 		1
 	})]
-	public class DryadChestplate : ModItem
+	public class DryadChestplate : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Dryad's Chestplate");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n2% increased druidic damage\n2% increased druidic critical strike chance");
+			base.Tooltip.SetDefault("2% increased druidic damage\n2% increased druidic critical strike chance");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 32;
 			base.item.height = 26;
@@ -31,6 +31,11 @@ namespace Redemption.Items.Armor
 			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
 			druidDamagePlayer.druidDamage += 0.02f;
 			druidDamagePlayer.druidCrit += 2;
+		}
+
+		public override void DrawHands(ref bool drawHands, ref bool drawArms)
+		{
+			drawHands = true;
 		}
 
 		public override void AddRecipes()

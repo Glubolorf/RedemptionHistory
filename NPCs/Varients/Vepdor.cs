@@ -18,7 +18,7 @@ namespace Redemption.NPCs.Varients
 		public override void SetDefaults()
 		{
 			base.npc.width = 44;
-			base.npc.height = 60;
+			base.npc.height = 50;
 			base.npc.damage = 40;
 			base.npc.defense = 2;
 			base.npc.lifeMax = 255;
@@ -210,11 +210,14 @@ namespace Redemption.NPCs.Varients
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D glowMask = base.mod.GetTexture("NPCs/Varients/Vepdor_Glowmask");
 			Texture2D attackAni = base.mod.GetTexture("NPCs/Varients/VepdorSlash");
-			int spriteDirection = base.npc.spriteDirection;
+			Texture2D attackGlow = base.mod.GetTexture("NPCs/Varients/VepdorSlash_Glow");
+			SpriteEffects effects = (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 			if (!this.specialAttack)
 			{
 				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				spriteBatch.Draw(glowMask, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, effects, 0f);
 			}
 			if (this.specialAttack)
 			{
@@ -222,6 +225,7 @@ namespace Redemption.NPCs.Varients
 				int num214 = attackAni.Height / 11;
 				int y6 = num214 * this.attackFrame;
 				Main.spriteBatch.Draw(attackAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, attackAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)attackAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				spriteBatch.Draw(attackGlow, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, attackAni.Width, num214)), base.npc.GetAlpha(Color.White), base.npc.rotation, new Vector2((float)attackAni.Width / 2f, (float)num214 / 2f), base.npc.scale, effects, 0f);
 			}
 			return false;
 		}

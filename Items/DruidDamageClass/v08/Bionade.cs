@@ -11,7 +11,7 @@ namespace Redemption.Items.DruidDamageClass.v08
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Bionade");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nExplodes into radioactive gas");
+			base.Tooltip.SetDefault("Explodes into radioactive gas");
 		}
 
 		public override void SafeSetDefaults()

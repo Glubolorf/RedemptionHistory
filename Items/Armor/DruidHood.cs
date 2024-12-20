@@ -9,15 +9,15 @@ namespace Redemption.Items.Armor
 	{
 		0
 	})]
-	public class DruidHood : ModItem
+	public class DruidHood : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Forest Druid's Hood");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n6% increased druidic damage\nSpirits shoot faster");
+			base.Tooltip.SetDefault("6% increased druidic damage\nSpirits shoot faster");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 30;
 			base.item.height = 26;

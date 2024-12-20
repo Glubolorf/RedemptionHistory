@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class CreationFragment : ModItem
+	public class CreationFragment : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -18,17 +18,17 @@ namespace Redemption.Items.DruidDamageClass
 				{
 					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Items/DruidDamageClass/" + base.GetType().Name + "_Glow");
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Items/DruidDamageClass/" + base.GetType().Name);
 				CreationFragment.customGlowMask = (short)(glowMasks.Length - 1);
 				Main.glowMaskTexture = glowMasks;
 			}
 			base.DisplayName.SetDefault("Creation Fragment");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'The blessing of life resides within this fragment'");
+			base.Tooltip.SetDefault("'The blessing of life resides within this fragment'");
 			ItemID.Sets.ItemNoGravity[base.item.type] = true;
 			ItemID.Sets.ItemIconPulse[base.item.type] = true;
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 24;

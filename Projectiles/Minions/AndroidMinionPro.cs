@@ -243,7 +243,7 @@ namespace Redemption.Projectiles.Minions
 			return false;
 		}
 
-		public int maxDistToAttack = 800;
+		public int maxDistToAttack = 1800;
 
 		public Entity target;
 	}

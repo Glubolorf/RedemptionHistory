@@ -38,7 +38,6 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 			base.npc.boss = true;
 			base.npc.aiStyle = 0;
 			base.npc.netAlways = true;
-			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossSlayer");
 			base.npc.noGravity = true;
 			base.npc.noTileCollide = true;
 			this.bossBag = base.mod.ItemType("SlayerBag");
@@ -55,7 +54,6 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 			if (!RedeWorld.downedSlayer)
 			{
 				RedeWorld.redemptionPoints--;
-				CombatText.NewText(this.player.getRect(), Color.Red, "-1", true, false);
 				for (int i = 0; i < 255; i++)
 				{
 					Player player2 = Main.player[i];
@@ -68,6 +66,7 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 								Main.NewText("<Chalice of Alignment> Oh dear, he seems to have a very short temper, and you winning probably made it worse... I hope he doesn't do anything stupid...", Color.DarkGoldenrod, false);
 							}
 						}
+						CombatText.NewText(player2.getRect(), Color.Red, "-1", true, false);
 					}
 				}
 			}
@@ -97,19 +96,19 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 			int num = Main.rand.Next(4);
 			if (num == 0)
 			{
-				this.player.QuickSpawnItem(base.mod.ItemType("SlayerFlamethrower"), 1);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("SlayerFlamethrower"), 1, false, 0, false, false);
 			}
 			if (num == 1)
 			{
-				this.player.QuickSpawnItem(base.mod.ItemType("SlayerNanogun"), 1);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("SlayerNanogun"), 1, false, 0, false, false);
 			}
 			if (num == 2)
 			{
-				this.player.QuickSpawnItem(base.mod.ItemType("SlayerFist"), 1);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("SlayerFist"), 1, false, 0, false, false);
 			}
 			if (num == 3)
 			{
-				this.player.QuickSpawnItem(base.mod.ItemType("SlayerGun"), 1);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("SlayerGun"), 1, false, 0, false, false);
 			}
 			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CyberPlating"), Main.rand.Next(8, 12), false, 0, false, false);
 			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("KingCore"), 1, false, 0, false, false);
@@ -129,7 +128,7 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 			if (Main.netMode == 2 || Main.dedServ)
 			{
 				writer.Write(this.customAI[0]);
-				writer.Write(this.customAI[1]);
+				writer.Write(base.npc.ai[0]);
 				writer.Write(this.customAI[2]);
 				writer.Write(this.customAI[3]);
 				writer.Write(this.customAI[4]);
@@ -143,7 +142,7 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 			if (Main.netMode == 1)
 			{
 				this.customAI[0] = reader.ReadFloat();
-				this.customAI[1] = reader.ReadFloat();
+				base.npc.ai[0] = reader.ReadFloat();
 				this.customAI[2] = reader.ReadFloat();
 				this.customAI[3] = reader.ReadFloat();
 				this.customAI[4] = reader.ReadFloat();
@@ -376,38 +375,77 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 			{
 				if (RedeWorld.downedSlayer)
 				{
-					if (base.npc.ai[1] == 60f)
+					if (RedeWorld.slayerRep >= 4)
 					{
-						string text = "So you've come back for more?";
-						Color rarityCyan = Colors.RarityCyan;
-						byte r = rarityCyan.R;
-						rarityCyan = Colors.RarityCyan;
-						byte g = rarityCyan.G;
-						rarityCyan = Colors.RarityCyan;
-						Main.NewText(text, r, g, rarityCyan.B, false);
+						if (base.npc.ai[1] == 60f)
+						{
+							string text = "So you've decided to fight me once more?";
+							Color rarityCyan = Colors.RarityCyan;
+							byte r = rarityCyan.R;
+							rarityCyan = Colors.RarityCyan;
+							byte g = rarityCyan.G;
+							rarityCyan = Colors.RarityCyan;
+							Main.NewText(text, r, g, rarityCyan.B, false);
+						}
+						if (base.npc.ai[1] == 220f)
+						{
+							string text2 = "Despite all you've done I'll still try to beat you.";
+							Color rarityCyan = Colors.RarityCyan;
+							byte r2 = rarityCyan.R;
+							rarityCyan = Colors.RarityCyan;
+							byte g2 = rarityCyan.G;
+							rarityCyan = Colors.RarityCyan;
+							Main.NewText(text2, r2, g2, rarityCyan.B, false);
+						}
+						if (base.npc.ai[1] == 400f)
+						{
+							string text3 = "So here's to a good fight!";
+							Color rarityCyan = Colors.RarityCyan;
+							byte r3 = rarityCyan.R;
+							rarityCyan = Colors.RarityCyan;
+							byte g3 = rarityCyan.G;
+							rarityCyan = Colors.RarityCyan;
+							Main.NewText(text3, r3, g3, rarityCyan.B, false);
+							this.idle1 = false;
+							this.blinkGun = true;
+							base.npc.netUpdate = true;
+						}
 					}
-					if (base.npc.ai[1] == 220f)
+					else
 					{
-						string text2 = "Interesting...";
-						Color rarityCyan = Colors.RarityCyan;
-						byte r2 = rarityCyan.R;
-						rarityCyan = Colors.RarityCyan;
-						byte g2 = rarityCyan.G;
-						rarityCyan = Colors.RarityCyan;
-						Main.NewText(text2, r2, g2, rarityCyan.B, false);
-					}
-					if (base.npc.ai[1] == 400f)
-					{
-						string text3 = "However, I still won't go easy on you...";
-						Color rarityCyan = Colors.RarityCyan;
-						byte r3 = rarityCyan.R;
-						rarityCyan = Colors.RarityCyan;
-						byte g3 = rarityCyan.G;
-						rarityCyan = Colors.RarityCyan;
-						Main.NewText(text3, r3, g3, rarityCyan.B, false);
-						this.idle1 = false;
-						this.blinkGun = true;
-						base.npc.netUpdate = true;
+						if (base.npc.ai[1] == 60f)
+						{
+							string text4 = "So you've come back for more?";
+							Color rarityCyan = Colors.RarityCyan;
+							byte r4 = rarityCyan.R;
+							rarityCyan = Colors.RarityCyan;
+							byte g4 = rarityCyan.G;
+							rarityCyan = Colors.RarityCyan;
+							Main.NewText(text4, r4, g4, rarityCyan.B, false);
+						}
+						if (base.npc.ai[1] == 220f)
+						{
+							string text5 = "Interesting...";
+							Color rarityCyan = Colors.RarityCyan;
+							byte r5 = rarityCyan.R;
+							rarityCyan = Colors.RarityCyan;
+							byte g5 = rarityCyan.G;
+							rarityCyan = Colors.RarityCyan;
+							Main.NewText(text5, r5, g5, rarityCyan.B, false);
+						}
+						if (base.npc.ai[1] == 400f)
+						{
+							string text6 = "However, I still won't go easy on you...";
+							Color rarityCyan = Colors.RarityCyan;
+							byte r6 = rarityCyan.R;
+							rarityCyan = Colors.RarityCyan;
+							byte g6 = rarityCyan.G;
+							rarityCyan = Colors.RarityCyan;
+							Main.NewText(text6, r6, g6, rarityCyan.B, false);
+							this.idle1 = false;
+							this.blinkGun = true;
+							base.npc.netUpdate = true;
+						}
 					}
 					if (base.npc.ai[1] == 418f)
 					{
@@ -430,13 +468,13 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 					{
 						if (base.npc.ai[1] == 60f)
 						{
-							string text4 = "Ready for a rematch?";
+							string text7 = "Ready for a rematch?";
 							Color rarityCyan = Colors.RarityCyan;
-							byte r4 = rarityCyan.R;
+							byte r7 = rarityCyan.R;
 							rarityCyan = Colors.RarityCyan;
-							byte g4 = rarityCyan.G;
+							byte g7 = rarityCyan.G;
 							rarityCyan = Colors.RarityCyan;
-							Main.NewText(text4, r4, g4, rarityCyan.B, false);
+							Main.NewText(text7, r7, g7, rarityCyan.B, false);
 						}
 						if (base.npc.ai[1] == 180f)
 						{
@@ -463,68 +501,68 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 					{
 						if (base.npc.ai[1] == 60f)
 						{
-							string text5 = "Well what do we have here?";
+							string text8 = "Well what do we have here?";
 							Color rarityCyan = Colors.RarityCyan;
-							byte r5 = rarityCyan.R;
+							byte r8 = rarityCyan.R;
 							rarityCyan = Colors.RarityCyan;
-							byte g5 = rarityCyan.G;
+							byte g8 = rarityCyan.G;
 							rarityCyan = Colors.RarityCyan;
-							Main.NewText(text5, r5, g5, rarityCyan.B, false);
+							Main.NewText(text8, r8, g8, rarityCyan.B, false);
 						}
 						if (base.npc.ai[1] == 220f)
 						{
-							string text6 = "I was ordered to kill a ravaging Undead known as the Keeper...";
+							string text9 = "I was ordered to kill a ravaging Undead known as the Keeper...";
 							Color rarityCyan = Colors.RarityCyan;
-							byte r6 = rarityCyan.R;
+							byte r9 = rarityCyan.R;
 							rarityCyan = Colors.RarityCyan;
-							byte g6 = rarityCyan.G;
+							byte g9 = rarityCyan.G;
 							rarityCyan = Colors.RarityCyan;
-							Main.NewText(text6, r6, g6, rarityCyan.B, false);
+							Main.NewText(text9, r9, g9, rarityCyan.B, false);
 						}
 						if (base.npc.ai[1] == 400f)
 						{
 							if (Main.LocalPlayer.GetModPlayer<RedePlayer>().chickenPower)
 							{
-								string text7 = "However, y- ... Wait...";
-								Color rarityCyan = Colors.RarityCyan;
-								byte r7 = rarityCyan.R;
-								rarityCyan = Colors.RarityCyan;
-								byte g7 = rarityCyan.G;
-								rarityCyan = Colors.RarityCyan;
-								Main.NewText(text7, r7, g7, rarityCyan.B, false);
-							}
-							else
-							{
-								string text8 = "However, you killed it before I arrived...";
-								Color rarityCyan = Colors.RarityCyan;
-								byte r8 = rarityCyan.R;
-								rarityCyan = Colors.RarityCyan;
-								byte g8 = rarityCyan.G;
-								rarityCyan = Colors.RarityCyan;
-								Main.NewText(text8, r8, g8, rarityCyan.B, false);
-							}
-						}
-						if (base.npc.ai[1] == 680f)
-						{
-							if (Main.LocalPlayer.GetModPlayer<RedePlayer>().chickenPower)
-							{
-								string text9 = "A chicken stole my kill... ? Well, it doesn't matter! You're dead!";
-								Color rarityCyan = Colors.RarityCyan;
-								byte r9 = rarityCyan.R;
-								rarityCyan = Colors.RarityCyan;
-								byte g9 = rarityCyan.G;
-								rarityCyan = Colors.RarityCyan;
-								Main.NewText(text9, r9, g9, rarityCyan.B, false);
-							}
-							else
-							{
-								string text10 = "You stole my kill... You know what? I don't care if I'm a member of the Heroes! You're dead!";
+								string text10 = "However, y- ... Wait...";
 								Color rarityCyan = Colors.RarityCyan;
 								byte r10 = rarityCyan.R;
 								rarityCyan = Colors.RarityCyan;
 								byte g10 = rarityCyan.G;
 								rarityCyan = Colors.RarityCyan;
 								Main.NewText(text10, r10, g10, rarityCyan.B, false);
+							}
+							else
+							{
+								string text11 = "However, you killed it before I arrived...";
+								Color rarityCyan = Colors.RarityCyan;
+								byte r11 = rarityCyan.R;
+								rarityCyan = Colors.RarityCyan;
+								byte g11 = rarityCyan.G;
+								rarityCyan = Colors.RarityCyan;
+								Main.NewText(text11, r11, g11, rarityCyan.B, false);
+							}
+						}
+						if (base.npc.ai[1] == 680f)
+						{
+							if (Main.LocalPlayer.GetModPlayer<RedePlayer>().chickenPower)
+							{
+								string text12 = "A chicken stole my kill... ? Well, it doesn't matter! You're dead!";
+								Color rarityCyan = Colors.RarityCyan;
+								byte r12 = rarityCyan.R;
+								rarityCyan = Colors.RarityCyan;
+								byte g12 = rarityCyan.G;
+								rarityCyan = Colors.RarityCyan;
+								Main.NewText(text12, r12, g12, rarityCyan.B, false);
+							}
+							else
+							{
+								string text13 = "You stole my kill... You know what? I don't care if I'm a member of the Heroes! You're dead!";
+								Color rarityCyan = Colors.RarityCyan;
+								byte r13 = rarityCyan.R;
+								rarityCyan = Colors.RarityCyan;
+								byte g13 = rarityCyan.G;
+								rarityCyan = Colors.RarityCyan;
+								Main.NewText(text13, r13, g13, rarityCyan.B, false);
 							}
 							this.idle1 = false;
 							this.blinkGun = true;
@@ -625,8 +663,8 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						float rotation = (float)Math.Atan2((double)(vector8.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector8.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
 						base.npc.velocity.X = (float)(Math.Cos((double)rotation) * 40.0) * -1f;
 						base.npc.velocity.Y = (float)(Math.Sin((double)rotation) * 10.0) * -1f;
-						base.npc.ai[0] %= 6.2831855f;
-						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
+						this.customAI[1] %= 6.2831855f;
+						new Vector2((float)Math.Cos((double)this.customAI[1]), (float)Math.Sin((double)this.customAI[1]));
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
 						Color color = default(Color);
 						Rectangle rectangle = new Rectangle((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
@@ -653,8 +691,8 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						float rotation2 = (float)Math.Atan2((double)(vector9.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector9.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
 						base.npc.velocity.X = (float)(Math.Cos((double)rotation2) * 40.0) * -1f;
 						base.npc.velocity.Y = (float)(Math.Sin((double)rotation2) * 10.0) * -1f;
-						base.npc.ai[0] %= 6.2831855f;
-						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
+						this.customAI[1] %= 6.2831855f;
+						new Vector2((float)Math.Cos((double)this.customAI[1]), (float)Math.Sin((double)this.customAI[1]));
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
 						Color color2 = default(Color);
 						Rectangle rectangle2 = new Rectangle((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
@@ -754,8 +792,8 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						float rotation3 = (float)Math.Atan2((double)(vector10.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector10.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
 						base.npc.velocity.X = (float)(Math.Cos((double)rotation3) * 50.0) * -1f;
 						base.npc.velocity.Y = (float)(Math.Sin((double)rotation3) * 10.0) * -1f;
-						base.npc.ai[0] %= 6.2831855f;
-						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
+						this.customAI[1] %= 6.2831855f;
+						new Vector2((float)Math.Cos((double)this.customAI[1]), (float)Math.Sin((double)this.customAI[1]));
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
 						Color color3 = default(Color);
 						Rectangle rectangle3 = new Rectangle((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
@@ -782,8 +820,8 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						float rotation4 = (float)Math.Atan2((double)(vector11.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector11.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
 						base.npc.velocity.X = (float)(Math.Cos((double)rotation4) * 50.0) * -1f;
 						base.npc.velocity.Y = (float)(Math.Sin((double)rotation4) * 10.0) * -1f;
-						base.npc.ai[0] %= 6.2831855f;
-						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
+						this.customAI[1] %= 6.2831855f;
+						new Vector2((float)Math.Cos((double)this.customAI[1]), (float)Math.Sin((double)this.customAI[1]));
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
 						Color color4 = default(Color);
 						Rectangle rectangle4 = new Rectangle((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
@@ -901,8 +939,8 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						float rotation5 = (float)Math.Atan2((double)(vector12.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector12.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
 						base.npc.velocity.X = (float)(Math.Cos((double)rotation5) * 60.0) * -1f;
 						base.npc.velocity.Y = (float)(Math.Sin((double)rotation5) * 10.0) * -1f;
-						base.npc.ai[0] %= 6.2831855f;
-						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
+						this.customAI[1] %= 6.2831855f;
+						new Vector2((float)Math.Cos((double)this.customAI[1]), (float)Math.Sin((double)this.customAI[1]));
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
 						Color color5 = default(Color);
 						Rectangle rectangle5 = new Rectangle((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
@@ -929,8 +967,8 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						float rotation6 = (float)Math.Atan2((double)(vector13.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector13.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
 						base.npc.velocity.X = (float)(Math.Cos((double)rotation6) * 60.0) * -1f;
 						base.npc.velocity.Y = (float)(Math.Sin((double)rotation6) * 10.0) * -1f;
-						base.npc.ai[0] %= 6.2831855f;
-						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
+						this.customAI[1] %= 6.2831855f;
+						new Vector2((float)Math.Cos((double)this.customAI[1]), (float)Math.Sin((double)this.customAI[1]));
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
 						Color color6 = default(Color);
 						Rectangle rectangle6 = new Rectangle((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
@@ -957,8 +995,8 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						float rotation7 = (float)Math.Atan2((double)(vector14.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector14.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
 						base.npc.velocity.X = (float)(Math.Cos((double)rotation7) * 60.0) * -1f;
 						base.npc.velocity.Y = (float)(Math.Sin((double)rotation7) * 10.0) * -1f;
-						base.npc.ai[0] %= 6.2831855f;
-						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
+						this.customAI[1] %= 6.2831855f;
+						new Vector2((float)Math.Cos((double)this.customAI[1]), (float)Math.Sin((double)this.customAI[1]));
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
 						Color color7 = default(Color);
 						Rectangle rectangle7 = new Rectangle((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
@@ -1082,8 +1120,8 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						float rotation8 = (float)Math.Atan2((double)(vector15.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector15.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
 						base.npc.velocity.X = (float)(Math.Cos((double)rotation8) * 60.0) * -1f;
 						base.npc.velocity.Y = (float)(Math.Sin((double)rotation8) * 10.0) * -1f;
-						base.npc.ai[0] %= 6.2831855f;
-						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
+						this.customAI[1] %= 6.2831855f;
+						new Vector2((float)Math.Cos((double)this.customAI[1]), (float)Math.Sin((double)this.customAI[1]));
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
 						Color color8 = default(Color);
 						Rectangle rectangle8 = new Rectangle((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
@@ -1115,8 +1153,8 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						float rotation9 = (float)Math.Atan2((double)(vector16.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector16.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
 						base.npc.velocity.X = (float)(Math.Cos((double)rotation9) * 60.0) * -1f;
 						base.npc.velocity.Y = (float)(Math.Sin((double)rotation9) * 10.0) * -1f;
-						base.npc.ai[0] %= 6.2831855f;
-						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
+						this.customAI[1] %= 6.2831855f;
+						new Vector2((float)Math.Cos((double)this.customAI[1]), (float)Math.Sin((double)this.customAI[1]));
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
 						Color color9 = default(Color);
 						Rectangle rectangle9 = new Rectangle((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
@@ -1148,8 +1186,8 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						float rotation10 = (float)Math.Atan2((double)(vector17.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector17.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
 						base.npc.velocity.X = (float)(Math.Cos((double)rotation10) * 60.0) * -1f;
 						base.npc.velocity.Y = (float)(Math.Sin((double)rotation10) * 10.0) * -1f;
-						base.npc.ai[0] %= 6.2831855f;
-						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
+						this.customAI[1] %= 6.2831855f;
+						new Vector2((float)Math.Cos((double)this.customAI[1]), (float)Math.Sin((double)this.customAI[1]));
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
 						Color color10 = default(Color);
 						Rectangle rectangle10 = new Rectangle((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
@@ -1185,8 +1223,8 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						float rotation11 = (float)Math.Atan2((double)(vector18.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector18.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
 						base.npc.velocity.X = (float)(Math.Cos((double)rotation11) * 60.0) * -1f;
 						base.npc.velocity.Y = (float)(Math.Sin((double)rotation11) * 10.0) * -1f;
-						base.npc.ai[0] %= 6.2831855f;
-						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
+						this.customAI[1] %= 6.2831855f;
+						new Vector2((float)Math.Cos((double)this.customAI[1]), (float)Math.Sin((double)this.customAI[1]));
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
 						Color color11 = default(Color);
 						Rectangle rectangle11 = new Rectangle((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
@@ -1218,8 +1256,8 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						float rotation12 = (float)Math.Atan2((double)(vector19.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector19.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
 						base.npc.velocity.X = (float)(Math.Cos((double)rotation12) * 60.0) * -1f;
 						base.npc.velocity.Y = (float)(Math.Sin((double)rotation12) * 10.0) * -1f;
-						base.npc.ai[0] %= 6.2831855f;
-						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
+						this.customAI[1] %= 6.2831855f;
+						new Vector2((float)Math.Cos((double)this.customAI[1]), (float)Math.Sin((double)this.customAI[1]));
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
 						Color color12 = default(Color);
 						Rectangle rectangle12 = new Rectangle((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
@@ -1251,8 +1289,8 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						float rotation13 = (float)Math.Atan2((double)(vector20.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector20.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
 						base.npc.velocity.X = (float)(Math.Cos((double)rotation13) * 60.0) * -1f;
 						base.npc.velocity.Y = (float)(Math.Sin((double)rotation13) * 10.0) * -1f;
-						base.npc.ai[0] %= 6.2831855f;
-						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
+						this.customAI[1] %= 6.2831855f;
+						new Vector2((float)Math.Cos((double)this.customAI[1]), (float)Math.Sin((double)this.customAI[1]));
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
 						Color color13 = default(Color);
 						Rectangle rectangle13 = new Rectangle((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
@@ -1284,8 +1322,8 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						float rotation14 = (float)Math.Atan2((double)(vector21.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector21.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
 						base.npc.velocity.X = (float)(Math.Cos((double)rotation14) * 60.0) * -1f;
 						base.npc.velocity.Y = (float)(Math.Sin((double)rotation14) * 10.0) * -1f;
-						base.npc.ai[0] %= 6.2831855f;
-						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
+						this.customAI[1] %= 6.2831855f;
+						new Vector2((float)Math.Cos((double)this.customAI[1]), (float)Math.Sin((double)this.customAI[1]));
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
 						Color color14 = default(Color);
 						Rectangle rectangle14 = new Rectangle((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
@@ -1417,46 +1455,14 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 			if (base.npc.life < (int)((float)base.npc.lifeMax * 0.75f) && this.shieldEvent == 0)
 			{
 				base.npc.ai[2] = 2f;
-				this.customAI[1] += 1f;
+				base.npc.ai[0] += 1f;
 				this.chargeAttack = false;
-				if (this.customAI[1] == 5f && !RedeConfigClient.Instance.NoBossText)
+				if (base.npc.ai[0] == 5f && !RedeConfigClient.Instance.NoBossText)
 				{
 					if (base.npc.ai[3] <= 600f && base.npc.ai[3] > 300f)
 					{
 						this.shield10Seconds = true;
-						string text11 = "Hmm? You are taking me down quite quickly... Well whatever. Shield Boost!";
-						Color rarityCyan = Colors.RarityCyan;
-						byte r11 = rarityCyan.R;
-						rarityCyan = Colors.RarityCyan;
-						byte g11 = rarityCyan.G;
-						rarityCyan = Colors.RarityCyan;
-						Main.NewText(text11, r11, g11, rarityCyan.B, false);
-					}
-					else if (base.npc.ai[3] <= 300f && base.npc.ai[3] > 120f)
-					{
-						this.shield5Seconds = true;
-						string text12 = "In less than 5 seconds, I am already forced to use a shield!? Alright! Now I'll show you what I'm truely capable of!";
-						Color rarityCyan = Colors.RarityCyan;
-						byte r12 = rarityCyan.R;
-						rarityCyan = Colors.RarityCyan;
-						byte g12 = rarityCyan.G;
-						rarityCyan = Colors.RarityCyan;
-						Main.NewText(text12, r12, g12, rarityCyan.B, false);
-					}
-					else if (base.npc.ai[3] <= 120f)
-					{
-						this.shield2Seconds = true;
-						string text13 = "In mere SECONDS, I am already forced to use a shield!? Alright! MAX SHIELD BOOST!";
-						Color rarityCyan = Colors.RarityCyan;
-						byte r13 = rarityCyan.R;
-						rarityCyan = Colors.RarityCyan;
-						byte g13 = rarityCyan.G;
-						rarityCyan = Colors.RarityCyan;
-						Main.NewText(text13, r13, g13, rarityCyan.B, false);
-					}
-					else
-					{
-						string text14 = "What a nuisance. Minions, take them down.";
+						string text14 = "Hmm? You are taking me down quite quickly... Well whatever. Shield Boost!";
 						Color rarityCyan = Colors.RarityCyan;
 						byte r14 = rarityCyan.R;
 						rarityCyan = Colors.RarityCyan;
@@ -1464,29 +1470,10 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						rarityCyan = Colors.RarityCyan;
 						Main.NewText(text14, r14, g14, rarityCyan.B, false);
 					}
-					base.npc.netUpdate = true;
-				}
-				if (this.customAI[1] < 500f)
-				{
-					this.shieldUp = true;
-					this.idle2 = false;
-					base.npc.dontTakeDamage = true;
-					if (this.customAI[1] == 260f)
+					else if (base.npc.ai[3] <= 300f && base.npc.ai[3] > 120f)
 					{
-						int p64 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
-						Main.projectile[p64].netUpdate = true;
-					}
-					if (this.customAI[1] == 320f)
-					{
-						int p65 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
-						Main.projectile[p65].netUpdate = true;
-					}
-				}
-				if (this.customAI[1] >= 500f && !NPC.AnyNPCs(base.mod.NPCType("SpaceKeeper")))
-				{
-					if (!RedeConfigClient.Instance.NoBossText)
-					{
-						string text15 = "I never needed them anyway.";
+						this.shield5Seconds = true;
+						string text15 = "In less than 5 seconds, I am already forced to use a shield!? Alright! Now I'll show you what I'm truely capable of!";
 						Color rarityCyan = Colors.RarityCyan;
 						byte r15 = rarityCyan.R;
 						rarityCyan = Colors.RarityCyan;
@@ -1494,7 +1481,58 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						rarityCyan = Colors.RarityCyan;
 						Main.NewText(text15, r15, g15, rarityCyan.B, false);
 					}
-					this.customAI[1] = 0f;
+					else if (base.npc.ai[3] <= 120f)
+					{
+						this.shield2Seconds = true;
+						string text16 = "In mere SECONDS, I am already forced to use a shield!? Alright! MAX SHIELD BOOST!";
+						Color rarityCyan = Colors.RarityCyan;
+						byte r16 = rarityCyan.R;
+						rarityCyan = Colors.RarityCyan;
+						byte g16 = rarityCyan.G;
+						rarityCyan = Colors.RarityCyan;
+						Main.NewText(text16, r16, g16, rarityCyan.B, false);
+					}
+					else
+					{
+						string text17 = "What a nuisance. Minions, take them down.";
+						Color rarityCyan = Colors.RarityCyan;
+						byte r17 = rarityCyan.R;
+						rarityCyan = Colors.RarityCyan;
+						byte g17 = rarityCyan.G;
+						rarityCyan = Colors.RarityCyan;
+						Main.NewText(text17, r17, g17, rarityCyan.B, false);
+					}
+					base.npc.netUpdate = true;
+				}
+				if (base.npc.ai[0] < 500f)
+				{
+					this.shieldUp = true;
+					this.idle2 = false;
+					base.npc.dontTakeDamage = true;
+					if (base.npc.ai[0] == 260f)
+					{
+						int p64 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+						Main.projectile[p64].netUpdate = true;
+					}
+					if (base.npc.ai[0] == 320f)
+					{
+						int p65 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+						Main.projectile[p65].netUpdate = true;
+					}
+				}
+				if (base.npc.ai[0] >= 500f && !NPC.AnyNPCs(base.mod.NPCType("SpaceKeeper")))
+				{
+					if (!RedeConfigClient.Instance.NoBossText)
+					{
+						string text18 = "I never needed them anyway.";
+						Color rarityCyan = Colors.RarityCyan;
+						byte r18 = rarityCyan.R;
+						rarityCyan = Colors.RarityCyan;
+						byte g18 = rarityCyan.G;
+						rarityCyan = Colors.RarityCyan;
+						Main.NewText(text18, r18, g18, rarityCyan.B, false);
+					}
+					base.npc.ai[0] = 0f;
 					this.shieldEvent = KSEntrance.AISTATE_SHIELD1;
 					this.customAI[4] = 0f;
 					base.npc.ai[2] = 1f;
@@ -1506,48 +1544,61 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 			if (base.npc.life < (int)((float)base.npc.lifeMax * 0.55f) && this.shieldEvent == KSEntrance.AISTATE_SHIELD1)
 			{
 				base.npc.ai[2] = 2f;
-				this.customAI[1] += 1f;
+				base.npc.ai[0] += 1f;
 				this.chargeAttack = false;
-				if (this.customAI[1] == 5f && !RedeConfigClient.Instance.NoBossText)
+				if (base.npc.ai[0] == 5f && !RedeConfigClient.Instance.NoBossText)
 				{
-					string text16 = "Alright, you are really starting to piss me off!";
-					Color rarityCyan = Colors.RarityCyan;
-					byte r16 = rarityCyan.R;
-					rarityCyan = Colors.RarityCyan;
-					byte g16 = rarityCyan.G;
-					rarityCyan = Colors.RarityCyan;
-					Main.NewText(text16, r16, g16, rarityCyan.B, false);
+					if (RedeWorld.slayerRep >= 4)
+					{
+						string text19 = "As annoying as always I see?";
+						Color rarityCyan = Colors.RarityCyan;
+						byte r19 = rarityCyan.R;
+						rarityCyan = Colors.RarityCyan;
+						byte g19 = rarityCyan.G;
+						rarityCyan = Colors.RarityCyan;
+						Main.NewText(text19, r19, g19, rarityCyan.B, false);
+					}
+					else
+					{
+						string text20 = "Alright, you are really starting to piss me off!";
+						Color rarityCyan = Colors.RarityCyan;
+						byte r20 = rarityCyan.R;
+						rarityCyan = Colors.RarityCyan;
+						byte g20 = rarityCyan.G;
+						rarityCyan = Colors.RarityCyan;
+						Main.NewText(text20, r20, g20, rarityCyan.B, false);
+					}
 					base.npc.netUpdate = true;
 				}
-				if (this.customAI[1] < 570f)
+				if (base.npc.ai[0] < 570f)
 				{
 					this.shieldUp = true;
 					this.idle2 = false;
 					base.npc.dontTakeDamage = true;
 				}
-				if (this.customAI[1] == 180f)
+				if (base.npc.ai[0] == 180f)
 				{
 					int p66 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p66].netUpdate = true;
 				}
-				if (this.customAI[1] == 240f)
+				if (base.npc.ai[0] == 240f)
 				{
 					int p67 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p67].netUpdate = true;
 				}
-				if (this.customAI[1] == 300f)
+				if (base.npc.ai[0] == 300f)
 				{
 					int p68 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p68].netUpdate = true;
 				}
-				if (this.customAI[1] == 360f)
+				if (base.npc.ai[0] == 360f)
 				{
 					int p69 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p69].netUpdate = true;
 				}
-				if (this.customAI[1] >= 570f && !NPC.AnyNPCs(base.mod.NPCType("SpaceKeeper")))
+				if (base.npc.ai[0] >= 570f && !NPC.AnyNPCs(base.mod.NPCType("SpaceKeeper")))
 				{
-					this.customAI[1] = 0f;
+					base.npc.ai[0] = 0f;
 					this.shieldEvent = KSEntrance.AISTATE_SHIELD2;
 					this.customAI[4] = 0f;
 					base.npc.ai[2] = 1f;
@@ -1559,15 +1610,26 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 			if (base.npc.life < (int)((float)base.npc.lifeMax * 0.35f) && this.shieldEvent == KSEntrance.AISTATE_SHIELD2)
 			{
 				base.npc.ai[2] = 2f;
-				this.customAI[1] += 1f;
+				base.npc.ai[0] += 1f;
 				this.chargeAttack = false;
-				if (this.customAI[1] < 570f)
+				if (base.npc.ai[0] < 570f)
 				{
 					this.shieldUp = true;
 					this.idle2 = false;
 					base.npc.dontTakeDamage = true;
 				}
-				if (this.customAI[1] == 30f)
+				if (base.npc.ai[0] == 5f && !RedeConfigClient.Instance.NoBossText && RedeWorld.slayerRep >= 4)
+				{
+					string text21 = "You'd think I'd learn my lesson by now, but nah. I no longer care if I lose.";
+					Color rarityCyan = Colors.RarityCyan;
+					byte r21 = rarityCyan.R;
+					rarityCyan = Colors.RarityCyan;
+					byte g21 = rarityCyan.G;
+					rarityCyan = Colors.RarityCyan;
+					Main.NewText(text21, r21, g21, rarityCyan.B, false);
+					base.npc.netUpdate = true;
+				}
+				if (base.npc.ai[0] == 30f)
 				{
 					int pieCut = 8;
 					for (int m2 = 0; m2 < pieCut; m2++)
@@ -1578,7 +1640,7 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 					}
 					base.npc.netUpdate = true;
 				}
-				if (this.customAI[1] == 150f)
+				if (base.npc.ai[0] == 150f)
 				{
 					int pieCut2 = 8;
 					for (int m3 = 0; m3 < pieCut2; m3++)
@@ -1588,29 +1650,29 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						Main.projectile[projID2].netUpdate = true;
 					}
 				}
-				if (this.customAI[1] == 60f)
+				if (base.npc.ai[0] == 60f)
 				{
 					int p70 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p70].netUpdate = true;
 				}
-				if (this.customAI[1] == 120f)
+				if (base.npc.ai[0] == 120f)
 				{
 					int p71 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p71].netUpdate = true;
 				}
-				if (this.customAI[1] == 180f)
+				if (base.npc.ai[0] == 180f)
 				{
 					int p72 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p72].netUpdate = true;
 				}
-				if (this.customAI[1] == 240f)
+				if (base.npc.ai[0] == 240f)
 				{
 					int p73 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p73].netUpdate = true;
 				}
-				if (this.customAI[1] >= 480f && !NPC.AnyNPCs(base.mod.NPCType("SpaceKeeper")))
+				if (base.npc.ai[0] >= 480f && !NPC.AnyNPCs(base.mod.NPCType("SpaceKeeper")))
 				{
-					this.customAI[1] = 0f;
+					base.npc.ai[0] = 0f;
 					this.shieldEvent = KSEntrance.AISTATE_SHIELD3;
 					this.customAI[4] = 0f;
 					base.npc.ai[2] = 1f;
@@ -1622,49 +1684,60 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 			if (base.npc.life <= 10000 && this.shieldEvent == KSEntrance.AISTATE_SHIELD3)
 			{
 				base.npc.ai[2] = 2f;
-				this.customAI[1] += 1f;
+				base.npc.ai[0] += 1f;
 				this.chargeAttack = false;
-				if (this.customAI[1] < 580f)
+				if (base.npc.ai[0] < 580f)
 				{
 					this.shieldUp = true;
 					this.idle2 = false;
 					base.npc.dontTakeDamage = true;
 				}
-				if (this.customAI[1] == 5f && !RedeConfigClient.Instance.NoBossText)
+				if (base.npc.ai[0] == 5f && !RedeConfigClient.Instance.NoBossText)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().omegaPower)
+					if (RedeWorld.slayerRep >= 4)
 					{
-						string text17 = "How am I losing to a WEAK LITTLE ANDROID!?";
+						string text22 = "Just to make something clear, you'd be dead if I wasn't using my Prototype Multium body.";
 						Color rarityCyan = Colors.RarityCyan;
-						byte r17 = rarityCyan.R;
+						byte r22 = rarityCyan.R;
 						rarityCyan = Colors.RarityCyan;
-						byte g17 = rarityCyan.G;
+						byte g22 = rarityCyan.G;
 						rarityCyan = Colors.RarityCyan;
-						Main.NewText(text17, r17, g17, rarityCyan.B, false);
+						Main.NewText(text22, r22, g22, rarityCyan.B, false);
+						base.npc.netUpdate = true;
+					}
+					else if (Main.LocalPlayer.GetModPlayer<RedePlayer>().omegaPower)
+					{
+						string text23 = "How am I losing to a WEAK LITTLE ANDROID!?";
+						Color rarityCyan = Colors.RarityCyan;
+						byte r23 = rarityCyan.R;
+						rarityCyan = Colors.RarityCyan;
+						byte g23 = rarityCyan.G;
+						rarityCyan = Colors.RarityCyan;
+						Main.NewText(text23, r23, g23, rarityCyan.B, false);
 					}
 					else if (Main.LocalPlayer.GetModPlayer<RedePlayer>().chickenPower)
 					{
-						string text18 = "The frick!? HOW AM I LOSING TO A CHICKEN!?";
+						string text24 = "The frick!? HOW AM I LOSING TO A CHICKEN!?";
 						Color rarityCyan = Colors.RarityCyan;
-						byte r18 = rarityCyan.R;
+						byte r24 = rarityCyan.R;
 						rarityCyan = Colors.RarityCyan;
-						byte g18 = rarityCyan.G;
+						byte g24 = rarityCyan.G;
 						rarityCyan = Colors.RarityCyan;
-						Main.NewText(text18, r18, g18, rarityCyan.B, false);
+						Main.NewText(text24, r24, g24, rarityCyan.B, false);
 					}
 					else
 					{
-						string text19 = "How am I losing to a WEAK TERRARIAN!?";
+						string text25 = "How am I losing to a WEAK TERRARIAN!?";
 						Color rarityCyan = Colors.RarityCyan;
-						byte r19 = rarityCyan.R;
+						byte r25 = rarityCyan.R;
 						rarityCyan = Colors.RarityCyan;
-						byte g19 = rarityCyan.G;
+						byte g25 = rarityCyan.G;
 						rarityCyan = Colors.RarityCyan;
-						Main.NewText(text19, r19, g19, rarityCyan.B, false);
+						Main.NewText(text25, r25, g25, rarityCyan.B, false);
 					}
 					base.npc.netUpdate = true;
 				}
-				if (this.customAI[1] == 180f)
+				if (base.npc.ai[0] == 180f)
 				{
 					int pieCut3 = 8;
 					for (int m4 = 0; m4 < pieCut3; m4++)
@@ -1674,7 +1747,7 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						Main.projectile[projID3].netUpdate = true;
 					}
 				}
-				if (this.customAI[1] == 220f)
+				if (base.npc.ai[0] == 220f)
 				{
 					int pieCut4 = 8;
 					for (int m5 = 0; m5 < pieCut4; m5++)
@@ -1684,7 +1757,7 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						Main.projectile[projID4].netUpdate = true;
 					}
 				}
-				if (this.customAI[1] == 260f)
+				if (base.npc.ai[0] == 260f)
 				{
 					int pieCut5 = 8;
 					for (int m6 = 0; m6 < pieCut5; m6++)
@@ -1694,7 +1767,7 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						Main.projectile[projID5].netUpdate = true;
 					}
 				}
-				if (this.customAI[1] == 300f)
+				if (base.npc.ai[0] == 300f)
 				{
 					int pieCut6 = 8;
 					for (int m7 = 0; m7 < pieCut6; m7++)
@@ -1704,7 +1777,7 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						Main.projectile[projID6].netUpdate = true;
 					}
 				}
-				if (this.customAI[1] == 340f)
+				if (base.npc.ai[0] == 340f)
 				{
 					int pieCut7 = 8;
 					for (int m8 = 0; m8 < pieCut7; m8++)
@@ -1714,83 +1787,118 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						Main.projectile[projID7].netUpdate = true;
 					}
 				}
-				if (this.customAI[1] == 180f)
+				if (base.npc.ai[0] == 180f)
 				{
 					int p74 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p74].netUpdate = true;
 				}
-				if (this.customAI[1] == 240f)
+				if (base.npc.ai[0] == 240f)
 				{
 					int p75 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p75].netUpdate = true;
 				}
-				if (this.customAI[1] == 300f)
+				if (base.npc.ai[0] == 300f)
 				{
 					int p76 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p76].netUpdate = true;
 				}
-				if (this.customAI[1] == 360f)
+				if (base.npc.ai[0] == 360f)
 				{
 					int p77 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
 					Main.projectile[p77].netUpdate = true;
 				}
-				if (this.customAI[1] >= 580f && !NPC.AnyNPCs(base.mod.NPCType("SpaceKeeper")))
+				if (base.npc.ai[0] >= 580f && !NPC.AnyNPCs(base.mod.NPCType("SpaceKeeper")))
 				{
-					this.musicChange = true;
 					this.customAI[2] += 1f;
-					if (this.customAI[2] == 5f && !RedeConfigClient.Instance.NoBossText)
+					if (this.customAI[2] == 5f && !RedeConfigClient.Instance.NoBossText && RedeWorld.slayerRep < 4)
 					{
-						string text20 = "No...";
+						string text26 = "No...";
 						Color rarityCyan = Colors.RarityCyan;
-						byte r20 = rarityCyan.R;
+						byte r26 = rarityCyan.R;
 						rarityCyan = Colors.RarityCyan;
-						byte g20 = rarityCyan.G;
+						byte g26 = rarityCyan.G;
 						rarityCyan = Colors.RarityCyan;
-						Main.NewText(text20, r20, g20, rarityCyan.B, false);
+						Main.NewText(text26, r26, g26, rarityCyan.B, false);
 						base.npc.netUpdate = true;
 					}
 					if (this.customAI[2] == 50f && !RedeConfigClient.Instance.NoBossText)
 					{
-						string text21 = "NO! HOW IS THIS HAPPENING!?";
-						Color rarityCyan = Colors.RarityCyan;
-						byte r21 = rarityCyan.R;
-						rarityCyan = Colors.RarityCyan;
-						byte g21 = rarityCyan.G;
-						rarityCyan = Colors.RarityCyan;
-						Main.NewText(text21, r21, g21, rarityCyan.B, false);
-					}
-					if (this.customAI[2] == 150f && !RedeConfigClient.Instance.NoBossText)
-					{
-						if (NPC.downedPlantBoss)
+						if (RedeWorld.slayerRep >= 4)
 						{
-							string text22 = "HOW ARE YOU WINNING!? THIS IS UNACCEPTABLE!";
+							string text27 = "Prototype Multium is the weakest of my 'vessels'.";
 							Color rarityCyan = Colors.RarityCyan;
-							byte r22 = rarityCyan.R;
+							byte r27 = rarityCyan.R;
 							rarityCyan = Colors.RarityCyan;
-							byte g22 = rarityCyan.G;
+							byte g27 = rarityCyan.G;
 							rarityCyan = Colors.RarityCyan;
-							Main.NewText(text22, r22, g22, rarityCyan.B, false);
+							Main.NewText(text27, r27, g27, rarityCyan.B, false);
 						}
 						else
 						{
-							string text23 = "YOU HAVEN'T EVEN DEFEATED THAT DAMN PLANT YET, HOW ARE YOU DEFEATING ME!?";
+							string text28 = "NO! HOW IS THIS HAPPENING!?";
 							Color rarityCyan = Colors.RarityCyan;
-							byte r23 = rarityCyan.R;
+							byte r28 = rarityCyan.R;
 							rarityCyan = Colors.RarityCyan;
-							byte g23 = rarityCyan.G;
+							byte g28 = rarityCyan.G;
 							rarityCyan = Colors.RarityCyan;
-							Main.NewText(text23, r23, g23, rarityCyan.B, false);
+							Main.NewText(text28, r28, g28, rarityCyan.B, false);
+						}
+					}
+					if (this.customAI[2] == 150f && !RedeConfigClient.Instance.NoBossText)
+					{
+						if (RedeWorld.slayerRep >= 4)
+						{
+							string text29 = "But I wear it anyway... I guess it reminds me of the time I was still human.";
+							Color rarityCyan = Colors.RarityCyan;
+							byte r29 = rarityCyan.R;
+							rarityCyan = Colors.RarityCyan;
+							byte g29 = rarityCyan.G;
+							rarityCyan = Colors.RarityCyan;
+							Main.NewText(text29, r29, g29, rarityCyan.B, false);
+						}
+						else if (NPC.downedPlantBoss)
+						{
+							string text30 = "HOW ARE YOU WINNING!? THIS IS UNACCEPTABLE!";
+							Color rarityCyan = Colors.RarityCyan;
+							byte r30 = rarityCyan.R;
+							rarityCyan = Colors.RarityCyan;
+							byte g30 = rarityCyan.G;
+							rarityCyan = Colors.RarityCyan;
+							Main.NewText(text30, r30, g30, rarityCyan.B, false);
+						}
+						else
+						{
+							string text31 = "YOU HAVEN'T EVEN DEFEATED THAT DAMN PLANT YET, HOW ARE YOU DEFEATING ME!?";
+							Color rarityCyan = Colors.RarityCyan;
+							byte r31 = rarityCyan.R;
+							rarityCyan = Colors.RarityCyan;
+							byte g31 = rarityCyan.G;
+							rarityCyan = Colors.RarityCyan;
+							Main.NewText(text31, r31, g31, rarityCyan.B, false);
 						}
 					}
 					if (this.customAI[2] == 320f && !RedeConfigClient.Instance.NoBossText)
 					{
-						string text24 = "I'VE HAD ENOUGH OF YOU! LET'S FINISH THIS!";
-						Color rarityCyan = Colors.RarityCyan;
-						byte r24 = rarityCyan.R;
-						rarityCyan = Colors.RarityCyan;
-						byte g24 = rarityCyan.G;
-						rarityCyan = Colors.RarityCyan;
-						Main.NewText(text24, r24, g24, rarityCyan.B, false);
+						if (RedeWorld.slayerRep >= 4)
+						{
+							string text32 = "Why am I having a conversation while fighting!? Sorry, let's finish this!";
+							Color rarityCyan = Colors.RarityCyan;
+							byte r32 = rarityCyan.R;
+							rarityCyan = Colors.RarityCyan;
+							byte g32 = rarityCyan.G;
+							rarityCyan = Colors.RarityCyan;
+							Main.NewText(text32, r32, g32, rarityCyan.B, false);
+						}
+						else
+						{
+							string text33 = "I'VE HAD ENOUGH OF YOU! LET'S FINISH THIS!";
+							Color rarityCyan = Colors.RarityCyan;
+							byte r33 = rarityCyan.R;
+							rarityCyan = Colors.RarityCyan;
+							byte g33 = rarityCyan.G;
+							rarityCyan = Colors.RarityCyan;
+							Main.NewText(text33, r33, g33, rarityCyan.B, false);
+						}
 					}
 					if (this.customAI[2] >= 500f)
 					{
@@ -1800,7 +1908,6 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 							Main.dust[dustIndex].velocity *= 2.9f;
 						}
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-						this.customAI[1] = 0f;
 						this.customAI[2] = 0f;
 						this.shieldEvent = KSEntrance.AISTATE_SHIELD4;
 						this.customAI[4] = 0f;
@@ -1811,10 +1918,6 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 						base.npc.netUpdate = true;
 					}
 				}
-			}
-			if (this.musicChange)
-			{
-				this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossSlayer2");
 			}
 			if (this.rocketEvent)
 			{
@@ -2313,13 +2416,13 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 			}
 		}
 
-		private Player player;
+		public Player player;
 
-		private float speed;
+		public float speed;
 
-		private Vector2[] oldPos = new Vector2[3];
+		public Vector2[] oldPos = new Vector2[3];
 
-		private float[] oldrot = new float[3];
+		public float[] oldrot = new float[3];
 
 		public float[] customAI = new float[5];
 
@@ -2406,8 +2509,6 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 		private int chargeRCounter;
 
 		private int rocketRCounter;
-
-		private bool musicChange;
 
 		private bool shield10Seconds;
 

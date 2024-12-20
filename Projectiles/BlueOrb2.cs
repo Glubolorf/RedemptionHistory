@@ -7,6 +7,14 @@ namespace Redemption.Projectiles
 {
 	public class BlueOrb2 : ModProjectile
 	{
+		public override string Texture
+		{
+			get
+			{
+				return "Redemption/Projectiles/BlueOrb1";
+			}
+		}
+
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Blue Orb");

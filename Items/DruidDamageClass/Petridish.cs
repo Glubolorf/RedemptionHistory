@@ -9,7 +9,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Mitosis");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nThrow a Petridish filled with bacteria");
+			base.Tooltip.SetDefault("Throw a Petridish filled with bacteria");
 		}
 
 		public override void SafeSetDefaults()

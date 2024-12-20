@@ -10,7 +10,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Brynildra");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nCasts a dark bolt\nIf the bolt comes in contact with an enemy, a leafless tree sprouts out of the ground beneath");
+			base.Tooltip.SetDefault("Casts a dark bolt\nIf the bolt comes in contact with an enemy, a leafless tree sprouts out of the ground beneath");
 		}
 
 		public override void SafeSetDefaults()

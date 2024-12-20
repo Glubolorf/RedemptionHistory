@@ -9,15 +9,15 @@ namespace Redemption.Items.Armor
 	{
 		0
 	})]
-	public class DryadGarland : ModItem
+	public class DryadGarland : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Dryad's Garland");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n2% increased druidic damage\n2% increased druidic critical strike chance");
+			base.Tooltip.SetDefault("2% increased druidic damage\n2% increased druidic critical strike chance");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 26;
 			base.item.height = 24;
@@ -41,7 +41,7 @@ namespace Redemption.Items.Armor
 		public override void UpdateArmorSet(Player player)
 		{
 			player.setBonus = "Staves swing faster";
-			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).fasterStaves = true;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).staveSpeed += 0.05f;
 		}
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)

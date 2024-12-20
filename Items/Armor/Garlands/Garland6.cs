@@ -9,15 +9,15 @@ namespace Redemption.Items.Armor.Garlands
 	{
 		0
 	})]
-	public class Garland6 : ModItem
+	public class Garland6 : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Titanium Garland");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n16% increased druidic damage\n7% increased druidic critical strike chance");
+			base.Tooltip.SetDefault("16% increased druidic damage\n7% increased druidic critical strike chance");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 24;
 			base.item.height = 26;
@@ -42,7 +42,7 @@ namespace Redemption.Items.Armor.Garlands
 		{
 			player.setBonus = "Staves swing faster, Throws seedbags faster, Spirits shoot faster\nBriefly become invulnerable after striking an enemy";
 			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.fasterStaves = true;
+			redePlayer.staveSpeed += 0.05f;
 			redePlayer.fasterSeedbags = true;
 			redePlayer.fasterSpirits = true;
 			player.onHitDodge = true;
@@ -50,7 +50,7 @@ namespace Redemption.Items.Armor.Garlands
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
 		{
-			drawAltHair = true;
+			drawHair = true;
 		}
 
 		public override void AddRecipes()

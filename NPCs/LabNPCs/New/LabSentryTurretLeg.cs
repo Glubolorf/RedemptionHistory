@@ -76,7 +76,7 @@ namespace Redemption.NPCs.LabNPCs.New
 			else if (distance < 450f)
 			{
 				this.customGunRot = false;
-				if ((int)Main.tile[point.X, point.Y].wall == base.mod.WallType("HardenedlyHardenedSludgeWallTile") || (int)Main.tile[point.X, point.Y].wall == base.mod.WallType("HardenedSludgeWallTile") || (int)Main.tile[point.X, point.Y].wall == base.mod.WallType("LabWallTileUnsafe") || (int)Main.tile[point.X, point.Y].wall == base.mod.WallType("VentWallTile"))
+				if ((int)Main.tile[point.X, point.Y].wall == base.mod.WallType("HardenedlyHardenedSludgeWallTile") || (int)Main.tile[point.X, point.Y].wall == base.mod.WallType("HardenedSludgeWallTile") || (int)Main.tile[point.X, point.Y].wall == base.mod.WallType("LabWallTileUnsafe") || ((int)Main.tile[point.X, point.Y].wall == base.mod.WallType("VentWallTile") && !this.player.dead))
 				{
 					base.npc.ai[2] += 1f;
 					if (base.npc.ai[2] % 5f == 0f)

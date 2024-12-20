@@ -4,15 +4,15 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class DruidsCharm : ModItem
+	public class DruidsCharm : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Master Druid's Charm");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n5% increased druidic damage\nNegates fall damage\nGrants immunity to fire blocks\nForms an spirit skull to aid you upon being attacked\nStaves will burn targets\nSeedbags will inflict Frostburn\nSeedbags that throw only one seed will throw 2-3 seeds instead\nStaves swing faster\nThrows seedbags faster\nSpirits shoot faster\nSpirit summoning weapons will summon 2 extra spirits\nSpirits pierce through more targets\nSpirits home in on enemies\n95% decrease to all other damage types");
+			base.Tooltip.SetDefault("5% increased druidic damage\nNegates fall damage\nGrants immunity to fire blocks\nForms an spirit skull to aid you upon being attacked\nStaves will burn targets\nSeedbags will inflict Frostburn\nSeedbags that throw only one seed will throw 2-3 seeds instead\nStaves swing faster\nThrows seedbags faster\nSpirits shoot faster\nSpirit summoning weapons will summon 2 extra spirits\nSpirits pierce through more targets\nSpirits home in on enemies\n95% decrease to all other damage types");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 42;
 			base.item.height = 52;
@@ -60,7 +60,7 @@ namespace Redemption.Items.DruidDamageClass
 			redePlayer.burnStaves = true;
 			redePlayer.spiritSkull1 = true;
 			redePlayer.moreSeeds = true;
-			redePlayer.fasterStaves = true;
+			redePlayer.staveSpeed += 0.05f;
 			redePlayer.fasterSeedbags = true;
 			redePlayer.fasterSpirits = true;
 			redePlayer.moreSpirits = true;

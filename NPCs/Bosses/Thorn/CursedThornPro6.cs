@@ -34,6 +34,11 @@ namespace Redemption.NPCs.Bosses.Thorn
 			base.projectile.localAI[0] += 1f;
 		}
 
+		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+		{
+			target.AddBuff(70, 600, true);
+		}
+
 		public override bool PreDraw(SpriteBatch sb, Color drawColor)
 		{
 			Color newLightColor = new Color(Math.Max(0, (int)CursedThornPro6.lightColor.R + Math.Min(0, -base.projectile.alpha + 20)), Math.Max(0, (int)CursedThornPro6.lightColor.G + Math.Min(0, -base.projectile.alpha + 20)), Math.Max(0, (int)CursedThornPro6.lightColor.B + Math.Min(0, -base.projectile.alpha + 20)));

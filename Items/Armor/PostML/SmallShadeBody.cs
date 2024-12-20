@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
@@ -11,20 +9,21 @@ namespace Redemption.Items.Armor.PostML
 	{
 		1
 	})]
-	public class SmallShadeBody : ModItem
+	public class SmallShadeBody : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Small Shadeplate");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n50 max life and mana\n10% increased druidic damage\n8% increased damage reduction");
+			base.Tooltip.SetDefault("50 max life and mana\n10% increased druidic damage\n8% increased damage reduction");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 38;
 			base.item.height = 26;
 			base.item.value = Item.sellPrice(0, 25, 0, 0);
 			base.item.defense = 26;
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 2;
 		}
 
 		public override void UpdateEquip(Player player)
@@ -33,17 +32,6 @@ namespace Redemption.Items.Armor.PostML
 			player.statManaMax2 += 50;
 			player.endurance += 0.08f;
 			DruidDamagePlayer.ModPlayer(player).druidDamage += 0.1f;
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> list)
-		{
-			foreach (TooltipLine line2 in list)
-			{
-				if (line2.mod == "Terraria" && line2.Name == "ItemName")
-				{
-					line2.overrideColor = new Color?(RedeColor.SoullessColour);
-				}
-			}
 		}
 
 		public override void AddRecipes()

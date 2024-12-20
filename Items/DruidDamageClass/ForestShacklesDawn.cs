@@ -4,15 +4,15 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class ForestShacklesDawn : ModItem
+	public class ForestShacklesDawn : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Forest Shackles");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Dawn'\n5% increased druidic damage\nStaves swing faster");
+			base.Tooltip.SetDefault("'Dawn'\n5% increased druidic damage\nStaves swing faster");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 40;
 			base.item.height = 46;
@@ -55,7 +55,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			DruidDamagePlayer.ModPlayer(player).druidDamage += 0.05f;
-			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).fasterStaves = true;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).staveSpeed += 0.05f;
 		}
 	}
 }

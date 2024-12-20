@@ -8,7 +8,7 @@ namespace Redemption.Items.LabThings
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Floppy Disk");
-			base.Tooltip.SetDefault("It reads - [c/87d883:'The Xenomite particles are very fine but complex, with the ability to quickly get rid of our most powerful antibiotics and other medicine.]\n[c/87d883:While we have developed a 'cure' for it, the Xenomite replicates way too fast for it to be effective.]\n[c/87d883:Currently we'd need a constant drip of the cure for it to just slow down it,]\n[c/87d883:as we haven't had time to make it potent enough to destroy all Xenomite particles.']");
+			base.Tooltip.SetDefault("'A very old floppy disk. A T-Bot might be able to decode the data...'\n(1/2)");
 		}
 
 		public override void SetDefaults()

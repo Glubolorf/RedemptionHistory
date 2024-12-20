@@ -21,7 +21,7 @@ namespace Redemption.Items.DruidDamageClass
 				Main.glowMaskTexture = glowMasks;
 			}
 			base.DisplayName.SetDefault("Lihzahrd World Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Holds the power of the sun'\nSummon a Golem Statue\nThe statue emits a great aura that increases player's attack and life regen when near\nCan only place one at a time");
+			base.Tooltip.SetDefault("'Holds the power of the sun'\nSummon a Golem Statue\nThe statue emits a great aura that increases player's attack and life regen when near\nCan only place one at a time");
 			Item.staff[base.item.type] = true;
 		}
 

@@ -52,14 +52,6 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 			base.npc.noGravity = true;
 			base.npc.noTileCollide = true;
 			base.npc.behindTiles = true;
-			if (RedeConfigClient.Instance.AntiAntti)
-			{
-				this.music = 38;
-			}
-			else
-			{
-				this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossStarGod1");
-			}
 			base.npc.HitSound = SoundID.NPCHit56;
 			base.npc.DeathSound = SoundID.NPCDeath60;
 			for (int i = 0; i < base.npc.buffImmune.Length; i++)

@@ -45,7 +45,7 @@ namespace Redemption.NPCs
 			base.npc.height = 40;
 			base.npc.aiStyle = 7;
 			base.npc.damage = 10;
-			base.npc.defense = 99;
+			base.npc.defense = 99999;
 			base.npc.lifeMax = 250;
 			base.npc.HitSound = SoundID.NPCHit1;
 			base.npc.DeathSound = SoundID.NPCDeath1;
@@ -99,22 +99,35 @@ namespace Redemption.NPCs
 		{
 			if (RedeWorld.downedNebuleus)
 			{
-				return "... I saw what you did.";
+				switch (Main.rand.Next(4))
+				{
+				case 0:
+					return "Soon... I can feel myself being restored...";
+				case 1:
+					return "My death, my sleep within the earth, it has undone myself. But as my time awake grows longer, my lost self returns.";
+				case 2:
+					return "It's all coming back to me... I saw what you did... I can comprehend more than just the dirt below my feet now... I have something to say to you, but I am still not ready.";
+				default:
+					return "... I saw what you did.";
+				}
 			}
-			switch (Main.rand.Next(6))
+			else
 			{
-			case 0:
-				return "I'M READY, I'M READY!";
-			case 1:
-				return "Me find shiny stones!";
-			case 2:
-				return "Oof!";
-			case 3:
-				return "My dirt is 10% off!";
-			case 4:
-				return "Where are all the other Noobs?";
-			default:
-				return "Hewwo! I am Newb!";
+				switch (Main.rand.Next(6))
+				{
+				case 0:
+					return "I'M READY, I'M READY!";
+				case 1:
+					return "Me find shiny stones!";
+				case 2:
+					return "You look stupid! Haha!";
+				case 3:
+					return "My dirt is 10% off!";
+				case 4:
+					return "Where are all the other Noobs?";
+				default:
+					return "Hewwo! I am Newb!";
+				}
 			}
 		}
 
@@ -219,7 +232,7 @@ namespace Redemption.NPCs
 
 		public override void DrawTownAttackSwing(ref Texture2D item, ref int itemSize, ref float scale, ref Vector2 offset)
 		{
-			item = Main.itemTexture[base.mod.ItemType("DirtSword")];
+			item = Main.itemTexture[base.mod.ItemType("AncientWoodSword")];
 		}
 
 		private int seriousFrame;

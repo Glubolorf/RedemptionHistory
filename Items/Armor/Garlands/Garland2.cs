@@ -9,15 +9,15 @@ namespace Redemption.Items.Armor.Garlands
 	{
 		0
 	})]
-	public class Garland2 : ModItem
+	public class Garland2 : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Palladium Garland");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n9% increased druidic damage\n9% increased druidic critical strike chance");
+			base.Tooltip.SetDefault("9% increased druidic damage\n9% increased druidic critical strike chance");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 18;
@@ -41,13 +41,13 @@ namespace Redemption.Items.Armor.Garlands
 		public override void UpdateArmorSet(Player player)
 		{
 			player.setBonus = "Staves swing faster\nGreatly increases life regeneration";
-			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).fasterStaves = true;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).staveSpeed += 0.05f;
 			player.palladiumRegen = true;
 		}
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
 		{
-			drawAltHair = true;
+			drawHair = true;
 		}
 
 		public override void AddRecipes()

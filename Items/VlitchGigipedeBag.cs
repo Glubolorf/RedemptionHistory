@@ -70,7 +70,7 @@ namespace Redemption.Items
 			}
 			player.QuickSpawnItem(base.mod.ItemType("CorruptedXenomite"), Main.rand.Next(18, 28));
 			player.QuickSpawnItem(base.mod.ItemType("VlitchScale"), Main.rand.Next(25, 35));
-			player.QuickSpawnItem(base.mod.ItemType("CorruptedStarlite"), Main.rand.Next(20, 25));
+			player.QuickSpawnItem(base.mod.ItemType("CorruptedStarliteBar"), Main.rand.Next(20, 25));
 			player.QuickSpawnItem(base.mod.ItemType("VlitchBattery"), Main.rand.Next(2, 4));
 			player.QuickSpawnItem(base.mod.ItemType("MiniVlitchCoreItem"), 1);
 		}

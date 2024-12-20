@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class CreationPickaxe : ModItem
+	public class CreationPickaxe : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -22,10 +22,9 @@ namespace Redemption.Items.DruidDamageClass
 				Main.glowMaskTexture = glowMasks;
 			}
 			base.DisplayName.SetDefault("Creation Pickaxe");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.damage = 80;
 			base.item.width = 38;
@@ -33,7 +32,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.crit = 4;
 			base.item.useTime = 6;
 			base.item.useAnimation = 11;
-			base.item.pick = 255;
+			base.item.pick = 225;
 			base.item.useStyle = 1;
 			base.item.knockBack = 5.5f;
 			base.item.value = Item.sellPrice(0, 5, 0, 0);

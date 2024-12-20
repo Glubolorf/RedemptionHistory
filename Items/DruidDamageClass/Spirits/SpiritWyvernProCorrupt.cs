@@ -25,6 +25,8 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 			base.projectile.tileCollide = false;
 			base.projectile.ignoreWater = true;
 			base.projectile.timeLeft = 200;
+			base.projectile.GetGlobalProjectile<DruidProjectile>().druidic = true;
+			base.projectile.GetGlobalProjectile<DruidProjectile>().fromStave = false;
 		}
 
 		public override void AI()

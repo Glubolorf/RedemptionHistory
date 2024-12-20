@@ -14,7 +14,7 @@ namespace Redemption.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 7;
+			base.item.damage = 5;
 			base.item.ranged = true;
 			base.item.width = 36;
 			base.item.height = 22;
@@ -42,7 +42,6 @@ namespace Redemption.Items.Weapons
 			ModRecipe modRecipe = new ModRecipe(base.mod);
 			modRecipe.anyWood = true;
 			modRecipe.AddIngredient(null, "KaniteBar", 14);
-			modRecipe.AddIngredient(97, 10);
 			modRecipe.AddIngredient(9, 4);
 			modRecipe.AddTile(16);
 			modRecipe.SetResult(this, 1);

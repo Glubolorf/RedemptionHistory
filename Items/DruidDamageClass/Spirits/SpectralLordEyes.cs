@@ -22,6 +22,8 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 			base.projectile.tileCollide = false;
 			base.projectile.alpha = 255;
 			base.projectile.timeLeft = 60;
+			base.projectile.GetGlobalProjectile<DruidProjectile>().druidic = true;
+			base.projectile.GetGlobalProjectile<DruidProjectile>().fromStave = false;
 		}
 
 		public override void AI()
@@ -53,18 +55,6 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			target.immune[base.projectile.owner] = 4;
-		}
-
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
-		{
-			Player player = Main.player[base.projectile.owner];
-			int critChance = player.HeldItem.crit;
-			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref critChance);
-			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref critChance);
-			if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
-			{
-				crit = true;
-			}
 		}
 	}
 }

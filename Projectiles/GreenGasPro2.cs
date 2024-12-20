@@ -5,6 +5,14 @@ namespace Redemption.Projectiles
 {
 	public class GreenGasPro2 : ModProjectile
 	{
+		public override string Texture
+		{
+			get
+			{
+				return "Redemption/Projectiles/GreenGasPro";
+			}
+		}
+
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Radioactive Gas");

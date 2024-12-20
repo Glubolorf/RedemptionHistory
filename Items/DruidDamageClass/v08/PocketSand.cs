@@ -10,7 +10,7 @@ namespace Redemption.Items.DruidDamageClass.v08
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Pocket Sand");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Zombie you don't like? Just throw sand in their eyes!'\nThrows a dust cloud that slightly reduces defense");
+			base.Tooltip.SetDefault("'Zombie you don't like? Just throw sand in their eyes!'\nThrows a dust cloud that slightly reduces defense");
 		}
 
 		public override void SafeSetDefaults()

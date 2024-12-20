@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -31,6 +30,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.shoot = 10;
 			base.item.shootSpeed = 10f;
 			base.item.useAmmo = AmmoID.Dart;
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}
 
 		public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
@@ -53,17 +53,6 @@ namespace Redemption.Items.Weapons.v08
 			modRecipe.AddTile(412);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> list)
-		{
-			foreach (TooltipLine line2 in list)
-			{
-				if (line2.mod == "Terraria" && line2.Name == "ItemName")
-				{
-					line2.overrideColor = new Color?(new Color(0, 255, 200));
-				}
-			}
 		}
 	}
 }

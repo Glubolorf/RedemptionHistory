@@ -9,15 +9,15 @@ namespace Redemption.Items.Armor
 	{
 		2
 	})]
-	public class BloomDruidLeggings : ModItem
+	public class BloomDruidLeggings : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Blossom Druid's Leggings");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n8% increased druidic damage\n8% increased druidic critical strike chance\nIncreased life regen");
+			base.Tooltip.SetDefault("8% increased druidic damage\n8% increased druidic critical strike chance\nIncreased life regen");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 22;
 			base.item.height = 18;

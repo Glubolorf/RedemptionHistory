@@ -36,7 +36,6 @@ namespace Redemption.NPCs.Bosses.InfectedEye
 			base.npc.HitSound = SoundID.NPCHit1;
 			base.npc.DeathSound = SoundID.NPCDeath1;
 			base.npc.buffImmune[24] = true;
-			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossXeno2");
 			base.npc.buffImmune[20] = true;
 			base.npc.netAlways = true;
 			this.bossBag = base.mod.ItemType("InfectedEyeBag");
@@ -91,7 +90,6 @@ namespace Redemption.NPCs.Bosses.InfectedEye
 			potionType = 499;
 			if (!RedeWorld.downedInfectedEye)
 			{
-				CombatText.NewText(this.player.getRect(), Color.Gray, "+0", true, false);
 				for (int i = 0; i < 255; i++)
 				{
 					Player player2 = Main.player[i];
@@ -104,6 +102,7 @@ namespace Redemption.NPCs.Bosses.InfectedEye
 								Main.NewText("<Chalice of Alignment> Oh... That's only made the Infection worse... Well, it doesn't matter, at least Cthulhu's other eye is no more!", Color.DarkGoldenrod, false);
 							}
 						}
+						CombatText.NewText(player2.getRect(), Color.Gray, "+0", true, false);
 					}
 				}
 			}

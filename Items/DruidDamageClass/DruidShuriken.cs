@@ -11,7 +11,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Druid Shuriken");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nAny enemy that gets hit is inflicted with a pollen cloud\nNot consumable, but deals less damage to compensate");
+			base.Tooltip.SetDefault("Any enemy that gets hit is inflicted with a pollen cloud\nNot consumable, but deals less damage to compensate");
 		}
 
 		public override void SafeSetDefaults()

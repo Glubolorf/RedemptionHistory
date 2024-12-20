@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Items;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -36,11 +37,11 @@ namespace Redemption.Prefixes
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus)
 		{
 			damageMult -= 0.08f;
-			manaMult += 0.12f;
 		}
 
 		public override void Apply(Item item)
 		{
+			item.GetGlobalItem<RedeItem>().prefixLifetimeModifier = 0.9f;
 		}
 
 		public override void ModifyValue(ref float valueMult)

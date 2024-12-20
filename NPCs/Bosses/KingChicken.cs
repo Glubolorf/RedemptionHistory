@@ -29,7 +29,6 @@ namespace Redemption.NPCs.Bosses
 			this.aiType = 46;
 			this.animationType = 46;
 			base.npc.boss = true;
-			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossKingChicken");
 			this.bossBag = base.mod.ItemType("KingChickenBag");
 		}
 
@@ -176,7 +175,7 @@ namespace Redemption.NPCs.Bosses
 
 		public override void BossLoot(ref string name, ref int potionType)
 		{
-			Player player = Main.player[base.npc.target];
+			Player player3 = Main.player[base.npc.target];
 			string text = "It's a freakin' chicken, what did you expect...";
 			Color rarityGreen = Colors.RarityGreen;
 			byte r = rarityGreen.R;
@@ -187,7 +186,6 @@ namespace Redemption.NPCs.Bosses
 			potionType = 0;
 			if (!RedeWorld.downedKingChicken)
 			{
-				CombatText.NewText(player.getRect(), Color.Gray, "+0", true, false);
 				for (int i = 0; i < 255; i++)
 				{
 					Player player2 = Main.player[i];
@@ -200,6 +198,7 @@ namespace Redemption.NPCs.Bosses
 								Main.NewText("<Chalice of Alignment> ... Hehe.", Color.DarkGoldenrod, false);
 							}
 						}
+						CombatText.NewText(player2.getRect(), Color.Gray, "+0", true, false);
 					}
 				}
 			}

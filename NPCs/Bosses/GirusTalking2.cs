@@ -24,25 +24,30 @@ namespace Redemption.NPCs.Bosses
 			base.projectile.localAI[1] += 1f;
 			if (base.projectile.localAI[1] == 580f)
 			{
-				Main.NewText("Come on, Vlitch Gigipede, I had at least a shred of hope in you...", new Color(255, 32, 32), false);
+				Main.NewText("Second Overlord is down. Oh well.", new Color(255, 32, 32), false);
 				Redemption.GirusSilence = true;
 			}
 			if (base.projectile.localAI[1] == 800f)
 			{
-				Main.NewText("Oh whatever, he was a just a big edgy worm, a useless minion!", new Color(255, 32, 32), false);
+				Main.NewText("Wasn't my creation though, in fact it was our...", new Color(255, 32, 32), false);
 			}
-			if (base.projectile.localAI[1] == 1200f)
+			if (base.projectile.localAI[1] == 1000f)
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().omegaPower)
-				{
-					Main.NewText("Little android! I'm interested in you, keep this up you may even become the latest Overlord!", new Color(255, 32, 32), false);
-				}
-				else
-				{
-					Main.NewText("Little organic thing! I'm interested in you, keep going and see how far you get...", new Color(255, 32, 32), false);
-				}
+				Main.NewText("...", new Color(255, 32, 32), false);
 			}
-			if (base.projectile.localAI[1] == 1600f)
+			if (base.projectile.localAI[1] == 1100f)
+			{
+				Main.NewText("... That doesn't matter. 'Grats! You defeated a black-and-red worm machine thing!", new Color(255, 32, 32), false);
+			}
+			if (base.projectile.localAI[1] == 1400f)
+			{
+				Main.NewText("*slow clapping* Very impressive.", new Color(255, 32, 32), false);
+			}
+			if (base.projectile.localAI[1] == 1750f)
+			{
+				Main.NewText("Now, the next Overlord is a prototype of mine. It's already quite the fighter.", new Color(255, 32, 32), false);
+			}
+			if (base.projectile.localAI[1] >= 2000f)
 			{
 				Main.NewText("Good luck.", new Color(255, 32, 32), false);
 				base.projectile.Kill();

@@ -9,21 +9,22 @@ namespace Redemption.Items.Armor
 	{
 		1
 	})]
-	public class SoulBody : ModItem
+	public class SoulBody : DruidDamageSpirit
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Lost Soul's Chestplate");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n2% increased druidic damage\n4% increased druidic critical strike chance\n2% damage reduction\nSpirits shoot faster\n[c/bdffff:Spirit Level +1]");
+			base.Tooltip.SetDefault("2% increased druidic damage\n4% increased druidic critical strike chance\n2% damage reduction\nSpirits shoot faster\n[c/bdffff:Spirit Level +1]");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 32;
 			base.item.height = 26;
 			base.item.value = 75;
 			base.item.rare = 1;
 			base.item.defense = 5;
+			this.spiritWeapon = false;
 		}
 
 		public override void UpdateEquip(Player player)

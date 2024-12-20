@@ -1,18 +1,17 @@
 ﻿using System;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass.DruidS
 {
-	public class SapphironOre : ModItem
+	public class SapphironOre : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Sapphiron Ore");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Sky Sapphire'");
+			base.Tooltip.SetDefault("'Sky Sapphire'");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 20;
 			base.item.height = 22;

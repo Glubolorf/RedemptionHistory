@@ -13,6 +13,7 @@ namespace Redemption.Tiles.Wasteland
 			Main.tileSpelunker[(int)base.Type] = true;
 			Main.tileMergeDirt[(int)base.Type] = true;
 			Main.tileBlockLight[(int)base.Type] = true;
+			Main.tileValue[(int)base.Type] = 600;
 			Main.tileMerge[(int)base.Type][base.mod.TileType("DeadRockTile")] = true;
 			this.drop = base.mod.ItemType("Starlite");
 			this.minPick = 180;

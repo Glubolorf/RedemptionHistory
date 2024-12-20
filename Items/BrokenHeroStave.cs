@@ -1,18 +1,17 @@
 ﻿using System;
+using Redemption.Items.DruidDamageClass;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace Redemption.Items
 {
-	public class BrokenHeroStave : ModItem
+	public class BrokenHeroStave : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Broken Hero Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 28;
 			base.item.height = 28;

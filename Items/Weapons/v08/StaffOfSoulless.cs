@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -33,17 +32,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.autoReuse = true;
 			base.item.shoot = base.mod.ProjectileType("TinyBlackenedHeartPro");
 			base.item.shootSpeed = 29f;
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> list)
-		{
-			foreach (TooltipLine line2 in list)
-			{
-				if (line2.mod == "Terraria" && line2.Name == "ItemName")
-				{
-					line2.overrideColor = new Color?(RedeColor.SoullessColour);
-				}
-			}
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 2;
 		}
 
 		public override void HoldItem(Player player)

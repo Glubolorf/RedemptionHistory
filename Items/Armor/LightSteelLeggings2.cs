@@ -13,7 +13,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Shining Hikarite Leggings");
-			base.Tooltip.SetDefault("+2 max minions\n15% increased movement speed");
+			base.Tooltip.SetDefault("+1 max minions\n15% increased movement speed");
 		}
 
 		public override void SetDefaults()
@@ -27,7 +27,7 @@ namespace Redemption.Items.Armor
 
 		public override void UpdateEquip(Player player)
 		{
-			player.maxMinions += 2;
+			player.maxMinions++;
 			player.moveSpeed += 0.15f;
 		}
 

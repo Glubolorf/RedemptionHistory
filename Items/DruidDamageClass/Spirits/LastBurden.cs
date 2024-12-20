@@ -1,39 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass.Spirits
 {
-	public class LastBurden : ModItem
+	public class LastBurden : DruidDamageSpirit
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Last Burden");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n'It crumbles in your hand...'\nIncreases spirits summoned to max\nSpirits home in on enemies\n[c/bdffff:Spirit Level +5]");
+			base.Tooltip.SetDefault("'It crumbles in your hand...'\nIncreases spirits summoned to max\nSpirits home in on enemies\n[c/bdffff:Spirit Level +5]");
 			Main.RegisterItemAnimation(base.item.type, new DrawAnimationVertical(3, 6));
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 42;
 			base.item.height = 56;
 			base.item.value = Item.sellPrice(0, 7, 50, 0);
 			base.item.rare = 11;
 			base.item.accessory = true;
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> list)
-		{
-			foreach (TooltipLine line2 in list)
-			{
-				if (line2.mod == "Terraria" && line2.Name == "ItemName")
-				{
-					line2.overrideColor = new Color?(RedeColor.SoullessColour);
-				}
-			}
+			this.spiritWeapon = false;
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 2;
 		}
 
 		public override bool CanEquipAccessory(Player player, int slot)

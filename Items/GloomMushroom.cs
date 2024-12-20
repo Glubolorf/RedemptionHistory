@@ -1,18 +1,18 @@
 ﻿using System;
+using Redemption.Items.DruidDamageClass;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace Redemption.Items
 {
-	public class GloomMushroom : ModItem
+	public class GloomMushroom : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Gloom Mushroom");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nUsed to craft Gloom Druid equipment");
+			base.Tooltip.SetDefault("Used to craft Gloom Druid equipment");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 18;
 			base.item.height = 18;

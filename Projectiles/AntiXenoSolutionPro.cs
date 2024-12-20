@@ -173,6 +173,18 @@ namespace Redemption.Projectiles
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1, 0);
 						}
+						else if (type == base.mod.TileType("LivingDeadLeavesTile"))
+						{
+							Main.tile[k, l].type = 192;
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1, 0);
+						}
+						else if (type == base.mod.TileType("LivingDeadWoodTile"))
+						{
+							Main.tile[k, l].type = 191;
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1, 0);
+						}
 					}
 				}
 			}

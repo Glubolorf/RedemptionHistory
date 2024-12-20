@@ -1,18 +1,19 @@
 ﻿using System;
+using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Placeable
 {
-	public class BotanistStation : ModItem
+	public class BotanistStation : DruidDamageItem
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Botanist Station");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nUsed to combine Seedbags");
+			base.Tooltip.SetDefault("Used to combine Seedbags");
 		}
 
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			base.item.width = 32;
 			base.item.height = 40;

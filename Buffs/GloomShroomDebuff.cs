@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.NPCs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -19,6 +20,11 @@ namespace Redemption.Buffs
 		{
 			player.lifeRegen = -5;
 			player.bleed = true;
+		}
+
+		public override void Update(NPC npc, ref int buffIndex)
+		{
+			npc.GetGlobalNPC<RedeGlobalNPC>().gloomShroom = true;
 		}
 	}
 }

@@ -21,7 +21,7 @@ namespace Redemption.Items.DruidDamageClass
 				Main.glowMaskTexture = glowMasks;
 			}
 			base.DisplayName.SetDefault("Gauche World Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Seeping with granite energy'\nSummon a Granite Golem Statue\nThe statue emits an aura that increases player's crit and mana regen when near\nCan only place one at a time");
+			base.Tooltip.SetDefault("'Seeping with granite energy'\nSummon a Granite Golem Statue\nThe statue emits an aura that increases player's crit and mana regen when near\nCan only place one at a time");
 			Item.staff[base.item.type] = true;
 		}
 

@@ -11,7 +11,6 @@ namespace Redemption.Items.DruidDamageClass.v08
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Acorn Bomb");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]");
 		}
 
 		public override void SafeSetDefaults()

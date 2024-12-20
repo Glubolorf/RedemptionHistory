@@ -21,7 +21,7 @@ namespace Redemption.Buffs
 			player.statDefense += 12;
 			player.endurance += 0.08f;
 			player.noKnockback = true;
-			modPlayer3.rapidStave = true;
+			modPlayer3.staveSpeed += 0.35f;
 			RedePlayer modPlayer2 = player.GetModPlayer<RedePlayer>();
 			if (player.ownedProjectileCounts[base.mod.ProjectileType("NatureGuardian10")] > 0)
 			{

@@ -10,7 +10,7 @@ namespace Redemption.Items
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Evil Jelly");
-			base.Tooltip.SetDefault("Lures a dark gelatinous being\nSold by Ragnos after all Mech bosses are defeated");
+			base.Tooltip.SetDefault("Lures a dark gelatinous being\nSold by Zephos/Daerel after all Mech bosses are defeated");
 		}
 
 		public override void SetDefaults()

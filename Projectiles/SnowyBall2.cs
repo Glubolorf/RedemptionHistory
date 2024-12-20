@@ -6,6 +6,14 @@ namespace Redemption.Projectiles
 {
 	public class SnowyBall2 : ModProjectile
 	{
+		public override string Texture
+		{
+			get
+			{
+				return "Redemption/Projectiles/SnowyBall";
+			}
+		}
+
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Chilling Sphere");

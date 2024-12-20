@@ -6,12 +6,12 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
-	public class MysticStave : DruidDamageItem
+	public class MysticStave : DruidStave
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Mystic Thorn Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nShoots a cluster of Mystic Thorn Bushes");
+			base.Tooltip.SetDefault("Shoots a cluster of Mystic Thorn Bushes");
 		}
 
 		public override void SafeSetDefaults()
@@ -21,47 +21,22 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.height = 48;
 			base.item.useTime = 44;
 			base.item.useAnimation = 44;
-			base.item.useStyle = 1;
 			base.item.crit = 4;
 			base.item.knockBack = 7f;
 			base.item.value = Item.sellPrice(0, 2, 50, 0);
 			base.item.rare = 7;
-			base.item.UseSound = SoundID.Item1;
+			base.item.UseSound = SoundID.Item43;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
 			base.item.shoot = base.mod.ProjectileType("Seed18");
 			base.item.shootSpeed = 11f;
+			this.defaultShoot = base.mod.ProjectileType("Seed18");
+			this.singleShotStave = false;
+			this.staveHoldOffset = new Vector2(4f, -10f);
+			this.staveLength = 48.2f;
 		}
 
-		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
-		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().burnStaves)
-			{
-				target.AddBuff(24, 180, false);
-			}
-		}
-
-		public override float UseTimeMultiplier(Player player)
-		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().fasterStaves)
-			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
-				{
-					return 1.45f;
-				}
-				return 1.15f;
-			}
-			else
-			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
-				{
-					return 1.35f;
-				}
-				return 1f;
-			}
-		}
-
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		protected override bool SpecialShootPattern(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
 			int numberProjectiles = 2 + Main.rand.Next(2);
 			for (int i = 0; i < numberProjectiles; i++)

@@ -16,7 +16,7 @@ namespace Redemption.Buffs
 
 		public override void Update(Player player, ref int buffIndex)
 		{
-			player.endurance += 0.8f;
+			player.endurance += 0.2f;
 			player.allDamage *= 0.4f;
 			player.buffTime[buffIndex] = 18000;
 			player.GetModPlayer<RedePlayer>().vlitchCoreAcc = true;

@@ -10,7 +10,7 @@ namespace Redemption.Items.DruidDamageClass.v08
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Poisonous Sleep Powder");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nThrows a poisonous cloud that tires normal enemies and reduces defense");
+			base.Tooltip.SetDefault("Throws a poisonous cloud that tires normal enemies and reduces defense");
 		}
 
 		public override void SafeSetDefaults()

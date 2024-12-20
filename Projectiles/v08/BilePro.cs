@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -28,6 +29,7 @@ namespace Redemption.Projectiles.v08
 			base.projectile.ignoreWater = true;
 			base.projectile.penetrate = 6;
 			base.projectile.extraUpdates = 2;
+			base.projectile.GetGlobalProjectile<DruidProjectile>().druidic = true;
 		}
 
 		public override void AI()
@@ -69,14 +71,7 @@ namespace Redemption.Projectiles.v08
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			Player player = Main.player[base.projectile.owner];
-			int critChance = player.HeldItem.crit;
-			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref critChance);
-			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref critChance);
-			if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
-			{
-			}
-			target.immune[base.projectile.owner] = 8;
+			target.immune[base.projectile.owner] = 6;
 			target.AddBuff(base.mod.BuffType("BileDebuff"), 600, false);
 		}
 	}

@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass.Spirits
 {
-	public class Shadebound : DruidDamageItem
+	public class Shadebound : DruidDamageSpirit
 	{
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Shadebound");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\nRelease a bond of shadesouls\nHolding this while an enemy is slain has a chance for a Small Shadesoul to spawn from said enemy\nThe higher your Spirit Level, the greater chance of the Small Shadesoul spawning\n[c/c0bdff:Minimum Spirit Level: 5]\n[c/bdffe4:Maximum Spirit Level: 7]");
+			base.Tooltip.SetDefault("Release a bond of shadesouls\nHolding this while an enemy is slain has a chance for a Small Shadesoul to spawn from said enemy\nThe higher your Spirit Level, the greater chance of the Small Shadesoul spawning");
 		}
 
 		public override void SafeSetDefaults()
@@ -32,17 +30,10 @@ namespace Redemption.Items.DruidDamageClass.Spirits
 			base.item.UseSound = SoundID.Item1;
 			base.item.value = Item.sellPrice(0, 55, 0, 0);
 			base.item.shoot = base.mod.ProjectileType("ShadeboundPro");
-		}
-
-		public override void ModifyTooltips(List<TooltipLine> list)
-		{
-			foreach (TooltipLine line2 in list)
-			{
-				if (line2.mod == "Terraria" && line2.Name == "ItemName")
-				{
-					line2.overrideColor = new Color?(RedeColor.SoullessColour);
-				}
-			}
+			this.spiritWeapon = true;
+			this.minSpiritLevel = 5;
+			this.maxSpiritLevel = 7;
+			base.item.GetGlobalItem<RedeItem>().redeRarity = 2;
 		}
 
 		public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)

@@ -19,11 +19,11 @@ namespace Redemption.Projectiles
 			base.projectile.height = 16;
 		}
 
-		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
+		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
 			if (Main.rand.Next(2) == 0 || (Main.expertMode && Main.rand.Next(1) == 0))
 			{
-				target.AddBuff(44, 50, true);
+				target.AddBuff(44, 50, false);
 			}
 		}
 	}

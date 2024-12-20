@@ -19,10 +19,11 @@ namespace Redemption.Projectiles
 			base.projectile.penetrate = -1;
 			base.projectile.hostile = false;
 			base.projectile.friendly = false;
-			base.projectile.alpha = 60;
+			base.projectile.alpha = 0;
 			base.projectile.tileCollide = false;
 			base.projectile.ignoreWater = true;
 			base.projectile.timeLeft = 63;
+			base.projectile.scale *= 2f;
 		}
 
 		public override void AI()

@@ -10,21 +10,18 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Mechanized World Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nSummon a Mechanical Abomination at your cursor point\nThe abomination emits a nano-field that increases player's attack and speed when near\nAlso deals damage to enemies\nCan only place one at a time");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nSummon a Mechanical Abomination at your cursor point\nThe abomination emits a nano-field that increases player's attack and speed when near\nCan only place one at a time");
 			Item.staff[base.item.type] = true;
 		}
 
 		public override void SafeSetDefaults()
 		{
-			base.item.damage = 27;
 			base.item.width = 50;
 			base.item.height = 50;
 			base.item.useTime = 30;
 			base.item.useAnimation = 30;
 			base.item.useStyle = 5;
 			base.item.mana = 100;
-			base.item.crit = 4;
-			base.item.knockBack = 0f;
 			base.item.value = Item.buyPrice(0, 5, 0, 0);
 			base.item.rare = 5;
 			base.item.UseSound = base.mod.GetLegacySoundSlot(2, "Sounds/Item/WorldTree1");

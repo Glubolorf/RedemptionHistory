@@ -17,7 +17,7 @@ namespace Redemption.Projectiles
 			base.projectile.CloneDefaults(45);
 			this.aiType = 45;
 			base.projectile.tileCollide = false;
-			base.projectile.timeLeft = 120;
+			base.projectile.timeLeft = 60;
 			base.projectile.knockBack = 0f;
 			base.projectile.penetrate = 2;
 		}

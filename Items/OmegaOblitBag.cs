@@ -32,7 +32,7 @@ namespace Redemption.Items
 			base.item.height = 24;
 			base.item.rare = 10;
 			base.item.expert = true;
-			this.bossBagNPC = base.mod.NPCType("OmegaOblitIdle");
+			this.bossBagNPC = base.mod.NPCType("OmegaOblitDamaged");
 			base.item.glowMask = OmegaOblitBag.customGlowMask;
 		}
 

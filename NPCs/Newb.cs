@@ -97,7 +97,7 @@ namespace Redemption.NPCs
 
 		public override string GetChat()
 		{
-			switch (Main.rand.Next(5))
+			switch (Main.rand.Next(6))
 			{
 			case 0:
 				return "I'M READY, I'M READY!";
@@ -107,6 +107,8 @@ namespace Redemption.NPCs
 				return "Oof!";
 			case 3:
 				return "My dirt is 10% off!";
+			case 4:
+				return "Where are all the other Noobs?";
 			default:
 				return "Hewwo! I am Newb!";
 			}

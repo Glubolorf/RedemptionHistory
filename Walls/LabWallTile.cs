@@ -13,5 +13,10 @@ namespace Redemption.Walls
 			this.drop = base.mod.ItemType("LabPlatingWall");
 			base.AddMapEntry(new Color(100, 100, 100), null);
 		}
+
+		public override bool CanExplode(int i, int j)
+		{
+			return false;
+		}
 	}
 }

@@ -26,5 +26,10 @@ namespace Redemption.Tiles
 		{
 			num = (fail ? 1 : 3);
 		}
+
+		public override bool CanExplode(int i, int j)
+		{
+			return false;
+		}
 	}
 }

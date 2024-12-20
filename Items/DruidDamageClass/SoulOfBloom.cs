@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -25,6 +26,11 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.maxStack = 999;
 			base.item.value = Item.buyPrice(0, 0, 85, 0);
 			base.item.rare = 5;
+		}
+
+		public override void PostUpdate()
+		{
+			Lighting.AddLight(base.item.Center, Color.HotPink.ToVector3() * 0.55f * Main.essScale);
 		}
 	}
 }

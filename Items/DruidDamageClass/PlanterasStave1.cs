@@ -15,7 +15,7 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override void SafeSetDefaults()
 		{
-			base.item.damage = 74;
+			base.item.damage = 44;
 			base.item.mana = 5;
 			base.item.width = 64;
 			base.item.height = 64;
@@ -30,7 +30,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.autoReuse = true;
 			base.item.noMelee = true;
 			base.item.shoot = base.mod.ProjectileType("MiniPlanteraSeed1");
-			base.item.shootSpeed = 15f;
+			base.item.shootSpeed = 17f;
 		}
 
 		public override bool CanUseItem(Player player)

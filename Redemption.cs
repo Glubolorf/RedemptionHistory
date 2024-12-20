@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Redemption.Items;
 using Redemption.Items.Cores;
@@ -19,13 +20,22 @@ namespace Redemption
 			properties.AutoloadSounds = true;
 			properties.AutoloadBackgrounds = true;
 			base.Properties = properties;
+			Redemption.inst = this;
 		}
 
 		public override void UpdateMusic(ref int music, ref MusicPriority priority)
 		{
-			if (Main.myPlayer != -1 && !Main.gameMenu && Main.player[Main.myPlayer].active && Main.player[Main.myPlayer].GetModPlayer<RedePlayer>(this).ZoneXeno)
+			if (Main.myPlayer != -1 && !Main.gameMenu)
 			{
-				music = base.GetSoundSlot(51, "Sounds/Music/XenoCaves");
+				if (Main.player[Main.myPlayer].active && Main.player[Main.myPlayer].GetModPlayer<RedePlayer>(this).ZoneXeno)
+				{
+					music = base.GetSoundSlot(51, "Sounds/Music/XenoCaves");
+				}
+				if (Redemption.GirusSilence)
+				{
+					music = base.GetSoundSlot(51, "Sounds/Music/silence");
+					priority = 8;
+				}
 			}
 		}
 
@@ -103,24 +113,64 @@ namespace Redemption
 				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/BossSlayer"), base.ItemType("KSBox"), base.TileType("KSBoxTile"), 0);
 				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/BossVlitch1"), base.ItemType("VlitchBox"), base.TileType("VlitchBoxTile"), 0);
 				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/BossKeeper"), base.ItemType("KeeperBox"), base.TileType("KeeperBoxTile"), 0);
+				base.AddMusicBox(base.GetSoundSlot(51, "Sounds/Music/BossVlitch2"), base.ItemType("VlitchBox2"), base.TileType("VlitchBoxTile2"), 0);
 			}
 			Redemption.FaceCustomCurrencyID = CustomCurrencyManager.RegisterCurrency(new CustomCurrency(base.ItemType<AncientGoldCoin>(), 999L));
 		}
 
 		public override void PostSetupContent()
 		{
-			Mod mod = ModLoader.GetMod("BossChecklist");
+			Mod mod = ModLoader.GetMod("FKBossHealthBar");
 			if (mod != null)
 			{
-				Mod mod2 = mod;
+				this.Call(new object[]
+				{
+					"RegisterHealthBarMini",
+					Redemption.inst.NPCType("StrangePortal")
+				});
+				this.Call(new object[]
+				{
+					"RegisterHealthBarMini",
+					Redemption.inst.NPCType("SunkenCaptain")
+				});
+				this.Call(new object[]
+				{
+					"RegisterHealthBarMini",
+					Redemption.inst.NPCType("SkullDigger")
+				});
+				this.Call(new object[]
+				{
+					"RegisterHealthBarMini",
+					Redemption.inst.NPCType("DarkSlime")
+				});
+				this.Call(new object[]
+				{
+					"RegisterHealthBarMini",
+					Redemption.inst.NPCType("VlitchCore1")
+				});
+				this.Call(new object[]
+				{
+					"RegisterHealthBarMini",
+					Redemption.inst.NPCType("VlitchCore2")
+				});
+				this.Call(new object[]
+				{
+					"RegisterHealthBarMini",
+					Redemption.inst.NPCType("VlitchCore3")
+				});
+			}
+			Mod mod2 = ModLoader.GetMod("BossChecklist");
+			if (mod2 != null)
+			{
+				Mod mod3 = mod2;
 				object[] array = new object[5];
 				array[0] = "AddMiniBossWithInfo";
 				array[1] = "The Mighty King Chicken";
 				array[2] = 0f;
 				array[3] = new Func<bool>(() => RedeWorld.downedKingChicken);
 				array[4] = "Use an [i:" + base.ItemType<EggCrown>() + "] at day";
-				mod2.Call(array);
-				Mod mod3 = mod;
+				mod3.Call(array);
+				Mod mod4 = mod2;
 				object[] array2 = new object[5];
 				array2[0] = "AddBossWithInfo";
 				array2[1] = "The Keeper";
@@ -134,63 +184,63 @@ namespace Redemption
 					base.ItemType<MysteriousTabletCrimson>(),
 					"] at night"
 				});
-				mod3.Call(array2);
-				Mod mod4 = mod;
+				mod4.Call(array2);
+				Mod mod5 = mod2;
 				object[] array3 = new object[5];
 				array3[0] = "AddMiniBossWithInfo";
 				array3[1] = "Strange Portal";
-				array3[2] = 3.49f;
+				array3[2] = 3.48f;
 				array3[3] = new Func<bool>(() => RedeWorld.downedStrangePortal);
 				array3[4] = "Use an [i:" + base.ItemType<UnstableCrystal>() + "]";
-				mod4.Call(array3);
-				Mod mod5 = mod;
+				mod5.Call(array3);
+				Mod mod6 = mod2;
 				object[] array4 = new object[5];
 				array4[0] = "AddBossWithInfo";
 				array4[1] = "Xenomite Crystal";
-				array4[2] = 3.5f;
+				array4[2] = 3.49f;
 				array4[3] = new Func<bool>(() => RedeWorld.downedXenomiteCrystal);
 				array4[4] = "Use a [i:" + base.ItemType<GeigerCounter>() + "], dropped by the Strange Portal";
-				mod5.Call(array4);
-				Mod mod6 = mod;
+				mod6.Call(array4);
+				Mod mod7 = mod2;
 				object[] array5 = new object[5];
 				array5[0] = "AddBossWithInfo";
 				array5[1] = "Infected Eye";
 				array5[2] = 6.25f;
 				array5[3] = new Func<bool>(() => RedeWorld.downedInfectedEye);
 				array5[4] = "Use a [i:" + base.ItemType<XenoEye>() + "] at night, requires the Xenomite Crystal to be defeated";
-				mod6.Call(array5);
-				Mod mod7 = mod;
+				mod7.Call(array5);
+				Mod mod8 = mod2;
 				object[] array6 = new object[5];
 				array6[0] = "AddBossWithInfo";
 				array6[1] = "King Slayer III";
 				array6[2] = 9.999f;
 				array6[3] = new Func<bool>(() => RedeWorld.downedSlayer);
 				array6[4] = "Use a [i:" + base.ItemType<KingSummon>() + "] at day. (Although I would recommend fighting at a later point in the game)";
-				mod7.Call(array6);
-				Mod mod8 = mod;
+				mod8.Call(array6);
+				Mod mod9 = mod2;
 				object[] array7 = new object[5];
 				array7[0] = "AddBossWithInfo";
 				array7[1] = "1st Vlitch Overlord";
 				array7[2] = 11.5f;
 				array7[3] = new Func<bool>(() => RedeWorld.downedVlitch1);
 				array7[4] = "Use a [i:" + base.ItemType<CorruptedHeroSword>() + "] at night";
-				mod8.Call(array7);
-				Mod mod9 = mod;
+				mod9.Call(array7);
+				Mod mod10 = mod2;
 				object[] array8 = new object[5];
 				array8[0] = "AddBossWithInfo";
 				array8[1] = "2nd Vlitch Overlord";
 				array8[2] = 13.5f;
 				array8[3] = new Func<bool>(() => RedeWorld.downedVlitch2);
 				array8[4] = "Use a [i:" + base.ItemType<CorruptedWormMedallion>() + "] at night";
-				mod9.Call(array8);
-				Mod mod10 = mod;
+				mod10.Call(array8);
+				Mod mod11 = mod2;
 				object[] array9 = new object[5];
 				array9[0] = "AddBossWithInfo";
 				array9[1] = "3rd Vlitch Overlord";
 				array9[2] = 15f;
 				array9[3] = new Func<bool>(() => RedeWorld.downedVlitch3);
 				array9[4] = "Use an [i:" + base.ItemType<OmegaRadar>() + "] at night";
-				mod10.Call(array9);
+				mod11.Call(array9);
 			}
 		}
 
@@ -241,6 +291,63 @@ namespace Redemption
 			modRecipe.AddRecipe();
 		}
 
+		public override void HandlePacket(BinaryReader bb, int whoAmI)
+		{
+			MsgType msgType = (MsgType)bb.ReadByte();
+			if (msgType == MsgType.ProjectileHostility)
+			{
+				int num = bb.ReadInt32();
+				int num2 = bb.ReadInt32();
+				bool flag = bb.ReadBoolean();
+				bool flag2 = bb.ReadBoolean();
+				if (Main.projectile[num2] != null)
+				{
+					Main.projectile[num2].owner = num;
+					Main.projectile[num2].friendly = flag;
+					Main.projectile[num2].hostile = flag2;
+				}
+				if (Main.netMode == 2)
+				{
+					MNet.SendBaseNetMessage(0, new object[]
+					{
+						num,
+						num2,
+						flag,
+						flag2
+					});
+					return;
+				}
+			}
+			else if (msgType == MsgType.SyncAI)
+			{
+				int num3 = (int)bb.ReadByte();
+				int num4 = (int)bb.ReadInt16();
+				int num5 = (int)bb.ReadByte();
+				int num6 = (int)bb.ReadByte();
+				float[] array = new float[num6];
+				for (int i = 0; i < num6; i++)
+				{
+					array[i] = bb.ReadSingle();
+				}
+				if (num3 == 0 && Main.npc[num4] != null && Main.npc[num4].active && Main.npc[num4].modNPC != null && Main.npc[num4].modNPC is ParentNPC)
+				{
+					((ParentNPC)Main.npc[num4].modNPC).SetAI(array, num5);
+				}
+				else if (num3 == 1 && Main.projectile[num4] != null && Main.projectile[num4].active && Main.projectile[num4].modProjectile != null && Main.projectile[num4].modProjectile is ParentProjectile)
+				{
+					((ParentProjectile)Main.projectile[num4].modProjectile).SetAI(array, num5);
+				}
+				if (Main.netMode == 2)
+				{
+					BaseNet.SyncAI(num3, num4, array, num5);
+				}
+			}
+		}
+
 		public static int FaceCustomCurrencyID;
+
+		public static bool GirusSilence;
+
+		public static Redemption inst = null;
 	}
 }

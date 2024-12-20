@@ -110,6 +110,35 @@ namespace Redemption.NPCs.Bosses
 					this.peckTimer = 0;
 				}
 			}
+			if (Main.rand.Next(500) == 0 && !this.cluckCluck)
+			{
+				this.cluckCluck = true;
+			}
+			if (this.cluckCluck)
+			{
+				this.cluckTimer++;
+				if (this.cluckTimer == 1)
+				{
+					int num = Main.rand.Next(3);
+					if (num == 0 && !Main.dedServ)
+					{
+						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck1").WithVolume(0.7f).WithPitchVariance(0.1f), -1, -1);
+					}
+					if (num == 1 && !Main.dedServ)
+					{
+						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck2").WithVolume(0.7f).WithPitchVariance(0.1f), -1, -1);
+					}
+					if (num == 2 && !Main.dedServ)
+					{
+						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck3").WithVolume(0.7f).WithPitchVariance(0.1f), -1, -1);
+					}
+				}
+				if (this.cluckTimer >= 2)
+				{
+					this.cluckCluck = false;
+					this.cluckTimer = 0;
+				}
+			}
 			this.timer++;
 			if (this.timer == 40)
 			{
@@ -239,5 +268,9 @@ namespace Redemption.NPCs.Bosses
 		private int peckCounter;
 
 		private int peckTimer;
+
+		private bool cluckCluck;
+
+		private int cluckTimer;
 	}
 }

@@ -11,7 +11,6 @@ namespace Redemption.Tiles
 		{
 			Main.tileSolid[(int)base.Type] = true;
 			Main.tileSpelunker[(int)base.Type] = false;
-			Main.tileNoSunLight[(int)base.Type] = true;
 			Main.tileMergeDirt[(int)base.Type] = true;
 			this.drop = base.mod.ItemType("AncientStoneBrick");
 			this.minPick = 0;

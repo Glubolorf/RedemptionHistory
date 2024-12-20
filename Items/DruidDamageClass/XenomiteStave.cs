@@ -42,7 +42,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
 			base.item.shoot = base.mod.ProjectileType("XenoBolt");
-			base.item.shootSpeed = 22f;
+			base.item.shootSpeed = 38f;
 			base.item.glowMask = XenomiteStave.customGlowMask;
 		}
 

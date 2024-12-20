@@ -26,7 +26,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 			base.npc.knockBackResist = 0f;
 			base.npc.width = 112;
 			base.npc.height = 178;
-			base.npc.value = (float)Item.buyPrice(0, 25, 0, 0);
+			base.npc.value = (float)Item.buyPrice(0, 0, 0, 0);
 			base.npc.npcSlots = 2f;
 			base.npc.boss = true;
 			base.npc.buffImmune[20] = true;
@@ -47,28 +47,6 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 
 		public override void HitEffect(int hitDirection, double damage)
 		{
-			if (base.npc.life <= 0)
-			{
-				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/OmegaGore1"), 1f);
-				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/OmegaGore2"), 1f);
-				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/OmegaGore3"), 1f);
-				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/OmegaGore4"), 1f);
-				for (int i = 0; i < 80; i++)
-				{
-					int num = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 235, 0f, 0f, 100, default(Color), 1.5f);
-					Main.dust[num].velocity *= 1.9f;
-				}
-				for (int j = 0; j < 45; j++)
-				{
-					int num2 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 6, 0f, 0f, 100, default(Color), 1.2f);
-					Main.dust[num2].velocity *= 1.8f;
-				}
-				for (int k = 0; k < 25; k++)
-				{
-					int num3 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 31, 0f, 0f, 100, default(Color), 1.2f);
-					Main.dust[num3].velocity *= 1.8f;
-				}
-			}
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 226, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
 		}
 
@@ -77,49 +55,6 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 			base.npc.lifeMax = (int)((float)base.npc.lifeMax * 0.5f * bossLifeScale);
 			base.npc.damage = (int)((float)base.npc.damage * 0.2f);
 			base.npc.defense = base.npc.defense + numPlayers;
-		}
-
-		public override void BossLoot(ref string name, ref int potionType)
-		{
-			potionType = 3544;
-			RedeWorld.downedVlitch3 = true;
-		}
-
-		public override void NPCLoot()
-		{
-			if (Main.rand.Next(10) == 0)
-			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("VlitchTrophy"), 1, false, 0, false, false);
-			}
-			if (Main.expertMode)
-			{
-				base.npc.DropBossBags();
-				return;
-			}
-			if (Main.rand.Next(3) == 0)
-			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("PlasmaJawser"), 1, false, 0, false, false);
-			}
-			if (Main.rand.Next(3) == 0)
-			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("OmegaClaw"), 1, false, 0, false, false);
-			}
-			if (Main.rand.Next(3) == 0)
-			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("GloopContainer"), 1, false, 0, false, false);
-			}
-			if (Main.rand.Next(14) == 0)
-			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("GirusMask"), 1, false, 0, false, false);
-			}
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CorruptedXenomite"), Main.rand.Next(25, 35), false, 0, false, false);
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("VlitchBattery"), Main.rand.Next(3, 5), false, 0, false, false);
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("OblitBrain"), 1, false, 0, false, false);
-		}
-
-		public override void FindFrame(int frameHeight)
-		{
-			base.npc.spriteDirection = base.npc.direction;
 		}
 
 		public override void AI()
@@ -932,6 +867,12 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 				this.attackMode = 1;
 				base.npc.dontTakeDamage = false;
 			}
+		}
+
+		public override bool CheckDead()
+		{
+			base.npc.SetDefaults(base.mod.NPCType("OmegaOblitDamaged"), -1f);
+			return false;
 		}
 
 		private void Target()

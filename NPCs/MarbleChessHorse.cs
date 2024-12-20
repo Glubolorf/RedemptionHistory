@@ -88,7 +88,7 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.Cavern.Chance * ((Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == 367 && RedeWorld.downedTheKeeper) ? 0.4f : 0f);
+			return SpawnCondition.Cavern.Chance * ((Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == 367 && RedeWorld.downedTheKeeper) ? 0.2f : 0f);
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)

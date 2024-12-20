@@ -25,6 +25,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.DisplayName.SetDefault("Creation Fragment");
 			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'The blessing of life resides within this fragment'");
 			ItemID.Sets.ItemNoGravity[base.item.type] = true;
+			ItemID.Sets.ItemIconPulse[base.item.type] = true;
 		}
 
 		public override void SetDefaults()

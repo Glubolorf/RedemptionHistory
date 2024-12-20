@@ -29,7 +29,7 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override void SafeSetDefaults()
 		{
-			base.item.damage = 80;
+			base.item.damage = 70;
 			base.item.height = 116;
 			base.item.width = 116;
 			base.item.useTime = 8;
@@ -43,7 +43,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.UseSound = SoundID.Item125;
 			base.item.autoReuse = true;
 			base.item.shoot = base.mod.ProjectileType("LastRPro5");
-			base.item.shootSpeed = 14f;
+			base.item.shootSpeed = 18f;
 			base.item.glowMask = SunshardStave.customGlowMask;
 		}
 

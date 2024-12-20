@@ -163,7 +163,7 @@ namespace Redemption.NPCs.Bosses
 				Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num4) * (double)num * -1.0), (float)(Math.Sin((double)num4) * (double)num * -1.0), num3, num2, 0f, 0, 0f, 0f);
 				base.npc.ai[1] = 0f;
 			}
-			if (base.npc.ai[0] % 200f == 3f)
+			if (base.npc.ai[0] % 200f == 3f && NPC.CountNPCS(base.mod.NPCType("XenomiteEye")) <= 4)
 			{
 				NPC.NewNPC((int)base.npc.position.X + 80, (int)base.npc.position.Y + 80, base.mod.NPCType("XenomiteEye"), 0, 0f, 0f, 0f, 0f, 255);
 			}

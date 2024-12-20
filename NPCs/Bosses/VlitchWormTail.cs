@@ -62,7 +62,7 @@ namespace Redemption.NPCs.Bosses
 			{
 				base.npc.dontTakeDamage = false;
 			}
-			if (base.npc.ai[0] % 500f == 3f)
+			if (base.npc.ai[0] % 500f == 3f && NPC.CountNPCS(base.mod.NPCType("CorruptedWormHead")) <= 4)
 			{
 				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("CorruptedWormHead"), 0, 0f, 0f, 0f, 0f, 255);
 			}
@@ -70,7 +70,7 @@ namespace Redemption.NPCs.Bosses
 			int num = 0;
 			float num2;
 			ai[num] = (num2 = ai[num]) + 1f;
-			if (num2 >= 400f)
+			if (num2 >= 400f && NPC.CountNPCS(base.mod.NPCType("CorruptedProbe")) <= 2)
 			{
 				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("CorruptedProbe"), 0, 0f, 0f, 0f, 0f, 255);
 				base.npc.ai[0] = 0f;

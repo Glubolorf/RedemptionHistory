@@ -33,6 +33,11 @@ namespace Redemption.Items.Weapons
 			base.item.autoReuse = true;
 		}
 
+		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
+		{
+			Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, 0f, base.mod.ProjectileType("FalconPro1"), base.item.damage, base.item.knockBack, Main.myPlayer, 0f, 0f);
+		}
+
 		public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{
 			Color transparent = Color.Transparent;

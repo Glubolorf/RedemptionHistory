@@ -28,6 +28,7 @@ namespace Redemption.NPCs
 			base.npc.alpha = 100;
 			base.npc.noGravity = true;
 			this.aiType = 288;
+			base.npc.catchItem = (short)base.mod.ItemType("LargeLostSoul");
 		}
 
 		public override void AI()

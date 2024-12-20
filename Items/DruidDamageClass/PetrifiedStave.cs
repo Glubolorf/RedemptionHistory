@@ -10,7 +10,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Petrified Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nShoots a Xeno Bolt");
 		}
 
 		public override void SafeSetDefaults()
@@ -28,6 +28,8 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.UseSound = SoundID.Item1;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
+			base.item.shoot = base.mod.ProjectileType("XenoBolt");
+			base.item.shootSpeed = 9f;
 		}
 
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)

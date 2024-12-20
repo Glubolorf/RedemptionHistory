@@ -48,6 +48,12 @@ namespace Redemption.Projectiles
 			}
 		}
 
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		{
+			fallThrough = false;
+			return true;
+		}
+
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
 			Player player = Main.player[base.projectile.owner];

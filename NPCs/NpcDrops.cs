@@ -1,5 +1,5 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
+using Redemption.Items;
 using Redemption.Items.DruidDamageClass;
 using Redemption.Items.Weapons;
 using Terraria;
@@ -29,6 +29,11 @@ namespace Redemption.NPCs
 			if (type == 178 && NPC.downedGolemBoss)
 			{
 				shop.item[nextSlot].SetDefaults(base.mod.ItemType<SteamMinigun>(), false);
+				nextSlot++;
+			}
+			if (type == 17)
+			{
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType<RopeHook>(), false);
 				nextSlot++;
 			}
 		}
@@ -821,18 +826,11 @@ namespace Redemption.NPCs
 			}
 			if (npc.type == base.mod.NPCType("InfectedEye") && !RedeWorld.spawnOre)
 			{
-				Main.NewText("The infection grows...", Color.ForestGreen.R, Color.ForestGreen.G, Color.ForestGreen.B, false);
 				for (int i = 0; i < (int)(WorldGen.rockLayerLow * (double)Main.maxTilesY * 0.00024); i++)
 				{
 					int num4 = WorldGen.genRand.Next(0, Main.maxTilesX);
 					int num5 = WorldGen.genRand.Next((int)WorldGen.rockLayer, Main.maxTilesY - 200);
 					WorldGen.OreRunner(num4, num5, (double)WorldGen.genRand.Next(2, 5), WorldGen.genRand.Next(2, 6), (ushort)base.mod.TileType("XenomiteOreBlock"));
-				}
-				for (int j = 0; j < (int)(WorldGen.rockLayerLow * (double)Main.maxTilesY * 1E-05); j++)
-				{
-					int num6 = WorldGen.genRand.Next(0, Main.maxTilesX);
-					int num7 = WorldGen.genRand.Next((int)WorldGen.rockLayerLow, Main.maxTilesY - 200);
-					WorldGen.OreRunner(num6, num7, (double)WorldGen.genRand.Next(90, 130), WorldGen.genRand.Next(90, 170), (ushort)base.mod.TileType("DeadRockTile"));
 				}
 				RedeWorld.spawnOre = true;
 			}
@@ -855,12 +853,12 @@ namespace Redemption.NPCs
 			}
 			if (npc.type == base.mod.NPCType("UndeadViolinist"))
 			{
-				int num8 = Main.rand.Next(2);
-				if (num8 == 0)
+				int num6 = Main.rand.Next(2);
+				if (num6 == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("TheViolin"), 1, false, 0, false, false);
 				}
-				if (num8 == 1)
+				if (num6 == 1)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("ViolinString"), 1, false, 0, false, false);
 				}
@@ -912,6 +910,10 @@ namespace Redemption.NPCs
 				if (Main.rand.Next(5) == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 317, 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(5) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("Nightshade"), 1, false, 0, false, false);
 				}
 				if (Main.hardMode)
 				{
@@ -1098,6 +1100,14 @@ namespace Redemption.NPCs
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("SludgeSpoon"), 1, false, 0, false, false);
 				}
 			}
+			if (npc.type == base.mod.NPCType("SludgyBoi2"))
+			{
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("XenomiteShard"), Main.rand.Next(2, 3), false, 0, false, false);
+				if (Main.rand.Next(20) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("SludgeSpoon"), 1, false, 0, false, false);
+				}
+			}
 			if (npc.type == base.mod.NPCType("SnowyBoi"))
 			{
 				if (Main.rand.Next(75) == 0)
@@ -1185,6 +1195,10 @@ namespace Redemption.NPCs
 				}
 				if (Main.rand.Next(4) == 0)
 				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("Nightshade"), Main.rand.Next(1, 3), false, 0, false, false);
+				}
+				if (Main.rand.Next(4) == 0)
+				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 62, Main.rand.Next(2, 6), false, 0, false, false);
 				}
 				if (Main.hardMode)
@@ -1255,16 +1269,16 @@ namespace Redemption.NPCs
 			}
 			if (npc.type == base.mod.NPCType("ServantOfTheHolyKnight"))
 			{
-				int num9 = Main.rand.Next(3);
-				if (num9 == 0)
+				int num7 = Main.rand.Next(3);
+				if (num7 == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("ArmorHK"), 1, false, 0, false, false);
 				}
-				if (num9 == 1)
+				if (num7 == 1)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("ArmorHKLeggings"), 1, false, 0, false, false);
 				}
-				if (num9 == 2)
+				if (num7 == 2)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("ArmorHKHead"), 1, false, 0, false, false);
 				}
@@ -1339,9 +1353,16 @@ namespace Redemption.NPCs
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("BrokenHeroStave"), 1, false, 0, false, false);
 			}
-			if (npc.type == 113 && Main.rand.Next(8) == 0)
+			if (npc.type == 113)
 			{
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("DruidEmblem"), 1, false, 0, false, false);
+				if (Main.rand.Next(8) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("DruidEmblem"), 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(6) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("WallsClaw"), 1, false, 0, false, false);
+				}
 			}
 			if (npc.type == base.mod.NPCType("DarkSlime"))
 			{
@@ -1391,12 +1412,12 @@ namespace Redemption.NPCs
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("SoulOfBloom"), Main.rand.Next(30, 40), false, 0, false, false);
 				if (Main.rand.Next(7) == 0)
 				{
-					int num10 = Main.rand.Next(2);
-					if (num10 == 0)
+					int num8 = Main.rand.Next(2);
+					if (num8 == 0)
 					{
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("PlanterasStave1"), 1, false, 0, false, false);
 					}
-					if (num10 == 1)
+					if (num8 == 1)
 					{
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("PlanterasStave2"), 1, false, 0, false, false);
 					}
@@ -1405,11 +1426,11 @@ namespace Redemption.NPCs
 			if (npc.type == 35 && !RedeWorld.spawnDragonOre)
 			{
 				Main.NewText("The caverns are heated with dragon bone...", 225, 150, 15, false);
-				for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 6E-05); k++)
+				for (int j = 0; j < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 6E-05); j++)
 				{
-					int num11 = WorldGen.genRand.Next(0, Main.maxTilesX);
-					int num12 = WorldGen.genRand.Next((int)((float)Main.maxTilesY * 0.3f), (int)((float)Main.maxTilesY * 0.45f));
-					WorldGen.OreRunner(num11, num12, (double)WorldGen.genRand.Next(2, 4), WorldGen.genRand.Next(4, 7), (ushort)base.mod.TileType("DragonLeadOreTile"));
+					int num9 = WorldGen.genRand.Next(0, Main.maxTilesX);
+					int num10 = WorldGen.genRand.Next((int)((float)Main.maxTilesY * 0.3f), (int)((float)Main.maxTilesY * 0.45f));
+					WorldGen.OreRunner(num9, num10, (double)WorldGen.genRand.Next(2, 4), WorldGen.genRand.Next(4, 7), (ushort)base.mod.TileType("DragonLeadOreTile"));
 				}
 				RedeWorld.spawnDragonOre = true;
 			}
@@ -1508,39 +1529,39 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("FriedEgg"), Main.rand.Next(2, 4), false, 0, false, false);
 				}
-				int num13 = Main.rand.Next(5);
-				if (num13 == 0)
+				int num11 = Main.rand.Next(5);
+				if (num11 == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("BlueSpice"), Main.rand.Next(1, 7), false, 0, false, false);
 				}
-				if (num13 == 1)
+				if (num11 == 1)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("GreenSpice"), Main.rand.Next(1, 6), false, 0, false, false);
 				}
-				if (num13 == 2)
+				if (num11 == 2)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("OrangeSpice"), Main.rand.Next(1, 5), false, 0, false, false);
 				}
-				if (num13 == 3)
+				if (num11 == 3)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("RedSpice"), Main.rand.Next(1, 4), false, 0, false, false);
 				}
-				if (num13 == 4)
+				if (num11 == 4)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("WhiteSpice"), Main.rand.Next(1, 3), false, 0, false, false);
 				}
 				if (Main.rand.Next(4) == 0)
 				{
-					int num14 = Main.rand.Next(4);
-					if (num14 == 0)
+					int num12 = Main.rand.Next(4);
+					if (num12 == 0)
 					{
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("MobyDigg"), 1, false, 0, false, false);
 					}
-					if (num14 == 1)
+					if (num12 == 1)
 					{
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("BarrelBombarder"), 1, false, 0, false, false);
 					}
-					if (num14 == 2)
+					if (num12 == 2)
 					{
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("ChiliSpray"), 1, false, 0, false, false);
 					}
@@ -1648,7 +1669,7 @@ namespace Redemption.NPCs
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("SkullDiggerFlail"), 1, false, 0, false, false);
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("SkullDiggerMask"), 1, false, 0, false, false);
 			}
-			if ((npc.type == 31 || npc.type == 294 || npc.type == 296 || npc.type == 295) && Main.rand.Next(20) == 0)
+			if ((npc.type == 31 || npc.type == 294 || npc.type == 296 || npc.type == 295) && Main.rand.Next(75) == 0)
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("DungeonHammer"), 1, false, 0, false, false);
 			}

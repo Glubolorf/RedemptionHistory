@@ -38,6 +38,12 @@ namespace Redemption.Items.DruidDamageClass
 			modRecipe.AddTile(13);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
+			modRecipe = new ModRecipe(base.mod);
+			modRecipe.AddRecipeGroup("Redemption:Plant", 2);
+			modRecipe.AddIngredient(126, 1);
+			modRecipe.AddTile(355);
+			modRecipe.SetResult(this, 1);
+			modRecipe.AddRecipe();
 		}
 	}
 }

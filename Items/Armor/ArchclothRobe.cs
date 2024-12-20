@@ -13,7 +13,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Archcloth Robe");
-			base.Tooltip.SetDefault("'Only the Nobles of Anglon wear these robes'");
+			base.Tooltip.SetDefault("'Only the Nobles of Anglon wear these robes'\nIncreases coin pickup range\nShops have lower prices");
 		}
 
 		public override void SetDefaults()
@@ -29,6 +29,12 @@ namespace Redemption.Items.Armor
 		{
 			robes = true;
 			equipSlot = base.mod.GetEquipSlot("ArchclothRobe_Legs", 2);
+		}
+
+		public override void UpdateEquip(Player player)
+		{
+			player.goldRing = true;
+			player.discount = true;
 		}
 
 		public override void AddRecipes()

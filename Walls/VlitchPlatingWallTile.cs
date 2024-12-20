@@ -13,5 +13,10 @@ namespace Redemption.Walls
 			this.drop = base.mod.ItemType("VlitchPlatingWall");
 			base.AddMapEntry(new Color(100, 0, 0), null);
 		}
+
+		public override bool CanExplode(int i, int j)
+		{
+			return false;
+		}
 	}
 }

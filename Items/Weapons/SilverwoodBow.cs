@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Daerel's Silverwood Bow");
-			base.Tooltip.SetDefault("'A bow made of Silverwood'\n40% chance not to consume ammo\n[c/1c4dff:Rare]");
+			base.Tooltip.SetDefault("'A bow made of Silverwood'\n40% chance not to consume ammo\nOnly usable after Eye of Cthulhu has been defeated\n[c/1c4dff:Rare]");
 		}
 
 		public override void SetDefaults()
@@ -44,6 +44,11 @@ namespace Redemption.Items.Weapons
 		public override bool ConsumeAmmo(Player player)
 		{
 			return Utils.NextFloat(Main.rand) >= 0.4f;
+		}
+
+		public override bool CanUseItem(Player player)
+		{
+			return NPC.downedBoss1;
 		}
 
 		public override void ModifyTooltips(List<TooltipLine> tooltips)

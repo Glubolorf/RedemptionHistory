@@ -1,14 +1,20 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Redemption.NPCs
 {
-	public class BoneWormTail : ModNPC
+	public class BoneWormTail : BoneWorm
 	{
+		public override string Texture
+		{
+			get
+			{
+				return "Redemption/NPCs/BoneWormTail";
+			}
+		}
+
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Bone Worm");
@@ -17,7 +23,7 @@ namespace Redemption.NPCs
 		public override void SetDefaults()
 		{
 			base.npc.width = 22;
-			base.npc.height = 24;
+			base.npc.height = 22;
 			base.npc.damage = 15;
 			base.npc.defense = 5;
 			base.npc.lifeMax = 1;
@@ -35,16 +41,17 @@ namespace Redemption.NPCs
 		{
 			if (base.npc.life <= 0)
 			{
-				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/BoneWormTailGore"), 1f);
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/BoneWormBodyGore"), 1f);
 			}
+		}
+
+		public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
+		{
+			return new bool?(false);
 		}
 
 		public override bool PreAI()
 		{
-			if (Main.player[base.npc.target].dead)
-			{
-				base.npc.timeLeft = 0;
-			}
 			if (base.npc.ai[3] > 0f)
 			{
 				base.npc.realLife = (int)base.npc.ai[3];
@@ -62,7 +69,6 @@ namespace Redemption.NPCs
 				base.npc.life = 0;
 				base.npc.HitEffect(0, 10.0);
 				base.npc.active = false;
-				NetMessage.SendData(28, -1, -1, null, base.npc.whoAmI, -1f, 0f, 0f, 0, 0, 0);
 			}
 			if ((double)base.npc.ai[1] < (double)Main.npc.Length)
 			{
@@ -75,25 +81,18 @@ namespace Redemption.NPCs
 				float num4 = (num3 - (float)base.npc.width) / num3;
 				float num5 = num * num4;
 				float num6 = num2 * num4;
-				base.npc.velocity = Vector2.Zero;
+				if (num < 0f)
+				{
+					base.npc.spriteDirection = 1;
+				}
+				else
+				{
+					base.npc.spriteDirection = -1;
+				}
 				base.npc.position.X = base.npc.position.X + num5;
 				base.npc.position.Y = base.npc.position.Y + num6;
 			}
 			return false;
-		}
-
-		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
-		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Vector2 vector;
-			vector..ctor((float)texture2D.Width * 0.5f, (float)texture2D.Height * 0.5f);
-			Main.spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, null, drawColor, base.npc.rotation, vector, base.npc.scale, 0, 0f);
-			return false;
-		}
-
-		public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
-		{
-			return new bool?(false);
 		}
 	}
 }

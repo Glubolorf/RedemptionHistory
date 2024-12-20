@@ -118,7 +118,7 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.Cavern.Chance * ((Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == 368 && RedeWorld.downedTheKeeper) ? 0.4f : 0f);
+			return SpawnCondition.Cavern.Chance * ((Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == 368 && RedeWorld.downedTheKeeper) ? 0.2f : 0f);
 		}
 
 		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)

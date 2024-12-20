@@ -21,21 +21,18 @@ namespace Redemption.Items.DruidDamageClass
 				Main.glowMaskTexture = array;
 			}
 			base.DisplayName.SetDefault("Lihzahrd World Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Holds the power of the sun'\nSummon a Golem Statue\nThe statue emits a great aura that increases player's attack and life regen when near\nAlso deals damage to enemies and burns them\nCan only place one at a time");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Holds the power of the sun'\nSummon a Golem Statue\nThe statue emits a great aura that increases player's attack and life regen when near\nCan only place one at a time");
 			Item.staff[base.item.type] = true;
 		}
 
 		public override void SafeSetDefaults()
 		{
-			base.item.damage = 31;
 			base.item.width = 48;
 			base.item.height = 48;
 			base.item.useTime = 30;
 			base.item.useAnimation = 30;
 			base.item.useStyle = 5;
 			base.item.mana = 100;
-			base.item.crit = 4;
-			base.item.knockBack = 0f;
 			base.item.value = Item.buyPrice(0, 6, 0, 0);
 			base.item.rare = 8;
 			base.item.UseSound = base.mod.GetLegacySoundSlot(2, "Sounds/Item/WorldTree1");

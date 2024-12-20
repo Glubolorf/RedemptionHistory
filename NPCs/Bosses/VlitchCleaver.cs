@@ -90,7 +90,10 @@ namespace Redemption.NPCs.Bosses
 		{
 			potionType = 499;
 			RedeWorld.downedVlitch1 = true;
-			Main.NewText("You feel a great wave of energy flowing through you as one of Vlitch's Overlords has been defeated...", Color.OrangeRed.R, Color.OrangeRed.G, Color.OrangeRed.B, false);
+			if (!RedeWorld.girusTalk1 && !NPC.AnyNPCs(base.mod.NPCType("VlitchWormHead")) && !NPC.AnyNPCs(base.mod.NPCType("OmegaOblitDamaged")))
+			{
+				Projectile.NewProjectile(new Vector2(base.npc.position.X, base.npc.position.Y), new Vector2(0f, 0f), base.mod.ProjectileType("GirusTalking1"), 0, 0f, 255, 0f, 0f);
+			}
 		}
 
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
@@ -124,7 +127,7 @@ namespace Redemption.NPCs.Bosses
 			{
 				base.npc.ai[1] += 1f;
 			}
-			if (base.npc.ai[1] % 200f == 80f)
+			if (base.npc.ai[1] % 200f == 80f && NPC.CountNPCS(base.mod.NPCType("CorruptedProbe")) <= 6)
 			{
 				NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 120, base.mod.NPCType("CorruptedProbe"), 0, 0f, 0f, 0f, 0f, 255);
 			}
@@ -144,7 +147,7 @@ namespace Redemption.NPCs.Bosses
 				Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num4) * (double)num * -1.0), (float)(Math.Sin((double)num4) * (double)num * -1.0), num3, num2, 0f, 0, 0f, 0f);
 				base.npc.ai[2] = 0f;
 			}
-			if (base.npc.ai[2] % 200f == 80f)
+			if (base.npc.ai[2] % 200f == 80f && NPC.CountNPCS(base.mod.NPCType("CorruptedBlade")) <= 6)
 			{
 				NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 120, base.mod.NPCType("CorruptedBlade"), 0, 0f, 0f, 0f, 0f, 255);
 			}
@@ -172,15 +175,18 @@ namespace Redemption.NPCs.Bosses
 					Main.NewText("Guess its time to take action...", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
 				}
 				this.timer2++;
-				if (this.timer2 <= 120)
+				if (this.timer2 <= 120 && this.player.active)
 				{
 					NPC npc2 = base.npc;
 					npc2.velocity.Y = npc2.velocity.Y * 0.2f;
 				}
 				if (this.timer2 >= 120)
 				{
-					NPC npc3 = base.npc;
-					npc3.velocity.Y = npc3.velocity.Y * -0.2f;
+					if (this.player.active)
+					{
+						NPC npc3 = base.npc;
+						npc3.velocity.Y = npc3.velocity.Y * -0.2f;
+					}
 					if (this.timer2 == 240)
 					{
 						this.timer2 = 0;

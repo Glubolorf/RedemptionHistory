@@ -65,7 +65,15 @@ namespace Redemption.Items.Cores
 				player.lifeRegen -= 1000;
 				Dust.NewDust(new Vector2(player.position.X - player.velocity.X * 2f, player.position.Y - 2f - player.velocity.Y * 2f), player.width, player.height, 226, 0f, 0f, 100, default(Color), 2f);
 			}
-			if ((Main.raining && player.ZoneOverworldHeight) || player.ZoneSkyHeight)
+			if (Main.raining && player.ZoneOverworldHeight)
+			{
+				player.lifeRegen += -25;
+				if (Main.rand.Next(10) == 0)
+				{
+					Dust.NewDust(new Vector2(player.position.X - player.velocity.X * 2f, player.position.Y - 2f - player.velocity.Y * 2f), player.width, player.height, 226, 0f, 0f, 100, default(Color), 2f);
+				}
+			}
+			if (Main.raining && player.ZoneSkyHeight)
 			{
 				player.lifeRegen += -25;
 				if (Main.rand.Next(10) == 0)

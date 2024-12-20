@@ -31,6 +31,7 @@ namespace Redemption.NPCs
 			base.npc.value = (float)Item.buyPrice(0, 0, 0, 0);
 			base.npc.npcSlots = 0f;
 			base.npc.netAlways = true;
+			base.npc.catchItem = 2002;
 		}
 
 		public override bool PreAI()
@@ -300,7 +301,7 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.Underground.Chance * 0.3f;
+			return SpawnCondition.Underground.Chance * 0.06f;
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)

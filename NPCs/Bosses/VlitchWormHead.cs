@@ -85,7 +85,10 @@ namespace Redemption.NPCs.Bosses
 		{
 			potionType = 499;
 			RedeWorld.downedVlitch2 = true;
-			Main.NewText("You feel a stinging pain of energy flowing through you as one of Vlitch's Overlords has been defeated...", Color.OrangeRed.R, Color.OrangeRed.G, Color.OrangeRed.B, false);
+			if (!RedeWorld.girusTalk2 && !NPC.AnyNPCs(base.mod.NPCType("VlitchCleaver")) && !NPC.AnyNPCs(base.mod.NPCType("OmegaOblitDamaged")))
+			{
+				Projectile.NewProjectile(new Vector2(base.npc.position.X, base.npc.position.Y), new Vector2(0f, 0f), base.mod.ProjectileType("GirusTalking2"), 0, 0f, 255, 0f, 0f);
+			}
 			if (!Main.dedServ)
 			{
 				Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/DistortedRoar").WithVolume(0.7f).WithPitchVariance(0.1f), -1, -1);

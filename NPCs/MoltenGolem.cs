@@ -67,7 +67,7 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.Underworld.Chance * (NPC.downedBoss3 ? 0.1f : 0f);
+			return SpawnCondition.Underworld.Chance * (NPC.downedBoss3 ? 0.05f : 0f);
 		}
 
 		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -36,9 +37,9 @@ namespace Redemption.NPCs
 		{
 			if (Main.hardMode)
 			{
-				return SpawnCondition.Cavern.Chance * 0.125f;
+				return SpawnCondition.Cavern.Chance * 0.05f;
 			}
-			return SpawnCondition.Cavern.Chance * 0.25f;
+			return SpawnCondition.Cavern.Chance * 0.1f;
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -58,5 +59,85 @@ namespace Redemption.NPCs
 				NPC.NewNPC((int)base.npc.position.X + 30, (int)base.npc.position.Y + 36, base.mod.NPCType("LostSoul1"), 0, 0f, 0f, 0f, 0f, 255);
 			}
 		}
+
+		public override void AI()
+		{
+			if (this.thrustAttack)
+			{
+				this.thrustCounter++;
+				if (this.thrustCounter > 3)
+				{
+					this.thrustFrame++;
+					this.thrustCounter = 0;
+				}
+				if (this.thrustFrame >= 6)
+				{
+					this.thrustFrame = 0;
+				}
+			}
+			float num = base.npc.Distance(Main.player[base.npc.target].Center);
+			if (num <= 80f && Main.rand.Next(20) == 0 && !this.thrustAttack)
+			{
+				this.thrustAttack = true;
+			}
+			if (!this.thrustAttack)
+			{
+				base.npc.aiStyle = 3;
+			}
+			if (this.thrustAttack)
+			{
+				this.thrustTimer++;
+				base.npc.aiStyle = 0;
+				base.npc.velocity.X = 0f;
+				if (this.thrustTimer == 9)
+				{
+					if (base.npc.direction == -1)
+					{
+						Projectile.NewProjectile(base.npc.position.X + -14f, base.npc.position.Y + 18f, 0f, 0f, base.mod.ProjectileType("DamagePro3"), 5, 3f, 255, 0f, 0f);
+						Main.PlaySound(SoundID.Item1, (int)base.npc.position.X, (int)base.npc.position.Y);
+					}
+					else
+					{
+						Projectile.NewProjectile(base.npc.position.X + 48f, base.npc.position.Y + 18f, 0f, 0f, base.mod.ProjectileType("DamagePro3"), 5, 3f, 255, 0f, 0f);
+						Main.PlaySound(SoundID.Item1, (int)base.npc.position.X, (int)base.npc.position.Y);
+					}
+				}
+				if (this.thrustTimer >= 18)
+				{
+					this.thrustAttack = false;
+					this.thrustTimer = 0;
+					this.thrustCounter = 0;
+					this.thrustFrame = 0;
+				}
+			}
+		}
+
+		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+		{
+			Texture2D texture2D = Main.npcTexture[base.npc.type];
+			Texture2D texture = base.mod.GetTexture("NPCs/SkeletonWandererThrust");
+			int spriteDirection = base.npc.spriteDirection;
+			if (!this.thrustAttack)
+			{
+				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+			}
+			if (this.thrustAttack)
+			{
+				Vector2 vector;
+				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
+				int num = texture.Height / 6;
+				int num2 = num * this.thrustFrame;
+				Main.spriteBatch.Draw(texture, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+			}
+			return false;
+		}
+
+		private bool thrustAttack;
+
+		private int thrustFrame;
+
+		private int thrustCounter;
+
+		private int thrustTimer;
 	}
 }

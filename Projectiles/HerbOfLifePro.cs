@@ -38,7 +38,7 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			if (Main.rand.Next(2) == 0)
+			if (Main.rand.Next(30) == 0)
 			{
 				Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 163, base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 0, default(Color), 1f);
 			}

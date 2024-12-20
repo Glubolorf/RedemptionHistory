@@ -28,7 +28,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.rare = 4;
 			base.item.UseSound = SoundID.Item1;
 			base.item.shoot = base.mod.ProjectileType("LightSoulPro1");
-			base.item.shootSpeed = 12f;
+			base.item.shootSpeed = 17f;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
 		}

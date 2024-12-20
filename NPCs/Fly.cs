@@ -27,6 +27,7 @@ namespace Redemption.NPCs
 			base.npc.aiStyle = 24;
 			this.aiType = 74;
 			this.animationType = 355;
+			base.npc.catchItem = (short)base.mod.ItemType("FlyBait");
 		}
 
 		public override void HitEffect(int hitDirection, double damage)

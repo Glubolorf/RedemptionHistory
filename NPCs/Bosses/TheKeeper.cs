@@ -31,6 +31,7 @@ namespace Redemption.NPCs.Bosses
 			base.npc.lavaImmune = true;
 			base.npc.noGravity = true;
 			base.npc.noTileCollide = true;
+			base.npc.netAlways = true;
 			base.npc.HitSound = SoundID.NPCHit13;
 			base.npc.DeathSound = SoundID.NPCDeath19;
 			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossKeeper");
@@ -246,9 +247,9 @@ namespace Redemption.NPCs.Bosses
 				{
 					this.shriekStart = false;
 				}
-				if (Main.rand.Next(400) == 0)
+				if (Main.rand.Next(400) == 0 && NPC.CountNPCS(base.mod.NPCType("BoneWorm")) <= 3)
 				{
-					NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 160, base.mod.NPCType("BoneWormHead"), 0, 0f, 0f, 0f, 0f, 255);
+					NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 160, base.mod.NPCType("BoneWorm"), 0, 0f, 0f, 0f, 0f, 255);
 				}
 			}
 		}

@@ -8,13 +8,18 @@ namespace Redemption.Projectiles
 {
 	public class TerraBallPro : ModProjectile
 	{
+		public override void SetStaticDefaults()
+		{
+			base.DisplayName.SetDefault("Terra Ball");
+		}
+
 		public override void SetDefaults()
 		{
 			base.projectile.width = 30;
 			base.projectile.height = 30;
 			base.projectile.friendly = true;
 			base.projectile.penetrate = 3;
-			base.projectile.timeLeft = 600;
+			base.projectile.timeLeft = 200;
 		}
 
 		public override void AI()

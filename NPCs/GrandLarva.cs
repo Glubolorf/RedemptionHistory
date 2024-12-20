@@ -26,6 +26,7 @@ namespace Redemption.NPCs
 			base.npc.aiStyle = 7;
 			this.aiType = 46;
 			this.animationType = 428;
+			base.npc.catchItem = (short)base.mod.ItemType("GrandLarvaBait");
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -57,7 +58,7 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.Cavern.Chance * 0.2f;
+			return SpawnCondition.Cavern.Chance * 0.02f;
 		}
 
 		public override bool CanHitPlayer(Player target, ref int cooldownSlot)

@@ -16,7 +16,7 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override void SafeSetDefaults()
 		{
-			base.item.damage = 44;
+			base.item.damage = 42;
 			base.item.width = 48;
 			base.item.height = 48;
 			base.item.useTime = 29;
@@ -30,7 +30,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
 			base.item.shoot = 94;
-			base.item.shootSpeed = 11f;
+			base.item.shootSpeed = 13f;
 		}
 
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)

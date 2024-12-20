@@ -53,7 +53,7 @@ namespace Redemption.NPCs
 		{
 			if (Main.hardMode)
 			{
-				return SpawnCondition.OverworldNightMonster.Chance * 0.02f;
+				return SpawnCondition.OverworldNightMonster.Chance * 0.01f;
 			}
 			return SpawnCondition.OverworldNightMonster.Chance * 0.04f;
 		}

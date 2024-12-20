@@ -21,7 +21,7 @@ namespace Redemption.Items.Weapons
 			base.item.height = 46;
 			base.item.useTime = 6;
 			base.item.axe = 5;
-			base.item.useAnimation = 14;
+			base.item.useAnimation = 26;
 			base.item.useStyle = 1;
 			base.item.knockBack = 5f;
 			base.item.value = Item.sellPrice(0, 1, 0, 0);

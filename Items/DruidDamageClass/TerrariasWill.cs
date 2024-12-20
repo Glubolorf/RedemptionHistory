@@ -14,7 +14,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Terraria's Will");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'With every leaf born, the planet blooms'\nWalking about creates ancient spores that grows into powerful plants that fight for you\n25% increased druid damage\n25% increased druid critical strike chance");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'With every leaf born, the planet blooms'\nWalking about creates ancient spores that grows into powerful plants that fight for you\n10% increased druid damage\n10% increased druid critical strike chance");
 		}
 
 		public override void SetDefaults()

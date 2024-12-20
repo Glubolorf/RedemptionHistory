@@ -9,21 +9,18 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Ancient World Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nSummon an Ancient Obelisk at your cursor point\nThe obelisk emits a force-field that increases player's defence and endurance when near\nAlso deals minor damage to enemies\nCan only place one at a time");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nSummon an Ancient Obelisk at your cursor point\nThe obelisk emits a force-field that increases player's defence and endurance when near\nCan only place one at a time");
 			Item.staff[base.item.type] = true;
 		}
 
 		public override void SafeSetDefaults()
 		{
-			base.item.damage = 3;
 			base.item.width = 44;
 			base.item.height = 46;
 			base.item.useTime = 30;
 			base.item.useAnimation = 30;
 			base.item.useStyle = 5;
 			base.item.mana = 100;
-			base.item.crit = 4;
-			base.item.knockBack = 0f;
 			base.item.value = Item.buyPrice(0, 2, 0, 0);
 			base.item.rare = 1;
 			base.item.UseSound = base.mod.GetLegacySoundSlot(2, "Sounds/Item/WorldTree1");

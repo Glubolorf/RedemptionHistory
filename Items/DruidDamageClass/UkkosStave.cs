@@ -18,10 +18,10 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override void SafeSetDefaults()
 		{
-			base.item.damage = 300;
+			base.item.damage = 400;
 			base.item.width = 76;
 			base.item.height = 80;
-			base.item.crit = 30;
+			base.item.crit = 40;
 			base.item.useTime = 40;
 			base.item.useAnimation = 40;
 			base.item.useStyle = 1;
@@ -53,7 +53,7 @@ namespace Redemption.Items.DruidDamageClass
 			}
 			else
 			{
-				base.item.damage = 300;
+				base.item.damage = 400;
 				base.item.useTime = 40;
 				base.item.useAnimation = 40;
 				base.item.UseSound = SoundID.Item1;

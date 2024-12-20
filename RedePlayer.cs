@@ -106,6 +106,28 @@ namespace Redemption
 			this.bloomingLuck = false;
 			this.lostSoulSet = false;
 			this.wanderingSoulSet = false;
+			this.natureGuardian1 = false;
+			this.natureGuardian2 = false;
+			this.natureGuardian3 = false;
+			this.natureGuardian4 = false;
+			this.charisma = false;
+			this.natureGuardian5 = false;
+			this.natureGuardian6 = false;
+			this.natureGuardian7 = false;
+			this.natureGuardian8 = false;
+			this.natureGuardian9 = false;
+			this.natureGuardian10 = false;
+			this.natureGuardian11 = false;
+			this.natureGuardian12 = false;
+			this.natureGuardian13 = false;
+			this.natureGuardian14 = false;
+			this.natureGuardian15 = false;
+			this.natureGuardian16 = false;
+			this.natureGuardian17 = false;
+			this.natureGuardian18 = false;
+			this.natureGuardian19 = false;
+			this.natureGuardian20 = false;
+			this.natureGuardian21 = false;
 		}
 
 		public override void UpdateDead()
@@ -241,6 +263,10 @@ namespace Redemption
 			{
 				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 0f, 0f, base.mod.ProjectileType("BloodPulse"), 50, 0f, base.player.whoAmI, 0f, 0f);
 			}
+			if (this.charisma)
+			{
+				target.AddBuff(72, 300, false);
+			}
 		}
 
 		public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
@@ -248,6 +274,10 @@ namespace Redemption
 			if (this.bloodyCollar)
 			{
 				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 0f, 0f, base.mod.ProjectileType("BloodPulse"), 50, 0f, base.player.whoAmI, 0f, 0f);
+			}
+			if (this.charisma)
+			{
+				target.AddBuff(72, 300, false);
 			}
 		}
 
@@ -460,5 +490,49 @@ namespace Redemption
 		public bool lostSoulSet;
 
 		public bool wanderingSoulSet;
+
+		public bool natureGuardian1;
+
+		public bool natureGuardian2;
+
+		public bool natureGuardian3;
+
+		public bool natureGuardian4;
+
+		public bool charisma;
+
+		public bool natureGuardian5;
+
+		public bool natureGuardian6;
+
+		public bool natureGuardian7;
+
+		public bool natureGuardian8;
+
+		public bool natureGuardian9;
+
+		public bool natureGuardian10;
+
+		public bool natureGuardian11;
+
+		public bool natureGuardian12;
+
+		public bool natureGuardian13;
+
+		public bool natureGuardian14;
+
+		public bool natureGuardian15;
+
+		public bool natureGuardian16;
+
+		public bool natureGuardian17;
+
+		public bool natureGuardian18;
+
+		public bool natureGuardian19;
+
+		public bool natureGuardian20;
+
+		public bool natureGuardian21;
 	}
 }

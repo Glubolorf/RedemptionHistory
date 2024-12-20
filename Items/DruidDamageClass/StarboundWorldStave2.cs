@@ -10,21 +10,18 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Starbound World Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Despite it's origin, it feels familiar'\nSummon a tree formed out of outergalactic crystals\nThe tree emits an aura that increases player's jump height and defence when near\nAlso deals damage to enemies and inflicts Frostburn\nCan only place one at a time");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Despite it's origin, it feels familiar'\nSummon a tree formed out of outergalactic crystals\nThe tree emits an aura that increases player's jump height and defence when near\nCan only place one at a time");
 			Item.staff[base.item.type] = true;
 		}
 
 		public override void SafeSetDefaults()
 		{
-			base.item.damage = 33;
 			base.item.width = 46;
 			base.item.height = 50;
 			base.item.useTime = 30;
 			base.item.useAnimation = 30;
 			base.item.useStyle = 5;
 			base.item.mana = 100;
-			base.item.crit = 4;
-			base.item.knockBack = 0f;
 			base.item.value = Item.buyPrice(0, 6, 0, 0);
 			base.item.rare = 6;
 			base.item.UseSound = base.mod.GetLegacySoundSlot(2, "Sounds/Item/WorldTree1");

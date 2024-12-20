@@ -9,7 +9,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Power Cell Wristband");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Fueled with the sun itself'\n20% increased druidic damage\n25% increased druidic critical strike chance");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Fueled with the sun itself'\n15% increased druidic damage\n15% increased druidic critical strike chance");
 		}
 
 		public override void SetDefaults()

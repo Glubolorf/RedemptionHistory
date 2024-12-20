@@ -65,5 +65,19 @@ namespace Redemption.Projectiles
 				crit = true;
 			}
 		}
+
+		public override void Kill(int timeLeft)
+		{
+			for (int i = 0; i < 5; i++)
+			{
+				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 6, 0f, 0f, 100, default(Color), 1.2f);
+				Main.dust[num].velocity *= 1.8f;
+			}
+			for (int j = 0; j < 5; j++)
+			{
+				int num2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 33, 0f, 0f, 100, default(Color), 1.2f);
+				Main.dust[num2].velocity *= 1.8f;
+			}
+		}
 	}
 }

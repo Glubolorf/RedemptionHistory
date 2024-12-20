@@ -48,6 +48,10 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
 		{
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).burnStaves)
+			{
+				target.AddBuff(24, 180, false);
+			}
 			target.AddBuff(20, 160, false);
 		}
 

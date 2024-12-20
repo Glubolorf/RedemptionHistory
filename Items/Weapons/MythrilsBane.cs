@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Mythril's Bane");
-			base.Tooltip.SetDefault("'A mighty weapon wielded by Zephos...'\n[c/aa00ff:Epic]");
+			base.Tooltip.SetDefault("'A mighty weapon wielded by Zephos...'\nOnly usable after Plantera has been defeated\n[c/aa00ff:Epic]");
 		}
 
 		public override void SetDefaults()
@@ -31,6 +31,11 @@ namespace Redemption.Items.Weapons
 			base.item.UseSound = SoundID.Item1;
 			base.item.useTurn = true;
 			base.item.autoReuse = true;
+		}
+
+		public override bool CanUseItem(Player player)
+		{
+			return NPC.downedPlantBoss;
 		}
 
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)

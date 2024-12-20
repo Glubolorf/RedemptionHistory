@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -273,6 +274,16 @@ namespace Redemption.NPCs.Bosses
 		{
 			scale = 1.5f;
 			return null;
+		}
+
+		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+		{
+			SpriteEffects spriteEffects = 0;
+			if (base.npc.spriteDirection == 1)
+			{
+				spriteEffects = 1;
+			}
+			spriteBatch.Draw(base.mod.GetTexture("NPCs/Bosses/TheKeeper_Glow"), new Vector2(base.npc.Center.X - Main.screenPosition.X, base.npc.Center.Y - Main.screenPosition.Y), new Rectangle?(base.npc.frame), Color.White, base.npc.rotation, new Vector2((float)base.npc.width * 0.5f, (float)base.npc.height * 0.5f), 1f, spriteEffects, 0f);
 		}
 
 		private Player player;

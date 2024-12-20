@@ -16,12 +16,12 @@ namespace Redemption.Buffs
 
 		public override void Update(Player player, ref int buffIndex)
 		{
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
+			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>(base.mod);
 			if (player.ownedProjectileCounts[base.mod.ProjectileType("DarkSoulMinion")] > 0)
 			{
-				redePlayer.darkSoulMinion = true;
+				modPlayer.darkSoulMinion = true;
 			}
-			if (!redePlayer.darkSoulMinion)
+			if (!modPlayer.darkSoulMinion)
 			{
 				player.DelBuff(buffIndex);
 				buffIndex--;

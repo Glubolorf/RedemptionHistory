@@ -44,55 +44,7 @@ namespace Redemption.Projectiles
 			base.projectile.localAI[0] += 1f;
 			if (base.projectile.localAI[0] > 255f)
 			{
-				int num = Main.rand.Next(12);
-				if (num == 0)
-				{
-					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-2 + Main.rand.Next(0, 4)), (float)(-2 + Main.rand.Next(0, 4)), base.mod.ProjectileType("Seed1"), 40, 1f, Main.myPlayer, 0f, 0f);
-				}
-				if (num == 1)
-				{
-					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-2 + Main.rand.Next(0, 4)), (float)(-2 + Main.rand.Next(0, 4)), base.mod.ProjectileType("Seed3"), 0, 1f, Main.myPlayer, 0f, 0f);
-				}
-				if (num == 2)
-				{
-					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-2 + Main.rand.Next(0, 4)), (float)(-2 + Main.rand.Next(0, 4)), base.mod.ProjectileType("Seed4"), 110, 1f, Main.myPlayer, 0f, 0f);
-				}
-				if (num == 3)
-				{
-					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-2 + Main.rand.Next(0, 4)), (float)(-2 + Main.rand.Next(0, 4)), base.mod.ProjectileType("Seed5"), 290, 1f, Main.myPlayer, 0f, 0f);
-				}
-				if (num == 4)
-				{
-					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-2 + Main.rand.Next(0, 4)), (float)(-2 + Main.rand.Next(0, 4)), base.mod.ProjectileType("Seed6"), 110, 1f, Main.myPlayer, 0f, 0f);
-				}
-				if (num == 5)
-				{
-					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-2 + Main.rand.Next(0, 4)), (float)(-2 + Main.rand.Next(0, 4)), base.mod.ProjectileType("Seed8"), 60, 1f, Main.myPlayer, 0f, 0f);
-				}
-				if (num == 6)
-				{
-					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-2 + Main.rand.Next(0, 4)), (float)(-2 + Main.rand.Next(0, 4)), base.mod.ProjectileType("Seed9"), 40, 1f, Main.myPlayer, 0f, 0f);
-				}
-				if (num == 7)
-				{
-					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-2 + Main.rand.Next(0, 4)), (float)(-2 + Main.rand.Next(0, 4)), base.mod.ProjectileType("Seed10"), 100, 1f, Main.myPlayer, 0f, 0f);
-				}
-				if (num == 8)
-				{
-					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-2 + Main.rand.Next(0, 4)), (float)(-2 + Main.rand.Next(0, 4)), base.mod.ProjectileType("Seed13"), 60, 1f, Main.myPlayer, 0f, 0f);
-				}
-				if (num == 9)
-				{
-					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-2 + Main.rand.Next(0, 4)), (float)(-2 + Main.rand.Next(0, 4)), base.mod.ProjectileType("Seed14"), 130, 1f, Main.myPlayer, 0f, 0f);
-				}
-				if (num == 10)
-				{
-					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-2 + Main.rand.Next(0, 4)), (float)(-2 + Main.rand.Next(0, 4)), base.mod.ProjectileType("Seed15"), 77, 1f, Main.myPlayer, 0f, 0f);
-				}
-				if (num == 11)
-				{
-					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-2 + Main.rand.Next(0, 4)), (float)(-2 + Main.rand.Next(0, 4)), base.mod.ProjectileType("Seed17"), 75, 1f, Main.myPlayer, 0f, 0f);
-				}
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-2 + Main.rand.Next(0, 4)), (float)(-2 + Main.rand.Next(0, 4)), base.mod.ProjectileType("Seed21"), 80, 1f, Main.myPlayer, 0f, 0f);
 				Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 262, base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 20, default(Color), 1f);
 				Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 262, base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 20, default(Color), 1f);
 				Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 262, base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 20, default(Color), 1f);

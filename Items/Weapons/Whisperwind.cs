@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Whisperwind, Bow of Blight");
-			base.Tooltip.SetDefault("'Constructed with the remains of Thistlebark, the Blighted Ent...'\nReplaces Wooden Arrows with Blight Bolts\n33% chance not to consume ammo\n[c/aa00ff:Epic]");
+			base.Tooltip.SetDefault("'Constructed with the remains of Thistlebark, the Blighted Ent...'\nReplaces Wooden Arrows with Blight Bolts\n33% chance not to consume ammo\nOnly usable after Plantera has been defeated\n[c/aa00ff:Epic]");
 		}
 
 		public override void SetDefaults()
@@ -34,6 +34,11 @@ namespace Redemption.Items.Weapons
 			base.item.shoot = 10;
 			base.item.shootSpeed = 45f;
 			base.item.useAmmo = AmmoID.Arrow;
+		}
+
+		public override bool CanUseItem(Player player)
+		{
+			return NPC.downedPlantBoss;
 		}
 
 		public override Vector2? HoldoutOffset()

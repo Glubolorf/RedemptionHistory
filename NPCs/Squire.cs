@@ -93,6 +93,14 @@ namespace Redemption.NPCs
 
 		public override string GetChat()
 		{
+			if (RedeWorld.downedSlayer && Main.rand.Next(15) == 0)
+			{
+				return "Have you seen a robot-lookin' person anywhere? I want revenge. He's got a red visor and wears black armour... No? Okay.";
+			}
+			if (!RedeWorld.downedSlayer && Main.rand.Next(15) == 0)
+			{
+				return "Wait, you defeated King Slayer? Thank you! He once attacked my village, and when I tried to kill him, he laser beamed my chest... God that hurt.";
+			}
 			if (NPC.downedBoss1 && !NPC.downedBoss2 && !Main.hardMode && Main.rand.Next(15) == 0)
 			{
 				return "I can't believe you killed the Eye of Cthulhu, I guess I could've helped a little more...";
@@ -202,7 +210,7 @@ namespace Redemption.NPCs
 			case 0:
 				return "Hey, I have some pretty cool things, you can have them if you got the money.";
 			case 1:
-				return "Have you seen a robot-lookin' person anywhere? I want revenge. He's got a red visor and wears black armour... No? Okay.";
+				return "Hm?";
 			case 2:
 				return "So, how are you?";
 			case 3:

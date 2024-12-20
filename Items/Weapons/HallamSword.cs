@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Hallam's Steel Sword");
-			base.Tooltip.SetDefault("'Still shining...'\n[c/aa00ff:Epic]");
+			base.Tooltip.SetDefault("'Still shining...'\nOnly usable after any Mech Boss has been defeated\n[c/aa00ff:Epic]");
 		}
 
 		public override void SetDefaults()
@@ -33,6 +33,11 @@ namespace Redemption.Items.Weapons
 			base.item.useTurn = true;
 			base.item.shootSpeed = 90f;
 			base.item.shoot = base.mod.ProjectileType("HallamSwordPro");
+		}
+
+		public override bool CanUseItem(Player player)
+		{
+			return NPC.downedMechBossAny;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

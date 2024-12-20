@@ -12,7 +12,7 @@ namespace Redemption.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Mysterious Artifact");
-			base.Tooltip.SetDefault("'Seems to have some weird carvings in it, looks like an alien alphabet...'\n[c/aa00ff:Epic]");
+			base.Tooltip.SetDefault("'Seems to have some weird carvings in it, looks like an alien alphabet...'\nOnly usable after Plantera has been defeated\n[c/aa00ff:Epic]");
 		}
 
 		public override void SetDefaults()
@@ -23,6 +23,11 @@ namespace Redemption.Items.Weapons
 			base.item.value = Item.sellPrice(0, 20, 0, 0);
 			base.item.useAnimation = 6;
 			base.item.damage = (int)((double)base.item.damage * 2.0);
+		}
+
+		public override bool CanUseItem(Player player)
+		{
+			return NPC.downedPlantBoss;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

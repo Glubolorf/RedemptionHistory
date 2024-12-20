@@ -12,7 +12,7 @@ namespace Redemption.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Nestori's Violin");
-			base.Tooltip.SetDefault("'The violin's design is quite mysterious, it makes a sound similar to a violins, but it's missing the sound hole...'\n[c/ffc300:Legendary]");
+			base.Tooltip.SetDefault("'The violin's design is quite mysterious, it makes a sound similar to a violins, but it's missing the sound hole...'\nOnly usable after Moonlord has been defeated\n[c/ffc300:Legendary]");
 		}
 
 		public override void SetDefaults()
@@ -31,6 +31,11 @@ namespace Redemption.Items.Weapons
 			base.item.autoReuse = true;
 			base.item.shoot = base.mod.ProjectileType("NestorisViolinPro");
 			base.item.shootSpeed = 50f;
+		}
+
+		public override bool CanUseItem(Player player)
+		{
+			return NPC.downedMoonlord;
 		}
 
 		public override void AddRecipes()

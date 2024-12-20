@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Blind Justice, Demon’s Terror");
-			base.Tooltip.SetDefault("'Demons fear this weapon, for a good reason too...'\nDeal 2x more damage to Demons\n[c/aa00ff:Epic]");
+			base.Tooltip.SetDefault("'Demons fear this weapon, for a good reason too...'\nDeal 2x more damage to Demons\nOnly usable after all Mech Bosses have been defeated\n[c/aa00ff:Epic]");
 		}
 
 		public override void SetDefaults()
@@ -33,6 +33,11 @@ namespace Redemption.Items.Weapons
 			base.item.useTurn = true;
 			base.item.shootSpeed = 14f;
 			base.item.shoot = base.mod.ProjectileType("SpectreScythe");
+		}
+
+		public override bool CanUseItem(Player player)
+		{
+			return NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

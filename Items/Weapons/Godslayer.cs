@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Godslayer, Promise of Slaughter");
-			base.Tooltip.SetDefault("'Never actually slayed any Gods... Yet...'\n[c/aa00ff:Epic]");
+			base.Tooltip.SetDefault("'Never actually slayed any Gods... Yet...'\nOnly usable after Plantera is defeated\n[c/aa00ff:Epic]");
 		}
 
 		public override void SetDefaults()
@@ -30,6 +30,11 @@ namespace Redemption.Items.Weapons
 			base.item.rare = 11;
 			base.item.UseSound = SoundID.Item7;
 			base.item.autoReuse = true;
+		}
+
+		public override bool CanUseItem(Player player)
+		{
+			return NPC.downedPlantBoss;
 		}
 
 		public override void ModifyTooltips(List<TooltipLine> tooltips)

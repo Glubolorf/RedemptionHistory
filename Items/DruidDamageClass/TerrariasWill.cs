@@ -14,7 +14,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Terraria's Will");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'With every leaf born, the planet blooms'\nWalking about creates ancient spores that pop into random buffed seeds\n45% increased druid damage\n50% increased druid critical strike chance");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'With every leaf born, the planet blooms'\nWalking about creates ancient spores that grows into powerful plants that fight for you\n45% increased druid damage\n50% increased druid critical strike chance");
 		}
 
 		public override void SetDefaults()
@@ -46,9 +46,9 @@ namespace Redemption.Items.DruidDamageClass
 			{
 				for (int i = 0; i < 1; i++)
 				{
-					if (Main.rand.Next(20) == 0)
+					if (Main.rand.Next(40) == 0)
 					{
-						Projectile.NewProjectile(player.position, new Vector2(0f, 0f), base.mod.ProjectileType("AncientSporePro"), 80, 0f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(player.position.X + Utils.NextFloat(Main.rand, (float)player.width), player.position.Y + Utils.NextFloat(Main.rand, (float)player.height)), new Vector2(0f, 0f), base.mod.ProjectileType("AncientSporePro"), 80, 0f, Main.myPlayer, 0f, 0f);
 					}
 				}
 			}

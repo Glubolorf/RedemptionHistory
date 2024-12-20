@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -11,7 +13,7 @@ namespace Redemption.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Dusksong, Bond of Dark Souls");
-			base.Tooltip.SetDefault("'The tome slowly burns, but never turns to cinder...'\nFires a barrage of homing Dark Souls\n[c/aa00ff:Epic]");
+			base.Tooltip.SetDefault("'The tome slowly burns, but never turns to cinder...'\nFires a barrage of homing Dark Souls\nOnly usable after any Mech Bosses have been defeated\n[c/aa00ff:Epic]");
 		}
 
 		public override void SetDefaults()
@@ -34,6 +36,11 @@ namespace Redemption.Items.Weapons
 			base.item.shootSpeed = 18f;
 		}
 
+		public override bool CanUseItem(Player player)
+		{
+			return NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3;
+		}
+
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
 			int num = 12 + Main.rand.Next(6);
@@ -45,6 +52,16 @@ namespace Redemption.Items.Weapons
 				Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
 			}
 			return false;
+		}
+
+		public override void ModifyTooltips(List<TooltipLine> tooltips)
+		{
+			Color transparent = Color.Transparent;
+			if (base.item.modItem != null && base.item.modItem.mod == ModLoader.GetMod("Redemption"))
+			{
+				TooltipLine tooltipLine = Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName"));
+				tooltipLine.overrideColor = new Color?(new Color(170, 0, 255));
+			}
 		}
 	}
 }

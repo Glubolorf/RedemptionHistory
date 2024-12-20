@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -22,6 +23,11 @@ namespace Redemption.Items
 			base.item.rare = 11;
 			base.item.accessory = true;
 			base.item.expert = true;
+		}
+
+		public override void PostUpdate()
+		{
+			Lighting.AddLight(base.item.Center, Color.Green.ToVector3() * 0.55f * Main.essScale);
 		}
 
 		public override void UpdateAccessory(Player player, bool hideVisual)

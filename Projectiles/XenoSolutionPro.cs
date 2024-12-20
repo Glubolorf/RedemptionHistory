@@ -102,12 +102,6 @@ namespace Redemption.Projectiles
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1, 0);
 						}
-						else if (type == 0)
-						{
-							Main.tile[k, l].type = (ushort)base.mod.TileType("DeadRockTile");
-							WorldGen.SquareTileFrame(k, l, true);
-							NetMessage.SendTileSquare(-1, k, l, 1, 0);
-						}
 					}
 				}
 			}

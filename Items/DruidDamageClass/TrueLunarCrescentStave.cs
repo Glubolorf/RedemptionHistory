@@ -33,6 +33,14 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.shootSpeed = 14f;
 		}
 
+		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
+		{
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).burnStaves)
+			{
+				target.AddBuff(24, 180, false);
+			}
+		}
+
 		public override bool CanUseItem(Player player)
 		{
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterStaves)

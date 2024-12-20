@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -28,6 +29,11 @@ namespace Redemption.Items
 			base.item.useStyle = 4;
 			base.item.UseSound = SoundID.Item44;
 			base.item.consumable = true;
+		}
+
+		public override void PostUpdate()
+		{
+			Lighting.AddLight(base.item.Center, Color.Green.ToVector3() * 0.55f * Main.essScale);
 		}
 
 		public override bool CanUseItem(Player player)

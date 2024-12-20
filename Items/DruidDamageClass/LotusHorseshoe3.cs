@@ -22,6 +22,26 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.defense = 2;
 		}
 
+		public override bool CanEquipAccessory(Player player, int slot)
+		{
+			if (slot < 10)
+			{
+				int num = 5 + player.extraAccessorySlots;
+				for (int i = 3; i < 3 + num; i++)
+				{
+					if (slot != i && player.armor[i].type == base.mod.ItemType("LotusHorseshoe1"))
+					{
+						return false;
+					}
+					if (slot != i && player.armor[i].type == base.mod.ItemType("LotusHorseshoe2"))
+					{
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+
 		public override void AddRecipes()
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);

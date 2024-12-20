@@ -347,5 +347,15 @@ namespace Redemption.NPCs
 		{
 			return SpawnCondition.Cavern.Chance * (Main.hardMode ? 0.001f : 0f);
 		}
+
+		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+		{
+			SpriteEffects spriteEffects = 0;
+			if (base.npc.spriteDirection == 1)
+			{
+				spriteEffects = 1;
+			}
+			spriteBatch.Draw(base.mod.GetTexture("NPCs/CrusherHead_Glow"), new Vector2(base.npc.Center.X - Main.screenPosition.X, base.npc.Center.Y - Main.screenPosition.Y), new Rectangle?(base.npc.frame), Color.White, base.npc.rotation, new Vector2((float)base.npc.width * 0.5f, (float)base.npc.height * 0.5f), 1f, spriteEffects, 0f);
+		}
 	}
 }

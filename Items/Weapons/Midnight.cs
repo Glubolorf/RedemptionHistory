@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Midnight, Defiler of the Prince");
-			base.Tooltip.SetDefault("'This axe is said to be forged out of stardust...'\n[c/aa00ff:Epic]");
+			base.Tooltip.SetDefault("'This axe is said to be forged out of stardust...'\nOnly usable after any Mech Boss has been defeated\n[c/aa00ff:Epic]");
 		}
 
 		public override void SetDefaults()
@@ -32,6 +32,11 @@ namespace Redemption.Items.Weapons
 			base.item.autoReuse = true;
 			base.item.shoot = base.mod.ProjectileType("MidnightNebula");
 			base.item.shootSpeed = 10f;
+		}
+
+		public override bool CanUseItem(Player player)
+		{
+			return NPC.downedMechBossAny;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

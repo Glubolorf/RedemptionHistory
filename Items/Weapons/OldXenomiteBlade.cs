@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Old Xenomite Blade");
-			base.Tooltip.SetDefault("'Where did this come from?'\n[c/aa00ff:Epic]");
+			base.Tooltip.SetDefault("'Where did this come from?'\nOnly usable in Hardmode\n[c/aa00ff:Epic]");
 		}
 
 		public override void SetDefaults()
@@ -31,6 +31,11 @@ namespace Redemption.Items.Weapons
 			base.item.UseSound = SoundID.Item15;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
+		}
+
+		public override bool CanUseItem(Player player)
+		{
+			return Main.hardMode;
 		}
 
 		public override void MeleeEffects(Player player, Rectangle hitbox)

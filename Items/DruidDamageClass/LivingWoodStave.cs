@@ -45,6 +45,14 @@ namespace Redemption.Items.DruidDamageClass
 			return true;
 		}
 
+		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
+		{
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).burnStaves)
+			{
+				target.AddBuff(24, 180, false);
+			}
+		}
+
 		public override void AddRecipes()
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);

@@ -58,9 +58,28 @@ namespace Redemption
 				base.ItemType("MoonglowBag"),
 				base.ItemType("MossBag"),
 				base.ItemType("EyeStalkBag"),
-				base.ItemType("MartianTreeBag")
+				base.ItemType("MartianTreeBag"),
+				base.ItemType("TitaniumBloomBag"),
+				base.ItemType("AdamantiteLilyBag")
 			});
 			RecipeGroup.RegisterGroup("Redemption:Seedbag", recipeGroup2);
+			RecipeGroup recipeGroup3 = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Phasesaber", new int[]
+			{
+				3765,
+				3764,
+				3769,
+				3767,
+				3766,
+				3768
+			});
+			RecipeGroup.RegisterGroup("Redemption:Phasesabers", recipeGroup3);
+			if (RecipeGroup.recipeGroupIDs.ContainsKey("Wood"))
+			{
+				int key = RecipeGroup.recipeGroupIDs["Wood"];
+				RecipeGroup recipeGroup4 = RecipeGroup.recipeGroups[key];
+				recipeGroup4.ValidItems.Add(base.ItemType("DeadWood"));
+				recipeGroup4.ValidItems.Add(base.ItemType("AncientWood"));
+			}
 		}
 
 		public override void Load()
@@ -128,19 +147,27 @@ namespace Redemption
 				Mod mod7 = mod;
 				object[] array6 = new object[5];
 				array6[0] = "AddBossWithInfo";
-				array6[1] = "Vlitch Cleaver";
-				array6[2] = 11.5f;
-				array6[3] = new Func<bool>(() => RedeWorld.downedVlitch1);
-				array6[4] = "Use a [i:" + base.ItemType<CorruptedHeroSword>() + "] at night";
+				array6[1] = "King Slayer III";
+				array6[2] = 9.999f;
+				array6[3] = new Func<bool>(() => RedeWorld.downedSlayer);
+				array6[4] = "Use a [i:" + base.ItemType<KingSummon>() + "] at day";
 				mod7.Call(array6);
 				Mod mod8 = mod;
 				object[] array7 = new object[5];
 				array7[0] = "AddBossWithInfo";
-				array7[1] = "Vlitch Gigipede";
-				array7[2] = 13.5f;
-				array7[3] = new Func<bool>(() => RedeWorld.downedVlitch2);
-				array7[4] = "Use a [i:" + base.ItemType<CorruptedWormMedallion>() + "] at night";
+				array7[1] = "Vlitch Cleaver";
+				array7[2] = 11.5f;
+				array7[3] = new Func<bool>(() => RedeWorld.downedVlitch1);
+				array7[4] = "Use a [i:" + base.ItemType<CorruptedHeroSword>() + "] at night";
 				mod8.Call(array7);
+				Mod mod9 = mod;
+				object[] array8 = new object[5];
+				array8[0] = "AddBossWithInfo";
+				array8[1] = "Vlitch Gigipede";
+				array8[2] = 13.5f;
+				array8[3] = new Func<bool>(() => RedeWorld.downedVlitch2);
+				array8[4] = "Use a [i:" + base.ItemType<CorruptedWormMedallion>() + "] at night";
+				mod9.Call(array8);
 			}
 		}
 

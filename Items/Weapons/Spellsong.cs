@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Spellsong, Core of the West");
-			base.Tooltip.SetDefault("'A magic sword once wielded by Estz, King of Jerzal...'\n[c/aa00ff:Epic]");
+			base.Tooltip.SetDefault("'A magic sword once wielded by Estz, King of Jerzal...'\nOnly usable after Plantera has been defeated\n[c/aa00ff:Epic]");
 		}
 
 		public override void SetDefaults()
@@ -33,6 +33,11 @@ namespace Redemption.Items.Weapons
 			base.item.autoReuse = true;
 			base.item.shoot = base.mod.ProjectileType("SpellsongPro1");
 			base.item.shootSpeed = 10f;
+		}
+
+		public override bool CanUseItem(Player player)
+		{
+			return NPC.downedPlantBoss;
 		}
 
 		public override void ModifyTooltips(List<TooltipLine> tooltips)

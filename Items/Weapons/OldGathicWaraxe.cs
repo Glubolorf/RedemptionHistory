@@ -23,7 +23,7 @@ namespace Redemption.Items.Weapons
 			base.item.useStyle = 1;
 			base.item.knockBack = 6f;
 			base.item.value = 3200;
-			base.item.rare = -1;
+			base.item.rare = 3;
 			base.item.UseSound = SoundID.Item7;
 			base.item.autoReuse = true;
 		}

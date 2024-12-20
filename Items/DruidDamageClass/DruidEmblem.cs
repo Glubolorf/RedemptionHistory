@@ -21,6 +21,22 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.accessory = true;
 		}
 
+		public override bool CanEquipAccessory(Player player, int slot)
+		{
+			if (slot < 10)
+			{
+				int num = 5 + player.extraAccessorySlots;
+				for (int i = 3; i < 3 + num; i++)
+				{
+					if (slot != i && player.armor[i].type == base.mod.ItemType("DruidsCharm"))
+					{
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);

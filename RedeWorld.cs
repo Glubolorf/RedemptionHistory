@@ -21,6 +21,35 @@ namespace Redemption
 			RedeWorld.xenoBiome = 0;
 		}
 
+		public override void PostUpdate()
+		{
+			if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && !RedeWorld.spawnSapphironOre && !RedeWorld.spawnScarlionOre)
+			{
+				if (!WorldGen.crimson)
+				{
+					RedeWorld.spawnSapphironOre = true;
+					Main.NewText("The souls of the world taint it's own evil...", 100, 100, 200, false);
+					for (int i = 0; i < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 6E-05); i++)
+					{
+						int num = WorldGen.genRand.Next(0, Main.maxTilesX);
+						int num2 = WorldGen.genRand.Next((int)((float)Main.maxTilesY * 0.3f), (int)((float)Main.maxTilesY * 0.45f));
+						WorldGen.OreRunner(num, num2, (double)WorldGen.genRand.Next(4, 5), WorldGen.genRand.Next(5, 8), (ushort)base.mod.TileType("SapphironOreTile"));
+					}
+				}
+				if (WorldGen.crimson)
+				{
+					RedeWorld.spawnScarlionOre = true;
+					Main.NewText("The souls of the world taint it's own evil...", 200, 100, 100, false);
+					for (int j = 0; j < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 6E-05); j++)
+					{
+						int num3 = WorldGen.genRand.Next(0, Main.maxTilesX);
+						int num4 = WorldGen.genRand.Next((int)((float)Main.maxTilesY * 0.3f), (int)((float)Main.maxTilesY * 0.45f));
+						WorldGen.OreRunner(num3, num4, (double)WorldGen.genRand.Next(4, 5), WorldGen.genRand.Next(5, 8), (ushort)base.mod.TileType("ScarlionOreTile"));
+					}
+				}
+			}
+		}
+
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
 		{
 			int num = tasks.FindIndex((GenPass genpass) => genpass.Name.Equals("Shinies"));
@@ -72,11 +101,18 @@ namespace Redemption
 			RedeWorld.downedVlitch1 = false;
 			RedeWorld.downedVlitch2 = false;
 			RedeWorld.downedDarkSlime = false;
+			RedeWorld.downedSlayer = false;
+			RedeWorld.spawnSapphironOre = false;
+			RedeWorld.spawnScarlionOre = false;
+			RedeWorld.deathBySlayer = false;
 		}
 
 		public override TagCompound Save()
 		{
 			List<string> list = new List<string>();
+			bool flag = false;
+			bool flag2 = false;
+			bool flag3 = false;
 			if (RedeWorld.downedKingChicken)
 			{
 				list.Add("KingChicken");
@@ -109,8 +145,27 @@ namespace Redemption
 			{
 				list.Add("DarkSlime");
 			}
+			if (RedeWorld.downedSlayer)
+			{
+				list.Add("KSEntrance");
+			}
+			if (RedeWorld.spawnSapphironOre)
+			{
+				flag = true;
+			}
+			if (RedeWorld.spawnScarlionOre)
+			{
+				flag2 = true;
+			}
+			if (RedeWorld.deathBySlayer)
+			{
+				flag3 = true;
+			}
 			TagCompound tagCompound = new TagCompound();
 			tagCompound.Add("downed", list);
+			tagCompound.Add("sapphiron", flag);
+			tagCompound.Add("scarlion", flag2);
+			tagCompound.Add("deathSlayer", flag3);
 			return tagCompound;
 		}
 
@@ -125,6 +180,10 @@ namespace Redemption
 			RedeWorld.downedVlitch1 = list.Contains("VlitchCleaver");
 			RedeWorld.downedVlitch2 = list.Contains("VlitchWormHead");
 			RedeWorld.downedDarkSlime = list.Contains("DarkSlime");
+			RedeWorld.downedSlayer = list.Contains("KSEntrance");
+			RedeWorld.spawnSapphironOre = tag.GetBool("sapphiron");
+			RedeWorld.spawnScarlionOre = tag.GetBool("scarlion");
+			RedeWorld.deathBySlayer = tag.GetBool("deathSlayer");
 		}
 
 		public override void NetSend(BinaryWriter writer)
@@ -138,6 +197,7 @@ namespace Redemption
 			bitsByte[5] = RedeWorld.downedVlitch1;
 			bitsByte[6] = RedeWorld.downedVlitch2;
 			bitsByte[7] = RedeWorld.downedDarkSlime;
+			bitsByte[8] = RedeWorld.downedSlayer;
 			writer.Write(bitsByte);
 		}
 
@@ -152,6 +212,7 @@ namespace Redemption
 			RedeWorld.downedVlitch1 = bitsByte[5];
 			RedeWorld.downedVlitch2 = bitsByte[6];
 			RedeWorld.downedDarkSlime = bitsByte[7];
+			RedeWorld.downedSlayer = bitsByte[8];
 		}
 
 		private const int saveVersion = 0;
@@ -159,6 +220,10 @@ namespace Redemption
 		public static bool spawnOre;
 
 		public static bool spawnDragonOre;
+
+		public static bool spawnSapphironOre;
+
+		public static bool spawnScarlionOre;
 
 		public static int xenoBiome;
 
@@ -177,5 +242,9 @@ namespace Redemption
 		public static bool downedVlitch2;
 
 		public static bool downedDarkSlime;
+
+		public static bool downedSlayer;
+
+		public static bool deathBySlayer;
 	}
 }

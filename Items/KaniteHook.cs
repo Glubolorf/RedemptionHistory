@@ -20,7 +20,6 @@ namespace Redemption.Items
 		public override void AddRecipes()
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
-			modRecipe.anyWood = true;
 			modRecipe.AddIngredient(null, "KaniteBar", 15);
 			modRecipe.AddIngredient(85, 4);
 			modRecipe.AddTile(16);

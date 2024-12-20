@@ -13,7 +13,7 @@ namespace Redemption.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Daerel's Dark-Steel Bow");
-			base.Tooltip.SetDefault("'A mighty bow made of Ancient Wood & Dark Steel'\nReplaces Wooden Arrows with Dark-Steel Arrows\n40% chance not to consume ammo\n[c/aa00ff:Epic]");
+			base.Tooltip.SetDefault("'A mighty bow made of Ancient Wood & Dark Steel'\nReplaces Wooden Arrows with Dark-Steel Arrows\n40% chance not to consume ammo\nOnly usable after all Mech Bosses have been defeated\n[c/aa00ff:Epic]");
 		}
 
 		public override void SetDefaults()
@@ -39,6 +39,11 @@ namespace Redemption.Items.Weapons
 		public override Vector2? HoldoutOffset()
 		{
 			return new Vector2?(new Vector2(-4f, 0f));
+		}
+
+		public override bool CanUseItem(Player player)
+		{
+			return NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3;
 		}
 
 		public override bool ConsumeAmmo(Player player)

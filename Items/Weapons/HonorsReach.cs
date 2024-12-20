@@ -14,7 +14,7 @@ namespace Redemption.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Honor's Reach, Edge of the East");
-			base.Tooltip.SetDefault("'A spear once wielded by a King of Anglon'\n[c/aa00ff:Epic]");
+			base.Tooltip.SetDefault("'A spear once wielded by a King of Anglon'\nOnly usable after Plantera is defeated\n[c/aa00ff:Epic]");
 		}
 
 		public override void SetDefaults()
@@ -56,7 +56,7 @@ namespace Redemption.Items.Weapons
 
 		public override bool CanUseItem(Player player)
 		{
-			return player.ownedProjectileCounts[base.item.shoot] < 1;
+			return player.ownedProjectileCounts[base.item.shoot] < 1 && NPC.downedPlantBoss;
 		}
 	}
 }

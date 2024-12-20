@@ -2,10 +2,11 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
+using Terraria.ModLoader;
 
 namespace Redemption.NPCs
 {
-	public class NpcDrops : RedeGlobalNPC
+	public class NpcDrops : GlobalNPC
 	{
 		public override void SetupShop(int type, Chest shop, ref int nextSlot)
 		{
@@ -938,15 +939,27 @@ namespace Redemption.NPCs
 			if (npc.type == 262)
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("SoulOfBloom"), Main.rand.Next(30, 40), false, 0, false, false);
+				if (Main.rand.Next(7) == 0)
+				{
+					int num10 = Main.rand.Next(2);
+					if (num10 == 0)
+					{
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("PlanterasStave1"), 1, false, 0, false, false);
+					}
+					if (num10 == 1)
+					{
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("PlanterasStave2"), 1, false, 0, false, false);
+					}
+				}
 			}
 			if (npc.type == 35 && !RedeWorld.spawnDragonOre)
 			{
 				Main.NewText("The caverns are heated with dragon bone...", 225, 150, 15, false);
 				for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 6E-05); k++)
 				{
-					int num10 = WorldGen.genRand.Next(0, Main.maxTilesX);
-					int num11 = WorldGen.genRand.Next((int)((float)Main.maxTilesY * 0.3f), (int)((float)Main.maxTilesY * 0.45f));
-					WorldGen.OreRunner(num10, num11, (double)WorldGen.genRand.Next(2, 4), WorldGen.genRand.Next(4, 7), (ushort)base.mod.TileType("DragonLeadOreTile"));
+					int num11 = WorldGen.genRand.Next(0, Main.maxTilesX);
+					int num12 = WorldGen.genRand.Next((int)((float)Main.maxTilesY * 0.3f), (int)((float)Main.maxTilesY * 0.45f));
+					WorldGen.OreRunner(num11, num12, (double)WorldGen.genRand.Next(2, 4), WorldGen.genRand.Next(4, 7), (ushort)base.mod.TileType("DragonLeadOreTile"));
 				}
 				RedeWorld.spawnDragonOre = true;
 			}
@@ -964,9 +977,9 @@ namespace Redemption.NPCs
 			}
 			if (npc.type == base.mod.NPCType("MartianScamArtist"))
 			{
-				if (Main.rand.Next(8) == 0)
+				if (Main.rand.Next(4) == 0)
 				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 2860, Main.rand.Next(8, 20), false, 0, false, false);
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("UltraVioletPlating"), Main.rand.Next(8, 20), false, 0, false, false);
 				}
 				if (Main.rand.Next(20) == 0)
 				{
@@ -983,6 +996,48 @@ namespace Redemption.NPCs
 				if (Main.rand.Next(4) == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("MartianTreeBag"), 1, false, 0, false, false);
+				}
+			}
+			if (npc.type == 245 && Main.rand.Next(8) == 0)
+			{
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("LihzWorldStave"), 1, false, 0, false, false);
+			}
+			if (npc.type == base.mod.NPCType("DeathGardener"))
+			{
+				if (Main.rand.Next(4) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("SkeletonCan"), 1, false, 0, false, false);
+				}
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("GloomMushroom"), Main.rand.Next(5, 7), false, 0, false, false);
+			}
+			if (npc.type == 439)
+			{
+				if (!Main.expertMode)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("CreationFragment"), Main.rand.Next(12, 60), false, 0, false, false);
+				}
+				if (Main.expertMode)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("CreationFragment"), Main.rand.Next(18, 90), false, 0, false, false);
+				}
+			}
+			if (npc.type == base.mod.NPCType("RaggedZombie"))
+			{
+				if (Main.rand.Next(4) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("DeathsGraspBag"), 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(50) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 216, 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(200) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 1304, 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(500) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("Falcon"), 1, false, 0, false, false);
 				}
 			}
 		}

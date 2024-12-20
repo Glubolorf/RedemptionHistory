@@ -12,6 +12,7 @@ namespace Redemption.Buffs
 			base.Description.SetDefault("\"You cannot use world staves\"");
 			Main.buffNoTimeDisplay[base.Type] = false;
 			Main.debuff[base.Type] = true;
+			this.canBeCleared = false;
 		}
 	}
 }

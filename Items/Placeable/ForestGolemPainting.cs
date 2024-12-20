@@ -23,8 +23,7 @@ namespace Redemption.Items.Placeable
 			base.item.useStyle = 1;
 			base.item.consumable = true;
 			base.item.value = 100;
-			base.item.rare = 9;
-			base.item.expert = true;
+			base.item.rare = 2;
 			base.item.createTile = base.mod.TileType("ForestGolemPaintingTile");
 			base.item.placeStyle = 0;
 		}

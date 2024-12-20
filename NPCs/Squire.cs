@@ -233,6 +233,11 @@ namespace Redemption.NPCs
 			nextSlot++;
 			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Archcloth"), false);
 			nextSlot++;
+			if (NPC.downedBoss1)
+			{
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("ForestGolemPainting"), false);
+				nextSlot++;
+			}
 			if (NPC.downedBoss3)
 			{
 				shop.item[nextSlot].SetDefaults(base.mod.ItemType("GathicCryoCrystal"), false);

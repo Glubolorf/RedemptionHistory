@@ -11,7 +11,7 @@ namespace Redemption.Items.Armor
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Hallan's Fantasy Robe");
+			base.DisplayName.SetDefault("Hallam's Fantasy Robe");
 			base.Tooltip.SetDefault("'Great for impersonating devs!'");
 		}
 

@@ -133,8 +133,8 @@ namespace Redemption.NPCs
 					flag = true;
 				}
 			}
-			float num8 = 14f;
-			float num9 = 0.1f;
+			float num8 = 10f;
+			float num9 = 0.08f;
 			Vector2 vector2;
 			vector2..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
 			float num10 = Main.player[base.npc.target].position.X + (float)(Main.player[base.npc.target].width / 2);

@@ -19,6 +19,7 @@ namespace Redemption.Items
 			base.item.value = Item.buyPrice(0, 1, 0, 0);
 			base.item.rare = 7;
 			base.item.accessory = true;
+			base.item.expert = true;
 		}
 
 		public override void UpdateAccessory(Player player, bool hideVisual)

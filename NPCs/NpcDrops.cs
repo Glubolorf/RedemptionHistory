@@ -469,7 +469,7 @@ namespace Redemption.NPCs
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 317, 1, false, 0, false, false);
 				}
 			}
-			if (npc.type == base.mod.NPCType("CorpseWalkerPriest") && Main.rand.Next(66) == 0)
+			if (npc.type == base.mod.NPCType("CorpseWalkerPriest") && Main.rand.Next(25) == 0)
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("CorpseWalkerStaff"), 1, false, 0, false, false);
 			}

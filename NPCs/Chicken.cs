@@ -46,7 +46,7 @@ namespace Redemption.NPCs
 			{
 				return 0f;
 			}
-			return 0.5f;
+			return 0.4f;
 		}
 
 		public override bool CanHitPlayer(Player target, ref int cooldownSlot)

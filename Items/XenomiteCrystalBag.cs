@@ -43,7 +43,7 @@ namespace Redemption.Items
 				player.QuickSpawnItem(base.mod.ItemType("XenomiteYoyo"), 1);
 			}
 			player.QuickSpawnItem(base.mod.ItemType("XenomiteShard"), Main.rand.Next(14, 24));
-			player.QuickSpawnItem(base.mod.ItemType("ForestGolemPainting"), 1);
+			player.QuickSpawnItem(base.mod.ItemType("NecklaceSight"), 1);
 		}
 	}
 }

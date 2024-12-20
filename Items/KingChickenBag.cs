@@ -34,7 +34,11 @@ namespace Redemption.Items
 			{
 				player.QuickSpawnItem(base.mod.ItemType("KingChickenMask"), 1);
 			}
-			player.QuickSpawnItem(base.mod.ItemType("EggStaff"), 1);
+			if (Main.rand.Next(3) == 0)
+			{
+				player.QuickSpawnItem(base.mod.ItemType("EggStaff"), 1);
+			}
+			player.QuickSpawnItem(base.mod.ItemType("SpiritOfLife"), 1);
 			player.QuickSpawnItem(base.mod.ItemType("Grain"), 1);
 		}
 	}

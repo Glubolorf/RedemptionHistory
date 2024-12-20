@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -29,6 +30,11 @@ namespace Redemption.Items.Weapons
 			base.item.shoot = 10;
 			base.item.shootSpeed = 5f;
 			base.item.useAmmo = AmmoID.Bullet;
+		}
+
+		public override Vector2? HoldoutOffset()
+		{
+			return new Vector2?(new Vector2(-4f, 0f));
 		}
 
 		public override void AddRecipes()

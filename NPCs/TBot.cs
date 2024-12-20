@@ -171,11 +171,11 @@ namespace Redemption.NPCs
 				nextSlot++;
 				shop.item[nextSlot].SetDefaults(base.mod.ItemType("MiniNuke"), false);
 				nextSlot++;
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("XenomiteShard"), false);
-				nextSlot++;
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("Starlite"), false);
-				nextSlot++;
 			}
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("XenomiteShard"), false);
+			nextSlot++;
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Starlite"), false);
+			nextSlot++;
 			if (NPC.downedPlantBoss)
 			{
 				shop.item[nextSlot].SetDefaults(base.mod.ItemType("Mk3Capacitator"), false);

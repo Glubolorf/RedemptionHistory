@@ -42,7 +42,7 @@ namespace Redemption.Items.Armor
 
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "Spirit summoning weapons will summon 2 extra spiritsYou emit an aura of light";
+			player.setBonus = "Spirit summoning weapons will summon 2 extra spirits\nYou emit an aura of light";
 			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
 			redePlayer.moreSpirits = true;
 			player.AddBuff(11, 2, true);

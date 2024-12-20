@@ -42,6 +42,14 @@ namespace Redemption.Projectiles
 			}
 		}
 
+		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+		{
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).frostburnSeedbag)
+			{
+				target.AddBuff(44, 160, false);
+			}
+		}
+
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
 			if (base.projectile.velocity.X != oldVelocity.X && Math.Abs(oldVelocity.X) > 0f)

@@ -84,6 +84,11 @@ namespace Redemption
 			this.moreSpirits = false;
 			this.rainbowCatPet = false;
 			this.golemWateringCan = false;
+			this.spiritHoming = false;
+			this.spiritChicken = false;
+			this.extraSeed = false;
+			this.spiritPierce = false;
+			this.frostburnSeedbag = false;
 		}
 
 		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
@@ -131,6 +136,10 @@ namespace Redemption
 					Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 483, 60, 1f, Main.myPlayer, 0f, 0f);
 				}
 			}
+			if (this.spiritChicken)
+			{
+				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("SpiritChickenPro"), 9, 1f, Main.myPlayer, 0f, 0f);
+			}
 		}
 
 		private const int saveVersion = 0;
@@ -170,5 +179,15 @@ namespace Redemption
 		public bool rainbowCatPet;
 
 		public bool golemWateringCan;
+
+		public bool spiritHoming;
+
+		public bool spiritChicken;
+
+		public bool extraSeed;
+
+		public bool spiritPierce;
+
+		public bool frostburnSeedbag;
 	}
 }

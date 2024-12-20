@@ -35,6 +35,11 @@ namespace Redemption.Items.Weapons
 			base.item.crit = 0;
 		}
 
+		public override Vector2? HoldoutOffset()
+		{
+			return new Vector2?(new Vector2(-2f, 0f));
+		}
+
 		public override void AddRecipes()
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);

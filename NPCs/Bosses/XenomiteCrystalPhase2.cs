@@ -117,6 +117,30 @@ namespace Redemption.NPCs.Bosses
 			{
 				NPC.NewNPC((int)base.npc.position.X + 50, (int)base.npc.position.Y + 50, base.mod.NPCType("XenomitePiece"), 0, 0f, 0f, 0f, 0f, 255);
 			}
+			this.specialAttack2++;
+			if (this.specialAttack2 == 300)
+			{
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 28f, base.npc.position.Y + 28f), new Vector2(0f, -8f), base.mod.ProjectileType("XenomiteFragmentPro"), 20, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 28f, base.npc.position.Y + 28f), new Vector2(0f, 8f), base.mod.ProjectileType("XenomiteFragmentPro"), 20, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 28f, base.npc.position.Y + 28f), new Vector2(-8f, 0f), base.mod.ProjectileType("XenomiteFragmentPro"), 20, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 28f, base.npc.position.Y + 28f), new Vector2(8f, 0f), base.mod.ProjectileType("XenomiteFragmentPro"), 20, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 28f, base.npc.position.Y + 28f), new Vector2(8f, 8f), base.mod.ProjectileType("XenomiteFragmentPro"), 20, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 28f, base.npc.position.Y + 28f), new Vector2(8f, -8f), base.mod.ProjectileType("XenomiteFragmentPro"), 20, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 28f, base.npc.position.Y + 28f), new Vector2(-8f, 8f), base.mod.ProjectileType("XenomiteFragmentPro"), 20, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 28f, base.npc.position.Y + 28f), new Vector2(-8f, -8f), base.mod.ProjectileType("XenomiteFragmentPro"), 20, 3f, 255, 0f, 0f);
+				this.specialAttack2 = 0;
+			}
+			if (base.npc.life < 800 && this.specialAttack2 == 150)
+			{
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 28f, base.npc.position.Y + 28f), new Vector2(0f, -10f), base.mod.ProjectileType("XenomiteFragmentPro"), 20, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 28f, base.npc.position.Y + 28f), new Vector2(0f, 10f), base.mod.ProjectileType("XenomiteFragmentPro"), 20, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 28f, base.npc.position.Y + 28f), new Vector2(-10f, 0f), base.mod.ProjectileType("XenomiteFragmentPro"), 20, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 28f, base.npc.position.Y + 28f), new Vector2(10f, 0f), base.mod.ProjectileType("XenomiteFragmentPro"), 20, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 28f, base.npc.position.Y + 28f), new Vector2(10f, 10f), base.mod.ProjectileType("XenomiteFragmentPro"), 20, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 28f, base.npc.position.Y + 28f), new Vector2(10f, -10f), base.mod.ProjectileType("XenomiteFragmentPro"), 20, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 28f, base.npc.position.Y + 28f), new Vector2(-10f, 10f), base.mod.ProjectileType("XenomiteFragmentPro"), 20, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 28f, base.npc.position.Y + 28f), new Vector2(-10f, -10f), base.mod.ProjectileType("XenomiteFragmentPro"), 20, 3f, 255, 0f, 0f);
+			}
 		}
 
 		private void Target()
@@ -142,5 +166,7 @@ namespace Redemption.NPCs.Bosses
 		}
 
 		private Player player;
+
+		public int specialAttack2;
 	}
 }

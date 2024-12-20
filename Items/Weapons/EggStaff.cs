@@ -32,7 +32,6 @@ namespace Redemption.Items.Weapons
 			base.item.shootSpeed = 10f;
 			base.item.buffType = base.mod.BuffType("CombatChickenBuff");
 			base.item.buffTime = 3600;
-			base.item.expert = true;
 		}
 
 		public override bool AltFunctionUse(Player player)

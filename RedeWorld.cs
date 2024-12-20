@@ -158,6 +158,8 @@ namespace Redemption
 
 		public static bool spawnOre;
 
+		public static bool spawnDragonOre;
+
 		public static int xenoBiome;
 
 		public static bool downedKingChicken;

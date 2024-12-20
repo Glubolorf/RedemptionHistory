@@ -25,6 +25,7 @@ namespace Redemption.Items.Weapons
 			base.item.value = 1550;
 			base.item.rare = 0;
 			base.item.UseSound = SoundID.Item1;
+			base.item.useTurn = true;
 			base.item.autoReuse = true;
 		}
 

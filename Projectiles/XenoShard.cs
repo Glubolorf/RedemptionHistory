@@ -70,6 +70,14 @@ namespace Redemption.Projectiles
 			}
 		}
 
+		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+		{
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).frostburnSeedbag)
+			{
+				target.AddBuff(44, 160, false);
+			}
+		}
+
 		public override void Kill(int timeLeft)
 		{
 			Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, base.mod.DustType("XenoDust"), base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 0, default(Color), 1f);

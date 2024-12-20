@@ -217,7 +217,7 @@ namespace Redemption.NPCs
 						num17 = 20f;
 					}
 					base.npc.soundDelay = (int)num17;
-					Main.PlaySound(15, (int)base.npc.position.X, (int)base.npc.position.Y, 1, 1f, 0f);
+					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Quake1").WithVolume(0.9f).WithPitchVariance(0.05f), -1, -1);
 				}
 				float num18 = Math.Abs(num14);
 				float num19 = Math.Abs(num15);

@@ -40,12 +40,28 @@ namespace Redemption.NPCs.Bosses
 		{
 			if (base.npc.life <= 0)
 			{
-				Gore.NewGore(base.npc.Center, base.npc.velocity, base.mod.GetGoreSlot("Gores/VlitchCleaverGore11"), 1f);
+				Gore.NewGore(base.npc.Center, base.npc.velocity, base.mod.GetGoreSlot("Gores/VlitchWormGore2"), 1f);
 			}
 		}
 
 		public override bool PreAI()
 		{
+			if (NPC.AnyNPCs(base.mod.NPCType("VlitchCore1")))
+			{
+				base.npc.dontTakeDamage = true;
+			}
+			if (NPC.AnyNPCs(base.mod.NPCType("VlitchCore2")))
+			{
+				base.npc.dontTakeDamage = true;
+			}
+			if (NPC.AnyNPCs(base.mod.NPCType("VlitchCore3")))
+			{
+				base.npc.dontTakeDamage = true;
+			}
+			if (!NPC.AnyNPCs(base.mod.NPCType("VlitchCore1")) && !NPC.AnyNPCs(base.mod.NPCType("VlitchCore2")) && !NPC.AnyNPCs(base.mod.NPCType("VlitchCore3")))
+			{
+				base.npc.dontTakeDamage = false;
+			}
 			if (base.npc.ai[3] > 0f)
 			{
 				base.npc.realLife = (int)base.npc.ai[3];

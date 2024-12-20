@@ -53,7 +53,7 @@ namespace Redemption.NPCs
 			base.npc.ai[1] += 1f;
 			if (base.npc.ai[1] >= 100f)
 			{
-				float num = 14f;
+				float num = 9f;
 				Vector2 vector;
 				vector..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 				int num2 = 20;

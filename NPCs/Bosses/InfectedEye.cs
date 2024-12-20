@@ -19,7 +19,7 @@ namespace Redemption.NPCs.Bosses
 		{
 			base.npc.aiStyle = 5;
 			base.npc.lifeMax = 20000;
-			base.npc.damage = 70;
+			base.npc.damage = 60;
 			base.npc.defense = 20;
 			base.npc.knockBackResist = 0f;
 			base.npc.width = 110;
@@ -118,6 +118,51 @@ namespace Redemption.NPCs.Bosses
 				base.npc.TargetClosest(true);
 			}
 			base.npc.netUpdate = true;
+			if (base.npc.life <= 9000)
+			{
+				this.specialAttack++;
+				if (this.specialAttack >= 600 && this.specialAttack <= 639)
+				{
+					base.npc.velocity.X = 0f;
+					base.npc.velocity.Y = 0f;
+					base.npc.rotation += 0.11f;
+					base.npc.aiStyle = 2;
+				}
+				if (this.specialAttack == 600)
+				{
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 82f, base.npc.position.Y + 64f), new Vector2(-8f, 0f), base.mod.ProjectileType("InfectedEyePro"), 40, 3f, 255, 0f, 0f);
+				}
+				if (this.specialAttack == 610)
+				{
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 82f, base.npc.position.Y + 64f), new Vector2(-8f, -8f), base.mod.ProjectileType("InfectedEyePro"), 40, 3f, 255, 0f, 0f);
+				}
+				if (this.specialAttack == 620)
+				{
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 82f, base.npc.position.Y + 64f), new Vector2(0f, -8f), base.mod.ProjectileType("InfectedEyePro"), 40, 3f, 255, 0f, 0f);
+				}
+				if (this.specialAttack == 630)
+				{
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 82f, base.npc.position.Y + 64f), new Vector2(8f, -8f), base.mod.ProjectileType("InfectedEyePro"), 40, 3f, 255, 0f, 0f);
+				}
+				if (this.specialAttack == 640)
+				{
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 82f, base.npc.position.Y + 64f), new Vector2(8f, 0f), base.mod.ProjectileType("InfectedEyePro"), 40, 3f, 255, 0f, 0f);
+				}
+				if (this.specialAttack == 630)
+				{
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 82f, base.npc.position.Y + 64f), new Vector2(8f, 8f), base.mod.ProjectileType("InfectedEyePro"), 40, 3f, 255, 0f, 0f);
+				}
+				if (this.specialAttack == 630)
+				{
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 82f, base.npc.position.Y + 64f), new Vector2(0f, 8f), base.mod.ProjectileType("InfectedEyePro"), 40, 3f, 255, 0f, 0f);
+				}
+				if (this.specialAttack >= 640)
+				{
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 82f, base.npc.position.Y + 64f), new Vector2(-8f, 8f), base.mod.ProjectileType("InfectedEyePro"), 40, 3f, 255, 0f, 0f);
+					this.specialAttack = 0;
+					base.npc.aiStyle = 5;
+				}
+			}
 			base.npc.ai[1] += 1f;
 			if (base.npc.ai[1] >= 80f)
 			{
@@ -325,5 +370,7 @@ namespace Redemption.NPCs.Bosses
 		}
 
 		private Player player;
+
+		public int specialAttack;
 	}
 }

@@ -9,7 +9,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Druid's Charm");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nSeed Bags that throw only one seed will throw 2-3 seeds instead\nStaves swing faster\nThrows seedbags faster\nSpirits shoot faster\nSpirit summoning weapons will summon 2 extra spirits");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nSeed Bags that throw only one seed will throw 2-3 seeds instead\nStaves swing faster\nThrows seedbags faster\nSpirits shoot faster\nSpirit summoning weapons will summon 2 extra spirits\nSpirits pierce through more targets\nSpirits home in on enemies");
 		}
 
 		public override void SetDefaults()
@@ -29,6 +29,18 @@ namespace Redemption.Items.DruidDamageClass
 			redePlayer.fasterSeedbags = true;
 			redePlayer.fasterSpirits = true;
 			redePlayer.moreSpirits = true;
+			redePlayer.spiritHoming = true;
+			redePlayer.spiritPierce = true;
+		}
+
+		public override void AddRecipes()
+		{
+			ModRecipe modRecipe = new ModRecipe(base.mod);
+			modRecipe.AddIngredient(null, "LargeSeedPouch", 1);
+			modRecipe.AddIngredient(null, "ForestCore", 100);
+			modRecipe.AddTile(null, "DruidicAltarTile");
+			modRecipe.SetResult(this, 1);
+			modRecipe.AddRecipe();
 		}
 	}
 }

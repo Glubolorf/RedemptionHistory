@@ -18,7 +18,7 @@ namespace Redemption.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 60;
+			base.item.damage = 40;
 			base.item.magic = true;
 			base.item.mana = 20;
 			base.item.width = 28;
@@ -33,7 +33,7 @@ namespace Redemption.Items.Weapons
 			base.item.UseSound = SoundID.Item21;
 			base.item.autoReuse = false;
 			base.item.shoot = base.mod.ProjectileType("AncientBoulder");
-			base.item.shootSpeed = 15f;
+			base.item.shootSpeed = 7f;
 		}
 
 		public override void ModifyTooltips(List<TooltipLine> tooltips)

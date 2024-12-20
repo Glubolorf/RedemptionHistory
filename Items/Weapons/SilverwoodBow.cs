@@ -36,6 +36,11 @@ namespace Redemption.Items.Weapons
 			base.item.useAmmo = AmmoID.Arrow;
 		}
 
+		public override Vector2? HoldoutOffset()
+		{
+			return new Vector2?(new Vector2(-4f, 0f));
+		}
+
 		public override bool ConsumeAmmo(Player player)
 		{
 			return Utils.NextFloat(Main.rand) >= 0.4f;

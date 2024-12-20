@@ -186,10 +186,13 @@ namespace Redemption.NPCs
 			shop.item[nextSlot].shopCustomPrice = new int?(4);
 			shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType<LostSoul>(), false);
-			shop.item[nextSlot].shopCustomPrice = new int?(8);
-			shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
-			nextSlot++;
+			if (Main.hardMode)
+			{
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType<LostSoul>(), false);
+				shop.item[nextSlot].shopCustomPrice = new int?(8);
+				shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
+				nextSlot++;
+			}
 		}
 
 		public override void TownNPCAttackStrength(ref int damage, ref float knockback)

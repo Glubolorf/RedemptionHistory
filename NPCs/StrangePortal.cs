@@ -12,6 +12,7 @@ namespace Redemption.NPCs
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Strange Portal");
+			Main.npcFrameCount[base.npc.type] = 4;
 		}
 
 		public override void SetDefaults()
@@ -28,6 +29,7 @@ namespace Redemption.NPCs
 			base.npc.knockBackResist = 0.1f;
 			base.npc.aiStyle = 2;
 			this.aiType = 34;
+			this.animationType = 34;
 			base.npc.boss = true;
 		}
 
@@ -65,6 +67,19 @@ namespace Redemption.NPCs
 			{
 				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 242, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
 			}
+			this.timer++;
+			if (this.timer >= 400)
+			{
+				base.npc.aiStyle = 97;
+			}
+			if (this.timer <= 400)
+			{
+				base.npc.aiStyle = 2;
+			}
+			if (this.timer >= 800)
+			{
+				this.timer = 0;
+			}
 		}
 
 		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
@@ -74,5 +89,7 @@ namespace Redemption.NPCs
 				target.AddBuff(164, 200, true);
 			}
 		}
+
+		public int timer;
 	}
 }

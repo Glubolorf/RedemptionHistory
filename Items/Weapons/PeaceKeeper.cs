@@ -25,8 +25,8 @@ namespace Redemption.Items.Weapons
 			base.item.useTime = 18;
 			base.item.shootSpeed = 3.7f;
 			base.item.knockBack = 5.5f;
-			base.item.width = 48;
-			base.item.height = 48;
+			base.item.width = 64;
+			base.item.height = 64;
 			base.item.scale = 1f;
 			base.item.rare = 9;
 			base.item.UseSound = SoundID.Item1;

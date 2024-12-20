@@ -11,7 +11,6 @@ namespace Redemption.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Sludge Spoon");
-			base.Tooltip.SetDefault("'Poopy-di scoop\nScoop - diddy - whoop\nWhoop - di - scoop - di - poop\nPoop - di - scoopty\nScoopty - whoop\nWhoopity - scoop, whoop - poop'");
 		}
 
 		public override void SetDefaults()

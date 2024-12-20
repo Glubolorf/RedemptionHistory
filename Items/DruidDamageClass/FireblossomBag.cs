@@ -16,7 +16,7 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override void SafeSetDefaults()
 		{
-			base.item.damage = 14;
+			base.item.damage = 29;
 			base.item.width = 22;
 			base.item.height = 26;
 			base.item.useTime = 44;
@@ -26,7 +26,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.crit = 4;
 			base.item.knockBack = 3f;
 			base.item.value = Item.buyPrice(0, 0, 65, 0);
-			base.item.rare = 2;
+			base.item.rare = 3;
 			base.item.UseSound = SoundID.Item1;
 			base.item.noMelee = true;
 			base.item.autoReuse = false;
@@ -63,6 +63,18 @@ namespace Redemption.Items.DruidDamageClass
 				}
 				return false;
 			}
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).extraSeed && Main.rand.Next(3) == 0)
+			{
+				int num3 = 2;
+				for (int j = 0; j < num3; j++)
+				{
+					Vector2 vector2 = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(25f));
+					float num4 = 1f - Utils.NextFloat(Main.rand) * 0.3f;
+					vector2 *= num4;
+					Projectile.NewProjectile(position.X, position.Y, vector2.X, vector2.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
+				}
+				return false;
+			}
 			return true;
 		}
 
@@ -72,6 +84,7 @@ namespace Redemption.Items.DruidDamageClass
 			modRecipe.AddIngredient(null, "LeatherPouch", 1);
 			modRecipe.AddIngredient(172, 5);
 			modRecipe.AddIngredient(318, 3);
+			modRecipe.AddIngredient(175, 5);
 			modRecipe.AddTile(18);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();

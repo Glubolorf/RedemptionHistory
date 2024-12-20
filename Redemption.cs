@@ -53,7 +53,10 @@ namespace Redemption
 				base.ItemType("ShiverthornBag"),
 				base.ItemType("SkyflowerBag"),
 				base.ItemType("VilethornBushBag"),
-				base.ItemType("WaterleafBag")
+				base.ItemType("WaterleafBag"),
+				base.ItemType("DaybloomBag"),
+				base.ItemType("MoonglowBag"),
+				base.ItemType("MossBag")
 			});
 			RecipeGroup.RegisterGroup("Redemption:Seedbag", recipeGroup2);
 		}

@@ -11,7 +11,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Spirit Wyvern in a Bottle");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nReleases a spirit wyvern");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nReleases a stationary spirit wyvern at cursor point");
 		}
 
 		public override void SafeSetDefaults()
@@ -31,7 +31,13 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.noMelee = true;
 			base.item.autoReuse = true;
 			base.item.shoot = base.mod.ProjectileType("SpiritWyvernPro");
-			base.item.shootSpeed = 12f;
+			base.item.shootSpeed = 0f;
+		}
+
+		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		{
+			position = Main.MouseWorld;
+			return true;
 		}
 
 		public override bool CanUseItem(Player player)
@@ -45,28 +51,6 @@ namespace Redemption.Items.DruidDamageClass
 			{
 				base.item.useTime = 23;
 				base.item.useAnimation = 23;
-			}
-			return true;
-		}
-
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-		{
-			Vector2 vector = Vector2.Normalize(new Vector2(speedX, speedY)) * 25f;
-			if (Collision.CanHit(position, 0, 0, position + vector, 0, 0))
-			{
-				position += vector;
-			}
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).moreSpirits)
-			{
-				int num = 3;
-				for (int i = 0; i < num; i++)
-				{
-					Vector2 vector2 = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(25f));
-					float num2 = 1f - Utils.NextFloat(Main.rand) * 0.3f;
-					vector2 *= num2;
-					Projectile.NewProjectile(position.X, position.Y, vector2.X, vector2.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
-				}
-				return false;
 			}
 			return true;
 		}

@@ -235,6 +235,8 @@ namespace Redemption.NPCs
 			nextSlot++;
 			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LivingLeaf"), false);
 			nextSlot++;
+			shop.item[nextSlot].SetDefaults(259, false);
+			nextSlot++;
 			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LeatherPouch"), false);
 			nextSlot++;
 			shop.item[nextSlot].SetDefaults(base.mod.ItemType("WoodenBuckler"), false);

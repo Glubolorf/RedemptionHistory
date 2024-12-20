@@ -68,6 +68,10 @@ namespace Redemption.Projectiles
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).frostburnSeedbag)
+			{
+				target.AddBuff(44, 160, false);
+			}
 			target.AddBuff(103, 160, false);
 		}
 

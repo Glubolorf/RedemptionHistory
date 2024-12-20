@@ -24,6 +24,7 @@ namespace Redemption.Items.Armor
 			base.item.width = 20;
 			base.item.height = 32;
 			base.item.rare = 8;
+			base.item.value = Item.buyPrice(5, 0, 0, 0);
 			base.item.vanity = true;
 		}
 

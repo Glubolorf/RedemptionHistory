@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Armor
@@ -23,6 +24,7 @@ namespace Redemption.Items.Armor
 			base.item.width = 38;
 			base.item.height = 28;
 			base.item.rare = 8;
+			base.item.value = Item.buyPrice(5, 0, 0, 0);
 			base.item.vanity = true;
 		}
 

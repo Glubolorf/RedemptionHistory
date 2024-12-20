@@ -3,13 +3,19 @@
 Please remember to update the mod when necessary.
 
 Adds:
-- 29 Buffs
-- 6 Walls
-- 83 Tiles
-- 117 NPCs (Including bosses & minibosses)
+- 32 Buffs
+- 7 Walls
+- 88 Tiles
+- 122 NPCs (Including bosses & minibosses)
 - 6 Bosses
 - 2 Minibosses
-- 444 Items
+- 488 Items
+
+Latest Update:
+- Bunch of moist resprites
+- New Vlitch Gigipede AI
+- More Druid Class stuff (Still not a viable class yet! Need to add more)
+For more, look at the mod's homepage
 
 Main Features (So far):
 - Living Wood Equipment
@@ -33,7 +39,7 @@ Main Features (So far):
 - Xenomite Crystal boss
 - Early Hardmode Boss
 - Xenomite Weapons/Tools/Armour
-- Infected Enemies (Three for now)
+- Infected Enemies
 - Stuff
 - Dirt Swords!
 - Wasteland Biome (After Infected Eye boss)

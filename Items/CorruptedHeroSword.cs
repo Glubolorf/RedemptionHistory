@@ -18,7 +18,7 @@ namespace Redemption.Items
 			base.item.width = 34;
 			base.item.height = 38;
 			base.item.maxStack = 20;
-			base.item.value = 1000000;
+			base.item.value = Item.sellPrice(0, 50, 0, 0);
 			base.item.rare = 10;
 			base.item.useAnimation = 30;
 			base.item.useTime = 30;

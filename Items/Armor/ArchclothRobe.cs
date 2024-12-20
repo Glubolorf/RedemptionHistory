@@ -1,4 +1,5 @@
 ﻿using System;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Armor
@@ -20,6 +21,7 @@ namespace Redemption.Items.Armor
 			base.item.width = 30;
 			base.item.height = 28;
 			base.item.rare = 4;
+			base.item.value = Item.sellPrice(0, 25, 0, 0);
 			base.item.vanity = true;
 		}
 

@@ -1,6 +1,4 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
-using Terraria;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles
@@ -14,6 +12,8 @@ namespace Redemption.Projectiles
 
 		public override void SetDefaults()
 		{
+			base.projectile.CloneDefaults(261);
+			this.aiType = 261;
 			base.projectile.width = 32;
 			base.projectile.height = 34;
 			base.projectile.magic = false;
@@ -23,25 +23,6 @@ namespace Redemption.Projectiles
 			base.projectile.tileCollide = true;
 			base.projectile.ignoreWater = true;
 			base.projectile.timeLeft = 200;
-		}
-
-		public override void AI()
-		{
-			base.projectile.localAI[0] += 1f;
-			base.projectile.rotation += 0.06f;
-			Projectile projectile = base.projectile;
-			projectile.velocity.Y = projectile.velocity.Y + 0.3f;
-			if (base.projectile.localAI[0] > 130f)
-			{
-				base.projectile.Kill();
-			}
-		}
-
-		public override bool OnTileCollide(Vector2 oldVelocity)
-		{
-			Collision.HitTiles(base.projectile.position, oldVelocity, base.projectile.width, base.projectile.height);
-			Main.PlaySound(0, (int)base.projectile.position.X, (int)base.projectile.position.Y, 1, 1f, 0f);
-			return true;
 		}
 	}
 }

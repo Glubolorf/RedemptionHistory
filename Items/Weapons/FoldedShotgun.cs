@@ -33,6 +33,11 @@ namespace Redemption.Items.Weapons
 			base.item.useAmmo = AmmoID.Bullet;
 		}
 
+		public override Vector2? HoldoutOffset()
+		{
+			return new Vector2?(new Vector2(-4f, 0f));
+		}
+
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
 			int num = 4 + Main.rand.Next(2);

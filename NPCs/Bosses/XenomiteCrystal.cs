@@ -113,6 +113,25 @@ namespace Redemption.NPCs.Bosses
 			{
 				NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("XenomitePiece"), 0, 0f, 0f, 0f, 0f, 255);
 			}
+			if (base.npc.life < 3000)
+			{
+				this.specialAttack1++;
+				if (this.specialAttack1 == 600)
+				{
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(0f, -5f), base.mod.ProjectileType("XenomiteFragmentPro"), 15, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(0f, 5f), base.mod.ProjectileType("XenomiteFragmentPro"), 15, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(-5f, 0f), base.mod.ProjectileType("XenomiteFragmentPro"), 15, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(5f, 0f), base.mod.ProjectileType("XenomiteFragmentPro"), 15, 3f, 255, 0f, 0f);
+					this.specialAttack1 = 0;
+				}
+			}
+			if (base.npc.life < 1500 && this.specialAttack1 == 300)
+			{
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(5f, 5f), base.mod.ProjectileType("XenomiteFragmentPro"), 15, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(5f, -5f), base.mod.ProjectileType("XenomiteFragmentPro"), 15, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(-5f, 5f), base.mod.ProjectileType("XenomiteFragmentPro"), 15, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(-5f, -5f), base.mod.ProjectileType("XenomiteFragmentPro"), 15, 3f, 255, 0f, 0f);
+			}
 		}
 
 		private void Target()
@@ -138,5 +157,7 @@ namespace Redemption.NPCs.Bosses
 		}
 
 		private Player player;
+
+		public int specialAttack1;
 	}
 }

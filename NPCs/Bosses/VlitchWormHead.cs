@@ -47,7 +47,8 @@ namespace Redemption.NPCs.Bosses
 		{
 			if (base.npc.life <= 0)
 			{
-				Gore.NewGore(base.npc.Center, base.npc.velocity, base.mod.GetGoreSlot("Gores/VlitchCleaverGore11"), 1f);
+				Gore.NewGore(base.npc.Center, base.npc.velocity, base.mod.GetGoreSlot("Gores/VlitchWormGore1"), 1f);
+				Gore.NewGore(base.npc.Center, base.npc.velocity, base.mod.GetGoreSlot("Gores/VlitchWormGore1"), 1f);
 			}
 		}
 
@@ -80,6 +81,7 @@ namespace Redemption.NPCs.Bosses
 			potionType = 499;
 			RedeWorld.downedVlitch2 = true;
 			Main.NewText("You feel a stinging pain of energy flowing through you as one of Vlitch's Overlords has been defeated...", Color.OrangeRed.R, Color.OrangeRed.G, Color.OrangeRed.B, false);
+			Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/DistortedRoar").WithVolume(0.9f).WithPitchVariance(0.1f), -1, -1);
 		}
 
 		public override bool PreAI()
@@ -90,6 +92,50 @@ namespace Redemption.NPCs.Bosses
 				NPC npc = base.npc;
 				npc.position.Y = npc.position.Y - 300f;
 			}
+			if (NPC.AnyNPCs(base.mod.NPCType("VlitchCore1")))
+			{
+				base.npc.dontTakeDamage = true;
+			}
+			if (NPC.AnyNPCs(base.mod.NPCType("VlitchCore2")))
+			{
+				base.npc.dontTakeDamage = true;
+			}
+			if (NPC.AnyNPCs(base.mod.NPCType("VlitchCore3")))
+			{
+				base.npc.dontTakeDamage = true;
+			}
+			if (!NPC.AnyNPCs(base.mod.NPCType("VlitchCore1")) && !NPC.AnyNPCs(base.mod.NPCType("VlitchCore2")) && !NPC.AnyNPCs(base.mod.NPCType("VlitchCore3")))
+			{
+				base.npc.dontTakeDamage = false;
+			}
+			this.timerVlitch1++;
+			if (this.timerVlitch1 == 120)
+			{
+				Main.NewText("[DEPLOYING CORE]", Color.Red.R, Color.Red.G, Color.Red.B, false);
+				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("VlitchCore1"), 0, 0f, 0f, 0f, 0f, 255);
+			}
+			if (base.npc.life < 50000)
+			{
+				this.timerVlitch2++;
+				if (this.timerVlitch2 == 60)
+				{
+					Main.NewText("[DEPLOYING CORE]", Color.Red.R, Color.Red.G, Color.Red.B, false);
+					NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("VlitchCore2"), 0, 0f, 0f, 0f, 0f, 255);
+				}
+			}
+			if (base.npc.life < 25000)
+			{
+				this.timerVlitch3++;
+				if (this.timerVlitch3 == 1)
+				{
+					Main.NewText("I may have miscalculated...", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
+				}
+				if (this.timerVlitch3 == 120)
+				{
+					Main.NewText("[DEPLOYING CORE]", Color.Red.R, Color.Red.G, Color.Red.B, false);
+					NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("VlitchCore3"), 0, 0f, 0f, 0f, 0f, 255);
+				}
+			}
 			this.Target();
 			this.DespawnHandler();
 			if (Main.netMode != 1)
@@ -98,7 +144,7 @@ namespace Redemption.NPCs.Bosses
 				{
 					base.npc.realLife = base.npc.whoAmI;
 					int num = base.npc.whoAmI;
-					int num2 = Main.rand.Next(14, 16);
+					int num2 = 16;
 					for (int i = 0; i < num2; i++)
 					{
 						num = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("VlitchWormBody"), base.npc.whoAmI, 0f, (float)num, 0f, 0f, 255);
@@ -250,7 +296,7 @@ namespace Redemption.NPCs.Bosses
 						num17 = 20f;
 					}
 					base.npc.soundDelay = (int)num17;
-					Main.PlaySound(15, (int)base.npc.position.X, (int)base.npc.position.Y, 1, 1f, 0f);
+					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Quake1").WithVolume(0.9f).WithPitchVariance(0.05f), -1, -1);
 				}
 				float num18 = Math.Abs(num14);
 				float num19 = Math.Abs(num15);
@@ -399,5 +445,11 @@ namespace Redemption.NPCs.Bosses
 		}
 
 		private Player player;
+
+		public int timerVlitch1;
+
+		public int timerVlitch2;
+
+		public int timerVlitch3;
 	}
 }

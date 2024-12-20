@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.NPCs;
-using Redemption.NPCs.Bosses.KingSlayerIII;
-using Redemption.NPCs.Bosses.KingSlayerIIIClone;
+using Redemption.NPCs.Bosses.KSIII;
+using Redemption.NPCs.Bosses.KSIII.Clone;
+using Redemption.NPCs.HM;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -14,7 +14,7 @@ namespace Redemption.Projectiles.Minions
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Mk-1 Missile Drone");
+			base.DisplayName.SetDefault("Missile Drone Mk.I");
 			Main.projFrames[base.projectile.type] = 4;
 			ProjectileID.Sets.MinionSacrificable[base.projectile.type] = true;
 			ProjectileID.Sets.Homing[base.projectile.type] = true;
@@ -65,7 +65,7 @@ namespace Redemption.Projectiles.Minions
 				base.projectile.localAI[0] = 1f;
 			}
 			base.projectile.localAI[1] += 1f;
-			if (base.projectile.localAI[1] > 120f && base.projectile.localAI[1] < 500f && this.shotCount < 4 && RedeHelper.ClosestNPC(ref this.target, 1000f, base.projectile.Center, true, player.MinionAttackTargetNPC) && this.target.type != ModContent.NPCType<Android>() && this.target.type != ModContent.NPCType<Apidroid>() && this.target.type != ModContent.NPCType<PrototypeSilver>() && this.target.type != ModContent.NPCType<SpaceKeeper>() && this.target.type != ModContent.NPCType<SpacePaladin>() && this.target.type != ModContent.NPCType<KSEntrance>() && this.target.type != ModContent.NPCType<KSEntranceClone>())
+			if (base.projectile.localAI[1] > 120f && base.projectile.localAI[1] < 500f && this.shotCount < 4 && RedeHelper.ClosestNPC(ref this.target, 1000f, base.projectile.Center, true, player.MinionAttackTargetNPC, null) && this.target.type != ModContent.NPCType<Android>() && this.target.type != ModContent.NPCType<Apidroid>() && this.target.type != ModContent.NPCType<PrototypeSilver>() && this.target.type != ModContent.NPCType<SpaceKeeper>() && this.target.type != ModContent.NPCType<SpacePaladin>() && this.target.type != ModContent.NPCType<KS3_Body>() && this.target.type != ModContent.NPCType<KS3_Body_Clone>())
 			{
 				this.targetted = true;
 				if (base.projectile.localAI[1] % 30f == 0f)

@@ -47,14 +47,12 @@ namespace Redemption.Items
 			NPC.downedTowerSolar = false;
 			NPC.downedTowerStardust = false;
 			NPC.downedTowerVortex = false;
-			RedeWorld.deathByNeb = false;
-			RedeWorld.deathBySlayer = false;
 			RedeWorld.downedBlisterface = false;
 			RedeWorld.downedChickenInvPZ = false;
 			RedeWorld.downedDarkSlime = false;
 			RedeWorld.downedEaglecrestGolemPZ = false;
 			RedeWorld.downedIBehemoth = false;
-			RedeWorld.downedInfectedEye = false;
+			RedeWorld.nukeDropped = false;
 			RedeWorld.downedMACE = false;
 			RedeWorld.downedNebuleus = false;
 			RedeWorld.downedPatientZero = false;
@@ -71,7 +69,12 @@ namespace Redemption.Items
 			RedeWorld.downedVolt = false;
 			RedeWorld.KSRajahInteraction = false;
 			RedeWorld.voltBegin = false;
+			RedeWorld.downedTheWarden = false;
+			RedeWorld.downedMansionWraith = false;
 			RedeWorld.oblitDeath = 0;
+			RedeWorld.nebDeath = 0;
+			RedeWorld.slayerDeath = 0;
+			RedeWorld.nebRep = 0;
 			return true;
 		}
 	}

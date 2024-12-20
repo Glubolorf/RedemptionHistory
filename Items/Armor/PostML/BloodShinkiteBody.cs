@@ -22,6 +22,7 @@ namespace Redemption.Items.Armor.PostML
 			base.item.height = 26;
 			base.item.value = Item.sellPrice(0, 25, 0, 0);
 			base.item.defense = 30;
+			base.item.rare = 11;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}
 
@@ -29,11 +30,7 @@ namespace Redemption.Items.Armor.PostML
 		{
 			player.statLifeMax2 += 25;
 			player.lifeRegen += 3;
-			player.meleeDamage *= 1.1f;
-			player.rangedDamage *= 1.1f;
-			player.magicDamage *= 1.1f;
-			player.minionDamage *= 1.1f;
-			player.thrownDamage *= 1.1f;
+			player.allDamage += 0.1f;
 		}
 
 		public override void AddRecipes()

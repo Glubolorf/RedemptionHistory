@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Redemption.Tiles;
+using Redemption.Tiles.Containers;
+using Redemption.Tiles.Ores;
 using Terraria.ModLoader;
 
 namespace Redemption
@@ -184,6 +185,26 @@ namespace Redemption
 			59,
 			120,
 			60
+		};
+
+		public static List<int> WhitelistTiles = new List<int>
+		{
+			41,
+			43,
+			44,
+			226,
+			444
+		};
+
+		public static List<int> ModdedChests = new List<int>
+		{
+			ModContent.TileType<AncientWoodChestTile>(),
+			ModContent.TileType<DeadWoodChestTile>(),
+			ModContent.TileType<LabChestTile>(),
+			ModContent.TileType<LabChestTileLocked>(),
+			ModContent.TileType<LabChestTileLocked2>(),
+			ModContent.TileType<ShadeChestTile>(),
+			ModContent.TileType<HolochestTile>()
 		};
 	}
 }

@@ -25,6 +25,20 @@ namespace Redemption.NPCs.Bosses.Thorn
 			base.projectile.alpha = 0;
 		}
 
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		{
+			Player player = Main.player[base.projectile.owner];
+			if (base.projectile.Center.Y < player.Center.Y)
+			{
+				fallThrough = true;
+			}
+			else
+			{
+				fallThrough = false;
+			}
+			return true;
+		}
+
 		public override void AI()
 		{
 			Projectile projectile = base.projectile;

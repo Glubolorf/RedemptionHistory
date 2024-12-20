@@ -46,10 +46,10 @@ namespace Redemption.NPCs.Bosses.Thorn
 			for (int p = 0; p < 200; p++)
 			{
 				this.clearCheck = Main.npc[p];
-				if (!this.clearCheck.immortal && !this.clearCheck.dontTakeDamage && base.projectile.alpha < 200 && Collision.CheckAABBvAABBCollision(base.projectile.position, base.projectile.Size, this.clearCheck.position, this.clearCheck.Size) && this.clearCheck.life <= this.clearCheck.lifeMax - 20)
+				if (!this.clearCheck.immortal && !this.clearCheck.dontTakeDamage && base.projectile.alpha < 200 && base.projectile.Hitbox.Intersects(this.clearCheck.Hitbox) && this.clearCheck.life <= this.clearCheck.lifeMax - 10)
 				{
-					this.clearCheck.life += 20;
-					this.clearCheck.HealEffect(20, true);
+					this.clearCheck.life += 10;
+					this.clearCheck.HealEffect(10, true);
 					Dust dust = Dust.NewDustDirect(this.clearCheck.position, this.clearCheck.width, this.clearCheck.height, 99, 0f, 0f, 100, default(Color), 1f);
 					dust.velocity = -this.clearCheck.DirectionTo(dust.position);
 				}

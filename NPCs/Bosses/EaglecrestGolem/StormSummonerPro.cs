@@ -44,7 +44,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 				}
 				if (base.projectile.localAI[0] % 10f == 0f)
 				{
-					Projectile.NewProjectile(new Vector2(base.projectile.Center.X - 1000f + (float)this.PosX, base.projectile.Center.Y), base.projectile.velocity, ModContent.ProjectileType<UkkoZap1>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+					Projectile.NewProjectile(new Vector2(base.projectile.Center.X - 1000f + (float)this.PosX, base.projectile.Center.Y), base.projectile.velocity, ModContent.ProjectileType<UkkoStrike>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 					return;
 				}
 			}
@@ -56,7 +56,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 				}
 				if (base.projectile.localAI[0] % 10f == 0f)
 				{
-					Projectile.NewProjectile(new Vector2(base.projectile.Center.X + 1000f - (float)this.PosX, base.projectile.Center.Y), base.projectile.velocity, ModContent.ProjectileType<UkkoZap1>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+					Projectile.NewProjectile(new Vector2(base.projectile.Center.X + 1000f - (float)this.PosX, base.projectile.Center.Y), base.projectile.velocity, ModContent.ProjectileType<UkkoStrike>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 					return;
 				}
 			}
@@ -68,8 +68,8 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 				}
 				if (base.projectile.localAI[0] % 5f == 0f && base.projectile.localAI[0] <= 50f)
 				{
-					Projectile.NewProjectile(new Vector2(base.projectile.Center.X - 1000f + (float)this.PosX, base.projectile.Center.Y + 400f), base.projectile.velocity, ModContent.ProjectileType<UkkoZap1>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
-					Projectile.NewProjectile(new Vector2(base.projectile.Center.X + 1000f - (float)this.PosX, base.projectile.Center.Y - 400f), base.projectile.velocity, ModContent.ProjectileType<UkkoZap1>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+					Projectile.NewProjectile(new Vector2(base.projectile.Center.X - 1000f + (float)this.PosX, base.projectile.Center.Y + 400f), base.projectile.velocity, ModContent.ProjectileType<UkkoStrike>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+					Projectile.NewProjectile(new Vector2(base.projectile.Center.X + 1000f - (float)this.PosX, base.projectile.Center.Y - 400f), base.projectile.velocity, ModContent.ProjectileType<UkkoStrike>(), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 					return;
 				}
 			}

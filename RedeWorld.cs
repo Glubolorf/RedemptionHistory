@@ -2,33 +2,168 @@
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs;
-using Redemption.Items;
-using Redemption.Items.DruidDamageClass;
-using Redemption.Items.DruidDamageClass.v08;
-using Redemption.Items.Weapons;
-using Redemption.NPCs;
-using Redemption.NPCs.Bosses.EaglecrestGolem;
-using Redemption.NPCs.LabNPCs.New;
+using Redemption.Buffs.Debuffs;
+using Redemption.Dusts;
+using Redemption.Items.Lore;
+using Redemption.Items.Placeable.Tiles;
+using Redemption.Items.Weapons.PreHM.Druid;
+using Redemption.Items.Weapons.PreHM.Druid.Staves;
+using Redemption.Items.Weapons.PreHM.Melee;
+using Redemption.Items.Weapons.PreHM.Ranged;
+using Redemption.NPCs.Friendly;
+using Redemption.NPCs.Lab;
 using Redemption.NPCs.Minibosses;
-using Redemption.NPCs.v08;
-using Redemption.Tiles;
-using Redemption.Tiles.SlayerShip;
-using Redemption.Tiles.Wasteland;
-using Redemption.Walls;
+using Redemption.NPCs.Minibosses.DarkSlime;
+using Redemption.NPCs.Soulless;
+using Redemption.Projectiles.Hostile;
+using Redemption.StructureHelper;
+using Redemption.Tiles.Containers;
+using Redemption.Tiles.Furniture.Ship;
+using Redemption.Tiles.Ores;
+using Redemption.Tiles.Plants;
+using Redemption.Tiles.Tiles;
+using Redemption.WorldGeneration.Soulless;
+using SubworldLibrary;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent.Events;
 using Terraria.GameContent.Generation;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.Utilities;
 using Terraria.World.Generation;
 
 namespace Redemption
 {
 	public class RedeWorld : ModWorld
 	{
+		public override void PreUpdate()
+		{
+			if (Subworld.IsActive<SoullessSub>())
+			{
+				Wiring.UpdateMech();
+				Liquid.skipCount++;
+				if (Liquid.skipCount > 1)
+				{
+					Liquid.UpdateLiquid();
+					Liquid.skipCount = 0;
+				}
+				for (int num = 0; num < 20; num++)
+				{
+					int i = Main.rand.Next(10, 1790);
+					int j = Main.rand.Next(10, 1790);
+					ModTile tile = TileLoader.GetTile((int)Main.tile[i, j].type);
+					if (tile != null)
+					{
+						tile.RandomUpdate(i, j);
+					}
+				}
+			}
+		}
+
+		public static bool CheckFlat(int startX, int startY, int width, float threshold, int goingDownWeight = 0, int goingUpWeight = 0)
+		{
+			if (!WorldGen.SolidTile(startX + width, startY))
+			{
+				return false;
+			}
+			float totalVariance = 0f;
+			for (int i = 0; i < width; i++)
+			{
+				if (startX + i >= Main.maxTilesX)
+				{
+					return false;
+				}
+				for (int j = startY - 1; j > startY - 100; j--)
+				{
+					if (WorldGen.SolidTile(startX + i, j))
+					{
+						return false;
+					}
+				}
+				int offset = 0;
+				bool goingUp = WorldGen.SolidTile(startX + i, startY);
+				offset += (goingUp ? goingUpWeight : goingDownWeight);
+				while ((goingUp && WorldGen.SolidTile(startX + i, startY - offset)) || (!goingUp && !WorldGen.SolidTile(startX + i, startY + offset)))
+				{
+					offset++;
+				}
+				if (goingUp)
+				{
+					offset--;
+				}
+				totalVariance += (float)offset;
+			}
+			return totalVariance / (float)width <= threshold;
+		}
+
+		private static void SpawnThornSummon()
+		{
+			bool placed = false;
+			int attempts = 0;
+			int placed2 = 0;
+			int placeX2 = 0;
+			while (!placed)
+			{
+				if (attempts++ >= 100000)
+				{
+					break;
+				}
+				int placeX3 = Main.spawnTileX + WorldGen.genRand.Next(-600, 600);
+				int placeY = (int)Main.worldSurface - 200;
+				if (placeX3 <= Main.spawnTileX - 100 || placeX3 >= Main.spawnTileX + 100)
+				{
+					while (!WorldGen.SolidTile(placeX3, placeY) && (double)placeY <= Main.worldSurface)
+					{
+						placeY++;
+					}
+					if ((double)placeY <= Main.worldSurface && Main.tile[placeX3, placeY].type == 2 && RedeWorld.CheckFlat(placeX3, placeY, 2, 0f, 0, 0))
+					{
+						WorldGen.PlaceObject(placeX3, placeY - 1, ModContent.TileType<HeartOfThornsTile>(), true, 0, 0, -1, -1);
+						NetMessage.SendObjectPlacment(-1, placeX3, placeY - 1, (int)((ushort)ModContent.TileType<HeartOfThornsTile>()), 0, 0, -1, -1);
+						if ((int)Main.tile[placeX3, placeY - 1].type == ModContent.TileType<HeartOfThornsTile>())
+						{
+							placeX2 = placeX3;
+							attempts = 0;
+							placed = true;
+						}
+					}
+				}
+			}
+			while (placed && placed2 < 30 && attempts++ < 100000)
+			{
+				int placeX4 = placeX2 + WorldGen.genRand.Next(-20, 20);
+				int placeY2 = (int)Main.worldSurface - 200;
+				while (!WorldGen.SolidTile(placeX4, placeY2) && (double)placeY2 <= Main.worldSurface)
+				{
+					placeY2++;
+				}
+				if ((double)placeY2 <= Main.worldSurface && Main.tile[placeX4, placeY2].type == 2)
+				{
+					int num = WorldGen.genRand.Next(2);
+					if (num != 0)
+					{
+						if (num == 1)
+						{
+							WorldGen.PlaceObject(placeX4, placeY2 - 1, ModContent.TileType<ThornsTile2>(), true, WorldGen.genRand.Next(2), 0, -1, -1);
+							NetMessage.SendObjectPlacment(-1, placeX4, placeY2 - 1, (int)((ushort)ModContent.TileType<ThornsTile>()), WorldGen.genRand.Next(2), 0, -1, -1);
+						}
+					}
+					else
+					{
+						WorldGen.PlaceObject(placeX4, placeY2 - 1, ModContent.TileType<ThornsTile>(), true, WorldGen.genRand.Next(2), 0, -1, -1);
+						NetMessage.SendObjectPlacment(-1, placeX4, placeY2 - 1, (int)((ushort)ModContent.TileType<ThornsTile>()), WorldGen.genRand.Next(2), 0, -1, -1);
+					}
+					placed2++;
+				}
+			}
+		}
+
 		public static int GetWorldSize()
 		{
 			if (Main.maxTilesX <= 4200)
@@ -61,6 +196,7 @@ namespace Redemption
 			RedeWorld.evilXenoBiome2 = tileCounts[ModContent.TileType<DeadGrassTileCrimson>()] + tileCounts[ModContent.TileType<IrradiatedCrimstoneTile>()];
 			RedeWorld.labBiome = tileCounts[ModContent.TileType<LabTileUnsafe>()];
 			RedeWorld.slayerBiome = tileCounts[ModContent.TileType<SlayerShipPanelTile>()];
+			RedeWorld.soullessBiome = tileCounts[ModContent.TileType<ShadestoneTile>()] + tileCounts[ModContent.TileType<ShadestoneBrickTile>()];
 		}
 
 		public override void ResetNearbyTileEffects()
@@ -70,18 +206,40 @@ namespace Redemption
 			RedeWorld.evilXenoBiome2 = 0;
 			RedeWorld.labBiome = 0;
 			RedeWorld.slayerBiome = 0;
+			RedeWorld.soullessBiome = 0;
 		}
 
 		public override void PostUpdate()
 		{
+			Player player = Main.player[Main.myPlayer];
+			if (Main.netMode != 1)
+			{
+				for (int i = 0; i < 255; i++)
+				{
+					Player player2 = Main.player[i];
+					if (player2.active && !player2.dead && player2.GetModPlayer<RedePlayer>().ZoneSoulless && Subworld.IsActive<SoullessSub>())
+					{
+						Vector2 MansionPos = new Vector2(673f, 1190f) * 16f;
+						if (Vector2.Distance(player2.Center, MansionPos) < 192f && !NPC.AnyNPCs(ModContent.NPCType<MansionWraith>()) && !RedeWorld.downedMansionWraith)
+						{
+							if (Main.netMode != 1)
+							{
+								NPC.NewNPC(10704, 19056, ModContent.NPCType<MansionWraith>(), 0, 0f, 0f, 0f, 0f, 255);
+								break;
+							}
+							break;
+						}
+					}
+				}
+			}
 			if (!Main.dayTime && NPC.downedBoss1 && !Main.hardMode && !Main.fastForwardTime)
 			{
-				if (Main.time == 1.0 && !WorldGen.spawnEye && !RedeWorld.downedTheKeeper && Main.netMode != 1)
+				if (Main.time == 1.0 && !WorldGen.spawnEye && !RedeWorld.downedKeeper && Main.netMode != 1)
 				{
 					bool flag3 = false;
-					for (int i = 0; i < 255; i++)
+					for (int j = 0; j < 255; j++)
 					{
-						if (Main.player[i].active && Main.player[i].statLifeMax >= 200 && Main.player[i].statDefense > 10)
+						if (Main.player[j].active && Main.player[j].statLifeMax >= 200 && Main.player[j].statDefense > 10)
 						{
 							flag3 = true;
 							break;
@@ -113,9 +271,9 @@ namespace Redemption
 				}
 				if (RedeWorld.spawnKeeper && Main.netMode != 1 && Main.time > 4860.0)
 				{
-					for (int j = 0; j < 255; j++)
+					for (int k = 0; k < 255; k++)
 					{
-						if (Main.player[j].active && !Main.player[j].dead && (double)Main.player[j].position.Y < Main.worldSurface * 16.0)
+						if (Main.player[k].active && !Main.player[k].dead && (double)Main.player[k].position.Y < Main.worldSurface * 16.0)
 						{
 							if (Main.netMode == 0)
 							{
@@ -138,7 +296,7 @@ namespace Redemption
 									NetMessage.BroadcastChatMessage(NetworkText.FromKey("Mods.Redemption.KeeperAwoken", new object[0]), new Color(175, 75, 255), -1);
 								}
 							}
-							Redemption.SpawnBoss(Main.player[j], "TheKeeper", false, new Vector2(Main.player[j].position.X + (float)Main.rand.Next(400, 500), Main.player[j].position.Y - 0f), "The Keeper", false);
+							Redemption.SpawnBoss(Main.player[k], "Keeper", false, new Vector2(Main.player[k].position.X + (float)Main.rand.Next(400, 500), Main.player[k].position.Y - 0f), "The Keeper", false);
 							RedeWorld.spawnKeeper = false;
 							break;
 						}
@@ -150,7 +308,7 @@ namespace Redemption
 				if (!WorldGen.crimson)
 				{
 					RedeWorld.spawnSapphironOre = true;
-					if (Main.netMode == 2)
+					if (Main.netMode != 0)
 					{
 						NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 					}
@@ -164,7 +322,7 @@ namespace Redemption
 					{
 						Main.NewText(Language.GetTextValue(key), messageColor, false);
 					}
-					for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 6E-05); k++)
+					for (int l = 0; l < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 6E-05); l++)
 					{
 						int num10 = WorldGen.genRand.Next(0, Main.maxTilesX);
 						int j2 = WorldGen.genRand.Next((int)((float)Main.maxTilesY * 0.3f), (int)((float)Main.maxTilesY * 0.8f));
@@ -174,7 +332,7 @@ namespace Redemption
 				if (WorldGen.crimson)
 				{
 					RedeWorld.spawnScarlionOre = true;
-					if (Main.netMode == 2)
+					if (Main.netMode != 0)
 					{
 						NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 					}
@@ -188,7 +346,7 @@ namespace Redemption
 					{
 						Main.NewText(Language.GetTextValue(key2), messageColor2, false);
 					}
-					for (int l = 0; l < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 6E-05); l++)
+					for (int m = 0; m < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 6E-05); m++)
 					{
 						int num11 = WorldGen.genRand.Next(0, Main.maxTilesX);
 						int j3 = WorldGen.genRand.Next((int)((float)Main.maxTilesY * 0.3f), (int)((float)Main.maxTilesY * 0.8f));
@@ -199,7 +357,7 @@ namespace Redemption
 			if (NPC.downedBoss3 && !RedeWorld.spawnDragonOre)
 			{
 				RedeWorld.spawnDragonOre = true;
-				if (Main.netMode == 2)
+				if (Main.netMode != 0)
 				{
 					NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 				}
@@ -213,7 +371,7 @@ namespace Redemption
 				{
 					Main.NewText(Language.GetTextValue(key3), messageColor3, false);
 				}
-				for (int m = 0; m < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 6E-05); m++)
+				for (int n = 0; n < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 6E-05); n++)
 				{
 					int num12 = WorldGen.genRand.Next(0, Main.maxTilesX);
 					int j4 = WorldGen.genRand.Next((int)((float)Main.maxTilesY * 0.6f), (int)((float)Main.maxTilesY * 0.8f));
@@ -223,7 +381,7 @@ namespace Redemption
 			if (NPC.downedMoonlord && !RedeWorld.messageKingSlayer)
 			{
 				RedeWorld.messageKingSlayer = true;
-				if (Main.netMode == 2)
+				if (Main.netMode != 0)
 				{
 					NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 				}
@@ -241,10 +399,10 @@ namespace Redemption
 					}
 				}
 			}
-			if (RedeWorld.downedXenomiteCrystal && !RedeWorld.infectionBegin)
+			if (RedeWorld.downedSoI && !RedeWorld.infectionBegin)
 			{
 				RedeWorld.infectionBegin = true;
-				if (Main.netMode == 2)
+				if (Main.netMode != 0)
 				{
 					NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 				}
@@ -278,7 +436,7 @@ namespace Redemption
 				if (this.labSafeMessageTimer >= 300)
 				{
 					RedeWorld.labSafe = true;
-					if (Main.netMode == 2)
+					if (Main.netMode != 0)
 					{
 						NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 					}
@@ -298,15 +456,17 @@ namespace Redemption
 					}
 				}
 			}
-			if (RedeWorld.downedInfectedEye && !RedeWorld.spawnXenoBiome)
+			if (RedeWorld.downedPatientZero && !RedeWorld.patientZeroMessages)
 			{
-				RedeWorld.spawnXenoBiome = true;
-				if (Main.netMode == 2)
+				RedeWorld.patientZeroMessages = true;
+				if (Main.netMode != 0)
 				{
 					NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 				}
-				string key8 = "Mods.Redemption.GrowingInfection";
-				Color messageColor8 = Color.Green;
+				string key8 = "Mods.Redemption.PatientZeroMessage1";
+				string key9 = "Mods.Redemption.PatientZeroMessage2";
+				string key10 = "Mods.Redemption.PatientZeroMessage3";
+				Color messageColor8 = Color.Gold;
 				if (Main.netMode == 2)
 				{
 					NetMessage.BroadcastChatMessage(NetworkText.FromKey(key8, new object[0]), messageColor8, -1);
@@ -315,26 +475,7 @@ namespace Redemption
 				{
 					Main.NewText(Language.GetTextValue(key8), messageColor8, false);
 				}
-				if (Main.dungeonX < Main.maxTilesX / 2)
-				{
-					ConversionHandler.ConvertDown((int)((float)Main.maxTilesX * 0.25f), 0, 100, ConversionType.WASTELAND);
-				}
-				else
-				{
-					ConversionHandler.ConvertDown((int)((float)Main.maxTilesX * 0.75f), 0, 100, ConversionType.WASTELAND);
-				}
-			}
-			if (RedeWorld.downedPatientZero && !RedeWorld.patientZeroMessages)
-			{
-				RedeWorld.patientZeroMessages = true;
-				if (Main.netMode == 2)
-				{
-					NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
-				}
-				string key9 = "Mods.Redemption.PatientZeroMessage1";
-				string key10 = "Mods.Redemption.PatientZeroMessage2";
-				string key11 = "Mods.Redemption.PatientZeroMessage3";
-				Color messageColor9 = Color.Gold;
+				Color messageColor9 = Color.DarkRed;
 				if (Main.netMode == 2)
 				{
 					NetMessage.BroadcastChatMessage(NetworkText.FromKey(key9, new object[0]), messageColor9, -1);
@@ -343,7 +484,7 @@ namespace Redemption
 				{
 					Main.NewText(Language.GetTextValue(key9), messageColor9, false);
 				}
-				Color messageColor10 = Color.DarkRed;
+				Color messageColor10 = Color.ForestGreen;
 				if (Main.netMode == 2)
 				{
 					NetMessage.BroadcastChatMessage(NetworkText.FromKey(key10, new object[0]), messageColor10, -1);
@@ -352,18 +493,9 @@ namespace Redemption
 				{
 					Main.NewText(Language.GetTextValue(key10), messageColor10, false);
 				}
-				Color messageColor11 = Color.ForestGreen;
-				if (Main.netMode == 2)
-				{
-					NetMessage.BroadcastChatMessage(NetworkText.FromKey(key11, new object[0]), messageColor11, -1);
-				}
-				else if (Main.netMode == 0)
-				{
-					Main.NewText(Language.GetTextValue(key11), messageColor11, false);
-				}
 				int x = Main.maxTilesX;
 				int y = Main.maxTilesY;
-				for (int n = 0; n < (int)((double)(x * y) * 0.00015); n++)
+				for (int k2 = 0; k2 < (int)((double)(x * y) * 0.00015); k2++)
 				{
 					int tilesX = WorldGen.genRand.Next(0, x);
 					int tilesY = WorldGen.genRand.Next(y - 200, y);
@@ -373,7 +505,24 @@ namespace Redemption
 					}
 				}
 			}
-			Player player = Main.player[Main.myPlayer];
+			if (RedeWorld.downedThorn && !RedeWorld.thornMessage)
+			{
+				RedeWorld.thornMessage = true;
+				if (Main.netMode != 0)
+				{
+					NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
+				}
+				string key11 = "Mods.Redemption.ThornMessage";
+				Color messageColor11 = Color.LawnGreen;
+				if (Main.netMode == 2)
+				{
+					NetMessage.BroadcastChatMessage(NetworkText.FromKey(key11, new object[0]), messageColor11, -1);
+				}
+				else if (Main.netMode == 0)
+				{
+					Main.NewText(Language.GetTextValue(key11), messageColor11, false);
+				}
+			}
 			if (NPC.AnyNPCs(ModContent.NPCType<TheSoulless>()) || NPC.AnyNPCs(ModContent.NPCType<TheSoulless2>()))
 			{
 				if (!Filters.Scene["MoonLordShake"].IsActive())
@@ -381,6 +530,18 @@ namespace Redemption
 					Filters.Scene.Activate("MoonLordShake", player.position, new object[0]);
 				}
 				Filters.Scene["MoonLordShake"].GetShader().UseIntensity(1f);
+			}
+			if (Main.player[Main.myPlayer].GetModPlayer<RedePlayer>().ZoneSoulless)
+			{
+				if (!Filters.Scene["MoonLordShake"].IsActive())
+				{
+					Filters.Scene.Activate("MoonLordShake", player.position, new object[0]);
+				}
+				Filters.Scene["MoonLordShake"].GetShader().UseIntensity(0.3f);
+			}
+			else if (Subworld.IsActive<SoullessSub>())
+			{
+				Filters.Scene["MoonLordShake"].Deactivate(new object[0]);
 			}
 			if (RedeWorld.girusCloaked && !player.HasBuff(ModContent.BuffType<GirusCloakBuff>()))
 			{
@@ -411,22 +572,42 @@ namespace Redemption
 				int drone = NPC.NewNPC((int)player.Center.X + A, (int)player.Center.Y + A, ModContent.NPCType<LabSentryDrone>(), 0, 0f, 0f, 0f, 0f, 255);
 				Main.npc[drone].netUpdate = true;
 			}
-			if ((RedeWorld.golemLure && !player.HasBuff(ModContent.BuffType<GolemSpelltomeBuff>())) || NPC.AnyNPCs(ModContent.NPCType<EaglecrestGolem>()))
-			{
-				RedeWorld.golemLure = false;
-				player.ClearBuff(ModContent.BuffType<GolemSpelltomeBuff>());
-			}
 			if ((RedeWorld.darkSlimeLure && !player.HasBuff(ModContent.BuffType<EvilJellyBuff>())) || NPC.AnyNPCs(ModContent.NPCType<EvilJellyBoss>()))
 			{
 				RedeWorld.darkSlimeLure = false;
 				player.ClearBuff(ModContent.BuffType<EvilJellyBuff>());
 			}
+			if (RedeWorld.blobbleSwarm)
+			{
+				RedeWorld.blobbleSwarmTimer++;
+				if (RedeWorld.blobbleSwarmTimer > 180)
+				{
+					RedeWorld.blobbleSwarm = false;
+					RedeWorld.blobbleSwarmTimer = 0;
+					RedeWorld.blobbleSwarmCooldown = 86400;
+				}
+			}
+			if (RedeWorld.blobbleSwarmCooldown > 0)
+			{
+				RedeWorld.blobbleSwarmCooldown--;
+			}
+			this.UpdateNukeCountdown();
 		}
 
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
 		{
 			int ShiniesIndex = tasks.FindIndex((GenPass genpass) => genpass.Name.Equals("Shinies"));
 			int ShiniesIndex2 = tasks.FindIndex((GenPass genpass) => genpass.Name.Equals("Final Cleanup"));
+			int GuideIndex = tasks.FindIndex((GenPass genpass) => genpass.Name.Equals("Sunflowers"));
+			if (GuideIndex == -1)
+			{
+				return;
+			}
+			tasks.Insert(GuideIndex, new PassLegacy("Heart of Thorns", delegate(GenerationProgress progress)
+			{
+				progress.Message = "Cursing the forest";
+				RedeWorld.SpawnThornSummon();
+			}));
 			if (ShiniesIndex != -1)
 			{
 				tasks.Insert(ShiniesIndex + 1, new PassLegacy("Redemption Mod Ores", delegate(GenerationProgress progress)
@@ -474,99 +655,230 @@ namespace Redemption
 			{
 				this.AncientHouse();
 			}));
-			tasks.Insert(ShiniesIndex + 5, new PassLegacy("Furnishing Ancient House", delegate(GenerationProgress progress)
+			tasks.Insert(ShiniesIndex + 5, new PassLegacy("Ancient Decal", delegate(GenerationProgress progress)
 			{
-				this.AncientHouseFurn();
+				for (int i = 0; i < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 3E-05); i++)
+				{
+					bool placed = false;
+					int attempts = 0;
+					while (!placed && attempts++ < 10000)
+					{
+						int tilesX = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
+						int tilesY = WorldGen.genRand.Next((int)((float)Main.maxTilesY * 0.4f), (int)((double)Main.maxTilesY * 0.8));
+						if (WorldGen.InWorld(tilesX + 2, tilesY + 4, 0))
+						{
+							Tile tile = Framing.GetTileSafely(tilesX + 2, tilesY + 4);
+							if (tile.type == 1 || tile.type == 59)
+							{
+								Point16 origin;
+								origin..ctor(tilesX, tilesY);
+								Generator.GenerateMultistructureRandom("WorldGeneration/AncientSRocksM", origin, base.mod, false, false);
+								placed = true;
+							}
+						}
+					}
+				}
+				for (int j = 0; j < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 3E-05); j++)
+				{
+					bool placed2 = false;
+					int attempts2 = 0;
+					while (!placed2 && attempts2++ < 10000)
+					{
+						int tilesX2 = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
+						int tilesY2 = WorldGen.genRand.Next((int)((float)Main.maxTilesY * 0.4f), (int)((double)Main.maxTilesY * 0.8));
+						if (WorldGen.InWorld(tilesX2 + 2, tilesY2 + 7, 0))
+						{
+							Tile tile2 = Framing.GetTileSafely(tilesX2 + 2, tilesY2 + 7);
+							if (tile2.type == 1 || tile2.type == 59)
+							{
+								Point16 origin2;
+								origin2..ctor(tilesX2, tilesY2);
+								Generator.GenerateMultistructureRandom("WorldGeneration/AncientSPillarsM", origin2, base.mod, false, false);
+								placed2 = true;
+							}
+						}
+					}
+				}
+				for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 4E-06); k++)
+				{
+					bool placed3 = false;
+					int attempts3 = 0;
+					while (!placed3 && attempts3++ < 10000)
+					{
+						int tilesX3 = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
+						int tilesY3 = WorldGen.genRand.Next((int)((float)Main.maxTilesY * 0.4f), (int)((double)Main.maxTilesY * 0.8));
+						if (WorldGen.InWorld(tilesX3 + 6, tilesY3 + 10, 0))
+						{
+							Tile tile3 = Framing.GetTileSafely(tilesX3 + 6, tilesY3 + 10);
+							if (tile3.type == 1 || tile3.type == 59)
+							{
+								Point16 dims = Point16.Zero;
+								Generator.GetDimensions("WorldGeneration/AncientSArch1", base.mod, ref dims, false);
+								for (int x = 0; x < (int)dims.X; x++)
+								{
+									for (int y = 0; y < (int)(dims.Y - 3); y++)
+									{
+										Framing.GetTileSafely(tilesX3 + x, tilesY3 + y).active();
+									}
+								}
+								Point16 origin3;
+								origin3..ctor(tilesX3, tilesY3);
+								Generator.GenerateStructure("WorldGeneration/AncientSArch1", origin3, base.mod, false, false);
+								placed3 = true;
+							}
+						}
+					}
+				}
+				for (int l = 0; l < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 4E-06); l++)
+				{
+					bool placed4 = false;
+					int attempts4 = 0;
+					while (!placed4 && attempts4++ < 10000)
+					{
+						int tilesX4 = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
+						int tilesY4 = WorldGen.genRand.Next((int)((float)Main.maxTilesY * 0.4f), (int)((double)Main.maxTilesY * 0.8));
+						if (WorldGen.InWorld(tilesX4 + 5, tilesY4 + 7, 0))
+						{
+							Tile tile4 = Framing.GetTileSafely(tilesX4 + 5, tilesY4 + 7);
+							if (tile4.type == 1 || tile4.type == 59)
+							{
+								Point16 dims2 = Point16.Zero;
+								Generator.GetDimensions("WorldGeneration/AncientSCoinPile1", base.mod, ref dims2, false);
+								for (int x2 = 0; x2 < (int)dims2.X; x2++)
+								{
+									for (int y2 = 0; y2 < (int)(dims2.Y - 6); y2++)
+									{
+										Framing.GetTileSafely(tilesX4 + x2, tilesY4 + y2).active();
+									}
+								}
+								Point16 origin4;
+								origin4..ctor(tilesX4, tilesY4);
+								Generator.GenerateStructure("WorldGeneration/AncientSCoinPile1", origin4, base.mod, false, false);
+								placed4 = true;
+							}
+						}
+					}
+				}
+				for (int m = 0; m < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 3E-06); m++)
+				{
+					int tilesX5 = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
+					int tilesY5 = WorldGen.genRand.Next((int)((float)Main.maxTilesY * 0.3f), (int)((double)Main.maxTilesY * 0.8));
+					if (WorldGen.InWorld(tilesX5, tilesY5, 0) && (Framing.GetTileSafely(tilesX5, tilesY5).type == 1 || Framing.GetTileSafely(tilesX5, tilesY5).type == 59))
+					{
+						Point16 origin5;
+						origin5..ctor(tilesX5, tilesY5);
+						Generator.GenerateMultistructureRandom("WorldGeneration/AncientSHutM", origin5, base.mod, false, false);
+					}
+				}
+				for (int n = 0; n < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 2E-06); n++)
+				{
+					int tilesX6 = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
+					int tilesY6 = WorldGen.genRand.Next((int)((float)Main.maxTilesY * 0.3f), (int)((double)Main.maxTilesY * 0.8));
+					if (WorldGen.InWorld(tilesX6, tilesY6, 0) && (Framing.GetTileSafely(tilesX6, tilesY6).type == 1 || Framing.GetTileSafely(tilesX6, tilesY6).type == 59))
+					{
+						Point16 origin6;
+						origin6..ctor(tilesX6, tilesY6);
+						Generator.GenerateStructure("WorldGeneration/AncientSBridge", origin6, base.mod, false, false);
+					}
+				}
 			}));
-			tasks.Insert(ShiniesIndex2 + 4, new PassLegacy("Clearing Space for ???", delegate(GenerationProgress progress)
+			tasks.Insert(ShiniesIndex + 10, new PassLegacy("Tied Lair", delegate(GenerationProgress progress)
 			{
-				this.HeroHallClear();
+				bool placed = false;
+				int attempts = 0;
+				while (!placed && attempts++ < 100000)
+				{
+					int tilesX = WorldGen.genRand.Next(12, Main.maxTilesX - 12);
+					int tilesY = WorldGen.genRand.Next((int)((float)Main.maxTilesY * 0.3f), (int)((double)Main.maxTilesY * 0.8));
+					if (WorldGen.InWorld(tilesX, tilesY, 0) && Framing.GetTileSafely(tilesX, tilesY).type == 1)
+					{
+						Point16 dims = Point16.Zero;
+						Generator.GetDimensions("WorldGeneration/TiedLair", base.mod, ref dims, false);
+						for (int x = 0; x < (int)dims.X; x++)
+						{
+							for (int y = 0; y < (int)dims.Y; y++)
+							{
+								TileLists.WhitelistTiles.Contains((int)Main.tile[tilesX + x, tilesY + y].type);
+							}
+						}
+						Point16 origin;
+						origin..ctor(tilesX, tilesY);
+						Generator.GenerateStructure("WorldGeneration/TiedLair", origin, base.mod, false, false);
+						placed = true;
+					}
+				}
 			}));
-			tasks.Insert(ShiniesIndex2 + 5, new PassLegacy("???", delegate(GenerationProgress progress)
+			tasks.Insert(ShiniesIndex2 + 4, new PassLegacy("???", delegate(GenerationProgress progress)
 			{
 				this.HeroHall();
-			}));
-			tasks.Insert(ShiniesIndex2 + 6, new PassLegacy("??? Furniture", delegate(GenerationProgress progress)
-			{
-				this.HeroHallStuff();
 			}));
 		}
 
 		public void AncientHouse()
 		{
-			Mod mod = Redemption.inst;
-			Dictionary<Color, int> colorToTile = new Dictionary<Color, int>();
-			colorToTile[new Color(255, 100, 0)] = ModContent.TileType<AncientWoodTile>();
-			colorToTile[new Color(0, 255, 0)] = ModContent.TileType<AncientDirtTile>();
-			colorToTile[new Color(150, 150, 150)] = -2;
-			colorToTile[Color.Black] = -1;
-			Dictionary<Color, int> colorToWall = new Dictionary<Color, int>();
-			colorToWall[new Color(255, 0, 255)] = ModContent.WallType<AncientWoodWallTile>();
-			colorToWall[new Color(0, 255, 255)] = 63;
-			colorToWall[Color.Black] = -1;
-			TexGen texGenerator = BaseWorldGenTex.GetTexGenerator(mod.GetTexture("WorldGeneration/AncientHouse"), colorToTile, mod.GetTexture("WorldGeneration/AncientHouseWalls"), colorToWall, null, null, null, null);
-			Point origin = new Point((int)((float)Main.maxTilesX * 0.07f), (int)((float)Main.maxTilesY * 0.45f));
-			texGenerator.Generate(origin.X, origin.Y, true, true);
+			Mod mod = Redemption.Inst;
+			Point16 origin;
+			origin..ctor((int)((float)Main.maxTilesX * 0.07f), (int)((float)Main.maxTilesY * 0.45f));
+			if (Main.dungeonX < Main.maxTilesX / 2)
+			{
+				origin..ctor((int)((float)Main.maxTilesX * 0.93f), (int)((float)Main.maxTilesY * 0.45f));
+			}
+			Generator.GenerateStructure("WorldGeneration/AncientHut", origin, mod, false, false);
+			this.AncientWoodChest((int)(origin.X + 4), (int)(origin.Y + 14));
 		}
 
-		public void AncientHouseFurn()
+		public void AncientWoodChest(int x, int y)
 		{
-			WorldGen.PlaceObject((int)((float)Main.maxTilesX * 0.07f) + 16, (int)((float)Main.maxTilesY * 0.45f) + 8, (int)((ushort)ModContent.TileType<AncientWoodDoorClosed>()), false, 0, 0, -1, -1);
-			NetMessage.SendObjectPlacment(-1, (int)((float)Main.maxTilesX * 0.07f) + 16, (int)((float)Main.maxTilesY * 0.45f) + 8, (int)((ushort)ModContent.TileType<AncientWoodDoorClosed>()), 0, 0, -1, -1);
-			WorldGen.PlaceObject((int)((float)Main.maxTilesX * 0.07f) + 10, (int)((float)Main.maxTilesY * 0.45f) + 7, (int)((ushort)ModContent.TileType<BrothersPaintingTile>()), false, 0, 0, -1, -1);
-			NetMessage.SendObjectPlacment(-1, (int)((float)Main.maxTilesX * 0.07f) + 10, (int)((float)Main.maxTilesY * 0.45f) + 7, (int)((ushort)ModContent.TileType<BrothersPaintingTile>()), 0, 0, -1, -1);
-			BaseWorldGen.GenerateChest((int)((float)Main.maxTilesX * 0.07f) + 3, (int)((float)Main.maxTilesY * 0.45f) + 9, (int)((ushort)ModContent.TileType<AncientWoodChestTile>()), 0, null, null, null, false);
-		}
-
-		public void HeroHallClear()
-		{
-			Mod inst = Redemption.inst;
-			Dictionary<Color, int> colorToTile = new Dictionary<Color, int>();
-			colorToTile[new Color(150, 150, 150)] = -2;
-			colorToTile[Color.Black] = -1;
-			TexGen texGenerator = BaseWorldGenTex.GetTexGenerator(inst.GetTexture("WorldGeneration/TempleOfHeroesClear"), colorToTile, null, null, null, null, null, null);
-			Point origin = new Point((int)((float)Main.maxTilesX * 0.4f), (int)((float)Main.maxTilesY * 0.45f));
-			texGenerator.Generate(origin.X, origin.Y, true, true);
+			int PlacementSuccess = WorldGen.PlaceChest(x, y, (ushort)ModContent.TileType<AncientWoodChestTile>(), false, 0);
+			int[] ChestLoot2 = new int[]
+			{
+				ModContent.ItemType<AncientWoodStave>(),
+				ModContent.ItemType<AncientWoodSword>(),
+				ModContent.ItemType<AncientWoodBow>()
+			};
+			int[] ChestLoot3 = new int[]
+			{
+				ModContent.ItemType<AncientWood>(),
+				ModContent.ItemType<AncientStone>(),
+				ModContent.ItemType<AncientDirt>()
+			};
+			if (PlacementSuccess >= 0)
+			{
+				Chest chest = Main.chest[PlacementSuccess];
+				chest.item[0].SetDefaults(ModContent.ItemType<Falcon>(), false);
+				chest.item[0].stack = 1;
+				chest.item[1].SetDefaults(Utils.Next<int>(WorldGen.genRand, ChestLoot2), false);
+				chest.item[1].stack = 1;
+				chest.item[2].SetDefaults(Utils.Next<int>(WorldGen.genRand, ChestLoot3), false);
+				chest.item[2].stack = WorldGen.genRand.Next(20, 60);
+			}
 		}
 
 		public void HeroHall()
 		{
-			Mod mod = Redemption.inst;
-			Dictionary<Color, int> colorToTile = new Dictionary<Color, int>();
-			colorToTile[new Color(0, 255, 0)] = ModContent.TileType<AncientHallBrickTile>();
-			colorToTile[new Color(255, 255, 0)] = ModContent.TileType<AncientStoneTile>();
-			colorToTile[new Color(0, 0, 255)] = ModContent.TileType<AncientWoodTile>();
-			colorToTile[new Color(255, 0, 255)] = 51;
-			colorToTile[new Color(150, 150, 150)] = -2;
-			colorToTile[Color.Black] = -1;
-			Dictionary<Color, int> colorToWall = new Dictionary<Color, int>();
-			colorToWall[new Color(255, 0, 255)] = ModContent.WallType<AncientHallPillarWall>();
-			colorToWall[Color.Black] = -1;
-			TexGen texGenerator = BaseWorldGenTex.GetTexGenerator(mod.GetTexture("WorldGeneration/TempleOfHeroes"), colorToTile, mod.GetTexture("WorldGeneration/TempleOfHeroesWalls"), colorToWall, null, null, null, null);
-			Point origin = new Point((int)((float)Main.maxTilesX * 0.4f), (int)((float)Main.maxTilesY * 0.45f));
-			texGenerator.Generate(origin.X, origin.Y, true, true);
+			Mod mod = Redemption.Inst;
+			Point16 origin;
+			origin..ctor((int)((float)Main.maxTilesX * 0.4f), (int)((float)Main.maxTilesY * 0.45f));
+			Generator.GenerateStructure("WorldGeneration/HallOfHeroes", origin, mod, false, false);
 		}
 
-		public void HeroHallStuff()
+		public override void PostDrawTiles()
 		{
-			WorldGen.PlaceObject((int)((float)Main.maxTilesX * 0.4f) + 17, (int)((float)Main.maxTilesY * 0.45f) + 11, (int)((ushort)ModContent.TileType<HKStatueTile>()), false, 0, 0, -1, -1);
-			WorldGen.PlaceObject((int)((float)Main.maxTilesX * 0.4f) + 25, (int)((float)Main.maxTilesY * 0.45f) + 16, (int)((ushort)ModContent.TileType<JStatueTile>()), false, 0, 0, -1, -1);
-			WorldGen.PlaceObject((int)((float)Main.maxTilesX * 0.4f) + 6, (int)((float)Main.maxTilesY * 0.45f) + 16, (int)((ushort)ModContent.TileType<KSStatueTile>()), false, 0, 0, -1, -1);
-			WorldGen.PlaceObject((int)((float)Main.maxTilesX * 0.4f) + 36, (int)((float)Main.maxTilesY * 0.45f) + 20, (int)((ushort)ModContent.TileType<NStatueTile>()), false, 0, 0, -1, -1);
-			WorldGen.PlaceObject((int)((float)Main.maxTilesX * 0.4f) + 4, (int)((float)Main.maxTilesY * 0.45f) + 13, (int)((ushort)ModContent.TileType<ArchclothBannerTile>()), false, 0, 0, -1, -1);
-			WorldGen.PlaceObject((int)((float)Main.maxTilesX * 0.4f) + 43, (int)((float)Main.maxTilesY * 0.45f) + 13, (int)((ushort)ModContent.TileType<ArchclothBannerTile>()), false, 0, 0, -1, -1);
-			WorldGen.PlaceObject((int)((float)Main.maxTilesX * 0.4f) + 14, (int)((float)Main.maxTilesY * 0.45f) + 13, (int)((ushort)ModContent.TileType<ArchclothBannerTile>()), false, 0, 0, -1, -1);
-			WorldGen.PlaceObject((int)((float)Main.maxTilesX * 0.4f) + 33, (int)((float)Main.maxTilesY * 0.45f) + 13, (int)((ushort)ModContent.TileType<ArchclothBannerTile>()), false, 0, 0, -1, -1);
-			WorldGen.PlaceObject((int)((float)Main.maxTilesX * 0.4f) + 24, (int)((float)Main.maxTilesY * 0.45f) + 27, (int)((ushort)ModContent.TileType<AncientAltarTile>()), false, 0, 0, -1, -1);
-			NetMessage.SendObjectPlacment(-1, (int)((float)Main.maxTilesX * 0.4f) + 17, (int)((float)Main.maxTilesY * 0.45f) + 11, (int)((ushort)ModContent.TileType<HKStatueTile>()), 0, 0, -1, -1);
-			NetMessage.SendObjectPlacment(-1, (int)((float)Main.maxTilesX * 0.4f) + 25, (int)((float)Main.maxTilesY * 0.45f) + 16, (int)((ushort)ModContent.TileType<JStatueTile>()), 0, 0, -1, -1);
-			NetMessage.SendObjectPlacment(-1, (int)((float)Main.maxTilesX * 0.4f) + 6, (int)((float)Main.maxTilesY * 0.45f) + 16, (int)((ushort)ModContent.TileType<KSStatueTile>()), 0, 0, -1, -1);
-			NetMessage.SendObjectPlacment(-1, (int)((float)Main.maxTilesX * 0.4f) + 36, (int)((float)Main.maxTilesY * 0.45f) + 20, (int)((ushort)ModContent.TileType<NStatueTile>()), 0, 0, -1, -1);
-			NetMessage.SendObjectPlacment(-1, (int)((float)Main.maxTilesX * 0.4f) + 4, (int)((float)Main.maxTilesY * 0.45f) + 13, (int)((ushort)ModContent.TileType<ArchclothBannerTile>()), 0, 0, -1, -1);
-			NetMessage.SendObjectPlacment(-1, (int)((float)Main.maxTilesX * 0.4f) + 43, (int)((float)Main.maxTilesY * 0.45f) + 13, (int)((ushort)ModContent.TileType<ArchclothBannerTile>()), 0, 0, -1, -1);
-			NetMessage.SendObjectPlacment(-1, (int)((float)Main.maxTilesX * 0.4f) + 14, (int)((float)Main.maxTilesY * 0.45f) + 13, (int)((ushort)ModContent.TileType<ArchclothBannerTile>()), 0, 0, -1, -1);
-			NetMessage.SendObjectPlacment(-1, (int)((float)Main.maxTilesX * 0.4f) + 33, (int)((float)Main.maxTilesY * 0.45f) + 13, (int)((ushort)ModContent.TileType<ArchclothBannerTile>()), 0, 0, -1, -1);
-			NetMessage.SendObjectPlacment(-1, (int)((float)Main.maxTilesX * 0.4f) + 24, (int)((float)Main.maxTilesY * 0.45f) + 27, (int)((ushort)ModContent.TileType<AncientAltarTile>()), 0, 0, -1, -1);
+			Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+			SpriteBatch spriteBatch = Main.spriteBatch;
+			for (int i = 0; i < 6000; i++)
+			{
+				Dust dust = Main.dust[i];
+				if (dust.type == ModContent.DustType<RainbowStarDust>())
+				{
+					Texture2D texture = base.mod.GetTexture("ExtraTextures/WhiteFlare");
+					Color color = dust.color * (1f - (float)dust.alpha / 255f);
+					color.A = 0;
+					float sizeMod = dust.scale;
+					spriteBatch.Draw(texture, dust.position - Main.screenPosition, null, color, 0f, new Vector2((float)(texture.Width / 2), (float)(texture.Height / 2)), sizeMod, SpriteEffects.None, 0f);
+				}
+			}
+			Main.spriteBatch.End();
 		}
 
 		public override void PostWorldGen()
@@ -636,26 +948,106 @@ namespace Redemption
 					}
 				}
 			}
-			int[] itemsToPlaceInAncientChests = new int[]
+		}
+
+		public void UpdateNukeCountdown()
+		{
+			if (!RedeWorld.nukeCountdownActive)
 			{
-				ModContent.ItemType<AncientWoodStave>(),
-				ModContent.ItemType<AncientWoodSword>(),
-				ModContent.ItemType<AncientWoodBow>(),
-				ModContent.ItemType<Falcon>()
-			};
-			for (int chestIndex4 = 0; chestIndex4 < 1000; chestIndex4++)
+				RedeWorld.nukeTimerInternal = 1800;
+				return;
+			}
+			if (RedeWorld.nukeGroundZero == Vector2.Zero)
 			{
-				Chest chest4 = Main.chest[chestIndex4];
-				if (chest4 != null && (int)Main.tile[chest4.x, chest4.y].type == ModContent.TileType<AncientWoodChestTile>())
+				RedeWorld.nukeCountdownActive = false;
+				return;
+			}
+			RedeWorld.nukeTimerShown = RedeWorld.nukeTimerInternal / 60;
+			if (RedeWorld.nukeTimerInternal % 60 == 0 && RedeWorld.nukeTimerInternal > 0)
+			{
+				if (RedeConfigClient.Instance.NoLoreElements)
 				{
-					for (int inventoryIndex4 = 0; inventoryIndex4 < 40; inventoryIndex4++)
+					Main.NewText(RedeWorld.nukeTimerShown.ToString(), Color.Red, false);
+				}
+				else if (!Main.dedServ)
+				{
+					Redemption.Inst.DialogueUIElement.DisplayDialogue(RedeWorld.nukeTimerShown.ToString(), 40, 8, 1f, null, (30f - (float)RedeWorld.nukeTimerShown) / 30f * 2f, new Color?(Color.Red), new Color?(Color.Black), null, null, 0, 0);
+				}
+			}
+			RedeWorld.nukeTimerInternal--;
+			if (RedeWorld.nukeTimerInternal <= 0)
+			{
+				MoonlordDeathDrama.RequestLight(1f, RedeWorld.nukeGroundZero);
+				for (int i = 0; i < 255; i++)
+				{
+					Player player = Main.player[i];
+					if (player.active && !player.dead)
 					{
-						if (chest4.item[inventoryIndex4].type == 0)
+						if (Vector2.Distance(player.Center, RedeWorld.nukeGroundZero) < 4592f)
 						{
-							int itemsToPlaceInAncientChestsChoice = Main.rand.Next(itemsToPlaceInAncientChests.Length);
-							chest4.item[0].SetDefaults(itemsToPlaceInAncientChests[itemsToPlaceInAncientChestsChoice], false);
-							break;
+							MoonlordDeathDrama.RequestLight(1f, player.Center);
 						}
+						else if (Vector2.Distance(player.Center, RedeWorld.nukeGroundZero) < 9184f)
+						{
+							MoonlordDeathDrama.RequestLight(0.5f, player.Center);
+						}
+						else
+						{
+							MoonlordDeathDrama.RequestLight(0.35f, player.Center);
+						}
+					}
+				}
+			}
+			if (RedeWorld.nukeTimerInternal <= -60)
+			{
+				RedeHelper.ProjectileExploson(RedeWorld.nukeGroundZero, 0f, 90, ModContent.ProjectileType<NukeShockwave>(), 1, 80f, RedeWorld.nukeGroundZero.X, RedeWorld.nukeGroundZero.Y);
+				this.HandleNukeExplosion();
+				WorldGen.KillTile((int)(RedeWorld.nukeGroundZero.X / 16f), (int)(RedeWorld.nukeGroundZero.Y / 16f), false, false, true);
+				ConversionHandler.ConvertWasteland(RedeWorld.nukeGroundZero, 287, true);
+				RedeWorld.nukeCountdownActive = false;
+				RedeWorld.nukeGroundZero = Vector2.Zero;
+				RedeWorld.nukeDropped = true;
+				if (Main.netMode != 0)
+				{
+					NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
+				}
+			}
+		}
+
+		public void HandleNukeExplosion()
+		{
+			for (int i = 0; i < 255; i++)
+			{
+				Player player = Main.player[i];
+				if (player.active && !player.dead)
+				{
+					if (Vector2.Distance(player.Center, RedeWorld.nukeGroundZero) < 4592f)
+					{
+						WeightedRandom<string> weightedRandom = new WeightedRandom<string>();
+						weightedRandom.Add(player.name + " saw a second sunrise.", 5.0);
+						weightedRandom.Add(player.name + " was wiped off the face of " + Main.worldName + ".", 5.0);
+						weightedRandom.Add(player.name + " experienced doomsday.", 5.0);
+						weightedRandom.Add(player.name + " became a shadow on the ground.", 5.0);
+						weightedRandom.Add(player.name + " couldn't find the fridge in time.", 1.0);
+						string nukeDeathReason = weightedRandom;
+						Main.PlaySound(Redemption.Inst.GetLegacySoundSlot(50, "Sounds/Custom/NukeExplosion"), player.Center);
+						player.KillMe(PlayerDeathReason.ByCustomReason(nukeDeathReason), 999999.0, 1, false);
+					}
+					if (Vector2.Distance(player.Center, RedeWorld.nukeGroundZero) < 9184f && Collision.CanHit(player.position, player.width, player.height, RedeWorld.nukeGroundZero, 1, 1))
+					{
+						player.AddBuff(80, 900, true);
+					}
+				}
+			}
+			for (int j = 0; j < 200; j++)
+			{
+				NPC npc = Main.npc[j];
+				if (npc.active)
+				{
+					Player player2 = Main.LocalPlayer;
+					if (Vector2.Distance(npc.Center, RedeWorld.nukeGroundZero) < 4592f)
+					{
+						player2.ApplyDamageToNPC(npc, 50000, 0f, 0, false);
 					}
 				}
 			}
@@ -663,19 +1055,21 @@ namespace Redemption
 
 		public override void Initialize()
 		{
-			RedeWorld.downedTheKeeper = false;
-			RedeWorld.redemptionPoints = 0;
-			RedeWorld.downedTheWarden = false;
-			RedeWorld.downedMansionWraith = false;
-			RedeWorld.wardenSaved = false;
-			RedeWorld.keeperSaved = false;
+			if (!Redemption.cachedata)
+			{
+				RedeWorld.downedKeeper = false;
+				RedeWorld.redemptionPoints = 0;
+				RedeWorld.downedTheWarden = false;
+				RedeWorld.downedMansionWraith = false;
+			}
 			RedeWorld.slayerRep = 0;
+			RedeWorld.nebRep = 0;
 			RedeWorld.downedJanitor = false;
 			RedeWorld.downedVolt = false;
 			RedeWorld.voltBegin = false;
 			RedeWorld.downedMossyGoliath = false;
-			RedeWorld.downedXenomiteCrystal = false;
-			RedeWorld.downedInfectedEye = false;
+			RedeWorld.downedSoI = false;
+			RedeWorld.nukeDropped = false;
 			RedeWorld.downedStrangePortal = false;
 			RedeWorld.downedVlitch1 = false;
 			RedeWorld.downedVlitch2 = false;
@@ -686,18 +1080,16 @@ namespace Redemption
 			RedeWorld.downedSunkenCaptain = false;
 			RedeWorld.downedBlisterface = false;
 			RedeWorld.downedStage3Scientist = false;
-			RedeWorld.labAccess1 = false;
-			RedeWorld.labAccess2 = false;
-			RedeWorld.labAccess3 = false;
-			RedeWorld.labAccess4 = false;
-			RedeWorld.labAccess5 = false;
-			RedeWorld.labAccess6 = false;
-			RedeWorld.labAccess7 = false;
+			for (int i = 0; i < RedeWorld.labAccess.Length; i++)
+			{
+				RedeWorld.labAccess[i] = false;
+			}
 			RedeWorld.labSafe = false;
 			RedeWorld.downedIBehemoth = false;
 			RedeWorld.downedMACE = false;
 			RedeWorld.downedPatientZero = false;
 			RedeWorld.patientZeroMessages = false;
+			RedeWorld.thornMessage = false;
 			RedeWorld.downedNebuleus = false;
 			RedeWorld.downedEaglecrestGolem = false;
 			RedeWorld.downedChickenInvPZ = false;
@@ -709,7 +1101,7 @@ namespace Redemption
 			RedeWorld.spawnSapphironOre = false;
 			RedeWorld.spawnScarlionOre = false;
 			RedeWorld.spawnDragonOre = false;
-			RedeWorld.deathBySlayer = false;
+			RedeWorld.slayerDeath = 0;
 			RedeWorld.foundNewb = false;
 			RedeWorld.spawnXenoBiome = false;
 			RedeWorld.starliteGenned = false;
@@ -717,7 +1109,6 @@ namespace Redemption
 			RedeWorld.girusTalk2 = false;
 			RedeWorld.girusTalk3 = false;
 			RedeWorld.infectionBegin = false;
-			RedeWorld.deathByNeb = false;
 			RedeWorld.girusCloaked = false;
 			RedeWorld.girusCloakTimer = 0;
 			RedeWorld.pzUS = false;
@@ -727,7 +1118,10 @@ namespace Redemption
 			RedeWorld.tbotDownedTimer = 0;
 			RedeWorld.spawnKeeper = false;
 			RedeWorld.oblitDeath = 0;
+			RedeWorld.nebDeath = 0;
 			RedeWorld.messageKingSlayer = false;
+			RedeWorld.nukeCountdownActive = false;
+			RedeWorld.nukeTimerInternal = 1800;
 		}
 
 		public override TagCompound Save()
@@ -737,17 +1131,17 @@ namespace Redemption
 			{
 				downed.Add("KingChicken");
 			}
-			if (RedeWorld.downedTheKeeper)
+			if (RedeWorld.downedKeeper)
 			{
-				downed.Add("TheKeeper");
+				downed.Add("Keeper");
 			}
-			if (RedeWorld.downedXenomiteCrystal)
+			if (RedeWorld.downedSoI)
 			{
 				downed.Add("XenomiteCrystalPhase2");
 			}
-			if (RedeWorld.downedInfectedEye)
+			if (RedeWorld.nukeDropped)
 			{
-				downed.Add("InfectedEye");
+				downed.Add("nukeDropped");
 			}
 			if (RedeWorld.downedStrangePortal)
 			{
@@ -780,10 +1174,6 @@ namespace Redemption
 			if (RedeWorld.spawnDragonOre)
 			{
 				downed.Add("dragore");
-			}
-			if (RedeWorld.deathBySlayer)
-			{
-				downed.Add("deathSlayer");
 			}
 			if (RedeWorld.foundNewb)
 			{
@@ -837,45 +1227,24 @@ namespace Redemption
 			{
 				downed.Add("Stage3Scientist");
 			}
-			if (RedeWorld.labAccess1)
+			for (int i = 0; i < RedeWorld.labAccess.Length; i++)
 			{
-				downed.Add("labA1");
-			}
-			if (RedeWorld.labAccess2)
-			{
-				downed.Add("labA2");
-			}
-			if (RedeWorld.labAccess3)
-			{
-				downed.Add("labA3");
-			}
-			if (RedeWorld.labAccess4)
-			{
-				downed.Add("labA4");
-			}
-			if (RedeWorld.labAccess5)
-			{
-				downed.Add("labA5");
-			}
-			if (RedeWorld.labAccess6)
-			{
-				downed.Add("labA6");
-			}
-			if (RedeWorld.labAccess7)
-			{
-				downed.Add("labA7");
+				if (RedeWorld.labAccess[i])
+				{
+					downed.Add("labA" + i);
+				}
 			}
 			if (RedeWorld.patientZeroMessages)
 			{
 				downed.Add("pzMessage");
 			}
+			if (RedeWorld.thornMessage)
+			{
+				downed.Add("thornMessage");
+			}
 			if (RedeWorld.keeperSaved)
 			{
 				downed.Add("keeperS");
-			}
-			if (RedeWorld.wardenSaved)
-			{
-				downed.Add("wardenS");
 			}
 			if (RedeWorld.downedIBehemoth)
 			{
@@ -891,11 +1260,7 @@ namespace Redemption
 			}
 			if (RedeWorld.downedNebuleus)
 			{
-				downed.Add("Nebuleus");
-			}
-			if (RedeWorld.deathByNeb)
-			{
-				downed.Add("deathNeb");
+				downed.Add("NebP1");
 			}
 			if (RedeWorld.downedEaglecrestGolem)
 			{
@@ -961,87 +1326,92 @@ namespace Redemption
 			tagCompound.Add("downed", downed);
 			tagCompound.Add("redePoints", RedeWorld.redemptionPoints);
 			tagCompound.Add("slayRep", RedeWorld.slayerRep);
+			tagCompound.Add("nebRep", RedeWorld.nebRep);
 			tagCompound.Add("tbotDowned", RedeWorld.tbotDownedTimer);
 			tagCompound.Add("zephosDowned", RedeWorld.zephosDownedTimer);
 			tagCompound.Add("daerelDowned", RedeWorld.daerelDownedTimer);
 			tagCompound.Add("oblitDeath", RedeWorld.oblitDeath);
+			tagCompound.Add("nebDeath", RedeWorld.nebDeath);
+			tagCompound.Add("slayerDeath", RedeWorld.slayerDeath);
 			return tagCompound;
 		}
 
 		public override void Load(TagCompound tag)
 		{
-			IList<string> list = tag.GetList<string>("downed");
-			RedeWorld.downedKingChicken = list.Contains("KingChicken");
-			RedeWorld.downedTheKeeper = list.Contains("TheKeeper");
-			RedeWorld.downedXenomiteCrystal = list.Contains("XenomiteCrystalPhase2");
-			RedeWorld.downedInfectedEye = list.Contains("InfectedEye");
-			RedeWorld.downedStrangePortal = list.Contains("StrangePortal");
-			RedeWorld.downedVlitch1 = list.Contains("VlitchCleaver");
-			RedeWorld.downedVlitch2 = list.Contains("VlitchWormHead");
-			RedeWorld.downedDarkSlime = list.Contains("DarkSlime");
-			RedeWorld.downedSlayer = list.Contains("KSEntrance");
-			RedeWorld.spawnSapphironOre = list.Contains("sapphiron");
-			RedeWorld.spawnScarlionOre = list.Contains("scarlion");
-			RedeWorld.spawnDragonOre = list.Contains("dragore");
-			RedeWorld.deathBySlayer = list.Contains("deathSlayer");
-			RedeWorld.foundNewb = list.Contains("newbFound");
-			RedeWorld.downedVlitch3 = list.Contains("OO");
-			RedeWorld.downedSkullDigger = list.Contains("SkullDigger");
-			RedeWorld.downedSunkenCaptain = list.Contains("SunkenCaptain");
-			RedeWorld.spawnXenoBiome = list.Contains("wasteland");
-			RedeWorld.starliteGenned = list.Contains("starliteGen");
-			RedeWorld.girusTalk1 = list.Contains("girTalk1");
-			RedeWorld.girusTalk2 = list.Contains("girTalk2");
-			RedeWorld.girusTalk3 = list.Contains("girTalk3");
-			RedeWorld.labSafe = list.Contains("labSafe1");
-			RedeWorld.infectionBegin = list.Contains("infection1");
-			RedeWorld.downedBlisterface = list.Contains("Blisterface");
-			RedeWorld.downedStage3Scientist = list.Contains("Stage3Scientist");
-			RedeWorld.labAccess1 = list.Contains("labA1");
-			RedeWorld.labAccess2 = list.Contains("labA2");
-			RedeWorld.labAccess3 = list.Contains("labA3");
-			RedeWorld.labAccess4 = list.Contains("labA4");
-			RedeWorld.labAccess5 = list.Contains("labA5");
-			RedeWorld.labAccess6 = list.Contains("labA6");
-			RedeWorld.labAccess7 = list.Contains("labA7");
-			RedeWorld.patientZeroMessages = list.Contains("pzMessage");
-			RedeWorld.keeperSaved = list.Contains("keeperS");
-			RedeWorld.downedIBehemoth = list.Contains("IrradiatedBehemoth");
-			RedeWorld.downedMACE = list.Contains("MACEProjectHead");
-			RedeWorld.downedPatientZero = list.Contains("PatientZero");
-			RedeWorld.downedNebuleus = list.Contains("Nebuleus");
-			RedeWorld.deathByNeb = list.Contains("deathNeb");
-			RedeWorld.downedEaglecrestGolem = list.Contains("EaglecrestGolem");
-			RedeWorld.downedChickenInv = list.Contains("downedChickenInv");
-			RedeWorld.downedChickenInvPZ = list.Contains("downedChickenInvPZ");
-			RedeWorld.downedEaglecrestGolemPZ = list.Contains("EaglecrestGolemPZ");
-			RedeWorld.downedThorn = list.Contains("Thorn");
-			RedeWorld.downedThornPZ = list.Contains("ThornPZ");
-			RedeWorld.redemptionPoints = tag.GetInt("redePoints");
-			RedeWorld.slayerRep = tag.GetInt("slayRep");
-			RedeWorld.downedJanitor = list.Contains("JanitorBot");
-			RedeWorld.downedVolt = list.Contains("TbotMiniboss");
-			RedeWorld.voltBegin = list.Contains("voltBeginFight");
-			RedeWorld.pzUS = list.Contains("PUS");
-			RedeWorld.maceUS = list.Contains("MPUS");
-			RedeWorld.daerelDownedTimer = tag.GetInt("daerelDowned");
-			RedeWorld.tbotDownedTimer = tag.GetInt("tbotDowned");
-			RedeWorld.zephosDownedTimer = tag.GetInt("zephosDowned");
-			RedeWorld.downedMossyGoliath = list.Contains("MossyGoliath");
-			RedeWorld.downedTheWarden = list.Contains("TheWarden");
-			RedeWorld.downedMansionWraith = list.Contains("MansionWraith");
-			RedeWorld.wardenSaved = list.Contains("wardenS");
-			RedeWorld.messageKingSlayer = list.Contains("messageKingSlayer");
-			RedeWorld.oblitDeath = tag.GetInt("oblitDeath");
+			if (!Redemption.cachedata)
+			{
+				IList<string> downed = tag.GetList<string>("downed");
+				RedeWorld.downedKingChicken = downed.Contains("KingChicken");
+				RedeWorld.downedKeeper = downed.Contains("Keeper");
+				RedeWorld.downedSoI = downed.Contains("XenomiteCrystalPhase2");
+				RedeWorld.nukeDropped = downed.Contains("nukeDropped");
+				RedeWorld.downedStrangePortal = downed.Contains("StrangePortal");
+				RedeWorld.downedVlitch1 = downed.Contains("VlitchCleaver");
+				RedeWorld.downedVlitch2 = downed.Contains("VlitchWormHead");
+				RedeWorld.downedDarkSlime = downed.Contains("DarkSlime");
+				RedeWorld.downedSlayer = downed.Contains("KSEntrance");
+				RedeWorld.spawnSapphironOre = downed.Contains("sapphiron");
+				RedeWorld.spawnScarlionOre = downed.Contains("scarlion");
+				RedeWorld.spawnDragonOre = downed.Contains("dragore");
+				RedeWorld.foundNewb = downed.Contains("newbFound");
+				RedeWorld.downedVlitch3 = downed.Contains("OO");
+				RedeWorld.downedSkullDigger = downed.Contains("SkullDigger");
+				RedeWorld.downedSunkenCaptain = downed.Contains("SunkenCaptain");
+				RedeWorld.spawnXenoBiome = downed.Contains("wasteland");
+				RedeWorld.starliteGenned = downed.Contains("starliteGen");
+				RedeWorld.girusTalk1 = downed.Contains("girTalk1");
+				RedeWorld.girusTalk2 = downed.Contains("girTalk2");
+				RedeWorld.girusTalk3 = downed.Contains("girTalk3");
+				RedeWorld.labSafe = downed.Contains("labSafe1");
+				RedeWorld.infectionBegin = downed.Contains("infection1");
+				RedeWorld.downedBlisterface = downed.Contains("Blisterface");
+				RedeWorld.downedStage3Scientist = downed.Contains("Stage3Scientist");
+				for (int i = 0; i < RedeWorld.labAccess.Length; i++)
+				{
+					RedeWorld.labAccess[i] = downed.Contains("labA" + i);
+				}
+				RedeWorld.patientZeroMessages = downed.Contains("pzMessage");
+				RedeWorld.thornMessage = downed.Contains("thornMessage");
+				RedeWorld.keeperSaved = downed.Contains("keeperS");
+				RedeWorld.downedIBehemoth = downed.Contains("IrradiatedBehemoth");
+				RedeWorld.downedMACE = downed.Contains("MACEProjectHead");
+				RedeWorld.downedPatientZero = downed.Contains("PatientZero");
+				RedeWorld.downedNebuleus = downed.Contains("NebP1");
+				RedeWorld.downedEaglecrestGolem = downed.Contains("EaglecrestGolem");
+				RedeWorld.downedChickenInv = downed.Contains("downedChickenInv");
+				RedeWorld.downedChickenInvPZ = downed.Contains("downedChickenInvPZ");
+				RedeWorld.downedEaglecrestGolemPZ = downed.Contains("EaglecrestGolemPZ");
+				RedeWorld.downedThorn = downed.Contains("Thorn");
+				RedeWorld.downedThornPZ = downed.Contains("ThornPZ");
+				RedeWorld.redemptionPoints = tag.GetInt("redePoints");
+				RedeWorld.slayerRep = tag.GetInt("slayRep");
+				RedeWorld.nebRep = tag.GetInt("nebRep");
+				RedeWorld.downedJanitor = downed.Contains("JanitorBot");
+				RedeWorld.downedVolt = downed.Contains("TbotMiniboss");
+				RedeWorld.voltBegin = downed.Contains("voltBeginFight");
+				RedeWorld.pzUS = downed.Contains("PUS");
+				RedeWorld.maceUS = downed.Contains("MPUS");
+				RedeWorld.daerelDownedTimer = tag.GetInt("daerelDowned");
+				RedeWorld.tbotDownedTimer = tag.GetInt("tbotDowned");
+				RedeWorld.zephosDownedTimer = tag.GetInt("zephosDowned");
+				RedeWorld.downedMossyGoliath = downed.Contains("MossyGoliath");
+				RedeWorld.downedTheWarden = downed.Contains("TheWarden");
+				RedeWorld.downedMansionWraith = downed.Contains("MansionWraith");
+				RedeWorld.messageKingSlayer = downed.Contains("messageKingSlayer");
+				RedeWorld.oblitDeath = tag.GetInt("oblitDeath");
+				RedeWorld.nebDeath = tag.GetInt("nebDeath");
+				RedeWorld.slayerDeath = tag.GetInt("slayerDeath");
+			}
+			Redemption.cachedata = false;
 		}
 
 		public override void NetSend(BinaryWriter writer)
 		{
 			BitsByte flags = default(BitsByte);
 			flags[0] = RedeWorld.downedKingChicken;
-			flags[1] = RedeWorld.downedTheKeeper;
-			flags[2] = RedeWorld.downedXenomiteCrystal;
-			flags[3] = RedeWorld.downedInfectedEye;
+			flags[1] = RedeWorld.downedKeeper;
+			flags[2] = RedeWorld.downedSoI;
+			flags[3] = RedeWorld.nukeDropped;
 			flags[4] = RedeWorld.downedStrangePortal;
 			flags[5] = RedeWorld.downedVlitch1;
 			flags[6] = RedeWorld.downedVlitch2;
@@ -1060,66 +1430,63 @@ namespace Redemption
 			BitsByte flags3 = default(BitsByte);
 			flags3[0] = RedeWorld.downedPatientZero;
 			flags3[1] = RedeWorld.labSafe;
-			flags3[2] = RedeWorld.deathBySlayer;
-			flags3[3] = RedeWorld.girusTalk1;
-			flags3[4] = RedeWorld.girusTalk2;
-			flags3[5] = RedeWorld.girusTalk3;
-			flags3[6] = RedeWorld.keeperSaved;
-			flags3[7] = RedeWorld.downedPatientZero;
+			flags3[2] = RedeWorld.girusTalk1;
+			flags3[3] = RedeWorld.girusTalk2;
+			flags3[4] = RedeWorld.girusTalk3;
+			flags3[5] = RedeWorld.keeperSaved;
+			flags3[6] = RedeWorld.downedPatientZero;
+			flags3[7] = RedeWorld.labSafe;
 			writer.Write(flags3);
 			BitsByte flags4 = default(BitsByte);
-			flags4[0] = RedeWorld.labSafe;
-			flags4[1] = RedeWorld.deathBySlayer;
-			flags4[2] = RedeWorld.labAccess1;
-			flags4[3] = RedeWorld.labAccess2;
-			flags4[4] = RedeWorld.labAccess3;
-			flags4[5] = RedeWorld.labAccess4;
-			flags4[6] = RedeWorld.labAccess5;
-			flags4[7] = RedeWorld.labAccess6;
+			for (int i = 0; i < RedeWorld.labAccess.Length; i++)
+			{
+				flags4[i] = RedeWorld.labAccess[i];
+			}
+			flags4[7] = RedeWorld.infectionBegin;
 			writer.Write(flags4);
 			BitsByte flags5 = default(BitsByte);
-			flags5[0] = RedeWorld.labAccess7;
-			flags5[1] = RedeWorld.infectionBegin;
-			flags5[2] = RedeWorld.patientZeroMessages;
-			flags5[3] = RedeWorld.downedNebuleus;
-			flags5[4] = RedeWorld.deathByNeb;
-			flags5[5] = RedeWorld.downedEaglecrestGolem;
-			flags5[6] = RedeWorld.downedChickenInv;
-			flags5[7] = RedeWorld.downedChickenInvPZ;
+			flags5[0] = RedeWorld.patientZeroMessages;
+			flags5[1] = RedeWorld.downedNebuleus;
+			flags5[2] = RedeWorld.downedEaglecrestGolem;
+			flags5[3] = RedeWorld.downedChickenInv;
+			flags5[4] = RedeWorld.downedChickenInvPZ;
+			flags5[5] = RedeWorld.downedEaglecrestGolemPZ;
+			flags5[6] = RedeWorld.downedThorn;
+			flags5[7] = RedeWorld.downedThornPZ;
 			writer.Write(flags5);
 			BitsByte flags6 = default(BitsByte);
-			flags6[0] = RedeWorld.downedEaglecrestGolemPZ;
-			flags6[1] = RedeWorld.downedThorn;
-			flags6[2] = RedeWorld.downedThornPZ;
-			flags6[3] = RedeWorld.downedJanitor;
-			flags6[4] = RedeWorld.downedVolt;
-			flags6[5] = RedeWorld.voltBegin;
-			flags6[6] = RedeWorld.pzUS;
-			flags6[7] = RedeWorld.maceUS;
+			flags6[0] = RedeWorld.downedJanitor;
+			flags6[1] = RedeWorld.downedVolt;
+			flags6[2] = RedeWorld.voltBegin;
+			flags6[3] = RedeWorld.pzUS;
+			flags6[4] = RedeWorld.maceUS;
+			flags6[5] = RedeWorld.downedMossyGoliath;
+			flags6[6] = RedeWorld.downedTheWarden;
 			writer.Write(flags6);
 			BitsByte flags7 = default(BitsByte);
-			flags7[0] = RedeWorld.downedMossyGoliath;
-			flags7[1] = RedeWorld.downedTheWarden;
-			flags7[2] = RedeWorld.wardenSaved;
-			flags7[3] = RedeWorld.spawnXenoBiome;
-			flags7[4] = RedeWorld.downedMansionWraith;
+			flags7[0] = RedeWorld.spawnXenoBiome;
+			flags7[1] = RedeWorld.downedMansionWraith;
+			flags7[5] = RedeWorld.thornMessage;
 			writer.Write(flags7);
 			writer.Write(RedeWorld.redemptionPoints);
 			writer.Write(RedeWorld.girusCloakTimer);
 			writer.Write(RedeWorld.slayerRep);
+			writer.Write(RedeWorld.nebRep);
 			writer.Write(RedeWorld.zephosDownedTimer);
 			writer.Write(RedeWorld.daerelDownedTimer);
 			writer.Write(RedeWorld.tbotDownedTimer);
 			writer.Write(RedeWorld.oblitDeath);
+			writer.Write(RedeWorld.nebDeath);
+			writer.Write(RedeWorld.slayerDeath);
 		}
 
 		public override void NetReceive(BinaryReader reader)
 		{
 			BitsByte flags = reader.ReadByte();
 			RedeWorld.downedKingChicken = flags[0];
-			RedeWorld.downedTheKeeper = flags[1];
-			RedeWorld.downedXenomiteCrystal = flags[2];
-			RedeWorld.downedInfectedEye = flags[3];
+			RedeWorld.downedKeeper = flags[1];
+			RedeWorld.downedSoI = flags[2];
+			RedeWorld.nukeDropped = flags[3];
 			RedeWorld.downedStrangePortal = flags[4];
 			RedeWorld.downedVlitch1 = flags[5];
 			RedeWorld.downedVlitch2 = flags[6];
@@ -1136,204 +1503,205 @@ namespace Redemption
 			BitsByte flags3 = reader.ReadByte();
 			RedeWorld.downedPatientZero = flags3[0];
 			RedeWorld.labSafe = flags3[1];
-			RedeWorld.deathBySlayer = flags3[2];
-			RedeWorld.girusTalk1 = flags3[3];
-			RedeWorld.girusTalk2 = flags3[4];
-			RedeWorld.girusTalk3 = flags3[5];
-			RedeWorld.keeperSaved = flags3[6];
-			RedeWorld.downedPatientZero = flags3[7];
+			RedeWorld.girusTalk1 = flags3[2];
+			RedeWorld.girusTalk2 = flags3[3];
+			RedeWorld.girusTalk3 = flags3[4];
+			RedeWorld.keeperSaved = flags3[5];
+			RedeWorld.downedPatientZero = flags3[6];
+			RedeWorld.labSafe = flags3[7];
 			BitsByte flags4 = reader.ReadByte();
-			RedeWorld.labSafe = flags4[0];
-			RedeWorld.deathBySlayer = flags4[1];
-			RedeWorld.labAccess1 = flags4[2];
-			RedeWorld.labAccess2 = flags4[3];
-			RedeWorld.labAccess3 = flags4[4];
-			RedeWorld.labAccess4 = flags4[5];
-			RedeWorld.labAccess5 = flags4[6];
-			RedeWorld.labAccess6 = flags4[7];
+			for (int i = 0; i < RedeWorld.labAccess.Length; i++)
+			{
+				RedeWorld.labAccess[i] = flags4[i];
+			}
+			RedeWorld.infectionBegin = flags4[7];
 			BitsByte flags5 = reader.ReadByte();
-			RedeWorld.labAccess7 = flags5[0];
-			RedeWorld.infectionBegin = flags5[1];
-			RedeWorld.patientZeroMessages = flags5[2];
-			RedeWorld.downedNebuleus = flags5[3];
-			RedeWorld.deathByNeb = flags5[4];
-			RedeWorld.downedEaglecrestGolem = flags5[5];
-			RedeWorld.downedChickenInv = flags5[6];
-			RedeWorld.downedChickenInvPZ = flags5[7];
+			RedeWorld.patientZeroMessages = flags5[0];
+			RedeWorld.downedNebuleus = flags5[1];
+			RedeWorld.downedEaglecrestGolem = flags5[2];
+			RedeWorld.downedChickenInv = flags5[3];
+			RedeWorld.downedChickenInvPZ = flags5[4];
+			RedeWorld.downedEaglecrestGolemPZ = flags5[5];
+			RedeWorld.downedThorn = flags5[6];
+			RedeWorld.downedThornPZ = flags5[7];
 			BitsByte flags6 = reader.ReadByte();
-			RedeWorld.downedEaglecrestGolemPZ = flags6[0];
-			RedeWorld.downedThorn = flags6[1];
-			RedeWorld.downedThornPZ = flags6[2];
-			RedeWorld.downedJanitor = flags6[3];
-			RedeWorld.downedVolt = flags6[4];
-			RedeWorld.voltBegin = flags6[5];
-			RedeWorld.pzUS = flags6[6];
-			RedeWorld.maceUS = flags6[7];
+			RedeWorld.downedJanitor = flags6[0];
+			RedeWorld.downedVolt = flags6[1];
+			RedeWorld.voltBegin = flags6[2];
+			RedeWorld.pzUS = flags6[3];
+			RedeWorld.maceUS = flags6[4];
+			RedeWorld.downedMossyGoliath = flags6[5];
+			RedeWorld.downedTheWarden = flags6[6];
 			BitsByte flags7 = reader.ReadByte();
-			RedeWorld.downedMossyGoliath = flags7[0];
-			RedeWorld.downedTheWarden = flags7[1];
-			RedeWorld.wardenSaved = flags7[2];
-			RedeWorld.spawnXenoBiome = flags7[3];
-			RedeWorld.downedMansionWraith = flags7[4];
+			RedeWorld.spawnXenoBiome = flags7[0];
+			RedeWorld.downedMansionWraith = flags7[1];
+			RedeWorld.thornMessage = flags7[5];
 			RedeWorld.redemptionPoints = reader.ReadInt32();
 			RedeWorld.girusCloakTimer = reader.ReadInt32();
 			RedeWorld.slayerRep = reader.ReadInt32();
+			RedeWorld.nebRep = reader.ReadInt32();
 			RedeWorld.daerelDownedTimer = reader.ReadInt32();
 			RedeWorld.zephosDownedTimer = reader.ReadInt32();
 			RedeWorld.tbotDownedTimer = reader.ReadInt32();
 			RedeWorld.oblitDeath = reader.ReadInt32();
+			RedeWorld.nebDeath = reader.ReadInt32();
+			RedeWorld.slayerDeath = reader.ReadInt32();
 		}
 
-		private const int saveVersion = 0;
+		public static bool spawnOre = false;
 
-		public static bool spawnOre;
+		public static bool spawnDragonOre = false;
 
-		public static bool spawnDragonOre;
+		public static bool spawnSapphironOre = false;
 
-		public static bool spawnSapphironOre;
+		public static bool spawnScarlionOre = false;
 
-		public static bool spawnScarlionOre;
+		public static bool spawnXenoBiome = false;
 
-		public static bool spawnXenoBiome;
+		public static bool messageKingSlayer = false;
 
-		public static bool messageKingSlayer;
+		public static bool starliteGenned = false;
 
-		public static bool starliteGenned;
+		public static bool labSafe = false;
 
-		public static bool labSafe;
+		public static bool infectionBegin = false;
 
-		public static bool infectionBegin;
+		public static int xenoBiome = 0;
 
-		public static int xenoBiome;
+		public static int evilXenoBiome = 0;
 
-		public static int evilXenoBiome;
+		public static int evilXenoBiome2 = 0;
 
-		public static int evilXenoBiome2;
+		public static int labBiome = 0;
 
-		public static int labBiome;
-
-		public static int slayerBiome;
+		public static int slayerBiome = 0;
 
 		private int labSafeMessageTimer;
 
-		public static bool labAccess1;
+		public static bool[] labAccess = new bool[7];
 
-		public static bool labAccess2;
+		public static bool patientZeroMessages = false;
 
-		public static bool labAccess3;
+		public static bool thornMessage = false;
 
-		public static bool labAccess4;
+		public static bool KSRajahInteraction = false;
 
-		public static bool labAccess5;
+		public static int redemptionPoints = 0;
 
-		public static bool labAccess6;
+		public static int girusCloakTimer = 0;
 
-		public static bool labAccess7;
+		public static bool girusCloaked = false;
 
-		public static bool patientZeroMessages;
+		public static int slayerRep = 0;
 
-		public static bool KSRajahInteraction;
+		public static int nebRep = 0;
 
-		public static int redemptionPoints;
+		public static bool darkSlimeLure = false;
 
-		public static int girusCloakTimer;
+		public static int zephosDownedTimer = 0;
 
-		public static bool girusCloaked;
+		public static int daerelDownedTimer = 0;
 
-		public static int slayerRep;
+		public static int tbotDownedTimer = 0;
 
-		public static bool golemLure;
-
-		public static bool darkSlimeLure;
-
-		public static int zephosDownedTimer;
-
-		public static int daerelDownedTimer;
-
-		public static int tbotDownedTimer;
+		public static int soullessBiome = 0;
 
 		public static bool spawnKeeper;
 
-		public static bool downedKingChicken;
+		public static bool blobbleSwarm;
 
-		public static bool downedTheKeeper;
+		public static int blobbleSwarmTimer;
 
-		public static bool downedXenomiteCrystal;
+		public static int blobbleSwarmCooldown;
 
-		public static bool downedInfectedEye;
+		public static int nukeTimerInternal = 1800;
 
-		public static bool downedStrangePortal;
+		public static int nukeTimerShown = 30;
 
-		public static bool downedVlitch1;
+		public static int nukeFireballRadius = 287;
 
-		public static bool downedVlitch2;
+		public static bool nukeCountdownActive = false;
 
-		public static bool downedDarkSlime;
+		public static Vector2 nukeGroundZero = Vector2.Zero;
 
-		public static bool downedSlayer;
+		public static bool downedKingChicken = false;
 
-		public static bool deathBySlayer;
+		public static bool downedKeeper = false;
 
-		public static bool foundNewb;
+		public static bool downedSoI = false;
 
-		public static bool downedVlitch3;
+		public static bool nukeDropped = false;
 
-		public static bool downedSkullDigger;
+		public static bool downedStrangePortal = false;
 
-		public static bool downedSunkenCaptain;
+		public static bool downedVlitch1 = false;
 
-		public static bool girusTalk1;
+		public static bool downedVlitch2 = false;
 
-		public static bool girusTalk2;
+		public static bool downedDarkSlime = false;
 
-		public static bool girusTalk3;
+		public static bool downedSlayer = false;
 
-		public static bool downedBlisterface;
+		public static int slayerDeath = 0;
 
-		public static bool downedStage3Scientist;
+		public static bool foundNewb = false;
 
-		public static bool keeperSaved;
+		public static bool downedVlitch3 = false;
 
-		public static bool downedIBehemoth;
+		public static bool downedSkullDigger = false;
 
-		public static bool downedMACE;
+		public static bool downedSunkenCaptain = false;
 
-		public static bool downedPatientZero;
+		public static bool girusTalk1 = false;
 
-		public static bool downedNebuleus;
+		public static bool girusTalk2 = false;
 
-		public static bool deathByNeb;
+		public static bool girusTalk3 = false;
 
-		public static bool downedEaglecrestGolem;
+		public static bool downedBlisterface = false;
 
-		public static bool downedChickenInvPZ;
+		public static bool downedStage3Scientist = false;
 
-		public static bool downedChickenInv;
+		public static bool keeperSaved = false;
 
-		public static bool downedEaglecrestGolemPZ;
+		public static bool downedIBehemoth = false;
 
-		public static bool downedThorn;
+		public static bool downedMACE = false;
 
-		public static bool downedThornPZ;
+		public static bool downedPatientZero = false;
 
-		public static bool downedJanitor;
+		public static bool downedNebuleus = false;
 
-		public static bool downedVolt;
+		public static bool downedEaglecrestGolem = false;
 
-		public static bool voltBegin;
+		public static bool downedChickenInvPZ = false;
+
+		public static bool downedChickenInv = false;
+
+		public static bool downedEaglecrestGolemPZ = false;
+
+		public static bool downedThorn = false;
+
+		public static bool downedThornPZ = false;
+
+		public static bool downedJanitor = false;
+
+		public static bool downedVolt = false;
+
+		public static bool voltBegin = false;
 
 		public static bool pzUS;
 
 		public static bool maceUS;
 
-		public static bool downedMossyGoliath;
+		public static bool downedMossyGoliath = false;
 
-		public static bool downedTheWarden;
+		public static bool downedTheWarden = false;
 
-		public static bool wardenSaved;
+		public static bool downedMansionWraith = false;
 
-		public static bool downedMansionWraith;
+		public static int oblitDeath = 0;
 
-		public static int oblitDeath;
+		public static int nebDeath = 0;
 	}
 }

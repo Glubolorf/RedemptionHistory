@@ -1,10 +1,12 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Items;
-using Redemption.Items.Armor;
-using Redemption.Items.Placeable;
-using Redemption.Items.Weapons;
+using Redemption.Items.Accessories.PreHM;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Placeable.Trophies;
+using Redemption.Items.Usable;
+using Redemption.Items.Weapons.PreHM.Ranged;
+using Redemption.Items.Weapons.PreHM.Summon;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -40,11 +42,11 @@ namespace Redemption.NPCs.Bosses
 		{
 			if (base.npc.life <= 0)
 			{
-				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/ChickenGore1"), 1f);
-				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/KingChickenGore1"), 1f);
-				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/KingChickenGore2"), 1f);
-				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/ChickenGore3"), 1f);
-				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/ChickenGore3"), 1f);
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/Friendly/ChickenGore1"), 1f);
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/Boss/KingChickenGore1"), 1f);
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/Boss/KingChickenGore2"), 1f);
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/Friendly/ChickenGore3"), 1f);
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/Friendly/ChickenGore3"), 1f);
 			}
 		}
 
@@ -52,7 +54,10 @@ namespace Redemption.NPCs.Bosses
 		{
 			if (!this.title)
 			{
-				Redemption.ShowTitle(base.npc, 14);
+				if (!Main.dedServ)
+				{
+					Redemption.Inst.TitleCardUIElement.DisplayTitle("King Chicken", 60, 90, 0.8f, 0, new Color?(Color.LightGoldenrodYellow), "The Mighty One", true);
+				}
 				this.title = true;
 			}
 			if (this.peckPeck)
@@ -212,7 +217,7 @@ namespace Redemption.NPCs.Bosses
 				}
 			}
 			RedeWorld.downedKingChicken = true;
-			if (Main.netMode == 2)
+			if (Main.netMode != 0)
 			{
 				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 			}

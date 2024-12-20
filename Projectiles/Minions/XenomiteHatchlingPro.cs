@@ -10,6 +10,7 @@ namespace Redemption.Projectiles.Minions
 		public override void SetDefaults()
 		{
 			base.projectile.CloneDefaults(440);
+			this.aiType = 440;
 			base.projectile.width = 2;
 			base.projectile.height = 16;
 			base.projectile.minion = true;
@@ -21,7 +22,6 @@ namespace Redemption.Projectiles.Minions
 			base.projectile.ignoreWater = true;
 			base.projectile.alpha = 0;
 			base.projectile.timeLeft = 200;
-			this.aiType = 440;
 			base.projectile.usesLocalNPCImmunity = true;
 		}
 

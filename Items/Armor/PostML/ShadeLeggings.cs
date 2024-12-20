@@ -1,5 +1,4 @@
 ﻿using System;
-using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -14,7 +13,7 @@ namespace Redemption.Items.Armor.PostML
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Shade Greaves");
-			base.Tooltip.SetDefault("40% increased movement speed\n10% increased druidic damage\n15% increased druidic critical strike chance\nDecreased falling speed\nIncreases spirits summoned by 1\n[c/bdffff:Spirit Level +2]");
+			base.Tooltip.SetDefault("40% increased movement speed\n10% increased druidic damage\n15% increased druidic critical strike chance\nHold UP to decrease fall speed\nIncreases spirits summoned by 1\n[c/bdffff:Spirit Level +2]");
 		}
 
 		public override void SafeSetDefaults()
@@ -24,6 +23,7 @@ namespace Redemption.Items.Armor.PostML
 			base.item.value = Item.sellPrice(0, 20, 0, 0);
 			base.item.defense = 26;
 			this.spiritWeapon = false;
+			base.item.rare = 11;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 2;
 		}
 
@@ -35,7 +35,10 @@ namespace Redemption.Items.Armor.PostML
 			druidDamagePlayer.druidCrit += 15;
 			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
 			redePlayer.spiritExtras++;
-			player.slowFall = true;
+			if (player.controlUp)
+			{
+				player.slowFall = true;
+			}
 			redePlayer.spiritLevel += 2;
 		}
 

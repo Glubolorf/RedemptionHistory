@@ -15,12 +15,6 @@ namespace Redemption
 
 		public static RedeConfigClient Instance;
 
-		[Label("Classic Vlitch Cleaver Sprite")]
-		public bool classicRedeVC;
-
-		[Label("Previous Infected Eye Sprite")]
-		public bool classicRedeIE;
-
 		[Label("No Combat Text")]
 		[Tooltip("Disables combat text, the text that appears above an enemies head, e.g. when a chicken pecks the ground")]
 		public bool NoCombatText;
@@ -29,9 +23,9 @@ namespace Redemption
 		[Tooltip("Newly created players will have an Empty Core in their inventory, these were used as challenges but their execution was poor")]
 		public bool StarterCore;
 
-		[Label("SHUT UP KING SLAYER NO ONE CARES")]
-		[Tooltip("Disables all boss dialogue from the mod (Don't use while a boss is alive)")]
-		public bool NoBossText;
+		[Label("[c/ff0000:Disable Lore Elements]")]
+		[Tooltip("WARNING: Disables all boss dialogue, alignment, and certain events from the mod (Don't use while a boss is alive)\nThis mod is heavily based on the lore, so I would not recommend this.")]
+		public bool NoLoreElements;
 
 		[Label("Anti-Antti (Disables Antti's music)")]
 		[Tooltip("Youtubers will get claimed when using that music, so if you're a Youtuber, enable this. (Getting claimed will NOT affect your channel, unlike copyright strikes)")]
@@ -46,7 +40,7 @@ namespace Redemption
 		public bool NoSpidersInMyTerrariaMod;
 
 		[Label("Disable Druid Class Tag")]
-		[Tooltip("Disables the ---Druid Class--- tooltip that is under druid item names")]
+		[Tooltip("Disables the -Druid Class- tooltip that is under druid item names")]
 		public bool NoDruidClassTag;
 
 		[Label("Disable Nature Guardian Info")]
@@ -54,7 +48,11 @@ namespace Redemption
 		public bool NoGuardianInfo;
 
 		[Label("Enable Zelda-Styled Boss Titles")]
-		[Tooltip("Enables the Legend of Zelda-style boss introduction text for bosses. (Thanks to Ancients Awakened for the code)")]
+		[Tooltip("Enables the Legend of Zelda-style boss introduction text for bosses. (Thanks to Seraph for the code)")]
 		public bool BossIntroText;
+
+		[Label("Disable Camera Lock")]
+		[Tooltip("Disables the locked camera during specific boss fights")]
+		public bool CameraLockDisable;
 	}
 }

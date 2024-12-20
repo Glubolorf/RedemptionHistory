@@ -1,5 +1,4 @@
 ﻿using System;
-using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -23,6 +22,7 @@ namespace Redemption.Items.Armor.PostML
 			base.item.height = 28;
 			base.item.value = Item.sellPrice(0, 25, 0, 0);
 			base.item.defense = 26;
+			base.item.rare = 11;
 			base.item.GetGlobalItem<RedeItem>().druidTag = true;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 2;
 		}

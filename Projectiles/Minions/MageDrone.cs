@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -172,24 +171,6 @@ namespace Redemption.Projectiles.Minions
 			base.projectile.minionSlots = 0f;
 		}
 
-		private void LookInDirection(Vector2 look)
-		{
-			float angle = 1.5707964f;
-			if (look.X != 0f)
-			{
-				angle = (float)Math.Atan((double)(look.Y / look.X));
-			}
-			else if (look.Y < 0f)
-			{
-				angle += 3.1415927f;
-			}
-			if (look.X < 0f)
-			{
-				angle += 3.1415927f;
-			}
-			base.projectile.rotation = angle - 1.5707964f;
-		}
-
 		public override void AI()
 		{
 			if (base.projectile.frame < 4)
@@ -280,9 +261,8 @@ namespace Redemption.Projectiles.Minions
 				this.clearCheck = Main.projectile[p];
 			}
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
-			if (player.dead || !player.HasBuff(ModContent.BuffType<MageDroneBuff>()))
+			if (player.dead || !modPlayer.jellyfishDrone)
 			{
-				modPlayer.jellyfishDrone = false;
 				base.projectile.Kill();
 			}
 			if (modPlayer.jellyfishDrone)
@@ -295,7 +275,7 @@ namespace Redemption.Projectiles.Minions
 				int proj = Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.clearCheck.Center - base.projectile.Center)), ModContent.ProjectileType<GirusDischarge2>(), 100, 0f, Main.myPlayer, 0f, 0f);
 				Main.projectile[proj].netUpdate = true;
 			}
-			if (RedeHelper.ClosestNPC(ref this.target, 200f, base.projectile.Center, false, player.MinionAttackTargetNPC) && base.projectile.localAI[1] % 120f == 0f)
+			if (RedeHelper.ClosestNPC(ref this.target, 200f, base.projectile.Center, false, player.MinionAttackTargetNPC, null) && base.projectile.localAI[1] % 120f == 0f)
 			{
 				Main.PlaySound(SoundID.Item93, (int)base.projectile.position.X, (int)base.projectile.position.Y);
 				int proj2 = Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), RedeHelper.PolarVector(10f, Utils.ToRotation(this.target.Center - base.projectile.Center)), ModContent.ProjectileType<GirusDischarge2>(), 100, 0f, Main.myPlayer, 0f, 0f);

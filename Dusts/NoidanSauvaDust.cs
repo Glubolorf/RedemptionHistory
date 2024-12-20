@@ -24,7 +24,7 @@ namespace Redemption.Dusts
 				}
 				Lighting.AddLight(dust.position, 0.4f * strength, 0.4f * strength, 0.5f * strength);
 			}
-			if (Collision.SolidCollision(dust.position - Vector2.One * 5f, 10, 10) && dust.fadeIn == 0f)
+			if (Collision.SolidCollision(dust.position + dust.velocity, 10, 10) && dust.fadeIn == 0f)
 			{
 				dust.scale *= 0.9f;
 				dust.velocity *= 0.1f;

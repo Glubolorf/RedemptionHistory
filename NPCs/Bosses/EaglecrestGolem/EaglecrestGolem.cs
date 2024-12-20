@@ -1,9 +1,11 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Items;
-using Redemption.Items.Placeable;
-using Redemption.Items.Weapons.v08;
+using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Placeable.Tiles;
+using Redemption.Items.Usable;
+using Redemption.Items.Weapons.PreHM.Ranged;
+using Redemption.Items.Weapons.PreHM.Summon;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -59,7 +61,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 				}
 			}
 			RedeWorld.downedEaglecrestGolem = true;
-			if (Main.netMode == 2)
+			if (Main.netMode != 0)
 			{
 				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 			}
@@ -70,7 +72,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<GolemEye>(), 1, false, 0, false, false);
 			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<AncientPebble>(), 1, false, 0, false, false);
 			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<AncientSlingShot>(), 1, false, 0, false, false);
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<AncientStone>(), Main.rand.Next(14, 34), false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<AncientStone2>(), Main.rand.Next(14, 34), false, 0, false, false);
 		}
 
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
@@ -219,44 +221,34 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 			}
 			if (base.npc.life < (int)((float)base.npc.lifeMax * 0.9f) && !this.summon1)
 			{
-				int Minion = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPile>(), 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[Minion].netUpdate = true;
-				int Minion2 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPile>(), 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[Minion2].netUpdate = true;
+				base.npc.SpawnNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPile>(), 0f, 0f, 0f, 0f);
+				base.npc.SpawnNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPile>(), 0f, 0f, 0f, 0f);
 				this.summon1 = true;
 				base.npc.netUpdate = true;
 				return;
 			}
 			if (base.npc.life < (int)((float)base.npc.lifeMax * 0.5f) && !this.summon2)
 			{
-				int Minion3 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPile>(), 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[Minion3].netUpdate = true;
-				int Minion4 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPile>(), 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[Minion4].netUpdate = true;
-				int Minion5 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPile>(), 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[Minion5].netUpdate = true;
+				base.npc.SpawnNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPile>(), 0f, 0f, 0f, 0f);
+				base.npc.SpawnNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPile>(), 0f, 0f, 0f, 0f);
+				base.npc.SpawnNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPile>(), 0f, 0f, 0f, 0f);
 				this.summon2 = true;
 				base.npc.netUpdate = true;
 				return;
 			}
 			if (base.npc.life < (int)((float)base.npc.lifeMax * 0.25f) && !this.summon3)
 			{
-				int Minion6 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPile>(), 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[Minion6].netUpdate = true;
-				int Minion7 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPile>(), 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[Minion7].netUpdate = true;
-				int Minion8 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPile>(), 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[Minion8].netUpdate = true;
+				base.npc.SpawnNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPile>(), 0f, 0f, 0f, 0f);
+				base.npc.SpawnNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPile>(), 0f, 0f, 0f, 0f);
+				base.npc.SpawnNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPile>(), 0f, 0f, 0f, 0f);
 				this.summon3 = true;
 				base.npc.netUpdate = true;
 				return;
 			}
 			if (base.npc.life < (int)((float)base.npc.lifeMax * 0.1f) && !this.summon4)
 			{
-				int Minion9 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPile>(), 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[Minion9].netUpdate = true;
-				int Minion10 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPile>(), 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[Minion10].netUpdate = true;
+				base.npc.SpawnNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPile>(), 0f, 0f, 0f, 0f);
+				base.npc.SpawnNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), ModContent.NPCType<EaglecrestRockPile>(), 0f, 0f, 0f, 0f);
 				this.summon4 = true;
 				base.npc.netUpdate = true;
 			}

@@ -216,11 +216,11 @@ namespace Redemption.Projectiles.Minions
 				base.projectile.ai[1] = 0f;
 				base.projectile.netUpdate = true;
 			}
-			if (RedeHelper.ClosestNPC(ref this.target, 1000f, base.projectile.Center, false, player.MinionAttackTargetNPC))
+			if (RedeHelper.ClosestNPC(ref this.target, 1000f, base.projectile.Center, false, player.MinionAttackTargetNPC, null))
 			{
 				int num518 = this.timer + 1;
 				this.timer = num518;
-				if (num518 % 80 == 0)
+				if (num518 % 80 == 0 && !this.target.friendly)
 				{
 					int p = Projectile.NewProjectile(base.projectile.Center, RedeHelper.PolarVector(15f, Utils.ToRotation(this.target.Center - base.projectile.Center)), ModContent.ProjectileType<VlitchLaserPro2>(), base.projectile.damage, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
 					Main.projectile[p].netUpdate = true;

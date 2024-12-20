@@ -13,17 +13,6 @@ namespace Redemption.NPCs.Bosses.Thorn
 	{
 		public override void SetStaticDefaults()
 		{
-			if (Main.netMode != 2)
-			{
-				Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
-				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
-				{
-					glowMasks[i] = Main.glowMaskTexture[i];
-				}
-				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("NPCs/Bosses/Thorn/" + base.GetType().Name + "_Glow");
-				AkkaBubble.customGlowMask = (short)(glowMasks.Length - 1);
-				Main.glowMaskTexture = glowMasks;
-			}
 			base.DisplayName.SetDefault("Bubble");
 			Main.projFrames[base.projectile.type] = 6;
 		}
@@ -40,7 +29,6 @@ namespace Redemption.NPCs.Bosses.Thorn
 			base.projectile.tileCollide = false;
 			base.projectile.ignoreWater = true;
 			base.projectile.timeLeft = 400;
-			base.projectile.glowMask = AkkaBubble.customGlowMask;
 		}
 
 		public override void AI()
@@ -95,12 +83,26 @@ namespace Redemption.NPCs.Bosses.Thorn
 			}
 		}
 
+		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+		{
+			Texture2D texture = Main.projectileTexture[base.projectile.type];
+			int num215 = texture.Height / 6;
+			int y7 = num215 * base.projectile.frame;
+			Vector2 position = base.projectile.Center - Main.screenPosition;
+			Rectangle rect = new Rectangle(0, y7, texture.Width, num215);
+			Vector2 origin = new Vector2((float)texture.Width / 2f, (float)num215 / 2f);
+			spriteBatch.End();
+			spriteBatch.Begin(SpriteSortMode.Deferred, (base.projectile.frame == 0) ? BlendState.NonPremultiplied : BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+			spriteBatch.Draw(texture, position, new Rectangle?(rect), drawColor * ((float)(255 - base.projectile.alpha) / 255f), base.projectile.rotation, origin, base.projectile.scale, SpriteEffects.None, 0f);
+			spriteBatch.End();
+			spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
+			return false;
+		}
+
 		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
 		{
 			target.AddBuff(144, target.HasBuff(103) ? 320 : 160, true);
 		}
-
-		public static short customGlowMask;
 
 		private Player clearCheck;
 

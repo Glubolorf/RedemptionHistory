@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,7 +11,7 @@ namespace Redemption.Projectiles.Minions.HoloMinions
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Holo Chicken");
+			base.DisplayName.SetDefault("Hologram");
 			Main.projFrames[base.projectile.type] = 2;
 			ProjectileID.Sets.MinionSacrificable[base.projectile.type] = true;
 			ProjectileID.Sets.Homing[base.projectile.type] = true;
@@ -19,11 +20,9 @@ namespace Redemption.Projectiles.Minions.HoloMinions
 
 		public override void SetDefaults()
 		{
-			base.projectile.netImportant = true;
-			base.projectile.width = 28;
-			base.projectile.height = 20;
+			base.projectile.width = 40;
+			base.projectile.height = 40;
 			base.projectile.friendly = true;
-			Main.projPet[base.projectile.type] = true;
 			base.projectile.minion = true;
 			base.projectile.minionSlots = 1f;
 			base.projectile.penetrate = -1;
@@ -31,178 +30,155 @@ namespace Redemption.Projectiles.Minions.HoloMinions
 			base.projectile.timeLeft = 18000;
 			base.projectile.tileCollide = false;
 			base.projectile.ignoreWater = true;
-			this.aiType = 317;
+			base.projectile.usesLocalNPCImmunity = true;
+		}
+
+		private void DustPuff()
+		{
+			for (int i = 0; i < 20; i++)
+			{
+				Dust.NewDustPerfect(base.projectile.Center, 226, new Vector2?(RedeHelper.PolarVector((float)Main.rand.Next(4), Utils.NextFloat(Main.rand) * 3.1415927f * 2f)), 0, default(Color), 1f);
+			}
 		}
 
 		public override void AI()
 		{
-			bool flag20 = base.projectile.type == ModContent.ProjectileType<HoloMinion1>();
 			Player player = Main.player[base.projectile.owner];
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
-			if (flag20)
+			if (player.dead)
 			{
-				if (player.dead)
-				{
-					modPlayer.holoMinion = false;
-				}
-				if (modPlayer.holoMinion)
-				{
-					base.projectile.timeLeft = 2;
-				}
+				modPlayer.holoMinion = false;
 			}
-			for (int num526 = 0; num526 < 1000; num526++)
+			if (modPlayer.holoMinion)
 			{
-				if (num526 != base.projectile.whoAmI && Main.projectile[num526].active && Main.projectile[num526].owner == base.projectile.owner && Main.projectile[num526].type == base.projectile.type && Math.Abs(base.projectile.position.X - Main.projectile[num526].position.X) + Math.Abs(base.projectile.position.Y - Main.projectile[num526].position.Y) < (float)base.projectile.width)
+				base.projectile.timeLeft = 2;
+			}
+			if (this.counter % 60 == 0)
+			{
+				this.flyOffset = RedeHelper.PolarVector((float)Main.rand.Next(100), Utils.NextFloat(Main.rand) * 3.1415927f * 2f);
+			}
+			this.counter++;
+			this.attackCooldown--;
+			base.projectile.frameCounter++;
+			switch (this.mode)
+			{
+			case 0:
+				this.flyTo = player.Center + this.flyOffset - 30f * Vector2.UnitY;
+				if ((player.Center - base.projectile.Center).Length() < 140f && RedeHelper.ClosestNPC(ref this.target, 10000f, player.Center, false, player.MinionAttackTargetNPC, null))
 				{
-					if (base.projectile.position.X < Main.projectile[num526].position.X)
+					this.mode = 1;
+					this.DustPuff();
+				}
+				base.projectile.rotation = base.projectile.velocity.X * 3.1415927f / 40f;
+				break;
+			case 1:
+				if (RedeHelper.ClosestNPC(ref this.target, 10000f, player.Center, false, player.MinionAttackTargetNPC, null))
+				{
+					Vector2 diff = this.target.Center - base.projectile.Center;
+					if (diff.Length() < 350f)
 					{
-						base.projectile.velocity.X = base.projectile.velocity.X - 0.05f;
+						this.mode = 2;
+						this.DustPuff();
 					}
 					else
 					{
-						base.projectile.velocity.X = base.projectile.velocity.X + 0.05f;
-					}
-					if (base.projectile.position.Y < Main.projectile[num526].position.Y)
-					{
-						base.projectile.velocity.Y = base.projectile.velocity.Y - 0.05f;
-					}
-					else
-					{
-						base.projectile.velocity.Y = base.projectile.velocity.Y + 0.05f;
-					}
-				}
-			}
-			float num527 = base.projectile.position.X;
-			float num528 = base.projectile.position.Y;
-			float num529 = 900f;
-			bool flag19 = false;
-			if (base.projectile.ai[0] == 0f)
-			{
-				for (int num530 = 0; num530 < 200; num530++)
-				{
-					if (Main.npc[num530].CanBeChasedBy(base.projectile, false))
-					{
-						float num531 = Main.npc[num530].position.X + (float)(Main.npc[num530].width / 2);
-						float num532 = Main.npc[num530].position.Y + (float)(Main.npc[num530].height / 2);
-						float num533 = Math.Abs(base.projectile.position.X + (float)(base.projectile.width / 2) - num531) + Math.Abs(base.projectile.position.Y + (float)(base.projectile.height / 2) - num532);
-						if (num533 < num529 && Collision.CanHit(base.projectile.position, base.projectile.width, base.projectile.height, Main.npc[num530].position, Main.npc[num530].width, Main.npc[num530].height))
+						base.projectile.rotation = Utils.ToRotation(diff) + 3.1415927f;
+						if (this.attackCooldown < 0)
 						{
-							num529 = num533;
-							num527 = num531;
-							num528 = num532;
-							flag19 = true;
+							Projectile.NewProjectile(base.projectile.Center, RedeHelper.PolarVector(25f, Utils.ToRotation(diff)), 440, base.projectile.damage, base.projectile.knockBack, player.whoAmI, 0f, 0f);
+							this.attackCooldown = 60;
 						}
+						this.flyTo = player.Center + this.flyOffset + RedeHelper.PolarVector(-50f, Utils.ToRotation(diff));
 					}
-				}
-			}
-			else
-			{
-				base.projectile.tileCollide = false;
-			}
-			if (!flag19)
-			{
-				base.projectile.friendly = true;
-				float num534 = 8f;
-				if (base.projectile.ai[0] == 1f)
-				{
-					num534 = 12f;
-				}
-				Vector2 vector38 = new Vector2(base.projectile.position.X + (float)base.projectile.width * 0.5f, base.projectile.position.Y + (float)base.projectile.height * 0.5f);
-				float num535 = Main.player[base.projectile.owner].Center.X - vector38.X;
-				float num536 = Main.player[base.projectile.owner].Center.Y - vector38.Y - 60f;
-				float num537 = (float)Math.Sqrt((double)(num535 * num535 + num536 * num536));
-				if (num537 < 100f && base.projectile.ai[0] == 1f && !Collision.SolidCollision(base.projectile.position, base.projectile.width, base.projectile.height))
-				{
-					base.projectile.ai[0] = 0f;
-				}
-				if (num537 > 2000f)
-				{
-					base.projectile.position.X = Main.player[base.projectile.owner].Center.X - (float)(base.projectile.width / 2);
-					base.projectile.position.Y = Main.player[base.projectile.owner].Center.Y - (float)(base.projectile.width / 2);
-				}
-				if (num537 > 70f)
-				{
-					num537 = num534 / num537;
-					num535 *= num537;
-					num536 *= num537;
-					base.projectile.velocity.X = (base.projectile.velocity.X * 20f + num535) / 21f;
-					base.projectile.velocity.Y = (base.projectile.velocity.Y * 20f + num536) / 21f;
 				}
 				else
 				{
-					if (base.projectile.velocity.X == 0f && base.projectile.velocity.Y == 0f)
+					this.mode = 0;
+				}
+				break;
+			case 2:
+				if (this.attackCooldown < 0)
+				{
+					if (RedeHelper.ClosestNPC(ref this.target, 400f, base.projectile.Center, true, player.MinionAttackTargetNPC, null))
 					{
-						base.projectile.velocity.X = -0.15f;
-						base.projectile.velocity.Y = -0.05f;
+						this.flyTo = this.target.Center + this.flyOffset * 0.5f;
+						Vector2 diff2 = this.flyTo - base.projectile.Center;
+						base.projectile.velocity = RedeHelper.PolarVector(20f, Utils.ToRotation(diff2));
+						this.attackCooldown = 20;
 					}
-					base.projectile.velocity *= 1.01f;
+					else
+					{
+						this.mode = 0;
+						this.DustPuff();
+					}
 				}
-				base.projectile.friendly = false;
-				base.projectile.rotation = base.projectile.velocity.X * 0.05f;
-				base.projectile.frameCounter++;
-				if (base.projectile.frameCounter >= 5)
+				if (this.attackCooldown < 10)
 				{
-					base.projectile.frameCounter = 0;
-					base.projectile.frame++;
+					base.projectile.velocity *= 0.8f;
 				}
-				if (base.projectile.frame >= 2)
-				{
-					base.projectile.frame = 0;
-				}
-				if ((double)Math.Abs(base.projectile.velocity.X) > 0.2)
-				{
-					base.projectile.spriteDirection = -base.projectile.direction;
-					return;
-				}
+				base.projectile.rotation += base.projectile.velocity.X * 3.1415927f * 2f / 30f;
+				break;
 			}
-			else
+			if (this.mode != 2)
 			{
-				if (base.projectile.ai[1] == -1f)
+				Vector2 diff3 = this.flyTo - base.projectile.Center;
+				if (diff3.Length() < 10f)
 				{
-					base.projectile.ai[1] = 17f;
-				}
-				if (base.projectile.ai[1] > 0f)
-				{
-					base.projectile.ai[1] -= 1f;
-				}
-				if (base.projectile.ai[1] == 0f)
-				{
-					base.projectile.friendly = true;
-					float num538 = 8f;
-					Vector2 vector39 = new Vector2(base.projectile.position.X + (float)base.projectile.width * 0.5f, base.projectile.position.Y + (float)base.projectile.height * 0.5f);
-					float num539 = num527 - vector39.X;
-					float num540 = num528 - vector39.Y;
-					float num541 = (float)Math.Sqrt((double)(num539 * num539 + num540 * num540));
-					if (num541 < 100f)
-					{
-						num538 = 10f;
-					}
-					num541 = num538 / num541;
-					num539 *= num541;
-					num540 *= num541;
-					base.projectile.velocity.X = (base.projectile.velocity.X * 14f + num539) / 15f;
-					base.projectile.velocity.Y = (base.projectile.velocity.Y * 14f + num540) / 15f;
-				}
-				else
-				{
-					base.projectile.friendly = false;
-					if (Math.Abs(base.projectile.velocity.X) + Math.Abs(base.projectile.velocity.Y) < 10f)
-					{
-						base.projectile.velocity *= 1.05f;
-					}
-				}
-				base.projectile.rotation = base.projectile.velocity.X * 0.05f;
-				if ((double)Math.Abs(base.projectile.velocity.X) > 0.2)
-				{
-					base.projectile.spriteDirection = -base.projectile.direction;
+					base.projectile.velocity = diff3;
 					return;
 				}
+				base.projectile.velocity = RedeHelper.PolarVector(10f, Utils.ToRotation(diff3));
 			}
 		}
 
-		public override bool MinionContactDamage()
+		public override bool? CanHitNPC(NPC target)
 		{
-			return true;
+			return new bool?(this.mode == 2);
 		}
+
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		{
+			base.projectile.localNPCImmunity[target.whoAmI] = 10;
+			target.immune[base.projectile.owner] = 0;
+		}
+
+		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
+		{
+			Texture2D texture = base.mod.GetTexture("Projectiles/Minions/HoloMinions/HoloMinion1");
+			if (this.mode != 0)
+			{
+				if (this.mode == 1)
+				{
+					texture = base.mod.GetTexture("Projectiles/Minions/HoloMinions/HoloMinion4");
+				}
+				else
+				{
+					texture = base.mod.GetTexture("Projectiles/Minions/HoloMinions/HoloMinion3");
+				}
+			}
+			int frameHeight = texture.Height / 2;
+			int frame = (base.projectile.frameCounter % 20 < 10) ? 0 : 1;
+			int c = 255 - base.projectile.alpha;
+			spriteBatch.Draw(texture, base.projectile.Center - Main.screenPosition, new Rectangle?(new Rectangle(0, frameHeight * frame, texture.Width, frameHeight)), new Color(c, c, c, c), base.projectile.rotation, new Vector2((float)texture.Width, (float)frameHeight) * 0.5f, Vector2.One, (base.projectile.velocity.X > 0f && this.mode != 1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			return false;
+		}
+
+		private int mode;
+
+		private const int chickenMode = 0;
+
+		private const int eyeMode = 1;
+
+		private const int swordMode = 2;
+
+		private Vector2 flyOffset;
+
+		private Vector2 flyTo;
+
+		private int counter;
+
+		private NPC target;
+
+		private int attackCooldown;
 	}
 }

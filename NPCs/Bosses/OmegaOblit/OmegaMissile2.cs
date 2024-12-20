@@ -95,6 +95,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 			{
 				if (base.projectile != proj && proj.identity == projAim.identity)
 				{
+					Projectile.NewProjectile(base.projectile.Center, Vector2.Zero, ModContent.ProjectileType<OOMissileBlast>(), base.projectile.damage, 0f, Main.myPlayer, 0f, 0f);
 					base.projectile.Kill();
 					proj.Kill();
 				}
@@ -104,14 +105,15 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 		private void AdjustMagnitude(ref Vector2 vector)
 		{
 			float magnitude = (float)Math.Sqrt((double)(vector.X * vector.X + vector.Y * vector.Y));
-			if (magnitude > 14f)
+			if (magnitude > 20f)
 			{
-				vector *= 14f / magnitude;
+				vector *= 20f / magnitude;
 			}
 		}
 
 		public override void OnHitPlayer(Player target, int damage, bool crit)
 		{
+			Projectile.NewProjectile(base.projectile.Center, Vector2.Zero, ModContent.ProjectileType<OOMissileBlast>(), base.projectile.damage, 0f, Main.myPlayer, 0f, 0f);
 			base.projectile.Kill();
 		}
 
@@ -121,12 +123,11 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 			for (int p = 0; p < 1000; p++)
 			{
 				this.clearCheck = Main.projectile[p];
-				if (this.clearCheck.type != base.projectile.type && this.clearCheck.active && this.clearCheck.identity == projAim.identity)
+				if (this.clearCheck.identity == projAim.identity && this.clearCheck.type != base.projectile.type && this.clearCheck.active)
 				{
 					this.clearCheck.Kill();
 				}
 			}
-			Projectile.NewProjectile(base.projectile.Center, new Vector2(0f, 0f), ModContent.ProjectileType<OOMissileBlast>(), base.projectile.damage, 0f, 255, 0f, 0f);
 			Main.PlaySound(SoundID.Item14, base.projectile.position);
 			for (int i = 0; i < 25; i++)
 			{

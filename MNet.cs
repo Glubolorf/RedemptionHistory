@@ -11,7 +11,7 @@ namespace Redemption
 			{
 				return;
 			}
-			BaseNet.WriteToPacket(Redemption.inst.GetPacket(256), (byte)msg, param).Send(-1, -1);
+			BaseNet.WriteToPacket(Redemption.Inst.GetPacket(256), (byte)msg, param).Send(-1, -1);
 		}
 	}
 }

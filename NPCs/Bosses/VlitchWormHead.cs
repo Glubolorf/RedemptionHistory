@@ -2,11 +2,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Dusts;
-using Redemption.Items;
-using Redemption.Items.Armor;
-using Redemption.Items.Placeable;
-using Redemption.Items.Weapons;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Materials.HM;
+using Redemption.Items.Placeable.Trophies;
+using Redemption.Items.Usable;
+using Redemption.Items.Weapons.HM.Ranged;
 using Redemption.NPCs.Bosses.OmegaOblit;
+using Redemption.NPCs.Bosses.VCleaver;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -58,8 +60,8 @@ namespace Redemption.NPCs.Bosses
 		{
 			if (base.npc.life <= 0)
 			{
-				Gore.NewGore(base.npc.Center, base.npc.velocity, base.mod.GetGoreSlot("Gores/VlitchWormGore1"), 1f);
-				Gore.NewGore(base.npc.Center, base.npc.velocity, base.mod.GetGoreSlot("Gores/VlitchWormGore1"), 1f);
+				Gore.NewGore(base.npc.Center, base.npc.velocity, base.mod.GetGoreSlot("Gores/Boss/VlitchWormGore1"), 1f);
+				Gore.NewGore(base.npc.Center, base.npc.velocity, base.mod.GetGoreSlot("Gores/Boss/VlitchWormGore1"), 1f);
 			}
 		}
 
@@ -97,7 +99,6 @@ namespace Redemption.NPCs.Bosses
 			potionType = 499;
 			if (!RedeWorld.downedVlitch2)
 			{
-				RedeWorld.redemptionPoints++;
 				for (int i = 0; i < 255; i++)
 				{
 					Player player2 = Main.player[i];
@@ -110,16 +111,16 @@ namespace Redemption.NPCs.Bosses
 								Main.NewText("<Chalice of Alignment> The second Vlitch Overlord is down! Only 1 more... I think?", Color.DarkGoldenrod, false);
 							}
 						}
-						CombatText.NewText(player2.getRect(), Color.Gold, "+1", true, false);
+						CombatText.NewText(player2.getRect(), Color.Gray, "+0", true, false);
 					}
 				}
 			}
 			RedeWorld.downedVlitch2 = true;
-			if (Main.netMode == 2)
+			if (Main.netMode != 0)
 			{
 				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 			}
-			if (!RedeWorld.girusTalk2 && !NPC.AnyNPCs(ModContent.NPCType<VlitchCleaver>()) && !NPC.AnyNPCs(ModContent.NPCType<OO>()) && !RedeWorld.girusCloaked && !RedeConfigClient.Instance.NoBossText)
+			if (!RedeWorld.girusTalk2 && !NPC.AnyNPCs(ModContent.NPCType<VlitchCleaver>()) && !NPC.AnyNPCs(ModContent.NPCType<OO>()) && !RedeWorld.girusCloaked && !RedeConfigClient.Instance.NoLoreElements)
 			{
 				Projectile.NewProjectile(new Vector2(base.npc.position.X, base.npc.position.Y), new Vector2(0f, 0f), ModContent.ProjectileType<GirusTalking2>(), 0, 0f, 255, 0f, 0f);
 			}
@@ -142,7 +143,7 @@ namespace Redemption.NPCs.Bosses
 				}
 				damage = (int)((float)damage * 0.44f);
 			}
-			if (projectile.ranged && (projectile.width < 20 || projectile.height < 20) && Main.rand.Next(4) == 0)
+			if (projectile.ranged && (projectile.width < 20 || projectile.height < 20) && Main.rand.Next(2) == 0)
 			{
 				if (!Main.dedServ)
 				{
@@ -175,7 +176,10 @@ namespace Redemption.NPCs.Bosses
 		{
 			if (!this.title)
 			{
-				Redemption.ShowTitle(base.npc, 11);
+				if (!Main.dedServ)
+				{
+					Redemption.Inst.TitleCardUIElement.DisplayTitle("Vlitch Gigapede", 60, 90, 0.8f, 0, new Color?(Color.Red), "2nd Vlitch Overlord", true);
+				}
 				this.title = true;
 			}
 			if (Main.dayTime)
@@ -203,11 +207,11 @@ namespace Redemption.NPCs.Bosses
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().omegaPower)
 			{
 				base.npc.ai[1] += 1f;
-				if (base.npc.ai[1] == 600f && !RedeConfigClient.Instance.NoBossText)
+				if (base.npc.ai[1] == 600f && !RedeConfigClient.Instance.NoLoreElements)
 				{
 					Main.NewText("The probes aren't attacking you!?", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
 				}
-				if (base.npc.ai[1] == 800f && !RedeConfigClient.Instance.NoBossText)
+				if (base.npc.ai[1] == 800f && !RedeConfigClient.Instance.NoLoreElements)
 				{
 					Main.NewText("No matter... The corrupted worms are smart enough.", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
 				}
@@ -215,15 +219,15 @@ namespace Redemption.NPCs.Bosses
 			if (base.npc.life > 0 && !NPC.AnyNPCs(ModContent.NPCType<VlitchWormTail>()))
 			{
 				base.npc.ai[2] += 1f;
-				if (base.npc.ai[2] == 60f && !RedeConfigClient.Instance.NoBossText)
+				if (base.npc.ai[2] == 60f && !RedeConfigClient.Instance.NoLoreElements)
 				{
 					Main.NewText("Huh? My tail despawned!?", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
 				}
-				if (base.npc.ai[2] == 230f && !RedeConfigClient.Instance.NoBossText)
+				if (base.npc.ai[2] == 230f && !RedeConfigClient.Instance.NoLoreElements)
 				{
 					Main.NewText("How am I suppose to summon my minions without my tail!?", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
 				}
-				if (base.npc.ai[2] == 530f && !RedeConfigClient.Instance.NoBossText)
+				if (base.npc.ai[2] == 530f && !RedeConfigClient.Instance.NoLoreElements)
 				{
 					Main.NewText("DAMN IT! STOP FLYING AWAY! YOU'RE BUGGING ME OUT!", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
 				}
@@ -238,7 +242,7 @@ namespace Redemption.NPCs.Bosses
 				{
 					CombatText.NewText(base.npc.getRect(), Color.Red, "[DEPLOYING CORE]", true, false);
 				}
-				if (!RedeConfigClient.Instance.NoBossText)
+				if (!RedeConfigClient.Instance.NoLoreElements)
 				{
 					Main.NewText("[DEPLOYING CORE]", Color.Red.R, Color.Red.G, Color.Red.B, false);
 				}
@@ -256,7 +260,7 @@ namespace Redemption.NPCs.Bosses
 					{
 						CombatText.NewText(base.npc.getRect(), Color.Red, "[DEPLOYING CORE]", true, false);
 					}
-					if (!RedeConfigClient.Instance.NoBossText)
+					if (!RedeConfigClient.Instance.NoLoreElements)
 					{
 						Main.NewText("[DEPLOYING CORE]", Color.Red.R, Color.Red.G, Color.Red.B, false);
 					}
@@ -269,7 +273,7 @@ namespace Redemption.NPCs.Bosses
 			if (base.npc.life <= (int)((float)base.npc.lifeMax * 0.25f) && !this.Core3)
 			{
 				base.npc.ai[3] += 1f;
-				if (base.npc.ai[3] == 1f && !RedeConfigClient.Instance.NoBossText)
+				if (base.npc.ai[3] == 1f && !RedeConfigClient.Instance.NoLoreElements)
 				{
 					Main.NewText("I may have miscalculated...", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
 				}
@@ -279,7 +283,7 @@ namespace Redemption.NPCs.Bosses
 					{
 						CombatText.NewText(base.npc.getRect(), Color.Red, "[DEPLOYING CORE]", true, false);
 					}
-					if (!RedeConfigClient.Instance.NoBossText)
+					if (!RedeConfigClient.Instance.NoLoreElements)
 					{
 						Main.NewText("[DEPLOYING CORE]", Color.Red.R, Color.Red.G, Color.Red.B, false);
 					}

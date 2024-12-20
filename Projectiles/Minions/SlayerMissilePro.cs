@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.NPCs;
-using Redemption.NPCs.Bosses.KingSlayerIII;
-using Redemption.NPCs.Bosses.KingSlayerIIIClone;
+using Redemption.NPCs.Bosses.KSIII;
+using Redemption.NPCs.Bosses.KSIII.Clone;
+using Redemption.NPCs.HM;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -59,7 +59,7 @@ namespace Redemption.Projectiles.Minions
 			bool target = false;
 			for (int i = 0; i < 200; i++)
 			{
-				if (Main.npc[i].active && !Main.npc[i].dontTakeDamage && !Main.npc[i].friendly && Main.npc[i].lifeMax > 5 && !Main.npc[i].immortal && Main.npc[i].type != ModContent.NPCType<Android>() && Main.npc[i].type != ModContent.NPCType<Apidroid>() && Main.npc[i].type != ModContent.NPCType<PrototypeSilver>() && Main.npc[i].type != ModContent.NPCType<SpaceKeeper>() && Main.npc[i].type != ModContent.NPCType<SpacePaladin>() && Main.npc[i].type != ModContent.NPCType<KSEntrance>() && Main.npc[i].type != ModContent.NPCType<KSEntranceClone>())
+				if (Main.npc[i].active && !Main.npc[i].dontTakeDamage && !Main.npc[i].friendly && Main.npc[i].lifeMax > 5 && !Main.npc[i].immortal && Main.npc[i].type != ModContent.NPCType<Android>() && Main.npc[i].type != ModContent.NPCType<Apidroid>() && Main.npc[i].type != ModContent.NPCType<PrototypeSilver>() && Main.npc[i].type != ModContent.NPCType<SpaceKeeper>() && Main.npc[i].type != ModContent.NPCType<SpacePaladin>() && Main.npc[i].type != ModContent.NPCType<KS3_Body>() && Main.npc[i].type != ModContent.NPCType<KS3_Body_Clone>())
 				{
 					Vector2 newMove = Main.npc[i].Center - base.projectile.Center;
 					float distanceTo = (float)Math.Sqrt((double)(newMove.X * newMove.X + newMove.Y * newMove.Y));

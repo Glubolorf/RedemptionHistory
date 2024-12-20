@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Buffs;
+using Redemption.Buffs.Debuffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -52,7 +52,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 
 		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
 		{
-			target.AddBuff(ModContent.BuffType<StunnedDebuff>(), 120, true);
+			target.AddBuff(ModContent.BuffType<StaticStunDebuff>(), 120, true);
 		}
 
 		public override void SendExtraAI(BinaryWriter writer)
@@ -136,6 +136,8 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
+			spriteBatch.End();
+			spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.Default, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 			if (base.projectile.velocity == Vector2.Zero)
 			{
 				return false;

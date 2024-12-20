@@ -10,7 +10,7 @@ namespace Redemption.WorldGeneration
 	{
 		public override bool Place(Point origin, StructureMap structures)
 		{
-			Mod inst = Redemption.inst;
+			Mod inst = Redemption.Inst;
 			Dictionary<Color, int> colorToTile = new Dictionary<Color, int>();
 			colorToTile[new Color(150, 150, 150)] = -2;
 			colorToTile[Color.Black] = -1;

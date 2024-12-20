@@ -12,7 +12,7 @@ namespace Redemption
 			byte msg = bb.ReadByte();
 			if (RedeNet.DEBUG)
 			{
-				Redemption.inst.Logger.Debug(((Main.netMode == 2) ? "--SERVER-- " : "--CLIENT-- ") + "HANDING MESSAGE: " + msg);
+				Redemption.Inst.Logger.Debug(((Main.netMode == 2) ? "--SERVER-- " : "--CLIENT-- ") + "HANDING MESSAGE: " + msg);
 			}
 			try
 			{
@@ -30,7 +30,7 @@ namespace Redemption
 			}
 			catch (Exception e)
 			{
-				Redemption.inst.Logger.Debug(string.Concat(new string[]
+				Redemption.Inst.Logger.Debug(string.Concat(new string[]
 				{
 					(Main.netMode == 2) ? "--SERVER-- " : "--CLIENT-- ",
 					"ERROR HANDLING MSG: ",
@@ -38,8 +38,8 @@ namespace Redemption
 					": ",
 					e.Message
 				}));
-				Redemption.inst.Logger.Debug(e.StackTrace);
-				Redemption.inst.Logger.Debug("-------");
+				Redemption.Inst.Logger.Debug(e.StackTrace);
+				Redemption.Inst.Logger.Debug("-------");
 			}
 		}
 
@@ -47,7 +47,7 @@ namespace Redemption
 		{
 			if (RedeNet.DEBUG)
 			{
-				Redemption.inst.Logger.Debug(string.Concat(new object[]
+				Redemption.Inst.Logger.Debug(string.Concat(new object[]
 				{
 					(Main.netMode == 2) ? "--SERVER-- " : "--CLIENT-- ",
 					"SYNC PLAYER CALLED! NEWPLAYER: ",
@@ -68,7 +68,7 @@ namespace Redemption
 		{
 			if (RedeNet.DEBUG)
 			{
-				Redemption.inst.Logger.Debug("--SERVER-- PLAYER JOINED!");
+				Redemption.Inst.Logger.Debug("--SERVER-- PLAYER JOINED!");
 			}
 		}
 
@@ -83,12 +83,12 @@ namespace Redemption
 			{
 				if (Main.netMode != 0)
 				{
-					BaseNet.WriteToPacket(Redemption.inst.GetPacket(256), (byte)msg, param).Send(client, -1);
+					BaseNet.WriteToPacket(Redemption.Inst.GetPacket(256), (byte)msg, param).Send(client, -1);
 				}
 			}
 			catch (Exception e)
 			{
-				Redemption.inst.Logger.Debug(string.Concat(new string[]
+				Redemption.Inst.Logger.Debug(string.Concat(new string[]
 				{
 					(Main.netMode == 2) ? "--SERVER-- " : "--CLIENT-- ",
 					"ERROR SENDING MSG: ",
@@ -96,15 +96,15 @@ namespace Redemption
 					": ",
 					e.Message
 				}));
-				Redemption.inst.Logger.Debug(e.StackTrace);
-				Redemption.inst.Logger.Debug("-------");
+				Redemption.Inst.Logger.Debug(e.StackTrace);
+				Redemption.Inst.Logger.Debug("-------");
 				string param2 = "";
 				for (int i = 0; i < param.Length; i++)
 				{
 					param2 += param[i];
 				}
-				Redemption.inst.Logger.Debug("PARAMS: " + param2);
-				Redemption.inst.Logger.Debug("-------");
+				Redemption.Inst.Logger.Debug("PARAMS: " + param2);
+				Redemption.Inst.Logger.Debug("-------");
 			}
 		}
 

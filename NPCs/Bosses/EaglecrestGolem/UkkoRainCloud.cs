@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Redemption.NPCs.Bosses.Thorn;
-using Redemption.Projectiles.v08;
+using Redemption.Projectiles.Hostile;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -43,7 +43,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 			{
 				base.projectile.frame = 0;
 			}
-			if (base.projectile.alpha > 0 && base.projectile.timeLeft >= 60)
+			if (base.projectile.alpha > 0 && base.projectile.timeLeft >= 60 && base.projectile.alpha > 100)
 			{
 				base.projectile.alpha -= 5;
 			}
@@ -51,7 +51,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 			{
 				base.projectile.alpha += 5;
 			}
-			if (base.projectile.alpha <= 0)
+			if (base.projectile.alpha <= 100)
 			{
 				foreach (Projectile proj in Enumerable.Where<Projectile>(Main.projectile, (Projectile x) => x.Hitbox.Intersects(base.projectile.Hitbox)))
 				{
@@ -66,7 +66,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 							}
 							base.projectile.localAI[0] = 1f;
 						}
-						else if (proj.type == ModContent.ProjectileType<DualcastBall>() || proj.type == ModContent.ProjectileType<UkkoLightning>() || proj.type == ModContent.ProjectileType<UkkoThunderwave>() || proj.type == ModContent.ProjectileType<UkkoZap2>())
+						else if (proj.type == ModContent.ProjectileType<DualcastBall>() || proj.type == ModContent.ProjectileType<UkkoLightning>() || proj.type == ModContent.ProjectileType<UkkoThunderwave>() || proj.type == ModContent.ProjectileType<UkkoStrike>())
 						{
 							Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Zap1").WithVolume(0.3f).WithPitchVariance(0.1f), -1, -1);
 							for (int j = 0; j < 20; j++)

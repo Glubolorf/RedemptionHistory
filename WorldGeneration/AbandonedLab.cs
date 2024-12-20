@@ -1,15 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Redemption.Items;
-using Redemption.Items.Armor.Costumes;
-using Redemption.Items.DruidDamageClass;
-using Redemption.Items.LabThings;
-using Redemption.Items.Weapons;
-using Redemption.Tiles;
-using Redemption.Tiles.LabDeco;
-using Redemption.Tiles.LabDeco.BossDoors;
-using Redemption.Tiles.Wasteland;
+using Redemption.Items.Accessories.HM;
+using Redemption.Items.Accessories.PostML;
+using Redemption.Items.Lore;
+using Redemption.Items.Materials.HM;
+using Redemption.Items.Materials.PostML;
+using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Usable;
+using Redemption.Items.Usable.Potions;
+using Redemption.Items.Weapons.HM.Magic;
+using Redemption.Items.Weapons.HM.Melee;
+using Redemption.Items.Weapons.HM.Ranged;
+using Redemption.Items.Weapons.PostML.Druid;
+using Redemption.Items.Weapons.PostML.Melee;
+using Redemption.Items.Weapons.PostML.Ranged;
+using Redemption.Tiles.Containers;
+using Redemption.Tiles.Furniture.Lab;
+using Redemption.Tiles.Furniture.Misc;
+using Redemption.Tiles.Ores;
+using Redemption.Tiles.Tiles;
 using Redemption.Walls;
 using Terraria;
 using Terraria.ModLoader;
@@ -22,7 +32,7 @@ namespace Redemption.WorldGeneration
 	{
 		public override bool Place(Point origin, StructureMap structures)
 		{
-			Mod mod = Redemption.inst;
+			Mod mod = Redemption.Inst;
 			Dictionary<Color, int> colorToTile = new Dictionary<Color, int>();
 			colorToTile[new Color(0, 255, 0)] = ModContent.TileType<LabTileUnsafe>();
 			colorToTile[new Color(0, 100, 0)] = ModContent.TileType<OvergrownLabTile>();
@@ -37,7 +47,6 @@ namespace Redemption.WorldGeneration
 			colorToTile[new Color(255, 200, 255)] = ModContent.TileType<PlutoniumTile>();
 			colorToTile[new Color(255, 100, 0)] = ModContent.TileType<SolidCoriumTile>();
 			colorToTile[new Color(255, 255, 0)] = ModContent.TileType<HardenedSludgeTile>();
-			colorToTile[new Color(187, 255, 90)] = ModContent.TileType<HardenedSludge2Tile>();
 			colorToTile[new Color(17, 54, 17)] = ModContent.TileType<HardenedSludge3Tile>();
 			colorToTile[new Color(120, 255, 255)] = ModContent.TileType<LabTubeTile>();
 			colorToTile[new Color(255, 120, 255)] = ModContent.TileType<LabTankTile>();
@@ -67,6 +76,18 @@ namespace Redemption.WorldGeneration
 			NetMessage.SendObjectPlacment(-1, origin.X + 169, origin.Y + 35, (int)((ushort)ModContent.TileType<LabDoor3TileClosed>()), 0, 0, -1, -1);
 			WorldGen.PlaceObject(origin.X + 109, origin.Y + 35, (int)((ushort)ModContent.TileType<LabDoor3TileClosed>()), false, 0, 0, -1, -1);
 			NetMessage.SendObjectPlacment(-1, origin.X + 109, origin.Y + 35, (int)((ushort)ModContent.TileType<LabDoor3TileClosed>()), 0, 0, -1, -1);
+			WorldGen.PlaceObject(origin.X + 143, origin.Y + 34, (int)((ushort)ModContent.TileType<LabKeycardDoorClosed>()), false, 0, 0, -1, -1);
+			NetMessage.SendObjectPlacment(-1, origin.X + 143, origin.Y + 34, (int)((ushort)ModContent.TileType<LabKeycardDoorClosed>()), 0, 0, -1, -1);
+			WorldGen.PlaceObject(origin.X + 196, origin.Y + 28, (int)((ushort)ModContent.TileType<LabKeycardDoorClosed>()), false, 0, 0, -1, -1);
+			NetMessage.SendObjectPlacment(-1, origin.X + 196, origin.Y + 28, (int)((ushort)ModContent.TileType<LabKeycardDoorClosed>()), 0, 0, -1, -1);
+			WorldGen.PlaceObject(origin.X + 29, origin.Y + 71, (int)((ushort)ModContent.TileType<LabKeycardDoorClosed>()), false, 0, 0, -1, -1);
+			NetMessage.SendObjectPlacment(-1, origin.X + 29, origin.Y + 71, (int)((ushort)ModContent.TileType<LabKeycardDoorClosed>()), 0, 0, -1, -1);
+			WorldGen.PlaceObject(origin.X + 29, origin.Y + 83, (int)((ushort)ModContent.TileType<LabKeycardDoorClosed>()), false, 0, 0, -1, -1);
+			NetMessage.SendObjectPlacment(-1, origin.X + 29, origin.Y + 83, (int)((ushort)ModContent.TileType<LabKeycardDoorClosed>()), 0, 0, -1, -1);
+			WorldGen.PlaceObject(origin.X + 227, origin.Y + 84, (int)((ushort)ModContent.TileType<LabKeycardDoorClosed>()), false, 0, 0, -1, -1);
+			NetMessage.SendObjectPlacment(-1, origin.X + 227, origin.Y + 84, (int)((ushort)ModContent.TileType<LabKeycardDoorClosed>()), 0, 0, -1, -1);
+			WorldGen.PlaceObject(origin.X + 194, origin.Y + 130, (int)((ushort)ModContent.TileType<LabKeycardDoorClosed>()), false, 0, 0, -1, -1);
+			NetMessage.SendObjectPlacment(-1, origin.X + 194, origin.Y + 130, (int)((ushort)ModContent.TileType<LabKeycardDoorClosed>()), 0, 0, -1, -1);
 			WorldGen.PlaceObject(origin.X + 156, origin.Y + 7, (int)((ushort)ModContent.TileType<LabBossDoorTile1H>()), false, 0, 0, -1, -1);
 			NetMessage.SendObjectPlacment(-1, origin.X + 156, origin.Y + 7, (int)((ushort)ModContent.TileType<LabBossDoorTile1H>()), 0, 0, -1, -1);
 			WorldGen.PlaceObject(origin.X + 62, origin.Y + 72, (int)((ushort)ModContent.TileType<LabBossDoorTile1>()), false, 0, 0, -1, -1);
@@ -133,8 +154,8 @@ namespace Redemption.WorldGeneration
 			NetMessage.SendObjectPlacment(-1, origin.X + 118, origin.Y + 14, (int)((ushort)ModContent.TileType<IntercomTile>()), 0, 0, -1, -1);
 			WorldGen.PlaceObject(origin.X + 121, origin.Y + 14, (int)((ushort)ModContent.TileType<LabFanTile1>()), false, 0, 0, -1, -1);
 			NetMessage.SendObjectPlacment(-1, origin.X + 121, origin.Y + 14, (int)((ushort)ModContent.TileType<LabFanTile1>()), 0, 0, -1, -1);
-			WorldGen.PlaceObject(origin.X + 189, origin.Y + 13, (int)((ushort)ModContent.TileType<LabFanTile1>()), false, 0, 0, -1, -1);
-			NetMessage.SendObjectPlacment(-1, origin.X + 189, origin.Y + 13, (int)((ushort)ModContent.TileType<LabFanTile1>()), 0, 0, -1, -1);
+			WorldGen.PlaceObject(origin.X + 188, origin.Y + 13, (int)((ushort)ModContent.TileType<LabFanTile1>()), false, 0, 0, -1, -1);
+			NetMessage.SendObjectPlacment(-1, origin.X + 188, origin.Y + 13, (int)((ushort)ModContent.TileType<LabFanTile1>()), 0, 0, -1, -1);
 			WorldGen.PlaceObject(origin.X + 122, origin.Y + 21, (int)((ushort)ModContent.TileType<LabWorkbenchTile>()), false, 0, 0, -1, -1);
 			NetMessage.SendObjectPlacment(-1, origin.X + 122, origin.Y + 21, (int)((ushort)ModContent.TileType<LabWorkbenchTile>()), 0, 0, -1, -1);
 			WorldGen.PlaceObject(origin.X + 124, origin.Y + 20, (int)((ushort)ModContent.TileType<LabReceptionCouchTile>()), false, 0, 0, -1, -1);
@@ -193,6 +214,8 @@ namespace Redemption.WorldGeneration
 			NetMessage.SendObjectPlacment(-1, origin.X + 164, origin.Y + 25, (int)((ushort)ModContent.TileType<CeilingMonitorTile>()), 0, 0, -1, -1);
 			WorldGen.PlaceObject(origin.X + 187, origin.Y + 28, (int)((ushort)ModContent.TileType<LabDoorBrokenTile>()), false, 0, 0, -1, -1);
 			NetMessage.SendObjectPlacment(-1, origin.X + 187, origin.Y + 28, (int)((ushort)ModContent.TileType<LabDoorBrokenTile>()), 0, 0, -1, -1);
+			WorldGen.PlaceObject(origin.X + 166, origin.Y + 37, (int)((ushort)ModContent.TileType<LabPhotoTile>()), false, 0, 0, -1, -1);
+			NetMessage.SendObjectPlacment(-1, origin.X + 166, origin.Y + 37, (int)((ushort)ModContent.TileType<LabPhotoTile>()), 0, 0, -1, -1);
 			WorldGen.PlaceObject(origin.X + 114, origin.Y + 33, (int)((ushort)ModContent.TileType<LabCabinet>()), false, 0, 0, -1, -1);
 			NetMessage.SendObjectPlacment(-1, origin.X + 114, origin.Y + 33, (int)((ushort)ModContent.TileType<LabCabinet>()), 0, 0, -1, -1);
 			WorldGen.PlaceObject(origin.X + 131, origin.Y + 32, (int)((ushort)ModContent.TileType<LabFanTile1>()), false, 0, 0, -1, -1);
@@ -524,7 +547,7 @@ namespace Redemption.WorldGeneration
 
 		public void LabChest(int x, int y)
 		{
-			Redemption inst = Redemption.inst;
+			Redemption inst = Redemption.Inst;
 			int PlacementSuccess = WorldGen.PlaceChest(x, y, (ushort)ModContent.TileType<LabChestTileLocked>(), false, 0);
 			int[] LabChestLoot = new int[]
 			{
@@ -586,7 +609,7 @@ namespace Redemption.WorldGeneration
 
 		public void DeadWoodChest(int x, int y)
 		{
-			Redemption inst = Redemption.inst;
+			Redemption inst = Redemption.Inst;
 			int PlacementSuccess = WorldGen.PlaceChest(x, y, (ushort)ModContent.TileType<DeadWoodChestTile>(), false, 0);
 			int[] LabChestLoot = new int[]
 			{
@@ -623,7 +646,6 @@ namespace Redemption.WorldGeneration
 					ModContent.ItemType<GasMask>(),
 					ModContent.ItemType<PlasmaShield>(),
 					ModContent.ItemType<MiniNuke>(),
-					ModContent.ItemType<XenoEye>(),
 					ModContent.ItemType<PlasmaSaber>(),
 					ModContent.ItemType<RadioactiveLauncher>(),
 					ModContent.ItemType<SludgeSpoon>()
@@ -642,7 +664,7 @@ namespace Redemption.WorldGeneration
 
 		public void SpecialLabChest(int x, int y)
 		{
-			Redemption inst = Redemption.inst;
+			Redemption inst = Redemption.Inst;
 			int PlacementSuccess = WorldGen.PlaceChest(x, y, (ushort)ModContent.TileType<LabChestTileLocked2>(), false, 0);
 			int[] LabChestLoot = new int[]
 			{

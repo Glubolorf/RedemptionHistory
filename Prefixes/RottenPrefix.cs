@@ -1,5 +1,4 @@
 ﻿using System;
-using Redemption.Items;
 using Terraria;
 using Terraria.ModLoader;
 

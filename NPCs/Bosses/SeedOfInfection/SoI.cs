@@ -1,11 +1,12 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Items;
-using Redemption.Items.Armor;
-using Redemption.Items.DruidDamageClass.SeedBags;
-using Redemption.Items.Placeable;
-using Redemption.Items.Weapons;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Placeable.Trophies;
+using Redemption.Items.Usable;
+using Redemption.Items.Weapons.PreHM.Druid.Seedbags;
+using Redemption.Items.Weapons.PreHM.Melee;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -48,7 +49,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 		public override void BossLoot(ref string name, ref int potionType)
 		{
 			potionType = 188;
-			if (!RedeWorld.downedXenomiteCrystal)
+			if (!RedeWorld.downedSoI)
 			{
 				for (int i = 0; i < 255; i++)
 				{
@@ -66,8 +67,8 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 					}
 				}
 			}
-			RedeWorld.downedXenomiteCrystal = true;
-			if (Main.netMode == 2)
+			RedeWorld.downedSoI = true;
+			if (Main.netMode != 0)
 			{
 				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 			}
@@ -114,7 +115,10 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 		{
 			if (!this.title)
 			{
-				Redemption.ShowTitle(base.npc, 12);
+				if (!Main.dedServ)
+				{
+					Redemption.Inst.TitleCardUIElement.DisplayTitle("Seed of Infection", 60, 90, 0.8f, 0, new Color?(Color.ForestGreen), null, true);
+				}
 				this.title = true;
 			}
 			Player player = Main.player[base.npc.target];
@@ -187,7 +191,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 				base.npc.ai[0] = 1f;
 				base.npc.ai[2] = 0f;
 				this.chargeSpeed = 0f;
-				base.npc.ai[1] = (float)Main.rand.Next(8);
+				base.npc.ai[1] = (float)(Main.expertMode ? Main.rand.Next(8) : Main.rand.Next(1, 8));
 				base.npc.netUpdate = true;
 				return;
 			}
@@ -201,21 +205,53 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 					if (base.npc.ai[2] < 40f)
 					{
 						this.chargeSpeed += 0.1f;
-						base.npc.velocity = -base.npc.DirectionTo(player.Center) * this.chargeSpeed;
+						base.npc.velocity = -base.npc.DirectionTo(this.target) * this.chargeSpeed;
+					}
+					if (base.npc.ai[2] <= 30f)
+					{
+						this.target = player.Center;
 					}
 					if (base.npc.ai[2] == 40f)
 					{
-						this.Dash(30);
+						Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
+						int dustType = 74;
+						int pieCut = 16;
+						for (int j = 0; j < pieCut; j++)
+						{
+							int dustID = Dust.NewDust(new Vector2(base.npc.Center.X - 1f, base.npc.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 3f);
+							Main.dust[dustID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(8f, 0f), (float)j / (float)pieCut * 6.28f);
+							Main.dust[dustID].noLight = false;
+							Main.dust[dustID].noGravity = true;
+						}
+						base.npc.ai[3] = 2f;
+						this.chargeSpeed = 0f;
+						base.npc.velocity = base.npc.DirectionTo(this.target) * 30f;
 					}
 					if (base.npc.ai[2] > 60f && base.npc.ai[2] < 100f)
 					{
 						base.npc.ai[3] = 0f;
 						this.chargeSpeed += 0.1f;
-						base.npc.velocity = -base.npc.DirectionTo(player.Center) * this.chargeSpeed;
+						base.npc.velocity = -base.npc.DirectionTo(this.target) * this.chargeSpeed;
+					}
+					if (base.npc.ai[2] <= 90f)
+					{
+						this.target = player.Center;
 					}
 					if (base.npc.ai[2] == 100f)
 					{
-						this.Dash(30);
+						Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
+						int dustType2 = 74;
+						int pieCut2 = 16;
+						for (int k = 0; k < pieCut2; k++)
+						{
+							int dustID2 = Dust.NewDust(new Vector2(base.npc.Center.X - 1f, base.npc.Center.Y - 1f), 2, 2, dustType2, 0f, 0f, 100, Color.White, 3f);
+							Main.dust[dustID2].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(8f, 0f), (float)k / (float)pieCut2 * 6.28f);
+							Main.dust[dustID2].noLight = false;
+							Main.dust[dustID2].noGravity = true;
+						}
+						base.npc.ai[3] = 2f;
+						this.chargeSpeed = 0f;
+						base.npc.velocity = base.npc.DirectionTo(this.target) * 30f;
 					}
 					if (base.npc.ai[2] >= 120f)
 					{
@@ -229,7 +265,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 				case 1:
 					this.chargeSpeed = 5f;
 					base.npc.rotation += 0.09f;
-					this.MoveToVector2(HighPos);
+					base.npc.MoveToVector2(HighPos, this.chargeSpeed);
 					base.npc.ai[2] += 1f;
 					if (base.npc.ai[2] == 80f)
 					{
@@ -266,7 +302,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 					base.npc.rotation += 0.09f;
 					if (base.npc.ai[2] < 70f)
 					{
-						this.MoveToVector2(TopPos);
+						base.npc.MoveToVector2(TopPos, this.chargeSpeed);
 					}
 					else
 					{
@@ -277,7 +313,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 					{
 						if (base.npc.life < (int)((float)base.npc.lifeMax * 0.5f))
 						{
-							for (int j = 0; j < 12; j++)
+							for (int l = 0; l < 12; l++)
 							{
 								int p = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), ModContent.ProjectileType<ShardShot2>(), 12, 3f, 255, 0f, 0f);
 								Main.projectile[p].netUpdate = true;
@@ -285,7 +321,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 						}
 						else
 						{
-							for (int k = 0; k < 8; k++)
+							for (int m = 0; m < 8; m++)
 							{
 								int p2 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), ModContent.ProjectileType<ShardShot2>(), 12, 3f, 255, 0f, 0f);
 								Main.projectile[p2].netUpdate = true;
@@ -311,7 +347,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 					}
 					this.chargeSpeed = 9f;
 					base.npc.rotation += 0.09f;
-					this.MoveToVector2(FarPos);
+					base.npc.MoveToVector2(FarPos, this.chargeSpeed);
 					base.npc.ai[2] += 1f;
 					if (base.npc.ai[2] == 100f || base.npc.ai[2] == 150f || base.npc.ai[2] == 200f)
 					{
@@ -473,7 +509,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 						base.npc.rotation += 0.09f;
 						if (base.npc.ai[2] < 70f)
 						{
-							this.MoveToVector2(TopPos);
+							base.npc.MoveToVector2(TopPos, this.chargeSpeed);
 						}
 						else
 						{
@@ -540,32 +576,6 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 			}
 		}
 
-		public void MoveToVector2(Vector2 p)
-		{
-			float moveSpeed = this.chargeSpeed;
-			float velMultiplier = 1f;
-			Vector2 dist = p - base.npc.Center;
-			float length = (dist == Vector2.Zero) ? 0f : dist.Length();
-			if (length < moveSpeed)
-			{
-				velMultiplier = MathHelper.Lerp(0f, 1f, length / moveSpeed);
-			}
-			if (base.npc.ai[1] != 0f)
-			{
-				if (length < 100f)
-				{
-					moveSpeed *= 0.5f;
-				}
-				if (length < 50f)
-				{
-					moveSpeed *= 0.5f;
-				}
-			}
-			base.npc.velocity = ((length == 0f) ? Vector2.Zero : Vector2.Normalize(dist));
-			base.npc.velocity *= moveSpeed;
-			base.npc.velocity *= velMultiplier;
-		}
-
 		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
 		{
 			target.noKnockback = true;
@@ -574,39 +584,46 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D eyeTexture = base.mod.GetTexture("NPCs/Bosses/SeedOfInfection/SoI_Eye");
 			Texture2D freakOutAni = base.mod.GetTexture("NPCs/Bosses/SeedOfInfection/SoI_FreakingOut");
-			int spriteDirection = base.npc.spriteDirection;
+			SpriteEffects effects = (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 			if (base.npc.ai[3] == 2f)
 			{
 				for (int i = this.oldPos.Length - 1; i >= 0; i--)
 				{
+					float oldrotary = (base.npc.spriteDirection == -1) ? this.oldrot[i] : (-this.oldrot[i]);
 					float alpha = 1f - (float)(i + 1) / (float)(this.oldPos.Length + 2);
-					spriteBatch.Draw(texture, this.oldPos[i] - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor * (0.5f * alpha), this.oldrot[i], Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+					spriteBatch.Draw(texture, this.oldPos[i] - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor * (0.5f * alpha), oldrotary, Utils.Size(base.npc.frame) / 2f, base.npc.scale, effects, 0f);
+					spriteBatch.Draw(eyeTexture, this.oldPos[i] - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor * (0.5f * alpha), 0f, Utils.Size(base.npc.frame) / 2f, base.npc.scale, effects, 0f);
 				}
 			}
 			if (base.npc.ai[3] != 1f)
 			{
-				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor * ((float)(255 - base.npc.alpha) / 255f), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				float rotary = (base.npc.spriteDirection == -1) ? base.npc.rotation : (-base.npc.rotation);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor * ((float)(255 - base.npc.alpha) / 255f), rotary, Utils.Size(base.npc.frame) / 2f, base.npc.scale, effects, 0f);
+				spriteBatch.Draw(eyeTexture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor * ((float)(255 - base.npc.alpha) / 255f), 0f, Utils.Size(base.npc.frame) / 2f, base.npc.scale, effects, 0f);
 			}
 			Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
 			if (base.npc.ai[3] == 1f)
 			{
 				int num214 = freakOutAni.Height / 6;
 				int y6 = num214 * this.freakOutFrame;
-				Main.spriteBatch.Draw(freakOutAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, freakOutAni.Width, num214)), drawColor * ((float)(255 - base.npc.alpha) / 255f), base.npc.rotation, new Vector2((float)freakOutAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				Main.spriteBatch.Draw(freakOutAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, freakOutAni.Width, num214)), drawColor * ((float)(255 - base.npc.alpha) / 255f), base.npc.rotation, new Vector2((float)freakOutAni.Width / 2f, (float)num214 / 2f), base.npc.scale, effects, 0f);
 			}
 			return false;
 		}
 
 		private Vector2[] oldPos = new Vector2[3];
 
-		private float[] oldrot = new float[3];
+		private readonly float[] oldrot = new float[3];
 
 		public int freakOutFrame;
 
 		public int frameCounters;
 
 		public float chargeSpeed;
+
+		public Vector2 target;
 
 		private bool title;
 	}

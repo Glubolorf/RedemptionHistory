@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Redemption.Items;
+using Redemption.Items.Materials.HM;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;

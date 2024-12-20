@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.OmegaOblit
 {
+	[AutoloadBossHead]
 	public class OOShield : ModNPC
 	{
 		public override string Texture
@@ -28,6 +29,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 
 		public override void SetDefaults()
 		{
+			base.npc.scale = 1f;
 			base.npc.width = 48;
 			base.npc.height = 48;
 			base.npc.damage = 120;
@@ -60,7 +62,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 			NPC host = Main.npc[(int)base.npc.ai[0]];
 			base.npc.position.X = host.Center.X - (float)((int)(Math.Cos(rad) * this.dist)) - (float)(base.npc.width / 2);
 			base.npc.position.Y = host.Center.Y - (float)((int)(Math.Sin(rad) * this.dist)) - (float)(base.npc.height / 2);
-			base.npc.ai[1] += 0.2f;
+			base.npc.ai[1] += 0.8f;
 			if (host.life <= 0 || !host.active || host.type != ModContent.NPCType<OO>())
 			{
 				base.npc.active = false;
@@ -91,6 +93,12 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 				hostY *= rootXY;
 			}
 			base.npc.rotation = (float)Math.Atan2((double)hostY, (double)hostX) + 3.14f + MathHelper.ToRadians(-90f);
+		}
+
+		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+		{
+			NPC host = Main.npc[(int)base.npc.ai[0]];
+			return host.ai[1] != 10f || host.ai[0] != 5f;
 		}
 
 		public override void HitEffect(int hitDirection, double damage)

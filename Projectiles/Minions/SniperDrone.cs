@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -50,9 +49,8 @@ namespace Redemption.Projectiles.Minions
 			}
 			Player player = Main.player[base.projectile.owner];
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
-			if (player.dead || !player.HasBuff(ModContent.BuffType<SniperDroneBuff>()))
+			if (player.dead || !modPlayer.girusSniperDrone)
 			{
-				modPlayer.girusSniperDrone = false;
 				base.projectile.Kill();
 			}
 			if (modPlayer.girusSniperDrone)
@@ -72,7 +70,7 @@ namespace Redemption.Projectiles.Minions
 			}
 			base.projectile.rotation = Utils.ToRotation(Main.MouseWorld - base.projectile.Center);
 			base.projectile.localAI[1] += 1f;
-			if (RedeHelper.ClosestNPC(ref this.target, 1000f, base.projectile.Center, false, player.MinionAttackTargetNPC) && base.projectile.localAI[1] % 40f == 0f)
+			if (RedeHelper.ClosestNPC(ref this.target, 1000f, base.projectile.Center, false, player.MinionAttackTargetNPC, null) && base.projectile.localAI[1] % 40f == 0f)
 			{
 				this.Shoot();
 			}

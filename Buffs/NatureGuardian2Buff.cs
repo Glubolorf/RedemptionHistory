@@ -1,6 +1,5 @@
 ﻿using System;
-using Redemption.Items.DruidDamageClass;
-using Redemption.Projectiles.DruidProjectiles.Stave.Guardians;
+using Redemption.Projectiles.Druid.Stave.Guardians;
 using Terraria;
 using Terraria.ModLoader;
 

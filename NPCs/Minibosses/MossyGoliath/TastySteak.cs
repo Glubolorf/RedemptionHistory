@@ -1,5 +1,4 @@
 ﻿using System;
-using Redemption.Items.DruidDamageClass.SeedBags;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

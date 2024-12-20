@@ -2,31 +2,51 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Redemption.Items;
-using Redemption.Items.Armor;
-using Redemption.Items.Armor.Costumes;
-using Redemption.Items.Armor.PostML;
-using Redemption.Items.Datalogs;
-using Redemption.Items.DruidDamageClass;
-using Redemption.Items.DruidDamageClass.SeedBags;
-using Redemption.Items.DruidDamageClass.v08;
-using Redemption.Items.LabThings;
-using Redemption.Items.Placeable;
-using Redemption.Items.Weapons;
-using Redemption.Items.Weapons.v08;
-using Redemption.NPCs;
+using Redemption.Items.Accessories.HM;
+using Redemption.Items.Accessories.PostML;
+using Redemption.Items.Accessories.PreHM;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Lore;
+using Redemption.Items.Materials.HM;
+using Redemption.Items.Materials.PostML;
+using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Placeable.MusicBoxes;
+using Redemption.Items.Placeable.Tiles;
+using Redemption.Items.Placeable.Trophies;
+using Redemption.Items.Usable;
+using Redemption.Items.Usable.Potions;
+using Redemption.Items.Usable.Summons;
+using Redemption.Items.Weapons.HM.Magic;
+using Redemption.Items.Weapons.HM.Melee;
+using Redemption.Items.Weapons.HM.Ranged;
+using Redemption.Items.Weapons.PostML.Druid.Seedbags;
+using Redemption.Items.Weapons.PostML.Druid.Staves;
+using Redemption.Items.Weapons.PostML.Magic;
+using Redemption.Items.Weapons.PostML.Melee;
+using Redemption.Items.Weapons.PostML.Ranged;
+using Redemption.Items.Weapons.PostML.Summon;
+using Redemption.Items.Weapons.PreHM.Druid.Seedbags;
+using Redemption.Items.Weapons.PreHM.Magic;
+using Redemption.Items.Weapons.PreHM.Melee;
+using Redemption.Items.Weapons.PreHM.Ranged;
+using Redemption.Items.Weapons.PreHM.Summon;
 using Redemption.NPCs.Bosses;
 using Redemption.NPCs.Bosses.EaglecrestGolem;
-using Redemption.NPCs.Bosses.InfectedEye;
-using Redemption.NPCs.Bosses.KingSlayerIII;
-using Redemption.NPCs.Bosses.Nebuleus;
+using Redemption.NPCs.Bosses.KSIII;
+using Redemption.NPCs.Bosses.Neb;
+using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.NPCs.Bosses.OmegaOblit;
 using Redemption.NPCs.Bosses.SeedOfInfection;
 using Redemption.NPCs.Bosses.TheKeeper;
 using Redemption.NPCs.Bosses.Thorn;
-using Redemption.NPCs.ChickenInvasion;
-using Redemption.NPCs.LabNPCs;
-using Redemption.NPCs.LabNPCs.New;
-using Redemption.NPCs.v08;
+using Redemption.NPCs.Bosses.VCleaver;
+using Redemption.NPCs.Bosses.Warden;
+using Redemption.NPCs.ChickenInv;
+using Redemption.NPCs.Critters;
+using Redemption.NPCs.Friendly;
+using Redemption.NPCs.Lab;
+using Redemption.NPCs.Minibosses;
+using Redemption.NPCs.Minibosses.SkullDigger;
 using Terraria.ModLoader;
 
 namespace Redemption.CrossMod
@@ -52,10 +72,174 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbSetTexture",
-					Redemption.inst.GetTexture("CrossMod/Healthbars/InfectionBarHead"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/InfectionBarBody"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/InfectionBarTail"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/ThornBarHead"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/ThornBarBody"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/ThornBarTail"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/BarFill")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetColours",
+					Color.LightGreen,
+					Color.LawnGreen,
+					Color.LawnGreen
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetMidBarOffset",
+					-30,
+					10
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetBossHeadCentre",
+					50,
+					32
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetFillDecoOffset",
+					4
+				});
+				yabhb.Call(new object[]
+				{
+					"hbFinishSingle",
+					Redemption.Inst.NPCType("Thorn")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbStart"
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetTexture",
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/ThornBarHead"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/ThornBarBody"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/ThornBarTail"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/BarFill")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetColours",
+					Color.LightGreen,
+					Color.LawnGreen,
+					Color.LawnGreen
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetMidBarOffset",
+					-30,
+					10
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetBossHeadCentre",
+					50,
+					32
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetFillDecoOffset",
+					4
+				});
+				yabhb.Call(new object[]
+				{
+					"hbFinishSingle",
+					Redemption.Inst.NPCType("ThornPZ")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbStart"
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetTexture",
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/EaglecrestBarHead"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/EaglecrestBarBody"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/EaglecrestBarTail"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/BarFill")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetColours",
+					Color.Orange,
+					Color.Orange,
+					Color.OrangeRed
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetMidBarOffset",
+					-30,
+					10
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetBossHeadCentre",
+					50,
+					32
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetFillDecoOffset",
+					4
+				});
+				yabhb.Call(new object[]
+				{
+					"hbFinishSingle",
+					Redemption.Inst.NPCType("EaglecrestGolem")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbStart"
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetTexture",
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/EaglecrestBarHead"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/EaglecrestBarBody"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/EaglecrestBarTail"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/BarFill")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetColours",
+					Color.Orange,
+					Color.Orange,
+					Color.OrangeRed
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetMidBarOffset",
+					-30,
+					10
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetBossHeadCentre",
+					50,
+					32
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetFillDecoOffset",
+					4
+				});
+				yabhb.Call(new object[]
+				{
+					"hbFinishSingle",
+					Redemption.Inst.NPCType("EaglecrestGolemPZ")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbStart"
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetTexture",
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/InfectionBarHead"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/InfectionBarBody"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/InfectionBarTail"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/BarFill")
 				});
 				yabhb.Call(new object[]
 				{
@@ -84,7 +268,7 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbFinishSingle",
-					Redemption.inst.NPCType("SoI")
+					Redemption.Inst.NPCType("SoI")
 				});
 				yabhb.Call(new object[]
 				{
@@ -93,10 +277,10 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbSetTexture",
-					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarHead"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarBody"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarTail"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/LabBarHead"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/LabBarBody"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/LabBarTail"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/BarFill")
 				});
 				yabhb.Call(new object[]
 				{
@@ -125,7 +309,7 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbFinishSingle",
-					Redemption.inst.NPCType("JanitorBot")
+					Redemption.Inst.NPCType("JanitorBot")
 				});
 				yabhb.Call(new object[]
 				{
@@ -134,10 +318,10 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbSetTexture",
-					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarHead"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarBody"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarTail"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/LabBarHead"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/LabBarBody"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/LabBarTail"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/BarFill")
 				});
 				yabhb.Call(new object[]
 				{
@@ -166,7 +350,7 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbFinishSingle",
-					Redemption.inst.NPCType("Stage3Scientist2")
+					Redemption.Inst.NPCType("Stage3Scientist2")
 				});
 				yabhb.Call(new object[]
 				{
@@ -175,10 +359,10 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbSetTexture",
-					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarHead"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarBody"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarTail"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/LabBarHead"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/LabBarBody"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/LabBarTail"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/BarFill")
 				});
 				yabhb.Call(new object[]
 				{
@@ -207,7 +391,7 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbFinishSingle",
-					Redemption.inst.NPCType("IrradiatedBehemoth2")
+					Redemption.Inst.NPCType("IrradiatedBehemoth2")
 				});
 				yabhb.Call(new object[]
 				{
@@ -216,10 +400,10 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbSetTexture",
-					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarHead"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarBody"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarTail"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/LabBarHead"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/LabBarBody"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/LabBarTail"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/BarFill")
 				});
 				yabhb.Call(new object[]
 				{
@@ -248,7 +432,7 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbFinishSingle",
-					Redemption.inst.NPCType("Blisterface2")
+					Redemption.Inst.NPCType("Blisterface2")
 				});
 				yabhb.Call(new object[]
 				{
@@ -257,10 +441,10 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbSetTexture",
-					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarHead"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarBody"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarTail"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/LabBarHead"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/LabBarBody"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/LabBarTail"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/BarFill")
 				});
 				yabhb.Call(new object[]
 				{
@@ -289,7 +473,7 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbFinishSingle",
-					Redemption.inst.NPCType("TbotMiniboss")
+					Redemption.Inst.NPCType("TbotMiniboss")
 				});
 				yabhb.Call(new object[]
 				{
@@ -298,10 +482,10 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbSetTexture",
-					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarHead"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarBody"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarTail"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/LabBarHead"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/LabBarBody"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/LabBarTail"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/BarFill")
 				});
 				yabhb.Call(new object[]
 				{
@@ -330,8 +514,8 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbFinishPhases",
-					Redemption.inst.NPCType("MACEProjectJawA"),
-					Redemption.inst.NPCType("MACEProjectHeadA")
+					Redemption.Inst.NPCType("MACEProjectJawA"),
+					Redemption.Inst.NPCType("MACEProjectHeadA")
 				});
 				yabhb.Call(new object[]
 				{
@@ -340,10 +524,10 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbSetTexture",
-					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarHead"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarBody"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/LabBarTail"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/LabBarHead"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/LabBarBody"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/LabBarTail"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/BarFill")
 				});
 				yabhb.Call(new object[]
 				{
@@ -372,7 +556,7 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbFinishSingle",
-					Redemption.inst.NPCType("PZ2BodyCover")
+					Redemption.Inst.NPCType("PZ2BodyCover")
 				});
 				yabhb.Call(new object[]
 				{
@@ -381,51 +565,10 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbSetTexture",
-					Redemption.inst.GetTexture("CrossMod/Healthbars/InfectionBarHead"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/InfectionBarBody"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/InfectionBarTail"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
-				});
-				yabhb.Call(new object[]
-				{
-					"hbSetColours",
-					Color.ForestGreen,
-					Color.OliveDrab,
-					Color.Olive
-				});
-				yabhb.Call(new object[]
-				{
-					"hbSetMidBarOffset",
-					-30,
-					10
-				});
-				yabhb.Call(new object[]
-				{
-					"hbSetBossHeadCentre",
-					50,
-					32
-				});
-				yabhb.Call(new object[]
-				{
-					"hbSetFillDecoOffset",
-					4
-				});
-				yabhb.Call(new object[]
-				{
-					"hbFinishSingle",
-					Redemption.inst.NPCType("InfectedEye")
-				});
-				yabhb.Call(new object[]
-				{
-					"hbStart"
-				});
-				yabhb.Call(new object[]
-				{
-					"hbSetTexture",
-					Redemption.inst.GetTexture("CrossMod/Healthbars/InfectionBarHead"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/InfectionBarBody"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/InfectionBarTail"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/InfectionBarHead"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/InfectionBarBody"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/InfectionBarTail"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/BarFill")
 				});
 				yabhb.Call(new object[]
 				{
@@ -454,7 +597,7 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbFinishSingle",
-					Redemption.inst.NPCType("PZ2Fight")
+					Redemption.Inst.NPCType("PZ2Fight")
 				});
 				yabhb.Call(new object[]
 				{
@@ -463,10 +606,10 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbSetTexture",
-					Redemption.inst.GetTexture("CrossMod/Healthbars/VlitchBarHead"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/VlitchBarBody"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/VlitchBarTail"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/VlitchBarHead"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/VlitchBarBody"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/VlitchBarTail"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/BarFill")
 				});
 				yabhb.Call(new object[]
 				{
@@ -484,7 +627,7 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbSetBossHeadCentre",
-					50,
+					60,
 					32
 				});
 				yabhb.Call(new object[]
@@ -495,7 +638,7 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbFinishSingle",
-					Redemption.inst.NPCType("VlitchCleaver")
+					Redemption.Inst.NPCType("VlitchCleaver")
 				});
 				yabhb.Call(new object[]
 				{
@@ -504,10 +647,10 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbSetTexture",
-					Redemption.inst.GetTexture("CrossMod/Healthbars/VlitchBarHead"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/VlitchBarBody"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/VlitchBarTail"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/VlitchBarHead"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/VlitchBarBody"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/VlitchBarTail"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/BarFill")
 				});
 				yabhb.Call(new object[]
 				{
@@ -525,7 +668,7 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbSetBossHeadCentre",
-					50,
+					60,
 					32
 				});
 				yabhb.Call(new object[]
@@ -536,7 +679,7 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbFinishSingle",
-					Redemption.inst.NPCType("VlitchWormHead")
+					Redemption.Inst.NPCType("VlitchWormHead")
 				});
 				yabhb.Call(new object[]
 				{
@@ -545,10 +688,10 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbSetTexture",
-					Redemption.inst.GetTexture("CrossMod/Healthbars/VlitchBarHead"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/VlitchBarBody"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/VlitchBarTail"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/VlitchBarHead"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/VlitchBarBody"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/VlitchBarTail"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/BarFill")
 				});
 				yabhb.Call(new object[]
 				{
@@ -566,7 +709,7 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbSetBossHeadCentre",
-					50,
+					60,
 					32
 				});
 				yabhb.Call(new object[]
@@ -577,7 +720,7 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbFinishSingle",
-					Redemption.inst.NPCType("OO")
+					Redemption.Inst.NPCType("OO")
 				});
 				yabhb.Call(new object[]
 				{
@@ -586,10 +729,10 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbSetTexture",
-					Redemption.inst.GetTexture("CrossMod/Healthbars/SlayerBarHead"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/SlayerBarBody"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/SlayerBarTail"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/SlayerBarHead"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/SlayerBarBody"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/SlayerBarTail"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/BarFill")
 				});
 				yabhb.Call(new object[]
 				{
@@ -618,7 +761,7 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbFinishSingle",
-					Redemption.inst.NPCType("KSEntrance")
+					Redemption.Inst.NPCType("KS3_Body")
 				});
 				yabhb.Call(new object[]
 				{
@@ -627,10 +770,10 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbSetTexture",
-					Redemption.inst.GetTexture("CrossMod/Healthbars/SlayerBarHead"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/SlayerBarBody"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/SlayerBarTail"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/SlayerBarHead"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/SlayerBarBody"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/SlayerBarTail"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/BarFill")
 				});
 				yabhb.Call(new object[]
 				{
@@ -659,7 +802,7 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbFinishSingle",
-					Redemption.inst.NPCType("KSEntranceClone")
+					Redemption.Inst.NPCType("KS3_Body_Clone")
 				});
 				yabhb.Call(new object[]
 				{
@@ -668,10 +811,10 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbSetTexture",
-					Redemption.inst.GetTexture("CrossMod/Healthbars/NebBarHead"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/NebBarBody"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/NebBarTail"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/NebBarHead"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/NebBarBody"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/NebBarTail"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/BarFill")
 				});
 				yabhb.Call(new object[]
 				{
@@ -700,7 +843,7 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbFinishSingle",
-					Redemption.inst.NPCType("Nebuleus")
+					Redemption.Inst.NPCType("NebP1")
 				});
 				yabhb.Call(new object[]
 				{
@@ -709,10 +852,10 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbSetTexture",
-					Redemption.inst.GetTexture("CrossMod/Healthbars/NebBarHead"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/NebBarBody"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/NebBarTail"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/NebBarHead"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/NebBarBody"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/NebBarTail"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/BarFill")
 				});
 				yabhb.Call(new object[]
 				{
@@ -741,7 +884,7 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbFinishSingle",
-					Redemption.inst.NPCType("BigNebuleus")
+					Redemption.Inst.NPCType("NebP2")
 				});
 				yabhb.Call(new object[]
 				{
@@ -750,10 +893,10 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbSetTexture",
-					Redemption.inst.GetTexture("CrossMod/Healthbars/NebBarHead"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/NebBarBody"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/NebBarTail"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/NebBarHead"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/NebBarBody"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/NebBarTail"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/BarFill")
 				});
 				yabhb.Call(new object[]
 				{
@@ -782,7 +925,7 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbFinishSingle",
-					Redemption.inst.NPCType("NebuleusClone")
+					Redemption.Inst.NPCType("NebP1_Clone")
 				});
 				yabhb.Call(new object[]
 				{
@@ -791,10 +934,10 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbSetTexture",
-					Redemption.inst.GetTexture("CrossMod/Healthbars/NebBarHead"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/NebBarBody"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/NebBarTail"),
-					Redemption.inst.GetTexture("CrossMod/Healthbars/BarFill")
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/NebBarHead"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/NebBarBody"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/NebBarTail"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/BarFill")
 				});
 				yabhb.Call(new object[]
 				{
@@ -823,62 +966,103 @@ namespace Redemption.CrossMod
 				yabhb.Call(new object[]
 				{
 					"hbFinishSingle",
-					Redemption.inst.NPCType("BigNebuleusClone")
+					Redemption.Inst.NPCType("NebP2_Clone")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbStart"
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetTexture",
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/WardenBarHead"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/WardenBarBody"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/WardenBarTail"),
+					Redemption.Inst.GetTexture("CrossMod/Healthbars/BarFill")
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetColours",
+					Color.GhostWhite,
+					Color.GhostWhite,
+					Color.GhostWhite
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetMidBarOffset",
+					-30,
+					10
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetBossHeadCentre",
+					50,
+					32
+				});
+				yabhb.Call(new object[]
+				{
+					"hbSetFillDecoOffset",
+					4
+				});
+				yabhb.Call(new object[]
+				{
+					"hbFinishSingle",
+					Redemption.Inst.NPCType("WardenIdle")
 				});
 				yabhb.Call(new object[]
 				{
 					"RegisterHealthBarMini",
-					Redemption.inst.NPCType("SunkenCaptain")
+					Redemption.Inst.NPCType("SunkenCaptain")
 				});
 				yabhb.Call(new object[]
 				{
 					"RegisterHealthBarMini",
-					Redemption.inst.NPCType("StrangePortal")
+					Redemption.Inst.NPCType("StrangePortal")
 				});
 				yabhb.Call(new object[]
 				{
 					"RegisterHealthBarMini",
-					Redemption.inst.NPCType("EvilJelly")
+					Redemption.Inst.NPCType("EvilJelly")
 				});
 				yabhb.Call(new object[]
 				{
 					"RegisterHealthBarMini",
-					Redemption.inst.NPCType("SkullDigger")
+					Redemption.Inst.NPCType("SkullDigger")
 				});
 				yabhb.Call(new object[]
 				{
 					"RegisterHealthBarMini",
-					Redemption.inst.NPCType("TrojanChicken")
+					Redemption.Inst.NPCType("TrojanChicken")
 				});
 				yabhb.Call(new object[]
 				{
 					"RegisterHealthBarMini",
-					Redemption.inst.NPCType("MossyGoliath")
+					Redemption.Inst.NPCType("MossyGoliath")
 				});
 				yabhb.Call(new object[]
 				{
 					"RegisterHealthBarMini",
-					Redemption.inst.NPCType("VlitchCore1")
+					Redemption.Inst.NPCType("VlitchCore1")
 				});
 				yabhb.Call(new object[]
 				{
 					"RegisterHealthBarMini",
-					Redemption.inst.NPCType("VlitchCore2")
+					Redemption.Inst.NPCType("VlitchCore2")
 				});
 				yabhb.Call(new object[]
 				{
 					"RegisterHealthBarMini",
-					Redemption.inst.NPCType("VlitchCore3")
+					Redemption.Inst.NPCType("VlitchCore3")
 				});
 				yabhb.Call(new object[]
 				{
 					"RegisterHealthBarMini",
-					Redemption.inst.NPCType("KingChicken")
+					Redemption.Inst.NPCType("KingChicken")
 				});
 				yabhb.Call(new object[]
 				{
 					"RegisterHealthBarMini",
-					Redemption.inst.NPCType("MansionWraith")
+					Redemption.Inst.NPCType("MansionWraith")
 				});
 			}
 		}
@@ -886,7 +1070,7 @@ namespace Redemption.CrossMod
 		private static void PerformBossChecklistSupport()
 		{
 			Mod bossChecklist = ModLoader.GetMod("BossChecklist");
-			Redemption mod = Redemption.inst;
+			Redemption mod = Redemption.Inst;
 			if (bossChecklist != null)
 			{
 				Mod mod2 = bossChecklist;
@@ -941,7 +1125,7 @@ namespace Redemption.CrossMod
 				array2[9] = "Wait by the sea on a full moon.";
 				array2[10] = "The captain vanishes in the mist";
 				array2[11] = "Redemption/CrossMod/BossChecklist/SunkenCaptain";
-				array2[12] = "Redemption/NPCs/SunkenCaptain_Head_Boss";
+				array2[12] = "Redemption/NPCs/Minibosses/SunkenCaptain_Head_Boss";
 				array2[13] = new Func<bool>(() => RedeWorld.downedSunkenCaptain);
 				mod3.Call(array2);
 				Mod mod4 = bossChecklist;
@@ -997,7 +1181,7 @@ namespace Redemption.CrossMod
 					ModContent.ItemType<RootTendril>(),
 					ModContent.ItemType<ThornSeedBag>()
 				};
-				array4[9] = "Use a [i:" + ModContent.ItemType<HeartOfTheThorns>() + "] at day. Can be crafted or found growing on grass.";
+				array4[9] = "Use a [i:" + ModContent.ItemType<HeartOfTheThorns>() + "] at day. Can be crafted or found on the surface.";
 				array4[11] = "Redemption/CrossMod/BossChecklist/Thorn";
 				array4[12] = "Redemption/NPCs/Bosses/Thorn/Thorn_Head_Boss";
 				mod5.Call(array4);
@@ -1005,10 +1189,10 @@ namespace Redemption.CrossMod
 				object[] array5 = new object[13];
 				array5[0] = "AddBoss";
 				array5[1] = 2.4f;
-				array5[2] = ModContent.NPCType<TheKeeper>();
+				array5[2] = ModContent.NPCType<Keeper>();
 				array5[3] = mod;
 				array5[4] = "The Keeper";
-				array5[5] = new Func<bool>(() => RedeWorld.downedTheKeeper);
+				array5[5] = new Func<bool>(() => RedeWorld.downedKeeper);
 				array5[6] = new List<int>
 				{
 					ModContent.ItemType<MysteriousTabletCorrupt>(),
@@ -1042,7 +1226,7 @@ namespace Redemption.CrossMod
 					"] at night."
 				});
 				array5[11] = "Redemption/CrossMod/BossChecklist/TheKeeper";
-				array5[12] = "Redemption/NPCs/Bosses/TheKeeper/TheKeeper_Head_Boss";
+				array5[12] = "Redemption/NPCs/Bosses/Keeper/Keeper_Head_Boss";
 				mod6.Call(array5);
 				Mod mod7 = bossChecklist;
 				object[] array6 = new object[14];
@@ -1063,7 +1247,7 @@ namespace Redemption.CrossMod
 				};
 				array6[9] = "Roams the caverns, seeking revenge...";
 				array6[11] = "Redemption/CrossMod/BossChecklist/SkullDigger";
-				array6[12] = "Redemption/NPCs/SkullDigger_Head_Boss";
+				array6[12] = "Redemption/NPCs/Minibosses/SkullDigger/SkullDigger_Head_Boss";
 				array6[13] = new Func<bool>(() => RedeWorld.downedSkullDigger);
 				mod7.Call(array6);
 				Mod mod8 = bossChecklist;
@@ -1073,7 +1257,7 @@ namespace Redemption.CrossMod
 				array7[2] = ModContent.NPCType<SoI>();
 				array7[3] = mod;
 				array7[4] = "Seed of Infection";
-				array7[5] = new Func<bool>(() => RedeWorld.downedXenomiteCrystal);
+				array7[5] = new Func<bool>(() => RedeWorld.downedSoI);
 				array7[6] = ModContent.ItemType<GeigerCounter>();
 				array7[7] = new List<int>
 				{
@@ -1119,42 +1303,10 @@ namespace Redemption.CrossMod
 				array8[12] = "Redemption/NPCs/Bosses/EaglecrestGolem/EaglecrestGolem_Head_Boss";
 				mod9.Call(array8);
 				Mod mod10 = bossChecklist;
-				object[] array9 = new object[14];
-				array9[0] = "AddBoss";
-				array9[1] = 6.25f;
-				array9[2] = ModContent.NPCType<InfectedEye>();
-				array9[3] = mod;
-				array9[4] = "Infected Eye";
-				array9[5] = new Func<bool>(() => RedeWorld.downedInfectedEye);
-				array9[6] = ModContent.ItemType<XenoEye>();
-				array9[7] = new List<int>
-				{
-					ModContent.ItemType<InfectedEyeTrophy>(),
-					ModContent.ItemType<TiedsMask>(),
-					ModContent.ItemType<TiedsSuit>(),
-					ModContent.ItemType<TiedsLeggings>(),
-					ModContent.ItemType<InfectedEyeBox>()
-				};
-				array9[8] = new List<int>
-				{
-					ModContent.ItemType<InfectedEyeBag>(),
-					ModContent.ItemType<AntiCrystallizer>(),
-					ModContent.ItemType<AntiXenomiteApplier>(),
-					ModContent.ItemType<XenomiteStaff>(),
-					ModContent.ItemType<TheInfectedEye>(),
-					ModContent.ItemType<InfectousJavelin>(),
-					ModContent.ItemType<Xenomite>()
-				};
-				array9[9] = "Use a [i:" + ModContent.ItemType<XenoEye>() + "] at night, requires the Seed of Infection to be defeated.";
-				array9[11] = "Redemption/CrossMod/BossChecklist/InfectedEye";
-				array9[12] = "Redemption/NPCs/Bosses/InfectedEye/InfectedEye_Head_Boss";
-				array9[13] = new Func<bool>(() => RedeWorld.downedXenomiteCrystal);
-				mod10.Call(array9);
-				Mod mod11 = bossChecklist;
-				object[] array10 = new object[13];
-				array10[0] = "AddEvent";
-				array10[1] = 9.1f;
-				array10[2] = new List<int>
+				object[] array9 = new object[13];
+				array9[0] = "AddEvent";
+				array9[1] = 9.1f;
+				array9[2] = new List<int>
 				{
 					ModContent.NPCType<InfectionHive>(),
 					ModContent.NPCType<SludgyBoi2>(),
@@ -1164,11 +1316,11 @@ namespace Redemption.CrossMod
 					ModContent.NPCType<Stage3Scientist2>(),
 					ModContent.NPCType<IrradiatedBehemoth2>()
 				};
-				array10[3] = mod;
-				array10[4] = "The Abandoned Lab";
-				array10[5] = new Func<bool>(() => RedeWorld.downedIBehemoth);
-				array10[6] = ModContent.ItemType<LabHelpMessage>();
-				array10[7] = new List<int>
+				array9[3] = mod;
+				array9[4] = "The Abandoned Lab";
+				array9[5] = new Func<bool>(() => RedeWorld.downedIBehemoth);
+				array9[6] = ModContent.ItemType<LabHelpMessage>();
+				array9[7] = new List<int>
 				{
 					ModContent.ItemType<Crowbar>(),
 					ModContent.ItemType<HazmatSuit>(),
@@ -1180,7 +1332,7 @@ namespace Redemption.CrossMod
 					ModContent.ItemType<LabMusicBox>(),
 					ModContent.ItemType<LabBossMusicBox>()
 				};
-				array10[8] = new List<int>
+				array9[8] = new List<int>
 				{
 					ModContent.ItemType<XenomiteShard>(),
 					ModContent.ItemType<RadiationPill>(),
@@ -1201,29 +1353,28 @@ namespace Redemption.CrossMod
 					ModContent.ItemType<PlasmaShield>(),
 					ModContent.ItemType<PlasmaSaber>(),
 					ModContent.ItemType<MiniNuke>(),
-					ModContent.ItemType<XenoEye>(),
 					ModContent.ItemType<RadioactiveLauncher>(),
 					ModContent.ItemType<SludgeSpoon>()
 				};
-				array10[9] = "Find the Abandoned Lab far below the surface, defeat the first 3 minibosses within. Requires all mech bosses to be defeated.";
-				array10[11] = "Redemption/CrossMod/BossChecklist/Lab";
-				mod11.Call(array10);
-				Mod mod12 = bossChecklist;
-				object[] array11 = new object[13];
-				array11[0] = "AddBoss";
-				array11[1] = 9.99999f;
-				array11[2] = ModContent.NPCType<KSEntrance>();
-				array11[3] = mod;
-				array11[4] = "King Slayer III";
-				array11[5] = new Func<bool>(() => RedeWorld.downedSlayer);
-				array11[6] = ModContent.ItemType<KingSummon>();
-				array11[7] = new List<int>
+				array9[9] = "Find the Abandoned Lab far below the surface, defeat the first 3 minibosses within. Requires all mech bosses to be defeated.";
+				array9[11] = "Redemption/CrossMod/BossChecklist/Lab";
+				mod10.Call(array9);
+				Mod mod11 = bossChecklist;
+				object[] array10 = new object[13];
+				array10[0] = "AddBoss";
+				array10[1] = 9.99999f;
+				array10[2] = ModContent.NPCType<KS3_Body>();
+				array10[3] = mod;
+				array10[4] = "King Slayer III";
+				array10[5] = new Func<bool>(() => RedeWorld.downedSlayer);
+				array10[6] = ModContent.ItemType<KingSummon>();
+				array10[7] = new List<int>
 				{
 					ModContent.ItemType<SlayerTrophy>(),
 					ModContent.ItemType<KingSlayerMask>(),
 					ModContent.ItemType<KSBox>()
 				};
-				array11[8] = new List<int>
+				array10[8] = new List<int>
 				{
 					ModContent.ItemType<SlayerBag>(),
 					ModContent.ItemType<PocketShieldProjector>(),
@@ -1236,19 +1387,50 @@ namespace Redemption.CrossMod
 					ModContent.ItemType<Holokey>(),
 					ModContent.ItemType<CyberPlating>()
 				};
-				array11[9] = "Use a [i:" + ModContent.ItemType<KingSummon>() + "] at day.";
-				array11[11] = "Redemption/CrossMod/BossChecklist/KingSlayer";
-				array11[12] = "Redemption/NPCs/Bosses/KingSlayerIII/KSEntrance_Head_Boss";
+				array10[9] = "Use a [i:" + ModContent.ItemType<KingSummon>() + "] at day.";
+				array10[11] = "Redemption/CrossMod/BossChecklist/KingSlayer";
+				array10[12] = "Redemption/NPCs/Bosses/KSIII/KS3_Body_Head_Boss";
+				mod11.Call(array10);
+				Mod mod12 = bossChecklist;
+				object[] array11 = new object[14];
+				array11[0] = "AddBoss";
+				array11[1] = 11.5f;
+				array11[2] = ModContent.NPCType<VlitchCleaver>();
+				array11[3] = mod;
+				array11[4] = "1st Vlitch Overlord";
+				array11[5] = new Func<bool>(() => RedeWorld.downedVlitch1);
+				array11[6] = ModContent.ItemType<CorruptedHeroSword>();
+				array11[7] = new List<int>
+				{
+					ModContent.ItemType<VlitchTrophy>(),
+					ModContent.ItemType<GirusMask>(),
+					ModContent.ItemType<IntruderMask>(),
+					ModContent.ItemType<IntruderArmour>(),
+					ModContent.ItemType<IntruderPants>(),
+					ModContent.ItemType<VlitchBox>()
+				};
+				array11[8] = new List<int>
+				{
+					ModContent.ItemType<VlitchCleaverBag>(),
+					ModContent.ItemType<GirusDagger>(),
+					ModContent.ItemType<GirusLance>(),
+					ModContent.ItemType<CorruptedXenomite>(),
+					ModContent.ItemType<VlitchBattery>()
+				};
+				array11[9] = "Use a [i:" + ModContent.ItemType<CorruptedHeroSword>() + "] at night.";
+				array11[11] = "Redemption/CrossMod/BossChecklist/Overlord1";
+				array11[12] = "Redemption/NPCs/Bosses/VCleaver/VlitchCleaver_Head_Boss";
+				array11[13] = new Func<bool>(() => RedeWorld.downedSoI);
 				mod12.Call(array11);
 				Mod mod13 = bossChecklist;
 				object[] array12 = new object[14];
 				array12[0] = "AddBoss";
-				array12[1] = 11.5f;
-				array12[2] = ModContent.NPCType<VlitchCleaver>();
+				array12[1] = 11.9f;
+				array12[2] = ModContent.NPCType<VlitchWormHead>();
 				array12[3] = mod;
-				array12[4] = "1st Vlitch Overlord";
-				array12[5] = new Func<bool>(() => RedeWorld.downedVlitch1);
-				array12[6] = ModContent.ItemType<CorruptedHeroSword>();
+				array12[4] = "2nd Vlitch Overlord";
+				array12[5] = new Func<bool>(() => RedeWorld.downedVlitch2);
+				array12[6] = ModContent.ItemType<CorruptedWormMedallion>();
 				array12[7] = new List<int>
 				{
 					ModContent.ItemType<VlitchTrophy>(),
@@ -1260,37 +1442,6 @@ namespace Redemption.CrossMod
 				};
 				array12[8] = new List<int>
 				{
-					ModContent.ItemType<VlitchCleaverBag>(),
-					ModContent.ItemType<GirusDagger>(),
-					ModContent.ItemType<GirusLance>(),
-					ModContent.ItemType<CorruptedXenomite>(),
-					ModContent.ItemType<VlitchBattery>()
-				};
-				array12[9] = "Use a [i:" + ModContent.ItemType<CorruptedHeroSword>() + "] at night.";
-				array12[11] = "Redemption/CrossMod/BossChecklist/Overlord1";
-				array12[12] = "Redemption/NPCs/Bosses/VlitchCleaver_Head_Boss";
-				array12[13] = new Func<bool>(() => RedeWorld.downedXenomiteCrystal);
-				mod13.Call(array12);
-				Mod mod14 = bossChecklist;
-				object[] array13 = new object[14];
-				array13[0] = "AddBoss";
-				array13[1] = 11.9f;
-				array13[2] = ModContent.NPCType<VlitchWormHead>();
-				array13[3] = mod;
-				array13[4] = "2nd Vlitch Overlord";
-				array13[5] = new Func<bool>(() => RedeWorld.downedVlitch2);
-				array13[6] = ModContent.ItemType<CorruptedWormMedallion>();
-				array13[7] = new List<int>
-				{
-					ModContent.ItemType<VlitchTrophy>(),
-					ModContent.ItemType<GirusMask>(),
-					ModContent.ItemType<IntruderMask>(),
-					ModContent.ItemType<IntruderArmour>(),
-					ModContent.ItemType<IntruderPants>(),
-					ModContent.ItemType<VlitchBox>()
-				};
-				array13[8] = new List<int>
-				{
 					ModContent.ItemType<VlitchGigipedeBag>(),
 					ModContent.ItemType<MiniVlitchCoreItem>(),
 					ModContent.ItemType<CorruptedRocketLauncher>(),
@@ -1300,21 +1451,21 @@ namespace Redemption.CrossMod
 					ModContent.ItemType<CorruptedStarliteBar>(),
 					ModContent.ItemType<VlitchBattery>()
 				};
-				array13[9] = "Use a [i:" + ModContent.ItemType<CorruptedWormMedallion>() + "] at night.";
-				array13[11] = "Redemption/CrossMod/BossChecklist/Overlord2";
-				array13[12] = "Redemption/NPCs/Bosses/VlitchWormHead_Head_Boss";
-				array13[13] = new Func<bool>(() => RedeWorld.downedXenomiteCrystal);
-				mod14.Call(array13);
-				Mod mod15 = bossChecklist;
-				object[] array14 = new object[14];
-				array14[0] = "AddBoss";
-				array14[1] = 14.05f;
-				array14[2] = ModContent.NPCType<OO>();
-				array14[3] = mod;
-				array14[4] = "3rd Vlitch Overlord";
-				array14[5] = new Func<bool>(() => RedeWorld.downedVlitch3);
-				array14[6] = ModContent.ItemType<OmegaRadar>();
-				array14[7] = new List<int>
+				array12[9] = "Use a [i:" + ModContent.ItemType<CorruptedWormMedallion>() + "] at night.";
+				array12[11] = "Redemption/CrossMod/BossChecklist/Overlord2";
+				array12[12] = "Redemption/NPCs/Bosses/VlitchWormHead_Head_Boss";
+				array12[13] = new Func<bool>(() => RedeWorld.downedSoI);
+				mod13.Call(array12);
+				Mod mod14 = bossChecklist;
+				object[] array13 = new object[14];
+				array13[0] = "AddBoss";
+				array13[1] = 14.05f;
+				array13[2] = ModContent.NPCType<OO>();
+				array13[3] = mod;
+				array13[4] = "3rd Vlitch Overlord";
+				array13[5] = new Func<bool>(() => RedeWorld.downedVlitch3);
+				array13[6] = ModContent.ItemType<OmegaRadar>();
+				array13[7] = new List<int>
 				{
 					ModContent.ItemType<VlitchTrophy>(),
 					ModContent.ItemType<GirusMask>(),
@@ -1323,7 +1474,7 @@ namespace Redemption.CrossMod
 					ModContent.ItemType<IntruderPants>(),
 					ModContent.ItemType<VlitchBox2>()
 				};
-				array14[8] = new List<int>
+				array13[8] = new List<int>
 				{
 					ModContent.ItemType<OmegaOblitBag>(),
 					ModContent.ItemType<ObliterationDrive>(),
@@ -1334,20 +1485,20 @@ namespace Redemption.CrossMod
 					ModContent.ItemType<VlitchBattery>(),
 					ModContent.ItemType<OblitBrain>()
 				};
-				array14[9] = "Use an [i:" + ModContent.ItemType<OmegaRadar>() + "] at night.";
-				array14[11] = "Redemption/CrossMod/BossChecklist/Overlord3";
-				array14[12] = "Redemption/NPCs/Bosses/OmegaOblit/OO_Head_Boss";
-				array14[13] = new Func<bool>(() => RedeWorld.downedXenomiteCrystal);
-				mod15.Call(array14);
-				Mod mod16 = bossChecklist;
-				object[] array15 = new object[14];
-				array15[0] = "AddBoss";
-				array15[1] = 14.5f;
-				array15[2] = ModContent.NPCType<PZ2BodyCover>();
-				array15[3] = mod;
-				array15[4] = "Patient Zero";
-				array15[5] = new Func<bool>(() => RedeWorld.downedPatientZero);
-				array15[7] = new List<int>
+				array13[9] = "Use an [i:" + ModContent.ItemType<OmegaRadar>() + "] at night.";
+				array13[11] = "Redemption/CrossMod/BossChecklist/Overlord3";
+				array13[12] = "Redemption/NPCs/Bosses/OmegaOblit/OO_Head_Boss";
+				array13[13] = new Func<bool>(() => RedeWorld.downedSoI);
+				mod14.Call(array13);
+				Mod mod15 = bossChecklist;
+				object[] array14 = new object[14];
+				array14[0] = "AddBoss";
+				array14[1] = 14.5f;
+				array14[2] = ModContent.NPCType<PZ2BodyCover>();
+				array14[3] = mod;
+				array14[4] = "Patient Zero";
+				array14[5] = new Func<bool>(() => RedeWorld.downedPatientZero);
+				array14[7] = new List<int>
 				{
 					ModContent.ItemType<Keycard2>(),
 					ModContent.ItemType<NanoAxe>(),
@@ -1360,7 +1511,7 @@ namespace Redemption.CrossMod
 					ModContent.ItemType<FloppyDisk7_1>(),
 					ModContent.ItemType<PZMusicBox>()
 				};
-				array15[8] = new List<int>
+				array14[8] = new List<int>
 				{
 					ModContent.ItemType<PZBag>(),
 					ModContent.ItemType<HeartOfInfection>(),
@@ -1370,16 +1521,16 @@ namespace Redemption.CrossMod
 					ModContent.ItemType<MedicKit1>(),
 					ModContent.ItemType<BluePrints>()
 				};
-				array15[9] = "Use a lunar pickaxe to mine the hardened sludge in the Abandoned Lab to explore further. Beware what awaits beyond.";
-				array15[11] = "Redemption/CrossMod/BossChecklist/PatientZero";
-				array15[12] = "Redemption/NPCs/LabNPCs/New/PZ2Eyelid_Head_Boss";
-				array15[13] = new Func<bool>(() => RedeWorld.downedXenomiteCrystal);
-				mod16.Call(array15);
-				Mod mod17 = bossChecklist;
-				object[] array16 = new object[14];
-				array16[0] = "AddEvent";
-				array16[1] = 14.55f;
-				array16[2] = new List<int>
+				array14[9] = "Use a lunar pickaxe to mine the hardened sludge in the Abandoned Lab to explore further. Beware what awaits beyond.";
+				array14[11] = "Redemption/CrossMod/BossChecklist/PatientZero";
+				array14[12] = "Redemption/NPCs/Lab/PZ2Eyelid_Head_Boss";
+				array14[13] = new Func<bool>(() => RedeWorld.downedSoI);
+				mod15.Call(array14);
+				Mod mod16 = bossChecklist;
+				object[] array15 = new object[14];
+				array15[0] = "AddEvent";
+				array15[1] = 14.55f;
+				array15[2] = new List<int>
 				{
 					ModContent.NPCType<GreatChickenWarrior>(),
 					ModContent.NPCType<ChickenMan>(),
@@ -1393,16 +1544,16 @@ namespace Redemption.CrossMod
 					ModContent.NPCType<ChickmanChickromancer>(),
 					ModContent.NPCType<RoosterKing>()
 				};
-				array16[3] = mod;
-				array16[4] = "King Chicken's Royal Army";
-				array16[5] = new Func<bool>(() => RedeWorld.downedChickenInvPZ);
-				array16[6] = ModContent.ItemType<ChickenContract>();
-				array16[7] = new List<int>
+				array15[3] = mod;
+				array15[4] = "King Chicken's Royal Army";
+				array15[5] = new Func<bool>(() => RedeWorld.downedChickenInvPZ);
+				array15[6] = ModContent.ItemType<ChickenContract>();
+				array15[7] = new List<int>
 				{
 					ModContent.ItemType<KingRoosterMask>(),
 					ModContent.ItemType<ChickenInvasionBox>()
 				};
-				array16[8] = new List<int>
+				array15[8] = new List<int>
 				{
 					ModContent.ItemType<ChickenEgg>(),
 					ModContent.ItemType<ChickenMountItem>(),
@@ -1418,14 +1569,50 @@ namespace Redemption.CrossMod
 					ModContent.ItemType<RoosterWings>(),
 					ModContent.ItemType<RoyalBattleHorn>()
 				};
-				array16[9] = "Use a [i:" + ModContent.ItemType<ChickenContract>() + "] at day after Patient Zero is defeated.";
-				array16[11] = "Redemption/CrossMod/BossChecklist/ChickenInvasion2";
-				array16[13] = new Func<bool>(() => RedeWorld.downedKingChicken);
+				array15[9] = "Use a [i:" + ModContent.ItemType<ChickenContract>() + "] at day after Patient Zero is defeated.";
+				array15[11] = "Redemption/CrossMod/BossChecklist/ChickenInvasion2";
+				array15[13] = new Func<bool>(() => RedeWorld.downedKingChicken);
+				mod16.Call(array15);
+				Mod mod17 = bossChecklist;
+				object[] array16 = new object[13];
+				array16[0] = "AddBoss";
+				array16[1] = 14.6f;
+				array16[2] = new List<int>
+				{
+					ModContent.NPCType<WardenIdle>()
+				};
+				array16[3] = mod;
+				array16[4] = "The Warden";
+				array16[5] = new Func<bool>(() => RedeWorld.downedTheWarden);
+				array16[6] = ModContent.ItemType<DaggerOfOathkeeper>();
+				array16[7] = new List<int>
+				{
+					ModContent.ItemType<WardenTrophy>(),
+					ModContent.ItemType<WardenMask>()
+				};
+				array16[8] = new List<int>
+				{
+					ModContent.ItemType<TheWardenBag>(),
+					ModContent.ItemType<ShadeStave>(),
+					ModContent.ItemType<ShadeCandleSpear>(),
+					ModContent.ItemType<VesselFrag>(),
+					ModContent.ItemType<WardensKey>()
+				};
+				array16[9] = string.Concat(new object[]
+				{
+					"Use a [i:",
+					ModContent.ItemType<EnterSoulless>(),
+					"] to enter the Soulless Caverns, dropped by Soulless Wanderers, Duelists, and Assassins. Find the [i:",
+					ModContent.ItemType<DaggerOfOathkeeper>(),
+					"] and right-click on the Warden's Altar within the temple."
+				});
+				array16[11] = "Redemption/CrossMod/BossChecklist/Warden";
+				array16[12] = "Redemption/NPCs/Bosses/Warden/WardenIdle_Head_Boss";
 				mod17.Call(array16);
 				Mod mod18 = bossChecklist;
 				object[] array17 = new object[13];
 				array17[0] = "AddBoss";
-				array17[1] = 14.7f;
+				array17[1] = 14.9f;
 				array17[2] = new List<int>
 				{
 					ModContent.NPCType<EaglecrestGolemPZ>(),
@@ -1474,8 +1661,8 @@ namespace Redemption.CrossMod
 				array18[1] = 15.5f;
 				array18[2] = new List<int>
 				{
-					ModContent.NPCType<Nebuleus>(),
-					ModContent.NPCType<BigNebuleus>()
+					ModContent.NPCType<NebP1>(),
+					ModContent.NPCType<NebP2>()
 				};
 				array18[3] = mod;
 				array18[4] = "Nebuleus, Angel of the Cosmos";
@@ -1505,7 +1692,7 @@ namespace Redemption.CrossMod
 				};
 				array18[9] = "Use an [i:" + ModContent.ItemType<NebSummon>() + "] at night.";
 				array18[11] = "Redemption/CrossMod/BossChecklist/Neb";
-				array18[12] = "Redemption/NPCs/Bosses/Nebuleus/Nebuleus_Head_Boss";
+				array18[12] = "Redemption/NPCs/Bosses/Neb/NebP1_Head_Boss";
 				mod19.Call(array18);
 			}
 		}
@@ -1515,7 +1702,7 @@ namespace Redemption.CrossMod
 			Mod censusMod = ModLoader.GetMod("Census");
 			if (censusMod != null)
 			{
-				Redemption inst = Redemption.inst;
+				Redemption inst = Redemption.Inst;
 				censusMod.Call(new object[]
 				{
 					"TownNPCCondition",

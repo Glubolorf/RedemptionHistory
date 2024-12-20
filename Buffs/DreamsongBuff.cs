@@ -1,5 +1,4 @@
 ﻿using System;
-using Redemption.NPCs;
 using Terraria;
 using Terraria.ModLoader;
 

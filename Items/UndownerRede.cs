@@ -25,8 +25,6 @@ namespace Redemption.Items
 
 		public override bool UseItem(Player player)
 		{
-			RedeWorld.deathByNeb = false;
-			RedeWorld.deathBySlayer = false;
 			RedeWorld.downedBlisterface = false;
 			RedeWorld.downedChickenInv = false;
 			RedeWorld.downedChickenInvPZ = false;
@@ -34,7 +32,7 @@ namespace Redemption.Items
 			RedeWorld.downedEaglecrestGolem = false;
 			RedeWorld.downedEaglecrestGolemPZ = false;
 			RedeWorld.downedIBehemoth = false;
-			RedeWorld.downedInfectedEye = false;
+			RedeWorld.nukeDropped = false;
 			RedeWorld.downedKingChicken = false;
 			RedeWorld.downedMACE = false;
 			RedeWorld.downedNebuleus = false;
@@ -44,11 +42,11 @@ namespace Redemption.Items
 			RedeWorld.downedStage3Scientist = false;
 			RedeWorld.downedStrangePortal = false;
 			RedeWorld.downedSunkenCaptain = false;
-			RedeWorld.downedTheKeeper = false;
+			RedeWorld.downedKeeper = false;
 			RedeWorld.downedVlitch1 = false;
 			RedeWorld.downedVlitch2 = false;
 			RedeWorld.downedVlitch3 = false;
-			RedeWorld.downedXenomiteCrystal = false;
+			RedeWorld.downedSoI = false;
 			RedeWorld.girusTalk1 = false;
 			RedeWorld.girusTalk2 = false;
 			RedeWorld.girusTalk3 = false;
@@ -60,7 +58,12 @@ namespace Redemption.Items
 			RedeWorld.KSRajahInteraction = false;
 			RedeWorld.voltBegin = false;
 			RedeWorld.downedMossyGoliath = false;
+			RedeWorld.downedTheWarden = false;
+			RedeWorld.downedMansionWraith = false;
 			RedeWorld.oblitDeath = 0;
+			RedeWorld.nebDeath = 0;
+			RedeWorld.slayerDeath = 0;
+			RedeWorld.nebRep = 0;
 			return true;
 		}
 	}

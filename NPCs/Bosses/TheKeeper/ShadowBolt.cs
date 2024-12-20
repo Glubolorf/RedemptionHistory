@@ -7,6 +7,14 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 {
 	public class ShadowBolt : ModProjectile
 	{
+		public override string Texture
+		{
+			get
+			{
+				return "Redemption/Empty";
+			}
+		}
+
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Shadow Bolt");
@@ -14,50 +22,52 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 
 		public override void SetDefaults()
 		{
-			base.projectile.width = 16;
-			base.projectile.height = 16;
+			base.projectile.width = 8;
+			base.projectile.height = 8;
 			base.projectile.penetrate = 2;
 			base.projectile.hostile = true;
 			base.projectile.friendly = false;
 			base.projectile.tileCollide = true;
 			base.projectile.ignoreWater = false;
 			base.projectile.alpha = 255;
-			base.projectile.timeLeft = 200;
+			base.projectile.timeLeft = 300;
+			base.projectile.extraUpdates = 1;
 		}
 
 		public override void AI()
 		{
 			if (base.projectile.localAI[0] == 0f)
 			{
-				int dustType = 173;
-				int pieCut = 8;
-				for (int i = 0; i < pieCut; i++)
+				for (int i = 0; i < 8; i++)
 				{
-					int dustID = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 2f);
-					Main.dust[dustID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)pieCut * 6.28f);
+					int dustID = Dust.NewDust(base.projectile.Center - new Vector2(-1f, -1f), 2, 2, 173, 0f, 0f, 100, Color.White, 2f);
+					Main.dust[dustID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / 8f * 6.28f);
 					Main.dust[dustID].noLight = false;
 					Main.dust[dustID].noGravity = true;
 				}
-				Main.PlaySound(2, (int)base.projectile.position.X, (int)base.projectile.position.Y, 20, 1f, 0f);
 				base.projectile.localAI[0] = 1f;
 			}
-			int num666 = 8;
-			int num667 = Dust.NewDust(new Vector2(base.projectile.position.X + (float)num666 + 6f, base.projectile.position.Y + (float)num666), base.projectile.width - num666 * 2, base.projectile.height - num666 * 2, 66, 0f, 0f, 0, new Color(131, 0, 0), 1.5f);
-			Main.dust[num667].velocity *= 0.5f;
-			Main.dust[num667].velocity += base.projectile.velocity * 0.5f;
-			Main.dust[num667].noGravity = true;
-			Main.dust[num667].noLight = false;
-			Main.dust[num667].scale = 2f;
+			int dust = Dust.NewDust(base.projectile.Center - new Vector2(-2f, -2f), 4, 4, 66, base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 0, new Color(131, 0, 0), 2f);
+			Main.dust[dust].velocity *= 0.5f;
+			Main.dust[dust].noGravity = true;
+			Main.dust[dust].noLight = false;
+		}
+
+		public override void OnHitPlayer(Player target, int damage, bool crit)
+		{
+			if (base.projectile.penetrate <= 0)
+			{
+				base.projectile.Kill();
+			}
+			base.projectile.penetrate--;
 		}
 
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			int dustType = 173;
-			int pieCut = 8;
-			for (int i = 0; i < pieCut; i++)
+			for (int i = 0; i < 8; i++)
 			{
-				int dustID = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 1f);
-				Main.dust[dustID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)pieCut * 6.28f);
+				int dustID = Dust.NewDust(base.projectile.Center - new Vector2(-1f, -1f), 2, 2, 173, 0f, 0f, 100, Color.White, 2f);
+				Main.dust[dustID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / 8f * 6.28f);
 				Main.dust[dustID].noLight = false;
 				Main.dust[dustID].noGravity = true;
 			}

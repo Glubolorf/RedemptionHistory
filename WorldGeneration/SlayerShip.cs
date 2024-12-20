@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Redemption.Items;
-using Redemption.Items.Datalogs;
-using Redemption.Items.Weapons.v08;
-using Redemption.Tiles.LabDeco;
-using Redemption.Tiles.SlayerShip;
+using Redemption.Items.Lore;
+using Redemption.Items.Materials.HM;
+using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Usable;
+using Redemption.Items.Weapons.HM.Magic;
+using Redemption.Items.Weapons.HM.Melee;
+using Redemption.Items.Weapons.HM.Ranged;
+using Redemption.Items.Weapons.HM.Summon;
+using Redemption.Tiles.Containers;
+using Redemption.Tiles.Furniture.Ship;
+using Redemption.Tiles.Tiles;
 using Redemption.Walls;
 using Terraria;
 using Terraria.ModLoader;
@@ -18,7 +24,7 @@ namespace Redemption.WorldGeneration
 	{
 		public override bool Place(Point origin, StructureMap structures)
 		{
-			Mod mod = Redemption.inst;
+			Mod mod = Redemption.Inst;
 			Dictionary<Color, int> colorToTile = new Dictionary<Color, int>();
 			colorToTile[new Color(0, 255, 255)] = ModContent.TileType<SlayerShipPanelTile>();
 			colorToTile[new Color(255, 255, 0)] = ModContent.TileType<JunkMetalTile>();
@@ -54,7 +60,7 @@ namespace Redemption.WorldGeneration
 
 		public void ShipChest(int x, int y)
 		{
-			Redemption inst = Redemption.inst;
+			Redemption inst = Redemption.Inst;
 			int PlacementSuccess = WorldGen.PlaceChest(x, y, (ushort)ModContent.TileType<HolochestTile>(), false, 0);
 			int[] HoloChestLoot = new int[]
 			{

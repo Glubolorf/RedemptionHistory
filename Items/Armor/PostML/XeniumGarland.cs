@@ -1,6 +1,5 @@
 ﻿using System;
-using Redemption.Buffs;
-using Redemption.Items.DruidDamageClass;
+using Redemption.Buffs.Debuffs;
 using Terraria;
 using Terraria.ModLoader;
 

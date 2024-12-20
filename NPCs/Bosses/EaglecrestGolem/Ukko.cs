@@ -1,12 +1,14 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Buffs;
-using Redemption.Items;
-using Redemption.Items.Armor.PostML;
-using Redemption.Items.DruidDamageClass.v08;
-using Redemption.Items.Placeable;
-using Redemption.Items.Weapons.v08;
+using Redemption.Buffs.NPCBuffs;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Materials.PostML;
+using Redemption.Items.Placeable.Trophies;
+using Redemption.Items.Usable;
+using Redemption.Items.Weapons.PostML.Druid.Staves;
+using Redemption.Items.Weapons.PostML.Magic;
+using Redemption.Items.Weapons.PostML.Summon;
 using Redemption.NPCs.Bosses.Thorn;
 using Terraria;
 using Terraria.ID;
@@ -46,7 +48,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 		{
 			potionType = 3544;
 			RedeWorld.downedEaglecrestGolemPZ = true;
-			if (Main.netMode == 2)
+			if (Main.netMode != 0)
 			{
 				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 			}
@@ -141,7 +143,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 				base.npc.frameCounter = 0.0;
 				NPC npc = base.npc;
 				npc.frame.Y = npc.frame.Y + 112;
-				if (base.npc.frame.Y > 340)
+				if (base.npc.frame.Y > 560)
 				{
 					base.npc.frameCounter = 0.0;
 					base.npc.frame.Y = 0;
@@ -233,7 +235,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 						if (base.npc.ai[2] == 8f)
 						{
 							base.npc.ai[3] = 1f;
-							int p = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<UkkoZap1>(), 46, 3f, Main.myPlayer, 0f, 0f);
+							int p = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<UkkoStrike>(), 36, 3f, Main.myPlayer, 0f, 0f);
 							Main.projectile[p].netUpdate = true;
 						}
 						if (base.npc.ai[2] >= 60f)
@@ -277,7 +279,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 								base.npc.netUpdate = true;
 								return;
 							}
-							this.MoveToVector2(ThunderwavePos);
+							base.npc.MoveToVector2(ThunderwavePos, 30f);
 							return;
 						}
 						else
@@ -339,12 +341,12 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 							}
 							else
 							{
-								this.MoveToVector2(this.MoveVector2);
+								base.npc.MoveToVector2(this.MoveVector2, 30f);
 							}
 						}
 						if ((Main.raining ? (base.npc.ai[2] % 15f == 0f) : (base.npc.ai[2] % 20f == 0f)) && base.npc.ai[2] > 40f && base.npc.ai[2] < 160f)
 						{
-							int p3 = Projectile.NewProjectile(player.Center.X + (float)Main.rand.Next(-300, 300), player.Center.Y + (float)Main.rand.Next(-300, 300), 0f, 0f, ModContent.ProjectileType<UkkoZap1>(), 46, 3f, Main.myPlayer, 0f, 0f);
+							int p3 = Projectile.NewProjectile(player.Center.X + (float)Main.rand.Next(-300, 300), player.Center.Y + (float)Main.rand.Next(-300, 300), 0f, 0f, ModContent.ProjectileType<UkkoStrike>(), 36, 3f, Main.myPlayer, 0f, 0f);
 							Main.projectile[p3].netUpdate = true;
 						}
 						if (base.npc.ai[2] >= 180f)
@@ -506,7 +508,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 								base.npc.netUpdate = true;
 								return;
 							}
-							this.MoveToVector2(this.MoveVector3);
+							base.npc.MoveToVector2(this.MoveVector3, 30f);
 							return;
 						}
 						else
@@ -514,11 +516,9 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 							base.npc.ai[2] += 1f;
 							if (base.npc.ai[2] % 8f == 0f && base.npc.ai[2] < 50f)
 							{
-								Vector2 speed = Vector2.Normalize(Utils.RotatedBy(new Vector2(1f, 0f), (double)(base.npc.rotation + 3.1415f), default(Vector2)));
-								speed = (float)((Main.rand.Next(2) == 0) ? 1 : -1) * speed;
-								float ai = (float)Main.rand.Next(120);
-								Vector2 speedR = Vector2.Normalize(Utils.RotatedByRandom(speed, 0.6)) * 20f;
-								Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, speedR.X, speedR.Y, ModContent.ProjectileType<UkkoLightning>(), base.npc.damage / 4, 0f, Main.myPlayer, Utils.ToRotation(speed) + 1000f, ai);
+								Vector2 ai = RedeHelper.PolarVector(12f, -Utils.ToRotation(base.npc.velocity) + Utils.NextFloat(Main.rand, -0.2f, 0.2f));
+								float ai2 = (float)Main.rand.Next(100);
+								Projectile.NewProjectile(base.npc.Center, RedeHelper.PolarVector(12f, -Utils.ToRotation(base.npc.velocity) + Utils.NextFloat(Main.rand, -0.2f, 0.2f)), ModContent.ProjectileType<UkkoLightning>(), base.npc.damage / 4, 0f, Main.myPlayer, Utils.ToRotation(ai), ai2);
 							}
 							if (base.npc.ai[2] >= 50f && this.dashCounter < 2)
 							{
@@ -572,13 +572,11 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 						break;
 					case 9:
 						base.npc.ai[2] += 1f;
-						if (base.npc.ai[2] % 15f == 0f && base.npc.ai[2] < 50f)
+						if (base.npc.ai[2] % 10f == 0f && base.npc.ai[2] < 50f)
 						{
-							Vector2 speed2 = Vector2.Normalize(Utils.RotatedBy(new Vector2(1f, 0f), (double)(base.npc.rotation + 3.1415f), default(Vector2)));
-							speed2 = (float)((Main.rand.Next(2) == 0) ? 1 : -1) * speed2;
-							float ai2 = (float)Main.rand.Next(120);
-							Vector2 speedR2 = Vector2.Normalize(Utils.RotatedByRandom(speed2, 0.6)) * 20f;
-							Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, speedR2.X, speedR2.Y, ModContent.ProjectileType<UkkoLightning>(), base.npc.damage / 4, 0f, Main.myPlayer, Utils.ToRotation(speed2) + 1000f, ai2);
+							Vector2 ai3 = RedeHelper.PolarVector(15f, Utils.NextFloat(Main.rand, 0f, 6.2831855f));
+							float ai4 = (float)Main.rand.Next(100);
+							Projectile.NewProjectile(base.npc.Center, RedeHelper.PolarVector(15f, Utils.NextFloat(Main.rand, 0f, 6.2831855f)), ModContent.ProjectileType<UkkoLightning>(), base.npc.damage / 4, 0f, Main.myPlayer, Utils.ToRotation(ai3), ai4);
 						}
 						if (base.npc.ai[2] >= 50f)
 						{
@@ -600,7 +598,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 						if (base.npc.ai[2] == 8f)
 						{
 							base.npc.ai[3] = 1f;
-							int p10 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<StormSummonerPro>(), 46, 3f, Main.myPlayer, (float)Main.rand.Next(4), 0f);
+							int p10 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<StormSummonerPro>(), 36, 3f, Main.myPlayer, (float)Main.rand.Next(4), 0f);
 							Main.projectile[p10].netUpdate = true;
 						}
 						if (base.npc.ai[2] >= 80f)
@@ -820,7 +818,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 						if (this.teamCooldown == 0 && NPC.AnyNPCs(ModContent.NPCType<Akka>()))
 						{
 							RedeUkkoAkka.TAearthProtection = true;
-							this.MoveToVector2(EarthProtectPos);
+							base.npc.MoveToVector2(EarthProtectPos, 30f);
 							base.npc.ai[2] += 1f;
 							if (base.npc.ai[2] == 6f)
 							{
@@ -900,7 +898,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 				base.npc.netUpdate = true;
 				return;
 			}
-			this.MoveToVector2(this.MoveVector2);
+			base.npc.MoveToVector2(this.MoveVector2, 30f);
 		}
 
 		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
@@ -912,29 +910,6 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 		{
 			this.player = Main.player[base.npc.target];
 			return !this.player.active || this.player.dead;
-		}
-
-		public void MoveToVector2(Vector2 p)
-		{
-			float moveSpeed = 30f;
-			float velMultiplier = 1f;
-			Vector2 dist = p - base.npc.Center;
-			float length = (dist == Vector2.Zero) ? 0f : dist.Length();
-			if (length < moveSpeed)
-			{
-				velMultiplier = MathHelper.Lerp(0f, 1f, length / moveSpeed);
-			}
-			if (length < 100f)
-			{
-				moveSpeed *= 0.5f;
-			}
-			if (length < 50f)
-			{
-				moveSpeed *= 0.5f;
-			}
-			base.npc.velocity = ((length == 0f) ? Vector2.Zero : Vector2.Normalize(dist));
-			base.npc.velocity *= moveSpeed;
-			base.npc.velocity *= velMultiplier;
 		}
 
 		public Vector2 Pos()
@@ -1027,7 +1002,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 					}
 					Main.rainTime = (int)((float)Main.rainTime * num3);
 					Main.raining = true;
-					if (Main.netMode == 2)
+					if (Main.netMode != 0)
 					{
 						NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 					}
@@ -1042,7 +1017,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 			{
 				Main.rainTime = 0;
 				Main.raining = false;
-				if (Main.netMode == 2)
+				if (Main.netMode != 0)
 				{
 					NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 				}
@@ -1121,7 +1096,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 
 		private Vector2[] oldPos = new Vector2[3];
 
-		private float[] oldrot = new float[3];
+		private readonly float[] oldrot = new float[3];
 
 		private int RunOnce;
 

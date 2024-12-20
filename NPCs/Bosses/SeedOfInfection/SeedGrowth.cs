@@ -21,7 +21,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 			base.npc.lifeMax = 75;
 			base.npc.damage = 26;
 			base.npc.defense = 0;
-			base.npc.knockBackResist = 0f;
+			base.npc.knockBackResist = 0.1f;
 			base.npc.width = 26;
 			base.npc.height = 26;
 			base.npc.value = (float)Item.buyPrice(0, 0, 0, 0);

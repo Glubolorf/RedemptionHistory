@@ -1,5 +1,9 @@
 ﻿using System;
-using System.Threading;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
+using Redemption.Tiles.Ores;
+using Redemption.Tiles.Tiles;
+using Redemption.Walls;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -8,235 +12,240 @@ namespace Redemption
 {
 	internal class ConversionHandler
 	{
-		public static void ConvertDown(int centerX, int y, int width, ConversionType convertType)
+		public static void ConvertWasteland(Vector2 Center, int radius = 287, bool crater = true)
 		{
-			int worldSize = ConversionHandler.GetWorldSize();
-			int num = ((worldSize == 3) ? 200 : ((worldSize == 2) ? 160 : 130)) / 2;
-			if (convertType == ConversionType.WASTELAND)
+			if (crater)
 			{
-				ConversionHandler.startXenoX = centerX;
-				ConversionHandler.startXenoY = y;
-				ConversionHandler.genXenoWidth = width;
-				ThreadPool.QueueUserWorkItem(new WaitCallback(ConversionHandler.ConvertDownXenoCallback), null);
-			}
-		}
-
-		public static int GetWorldSize()
-		{
-			int maxTilesX = Main.maxTilesX;
-			if (maxTilesX == 4200)
-			{
-				return 1;
-			}
-			if (maxTilesX == 6400)
-			{
-				return 2;
-			}
-			if (maxTilesX != 8400)
-			{
-				return 1;
-			}
-			return 3;
-		}
-
-		public static void ConvertDownXenoCallback(object threadContext)
-		{
-			try
-			{
-				ConversionHandler.Do_ConvertDownXeno(threadContext);
-			}
-			catch (Exception)
-			{
-			}
-		}
-
-		public static void Do_ConvertDownXeno(object threadContext)
-		{
-			ConversionHandler.Dodo_ConvertDown(ConversionHandler.startXenoX, ConversionHandler.startXenoY, ConversionHandler.genXenoWidth, ConversionType.WASTELAND);
-		}
-
-		public static void Dodo_ConvertDown(int startX, int startY, int genWidth, ConversionType conversionType)
-		{
-			Mod mod = Redemption.inst;
-			int tileGrass = 0;
-			int tileCorruptGrass = 0;
-			int tileCrimsonGrass = 0;
-			int wallGrass = 0;
-			int tileStone = 0;
-			int tileCorruptStone = 0;
-			int tileCrimsonStone = 0;
-			int wallStone = 0;
-			int tileSand = 0;
-			int tileSandHard = 0;
-			int wallSandHard = 0;
-			int tileSandstone = 0;
-			int wallSandstone = 0;
-			int tileIce = 0;
-			int wallIce = 0;
-			int tileThorn = 0;
-			int tileWood = 0;
-			int tileLeaves = 0;
-			int wallLeaves = 0;
-			int livingwoodWall = 0;
-			int tileGem = 0;
-			if (conversionType == ConversionType.WASTELAND)
-			{
-				tileGrass = mod.TileType("DeadGrassTile");
-				tileCorruptGrass = mod.TileType("DeadGrassTileCorruption");
-				tileCrimsonGrass = mod.TileType("DeadGrassTileCrimson");
-				wallGrass = mod.WallType("DeadGrassWallTile");
-				tileStone = mod.TileType("DeadRockTile");
-				tileCorruptStone = mod.TileType("IrradiatedEbonstoneTile");
-				tileCrimsonStone = mod.TileType("IrradiatedCrimstoneTile");
-				wallStone = mod.WallType("DeadRockWallTile");
-				tileSand = mod.TileType("RadioactiveSandTile");
-				tileSandHard = mod.TileType("HardenedRadioactiveSandTile");
-				wallSandHard = mod.WallType("HardenedRadioactiveSandWallTile");
-				tileSandstone = mod.TileType("RadioactiveSandstoneTile");
-				wallSandstone = mod.WallType("RadioactiveSandstoneWallTile");
-				tileIce = mod.TileType("RadioactiveIceTile");
-				wallIce = mod.TileType("RadioactiveIceWallTile");
-				tileWood = mod.TileType("LivingDeadWoodTile");
-				tileLeaves = mod.TileType("LivingDeadLeavesTile");
-				wallLeaves = mod.TileType("LivingDeadLeavesWallTile");
-				livingwoodWall = mod.TileType("LivingDeadWoodWallTile");
-				tileGem = mod.TileType("StarliteGemOreTile");
-			}
-			int y = startY;
-			for (int x = 0; x < genWidth; x++)
-			{
-				while (y < Main.maxTilesY - 50)
+				Mod mod = Redemption.Inst;
+				Tile tile = Framing.GetTileSafely((int)Center.X / 16, BaseWorldGen.GetFirstTileFloor((int)Center.X / 16, (int)Center.Y / 16, true));
+				int tileType = (int)tile.type;
+				if (tile.active() && (TileID.Sets.Conversion.Ice[tileType] || tileType == 147))
 				{
-					ConversionHandler.Convert(startX + x, y, genWidth, tileGrass, tileCorruptGrass, tileCrimsonGrass, wallGrass, tileStone, tileCorruptStone, tileCrimsonStone, wallStone, tileSand, tileSandHard, wallSandHard, tileSandstone, wallSandstone, tileIce, wallIce, tileThorn, tileWood, tileLeaves, wallLeaves, livingwoodWall, tileGem);
-					y += genWidth * 2;
+					Dictionary<Color, int> dictionary = new Dictionary<Color, int>();
+					Color key = new Color(0, 255, 255);
+					dictionary[key] = ModContent.TileType<PlutoniumTile>();
+					Color black = new Color(150, 150, 150);
+					dictionary[black] = -2;
+					Color black2 = Color.Black;
+					dictionary[black2] = -1;
+					Dictionary<Color, int> colorToTile = dictionary;
+					Dictionary<Color, int> dictionary2 = new Dictionary<Color, int>();
+					black2 = new Color(150, 150, 150);
+					dictionary2[black2] = -2;
+					black = Color.Black;
+					dictionary2[black] = -1;
+					Dictionary<Color, int> colorToWall = dictionary2;
+					BaseWorldGenTex.GetTexGenerator(mod.GetTexture("WorldGeneration/CraterSnow"), colorToTile, mod.GetTexture("WorldGeneration/CraterWalls"), colorToWall, null, null, null, null).Generate((int)(Center.X / 16f) - 50, (int)(Center.Y / 16f) - 46, true, true);
+				}
+				else if (tile.active() && (TileID.Sets.Conversion.Sand[tileType] || TileID.Sets.Conversion.Sandstone[tileType] || TileID.Sets.Conversion.HardenedSand[tileType]))
+				{
+					Dictionary<Color, int> dictionary3 = new Dictionary<Color, int>();
+					Color black = new Color(0, 255, 255);
+					dictionary3[black] = ModContent.TileType<PlutoniumTile>();
+					Color black2 = new Color(0, 0, 255);
+					dictionary3[black2] = 396;
+					Color key = new Color(255, 0, 0);
+					dictionary3[key] = 54;
+					Color black3 = new Color(150, 150, 150);
+					dictionary3[black3] = -2;
+					Color black4 = Color.Black;
+					dictionary3[black4] = -1;
+					Dictionary<Color, int> colorToTile2 = dictionary3;
+					Dictionary<Color, int> dictionary4 = new Dictionary<Color, int>();
+					black4 = new Color(150, 150, 150);
+					dictionary4[black4] = -2;
+					black3 = Color.Black;
+					dictionary4[black3] = -1;
+					Dictionary<Color, int> colorToWall2 = dictionary4;
+					BaseWorldGenTex.GetTexGenerator(mod.GetTexture("WorldGeneration/Crater"), colorToTile2, mod.GetTexture("WorldGeneration/CraterWalls"), colorToWall2, null, null, null, null).Generate((int)(Center.X / 16f) - 50, (int)(Center.Y / 16f) - 46, true, true);
+				}
+				else
+				{
+					Dictionary<Color, int> dictionary5 = new Dictionary<Color, int>();
+					Color black3 = new Color(0, 255, 255);
+					dictionary5[black3] = ModContent.TileType<PlutoniumTile>();
+					Color black4 = new Color(0, 0, 255);
+					dictionary5[black4] = 0;
+					Color key = new Color(255, 0, 0);
+					dictionary5[key] = 57;
+					Color black2 = new Color(150, 150, 150);
+					dictionary5[black2] = -2;
+					Color black = Color.Black;
+					dictionary5[black] = -1;
+					Dictionary<Color, int> colorToTile3 = dictionary5;
+					Dictionary<Color, int> dictionary6 = new Dictionary<Color, int>();
+					black = new Color(150, 150, 150);
+					dictionary6[black] = -2;
+					black2 = Color.Black;
+					dictionary6[black2] = -1;
+					Dictionary<Color, int> colorToWall3 = dictionary6;
+					BaseWorldGenTex.GetTexGenerator(mod.GetTexture("WorldGeneration/Crater"), colorToTile3, mod.GetTexture("WorldGeneration/CraterWalls"), colorToWall3, null, null, null, null).Generate((int)(Center.X / 16f) - 50, (int)(Center.Y / 16f) - 46, true, true);
 				}
 			}
-		}
-
-		public static void Convert(int i, int j, int size, int tileGrass, int tileCorruptGrass, int tileCrimsonGrass, int wallGrass, int tileStone, int tileCorruptStone, int tileCrimsonStone, int wallStone, int tileSand, int tileSandHard, int wallSandHard, int tileSandstone, int wallSandstone, int tileIce, int wallIce, int tileThorn, int tileWood, int tileLeaves, int wallLeaves, int wallWood, int tileGem = 0)
-		{
-			for (int k = i - size; k <= i + size; k++)
+			BaseWorldGen.ReplaceTiles(Center, radius, new int[]
 			{
-				for (int l = j - size; l <= j + size; l++)
+				1,
+				182,
+				180,
+				179,
+				381,
+				183,
+				181,
+				181,
+				181,
+				181,
+				25,
+				203,
+				117,
+				2,
+				23,
+				199,
+				109,
+				161,
+				163,
+				200,
+				164,
+				53,
+				112,
+				234,
+				116,
+				397,
+				398,
+				399,
+				402,
+				396,
+				400,
+				401,
+				403,
+				191,
+				67,
+				66,
+				63,
+				65,
+				64,
+				68
+			}, new int[]
+			{
+				ModContent.TileType<DeadRockTile>(),
+				ModContent.TileType<DeadRockTile>(),
+				ModContent.TileType<DeadRockTile>(),
+				ModContent.TileType<DeadRockTile>(),
+				ModContent.TileType<DeadRockTile>(),
+				ModContent.TileType<DeadRockTile>(),
+				ModContent.TileType<DeadRockTile>(),
+				ModContent.TileType<DeadRockTile>(),
+				ModContent.TileType<DeadRockTile>(),
+				ModContent.TileType<DeadRockTile>(),
+				ModContent.TileType<IrradiatedEbonstoneTile>(),
+				ModContent.TileType<IrradiatedCrimstoneTile>(),
+				ModContent.TileType<DeadRockTile>(),
+				ModContent.TileType<DeadGrassTile>(),
+				ModContent.TileType<DeadGrassTileCorruption>(),
+				ModContent.TileType<DeadGrassTileCrimson>(),
+				ModContent.TileType<DeadGrassTile>(),
+				ModContent.TileType<RadioactiveIceTile>(),
+				ModContent.TileType<RadioactiveIceTile>(),
+				ModContent.TileType<RadioactiveIceTile>(),
+				ModContent.TileType<RadioactiveIceTile>(),
+				ModContent.TileType<RadioactiveSandTile>(),
+				ModContent.TileType<RadioactiveSandTile>(),
+				ModContent.TileType<RadioactiveSandTile>(),
+				ModContent.TileType<RadioactiveSandTile>(),
+				ModContent.TileType<HardenedRadioactiveSandTile>(),
+				ModContent.TileType<HardenedRadioactiveSandTile>(),
+				ModContent.TileType<HardenedRadioactiveSandTile>(),
+				ModContent.TileType<HardenedRadioactiveSandTile>(),
+				ModContent.TileType<RadioactiveSandstoneTile>(),
+				ModContent.TileType<RadioactiveSandstoneTile>(),
+				ModContent.TileType<RadioactiveSandstoneTile>(),
+				ModContent.TileType<RadioactiveSandstoneTile>(),
+				ModContent.TileType<LivingDeadWoodTile>(),
+				ModContent.TileType<StarliteGemOreTile>(),
+				ModContent.TileType<StarliteGemOreTile>(),
+				ModContent.TileType<StarliteGemOreTile>(),
+				ModContent.TileType<StarliteGemOreTile>(),
+				ModContent.TileType<StarliteGemOreTile>(),
+				ModContent.TileType<StarliteGemOreTile>()
+			}, true, true);
+			BaseWorldGen.ReplaceWalls(Center, 287, new int[]
+			{
+				63,
+				69,
+				81,
+				70,
+				1,
+				3,
+				83,
+				28,
+				216,
+				217,
+				218,
+				219,
+				187,
+				220,
+				221,
+				222,
+				71,
+				60,
+				78
+			}, new int[]
+			{
+				ModContent.WallType<DeadGrassWallTile>(),
+				ModContent.WallType<DeadGrassWallTile>(),
+				ModContent.WallType<DeadGrassWallTile>(),
+				ModContent.WallType<DeadGrassWallTile>(),
+				ModContent.WallType<DeadRockWallTile>(),
+				ModContent.WallType<DeadRockWallTile>(),
+				ModContent.WallType<DeadRockWallTile>(),
+				ModContent.WallType<DeadRockWallTile>(),
+				ModContent.WallType<HardenedRadioactiveSandWallTile>(),
+				ModContent.WallType<HardenedRadioactiveSandWallTile>(),
+				ModContent.WallType<HardenedRadioactiveSandWallTile>(),
+				ModContent.WallType<HardenedRadioactiveSandWallTile>(),
+				ModContent.WallType<RadioactiveSandstoneWallTile>(),
+				ModContent.WallType<RadioactiveSandstoneWallTile>(),
+				ModContent.WallType<RadioactiveSandstoneWallTile>(),
+				ModContent.WallType<RadioactiveSandstoneWallTile>(),
+				ModContent.WallType<RadioactiveIceWallTile>(),
+				ModContent.WallType<LivingDeadLeavesWallTile>(),
+				ModContent.WallType<LivingDeadWoodWallTile>()
+			}, true, true);
+			int radiusLeft = (int)(Center.X / 16f - (float)radius);
+			int radiusRight = (int)(Center.X / 16f + (float)radius);
+			int radiusUp = (int)(Center.Y / 16f - (float)radius);
+			int radiusDown = (int)(Center.Y / 16f + (float)radius);
+			if (radiusLeft < 0)
+			{
+				radiusLeft = 0;
+			}
+			if (radiusRight > Main.maxTilesX)
+			{
+				radiusRight = Main.maxTilesX;
+			}
+			if (radiusUp < 0)
+			{
+				radiusUp = 0;
+			}
+			if (radiusDown > Main.maxTilesY)
+			{
+				radiusDown = Main.maxTilesY;
+			}
+			float distRad = (float)radius * 16f;
+			for (int x = radiusLeft; x <= radiusRight; x++)
+			{
+				for (int y = radiusUp; y <= radiusDown; y++)
 				{
-					if (WorldGen.InWorld(k, l, 1))
+					double dist = (double)Vector2.Distance(new Vector2((float)x * 16f + 8f, (float)y * 16f + 8f), Center);
+					if (WorldGen.InWorld(x, y, 0) && dist < (double)distRad && Main.tile[x, y] != null && Main.tile[x, y].active() && Main.tile[x, y].type == 192)
 					{
-						int type = (int)Main.tile[k, l].type;
-						int wall = (int)Main.tile[k, l].wall;
-						if (wallGrass != 0 && WallID.Sets.Conversion.Grass[wall] && wall != wallGrass)
-						{
-							Main.tile[k, l].wall = (ushort)wallGrass;
-							NetMessage.SendTileSquare(-1, k, l, 1, 0);
-						}
-						else if (wallStone != 0 && WallID.Sets.Conversion.Stone[wall] && wall != wallStone)
-						{
-							Main.tile[k, l].wall = (ushort)wallStone;
-							NetMessage.SendTileSquare(-1, k, l, 1, 0);
-						}
-						else if (wallSandHard != 0 && WallID.Sets.Conversion.HardenedSand[wall] && wall != wallSandHard)
-						{
-							Main.tile[k, l].wall = (ushort)wallSandHard;
-							NetMessage.SendTileSquare(-1, k, l, 1, 0);
-						}
-						else if (wallSandstone != 0 && WallID.Sets.Conversion.Sandstone[wall] && wall != wallSandstone)
-						{
-							Main.tile[k, l].wall = (ushort)wallSandstone;
-							NetMessage.SendTileSquare(-1, k, l, 1, 0);
-						}
-						else if (wallIce != 0 && wall == 71 && wall != wallIce)
-						{
-							Main.tile[k, l].wall = (ushort)wallIce;
-							NetMessage.SendTileSquare(-1, k, l, 1, 0);
-						}
-						else if (wallLeaves != 0 && wall == 60 && wall != wallLeaves)
-						{
-							Main.tile[k, l].wall = (ushort)wallLeaves;
-							NetMessage.SendTileSquare(-1, k, l, 1, 0);
-						}
-						else if (wallWood != 0 && wall == 78 && wall != wallLeaves)
-						{
-							Main.tile[k, l].wall = (ushort)wallWood;
-							NetMessage.SendTileSquare(-1, k, l, 1, 0);
-						}
-						if (tileStone != 0 && (Main.tileMoss[type] || TileID.Sets.Conversion.Stone[type]) && type != tileStone && type != 25 && type != 203)
-						{
-							Main.tile[k, l].type = (ushort)tileStone;
-							NetMessage.SendTileSquare(-1, k, l, 1, 0);
-						}
-						else if (tileCorruptStone != 0 && type == 25 && type != tileCorruptStone)
-						{
-							Main.tile[k, l].type = (ushort)tileCorruptStone;
-							NetMessage.SendTileSquare(-1, k, l, 1, 0);
-						}
-						else if (tileCrimsonStone != 0 && type == 203 && type != tileCrimsonStone)
-						{
-							Main.tile[k, l].type = (ushort)tileCrimsonStone;
-							NetMessage.SendTileSquare(-1, k, l, 1, 0);
-						}
-						else if (tileGrass != 0 && TileID.Sets.Conversion.Grass[type] && type != tileGrass && type != 23 && type != 199)
-						{
-							Main.tile[k, l].type = (ushort)tileGrass;
-							NetMessage.SendTileSquare(-1, k, l, 1, 0);
-						}
-						else if (tileCorruptGrass != 0 && type == 23 && type != tileCorruptGrass)
-						{
-							Main.tile[k, l].type = (ushort)tileCorruptGrass;
-							NetMessage.SendTileSquare(-1, k, l, 1, 0);
-						}
-						else if (tileCrimsonGrass != 0 && type == 199 && type != tileCrimsonGrass)
-						{
-							Main.tile[k, l].type = (ushort)tileCrimsonGrass;
-							NetMessage.SendTileSquare(-1, k, l, 1, 0);
-						}
-						else if (tileIce != 0 && TileID.Sets.Conversion.Ice[type] && type != tileIce)
-						{
-							Main.tile[k, l].type = (ushort)tileIce;
-							NetMessage.SendTileSquare(-1, k, l, 1, 0);
-						}
-						else if (tileSand != 0 && TileID.Sets.Conversion.Sand[type] && type != tileSand)
-						{
-							Main.tile[k, l].type = (ushort)tileSand;
-							NetMessage.SendTileSquare(-1, k, l, 1, 0);
-						}
-						else if (tileSandHard != 0 && TileID.Sets.Conversion.HardenedSand[type] && type != tileSandHard)
-						{
-							Main.tile[k, l].type = (ushort)tileSandHard;
-							NetMessage.SendTileSquare(-1, k, l, 1, 0);
-						}
-						else if (tileSandstone != 0 && TileID.Sets.Conversion.Sandstone[type] && type != tileSandstone)
-						{
-							Main.tile[k, l].type = (ushort)tileSandstone;
-							NetMessage.SendTileSquare(-1, k, l, 1, 0);
-						}
-						else if (tileThorn != 0 && TileID.Sets.Conversion.Thorn[type] && type != tileThorn)
-						{
-							Main.tile[k, l].type = (ushort)tileThorn;
-							NetMessage.SendTileSquare(-1, k, l, 1, 0);
-						}
-						else if (tileWood != 0 && (type == 383 || type == 191) && type != tileWood)
-						{
-							Main.tile[k, l].type = (ushort)tileWood;
-							NetMessage.SendTileSquare(-1, k, l, 1, 0);
-						}
-						else if (tileLeaves != 0 && (type == 384 || type == 192) && type != tileLeaves)
-						{
-							Main.tile[k, l].type = (ushort)tileLeaves;
-							NetMessage.SendTileSquare(-1, k, l, 1, 0);
-						}
-						else if (tileGem != 0 && (type == 67 || type == 66 || type == 63 || type == 65 || type == 64 || type == 68) && type != tileGem)
-						{
-							Main.tile[k, l].type = (ushort)tileGem;
-							NetMessage.SendTileSquare(-1, k, l, 1, 0);
-						}
+						WorldGen.KillTile(x, y, false, false, true);
 					}
 				}
 			}
+			if (Main.netMode != 0)
+			{
+				NetMessage.SendTileSquare(-1, (int)(Center.X / 16f), (int)(Center.Y / 16f), radius * 2 + 2, 0);
+			}
 		}
-
-		public static int startXenoX = -1;
-
-		public static int startXenoY = -1;
-
-		public static int genXenoWidth = -1;
 	}
 }

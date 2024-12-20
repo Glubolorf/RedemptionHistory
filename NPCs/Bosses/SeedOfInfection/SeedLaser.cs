@@ -14,7 +14,7 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 		{
 			get
 			{
-				return "Redemption/NPCs/LabNPCs/New/PatientLaser5";
+				return "Redemption/NPCs/Lab/PatientLaser5";
 			}
 		}
 
@@ -130,8 +130,8 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 				return false;
 			}
 			Texture2D texture2D19 = Main.projectileTexture[base.projectile.type];
-			Texture2D texture2D20 = base.mod.GetTexture("NPCs/LabNPCs/New/PatientLaser5_Beam");
-			Texture2D texture2D21 = base.mod.GetTexture("NPCs/LabNPCs/New/PatientLaser5_End");
+			Texture2D texture2D20 = base.mod.GetTexture("NPCs/Lab/PatientLaser5_Beam");
+			Texture2D texture2D21 = base.mod.GetTexture("NPCs/Lab/PatientLaser5_End");
 			float num228 = this.LaserLength;
 			Color color44 = Color.White * 0.8f;
 			Texture2D arg_AF99_ = texture2D19;

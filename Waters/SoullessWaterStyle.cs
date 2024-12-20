@@ -10,7 +10,7 @@ namespace Redemption.Waters
 	{
 		public override bool ChooseWaterStyle()
 		{
-			return Main.bgStyle == base.mod.GetSurfaceBgStyleSlot("SoullessSurfaceBgStyle");
+			return Main.bgStyle == base.mod.GetSurfaceBgStyleSlot("SoullessSurfaceBgStyle") && !Main.LocalPlayer.GetModPlayer<RedePlayer>().anglerPot;
 		}
 
 		public override int ChooseWaterfallStyle()
@@ -25,7 +25,7 @@ namespace Redemption.Waters
 
 		public override int GetDropletGore()
 		{
-			return base.mod.GetGoreSlot("Gores/SoullessDroplet");
+			return base.mod.GetGoreSlot("Gores/Misc/SoullessDroplet");
 		}
 
 		public override void LightColorMultiplier(ref float r, ref float g, ref float b)

@@ -22,15 +22,16 @@ namespace Redemption.Items.Armor.PostML
 			base.item.height = 16;
 			base.item.value = Item.sellPrice(0, 20, 0, 0);
 			base.item.defense = 30;
+			base.item.rare = 11;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}
 
 		public override void UpdateEquip(Player player)
 		{
-			player.moveSpeed *= 1.4f;
-			player.allDamage *= 1.1f;
+			player.moveSpeed += 0.4f;
+			player.allDamage += 0.1f;
 			player.meleeCrit += 10;
-			player.meleeSpeed *= 1.1f;
+			player.meleeSpeed += 0.1f;
 			player.fireWalk = true;
 		}
 

@@ -122,6 +122,8 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
+			spriteBatch.End();
+			spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.Default, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 			if (base.projectile.velocity == Vector2.Zero)
 			{
 				return false;
@@ -161,6 +163,8 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 			Texture2D arg_B1FF_ = texture2D21;
 			Vector2 arg_B1FF_2 = value20 - Main.screenPosition;
 			spriteBatch2.Draw(arg_B1FF_, arg_B1FF_2, null, color44, base.projectile.rotation, Utils.Top(Utils.Frame(texture2D21, 1, 1, 0, 0)), new Vector2(Math.Min(base.projectile.ai[1], 60f) / 60f, 1f), SpriteEffects.None, 0f);
+			spriteBatch.End();
+			spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 			return false;
 		}
 

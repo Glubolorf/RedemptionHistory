@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Redemption.Buffs;
-using Redemption.Projectiles;
+using Redemption.Buffs.Debuffs;
+using Redemption.Projectiles.Misc;
 using Terraria;
 using Terraria.ModLoader;
 

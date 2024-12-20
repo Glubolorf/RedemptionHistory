@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Redemption.Dusts;
-using Redemption.NPCs.Bosses.EaglecrestGolem;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -32,7 +31,7 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 			base.projectile.tileCollide = false;
 			base.projectile.ignoreWater = true;
 			base.projectile.alpha = 255;
-			base.projectile.timeLeft = 500;
+			base.projectile.timeLeft = 400;
 		}
 
 		public override void AI()
@@ -59,11 +58,11 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 					dust3.noGravity = true;
 					dust3.velocity = -base.projectile.DirectionTo(dust3.position) * 10f;
 				}
-				player.GetModPlayer<ShakeScreen>().shakeSubtle = true;
 			}
 			if (base.projectile.timeLeft == 180)
 			{
-				Redemption.ShowText(base.projectile, 4, 0, 180);
+				player.GetModPlayer<ScreenPlayer>().Rumble(180, 3);
+				Redemption.Inst.DialogueUIElement.DisplayDialogue("Octavia...", 120, 30, 0.6f, null, 2f, new Color?(Color.DarkGray), null, null, null, 0, 0);
 			}
 		}
 
@@ -78,11 +77,11 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 				Main.dust[dustID].noLight = false;
 				Main.dust[dustID].noGravity = true;
 			}
-			if (Main.netMode == 2)
+			Redemption.GirusSilence = false;
+			if (Main.netMode != 0)
 			{
 				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 			}
-			Redemption.GirusSilence = false;
 		}
 
 		public Vector2 vector;

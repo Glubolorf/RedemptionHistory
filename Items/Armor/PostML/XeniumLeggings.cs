@@ -13,7 +13,7 @@ namespace Redemption.Items.Armor.PostML
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Xenium Leggings");
-			base.Tooltip.SetDefault("25% increased movement speed\nIncreases movement speed after being struck\nIncreased fall speed");
+			base.Tooltip.SetDefault("25% increased movement speed\nIncreases movement speed after being struck\nHold DOWN to increase fall speed");
 		}
 
 		public override void SetDefaults()
@@ -27,7 +27,10 @@ namespace Redemption.Items.Armor.PostML
 
 		public override void UpdateEquip(Player player)
 		{
-			player.maxFallSpeed += 8f;
+			if (player.controlDown)
+			{
+				player.maxFallSpeed += 10f;
+			}
 			player.panic = true;
 			player.moveSpeed *= 1.25f;
 		}

@@ -4145,17 +4145,17 @@ namespace Redemption
 			{
 				if (npc.direction == -1 && npc.velocity.X > -maxSpeedX)
 				{
-					NPC npc2 = npc;
-					npc2.velocity.X = npc2.velocity.X - moveIntervalX;
+					NPC npc4 = npc;
+					npc4.velocity.X = npc4.velocity.X - moveIntervalX;
 					if (npc.velocity.X > maxSpeedX)
 					{
-						NPC npc3 = npc;
-						npc3.velocity.X = npc3.velocity.X - moveIntervalX;
+						NPC npc5 = npc;
+						npc5.velocity.X = npc5.velocity.X - moveIntervalX;
 					}
 					else if (npc.velocity.X > 0f)
 					{
-						NPC npc4 = npc;
-						npc4.velocity.X = npc4.velocity.X + moveIntervalX * 0.5f;
+						NPC npc6 = npc;
+						npc6.velocity.X = npc6.velocity.X + moveIntervalX * 0.5f;
 					}
 					if (npc.velocity.X < -maxSpeedX)
 					{
@@ -4164,17 +4164,17 @@ namespace Redemption
 				}
 				else if (npc.direction == 1 && npc.velocity.X < maxSpeedX)
 				{
-					NPC npc5 = npc;
-					npc5.velocity.X = npc5.velocity.X + moveIntervalX;
+					NPC npc7 = npc;
+					npc7.velocity.X = npc7.velocity.X + moveIntervalX;
 					if (npc.velocity.X < -maxSpeedX)
 					{
-						NPC npc6 = npc;
-						npc6.velocity.X = npc6.velocity.X + moveIntervalX;
+						NPC npc8 = npc;
+						npc8.velocity.X = npc8.velocity.X + moveIntervalX;
 					}
 					else if (npc.velocity.X < 0f)
 					{
-						NPC npc7 = npc;
-						npc7.velocity.X = npc7.velocity.X - moveIntervalX * 0.5f;
+						NPC npc9 = npc;
+						npc9.velocity.X = npc9.velocity.X - moveIntervalX * 0.5f;
 					}
 					if (npc.velocity.X > maxSpeedX)
 					{
@@ -4183,17 +4183,17 @@ namespace Redemption
 				}
 				if (npc.directionY == -1 && (double)npc.velocity.Y > (double)(-(double)maxSpeedY))
 				{
-					NPC npc8 = npc;
-					npc8.velocity.Y = npc8.velocity.Y - moveIntervalY;
+					NPC npc10 = npc;
+					npc10.velocity.Y = npc10.velocity.Y - moveIntervalY;
 					if ((double)npc.velocity.Y > (double)maxSpeedY)
 					{
-						NPC npc9 = npc;
-						npc9.velocity.Y = npc9.velocity.Y - moveIntervalY;
+						NPC npc11 = npc;
+						npc11.velocity.Y = npc11.velocity.Y - moveIntervalY;
 					}
 					else if (npc.velocity.Y > 0f)
 					{
-						NPC npc10 = npc;
-						npc10.velocity.Y = npc10.velocity.Y + moveIntervalY * 0.5f;
+						NPC npc12 = npc;
+						npc12.velocity.Y = npc12.velocity.Y + moveIntervalY * 0.5f;
 					}
 					if ((double)npc.velocity.Y < (double)(-(double)maxSpeedY))
 					{
@@ -4203,17 +4203,17 @@ namespace Redemption
 				}
 				else if (npc.directionY == 1 && (double)npc.velocity.Y < (double)maxSpeedY)
 				{
-					NPC npc11 = npc;
-					npc11.velocity.Y = npc11.velocity.Y + moveIntervalY;
+					NPC npc13 = npc;
+					npc13.velocity.Y = npc13.velocity.Y + moveIntervalY;
 					if ((double)npc.velocity.Y < (double)(-(double)maxSpeedY))
 					{
-						NPC npc12 = npc;
-						npc12.velocity.Y = npc12.velocity.Y + moveIntervalY;
+						NPC npc14 = npc;
+						npc14.velocity.Y = npc14.velocity.Y + moveIntervalY;
 					}
 					else if (npc.velocity.Y < 0f)
 					{
-						NPC npc13 = npc;
-						npc13.velocity.Y = npc13.velocity.Y - moveIntervalY * 0.5f;
+						NPC npc15 = npc;
+						npc15.velocity.Y = npc15.velocity.Y - moveIntervalY * 0.5f;
 					}
 					if ((double)npc.velocity.Y > (double)maxSpeedY)
 					{
@@ -4247,9 +4247,11 @@ namespace Redemption
 				{
 					if (npc.velocity.Y > 0f)
 					{
-						npc.velocity.Y = npc.velocity.Y * 0.95f;
+						NPC npc2 = npc;
+						npc2.velocity.Y = npc2.velocity.Y * 0.95f;
 					}
-					npc.velocity.Y = npc.velocity.Y - 0.5f;
+					NPC npc3 = npc;
+					npc3.velocity.Y = npc3.velocity.Y - 0.5f;
 					if (npc.velocity.Y < -maxSpeedX)
 					{
 						npc.velocity.Y = -maxSpeedX;
@@ -5623,15 +5625,13 @@ namespace Redemption
 						}
 						if (tile.nactive() && (y != tileY || (!tile.halfBrick() && tile.slope() == 0)) && Main.tileSolid[(int)tile.type] && (jumpUpPlatforms || !Main.tileSolidTop[(int)tile.type]))
 						{
-							if (!Main.tileSolidTop[(int)tile.type])
+							if (!Main.tileSolidTop[(int)tile.type] && new Rectangle(tileX * 16, y * 16, 16, 16)
 							{
-								Rectangle tileHitbox = new Rectangle(tileX * 16, y * 16, 16, 16);
-								tileHitbox.Y = hitbox.Y;
-								if (tileHitbox.Intersects(hitbox))
-								{
-									newVelocity = velocity;
-									break;
-								}
+								Y = hitbox.Y
+							}.Intersects(hitbox))
+							{
+								newVelocity = velocity;
+								break;
 							}
 							if (tileNear.nactive() && Main.tileSolid[(int)tileNear.type] && !Main.tileSolidTop[(int)tileNear.type])
 							{
@@ -5665,6 +5665,135 @@ namespace Redemption
 						Main.tile[tileX, tileY + 2] = new Tile();
 					}
 					if (directionY < 0f && (!Main.tile[tileX, tileY + 1].nactive() || !Main.tileSolid[(int)Main.tile[tileX, tileY + 1].type]) && (!Main.tile[tileX + direction, tileY + 1].nactive() || !Main.tileSolid[(int)Main.tile[tileX + direction, tileY + 1].type]) && (!Main.tile[tileX + direction, tileY + 2].nactive() || !Main.tileSolid[(int)Main.tile[tileX, tileY + 2].type] || target == null || target.Center.Y + (float)target.height * 0.25f < (float)tileY * 16f))
+					{
+						newVelocity.Y = -8f;
+						newVelocity.X *= 1.5f * (1f / maxSpeedX);
+						if (tileX <= tileItX)
+						{
+							for (int x = tileX; x < tileItX; x++)
+							{
+								Tile tile2 = Main.tile[x, tileY + 1];
+								if (tile2 == null)
+								{
+									tile2 = (Main.tile[x, tileY + 1] = new Tile());
+								}
+								if (x != tileX && !tile2.nactive())
+								{
+									newVelocity.Y -= 0.0325f;
+									newVelocity.X += (float)direction * 0.255f;
+								}
+							}
+						}
+						else if (tileX > tileItX)
+						{
+							for (int x2 = tileItX; x2 < tileX; x2++)
+							{
+								Tile tile3 = Main.tile[x2, tileY + 1];
+								if (tile3 == null)
+								{
+									tile3 = (Main.tile[x2, tileY + 1] = new Tile());
+								}
+								if (x2 != tileItX && !tile3.nactive())
+								{
+									newVelocity.Y -= 0.0325f;
+									newVelocity.X += (float)direction * 0.255f;
+								}
+							}
+						}
+					}
+				}
+				result = newVelocity;
+			}
+			catch (Exception e)
+			{
+				BaseUtility.LogFancy("Redemption~ ATTEMPT JUMP ERROR:", e);
+				result = velocity;
+			}
+			return result;
+		}
+
+		public static Vector2 AttemptJump(Vector2 position, Vector2 velocity, int width, int height, int direction, Vector2 vector, float directionY = 0f, int tileDistX = 3, int tileDistY = 4, float maxSpeedX = 1f, bool jumpUpPlatforms = false, bool ignoreTiles = false)
+		{
+			Vector2 result;
+			try
+			{
+				tileDistX -= 2;
+				Vector2 newVelocity = velocity;
+				int tileX = Math.Max(10, Math.Min(Main.maxTilesX - 10, (int)((position.X + (float)width * 0.5f + ((float)width * 0.5f + 8f) * (float)direction) / 16f)));
+				int tileY = Math.Max(10, Math.Min(Main.maxTilesY - 10, (int)((position.Y + (float)height - 15f) / 16f)));
+				int tileItX = Math.Max(10, Math.Min(Main.maxTilesX - 10, tileX + direction * tileDistX));
+				int tileItY = Math.Max(10, Math.Min(Main.maxTilesY - 10, tileY - tileDistY));
+				int lastY = tileY;
+				int tileHeight = (int)((float)height / 16f);
+				if (height > tileHeight * 16)
+				{
+					tileHeight++;
+				}
+				Rectangle hitbox = new Rectangle((int)position.X, (int)position.Y, width, height);
+				if (ignoreTiles && Math.Abs(position.X + (float)width * 0.5f - vector.X) < (float)(width + 120))
+				{
+					float dist = (float)((int)Math.Abs(position.Y + (float)height * 0.5f - vector.Y) / 16);
+					if (dist < (float)(tileDistY + 2))
+					{
+						newVelocity.Y = -8f + dist * -0.5f;
+					}
+				}
+				if (newVelocity.Y == velocity.Y)
+				{
+					for (int y = tileY; y >= tileItY; y--)
+					{
+						Tile tile = Main.tile[tileX, y];
+						Tile tileNear = Main.tile[Math.Min(Main.maxTilesX, tileX - direction), y];
+						if (tile == null)
+						{
+							tile = (Main.tile[tileX, y] = new Tile());
+						}
+						if (tileNear == null)
+						{
+							tileNear = (Main.tile[Math.Min(Main.maxTilesX, tileX - direction), y] = new Tile());
+						}
+						if (tile.nactive() && (y != tileY || (!tile.halfBrick() && tile.slope() == 0)) && Main.tileSolid[(int)tile.type] && (jumpUpPlatforms || !Main.tileSolidTop[(int)tile.type]))
+						{
+							if (!Main.tileSolidTop[(int)tile.type] && new Rectangle(tileX * 16, y * 16, 16, 16)
+							{
+								Y = hitbox.Y
+							}.Intersects(hitbox))
+							{
+								newVelocity = velocity;
+								break;
+							}
+							if (tileNear.nactive() && Main.tileSolid[(int)tileNear.type] && !Main.tileSolidTop[(int)tileNear.type])
+							{
+								newVelocity = velocity;
+								break;
+							}
+							if ((float)(y * 16) >= vector.Y)
+							{
+								lastY = y;
+								newVelocity.Y = -(5f + (float)(tileY - y) * ((tileY - y > 3) ? (1f - (float)(tileY - y - 2) * 0.0525f) : 1f));
+							}
+						}
+						else if (lastY - y >= tileHeight)
+						{
+							break;
+						}
+					}
+				}
+				if (newVelocity.Y == velocity.Y)
+				{
+					if (Main.tile[tileX, tileY + 1] == null)
+					{
+						Main.tile[tileX, tileY + 1] = new Tile();
+					}
+					if (Main.tile[tileX + direction, tileY + 1] == null)
+					{
+						Main.tile[tileX, tileY + 1] = new Tile();
+					}
+					if (Main.tile[tileX + direction, tileY + 2] == null)
+					{
+						Main.tile[tileX, tileY + 2] = new Tile();
+					}
+					if (directionY < 0f && (!Main.tile[tileX, tileY + 1].nactive() || !Main.tileSolid[(int)Main.tile[tileX, tileY + 1].type]) && (!Main.tile[tileX + direction, tileY + 1].nactive() || !Main.tileSolid[(int)Main.tile[tileX + direction, tileY + 1].type]) && (!Main.tile[tileX + direction, tileY + 2].nactive() || !Main.tileSolid[(int)Main.tile[tileX, tileY + 2].type] || vector.Y < (float)tileY * 16f))
 					{
 						newVelocity.Y = -8f;
 						newVelocity.X *= 1.5f * (1f / maxSpeedX);
@@ -6102,22 +6231,26 @@ namespace Redemption
 				Gore gore = Main.gore[goreID];
 				gore.scale = scale * 1.5f;
 				gore.velocity.X = ((rand.Next(2) == 0) ? (-(gore.velocity.X + 1.5f)) : (gore.velocity.X + 1.5f));
-				gore.velocity.Y = gore.velocity.Y + 1.5f;
+				Gore gore2 = gore;
+				gore2.velocity.Y = gore2.velocity.Y + 1.5f;
 				goreID = Gore.NewGore(vector, velocityDefault, Main.rand.Next(61, 64), 1f);
 				gore = Main.gore[goreID];
 				gore.scale = scale * 1.5f;
 				gore.velocity.X = ((rand.Next(2) == 0) ? (-(gore.velocity.X + 1.5f)) : (gore.velocity.X + 1.5f));
-				gore.velocity.Y = gore.velocity.Y + 1.5f;
+				Gore gore3 = gore;
+				gore3.velocity.Y = gore3.velocity.Y + 1.5f;
 				goreID = Gore.NewGore(vector, velocityDefault, Main.rand.Next(61, 64), 1f);
 				gore = Main.gore[goreID];
 				gore.scale = scale * 1.5f;
 				gore.velocity.X = ((rand.Next(2) == 0) ? (-(gore.velocity.X + 1.5f)) : (gore.velocity.X + 1.5f));
-				gore.velocity.Y = gore.velocity.Y + 1.5f;
+				Gore gore4 = gore;
+				gore4.velocity.Y = gore4.velocity.Y + 1.5f;
 				goreID = Gore.NewGore(vector, velocityDefault, Main.rand.Next(61, 64), 1f);
 				gore = Main.gore[goreID];
 				gore.scale = scale * 1.5f;
 				gore.velocity.X = ((rand.Next(2) == 0) ? (-(gore.velocity.X + 1.5f)) : (gore.velocity.X + 1.5f));
-				gore.velocity.Y = gore.velocity.Y + 1.5f;
+				Gore gore5 = gore;
+				gore5.velocity.Y = gore5.velocity.Y + 1.5f;
 			}
 		}
 

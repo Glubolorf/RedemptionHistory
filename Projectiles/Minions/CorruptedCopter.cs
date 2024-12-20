@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Redemption.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -50,9 +49,8 @@ namespace Redemption.Projectiles.Minions
 			}
 			Player player = Main.player[base.projectile.owner];
 			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
-			if (player.dead || !player.HasBuff(ModContent.BuffType<CorruptedCopterBuff>()))
+			if (player.dead || !modPlayer.corruptedCopter)
 			{
-				modPlayer.corruptedCopter = false;
 				base.projectile.Kill();
 			}
 			if (modPlayer.corruptedCopter)
@@ -72,7 +70,7 @@ namespace Redemption.Projectiles.Minions
 				base.projectile.localAI[0] = 1f;
 			}
 			base.projectile.localAI[1] += 1f;
-			if (RedeHelper.ClosestNPC(ref this.target, 1000f, base.projectile.Center, false, player.MinionAttackTargetNPC))
+			if (RedeHelper.ClosestNPC(ref this.target, 1000f, base.projectile.Center, false, player.MinionAttackTargetNPC, null))
 			{
 				Vector2 AttackPos = new Vector2((float)((base.projectile.Center.X > this.target.Center.X) ? 100 : -100), -100f);
 				this.MoveToVector3(AttackPos);

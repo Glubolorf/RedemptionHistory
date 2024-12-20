@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Redemption.Items.Placeable.Banners;
-using Redemption.NPCs;
+using Redemption.NPCs.PreHM;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -40,8 +40,7 @@ namespace Redemption.Tiles.Banners
 			if (closer)
 			{
 				Player localPlayer = Main.LocalPlayer;
-				localPlayer.NPCBannerBuff[ModContent.NPCType<StoneGolemAncient1>()] = true;
-				localPlayer.NPCBannerBuff[ModContent.NPCType<StoneGolemAncient2>()] = true;
+				localPlayer.NPCBannerBuff[ModContent.NPCType<AncientStoneGolem>()] = true;
 				localPlayer.hasBanner = true;
 			}
 		}

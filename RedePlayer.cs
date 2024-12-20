@@ -4,28 +4,40 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Redemption.Buffs;
+using Redemption.Buffs.Cooldowns;
+using Redemption.Buffs.Debuffs;
+using Redemption.Buffs.Minions;
 using Redemption.Buffs.Wasteland;
 using Redemption.Dusts;
 using Redemption.Items;
-using Redemption.Items.Armor.Costumes;
-using Redemption.Items.Cores;
-using Redemption.Items.DruidDamageClass;
-using Redemption.Items.LabThings;
-using Redemption.NPCs;
+using Redemption.Items.Accessories.HM;
+using Redemption.Items.Accessories.PostML;
+using Redemption.Items.Accessories.PreHM;
+using Redemption.Items.Armor.Cores;
+using Redemption.Items.Materials.PostML;
+using Redemption.Items.Placeable.Furniture.Lab;
+using Redemption.Items.Placeable.Furniture.Shade;
+using Redemption.Items.Weapons.PostML.Melee;
+using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.NPCs.Bosses.EaglecrestGolem;
-using Redemption.NPCs.Bosses.Nebuleus;
+using Redemption.NPCs.Bosses.Neb;
+using Redemption.NPCs.Bosses.Neb.Clone;
+using Redemption.NPCs.Bosses.Neb.Phase2;
 using Redemption.NPCs.Bosses.Thorn;
-using Redemption.NPCs.ChickenInvasion;
-using Redemption.NPCs.v08;
-using Redemption.Projectiles;
-using Redemption.Projectiles.DruidProjectiles;
-using Redemption.Projectiles.DruidProjectiles.Stave;
-using Redemption.Projectiles.v08;
+using Redemption.NPCs.ChickenInv;
+using Redemption.NPCs.Friendly;
+using Redemption.NPCs.PreHM;
+using Redemption.NPCs.Soulless;
+using Redemption.Projectiles.Druid;
+using Redemption.Projectiles.Druid.Stave;
+using Redemption.Projectiles.Magic;
+using Redemption.Projectiles.Melee;
+using Redemption.Projectiles.Misc;
 using Redemption.Walls;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Events;
-using Terraria.Graphics.Shaders;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -39,6 +51,8 @@ namespace Redemption
 		{
 			this.medKit = false;
 			this.galaxyHeart = false;
+			this.shadowBinderCharge = 0;
+			this.foundHall = false;
 		}
 
 		public override TagCompound Save()
@@ -52,8 +66,13 @@ namespace Redemption
 			{
 				boost.Add("galaxyHeart");
 			}
+			if (this.foundHall)
+			{
+				boost.Add("foundHall");
+			}
 			TagCompound tagCompound = new TagCompound();
 			tagCompound.Add("boost", boost);
+			tagCompound.Add("sbCharge", this.shadowBinderCharge);
 			return tagCompound;
 		}
 
@@ -62,6 +81,8 @@ namespace Redemption
 			IList<string> boost = tag.GetList<string>("boost");
 			this.medKit = boost.Contains("medicKit");
 			this.galaxyHeart = boost.Contains("galaxyHeart");
+			this.foundHall = boost.Contains("foundHall");
+			this.shadowBinderCharge = tag.GetInt("sbCharge");
 		}
 
 		public override void PostUpdateMiscEffects()
@@ -570,92 +591,38 @@ namespace Redemption
 			{
 				this.foundHall = true;
 			}
-			if (base.player.pulley)
-			{
-				this.ModDashMovement();
-			}
-			else if (base.player.grappling[0] == -1 && !base.player.tongued)
-			{
-				this.ModHorizontalMovement();
-				this.ModDashMovement();
-			}
-			if (Main.hasFocus)
-			{
-				for (int i = 0; i < this.modDoubleTapCardinalTimer.Length; i++)
-				{
-					this.modDoubleTapCardinalTimer[i]--;
-					if (this.modDoubleTapCardinalTimer[i] < 0)
-					{
-						this.modDoubleTapCardinalTimer[i] = 0;
-					}
-				}
-				for (int j = 0; j < 4; j++)
-				{
-					bool flag5 = false;
-					bool flag6 = false;
-					switch (j)
-					{
-					case 0:
-						flag5 = (base.player.controlDown && base.player.releaseDown);
-						flag6 = base.player.controlDown;
-						break;
-					case 1:
-						flag5 = (base.player.controlUp && base.player.releaseUp);
-						flag6 = base.player.controlUp;
-						break;
-					case 2:
-						flag5 = (base.player.controlRight && base.player.releaseRight);
-						flag6 = base.player.controlRight;
-						break;
-					case 3:
-						flag5 = (base.player.controlLeft && base.player.releaseLeft);
-						flag6 = base.player.controlLeft;
-						break;
-					}
-					if (flag5)
-					{
-						if (this.modDoubleTapCardinalTimer[j] > 0)
-						{
-							this.ModKeyDoubleTap(j);
-						}
-						else
-						{
-							this.modDoubleTapCardinalTimer[j] = 15;
-						}
-					}
-					if (flag6)
-					{
-						this.modHoldDownCardinalTimer[j]++;
-						base.player.KeyHoldDown(j, this.modHoldDownCardinalTimer[j]);
-					}
-					else
-					{
-						this.modHoldDownCardinalTimer[j] = 0;
-					}
-				}
-			}
-		}
-
-		public void ModKeyDoubleTap(int keyDir)
-		{
-			bool reversedUpDownArmorSetBonuses = Main.ReversedUpDownArmorSetBonuses;
 		}
 
 		public override void UpdateBiomeVisuals()
 		{
-			bool useFireC = NPC.AnyNPCs(ModContent.NPCType<NebuleusClone>());
-			bool useFire2C = NPC.AnyNPCs(ModContent.NPCType<BigNebuleusClone>());
-			bool useFire = NPC.AnyNPCs(ModContent.NPCType<Nebuleus>());
-			base.player.ManageSpecialBiomeVisuals("Redemption:Nebuleus", useFire || useFireC, default(Vector2));
-			bool useFire2 = NPC.AnyNPCs(ModContent.NPCType<BigNebuleus>());
-			base.player.ManageSpecialBiomeVisuals("Redemption:BigNebuleus", useFire2 || useFire2C, default(Vector2));
+			bool flag = BasePlayer.HasAccessory(base.player, ModContent.ItemType<GasMask>(), true, false) || BasePlayer.HasAccessory(base.player, ModContent.ItemType<HEVSuit>(), true, false);
+			bool useFireC = NPC.AnyNPCs(ModContent.NPCType<NebP1_Clone>());
+			bool useFire2C = NPC.AnyNPCs(ModContent.NPCType<NebP2_Clone>());
+			bool useFire = NPC.AnyNPCs(ModContent.NPCType<NebP1>());
+			base.player.ManageSpecialBiomeVisuals("Redemption:NebP1", useFire || useFireC, default(Vector2));
+			bool useFire2 = NPC.AnyNPCs(ModContent.NPCType<NebP2>());
+			base.player.ManageSpecialBiomeVisuals("Redemption:NebP2", useFire2 || useFire2C, default(Vector2));
 			bool useFire3 = NPC.AnyNPCs(ModContent.NPCType<Ukko>());
 			base.player.ManageSpecialBiomeVisuals("Redemption:Ukko", useFire3, default(Vector2));
 			base.player.ManageSpecialBiomeVisuals("Redemption:XenoSky", this.ZoneXeno || this.ZoneEvilXeno || this.ZoneEvilXeno2, base.player.Center);
-			if (!this.ZoneXeno && !this.ZoneEvilXeno && !this.ZoneEvilXeno2)
+			if (flag)
 			{
-				base.player.HasBuff(ModContent.BuffType<RadiationDebuff>());
+				Filter filter = Filters.Scene["MoR:FogOverlay"];
+				if (filter != null)
+				{
+					filter.GetShader().UseOpacity(0.25f).UseIntensity(0.6f).UseColor(Color.DarkOliveGreen).UseImage(ModContent.GetTexture("Redemption/Effects/Perlin"), 0, null);
+				}
 			}
+			else
+			{
+				Filter filter2 = Filters.Scene["MoR:FogOverlay"];
+				if (filter2 != null)
+				{
+					filter2.GetShader().UseOpacity(0.3f).UseIntensity(1f).UseColor(Color.DarkOliveGreen).UseImage(ModContent.GetTexture("Redemption/Effects/Perlin"), 0, null);
+				}
+			}
+			base.player.ManageSpecialBiomeVisuals("MoR:FogOverlay", this.ZoneXeno || this.ZoneEvilXeno || this.ZoneEvilXeno2 || this.irradiatedEffect >= 4, default(Vector2));
+			base.player.ManageSpecialBiomeVisuals("Redemption:SoullessSky", this.ZoneSoulless && !this.dreamsong, base.player.Center);
 		}
 
 		public override void UpdateBiomes()
@@ -665,12 +632,13 @@ namespace Redemption
 			this.ZoneEvilXeno2 = (RedeWorld.evilXenoBiome2 > 40);
 			this.ZoneLab = (RedeWorld.labBiome > 200);
 			this.ZoneSlayer = (RedeWorld.slayerBiome > 75);
+			this.ZoneSoulless = (RedeWorld.soullessBiome > 5);
 		}
 
 		public override bool CustomBiomesMatch(Player other)
 		{
 			RedePlayer modOther = other.GetModPlayer<RedePlayer>();
-			return this.ZoneXeno == modOther.ZoneXeno && this.ZoneEvilXeno == modOther.ZoneEvilXeno && this.ZoneEvilXeno2 == modOther.ZoneEvilXeno2 && this.ZoneLab == modOther.ZoneLab && this.ZoneSlayer == modOther.ZoneSlayer;
+			return this.ZoneXeno == modOther.ZoneXeno && this.ZoneEvilXeno == modOther.ZoneEvilXeno && this.ZoneEvilXeno2 == modOther.ZoneEvilXeno2 && this.ZoneLab == modOther.ZoneLab && this.ZoneSlayer == modOther.ZoneSlayer && this.ZoneSoulless == modOther.ZoneSoulless;
 		}
 
 		public override void CopyCustomBiomesTo(Player other)
@@ -681,6 +649,7 @@ namespace Redemption
 			modPlayer.ZoneEvilXeno2 = this.ZoneEvilXeno2;
 			modPlayer.ZoneLab = this.ZoneLab;
 			modPlayer.ZoneSlayer = this.ZoneSlayer;
+			modPlayer.ZoneSoulless = this.ZoneSoulless;
 		}
 
 		public override void SendCustomBiomes(BinaryWriter writer)
@@ -691,6 +660,7 @@ namespace Redemption
 			flags[2] = this.ZoneEvilXeno;
 			flags[3] = this.ZoneEvilXeno2;
 			flags[4] = this.ZoneSlayer;
+			flags[5] = this.ZoneSoulless;
 			writer.Write(flags);
 		}
 
@@ -715,6 +685,7 @@ namespace Redemption
 			this.ZoneEvilXeno = flags[2];
 			this.ZoneEvilXeno2 = flags[3];
 			this.ZoneSlayer = flags[4];
+			this.ZoneSoulless = flags[5];
 		}
 
 		public override void OnRespawn(Player player)
@@ -743,14 +714,12 @@ namespace Redemption
 			this.fasterSeedbags = false;
 			this.fasterSpirits = false;
 			this.moreSpirits = false;
-			this.rainbowCatPet = false;
 			this.golemWateringCan = false;
 			this.spiritHoming = false;
 			this.spiritChicken = false;
 			this.extraSeed = false;
 			this.spiritPierce = false;
 			this.frostburnSeedbag = false;
-			this.skeleMinion1 = false;
 			this.spiritSkull1 = false;
 			this.burnStaves = false;
 			this.seedHit = false;
@@ -759,9 +728,7 @@ namespace Redemption
 			this.sapphireBonus = false;
 			this.scarletBonus = false;
 			this.skeletonCan = false;
-			this.enjoyment = false;
 			this.ultraFlames = false;
-			RedePlayer.reflectProjs = false;
 			this.creationBonus = false;
 			this.druidBane = false;
 			this.chickenAccessoryPrevious = this.chickenAccessory;
@@ -802,18 +769,6 @@ namespace Redemption
 			this.hazmatAccessory = (this.hazmatHideVanity = (this.hazmatForceVanity = (this.hazmatPower = false)));
 			this.skeletonFriendly = false;
 			this.xeniumMinion = false;
-			this.xeniumMinion1 = false;
-			this.xeniumMinion2 = false;
-			this.xeniumMinion3 = false;
-			this.xeniumMinion4 = false;
-			this.xeniumMinion5 = false;
-			this.xeniumMinion6 = false;
-			this.xeniumMinion7 = false;
-			this.xeniumMinion8 = false;
-			this.xeniumMinion9 = false;
-			this.xeniumMinion10 = false;
-			this.xeniumMinion11 = false;
-			this.xeniumMinion12 = false;
 			this.xeniumDischarge = false;
 			this.xeniumBarrier = false;
 			this.labWaterImmune = false;
@@ -830,7 +785,6 @@ namespace Redemption
 			this.moltenEruption = false;
 			this.staveQuadShot = false;
 			this.lifeSteal1 = false;
-			this.plasmaShield = false;
 			this.eldritchRoot = false;
 			this.sleepPowder = false;
 			this.vendetta = false;
@@ -851,8 +805,6 @@ namespace Redemption
 			this.smallShadeSet = false;
 			this.shadeSet = false;
 			this.forestFriendly = false;
-			this.infectedThornshield = false;
-			this.dashMod = 0;
 			this.girusCloaked = false;
 			this.girusCloakTimer = 0;
 			this.hairLoss = false;
@@ -878,7 +830,9 @@ namespace Redemption
 			this.spiritGolemCross = false;
 			this.lacerated = false;
 			this.ukkonenMinion = false;
+			this.dreamsong = false;
 			this.cursedThornSet = false;
+			this.shadowBinder = false;
 			this.xenomiteSet = false;
 			this.corruptedXenomiteSet = false;
 			this.seedLifeTime = 1f;
@@ -890,302 +844,20 @@ namespace Redemption
 			this.omegaPower = false;
 			this.halPet = false;
 			this.tiedPet = false;
+			this.lantardPet = false;
 			this.tbotEyes = false;
-		}
-
-		public void ModDashMovement()
-		{
-			if (this.dashMod == 1 && this.dashDelayMod < 0 && base.player.whoAmI == Main.myPlayer)
-			{
-				Rectangle rectangle = new Rectangle((int)((double)base.player.position.X + (double)base.player.velocity.X * 0.5 - 4.0), (int)((double)base.player.position.Y + (double)base.player.velocity.Y * 0.5 - 4.0), base.player.width + 8, base.player.height + 8);
-				for (int i = 0; i < 200; i++)
-				{
-					if (Main.npc[i].active && !Main.npc[i].dontTakeDamage && !Main.npc[i].friendly && Main.npc[i].immune[base.player.whoAmI] <= 0)
-					{
-						NPC nPC = Main.npc[i];
-						Rectangle rect = nPC.getRect();
-						DruidDamagePlayer modPlayer = DruidDamagePlayer.ModPlayer(base.player);
-						if (rectangle.Intersects(rect) && (nPC.noTileCollide || base.player.CanHit(nPC)))
-						{
-							float num = 40f;
-							float num2 = 8f;
-							bool crit = false;
-							if (base.player.kbGlove)
-							{
-								num2 *= 2f;
-							}
-							if (base.player.kbBuff)
-							{
-								num2 *= 1.5f;
-							}
-							if (Main.rand.Next(100) < modPlayer.druidCrit)
-							{
-								crit = true;
-							}
-							int direction = base.player.direction;
-							if (base.player.velocity.X < 0f)
-							{
-								direction = -1;
-							}
-							if (base.player.velocity.X > 0f)
-							{
-								direction = 1;
-							}
-							base.player.velocity.X = -base.player.velocity.X;
-							if (base.player.whoAmI == Main.myPlayer)
-							{
-								base.player.ApplyDamageToNPC(nPC, (int)num, num2, direction, crit);
-								nPC.AddBuff(39, 300, false);
-							}
-							nPC.immune[base.player.whoAmI] = 6;
-							base.player.immune = true;
-							base.player.immuneNoBlink = true;
-							base.player.immuneTime = 8;
-						}
-					}
-				}
-			}
-			if (this.dashDelayMod > 0)
-			{
-				if (base.player.eocDash > 0)
-				{
-					base.player.eocDash--;
-				}
-				if (base.player.eocDash == 0)
-				{
-					base.player.eocHit = -1;
-				}
-				this.dashDelayMod--;
-				return;
-			}
-			if (this.dashDelayMod < 0)
-			{
-				float num3 = 12f;
-				float num4 = 0.992f;
-				float num5 = Math.Max(base.player.accRunSpeed, base.player.maxRunSpeed);
-				float num6 = 0.96f;
-				int num7 = 20;
-				if (this.dashMod == 1)
-				{
-					for (int j = 0; j < 2; j++)
-					{
-						int num8;
-						if (base.player.velocity.Y == 0f)
-						{
-							num8 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y + (float)base.player.height - 4f), base.player.width, 8, 74, 0f, 0f, 100, default(Color), 1.4f);
-						}
-						else
-						{
-							num8 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y + (float)(base.player.height / 2) - 8f), base.player.width, 16, 74, 0f, 0f, 100, default(Color), 1.4f);
-						}
-						Main.dust[num8].velocity *= 0.1f;
-						Main.dust[num8].scale *= 1f + (float)Main.rand.Next(20) * 0.01f;
-						Main.dust[num8].shader = GameShaders.Armor.GetSecondaryShader(base.player.cShoe, base.player);
-					}
-				}
-				if (this.dashMod > 0)
-				{
-					base.player.vortexStealthActive = false;
-					if (base.player.velocity.X > num3 || base.player.velocity.X < -num3)
-					{
-						base.player.velocity.X = base.player.velocity.X * num4;
-						return;
-					}
-					if (base.player.velocity.X > num5 || base.player.velocity.X < -num5)
-					{
-						base.player.velocity.X = base.player.velocity.X * num6;
-						return;
-					}
-					this.dashDelayMod = num7;
-					if (base.player.velocity.X < 0f)
-					{
-						base.player.velocity.X = -num5;
-						return;
-					}
-					if (base.player.velocity.X > 0f)
-					{
-						base.player.velocity.X = num5;
-						return;
-					}
-				}
-			}
-			else if (this.dashMod > 0 && !base.player.mount.Active && this.dashMod == 1)
-			{
-				int num9 = 0;
-				bool flag = false;
-				if (this.dashTimeMod > 0)
-				{
-					this.dashTimeMod--;
-				}
-				if (this.dashTimeMod < 0)
-				{
-					this.dashTimeMod++;
-				}
-				if (base.player.controlRight && base.player.releaseRight)
-				{
-					if (this.dashTimeMod > 0)
-					{
-						num9 = 1;
-						flag = true;
-						this.dashTimeMod = 0;
-					}
-					else
-					{
-						this.dashTimeMod = 15;
-					}
-				}
-				else if (base.player.controlLeft && base.player.releaseLeft)
-				{
-					if (this.dashTimeMod < 0)
-					{
-						num9 = -1;
-						flag = true;
-						this.dashTimeMod = 0;
-					}
-					else
-					{
-						this.dashTimeMod = -15;
-					}
-				}
-				if (flag)
-				{
-					base.player.velocity.X = 16.9f * (float)num9;
-					Point point = Utils.ToTileCoordinates(base.player.Center + new Vector2((float)(num9 * base.player.width / 2 + 2), base.player.gravDir * (float)(-(float)base.player.height) / 2f + base.player.gravDir * 2f));
-					Point point2 = Utils.ToTileCoordinates(base.player.Center + new Vector2((float)(num9 * base.player.width / 2 + 2), 0f));
-					if (WorldGen.SolidOrSlopedTile(point.X, point.Y) || WorldGen.SolidOrSlopedTile(point2.X, point2.Y))
-					{
-						base.player.velocity.X = base.player.velocity.X / 2f;
-					}
-					this.dashDelayMod = -1;
-					for (int num10 = 0; num10 < 20; num10++)
-					{
-						int num11 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y), base.player.width, base.player.height, 74, 0f, 0f, 100, default(Color), 2f);
-						Dust expr_CDB_cp_0 = Main.dust[num11];
-						expr_CDB_cp_0.position.X = expr_CDB_cp_0.position.X + (float)Main.rand.Next(-5, 6);
-						Dust expr_D02_cp_0 = Main.dust[num11];
-						expr_D02_cp_0.position.Y = expr_D02_cp_0.position.Y + (float)Main.rand.Next(-5, 6);
-						Main.dust[num11].velocity *= 0.2f;
-						Main.dust[num11].scale *= 1f + (float)Main.rand.Next(20) * 0.01f;
-						Main.dust[num11].shader = GameShaders.Armor.GetSecondaryShader(base.player.cShoe, base.player);
-					}
-					return;
-				}
-			}
-		}
-
-		public void ModHorizontalMovement()
-		{
-			float num = (base.player.accRunSpeed + base.player.maxRunSpeed) / 2f;
-			if (base.player.controlLeft && base.player.velocity.X > -base.player.accRunSpeed && this.dashDelayMod >= 0)
-			{
-				if (base.player.mount.Active && base.player.mount.Cart)
-				{
-					if (base.player.velocity.X < 0f)
-					{
-						base.player.direction = -1;
-					}
-				}
-				else if ((base.player.itemAnimation == 0 || base.player.inventory[base.player.selectedItem].useTurn) && base.player.mount.AllowDirectionChange)
-				{
-					base.player.direction = -1;
-				}
-				if (base.player.velocity.Y == 0f || base.player.wingsLogic > 0 || base.player.mount.CanFly)
-				{
-					if (base.player.velocity.X > base.player.runSlowdown)
-					{
-						base.player.velocity.X = base.player.velocity.X - base.player.runSlowdown;
-					}
-					base.player.velocity.X = base.player.velocity.X - base.player.runAcceleration * 0.2f;
-					if (base.player.wingsLogic > 0)
-					{
-						base.player.velocity.X = base.player.velocity.X - base.player.runAcceleration * 0.2f;
-					}
-				}
-				if (base.player.onWrongGround)
-				{
-					if (base.player.velocity.X < base.player.runSlowdown)
-					{
-						base.player.velocity.X = base.player.velocity.X + base.player.runSlowdown;
-					}
-					else
-					{
-						base.player.velocity.X = 0f;
-					}
-				}
-				if (base.player.velocity.X < -num && base.player.velocity.Y == 0f && !base.player.mount.Active)
-				{
-					int num2 = 0;
-					if (base.player.gravDir == -1f)
-					{
-						num2 -= base.player.height;
-					}
-					if (this.dashMod == 1)
-					{
-						int num3 = Dust.NewDust(new Vector2(base.player.position.X - 4f, base.player.position.Y + (float)base.player.height + (float)num2), base.player.width + 8, 4, 74, -base.player.velocity.X * 0.5f, base.player.velocity.Y * 0.5f, 50, default(Color), 1.5f);
-						Main.dust[num3].velocity.X = Main.dust[num3].velocity.X * 0.2f;
-						Main.dust[num3].velocity.Y = Main.dust[num3].velocity.Y * 0.2f;
-						Main.dust[num3].shader = GameShaders.Armor.GetSecondaryShader(base.player.cShoe, base.player);
-						return;
-					}
-				}
-			}
-			else if (base.player.controlRight && base.player.velocity.X < base.player.accRunSpeed && this.dashDelayMod >= 0)
-			{
-				if (base.player.mount.Active && base.player.mount.Cart)
-				{
-					if (base.player.velocity.X > 0f)
-					{
-						base.player.direction = -1;
-					}
-				}
-				else if ((base.player.itemAnimation == 0 || base.player.inventory[base.player.selectedItem].useTurn) && base.player.mount.AllowDirectionChange)
-				{
-					base.player.direction = 1;
-				}
-				if (base.player.velocity.Y == 0f || base.player.wingsLogic > 0 || base.player.mount.CanFly)
-				{
-					if (base.player.velocity.X < -base.player.runSlowdown)
-					{
-						base.player.velocity.X = base.player.velocity.X + base.player.runSlowdown;
-					}
-					base.player.velocity.X = base.player.velocity.X + base.player.runAcceleration * 0.2f;
-					if (base.player.wingsLogic > 0)
-					{
-						base.player.velocity.X = base.player.velocity.X + base.player.runAcceleration * 0.2f;
-					}
-				}
-				if (base.player.onWrongGround)
-				{
-					if (base.player.velocity.X > base.player.runSlowdown)
-					{
-						base.player.velocity.X = base.player.velocity.X - base.player.runSlowdown;
-					}
-					else
-					{
-						base.player.velocity.X = 0f;
-					}
-				}
-				if (base.player.velocity.X > num && base.player.velocity.Y == 0f && !base.player.mount.Active)
-				{
-					int num4 = 0;
-					if (base.player.gravDir == -1f)
-					{
-						num4 -= base.player.height;
-					}
-					if (this.dashMod == 1)
-					{
-						int num5 = Dust.NewDust(new Vector2(base.player.position.X - 4f, base.player.position.Y + (float)base.player.height + (float)num4), base.player.width + 8, 4, 74, -base.player.velocity.X * 0.5f, base.player.velocity.Y * 0.5f, 50, default(Color), 1.5f);
-						Main.dust[num5].velocity.X = Main.dust[num5].velocity.X * 0.2f;
-						Main.dust[num5].velocity.Y = Main.dust[num5].velocity.Y * 0.2f;
-						Main.dust[num5].shader = GameShaders.Armor.GetSecondaryShader(base.player.cShoe, base.player);
-					}
-				}
-			}
+			this.zapField = false;
+			this.dreambound = false;
+			this.brokenBlade = false;
+			this.trueMeleeDamage = 1f;
+			this.snipped = false;
+			this.anglerPot = false;
+			this.consecutiveStrikes = false;
+			this.earthbind = false;
 		}
 
 		public override void UpdateDead()
 		{
-			this.enjoyment = false;
 			this.ultraFlames = false;
 			this.druidBane = false;
 			this.holyFire = false;
@@ -1197,23 +869,14 @@ namespace Redemption
 			this.hairLoss = false;
 			this.irradiatedEffect = 0;
 			this.girusCloakTimer = 0;
-			Redemption.templeOfHeroes = false;
 			this.bileDebuff = false;
 			this.bioweaponDebuff = false;
 			this.lacerated = false;
+			this.earthbind = false;
 		}
 
 		public override void UpdateBadLifeRegen()
 		{
-			if (this.enjoyment)
-			{
-				if (base.player.lifeRegen > 0)
-				{
-					base.player.lifeRegen = 0;
-				}
-				base.player.lifeRegenTime = 0;
-				base.player.lifeRegen -= 15;
-			}
 			if (this.ultraFlames)
 			{
 				if (base.player.lifeRegen > 0)
@@ -1249,15 +912,6 @@ namespace Redemption
 				}
 				base.player.lifeRegenTime = 0;
 				base.player.lifeRegen -= 500;
-			}
-			if (this.enjoyment)
-			{
-				if (base.player.lifeRegen > 0)
-				{
-					base.player.lifeRegen = 0;
-				}
-				base.player.lifeRegenTime = 0;
-				base.player.lifeRegen -= 15;
 			}
 			if (this.sleepPowder)
 			{
@@ -1315,7 +969,7 @@ namespace Redemption
 			}
 		}
 
-		public override void SetupStartInventory(IList<Item> items)
+		public override void SetupStartInventory(IList<Item> items, bool mediumcoreDeath)
 		{
 			if (RedeConfigClient.Instance.StarterCore)
 			{
@@ -1363,14 +1017,26 @@ namespace Redemption
 			{
 				base.player.AddBuff(ModContent.BuffType<HEVSuitBuff>(), 60, true);
 			}
+			if (this.snipped)
+			{
+				if (base.player.mount.CanFly)
+				{
+					base.player.mount.Dismount(base.player);
+				}
+				base.player.wingTimeMax /= 2;
+				if (base.player.wingTime > (float)base.player.wingTimeMax)
+				{
+					base.player.wingTime = (float)base.player.wingTimeMax;
+				}
+			}
 		}
 
-		public override void ModifyDrawHeadLayers(List<PlayerHeadLayer> layers)
+		public override void ModifyDrawInfo(ref PlayerDrawInfo drawInfo)
 		{
 			if (this.hairLoss)
 			{
-				layers.Remove(PlayerHeadLayer.Hair);
-				layers.Remove(PlayerHeadLayer.AltHair);
+				drawInfo.drawHair = false;
+				drawInfo.drawAltHair = false;
 			}
 		}
 
@@ -1398,84 +1064,84 @@ namespace Redemption
 
 		public override void DrawEffects(PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
 		{
-			if (this.enjoyment && Main.rand.Next(4) == 0 && drawInfo.shadow == 0f)
+			if (this.ultraFlames && Main.rand.Next(2) == 0 && drawInfo.shadow == 0f)
 			{
-				int dust = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 243, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
+				int dust = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 92, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
 				Main.dust[dust].noGravity = true;
 				Main.dust[dust].velocity *= 1.8f;
 				Dust dust10 = Main.dust[dust];
 				dust10.velocity.Y = dust10.velocity.Y - 0.5f;
 				Main.playerDrawDust.Add(dust);
 			}
-			if (this.ultraFlames && Main.rand.Next(2) == 0 && drawInfo.shadow == 0f)
+			if (this.druidBane && Main.rand.Next(2) == 0 && drawInfo.shadow == 0f)
 			{
-				int dust2 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 92, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
+				int dust2 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 163, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
 				Main.dust[dust2].noGravity = true;
 				Main.dust[dust2].velocity *= 1.8f;
 				Dust dust11 = Main.dust[dust2];
 				dust11.velocity.Y = dust11.velocity.Y - 0.5f;
 				Main.playerDrawDust.Add(dust2);
 			}
-			if (this.druidBane && Main.rand.Next(2) == 0 && drawInfo.shadow == 0f)
+			if (this.holyFire && Main.rand.Next(2) == 0 && drawInfo.shadow == 0f)
 			{
-				int dust3 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 163, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
+				int dust3 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 64, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 2f);
 				Main.dust[dust3].noGravity = true;
 				Main.dust[dust3].velocity *= 1.8f;
 				Dust dust12 = Main.dust[dust3];
 				dust12.velocity.Y = dust12.velocity.Y - 0.5f;
 				Main.playerDrawDust.Add(dust3);
 			}
-			if (this.holyFire && Main.rand.Next(2) == 0 && drawInfo.shadow == 0f)
+			if (this.bileDebuff && Main.rand.Next(4) == 0 && drawInfo.shadow == 0f)
 			{
-				int dust4 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 64, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 2f);
+				int dust4 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 74, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
 				Main.dust[dust4].noGravity = true;
 				Main.dust[dust4].velocity *= 1.8f;
 				Dust dust13 = Main.dust[dust4];
 				dust13.velocity.Y = dust13.velocity.Y - 0.5f;
 				Main.playerDrawDust.Add(dust4);
 			}
-			if (this.bileDebuff && Main.rand.Next(4) == 0 && drawInfo.shadow == 0f)
-			{
-				int dust5 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 74, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
-				Main.dust[dust5].noGravity = true;
-				Main.dust[dust5].velocity *= 1.8f;
-				Dust dust14 = Main.dust[dust5];
-				dust14.velocity.Y = dust14.velocity.Y - 0.5f;
-				Main.playerDrawDust.Add(dust5);
-			}
 			if (this.bioweaponDebuff)
 			{
 				if (Main.rand.Next(15) == 0 && drawInfo.shadow == 0f)
 				{
-					int dust6 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 74, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
+					int dust5 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 74, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
+					Main.dust[dust5].noGravity = true;
+					Main.dust[dust5].velocity *= 1.8f;
+					Dust dust14 = Main.dust[dust5];
+					dust14.velocity.Y = dust14.velocity.Y - 0.5f;
+					Main.playerDrawDust.Add(dust5);
+				}
+				if (Main.rand.Next(10) == 0 && drawInfo.shadow == 0f)
+				{
+					int dust6 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 31, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
 					Main.dust[dust6].noGravity = true;
 					Main.dust[dust6].velocity *= 1.8f;
 					Dust dust15 = Main.dust[dust6];
 					dust15.velocity.Y = dust15.velocity.Y - 0.5f;
 					Main.playerDrawDust.Add(dust6);
 				}
-				if (Main.rand.Next(10) == 0 && drawInfo.shadow == 0f)
-				{
-					int dust7 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 31, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
-					Main.dust[dust7].noGravity = true;
-					Main.dust[dust7].velocity *= 1.8f;
-					Dust dust16 = Main.dust[dust7];
-					dust16.velocity.Y = dust16.velocity.Y - 0.5f;
-					Main.playerDrawDust.Add(dust7);
-				}
 			}
 			if (base.player.HasBuff(ModContent.BuffType<SoulboundBuff>()) && Main.rand.Next(5) == 0 && drawInfo.shadow == 0f)
 			{
-				int dust8 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 20, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
+				int dust7 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 20, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
+				Main.dust[dust7].noGravity = true;
+				Main.dust[dust7].velocity *= 1.8f;
+				Dust dust16 = Main.dust[dust7];
+				dust16.velocity.Y = dust16.velocity.Y - 0.5f;
+				Main.playerDrawDust.Add(dust7);
+			}
+			if (base.player.HasBuff(ModContent.BuffType<ShadeboundBuff>()) && Main.rand.Next(5) == 0 && drawInfo.shadow == 0f)
+			{
+				int dust8 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, ModContent.DustType<VoidFlame>(), base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.8f);
 				Main.dust[dust8].noGravity = true;
 				Main.dust[dust8].velocity *= 1.8f;
 				Dust dust17 = Main.dust[dust8];
 				dust17.velocity.Y = dust17.velocity.Y - 0.5f;
 				Main.playerDrawDust.Add(dust8);
 			}
-			if (base.player.HasBuff(ModContent.BuffType<ShadeboundBuff>()) && Main.rand.Next(5) == 0 && drawInfo.shadow == 0f)
+			if (base.player.HasBuff(ModContent.BuffType<StaticStunDebuff>()) && Main.rand.Next(4) == 0 && drawInfo.shadow == 0f)
 			{
-				int dust9 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, ModContent.DustType<VoidFlame>(), base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.8f);
+				int dust9 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 226, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.8f);
 				Main.dust[dust9].noGravity = true;
 				Main.dust[dust9].velocity *= 1.8f;
 				Dust dust18 = Main.dust[dust9];
@@ -1486,8 +1152,26 @@ namespace Redemption
 
 		public override void ModifyDrawLayers(List<PlayerLayer> layers)
 		{
-			RedePlayer.MiscEffectsFront.visible = true;
-			layers.Insert(0, RedePlayer.MiscEffectsFront);
+			if (this.hairLoss)
+			{
+				foreach (PlayerLayer playerLayer in layers)
+				{
+					if (playerLayer == PlayerLayer.Head)
+					{
+						playerLayer.visible = false;
+					}
+				}
+			}
+			if (this.earthbind)
+			{
+				RedePlayer.EarthbindLayer.visible = true;
+				layers.Add(RedePlayer.EarthbindLayer);
+			}
+			if (base.player.HeldItem.type == ModContent.ItemType<SneakloneRemote>())
+			{
+				RedePlayer.MissileLauncherLayer.visible = true;
+				layers.Insert(0, RedePlayer.MissileLauncherLayer);
+			}
 		}
 
 		public override void OnEnterWorld(Player player)
@@ -1496,6 +1180,35 @@ namespace Redemption
 			{
 				Main.NewText("Also download 'Mod of Redemption: Music Pack' from the Mod Browser or perish.", 244, 71, byte.MaxValue, false);
 			}
+		}
+
+		public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		{
+			if (this.thornCirclet && !item.summon)
+			{
+				this.thornCircletCounter++;
+				if (this.thornCircletCounter >= 5)
+				{
+					for (int i = 0; i < Main.rand.Next(2, 6); i++)
+					{
+						Projectile.NewProjectile(base.player.Center, RedeHelper.PolarVector(Utils.NextFloat(Main.rand, 7f, 13f), Utils.ToRotation(Main.MouseWorld - base.player.Center) + Utils.NextFloat(Main.rand, -0.2f, 0.2f)), ModContent.ProjectileType<StingerFriendly>(), damage, knockBack, Main.myPlayer, 0f, 0f);
+					}
+					this.thornCircletCounter = 0;
+				}
+			}
+			if (this.thornCrown && !item.summon)
+			{
+				this.thornCircletCounter++;
+				if (this.thornCircletCounter >= 5)
+				{
+					for (int j = 0; j < Main.rand.Next(3, 7); j++)
+					{
+						Projectile.NewProjectile(base.player.Center, RedeHelper.PolarVector(Utils.NextFloat(Main.rand, 8f, 17f), Utils.ToRotation(Main.MouseWorld - base.player.Center) + Utils.NextFloat(Main.rand, -0.2f, 0.2f)), 484, damage, knockBack, Main.myPlayer, 0f, 0f);
+					}
+					this.thornCircletCounter = 0;
+				}
+			}
+			return base.Shoot(item, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
 		}
 
 		public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
@@ -1524,6 +1237,7 @@ namespace Redemption
 
 		public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
 		{
+			damage = (int)((float)damage * this.trueMeleeDamage);
 			if (base.player.HasBuff(ModContent.BuffType<BioweaponFlaskBuff>()))
 			{
 				target.AddBuff(ModContent.BuffType<BioweaponDebuff>(), 900, false);
@@ -1567,7 +1281,7 @@ namespace Redemption
 			{
 				Projectile.NewProjectile(target.Center.X, target.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)Main.rand.Next(-11, 0), ModContent.ProjectileType<BloodOrbPro3>(), 0, 0f, Main.myPlayer, 0f, 0f);
 			}
-			if (this.cursedShinkiteSet && Main.rand.Next(6) == 0)
+			if (this.cursedShinkiteSet && Main.rand.Next(6) == 0 && proj.type != ModContent.ProjectileType<CursedExp>())
 			{
 				Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, 0f, ModContent.ProjectileType<CursedExp>(), 100, 0f, Main.myPlayer, 0f, 0f);
 			}
@@ -1663,7 +1377,20 @@ namespace Redemption
 			{
 				Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, 0f, ModContent.ProjectileType<AkkaSeedF>(), 400, 3f, Main.myPlayer, 0f, 0f);
 			}
-			if (this.xenomiteSet && crit && Main.rand.Next(2) == 0)
+			if (this.shadowBinder && target.life <= 0 && target.lifeMax >= 5000)
+			{
+				for (int index = 0; index < 10; index++)
+				{
+					Dust dust = Dust.NewDustDirect(new Vector2(target.position.X, target.position.Y), target.width, target.height, 20, 0f, 0f, 100, default(Color), 2f);
+					dust.velocity = -base.player.DirectionTo(dust.position) * 20f;
+					dust.noGravity = true;
+				}
+				if (this.shadowBinderCharge < 100)
+				{
+					this.shadowBinderCharge++;
+				}
+			}
+			if (this.xenomiteSet && crit && proj.type != ModContent.ProjectileType<XenoYoyoShard>() && Main.rand.Next(2) == 0)
 			{
 				for (int i = 0; i < 6; i++)
 				{
@@ -1671,7 +1398,7 @@ namespace Redemption
 					Main.projectile[p].melee = false;
 				}
 			}
-			if (this.corruptedXenomiteSet && crit)
+			if (this.corruptedXenomiteSet && crit && proj.type != ModContent.ProjectileType<PhantomDagger>())
 			{
 				Projectile.NewProjectile(new Vector2(base.player.Center.X, base.player.Center.Y), RedeHelper.PolarVector(20f, Utils.ToRotation(Main.MouseWorld - base.player.Center)), ModContent.ProjectileType<PhantomDagger>(), 140, 3f, Main.myPlayer, 0f, 0f);
 			}
@@ -1753,6 +1480,19 @@ namespace Redemption
 			{
 				NPC.NewNPC((int)target.Center.X, (int)target.Center.Y, 288, 0, 0f, 0f, 0f, 0f, 255);
 			}
+			if (this.shadowBinder && target.life <= 0 && target.lifeMax >= 5000)
+			{
+				for (int index = 0; index < 10; index++)
+				{
+					Dust dust = Dust.NewDustDirect(new Vector2(target.position.X, target.position.Y), target.width, target.height, 20, 0f, 0f, 100, default(Color), 2f);
+					dust.velocity = -base.player.DirectionTo(dust.position) * 20f;
+					dust.noGravity = true;
+				}
+				if (this.shadowBinderCharge < 100)
+				{
+					this.shadowBinderCharge++;
+				}
+			}
 			if (this.xenomiteSet && crit && Main.rand.Next(2) == 0)
 			{
 				for (int i = 0; i < 6; i++)
@@ -1765,17 +1505,9 @@ namespace Redemption
 			{
 				Projectile.NewProjectile(new Vector2(base.player.Center.X, base.player.Center.Y), RedeHelper.PolarVector(20f, Utils.ToRotation(Main.MouseWorld - base.player.Center)), ModContent.ProjectileType<PhantomDagger>(), 140, 3f, Main.myPlayer, 0f, 0f);
 			}
-		}
-
-		public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref bool crit)
-		{
-			if (this.plasmaShield && Main.rand.Next(4) == 0)
+			if (this.brokenBlade && base.player.ownedProjectileCounts[ModContent.ProjectileType<PhantomCleaverF>()] == 0 && RedeHelper.Chance(0.1f))
 			{
-				projectile.damage = damage * 2;
-				projectile.velocity.X = -projectile.velocity.X;
-				projectile.velocity.Y = -projectile.velocity.Y;
-				projectile.friendly = true;
-				projectile.hostile = false;
+				Projectile.NewProjectile(new Vector2(target.Center.X, target.position.Y - 200f), Vector2.Zero, ModContent.ProjectileType<PhantomCleaverF>(), item.damage * 3, item.knockBack, Main.myPlayer, (float)target.whoAmI, 0f);
 			}
 		}
 
@@ -1805,10 +1537,6 @@ namespace Redemption
 			{
 				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " was baned by the druids");
 			}
-			if (base.player.FindBuffIndex(ModContent.BuffType<EnjoymentDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-			{
-				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " finally discovered happiness");
-			}
 			if (base.player.FindBuffIndex(ModContent.BuffType<GloomShroomDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
 			{
 				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got gloomed");
@@ -1816,10 +1544,6 @@ namespace Redemption
 			if (base.player.FindBuffIndex(ModContent.BuffType<UltraFlameDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
 			{
 				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got melted to the bone");
-			}
-			if (base.player.FindBuffIndex(ModContent.BuffType<XenomiteSkullDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
-			{
-				damageSource = PlayerDeathReason.ByCustomReason("The lab's defensive systems overwhelmed " + base.player.name + " with intense energy");
 			}
 			if (base.player.FindBuffIndex(ModContent.BuffType<BlackenedHeartDebuff>()) != -1 && damage == 10.0 && hitDirection == 0 && damageSource.SourceOtherIndex == 8)
 			{
@@ -1841,15 +1565,7 @@ namespace Redemption
 			{
 				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got blobble'd!");
 			}
-			if (damageSource.SourceNPCIndex >= 0 && Main.npc[damageSource.SourceNPCIndex].type == ModContent.NPCType<ChickenCultist>())
-			{
-				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got pecked to death");
-			}
-			if (damageSource.SourceNPCIndex >= 0 && Main.npc[damageSource.SourceNPCIndex].type == ModContent.NPCType<ChickenMan>())
-			{
-				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got pecked to death");
-			}
-			if (damageSource.SourceNPCIndex >= 0 && Main.npc[damageSource.SourceNPCIndex].type == ModContent.NPCType<ShieldedChickenMan>())
+			if (damageSource.SourceNPCIndex >= 0 && (Main.npc[damageSource.SourceNPCIndex].type == ModContent.NPCType<ChickenCultist>() || Main.npc[damageSource.SourceNPCIndex].type == ModContent.NPCType<ChickenMan>() || Main.npc[damageSource.SourceNPCIndex].type == ModContent.NPCType<ShieldedChickenMan>()))
 			{
 				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got pecked to death");
 			}
@@ -1881,40 +1597,61 @@ namespace Redemption
 					Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
 				}
 			}
-			if (this.omegaPower && base.player.wet && !base.player.lavaWet && !base.player.honeyWet)
+			if (this.omegaPower)
 			{
+				playSound = false;
+				genGore = false;
 				Main.PlaySound(SoundID.Item14, base.player.position);
-				for (int k = 0; k < 30; k++)
+				if (base.player.wet && !base.player.lavaWet && !base.player.honeyWet)
 				{
-					int dustIndex5 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y), base.player.width, base.player.height, 31, 0f, 0f, 100, default(Color), 5f);
-					Main.dust[dustIndex5].velocity *= 1.4f;
+					for (int k = 0; k < 30; k++)
+					{
+						int dustIndex5 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y), base.player.width, base.player.height, 31, 0f, 0f, 100, default(Color), 5f);
+						Main.dust[dustIndex5].velocity *= 1.4f;
+					}
+					for (int l = 0; l < 40; l++)
+					{
+						int dustIndex6 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y), base.player.width, base.player.height, 6, 0f, 0f, 100, default(Color), 3f);
+						Main.dust[dustIndex6].noGravity = true;
+						Main.dust[dustIndex6].velocity *= 5f;
+						dustIndex6 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y), base.player.width, base.player.height, 6, 0f, 0f, 100, default(Color), 2f);
+						Main.dust[dustIndex6].velocity *= 3f;
+					}
+					for (int g2 = 0; g2 < 2; g2++)
+					{
+						int goreIndex2 = Gore.NewGore(new Vector2(base.player.position.X + (float)(base.player.width / 2) - 24f, base.player.position.Y + (float)(base.player.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+						Main.gore[goreIndex2].scale = 1.5f;
+						Main.gore[goreIndex2].velocity.X = Main.gore[goreIndex2].velocity.X + 1.5f;
+						Main.gore[goreIndex2].velocity.Y = Main.gore[goreIndex2].velocity.Y + 1.5f;
+						goreIndex2 = Gore.NewGore(new Vector2(base.player.position.X + (float)(base.player.width / 2) - 24f, base.player.position.Y + (float)(base.player.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+						Main.gore[goreIndex2].scale = 1.5f;
+						Main.gore[goreIndex2].velocity.X = Main.gore[goreIndex2].velocity.X - 1.5f;
+						Main.gore[goreIndex2].velocity.Y = Main.gore[goreIndex2].velocity.Y + 1.5f;
+						goreIndex2 = Gore.NewGore(new Vector2(base.player.position.X + (float)(base.player.width / 2) - 24f, base.player.position.Y + (float)(base.player.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+						Main.gore[goreIndex2].scale = 1.5f;
+						Main.gore[goreIndex2].velocity.X = Main.gore[goreIndex2].velocity.X + 1.5f;
+						Main.gore[goreIndex2].velocity.Y = Main.gore[goreIndex2].velocity.Y - 1.5f;
+						goreIndex2 = Gore.NewGore(new Vector2(base.player.position.X + (float)(base.player.width / 2) - 24f, base.player.position.Y + (float)(base.player.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+						Main.gore[goreIndex2].scale = 1.5f;
+						Main.gore[goreIndex2].velocity.X = Main.gore[goreIndex2].velocity.X - 1.5f;
+						Main.gore[goreIndex2].velocity.Y = Main.gore[goreIndex2].velocity.Y - 1.5f;
+					}
 				}
-				for (int l = 0; l < 40; l++)
+				else
 				{
-					int dustIndex6 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y), base.player.width, base.player.height, 6, 0f, 0f, 100, default(Color), 3f);
-					Main.dust[dustIndex6].noGravity = true;
-					Main.dust[dustIndex6].velocity *= 5f;
-					dustIndex6 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y), base.player.width, base.player.height, 6, 0f, 0f, 100, default(Color), 2f);
-					Main.dust[dustIndex6].velocity *= 3f;
-				}
-				for (int g2 = 0; g2 < 2; g2++)
-				{
-					int goreIndex2 = Gore.NewGore(new Vector2(base.player.position.X + (float)(base.player.width / 2) - 24f, base.player.position.Y + (float)(base.player.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-					Main.gore[goreIndex2].scale = 1.5f;
-					Main.gore[goreIndex2].velocity.X = Main.gore[goreIndex2].velocity.X + 1.5f;
-					Main.gore[goreIndex2].velocity.Y = Main.gore[goreIndex2].velocity.Y + 1.5f;
-					goreIndex2 = Gore.NewGore(new Vector2(base.player.position.X + (float)(base.player.width / 2) - 24f, base.player.position.Y + (float)(base.player.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-					Main.gore[goreIndex2].scale = 1.5f;
-					Main.gore[goreIndex2].velocity.X = Main.gore[goreIndex2].velocity.X - 1.5f;
-					Main.gore[goreIndex2].velocity.Y = Main.gore[goreIndex2].velocity.Y + 1.5f;
-					goreIndex2 = Gore.NewGore(new Vector2(base.player.position.X + (float)(base.player.width / 2) - 24f, base.player.position.Y + (float)(base.player.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-					Main.gore[goreIndex2].scale = 1.5f;
-					Main.gore[goreIndex2].velocity.X = Main.gore[goreIndex2].velocity.X + 1.5f;
-					Main.gore[goreIndex2].velocity.Y = Main.gore[goreIndex2].velocity.Y - 1.5f;
-					goreIndex2 = Gore.NewGore(new Vector2(base.player.position.X + (float)(base.player.width / 2) - 24f, base.player.position.Y + (float)(base.player.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-					Main.gore[goreIndex2].scale = 1.5f;
-					Main.gore[goreIndex2].velocity.X = Main.gore[goreIndex2].velocity.X - 1.5f;
-					Main.gore[goreIndex2].velocity.Y = Main.gore[goreIndex2].velocity.Y - 1.5f;
+					for (int m = 0; m < 10; m++)
+					{
+						int dustIndex7 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y), base.player.width, base.player.height, 31, 0f, 0f, 100, default(Color), 5f);
+						Main.dust[dustIndex7].velocity *= 1.4f;
+					}
+					for (int n = 0; n < 15; n++)
+					{
+						int dustIndex8 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y), base.player.width, base.player.height, 6, 0f, 0f, 100, default(Color), 3f);
+						Main.dust[dustIndex8].noGravity = true;
+						Main.dust[dustIndex8].velocity *= 5f;
+						dustIndex8 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y), base.player.width, base.player.height, 6, 0f, 0f, 100, default(Color), 2f);
+						Main.dust[dustIndex8].velocity *= 3f;
+					}
 				}
 			}
 			if (this.ksShieldGenerator && base.player.FindBuffIndex(ModContent.BuffType<KSShieldCooldown>()) == -1)
@@ -1923,7 +1660,7 @@ namespace Redemption
 				base.player.HealEffect(100, true);
 				base.player.immune = true;
 				base.player.AddBuff(ModContent.BuffType<KSShieldBuff>(), 3600, true);
-				base.player.AddBuff(ModContent.BuffType<KSShieldCooldown>(), 36000, true);
+				base.player.AddBuff(ModContent.BuffType<KSShieldCooldown>(), 18000, true);
 				if (base.player.ownedProjectileCounts[ModContent.ProjectileType<KSShieldPro>()] == 0)
 				{
 					Projectile.NewProjectile(base.player.position, Vector2.Zero, ModContent.ProjectileType<KSShieldPro>(), 0, 0f, base.player.whoAmI, 0f, 0f);
@@ -1942,6 +1679,16 @@ namespace Redemption
 					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Reflect").WithVolume(0.4f).WithPitchVariance(0.1f), -1, -1);
 				}
 				return false;
+			}
+			return true;
+		}
+
+		public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+		{
+			if (this.omegaPower)
+			{
+				playSound = false;
+				Main.PlaySound(SoundID.NPCHit4, base.player.position);
 			}
 			return true;
 		}
@@ -2046,13 +1793,13 @@ namespace Redemption
 						{
 							Dust dust = Main.dust[Dust.NewDust(vector, 10, 10, 256, 0f, 0f, 0, default(Color), 1f)];
 							dust.velocity.Y = 2f + Utils.NextFloat(Main.rand) * 0.2f;
-							Dust expr_460_cp_0 = dust;
-							expr_460_cp_0.velocity.Y = expr_460_cp_0.velocity.Y * dust.scale;
-							Dust expr_47A_cp_0 = dust;
-							expr_47A_cp_0.velocity.Y = expr_47A_cp_0.velocity.Y * 0.35f;
+							Dust dust2 = dust;
+							dust2.velocity.Y = dust2.velocity.Y * dust.scale;
+							Dust dust3 = dust;
+							dust3.velocity.Y = dust3.velocity.Y * 0.35f;
 							dust.velocity.X = num3 * 5f + Utils.NextFloat(Main.rand) * 1f;
-							Dust expr_4B7_cp_0 = dust;
-							expr_4B7_cp_0.velocity.X = expr_4B7_cp_0.velocity.X + num3 * num14 * 20f;
+							Dust dust4 = dust;
+							dust4.velocity.X = dust4.velocity.X + num3 * num14 * 20f;
 							dust.fadeIn += num14 * 0.2f;
 							dust.velocity *= 1f + num13 * 0.5f;
 							dust.color = weightedRandom;
@@ -2068,12 +1815,6 @@ namespace Redemption
 							{
 								i--;
 								vector += Utils.RandomVector2(Main.rand, -10f, 10f) + dust.velocity * -1.1f;
-								num16 = (int)vector.X / 16;
-								num17 = (int)vector.Y / 16;
-								if (WorldGen.InWorld(num16, num17, 10) && Main.tile[num16, num17] != null)
-								{
-									ushort wall = Main.tile[num16, num17].wall;
-								}
 							}
 						}
 						if (num10 <= 0f)
@@ -2088,17 +1829,52 @@ namespace Redemption
 
 		public override void CatchFish(Item fishingRod, Item bait, int power, int liquidType, int poolSize, int worldLayer, int questFish, ref int caughtType, ref bool junk)
 		{
-			if (junk)
+			if (Main.rand.Next(100) < 10 + (base.player.cratePotion ? 10 : 0) && liquidType == 0 && this.ZoneLab && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
 			{
-				return;
+				caughtType = ModContent.ItemType<LabCrate>();
+			}
+			if (liquidType == 0 && this.ZoneSoulless)
+			{
+				if (Main.rand.Next(100) < 10 + (base.player.cratePotion ? 10 : 0))
+				{
+					caughtType = ModContent.ItemType<ShadeCrate>();
+				}
+				else if (Main.rand.Next(8) == 0)
+				{
+					caughtType = ModContent.ItemType<AbyssBloskus>();
+				}
+				else if (Main.rand.Next(8) == 0)
+				{
+					caughtType = ModContent.ItemType<SlumberEel>();
+				}
+				else if (Main.rand.Next(6) == 0)
+				{
+					caughtType = ModContent.ItemType<ChakrogAngler>();
+				}
+				else if (Main.rand.Next(6) == 0)
+				{
+					caughtType = ModContent.ItemType<AbyssStinger>();
+				}
+				else if (Main.rand.Next(18) == 0)
+				{
+					caughtType = ModContent.ItemType<DarkStar>();
+				}
+				else if (Main.rand.Next(3) == 0)
+				{
+					caughtType = ModContent.ItemType<LurkingKetred>();
+				}
+				else if (Main.rand.Next(5) == 0)
+				{
+					caughtType = ModContent.ItemType<MaskFish>();
+				}
+				else
+				{
+					caughtType = ModContent.ItemType<ShadeFish>();
+				}
 			}
 			if ((this.ZoneXeno || this.ZoneEvilXeno || this.ZoneEvilXeno2) && liquidType == 0 && questFish == ModContent.ItemType<XenChomper>() && Main.rand.Next(2) == 0)
 			{
 				caughtType = ModContent.ItemType<XenChomper>();
-			}
-			if (this.ZoneLab && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && Main.rand.Next(6) == 0)
-			{
-				caughtType = ModContent.ItemType<LabCrate>();
 			}
 		}
 
@@ -2125,7 +1901,7 @@ namespace Redemption
 			}
 			if (this.skeletonCan)
 			{
-				for (int j = 0; j < Main.rand.Next(1, 2); j++)
+				for (int j = 0; j < Main.rand.Next(1, 3); j++)
 				{
 					Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), ModContent.ProjectileType<BoneSeed>(), 10, 1f, Main.myPlayer, 0f, 0f);
 				}
@@ -2169,29 +1945,7 @@ namespace Redemption
 					Main.projectile[projID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(8f, 0f), (float)m / (float)pieCut * 6.28f);
 				}
 			}
-			if (this.thornCirclet)
-			{
-				for (int n = 0; n < 6; n++)
-				{
-					int Proj = Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 55, 20, 1f, Main.myPlayer, 0f, 0f);
-					Main.projectile[Proj].hostile = false;
-					Main.projectile[Proj].friendly = true;
-					Main.projectile[Proj].timeLeft = 180;
-				}
-			}
-			if (this.thornCrown)
-			{
-				for (int i2 = 0; i2 < 6; i2++)
-				{
-					int Proj2 = Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 484, 200, 1f, Main.myPlayer, 0f, 0f);
-					Main.projectile[Proj2].hostile = false;
-					Main.projectile[Proj2].friendly = true;
-					Main.projectile[Proj2].timeLeft = 180;
-				}
-			}
 		}
-
-		private const int saveVersion = 0;
 
 		public bool examplePet;
 
@@ -2229,8 +1983,6 @@ namespace Redemption
 
 		public bool moreSpirits;
 
-		public bool rainbowCatPet;
-
 		public bool golemWateringCan;
 
 		public bool spiritHoming;
@@ -2242,8 +1994,6 @@ namespace Redemption
 		public bool spiritPierce;
 
 		public bool frostburnSeedbag;
-
-		public bool skeleMinion1;
 
 		public bool spiritSkull1;
 
@@ -2261,13 +2011,9 @@ namespace Redemption
 
 		public bool skeletonCan;
 
-		public bool enjoyment;
-
 		public bool ultraFlames;
 
 		public bool creationBonus;
-
-		public static bool reflectProjs = false;
 
 		public bool druidBane;
 
@@ -2361,30 +2107,6 @@ namespace Redemption
 
 		public bool xeniumMinion;
 
-		public bool xeniumMinion1;
-
-		public bool xeniumMinion2;
-
-		public bool xeniumMinion3;
-
-		public bool xeniumMinion4;
-
-		public bool xeniumMinion5;
-
-		public bool xeniumMinion6;
-
-		public bool xeniumMinion7;
-
-		public bool xeniumMinion8;
-
-		public bool xeniumMinion9;
-
-		public bool xeniumMinion10;
-
-		public bool xeniumMinion11;
-
-		public bool xeniumMinion12;
-
 		public bool xeniumDischarge;
 
 		public bool xeniumBarrier;
@@ -2418,8 +2140,6 @@ namespace Redemption
 		public bool staveQuadShot;
 
 		public bool lifeSteal1;
-
-		public bool plasmaShield;
 
 		public bool eldritchRoot;
 
@@ -2469,18 +2189,6 @@ namespace Redemption
 
 		public bool forestFriendly;
 
-		public bool infectedThornshield;
-
-		public int dashMod;
-
-		public int dashTimeMod;
-
-		public int dashDelayMod;
-
-		public int[] modDoubleTapCardinalTimer = new int[4];
-
-		public int[] modHoldDownCardinalTimer = new int[4];
-
 		public int irradiatedLevel;
 
 		public int irradiatedTimer;
@@ -2502,6 +2210,8 @@ namespace Redemption
 		public bool bioweaponDebuff;
 
 		public bool thornCirclet;
+
+		public int thornCircletCounter;
 
 		public bool ksShieldGenerator;
 
@@ -2539,9 +2249,17 @@ namespace Redemption
 
 		public bool ukkonenMinion;
 
+		public bool ZoneSoulless;
+
+		public bool dreamsong;
+
 		public bool cursedThornSet;
 
 		public int powerSurgeCharge;
+
+		public bool shadowBinder;
+
+		public int shadowBinderCharge;
 
 		public bool xenomiteSet;
 
@@ -2565,9 +2283,27 @@ namespace Redemption
 
 		public bool tiedPet;
 
+		public bool lantardPet;
+
 		public bool tbotEyes;
 
-		public static readonly PlayerLayer MiscEffectsFront = new PlayerLayer("Redemption", "MiscEffectsFront", PlayerLayer.MiscEffectsFront, delegate(PlayerDrawInfo drawInfo)
+		public bool zapField;
+
+		public bool dreambound;
+
+		public bool brokenBlade;
+
+		public float trueMeleeDamage = 1f;
+
+		public bool snipped;
+
+		public bool anglerPot;
+
+		public bool consecutiveStrikes;
+
+		public bool earthbind;
+
+		public static readonly PlayerLayer EarthbindLayer = new PlayerLayer("Redemption", "EarthbindLayer", PlayerLayer.Body, delegate(PlayerDrawInfo drawInfo)
 		{
 			if (drawInfo.shadow != 0f)
 			{
@@ -2576,14 +2312,39 @@ namespace Redemption
 			Player drawPlayer = drawInfo.drawPlayer;
 			Mod mod = ModLoader.GetMod("Redemption");
 			drawPlayer.GetModPlayer<RedePlayer>();
-			if (drawPlayer.HasBuff(ModContent.BuffType<EarthbindDebuff>()))
+			if (drawPlayer.active && !drawPlayer.dead && !drawPlayer.outOfRange)
 			{
-				Texture2D texture = mod.GetTexture("NPCs/Bosses/Thorn/AkkaEarthbindEffect");
-				int drawX = (int)(drawInfo.position.X + (float)drawPlayer.width / 2f - Main.screenPosition.X);
-				int drawY = (int)(drawInfo.position.Y + (float)drawPlayer.height / 2f - Main.screenPosition.Y);
-				DrawData data;
-				data..ctor(texture, new Vector2((float)drawX, (float)drawY), null, Color.White, 0f, new Vector2((float)texture.Width / 2f, (float)texture.Height / 2f), 1f, SpriteEffects.None, 0);
-				Main.playerDrawData.Add(data);
+				Texture2D texture = mod.GetTexture("ExtraTextures/AkkaEarthbindEffect");
+				Vector2 origin = new Vector2((float)texture.Width * 0.5f, (float)texture.Height * 0.5f);
+				Vector2 drawPos = drawPlayer.position + new Vector2((float)drawPlayer.width * 0.5f, (float)drawPlayer.height * 0.5f);
+				drawPos.X = (float)((int)drawPos.X);
+				drawPos.Y = (float)((int)drawPos.Y);
+				DrawData drawData;
+				drawData..ctor(texture, drawPos - Main.screenPosition, null, Color.White, 0f, origin, 1f, SpriteEffects.None, 0);
+				Main.playerDrawData.Add(drawData);
+			}
+		});
+
+		public static readonly PlayerLayer MissileLauncherLayer = new PlayerLayer("Redemption", "MissileLauncherLayer", PlayerLayer.MiscEffectsBack, delegate(PlayerDrawInfo drawInfo)
+		{
+			if (drawInfo.shadow != 0f)
+			{
+				return;
+			}
+			Player drawPlayer = drawInfo.drawPlayer;
+			Mod mod = ModLoader.GetMod("Redemption");
+			drawPlayer.GetModPlayer<RedePlayer>();
+			if (drawPlayer.active && !drawPlayer.dead && !drawPlayer.outOfRange)
+			{
+				Texture2D texture = mod.GetTexture("ExtraTextures/SneakLoneRemote_Extra");
+				Vector2 origin = new Vector2((float)texture.Width * 0.5f, (float)texture.Height * 0.5f);
+				SpriteEffects spriteEffects = (drawPlayer.direction == 1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+				Vector2 drawPos = drawPlayer.position + new Vector2((float)drawPlayer.width * 0.5f, (float)drawPlayer.height * 0.5f);
+				drawPos.X = (float)((drawPlayer.direction == 1) ? ((int)drawPos.X + 3) : ((int)drawPos.X - 3));
+				drawPos.Y = (float)((int)drawPos.Y + 2);
+				DrawData drawData;
+				drawData..ctor(texture, drawPos - Main.screenPosition, null, Color.White, 0f, origin, 1f, spriteEffects, 0);
+				Main.playerDrawData.Add(drawData);
 			}
 		});
 	}

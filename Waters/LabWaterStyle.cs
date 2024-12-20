@@ -25,7 +25,7 @@ namespace Redemption.Waters
 
 		public override int GetDropletGore()
 		{
-			return base.mod.GetGoreSlot("Gores/LabDroplet");
+			return base.mod.GetGoreSlot("Gores/Misc/LabDroplet");
 		}
 
 		public override void LightColorMultiplier(ref float r, ref float g, ref float b)

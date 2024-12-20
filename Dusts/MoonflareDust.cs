@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -8,29 +9,41 @@ namespace Redemption.Dusts
 	{
 		public override void OnSpawn(Dust dust)
 		{
-			dust.alpha = 1;
-			dust.scale = 1.2f;
-			dust.velocity *= 0.4f;
-			dust.noGravity = true;
-			dust.noLight = true;
+			dust.scale *= 1f;
+		}
+
+		public override bool MidUpdate(Dust dust)
+		{
+			dust.rotation += dust.velocity.X / 3f;
+			if (!dust.noLight)
+			{
+				float strength = dust.scale * 1.4f;
+				if (strength > 1f)
+				{
+					strength = 1f;
+				}
+				Lighting.AddLight(dust.position, 0.6f * strength, 0.5f * strength, 0.2f * strength);
+			}
+			if (Collision.SolidCollision(dust.position + dust.velocity, 10, 10) && dust.fadeIn == 0f)
+			{
+				dust.scale *= 0.9f;
+				dust.velocity *= 0.1f;
+			}
+			return false;
 		}
 
 		public override bool Update(Dust dust)
 		{
-			dust.rotation += dust.velocity.X / 3f;
-			dust.position += dust.velocity;
-			int oldAlpha = dust.alpha;
-			dust.alpha = (int)((double)dust.alpha * 1.2);
-			if (dust.alpha == oldAlpha)
+			if (WorldGen.SolidTile(Framing.GetTileSafely((int)dust.position.X / 16, (int)dust.position.Y / 16)))
 			{
-				dust.alpha++;
+				dust.noLight = true;
 			}
-			if (dust.alpha >= 255)
-			{
-				dust.alpha = 255;
-				dust.active = false;
-			}
-			return false;
+			return true;
+		}
+
+		public override Color? GetAlpha(Dust dust, Color lightColor)
+		{
+			return new Color?(new Color((int)lightColor.R, (int)lightColor.G, (int)lightColor.B, 25));
 		}
 	}
 }

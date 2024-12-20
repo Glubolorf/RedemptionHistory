@@ -1,17 +1,13 @@
 ﻿using System;
+using System.Reflection;
 using Microsoft.Xna.Framework;
-using Redemption.Items;
-using Redemption.Items.Armor.Costumes;
-using Redemption.NPCs;
-using Redemption.NPCs.Bosses.InfectedEye;
-using Redemption.NPCs.Bosses.SeedOfInfection;
-using Redemption.NPCs.Bosses.TheKeeper;
-using Redemption.NPCs.ChickenInvasion;
-using Redemption.NPCs.LabNPCs;
-using Redemption.NPCs.LabNPCs.New;
-using Redemption.NPCs.v08;
-using Redemption.NPCs.Varients;
+using Microsoft.Xna.Framework.Graphics;
+using Redemption.Items.Accessories.HM;
+using Redemption.Items.Accessories.PostML;
+using Redemption.Items.Armor.Vanity;
 using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 
@@ -19,44 +15,22 @@ namespace Redemption
 {
 	public static class RedeHelper
 	{
-		public static bool IsBunny(this NPC npc)
+		public static object GetFieldValue(this Type type, string fieldName, object obj = null, BindingFlags? flags = null)
 		{
-			return npc.type == 46 || npc.type == 443 || npc.type == 303 || npc.type == 337 || npc.type == 540;
+			if (flags == null)
+			{
+				flags = new BindingFlags?(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+			}
+			return type.GetField(fieldName, flags.Value).GetValue(obj);
 		}
 
-		public static bool IsVanillaWeakSkeleton(this NPC npc)
+		public static T GetFieldValue<T>(this Type type, string fieldName, object obj = null, BindingFlags? flags = null)
 		{
-			return npc.type == 77 || npc.type == -49 || npc.type == -51 || npc.type == -53 || npc.type == -47 || npc.type == 449 || npc.type == 450 || npc.type == 451 || npc.type == 452 || npc.type == 566 || npc.type == 567 || npc.type == 481 || npc.type == 201 || npc.type == -15 || npc.type == 202 || npc.type == 203 || npc.type == 21 || npc.type == 324 || npc.type == 110 || npc.type == 323 || npc.type == 293 || npc.type == 291 || npc.type == 322 || npc.type == -48 || npc.type == -50 || npc.type == -52 || npc.type == -46 || npc.type == 292 || npc.type == 31 || npc.type == 294 || npc.type == 296 || npc.type == 295 || (npc.type >= 39 && npc.type <= 41) || npc.type == 32 || npc.type == 34 || npc.type == 44 || npc.type == 167 || npc.type == 197 || npc.type == 273 || npc.type == 274 || npc.type == 275 || npc.type == 276 || npc.type == 287 || npc.type == 285 || npc.type == 286 || npc.type == 289 || npc.type == 277 || npc.type == 279 || npc.type == 278 || npc.type == 280 || npc.type == 283 || npc.type == 284 || npc.type == 281 || npc.type == 282 || npc.type == 172 || npc.type == 269 || npc.type == 270 || npc.type == 271 || npc.type == 272;
-		}
-
-		public static bool IsInfected(this NPC npc)
-		{
-			return npc.type == ModContent.NPCType<HazmatSkeleton>() || npc.type == ModContent.NPCType<HazmatZombie>() || npc.type == ModContent.NPCType<InfectedCaveBat>() || npc.type == ModContent.NPCType<InfectedDemonEye>() || npc.type == ModContent.NPCType<InfectedDiggerHead>() || npc.type == ModContent.NPCType<InfectedDiggerBody>() || npc.type == ModContent.NPCType<InfectedDiggerTail>() || npc.type == ModContent.NPCType<InfectedGiantBat>() || npc.type == ModContent.NPCType<InfectedGiantWormBody>() || npc.type == ModContent.NPCType<InfectedGiantWormHead>() || npc.type == ModContent.NPCType<InfectedGiantWormTail>() || npc.type == ModContent.NPCType<InfectedGiantWormTail>() || npc.type == ModContent.NPCType<InfectedZombie>() || npc.type == ModContent.NPCType<SludgyBoi>() || npc.type == ModContent.NPCType<XenoChomper>() || npc.type == ModContent.NPCType<XenomiteEye>() || npc.type == ModContent.NPCType<XenomiteGargantuan>() || npc.type == ModContent.NPCType<XenomiteGolem>() || npc.type == ModContent.NPCType<XenonRoller>() || npc.type == ModContent.NPCType<RadiumDiggerBody>() || npc.type == ModContent.NPCType<RadiumDiggerTail>() || npc.type == ModContent.NPCType<RadiumDiggerHead>() || npc.type == ModContent.NPCType<InfectedEye>() || npc.type == ModContent.NPCType<Blisterling>() || npc.type == ModContent.NPCType<Blisterling2>() || npc.type == ModContent.NPCType<InfectionHive>() || npc.type == ModContent.NPCType<SludgyBlob>() || npc.type == ModContent.NPCType<SludgyBoi2>() || npc.type == ModContent.NPCType<Stage2Scientist>() || npc.type == ModContent.NPCType<WalterInfected>() || npc.type == ModContent.NPCType<XenoChomper2>() || npc.type == ModContent.NPCType<XenomiteBeast>() || npc.type == ModContent.NPCType<SpikyRadioactiveSlime>() || npc.type == ModContent.NPCType<SneezyInfectedFlinx>() || npc.type == ModContent.NPCType<RadiumRampager>() || npc.type == ModContent.NPCType<RadiumDigger2Tail>() || npc.type == ModContent.NPCType<RadiumDigger2Head>() || npc.type == ModContent.NPCType<RadiumDigger2Body>() || npc.type == ModContent.NPCType<RadioactiveSlime>() || npc.type == ModContent.NPCType<NuclearSlime>() || npc.type == ModContent.NPCType<InfectedSwarmer>() || npc.type == ModContent.NPCType<InfectedSnowFlinx>() || npc.type == ModContent.NPCType<InfectedChicken>() || npc.type == ModContent.NPCType<GreenPigron>() || npc.type == ModContent.NPCType<DecayedGhoul>() || npc.type == ModContent.NPCType<BobTheBlob>() || npc.type == ModContent.NPCType<Injector>() || npc.type == ModContent.NPCType<BileBoomer>() || npc.type == ModContent.NPCType<IrradiatedSpear>() || npc.type == ModContent.NPCType<VirusJelly>() || npc.type == ModContent.NPCType<Superbug>() || npc.type == ModContent.NPCType<BloatedFaceMonster>() || npc.type == ModContent.NPCType<BloatedGoldfish>() || npc.type == ModContent.NPCType<IrradiatedWorldFeederTail>() || npc.type == ModContent.NPCType<IrradiatedWorldFeederHead>() || npc.type == ModContent.NPCType<IrradiatedWorldFeederBody>() || npc.type == ModContent.NPCType<NerveParasite>() || npc.type == ModContent.NPCType<RadioactiveSlimer>() || npc.type == ModContent.NPCType<Xenoling>() || npc.type == ModContent.NPCType<Superbug2>() || npc.type == ModContent.NPCType<Blisterface2>() || npc.type == ModContent.NPCType<IrradiatedBehemoth2>() || npc.type == ModContent.NPCType<PZ2BodyCover>() || npc.type == ModContent.NPCType<PZ2Fight>() || npc.type == ModContent.NPCType<Stage3Scientist2>() || npc.type == ModContent.NPCType<SeedGrowth>() || npc.type == ModContent.NPCType<SoI>();
-		}
-
-		public static bool IsGhostly(this NPC npc)
-		{
-			return npc.type == 84 || npc.type == 179 || npc.type == 83 || npc.type == 533 || npc.type == 288 || npc.type == 182 || npc.type == 316 || npc.type == 140 || npc.type == 82 || npc.type == 253 || npc.type == 330 || npc.type == ModContent.NPCType<TheKeeper>() || npc.type == ModContent.NPCType<AAAA>() || npc.type == ModContent.NPCType<DarkSoul>() || npc.type == ModContent.NPCType<DarkSoul2>() || npc.type == ModContent.NPCType<DarkSoul3>() || npc.type == ModContent.NPCType<SkullDigger>() || npc.type == ModContent.NPCType<WanderingSoul>() || npc.type == ModContent.NPCType<IrradiatedSpear>() || npc.type == ModContent.NPCType<SoullessAssassin>() || npc.type == ModContent.NPCType<SoullessDueller>() || npc.type == ModContent.NPCType<SoullessWanderer>() || npc.type == ModContent.NPCType<BileBoomer>() || npc.type == ModContent.NPCType<Shadebug>();
-		}
-
-		public static bool IsDragonlike(this NPC npc)
-		{
-			return npc.type == 551 || npc.type == 558 || npc.type == 559 || npc.type == 560 || npc.type == 170 || npc.type == 180 || npc.type == 171 || npc.type == 370 || npc.type == ModContent.NPCType<GreenPigron>() || (npc.type >= 87 && npc.type <= 92) || (npc.type >= 454 && npc.type <= 459);
-		}
-
-		public static bool IsDemon(this NPC npc)
-		{
-			return npc.type == 62 || npc.type == 66 || npc.type == 24 || npc.type == 156;
-		}
-
-		public static bool IsSoulless(this NPC npc)
-		{
-			return npc.type == ModContent.NPCType<SoullessAssassin>() || npc.type == ModContent.NPCType<SoullessDueller>() || npc.type == ModContent.NPCType<SoullessWanderer>() || npc.type == ModContent.NPCType<ShadesoulNPC>() || npc.type == ModContent.NPCType<SmallShadesoulNPC>() || npc.type == ModContent.NPCType<TheSoulless2>() || npc.type == ModContent.NPCType<TheSoulless>() || npc.type == ModContent.NPCType<Shadebug>();
-		}
-
-		public static bool IsAnySkeleton(this NPC npc)
-		{
-			return npc.type == 77 || npc.type == -49 || npc.type == -51 || npc.type == -53 || npc.type == -47 || npc.type == 449 || npc.type == 450 || npc.type == 451 || npc.type == 452 || npc.type == 566 || npc.type == 567 || npc.type == 481 || npc.type == 201 || npc.type == -15 || npc.type == 202 || npc.type == 203 || npc.type == 21 || npc.type == 324 || npc.type == 110 || npc.type == 323 || npc.type == 293 || npc.type == 291 || npc.type == 322 || npc.type == -48 || npc.type == -50 || npc.type == -52 || npc.type == -46 || npc.type == 292 || npc.type == 31 || npc.type == 294 || npc.type == 296 || npc.type == 295 || (npc.type >= 39 && npc.type <= 41) || npc.type == 32 || npc.type == 34 || npc.type == 68 || npc.type == 44 || npc.type == 167 || npc.type == 197 || npc.type == 273 || npc.type == 274 || npc.type == 275 || npc.type == 276 || npc.type == 287 || npc.type == 285 || npc.type == 286 || npc.type == 289 || npc.type == 277 || npc.type == 279 || npc.type == 278 || npc.type == 280 || npc.type == 283 || npc.type == 284 || npc.type == 281 || npc.type == 282 || npc.type == 172 || npc.type == 269 || npc.type == 270 || npc.type == 271 || npc.type == 272 || npc.type == 35 || npc.type == 36 || npc.type == ModContent.NPCType<BoneChicken>() || npc.type == ModContent.NPCType<ChickmanChickromancer>() || npc.type == ModContent.NPCType<BloodBoiledSkeleton>() || npc.type == ModContent.NPCType<SkeletonAssassin2>() || npc.type == ModContent.NPCType<SkeletonWanderer2>() || npc.type == ModContent.NPCType<SkeletonWarden>() || npc.type == ModContent.NPCType<Vepdor>() || npc.type == ModContent.NPCType<BoneLeviathanBody>() || npc.type == ModContent.NPCType<BoneLeviathanHead>() || npc.type == ModContent.NPCType<BoneLeviathanTail>() || npc.type == ModContent.NPCType<BoneSpider>() || npc.type == ModContent.NPCType<CorpseWalkerPriest>() || npc.type == ModContent.NPCType<DeathGardener>() || npc.type == ModContent.NPCType<HazmatSkeleton>() || npc.type == ModContent.NPCType<SkeleDruid>() || npc.type == ModContent.NPCType<Skelemies>() || npc.type == ModContent.NPCType<Skelemies2>() || npc.type == ModContent.NPCType<SkeletonAssassin>() || npc.type == ModContent.NPCType<SkeletonDueller>() || npc.type == ModContent.NPCType<SkeletonMinion>() || npc.type == ModContent.NPCType<SkeletonNoble>() || npc.type == ModContent.NPCType<SkeletonNobleArmoured>() || npc.type == ModContent.NPCType<SkeletonNobleArmoured2>() || npc.type == ModContent.NPCType<SkeletonNobleArmoured3>() || npc.type == ModContent.NPCType<SkeletonWanderer>();
+			if (flags == null)
+			{
+				flags = new BindingFlags?(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+			}
+			return (T)((object)type.GetField(fieldName, flags.Value).GetValue(obj));
 		}
 
 		public static bool IsFullTBot(this Player player)
@@ -72,6 +46,31 @@ namespace Redemption
 		public static bool IsRadiationProtected(this Player player)
 		{
 			return BasePlayer.HasAccessory(player, ModContent.ItemType<GasMask>(), true, false) || BasePlayer.HasAccessory(player, ModContent.ItemType<HazmatSuit>(), true, false) || BasePlayer.HasAccessory(player, ModContent.ItemType<HEVSuit>(), true, false);
+		}
+
+		public static bool IsNebVanity(this Player player)
+		{
+			return BasePlayer.HasHelmet(player, ModContent.ItemType<NebuleusMask>(), true) && BasePlayer.HasChestplate(player, ModContent.ItemType<NebuleusVanity>(), true);
+		}
+
+		public static bool IsHolyKnight(this Player player)
+		{
+			return BasePlayer.HasHelmet(player, ModContent.ItemType<ArmorHKHead>(), true) && BasePlayer.HasChestplate(player, ModContent.ItemType<ArmorHK>(), true) && BasePlayer.HasLeggings(player, ModContent.ItemType<ArmorHKLeggings>(), true);
+		}
+
+		public static bool IsHal(this Player player)
+		{
+			return BasePlayer.HasHelmet(player, ModContent.ItemType<HallamHoodie>(), true) && BasePlayer.HasChestplate(player, ModContent.ItemType<HallamLeggings>(), true);
+		}
+
+		public static Vector2 TurnRight(this Vector2 vec)
+		{
+			return new Vector2(-vec.Y, vec.X);
+		}
+
+		public static Vector2 TurnLeft(this Vector2 vec)
+		{
+			return new Vector2(vec.Y, -vec.X);
 		}
 
 		public static Vector2 PolarVector(float radius, float theta)
@@ -94,18 +93,22 @@ namespace Redemption
 			return item;
 		}
 
-		public static bool ClosestNPC(ref NPC target, float maxDistance, Vector2 position, bool ignoreTiles = false, int overrideTarget = -1)
+		public static bool ClosestNPC(ref NPC target, float maxDistance, Vector2 position, bool ignoreTiles = false, int overrideTarget = -1, RedeHelper.SpecialCondition specialCondition = null)
 		{
+			if (specialCondition == null)
+			{
+				specialCondition = ((NPC possibleTarget) => true);
+			}
 			bool foundTarget = false;
 			if (overrideTarget != -1 && (Main.npc[overrideTarget].Center - position).Length() < maxDistance)
 			{
 				target = Main.npc[overrideTarget];
 				return true;
 			}
-			for (int i = 0; i < 200; i++)
+			for (int i = 0; i < Main.npc.Length; i++)
 			{
-				NPC possibleTarget = Main.npc[i];
-				if ((possibleTarget.Center - position).Length() < maxDistance && possibleTarget.active && possibleTarget.chaseable && !possibleTarget.dontTakeDamage && !possibleTarget.friendly && possibleTarget.lifeMax > 5 && !possibleTarget.immortal && (Collision.CanHit(position, 0, 0, possibleTarget.Center, 0, 0) || ignoreTiles))
+				NPC possibleTarget2 = Main.npc[i];
+				if ((possibleTarget2.Center - position).Length() < maxDistance && possibleTarget2.active && possibleTarget2.chaseable && !possibleTarget2.dontTakeDamage && !possibleTarget2.friendly && possibleTarget2.lifeMax > 5 && !possibleTarget2.immortal && (Collision.CanHit(position, 0, 0, possibleTarget2.Center, 0, 0) || ignoreTiles) && specialCondition(possibleTarget2))
 				{
 					target = Main.npc[i];
 					foundTarget = true;
@@ -113,6 +116,179 @@ namespace Redemption
 				}
 			}
 			return foundTarget;
+		}
+
+		public static int MinionHordeIdentity(Projectile projectile)
+		{
+			int identity = 0;
+			for (int p = 0; p < 1000; p++)
+			{
+				if (Main.projectile[p].active && Main.projectile[p].type == projectile.type && Main.projectile[p].owner == projectile.owner)
+				{
+					if (projectile.whoAmI == p)
+					{
+						break;
+					}
+					identity++;
+				}
+			}
+			return identity;
+		}
+
+		public static bool UseAmmo(this Projectile projectile, int ammoID, ref int shoot, ref float speed, ref int Damage, ref float KnockBack, bool dontConsume = false)
+		{
+			Player player = Main.player[projectile.owner];
+			Item item = new Item();
+			bool hasFoundAmmo = false;
+			for (int i = 54; i < 58; i++)
+			{
+				if (player.inventory[i].ammo == ammoID && player.inventory[i].stack > 0)
+				{
+					item = player.inventory[i];
+					hasFoundAmmo = true;
+					break;
+				}
+			}
+			if (!hasFoundAmmo)
+			{
+				for (int j = 0; j < 54; j++)
+				{
+					if (player.inventory[j].ammo == ammoID && player.inventory[j].stack > 0)
+					{
+						item = player.inventory[j];
+						hasFoundAmmo = true;
+						break;
+					}
+				}
+			}
+			if (hasFoundAmmo)
+			{
+				shoot = item.shoot;
+				if (player.magicQuiver && (ammoID == AmmoID.Arrow || ammoID == AmmoID.Stake))
+				{
+					KnockBack = (float)((int)((double)KnockBack * 1.1));
+					speed *= 1.1f;
+				}
+				speed += item.shootSpeed;
+				if (item.ranged)
+				{
+					if (item.damage > 0)
+					{
+						Damage += (int)((float)item.damage * player.rangedDamage);
+					}
+				}
+				else
+				{
+					Damage += item.damage;
+				}
+				if (ammoID == AmmoID.Arrow && player.archery)
+				{
+					if (speed < 20f)
+					{
+						speed *= 1.2f;
+						if (speed > 20f)
+						{
+							speed = 20f;
+						}
+					}
+					Damage = (int)((double)((float)Damage) * 1.2);
+				}
+				KnockBack += item.knockBack;
+				bool flag2 = dontConsume;
+				if (player.magicQuiver && ammoID == AmmoID.Arrow && Main.rand.Next(5) == 0)
+				{
+					flag2 = true;
+				}
+				if (player.ammoBox && Main.rand.Next(5) == 0)
+				{
+					flag2 = true;
+				}
+				if (player.ammoPotion && Main.rand.Next(5) == 0)
+				{
+					flag2 = true;
+				}
+				if (player.ammoCost80 && Main.rand.Next(5) == 0)
+				{
+					flag2 = true;
+				}
+				if (player.ammoCost75 && Main.rand.Next(4) == 0)
+				{
+					flag2 = true;
+				}
+				if (!flag2 && item.consumable)
+				{
+					item.stack--;
+					if (item.stack <= 0)
+					{
+						item.active = false;
+						item.TurnToAir();
+					}
+				}
+				return true;
+			}
+			return false;
+		}
+
+		public static void SlowRotation(this float currentRotation, float targetAngle, float speed)
+		{
+			float actDirection = Utils.ToRotation(new Vector2((float)Math.Cos((double)currentRotation), (float)Math.Sin((double)currentRotation)));
+			targetAngle = Utils.ToRotation(new Vector2((float)Math.Cos((double)targetAngle), (float)Math.Sin((double)targetAngle)));
+			int f;
+			if ((double)Math.Abs(actDirection - targetAngle) > 3.141592653589793)
+			{
+				f = -1;
+			}
+			else
+			{
+				f = 1;
+			}
+			if (actDirection <= targetAngle + speed * 2f && actDirection >= targetAngle - speed * 2f)
+			{
+				actDirection = targetAngle;
+			}
+			else if (actDirection <= targetAngle)
+			{
+				actDirection += speed * (float)f;
+			}
+			else if (actDirection >= targetAngle)
+			{
+				actDirection -= speed * (float)f;
+			}
+			actDirection = Utils.ToRotation(new Vector2((float)Math.Cos((double)actDirection), (float)Math.Sin((double)actDirection)));
+			currentRotation = actDirection;
+		}
+
+		public static float AngularDifference(float angle1, float angle2)
+		{
+			angle1 = Utils.ToRotation(RedeHelper.PolarVector(1f, angle1));
+			angle2 = Utils.ToRotation(RedeHelper.PolarVector(1f, angle2));
+			if ((double)Math.Abs(angle1 - angle2) > 3.141592653589793)
+			{
+				return 6.2831855f - Math.Abs(angle1 - angle2);
+			}
+			return Math.Abs(angle1 - angle2);
+		}
+
+		private static float X(float t, float x0, float x1, float x2, float x3)
+		{
+			return (float)((double)x0 * Math.Pow((double)(1f - t), 3.0) + (double)(x1 * 3f * t) * Math.Pow((double)(1f - t), 2.0) + (double)(x2 * 3f) * Math.Pow((double)t, 2.0) * (double)(1f - t) + (double)x3 * Math.Pow((double)t, 3.0));
+		}
+
+		private static float Y(float t, float y0, float y1, float y2, float y3)
+		{
+			return (float)((double)y0 * Math.Pow((double)(1f - t), 3.0) + (double)(y1 * 3f * t) * Math.Pow((double)(1f - t), 2.0) + (double)(y2 * 3f) * Math.Pow((double)t, 2.0) * (double)(1f - t) + (double)y3 * Math.Pow((double)t, 3.0));
+		}
+
+		public static void DrawBezier(SpriteBatch spriteBatch, Texture2D texture, string glowMaskTexture, Color drawColor, Vector2 startingPos, Vector2 endPoints, Vector2 c1, Vector2 c2, float chainsPerUse, float rotDis)
+		{
+			for (float i = 0f; i <= 1f; i += chainsPerUse)
+			{
+				if (i != 0f)
+				{
+					float projTrueRotation = Utils.ToRotation(new Vector2(RedeHelper.X(i, startingPos.X, c1.X, c2.X, endPoints.X) - RedeHelper.X(i - chainsPerUse, startingPos.X, c1.X, c2.X, endPoints.X), RedeHelper.Y(i, startingPos.Y, c1.Y, c2.Y, endPoints.Y) - RedeHelper.Y(i - chainsPerUse, startingPos.Y, c1.Y, c2.Y, endPoints.Y))) - 1.5707964f + rotDis;
+					spriteBatch.Draw(texture, new Vector2(RedeHelper.X(i, startingPos.X, c1.X, c2.X, endPoints.X) - Main.screenPosition.X, RedeHelper.Y(i, startingPos.Y, c1.Y, c2.Y, endPoints.Y) - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, texture.Width, texture.Height)), drawColor, projTrueRotation, new Vector2((float)texture.Width * 0.5f, (float)texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+				}
+			}
 		}
 
 		public static byte GetLiquidLevel(int x, int y, RedeHelper.LiquidType liquidType = RedeHelper.LiquidType.Any)
@@ -160,7 +336,7 @@ namespace Redemption
 			return new Vector2((float)(rand.Next((int)pos1.X, (int)pos2.X) + 1), (float)(rand.Next((int)pos1.Y, (int)pos2.Y) + 1));
 		}
 
-		public static int GetNearestAlivePlayer(NPC npc)
+		public static int GetNearestAlivePlayer(this NPC npc)
 		{
 			float NearestPlayerDist = 4.8151624E+09f;
 			int NearestPlayer = -1;
@@ -170,6 +346,36 @@ namespace Redemption
 				{
 					NearestPlayerDist = player.Distance(npc.Center);
 					NearestPlayer = player.whoAmI;
+				}
+			}
+			return NearestPlayer;
+		}
+
+		public static int GetNearestAlivePlayer(this Projectile projectile)
+		{
+			float NearestPlayerDist = 4.8151624E+09f;
+			int NearestPlayer = -1;
+			foreach (Player player in Main.player)
+			{
+				if (player.Distance(projectile.Center) < NearestPlayerDist && player.active)
+				{
+					NearestPlayerDist = player.Distance(projectile.Center);
+					NearestPlayer = player.whoAmI;
+				}
+			}
+			return NearestPlayer;
+		}
+
+		public static Vector2 GetNearestAlivePlayerVector(this NPC npc)
+		{
+			float NearestPlayerDist = 4.8151624E+09f;
+			Vector2 NearestPlayer = Vector2.Zero;
+			foreach (Player player in Main.player)
+			{
+				if (player.Distance(npc.Center) < NearestPlayerDist && player.active)
+				{
+					NearestPlayerDist = player.Distance(npc.Center);
+					NearestPlayer = player.Center;
 				}
 			}
 			return NearestPlayer;
@@ -379,6 +585,11 @@ namespace Redemption
 			return rand.Next(total) < chance;
 		}
 
+		public static Vector2 Spread(float xy)
+		{
+			return new Vector2(Utils.NextFloat(Main.rand, -xy, xy - 1f), Utils.NextFloat(Main.rand, -xy, xy - 1f));
+		}
+
 		public static void CreateDust(Player player, int dust, int count)
 		{
 			for (int i = 0; i < count; i++)
@@ -421,6 +632,303 @@ namespace Redemption
 			}
 			return p;
 		}
+
+		public static Vector2 GetOrigin(Texture2D tex, int frames = 1)
+		{
+			return new Vector2((float)(tex.Width / 2), (float)(tex.Height / frames / 2));
+		}
+
+		public static Vector2 GetOrigin(Rectangle rect, int frames = 1)
+		{
+			return new Vector2((float)(rect.Width / 2), (float)(rect.Height / frames / 2));
+		}
+
+		public static void ProjectileExploson(Vector2 pos, float StartAngle, int Streams, int type, int damage, float ProjSpeed, float ai0 = 0f, float ai1 = 0f)
+		{
+			if (Main.netMode != 1)
+			{
+				for (int i = 0; i < Streams; i++)
+				{
+					Vector2 direction = Utils.RotatedBy(Vector2.Normalize(new Vector2(1f, 1f)), (double)MathHelper.ToRadians((float)(360 / Streams * i) + StartAngle), default(Vector2));
+					direction.X *= ProjSpeed;
+					direction.Y *= ProjSpeed;
+					int proj = Projectile.NewProjectile(pos.X, pos.Y, direction.X, direction.Y, type, damage, 0f, Main.myPlayer, ai0, ai1);
+					Main.projectile[proj].Center = pos;
+				}
+			}
+		}
+
+		public static void Shoot(this NPC npc, Vector2 position, int projType, int damage, Vector2 velocity, bool customSound, LegacySoundStyle sound, string soundString = "", float ai0 = 0f, float ai1 = 0f)
+		{
+			Mod mod = Redemption.Inst;
+			Player player = Main.player[npc.target];
+			if (customSound)
+			{
+				if (!Main.dedServ)
+				{
+					Main.PlaySound(mod.GetLegacySoundSlot(50, soundString), (int)npc.position.X, (int)npc.position.Y);
+				}
+			}
+			else
+			{
+				Main.PlaySound(sound, (int)npc.position.X, (int)npc.position.Y);
+			}
+			if (Main.netMode != 1)
+			{
+				Projectile.NewProjectile(position, velocity, projType, damage / 3, 0f, Main.myPlayer, ai0, ai1);
+			}
+		}
+
+		public static void SpawnNPC(this NPC npc, int posX, int posY, int npcType, float ai0 = 0f, float ai1 = 0f, float ai2 = 0f, float ai3 = 0f)
+		{
+			Redemption inst = Redemption.Inst;
+			Player player = Main.player[npc.target];
+			if (Main.netMode != 1)
+			{
+				int i = NPC.NewNPC(posX, posY, npcType, 0, ai0, ai1, ai2, ai3, 255);
+				if (i != 200 && Main.netMode == 2)
+				{
+					NetMessage.SendData(23, -1, -1, null, i, 0f, 0f, 0f, 0, 0, 0);
+				}
+			}
+		}
+
+		public static void Dash(this NPC npc, int speed, bool directional, LegacySoundStyle sound, Vector2 target)
+		{
+			Player player = Main.player[npc.target];
+			Main.PlaySound(sound, (int)npc.position.X, (int)npc.position.Y);
+			if (target == Vector2.Zero)
+			{
+				target = player.Center;
+			}
+			if (directional)
+			{
+				npc.velocity = npc.DirectionTo(target) * (float)speed;
+				return;
+			}
+			npc.velocity.X = (float)((target.X > npc.Center.X) ? speed : (-(float)speed));
+		}
+
+		public static void LookAtPlayer(this NPC npc)
+		{
+			if (Main.player[npc.target].Center.X > npc.Center.X)
+			{
+				npc.spriteDirection = 1;
+				return;
+			}
+			npc.spriteDirection = -1;
+		}
+
+		public static void LookAtPlayer(this Projectile projectile)
+		{
+			if (Main.player[projectile.owner].Center.X > projectile.Center.X)
+			{
+				projectile.spriteDirection = 1;
+				return;
+			}
+			projectile.spriteDirection = -1;
+		}
+
+		public static void LookByVelocity(this NPC npc)
+		{
+			if (npc.velocity.X > 0f)
+			{
+				npc.spriteDirection = 1;
+				return;
+			}
+			npc.spriteDirection = -1;
+		}
+
+		public static void MoveToVector2(this NPC npc, Vector2 p, float moveSpeed)
+		{
+			float velMultiplier = 1f;
+			Vector2 dist = p - npc.Center;
+			float length = (dist == Vector2.Zero) ? 0f : dist.Length();
+			if (length < moveSpeed)
+			{
+				velMultiplier = MathHelper.Lerp(0f, 1f, length / moveSpeed);
+			}
+			if (length < 100f)
+			{
+				moveSpeed *= 0.5f;
+			}
+			if (length < 50f)
+			{
+				moveSpeed *= 0.5f;
+			}
+			npc.velocity = ((length == 0f) ? Vector2.Zero : Vector2.Normalize(dist));
+			npc.velocity *= moveSpeed;
+			npc.velocity *= velMultiplier;
+		}
+
+		public static void MoveToVector2(this Projectile projectile, Vector2 p, float moveSpeed)
+		{
+			float velMultiplier = 1f;
+			Vector2 dist = p - projectile.Center;
+			float length = (dist == Vector2.Zero) ? 0f : dist.Length();
+			if (length < moveSpeed)
+			{
+				velMultiplier = MathHelper.Lerp(0f, 1f, length / moveSpeed);
+			}
+			if (length < 100f)
+			{
+				moveSpeed *= 0.5f;
+			}
+			if (length < 50f)
+			{
+				moveSpeed *= 0.5f;
+			}
+			projectile.velocity = ((length == 0f) ? Vector2.Zero : Vector2.Normalize(dist));
+			projectile.velocity *= moveSpeed;
+			projectile.velocity *= velMultiplier;
+		}
+
+		public static void Move(this NPC npc, Vector2 vector, float speed, float turnResistance = 10f, bool toPlayer = false)
+		{
+			Player player = Main.player[npc.target];
+			Vector2 move = (toPlayer ? (player.Center + vector) : vector) - npc.Center;
+			float magnitude = RedeHelper.Magnitude(move);
+			if (magnitude > speed)
+			{
+				move *= speed / magnitude;
+			}
+			move = (npc.velocity * turnResistance + move) / (turnResistance + 1f);
+			magnitude = RedeHelper.Magnitude(move);
+			if (magnitude > speed)
+			{
+				move *= speed / magnitude;
+			}
+			npc.velocity = move;
+		}
+
+		public static void Move(this Projectile projectile, Vector2 vector, float speed, float turnResistance = 10f, bool toPlayer = false)
+		{
+			Player player = Main.player[projectile.owner];
+			Vector2 move = (toPlayer ? (player.Center + vector) : vector) - projectile.Center;
+			float magnitude = RedeHelper.Magnitude(move);
+			if (magnitude > speed)
+			{
+				move *= speed / magnitude;
+			}
+			move = (projectile.velocity * turnResistance + move) / (turnResistance + 1f);
+			magnitude = RedeHelper.Magnitude(move);
+			if (magnitude > speed)
+			{
+				move *= speed / magnitude;
+			}
+			projectile.velocity = move;
+		}
+
+		public static void MoveToNPC(this NPC npc, NPC target, Vector2 vector, float speed, float turnResistance = 10f)
+		{
+			Vector2 move = target.Center + vector - npc.Center;
+			float magnitude = RedeHelper.Magnitude(move);
+			if (magnitude > speed)
+			{
+				move *= speed / magnitude;
+			}
+			move = (npc.velocity * turnResistance + move) / (turnResistance + 1f);
+			magnitude = RedeHelper.Magnitude(move);
+			if (magnitude > speed)
+			{
+				move *= speed / magnitude;
+			}
+			npc.velocity = move;
+		}
+
+		public static float Magnitude(Vector2 mag)
+		{
+			return (float)Math.Sqrt((double)(mag.X * mag.X + mag.Y * mag.Y));
+		}
+
+		public static bool Sight(this NPC npc, float range = -1f, bool lineOfSight = false)
+		{
+			Player player = Main.player[npc.target];
+			return (!lineOfSight || Collision.CanHit(npc.position, npc.width, npc.height, player.position, player.width, player.height)) && (range < 0f || npc.Distance(Main.player[npc.target].Center) <= range) && ((npc.Center.X > player.Center.X && npc.spriteDirection == -1) || (npc.Center.X < player.Center.X && npc.spriteDirection == 1));
+		}
+
+		public static void JumpDownPlatform(this NPC npc, ref bool canJump, int yOffset = 12)
+		{
+			Player player = Main.player[npc.target];
+			Point tile = Utils.ToTileCoordinates(npc.Bottom);
+			if (Main.tileSolidTop[(int)Framing.GetTileSafely(tile.X, tile.Y).type] && Main.tile[tile.X, tile.Y].active() && npc.Center.Y + (float)yOffset < player.Center.Y)
+			{
+				Point tile2 = Utils.ToTileCoordinates(npc.BottomRight);
+				canJump = true;
+				if ((Main.tile[tile.X - 1, tile.Y - 1].active() && Main.tileSolid[(int)Framing.GetTileSafely(tile.X - 1, tile.Y - 1).type]) || (Main.tile[tile2.X + 1, tile2.Y - 1].active() && Main.tileSolid[(int)Framing.GetTileSafely(tile2.X + 1, tile2.Y - 1).type]) || npc.collideX)
+				{
+					npc.velocity.X = 0f;
+				}
+			}
+		}
+
+		public static void JumpDownPlatform(this NPC npc, Vector2 vector, ref bool canJump, int yOffset = 12)
+		{
+			Point tile = Utils.ToTileCoordinates(npc.Bottom);
+			if (Main.tileSolidTop[(int)Framing.GetTileSafely(tile.X, tile.Y).type] && Main.tile[tile.X, tile.Y].active() && npc.Center.Y + (float)yOffset < vector.Y)
+			{
+				Point tile2 = Utils.ToTileCoordinates(npc.BottomRight);
+				canJump = true;
+				if ((Main.tile[tile.X - 1, tile.Y - 1].active() && Main.tileSolid[(int)Framing.GetTileSafely(tile.X - 1, tile.Y - 1).type]) || (Main.tile[tile2.X + 1, tile2.Y - 1].active() && Main.tileSolid[(int)Framing.GetTileSafely(tile2.X + 1, tile2.Y - 1).type]) || npc.collideX)
+				{
+					npc.velocity.X = 0f;
+				}
+			}
+		}
+
+		public static bool NPCHasAnyBuff(this NPC npc)
+		{
+			for (int i = 0; i < BuffLoader.BuffCount; i++)
+			{
+				if (npc.HasBuff(i))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		public static void HorizontallyMove(NPC npc, Vector2 vector, float moveInterval, float moveSpeed, int maxJumpTilesX, int maxJumpTilesY, bool jumpUpPlatforms)
+		{
+			if (npc.velocity.X < -moveSpeed || npc.velocity.X > moveSpeed)
+			{
+				if (npc.velocity.Y == 0f)
+				{
+					npc.velocity *= 0.8f;
+				}
+			}
+			else if (npc.velocity.X < moveSpeed && vector.X > npc.Center.X)
+			{
+				npc.velocity.X = npc.velocity.X + moveInterval;
+				if (npc.velocity.X > moveSpeed)
+				{
+					npc.velocity.X = moveSpeed;
+				}
+			}
+			else if (npc.velocity.X > -moveSpeed && vector.X < npc.Center.X)
+			{
+				npc.velocity.X = npc.velocity.X - moveInterval;
+				if (npc.velocity.X < -moveSpeed)
+				{
+					npc.velocity.X = -moveSpeed;
+				}
+			}
+			if (BaseAI.HitTileOnSide(npc, 3, true) && ((npc.velocity.X < 0f && npc.direction == -1) || (npc.velocity.X > 0f && npc.direction == 1)))
+			{
+				Vector2 newVec = BaseAI.AttemptJump(npc.position, npc.velocity, npc.width, npc.height, npc.direction, vector, (float)npc.directionY, maxJumpTilesX, maxJumpTilesY, moveSpeed, jumpUpPlatforms, false);
+				if (!npc.noTileCollide)
+				{
+					Collision.StepUp(ref npc.position, ref npc.velocity, npc.width, npc.height, ref npc.stepSpeed, ref npc.gfxOffY, 1, false, 0);
+				}
+				if (npc.velocity != newVec)
+				{
+					npc.velocity = newVec;
+					npc.netUpdate = true;
+				}
+			}
+		}
+
+		public delegate bool SpecialCondition(NPC possibleTarget);
 
 		[Flags]
 		public enum LiquidType

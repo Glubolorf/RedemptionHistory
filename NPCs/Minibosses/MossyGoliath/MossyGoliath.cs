@@ -1,11 +1,12 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Buffs;
+using Redemption.Buffs.Debuffs;
 using Redemption.Items.Quest;
-using Redemption.NPCs.Bosses.EaglecrestGolem;
-using Redemption.NPCs.Bosses.Thorn;
+using Redemption.Items.Quest.Daerel;
+using Redemption.Items.Quest.Zephos;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -40,7 +41,7 @@ namespace Redemption.NPCs.Minibosses.MossyGoliath
 		{
 			potionType = 188;
 			RedeWorld.downedMossyGoliath = true;
-			if (Main.netMode == 2)
+			if (Main.netMode != 0)
 			{
 				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 			}
@@ -166,9 +167,9 @@ namespace Redemption.NPCs.Minibosses.MossyGoliath
 				{
 					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Roar1").WithVolume(1f).WithPitchVariance(0.1f), -1, -1);
 				}
-				if (base.npc.ai[2] > 30f && base.npc.ai[2] < 60f)
+				if (base.npc.ai[2] == 30f)
 				{
-					player.GetModPlayer<ShakeScreen>().shakeSubtle = true;
+					player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 10f;
 				}
 				if (base.npc.ai[2] >= 80f)
 				{
@@ -238,9 +239,9 @@ namespace Redemption.NPCs.Minibosses.MossyGoliath
 						{
 							Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Roar1").WithVolume(1f).WithPitchVariance(0.1f), -1, -1);
 						}
-						if (base.npc.ai[2] > 30f && base.npc.ai[2] < 60f)
+						if (base.npc.ai[2] == 30f)
 						{
-							player.GetModPlayer<ShakeScreen>().shakeSubtle = true;
+							player.GetModPlayer<ScreenPlayer>().ScreenShakeIntensity = 10f;
 						}
 						if (base.npc.ai[2] > 25f && base.npc.ai[2] % 10f == 0f)
 						{
@@ -272,10 +273,10 @@ namespace Redemption.NPCs.Minibosses.MossyGoliath
 								Dust dust2 = Main.dust[dustIndex2];
 								dust2.velocity.X = dust2.velocity.X * 0f;
 							}
-							if (Main.tile[point.X, point.Y + 3].type != 0 && distance < 600f)
+							if (Main.tile[point.X, point.Y].type != 0 && Main.tile[point.X, point.Y].active() && player.velocity.Y == 0f && distance < 600f)
 							{
-								int p2 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<AkkaTremor>(), 13, 1f, 255, 0f, 0f);
-								Main.projectile[p2].netUpdate = true;
+								int hitDirection = (base.npc.Center.X > player.Center.X) ? -1 : 1;
+								player.Hurt(PlayerDeathReason.ByNPC(base.npc.whoAmI), base.npc.damage, hitDirection, false, false, false, 0);
 								player.AddBuff(ModContent.BuffType<StunnedDebuff>(), 60, true);
 							}
 						}
@@ -334,10 +335,10 @@ namespace Redemption.NPCs.Minibosses.MossyGoliath
 								Dust dust4 = Main.dust[dustIndex3];
 								dust4.velocity.X = dust4.velocity.X * 0f;
 							}
-							if (Main.tile[point.X, point.Y + 1].type != 0 && distance < 600f)
+							if (Main.tile[point.X, point.Y].type != 0 && Main.tile[point.X, point.Y].active() && player.velocity.Y == 0f && distance < 600f)
 							{
-								int p3 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<AkkaTremor>(), 13, 1f, 255, 0f, 0f);
-								Main.projectile[p3].netUpdate = true;
+								int hitDirection2 = (base.npc.Center.X > player.Center.X) ? -1 : 1;
+								player.Hurt(PlayerDeathReason.ByNPC(base.npc.whoAmI), base.npc.damage, hitDirection2, false, false, false, 0);
 								player.AddBuff(ModContent.BuffType<StunnedDebuff>(), 60, true);
 							}
 							base.npc.ai[3] = 0f;
@@ -358,8 +359,8 @@ namespace Redemption.NPCs.Minibosses.MossyGoliath
 						}
 						if (base.npc.ai[2] > 25f && base.npc.ai[2] % 4f == 0f)
 						{
-							int p4 = Projectile.NewProjectile(new Vector2((base.npc.spriteDirection == -1) ? (base.npc.position.X + 12f) : (base.npc.position.X + 148f), base.npc.position.Y + 46f), new Vector2((base.npc.spriteDirection == -1) ? -3f : 3f, Utils.NextFloat(Main.rand, -1f, 1f)), ModContent.ProjectileType<ToxicBreath>(), 13, 0f, Main.myPlayer, 0f, 0f);
-							Main.projectile[p4].netUpdate = true;
+							int p2 = Projectile.NewProjectile(new Vector2((base.npc.spriteDirection == -1) ? (base.npc.position.X + 12f) : (base.npc.position.X + 148f), base.npc.position.Y + 46f), new Vector2((base.npc.spriteDirection == -1) ? -3f : 3f, Utils.NextFloat(Main.rand, -1f, 1f)), ModContent.ProjectileType<ToxicBreath>(), 13, 0f, Main.myPlayer, 0f, 0f);
+							Main.projectile[p2].netUpdate = true;
 						}
 						if (base.npc.ai[2] >= 80f)
 						{
@@ -475,12 +476,12 @@ namespace Redemption.NPCs.Minibosses.MossyGoliath
 					int dustIndex2 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 0, 0f, 0f, 100, default(Color), 2f);
 					Main.dust[dustIndex2].velocity *= 4.6f;
 				}
-				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/MossyGoliathGore1"), 1f);
-				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/MossyGoliathGore2"), 1f);
-				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/MossyGoliathGore3"), 1f);
-				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/MossyGoliathGore4"), 1f);
-				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/MossyGoliathGore5"), 1f);
-				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/MossyGoliathGore6"), 1f);
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/Boss/MossyGoliathGore1"), 1f);
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/Boss/MossyGoliathGore2"), 1f);
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/Boss/MossyGoliathGore3"), 1f);
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/Boss/MossyGoliathGore4"), 1f);
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/Boss/MossyGoliathGore5"), 1f);
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/Boss/MossyGoliathGore6"), 1f);
 			}
 			int dustIndex3 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 3, 0f, 0f, 100, default(Color), 1f);
 			Main.dust[dustIndex3].velocity *= 4.6f;

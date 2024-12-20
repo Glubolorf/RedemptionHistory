@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Redemption.NPCs.Bosses.EaglecrestGolem;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -37,9 +36,12 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 		{
 			Player player = Main.player[base.projectile.owner];
 			InfectionTextPlayer modPlayer = player.GetModPlayer<InfectionTextPlayer>();
-			ShakeScreen modPlayer2 = player.GetModPlayer<ShakeScreen>();
+			ScreenPlayer modPlayer2 = player.GetModPlayer<ScreenPlayer>();
 			modPlayer.text = true;
-			modPlayer2.shakeSubtle = true;
+			if (base.projectile.localAI[0] == 1f)
+			{
+				modPlayer2.Rumble(179, 3);
+			}
 			base.projectile.velocity.X = 0f;
 			base.projectile.velocity.Y = 0f;
 			if (base.projectile.timeLeft <= 30)

@@ -162,6 +162,8 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
+			spriteBatch.End();
+			spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.Default, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 			if (base.projectile.velocity == Vector2.Zero)
 			{
 				return false;

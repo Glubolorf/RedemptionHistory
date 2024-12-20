@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.Tiles.Furniture.Misc;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Quest
@@ -26,6 +27,13 @@ namespace Redemption.Items.Quest
 			base.item.maxStack = 1;
 			base.item.value = 10000;
 			base.item.rare = 5;
+			base.item.useTurn = true;
+			base.item.autoReuse = true;
+			base.item.useAnimation = 15;
+			base.item.useTime = 10;
+			base.item.useStyle = 1;
+			base.item.consumable = true;
+			base.item.createTile = ModContent.TileType<HallamsSwordTile>();
 		}
 	}
 }

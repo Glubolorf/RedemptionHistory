@@ -2,11 +2,12 @@
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Items;
-using Redemption.Items.Armor.PostML;
-using Redemption.Items.DruidDamageClass.SeedBags;
-using Redemption.Items.Placeable;
-using Redemption.Items.Weapons.v08;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Placeable.Trophies;
+using Redemption.Items.Usable;
+using Redemption.Items.Weapons.PreHM.Druid.Seedbags;
+using Redemption.Items.Weapons.PreHM.Melee;
+using Redemption.Items.Weapons.PreHM.Ranged;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -115,7 +116,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 				}
 			}
 			RedeWorld.downedThorn = true;
-			if (Main.netMode == 2)
+			if (Main.netMode != 0)
 			{
 				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 			}
@@ -131,6 +132,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 				writer.Write(this.customAI[2]);
 				writer.Write(this.customAI[3]);
 				writer.Write(this.teleportTimer);
+				writer.Write(this.choice);
 				writer.Write(this.beginFight);
 				writer.Write(this.teleport);
 				writer.Write(this.attacking);
@@ -149,6 +151,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 				this.customAI[2] = reader.ReadFloat();
 				this.customAI[3] = reader.ReadFloat();
 				this.teleportTimer = reader.ReadInt32();
+				this.choice = reader.ReadInt32();
 				this.beginFight = reader.ReadBool();
 				this.teleport = reader.ReadBool();
 				this.attacking = reader.ReadBool();
@@ -161,8 +164,15 @@ namespace Redemption.NPCs.Bosses.Thorn
 		{
 			if (!this.title)
 			{
-				Redemption.ShowTitle(base.npc, 5);
+				if (!Main.dedServ)
+				{
+					Redemption.Inst.TitleCardUIElement.DisplayTitle("Thorn", 60, 90, 0.8f, 0, new Color?(Color.ForestGreen), "Bane of the Forest", true);
+				}
 				this.title = true;
+			}
+			if (Main.xMas)
+			{
+				base.npc.GivenName = "Everthorn, Bane of the Holidays";
 			}
 			this.Target();
 			this.DespawnHandler();

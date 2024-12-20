@@ -22,6 +22,7 @@ namespace Redemption.Items.Armor.PostML
 			base.item.height = 26;
 			base.item.value = Item.sellPrice(0, 25, 0, 0);
 			base.item.defense = 30;
+			base.item.rare = 11;
 			base.item.GetGlobalItem<RedeItem>().redeRarity = 1;
 		}
 

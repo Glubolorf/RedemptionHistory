@@ -176,6 +176,51 @@ namespace Redemption
 			}
 		}
 
+		public static void ReplaceWalls(Vector2 position, int radius, int[] walls, int[] replacements, bool silent = false, bool sync = true)
+		{
+			int radiusLeft = (int)(position.X / 16f - (float)radius);
+			int radiusRight = (int)(position.X / 16f + (float)radius);
+			int radiusUp = (int)(position.Y / 16f - (float)radius);
+			int radiusDown = (int)(position.Y / 16f + (float)radius);
+			if (radiusLeft < 0)
+			{
+				radiusLeft = 0;
+			}
+			if (radiusRight > Main.maxTilesX)
+			{
+				radiusRight = Main.maxTilesX;
+			}
+			if (radiusUp < 0)
+			{
+				radiusUp = 0;
+			}
+			if (radiusDown > Main.maxTilesY)
+			{
+				radiusDown = Main.maxTilesY;
+			}
+			float distRad = (float)radius * 16f;
+			for (int x = radiusLeft; x <= radiusRight; x++)
+			{
+				for (int y = radiusUp; y <= radiusDown; y++)
+				{
+					double dist = (double)Vector2.Distance(new Vector2((float)x * 16f + 8f, (float)y * 16f + 8f), position);
+					if (WorldGen.InWorld(x, y, 0) && dist < (double)distRad && Main.tile[x, y] != null)
+					{
+						int currentType = (int)Main.tile[x, y].wall;
+						int index = 0;
+						if (BaseUtility.InArray(walls, currentType, ref index))
+						{
+							BaseWorldGen.GenerateTile(x, y, -1, replacements[index], 0, true, false, -2, silent, false);
+						}
+					}
+				}
+			}
+			if (sync && Main.netMode != 0)
+			{
+				NetMessage.SendTileSquare(-1, (int)(position.X / 16f), (int)(position.Y / 16f), radius * 2 + 2, 0);
+			}
+		}
+
 		public static bool KillChestAndItems(int X, int Y)
 		{
 			for (int i = 0; i < 1000; i++)

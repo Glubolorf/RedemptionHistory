@@ -23,7 +23,7 @@ namespace Redemption
 				color.B,
 				Lang.tip[50],
 				price,
-				"Ancient Gold Coins"
+				"Antique Doruls"
 			});
 		}
 

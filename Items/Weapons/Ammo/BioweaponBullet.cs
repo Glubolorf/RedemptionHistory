@@ -1,5 +1,5 @@
 ﻿using System;
-using Redemption.Projectiles.v08;
+using Redemption.Projectiles.Ranged;
 using Terraria.ID;
 using Terraria.ModLoader;
 

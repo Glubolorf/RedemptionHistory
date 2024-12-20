@@ -1,13 +1,17 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Buffs;
-using Redemption.Items;
-using Redemption.Items.Armor.PostML;
-using Redemption.Items.Placeable;
-using Redemption.Items.Weapons.v08;
+using Redemption.Buffs.Debuffs;
+using Redemption.Buffs.NPCBuffs;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Materials.PostML;
+using Redemption.Items.Placeable.Trophies;
+using Redemption.Items.Usable;
+using Redemption.Items.Weapons.PostML.Melee;
+using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.NPCs.Bosses.EaglecrestGolem;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -45,7 +49,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 		{
 			potionType = 3544;
 			RedeWorld.downedThornPZ = true;
-			if (Main.netMode == 2)
+			if (Main.netMode != 0)
 			{
 				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 			}
@@ -139,6 +143,38 @@ namespace Redemption.NPCs.Bosses.Thorn
 					this.magicFrame = 0;
 				}
 			}
+			if (!this.barrierSpawn)
+			{
+				int degrees = 0;
+				for (int j = 0; j < 36; j++)
+				{
+					degrees += 10;
+					int N2 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<RockBarrier>(), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[N2].ai[0] = (float)base.npc.whoAmI;
+					Main.npc[N2].ai[1] = (float)degrees;
+				}
+				this.barrierSpawn = true;
+			}
+			if (Vector2.Distance(base.npc.Center, player.Center) > 1800f)
+			{
+				Vector2 movement = base.npc.Center - player.Center;
+				float difference = movement.Length() - 1800f;
+				movement.Normalize();
+				movement *= ((difference < 17f) ? difference : 17f);
+				player.position += movement;
+				if (Utils.NextBool(Main.rand, 10))
+				{
+					int A = Main.rand.Next(600, 650);
+					int B = Main.rand.Next(-200, 200) + 700;
+					base.npc.Shoot(new Vector2(player.Center.X + (float)A, player.Center.Y + (float)B), ModContent.ProjectileType<SharpRockPro>(), 100, new Vector2(-12f, -14f), false, SoundID.Item69.WithVolume(0.4f), "", 0f, 0f);
+				}
+				if (Utils.NextBool(Main.rand, 10))
+				{
+					int A2 = Main.rand.Next(-650, -600);
+					int B2 = Main.rand.Next(-200, 200) + 700;
+					base.npc.Shoot(new Vector2(player.Center.X + (float)A2, player.Center.Y + (float)B2), ModContent.ProjectileType<SharpRockPro>(), 100, new Vector2(12f, -14f), false, SoundID.Item69.WithVolume(0.4f), "", 0f, 0f);
+				}
+			}
 			Vector2 EarthProtectPos = new Vector2((player.Center.X > base.npc.Center.X) ? (player.Center.X - 500f) : (player.Center.X + 500f), player.Center.Y - 100f);
 			if (RedeUkkoAkka.TAbubbles && NPC.AnyNPCs(ModContent.NPCType<Ukko>()))
 			{
@@ -157,7 +193,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 						base.npc.netUpdate = true;
 						return;
 					}
-					this.MoveToVector2(this.MoveVector2);
+					base.npc.MoveToVector2(this.MoveVector2, 20f);
 					return;
 				}
 				else if (base.npc.ai[0] == 2f)
@@ -173,7 +209,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 					base.npc.ai[2] += 1f;
 					if (base.npc.ai[2] % 3f == 0f && base.npc.ai[2] < 70f)
 					{
-						for (int j = 0; j < 2; j++)
+						for (int k = 0; k < 2; k++)
 						{
 							int p = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, Utils.NextFloat(Main.rand, -16f, 16f), Utils.NextFloat(Main.rand, -16f, 16f), ModContent.ProjectileType<AkkaBubble>(), 26, 1f, 255, 0f, 0f);
 							Main.projectile[p].netUpdate = true;
@@ -199,7 +235,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 					base.npc.ai[2] = 0f;
 					base.npc.ai[0] = 0f;
 					this.teamAttackCheck = true;
-					this.MoveToVector2(EarthProtectPos);
+					base.npc.MoveToVector2(EarthProtectPos, 20f);
 					base.npc.netUpdate = true;
 					return;
 				}
@@ -233,7 +269,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 						base.npc.netUpdate = true;
 						return;
 					}
-					this.MoveToVector2(this.MoveVector2);
+					base.npc.MoveToVector2(this.MoveVector2, 20f);
 					return;
 				}
 				else if (base.npc.ai[0] == 2f)
@@ -292,12 +328,12 @@ namespace Redemption.NPCs.Bosses.Thorn
 						}
 						if (Main.tile[point.X, point.Y + 3].type != 0)
 						{
-							player.GetModPlayer<ShakeScreen>().shakeQuake = true;
+							player.GetModPlayer<ScreenPlayer>().Rumble(2, 4);
 							this.TremorTimer++;
 							if (this.TremorTimer > 50 && this.TremorTimer % 40 == 0)
 							{
-								int p4 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<AkkaTremor>(), 13, 1f, 255, 0f, 0f);
-								Main.projectile[p4].netUpdate = true;
+								int hitDirection = (base.npc.Center.X > player.Center.X) ? 1 : -1;
+								player.Hurt(PlayerDeathReason.ByNPC(base.npc.whoAmI), 40, hitDirection, false, false, false, 0);
 								player.AddBuff(ModContent.BuffType<StunnedDebuff>(), 60, true);
 							}
 						}
@@ -346,14 +382,14 @@ namespace Redemption.NPCs.Bosses.Thorn
 						base.npc.ai[2] += 1f;
 						if (base.npc.ai[2] == 5f)
 						{
-							int p5 = Projectile.NewProjectile(base.npc.Center.X, base.npc.position.Y - 4f, 0f, -10f, ModContent.ProjectileType<Moonbeam>(), 0, 0f, Main.myPlayer, 0f, 0f);
-							Main.projectile[p5].hostile = false;
-							Main.projectile[p5].netUpdate = true;
+							int p4 = Projectile.NewProjectile(base.npc.Center.X, base.npc.position.Y - 4f, 0f, -10f, ModContent.ProjectileType<Moonbeam>(), 0, 0f, Main.myPlayer, 0f, 0f);
+							Main.projectile[p4].hostile = false;
+							Main.projectile[p4].netUpdate = true;
 						}
 						if (base.npc.ai[2] == 25f)
 						{
-							int p6 = Projectile.NewProjectile(player.Center.X, player.Center.Y - 1000f, 0f, 10f, ModContent.ProjectileType<Moonbeam>(), 33, 1f, Main.myPlayer, 0f, 0f);
-							Main.projectile[p6].netUpdate = true;
+							int p5 = Projectile.NewProjectile(player.Center.X, player.Center.Y - 1000f, 0f, 10f, ModContent.ProjectileType<Moonbeam>(), 33, 1f, Main.myPlayer, 0f, 0f);
+							Main.projectile[p5].netUpdate = true;
 						}
 						if (base.npc.ai[2] >= 70f)
 						{
@@ -374,8 +410,8 @@ namespace Redemption.NPCs.Bosses.Thorn
 						base.npc.ai[2] += 1f;
 						if (base.npc.ai[2] % 10f == 0f && base.npc.ai[2] > 40f && base.npc.ai[2] < 160f)
 						{
-							int p7 = Projectile.NewProjectile(player.Center.X + (float)Main.rand.Next(-300, 300), player.Center.Y + (float)Main.rand.Next(-300, 0), 0f, 0f, ModContent.ProjectileType<AkkaSeed>(), 30, 3f, Main.myPlayer, 0f, 0f);
-							Main.projectile[p7].netUpdate = true;
+							int p6 = Projectile.NewProjectile(player.Center.X + (float)Main.rand.Next(-300, 300), player.Center.Y + (float)Main.rand.Next(-300, 0), 0f, 0f, ModContent.ProjectileType<AkkaSeed>(), 30, 3f, Main.myPlayer, 0f, 0f);
+							Main.projectile[p6].netUpdate = true;
 						}
 						if (base.npc.ai[2] >= 200f)
 						{
@@ -396,8 +432,8 @@ namespace Redemption.NPCs.Bosses.Thorn
 						base.npc.ai[2] += 1f;
 						if (base.npc.ai[2] % 10f == 0f && base.npc.ai[2] > 20f && base.npc.ai[2] < 200f)
 						{
-							int p8 = Projectile.NewProjectile(base.npc.Center.X + 50f, base.npc.Center.Y + 50f, 0f, 0f, ModContent.ProjectileType<AkkaHealingSpirit>(), 0, 0f, Main.myPlayer, 0f, 0f);
-							Main.projectile[p8].netUpdate = true;
+							int p7 = Projectile.NewProjectile(base.npc.Center.X + 50f, base.npc.Center.Y + 50f, 0f, 0f, ModContent.ProjectileType<AkkaHealingSpirit>(), 0, 0f, Main.myPlayer, 0f, 0f);
+							Main.projectile[p7].netUpdate = true;
 						}
 						if (base.npc.ai[2] >= 260f)
 						{
@@ -434,8 +470,8 @@ namespace Redemption.NPCs.Bosses.Thorn
 							base.npc.ai[2] += 1f;
 							if (base.npc.ai[2] == 30f)
 							{
-								int p9 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<AkkaEarthbind>(), 0, 0f, Main.myPlayer, 0f, 0f);
-								Main.projectile[p9].netUpdate = true;
+								int p8 = Projectile.NewProjectile(player.Center.X, player.Center.Y, 0f, 0f, ModContent.ProjectileType<AkkaEarthbind>(), 0, 0f, Main.myPlayer, 0f, 0f);
+								Main.projectile[p8].netUpdate = true;
 							}
 							if (base.npc.ai[2] >= 70f)
 							{
@@ -462,29 +498,6 @@ namespace Redemption.NPCs.Bosses.Thorn
 		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
 		{
 			return false;
-		}
-
-		public void MoveToVector2(Vector2 p)
-		{
-			float moveSpeed = 20f;
-			float velMultiplier = 1f;
-			Vector2 dist = p - base.npc.Center;
-			float length = (dist == Vector2.Zero) ? 0f : dist.Length();
-			if (length < moveSpeed)
-			{
-				velMultiplier = MathHelper.Lerp(0f, 1f, length / moveSpeed);
-			}
-			if (length < 100f)
-			{
-				moveSpeed *= 0.5f;
-			}
-			if (length < 50f)
-			{
-				moveSpeed *= 0.5f;
-			}
-			base.npc.velocity = ((length == 0f) ? Vector2.Zero : Vector2.Normalize(dist));
-			base.npc.velocity *= moveSpeed;
-			base.npc.velocity *= velMultiplier;
 		}
 
 		public Vector2 Pos()
@@ -569,7 +582,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 
 		private Vector2[] oldPos = new Vector2[3];
 
-		private float[] oldrot = new float[3];
+		private readonly float[] oldrot = new float[3];
 
 		public Vector2 MoveVector2;
 
@@ -588,5 +601,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 		public int frameCounters;
 
 		public int magicFrame;
+
+		public bool barrierSpawn;
 	}
 }

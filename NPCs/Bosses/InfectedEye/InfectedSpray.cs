@@ -55,17 +55,17 @@ namespace Redemption.NPCs.Bosses.InfectedEye
 						if (Main.rand.Next(3) == 0)
 						{
 							Main.dust[num299].noGravity = true;
-							Dust expr_DD5D_cp_0 = Main.dust[num299];
+							Dust dust = Main.dust[num299];
 							Main.dust[num299].scale *= 2f;
-							expr_DD5D_cp_0.velocity.X = expr_DD5D_cp_0.velocity.X * 2f;
-							Dust expr_DD7D_cp_0 = Main.dust[num299];
-							expr_DD7D_cp_0.velocity.Y = expr_DD7D_cp_0.velocity.Y * 2f;
+							dust.velocity.X = dust.velocity.X * 2f;
+							Dust dust2 = Main.dust[num299];
+							dust2.velocity.Y = dust2.velocity.Y * 2f;
 						}
 						Main.dust[num299].scale *= 1f;
-						Dust expr_DDE2_cp_0 = Main.dust[num299];
-						expr_DDE2_cp_0.velocity.X = expr_DDE2_cp_0.velocity.X * 1.2f;
-						Dust expr_DE02_cp_0 = Main.dust[num299];
-						expr_DE02_cp_0.velocity.Y = expr_DE02_cp_0.velocity.Y * 1.2f;
+						Dust dust3 = Main.dust[num299];
+						dust3.velocity.X = dust3.velocity.X * 1.2f;
+						Dust dust4 = Main.dust[num299];
+						dust4.velocity.Y = dust4.velocity.Y * 1.2f;
 						Main.dust[num299].scale *= num296;
 						Main.dust[num299].velocity += base.projectile.velocity;
 						if (!Main.dust[num299].noGravity)

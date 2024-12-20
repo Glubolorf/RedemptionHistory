@@ -1,15 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Buffs;
-using Redemption.Items;
-using Redemption.Items.Armor;
-using Redemption.Items.DruidDamageClass.SeedBags;
-using Redemption.Items.Placeable;
-using Redemption.Items.Weapons;
-using Redemption.NPCs.Bosses.EaglecrestGolem;
+using Redemption.Buffs.Debuffs;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Materials.HM;
+using Redemption.Items.Materials.PostML;
+using Redemption.Items.Placeable.Trophies;
+using Redemption.Items.Usable;
+using Redemption.Items.Weapons.PostML.Druid.Seedbags;
+using Redemption.Items.Weapons.PostML.Magic;
+using Redemption.Items.Weapons.PostML.Ranged;
+using Redemption.NPCs.Bosses.VCleaver;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -45,7 +49,6 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 			base.npc.buffImmune[39] = true;
 			base.npc.buffImmune[24] = true;
 			base.npc.buffImmune[ModContent.BuffType<UltraFlameDebuff>()] = true;
-			base.npc.buffImmune[ModContent.BuffType<EnjoymentDebuff>()] = true;
 			base.npc.netAlways = true;
 			base.npc.HitSound = SoundID.NPCHit42;
 			base.npc.DeathSound = SoundID.NPCDeath14;
@@ -56,19 +59,19 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 		{
 			if (base.npc.life <= 0 && base.npc.ai[1] >= 17f)
 			{
-				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/OOGore1"), 1f);
-				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/OOGore2"), 1f);
-				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/OOGore3"), 1f);
-				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/OOGore4"), 1f);
-				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/OOGore5"), 1f);
-				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/OOGore6"), 1f);
-				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/OOGore7"), 1f);
-				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/OOGore8"), 1f);
-				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/OOGore9"), 1f);
-				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/OOGore10"), 1f);
-				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/OOGore11"), 1f);
-				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/OOGore12"), 1f);
-				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/OOGore13"), 1f);
+				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/Boss/OOGore1"), 1f);
+				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/Boss/OOGore2"), 1f);
+				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/Boss/OOGore3"), 1f);
+				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/Boss/OOGore4"), 1f);
+				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/Boss/OOGore5"), 1f);
+				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/Boss/OOGore6"), 1f);
+				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/Boss/OOGore7"), 1f);
+				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/Boss/OOGore8"), 1f);
+				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/Boss/OOGore9"), 1f);
+				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/Boss/OOGore10"), 1f);
+				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/Boss/OOGore11"), 1f);
+				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/Boss/OOGore12"), 1f);
+				Gore.NewGore(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.velocity, base.mod.GetGoreSlot("Gores/Boss/OOGore13"), 1f);
 				for (int i = 0; i < 120; i++)
 				{
 					int dustIndex = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 235, 0f, 0f, 100, default(Color), 1.7f);
@@ -99,7 +102,6 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 			potionType = 3544;
 			if (!RedeWorld.downedVlitch3)
 			{
-				RedeWorld.redemptionPoints++;
 				for (int i = 0; i < 255; i++)
 				{
 					Player player2 = Main.player[i];
@@ -112,16 +114,16 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 								Main.NewText("<Chalice of Alignment> Good job! All Vlitch Overlords have been... Wait...", Color.DarkGoldenrod, false);
 							}
 						}
-						CombatText.NewText(player2.getRect(), Color.Gold, "+1", true, false);
+						CombatText.NewText(player2.getRect(), Color.Gray, "+0", true, false);
 					}
 				}
 			}
 			RedeWorld.downedVlitch3 = true;
-			if (Main.netMode == 2)
+			if (Main.netMode != 0)
 			{
 				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 			}
-			if (!RedeWorld.girusTalk3 && !NPC.AnyNPCs(ModContent.NPCType<VlitchWormHead>()) && !NPC.AnyNPCs(ModContent.NPCType<VlitchCleaver>()) && !RedeWorld.girusCloaked && !RedeConfigClient.Instance.NoBossText)
+			if (!RedeWorld.girusTalk3 && !NPC.AnyNPCs(ModContent.NPCType<VlitchWormHead>()) && !NPC.AnyNPCs(ModContent.NPCType<VlitchCleaver>()) && !RedeWorld.girusCloaked && !RedeConfigClient.Instance.NoLoreElements)
 			{
 				Projectile.NewProjectile(new Vector2(base.npc.position.X, base.npc.position.Y), new Vector2(0f, 0f), ModContent.ProjectileType<GirusTalking3>(), 0, 0f, 255, 0f, 0f);
 			}
@@ -163,20 +165,78 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 			{
 				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<GloopContainer>(), 1, false, 0, false, false);
 			}
-			if (Main.rand.Next(14) == 0)
+			if (Main.rand.Next(3) == 0)
 			{
-				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<GirusMask>(), 1, false, 0, false, false);
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<SneakloneRemote>(), 1, false, 0, false, false);
+			}
+			if (Utils.NextBool(Main.rand, 7))
+			{
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<OOMask>(), 1, false, 0, false, false);
 			}
 			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<CorruptedXenomite>(), Main.rand.Next(25, 35), false, 0, false, false);
 			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<VlitchBattery>(), Main.rand.Next(3, 5), false, 0, false, false);
 			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, ModContent.ItemType<OblitBrain>(), 1, false, 0, false, false);
 		}
 
+		public override void SendExtraAI(BinaryWriter writer)
+		{
+			base.SendExtraAI(writer);
+			if (Main.netMode == 2 || Main.dedServ)
+			{
+				writer.Write(this.repeat);
+				writer.Write(this.ID);
+			}
+		}
+
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			base.ReceiveExtraAI(reader);
+			if (Main.netMode == 1)
+			{
+				this.repeat = reader.ReadInt32();
+				this.ID = reader.ReadInt32();
+			}
+		}
+
+		public int ID
+		{
+			get
+			{
+				return (int)base.npc.ai[1];
+			}
+			set
+			{
+				base.npc.ai[1] = (float)value;
+			}
+		}
+
+		private void AttackChoice()
+		{
+			int attempts = 0;
+			while (attempts == 0)
+			{
+				if (this.CopyList == null || this.CopyList.Count == 0)
+				{
+					this.CopyList = new List<int>(this.AttackList);
+				}
+				this.ID = this.CopyList[Main.rand.Next(0, this.CopyList.Count)];
+				this.CopyList.Remove(this.ID);
+				base.npc.netUpdate = true;
+				if ((this.ID != 6 || base.npc.life < (int)((float)base.npc.lifeMax * 0.6f)) && (this.ID != 7 || base.npc.life < (int)((float)base.npc.lifeMax * 0.7f)))
+				{
+					attempts++;
+				}
+			}
+		}
+
 		public override void AI()
 		{
 			if (!this.title)
 			{
-				Redemption.ShowTitle(base.npc, 9);
+				if (!Main.dedServ)
+				{
+					Redemption.Inst.TitleCardUIElement.DisplayTitle("Omega Obliterator", 60, 90, 0.8f, 0, new Color?(Color.Red), "3rd Vlitch Overlord", true);
+				}
 				this.title = true;
 			}
 			for (int i = this.oldPos.Length - 1; i > 0; i--)
@@ -228,7 +288,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 					this.chargeFrame++;
 					this.frameCounters = 0;
 				}
-				if (this.chargeFrame >= 2)
+				if (this.chargeFrame >= 3)
 				{
 					this.chargeFrame = 0;
 				}
@@ -250,7 +310,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 			{
 				if (base.npc.spriteDirection != 1)
 				{
-					int dustIndex = Dust.NewDust(new Vector2(base.npc.position.X + 82f, base.npc.position.Y + 26f), 12, 12, 235, 0f, 0f, 0, default(Color), 2f);
+					int dustIndex = Dust.NewDust(new Vector2(base.npc.position.X + 80f, base.npc.position.Y + 26f), 12, 12, 235, 0f, 0f, 0, default(Color), 2f);
 					Main.dust[dustIndex].noGravity = true;
 					Dust dust = Main.dust[dustIndex];
 					dust.velocity.X = 8f;
@@ -258,7 +318,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 				}
 				else
 				{
-					int dustIndex2 = Dust.NewDust(new Vector2(base.npc.position.X + 2f, base.npc.position.Y + 26f), 12, 12, 235, 0f, 0f, 0, default(Color), 2f);
+					int dustIndex2 = Dust.NewDust(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 26f), 12, 12, 235, 0f, 0f, 0, default(Color), 2f);
 					Main.dust[dustIndex2].noGravity = true;
 					Dust dust2 = Main.dust[dustIndex2];
 					dust2.velocity.X = -8f;
@@ -267,7 +327,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 			}
 			else if (base.npc.spriteDirection != 1)
 			{
-				int dustIndex3 = Dust.NewDust(new Vector2(base.npc.position.X + 82f, base.npc.position.Y + 26f), 12, 2, 235, 0f, 0f, 0, default(Color), 1f);
+				int dustIndex3 = Dust.NewDust(new Vector2(base.npc.position.X + 80f, base.npc.position.Y + 26f), 12, 2, 235, 0f, 0f, 0, default(Color), 1f);
 				Main.dust[dustIndex3].noGravity = true;
 				Dust dust3 = Main.dust[dustIndex3];
 				dust3.velocity.X = 2f;
@@ -275,7 +335,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 			}
 			else
 			{
-				int dustIndex4 = Dust.NewDust(new Vector2(base.npc.position.X + 2f, base.npc.position.Y + 26f), 12, 2, 235, 0f, 0f, 0, default(Color), 1f);
+				int dustIndex4 = Dust.NewDust(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 26f), 12, 2, 235, 0f, 0f, 0, default(Color), 1f);
 				Main.dust[dustIndex4].noGravity = true;
 				Dust dust4 = Main.dust[dustIndex4];
 				dust4.velocity.X = -2f;
@@ -299,16 +359,16 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 				if (!this.barrierSpawn)
 				{
 					int degrees = 0;
-					for (int j = 0; j < 24; j++)
+					for (int j = 0; j < 36; j++)
 					{
-						degrees += 15;
+						degrees += 10;
 						int N2 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, ModContent.NPCType<OOShield>(), 0, 0f, 0f, 0f, 0f, 255);
 						Main.npc[N2].ai[0] = (float)base.npc.whoAmI;
 						Main.npc[N2].ai[1] = (float)degrees;
 					}
 					this.barrierSpawn = true;
 				}
-				if (Vector2.Distance(base.npc.Center, player.Center) > 1500f)
+				if (Vector2.Distance(base.npc.Center, player.Center) > 1500f && (base.npc.ai[1] != 10f || base.npc.ai[0] != 5f))
 				{
 					player.AddBuff(144, 10, true);
 				}
@@ -317,15 +377,16 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 			{
 				this.music = base.mod.GetSoundSlot(51, "Sounds/Music/silence");
 			}
+			player.GetModPlayer<ScreenPlayer>().ScreenFocusPosition = base.npc.Center;
 			switch ((int)base.npc.ai[0])
 			{
 			case 0:
-				this.LookAtPlayer();
+				base.npc.LookAtPlayer();
 				base.npc.ai[2] += 1f;
 				if (Vector2.Distance(base.npc.Center, DefaultPos) < 100f || base.npc.ai[2] > 200f)
 				{
 					base.npc.ai[2] = 0f;
-					if (RedeWorld.oblitDeath == 2 || RedeConfigClient.Instance.NoBossText)
+					if (RedeWorld.oblitDeath == 2 || RedeConfigClient.Instance.NoLoreElements)
 					{
 						base.npc.ai[0] = 2f;
 					}
@@ -337,7 +398,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 				}
 				else
 				{
-					this.MoveToVector2(DefaultPos, 11f);
+					base.npc.MoveToVector2(DefaultPos, 11f);
 				}
 				break;
 			case 1:
@@ -346,6 +407,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 				if (base.npc.ai[2] >= 30f)
 				{
 					base.npc.velocity *= 0f;
+					player.GetModPlayer<ScreenPlayer>().lockScreen = true;
 				}
 				if (base.npc.ai[2] == 120f)
 				{
@@ -354,7 +416,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 				}
 				if (base.npc.ai[2] < 190f || base.npc.ai[2] > 370f)
 				{
-					this.LookAtPlayer();
+					base.npc.LookAtPlayer();
 				}
 				if (base.npc.ai[2] == 190f && player.active && !player.dead)
 				{
@@ -364,9 +426,9 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 					int p2 = Projectile.NewProjectile(LaserPos, new Vector2(0f, 0f), ModContent.ProjectileType<Lasers>(), 0, 0f, 255, 0f, 0f);
 					Main.projectile[p2].netUpdate = true;
 				}
-				if (base.npc.ai[2] > 238f && base.npc.ai[2] <= 350f)
+				if (base.npc.ai[2] == 238f)
 				{
-					player.GetModPlayer<ShakeScreen>().shakeMega = true;
+					player.GetModPlayer<ScreenPlayer>().Rumble(112, 20);
 				}
 				if (base.npc.ai[2] == 350f)
 				{
@@ -433,21 +495,21 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 				}
 				break;
 			case 2:
-				this.LookAtPlayer();
+				base.npc.LookAtPlayer();
 				base.npc.ai[2] += 1f;
 				if (base.npc.ai[2] < 60f)
 				{
-					this.Move(DefaultPos2, 9f);
+					base.npc.Move(DefaultPos2, 9f, 10f, true);
 				}
 				else
 				{
 					base.npc.velocity *= 0.96f;
 				}
-				if (base.npc.ai[2] == 60f && !RedeConfigClient.Instance.NoBossText)
+				if (base.npc.ai[2] == 60f && !RedeConfigClient.Instance.NoLoreElements)
 				{
 					CombatText.NewText(base.npc.getRect(), Colors.RarityRed, "TARGET FOUND...", true, false);
 				}
-				if (base.npc.ai[2] == 120f && !RedeConfigClient.Instance.NoBossText)
+				if (base.npc.ai[2] == 120f && !RedeConfigClient.Instance.NoLoreElements)
 				{
 					CombatText.NewText(base.npc.getRect(), Colors.RarityRed, "PREPARE FOR OBLITERATION...", true, false);
 				}
@@ -459,22 +521,22 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 				}
 				break;
 			case 3:
-				this.LookAtPlayer();
+				base.npc.LookAtPlayer();
 				this.frameCounters = 0;
 				base.npc.ai[3] = 0f;
 				base.npc.ai[0] = 4f;
 				base.npc.ai[2] = 0f;
-				base.npc.ai[1] = (float)Main.rand.Next(8);
+				this.AttackChoice();
 				this.MoveVector2 = RandPos;
 				base.npc.netUpdate = true;
 				break;
 			case 4:
-				switch ((int)base.npc.ai[1])
+				switch (this.ID)
 				{
 				case 0:
 					if (base.npc.ai[3] != 2f)
 					{
-						this.LookAtPlayer();
+						base.npc.LookAtPlayer();
 						base.npc.netUpdate = true;
 					}
 					if (base.npc.ai[2] == 0f)
@@ -518,7 +580,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 				case 1:
 					if (base.npc.ai[3] != 2f)
 					{
-						this.LookAtPlayer();
+						base.npc.LookAtPlayer();
 						base.npc.netUpdate = true;
 					}
 					base.npc.ai[2] += 1f;
@@ -531,7 +593,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 						}
 						else
 						{
-							this.Move(DefaultPos2, 15f);
+							base.npc.Move(DefaultPos2, 15f, 10f, true);
 						}
 					}
 					else
@@ -548,8 +610,8 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 						}
 						if (base.npc.ai[2] > 235f && base.npc.ai[2] % 3f == 0f && base.npc.velocity.Length() > 12f)
 						{
-							this.Shoot(base.npc.Center, ModContent.ProjectileType<OmegaBlast>(), 90, new Vector2((base.npc.spriteDirection != 1) ? 4f : -4f, 12f), false, false, SoundID.Item91, 0f, "", 0f);
-							this.Shoot(base.npc.Center, ModContent.ProjectileType<OmegaBlast>(), 90, new Vector2((base.npc.spriteDirection != 1) ? 4f : -4f, -12f), false, false, SoundID.Item91, 0f, "", 0f);
+							base.npc.Shoot(base.npc.Center, ModContent.ProjectileType<OmegaBlast>(), 90, new Vector2((base.npc.spriteDirection != 1) ? 4f : -4f, 12f), false, SoundID.Item91, "", 0f, 0f);
+							base.npc.Shoot(base.npc.Center, ModContent.ProjectileType<OmegaBlast>(), 90, new Vector2((base.npc.spriteDirection != 1) ? 4f : -4f, -12f), false, SoundID.Item91, "", 0f, 0f);
 							base.npc.netUpdate = true;
 						}
 						if (base.npc.ai[2] > 310f)
@@ -563,7 +625,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 					}
 					break;
 				case 2:
-					this.LookAtPlayer();
+					base.npc.LookAtPlayer();
 					base.npc.ai[2] += 1f;
 					if (base.npc.ai[2] < 200f)
 					{
@@ -576,7 +638,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 						else
 						{
 							base.npc.ai[3] = 2f;
-							this.Move(DefaultPos2, 16f);
+							base.npc.Move(DefaultPos2, 16f, 10f, true);
 						}
 					}
 					else
@@ -585,7 +647,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 						base.npc.ai[3] = 1f;
 						if (base.npc.ai[2] == 210f)
 						{
-							this.Shoot(LaserPos, ModContent.ProjectileType<OmegaPlasmaBall>(), 90, new Vector2((base.npc.spriteDirection != 1) ? -10f : 10f, 0f), false, true, SoundID.Item1, 0f, "Sounds/Custom/BallCreate", 0f);
+							base.npc.Shoot(LaserPos, ModContent.ProjectileType<OmegaPlasmaBall>(), 90, new Vector2((base.npc.spriteDirection != 1) ? -10f : 10f, 0f), true, SoundID.Item1, "Sounds/Custom/BallCreate", 0f, 0f);
 							base.npc.netUpdate = true;
 						}
 						if (base.npc.ai[2] > 230f)
@@ -611,7 +673,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 					}
 					break;
 				case 3:
-					this.LookAtPlayer();
+					base.npc.LookAtPlayer();
 					base.npc.ai[2] += 1f;
 					if (base.npc.ai[2] < 200f)
 					{
@@ -632,7 +694,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 						else
 						{
 							base.npc.ai[3] = 2f;
-							this.Move(DefaultPos2, 19f);
+							base.npc.Move(DefaultPos2, 19f, 10f, true);
 						}
 					}
 					else
@@ -644,7 +706,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 						base.npc.ai[3] = 1f;
 						if (base.npc.ai[2] > 200f && base.npc.ai[2] % 7f == 0f)
 						{
-							this.Shoot(LaserPos, ModContent.ProjectileType<OmegaPlasmaBall>(), 90, new Vector2((base.npc.spriteDirection != 1) ? -12f : 12f, 0f), false, true, SoundID.Item1, 0f, "Sounds/Custom/BallCreate", 0f);
+							base.npc.Shoot(LaserPos, ModContent.ProjectileType<OmegaPlasmaBall>(), 90, new Vector2((base.npc.spriteDirection != 1) ? -12f : 12f, 0f), true, SoundID.Item1, "Sounds/Custom/BallCreate", 0f, 0f);
 							base.npc.netUpdate = true;
 						}
 						if (base.npc.ai[2] > 270f)
@@ -658,7 +720,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 					}
 					break;
 				case 4:
-					this.LookAtPlayer();
+					base.npc.LookAtPlayer();
 					base.npc.ai[2] += 1f;
 					if (base.npc.ai[2] < 200f)
 					{
@@ -669,7 +731,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 						}
 						else
 						{
-							this.Move(DefaultPos2, 11f);
+							base.npc.Move(DefaultPos2, 11f, 10f, true);
 						}
 					}
 					else
@@ -679,13 +741,13 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 						{
 							if (base.npc.ai[2] > 200f && base.npc.ai[2] % 4f == 0f && base.npc.ai[2] < 320f)
 							{
-								this.Shoot(new Vector2(player.Center.X + (float)Main.rand.Next(-600, 600), player.Center.Y + (float)Main.rand.Next(-600, 600)), ModContent.ProjectileType<OOCrosshair>(), 160, new Vector2(0f, 0f), false, true, SoundID.Item1, 0f, "Sounds/Custom/Alarm2", (float)base.npc.whoAmI);
+								base.npc.Shoot(new Vector2(player.Center.X + (float)Main.rand.Next(-600, 600), player.Center.Y + (float)Main.rand.Next(-600, 600)), ModContent.ProjectileType<OOCrosshair>(), 160, Vector2.Zero, true, SoundID.Item1, "Sounds/Custom/Alarm2", (float)base.npc.whoAmI, 0f);
 								base.npc.netUpdate = true;
 							}
 						}
 						else if (base.npc.ai[2] > 200f && base.npc.ai[2] % 8f == 0f && base.npc.ai[2] < 320f)
 						{
-							this.Shoot(new Vector2(player.Center.X + (float)Main.rand.Next(-600, 600), player.Center.Y + (float)Main.rand.Next(-600, 600)), ModContent.ProjectileType<OOCrosshair>(), 160, new Vector2(0f, 0f), false, true, SoundID.Item1, 0f, "Sounds/Custom/Alarm2", (float)base.npc.whoAmI);
+							base.npc.Shoot(new Vector2(player.Center.X + (float)Main.rand.Next(-600, 600), player.Center.Y + (float)Main.rand.Next(-600, 600)), ModContent.ProjectileType<OOCrosshair>(), 160, Vector2.Zero, true, SoundID.Item1, "Sounds/Custom/Alarm2", (float)base.npc.whoAmI, 0f);
 							base.npc.netUpdate = true;
 						}
 						if (base.npc.ai[2] > 320f)
@@ -700,7 +762,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 				case 5:
 					if (base.npc.ai[2] < 300f)
 					{
-						this.LookAtPlayer();
+						base.npc.LookAtPlayer();
 						base.npc.netUpdate = true;
 					}
 					base.npc.ai[2] += 1f;
@@ -708,13 +770,13 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 					{
 						if (((base.npc.life < (int)((float)base.npc.lifeMax * 0.2f)) ? (base.npc.ai[2] % 8f == 0f) : (base.npc.ai[2] % 10f == 0f)) && base.npc.ai[2] < 300f)
 						{
-							this.Shoot(GunPos, ModContent.ProjectileType<OOLaser>(), 90, new Vector2(0f, 0f), true, true, SoundID.Item1, 12f, "Sounds/Custom/Laser1", 0f);
+							base.npc.Shoot(GunPos, ModContent.ProjectileType<OOLaser>(), 90, RedeHelper.PolarVector(12f, Utils.ToRotation(player.Center - base.npc.Center)), true, SoundID.Item1, "Sounds/Custom/Laser1", 0f, 0f);
 							base.npc.netUpdate = true;
 						}
 					}
 					else if (base.npc.ai[2] % 15f == 0f && base.npc.ai[2] < 300f)
 					{
-						this.Shoot(GunPos, ModContent.ProjectileType<OOLaser>(), 90, new Vector2(0f, 0f), true, true, SoundID.Item1, 12f, "Sounds/Custom/Laser1", 0f);
+						base.npc.Shoot(GunPos, ModContent.ProjectileType<OOLaser>(), 90, RedeHelper.PolarVector(12f, Utils.ToRotation(player.Center - base.npc.Center)), true, SoundID.Item1, "Sounds/Custom/Laser1", 0f, 0f);
 						base.npc.netUpdate = true;
 					}
 					if (base.npc.ai[2] < 200f)
@@ -727,7 +789,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 						else
 						{
 							base.npc.ai[3] = 2f;
-							this.Move(this.MoveVector2, 20f);
+							base.npc.Move(this.MoveVector2, 20f, 10f, true);
 						}
 					}
 					else if (base.npc.ai[2] >= 200f && base.npc.ai[2] < 300f)
@@ -755,10 +817,10 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 					}
 					else
 					{
-						this.MoveToVector2(ShootPos, 8f);
+						base.npc.MoveToVector2(ShootPos, 8f);
 						if (base.npc.ai[2] == 305f)
 						{
-							this.Shoot(GunPos, ModContent.ProjectileType<OONormalBeam>(), 180, new Vector2((base.npc.spriteDirection != 1) ? -10f : 10f, 0f), false, true, SoundID.Item1, 0f, "Sounds/Custom/Laser1", (float)base.npc.whoAmI);
+							base.npc.Shoot(GunPos, ModContent.ProjectileType<OONormalBeam>(), 180, new Vector2((base.npc.spriteDirection != 1) ? -10f : 10f, 0f), true, SoundID.Item1, "Sounds/Custom/Laser1", (float)base.npc.whoAmI, 0f);
 							base.npc.netUpdate = true;
 						}
 						if (base.npc.ai[2] > 420f)
@@ -772,103 +834,85 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 					}
 					break;
 				case 6:
-					if (base.npc.life < (int)((float)base.npc.lifeMax * 0.6f))
+					base.npc.ai[2] += 1f;
+					if (base.npc.ai[2] < 200f)
 					{
-						base.npc.ai[2] += 1f;
-						if (base.npc.ai[2] < 200f)
+						if (Vector2.Distance(base.npc.Center, BottomPos) < 200f || base.npc.ai[2] >= 80f)
 						{
-							if (Vector2.Distance(base.npc.Center, BottomPos) < 200f || base.npc.ai[2] >= 80f)
-							{
-								this.Shoot(GunPos, ModContent.ProjectileType<OOStunBeam>(), 100, new Vector2((base.npc.spriteDirection != 1) ? -10f : 10f, 0f), false, true, SoundID.Item1, 0f, "Sounds/Custom/BallFire", (float)base.npc.whoAmI);
-								base.npc.velocity *= 0f;
-								base.npc.ai[2] = 200f;
-								base.npc.netUpdate = true;
-							}
-							else
-							{
-								this.LookAtPlayer();
-								base.npc.ai[3] = 2f;
-								this.Move(BottomPos, 30f);
-							}
+							base.npc.Shoot(GunPos, ModContent.ProjectileType<OOStunBeam>(), 100, new Vector2((base.npc.spriteDirection != 1) ? -10f : 10f, 0f), true, SoundID.Item1, "Sounds/Custom/BallFire", (float)base.npc.whoAmI, 0f);
+							base.npc.velocity *= 0f;
+							base.npc.ai[2] = 200f;
+							base.npc.netUpdate = true;
 						}
 						else
 						{
-							if (base.npc.ai[2] < 205f)
-							{
-								NPC npc4 = base.npc;
-								npc4.velocity.Y = npc4.velocity.Y - 2f;
-							}
-							if (base.npc.ai[2] > 200f && base.npc.ai[2] % 6f == 0f && base.npc.ai[2] < 360f && player.active && !player.dead && player.HasBuff(ModContent.BuffType<StunnedDebuff>()))
-							{
-								this.Shoot(new Vector2(player.Center.X + (float)Main.rand.Next(-80, 80), player.Center.Y + (float)Main.rand.Next(-80, 80)), ModContent.ProjectileType<OOCrosshair>(), 160, new Vector2(0f, 0f), false, true, SoundID.Item1, 0f, "Sounds/Custom/Alarm2", (float)base.npc.whoAmI);
-								base.npc.netUpdate = true;
-							}
-							if (base.npc.ai[2] > 300f)
-							{
-								base.npc.velocity *= 0.98f;
-							}
-							if (base.npc.ai[2] > 400f)
-							{
-								base.npc.velocity *= 0f;
-								base.npc.ai[0] = 3f;
-								base.npc.ai[2] = 0f;
-								base.npc.ai[3] = 0f;
-								base.npc.netUpdate = true;
-							}
+							base.npc.LookAtPlayer();
+							base.npc.ai[3] = 2f;
+							base.npc.Move(BottomPos, 30f, 10f, true);
 						}
 					}
 					else
 					{
-						base.npc.ai[1] = (float)Main.rand.Next(8);
-						base.npc.ai[2] = 0f;
-						base.npc.netUpdate = true;
+						if (base.npc.ai[2] < 205f)
+						{
+							NPC npc4 = base.npc;
+							npc4.velocity.Y = npc4.velocity.Y - 2f;
+						}
+						if (base.npc.ai[2] > 200f && base.npc.ai[2] % 6f == 0f && base.npc.ai[2] < 360f && player.active && !player.dead && player.HasBuff(ModContent.BuffType<StaticStunDebuff>()))
+						{
+							base.npc.Shoot(new Vector2(player.Center.X + (float)Main.rand.Next(-80, 80), player.Center.Y + (float)Main.rand.Next(-80, 80)), ModContent.ProjectileType<OOCrosshair>(), 160, Vector2.Zero, true, SoundID.Item1, "Sounds/Custom/Alarm2", (float)base.npc.whoAmI, 0f);
+							base.npc.netUpdate = true;
+						}
+						if (base.npc.ai[2] > 300f)
+						{
+							base.npc.velocity *= 0.98f;
+						}
+						if (base.npc.ai[2] > 400f)
+						{
+							base.npc.velocity *= 0f;
+							base.npc.ai[0] = 3f;
+							base.npc.ai[2] = 0f;
+							base.npc.ai[3] = 0f;
+							base.npc.netUpdate = true;
+						}
 					}
 					break;
 				case 7:
-					if (base.npc.life < (int)((float)base.npc.lifeMax * 0.7f))
+					base.npc.ai[2] += 1f;
+					if (base.npc.ai[2] < 200f)
 					{
-						base.npc.ai[2] += 1f;
-						if (base.npc.ai[2] < 200f)
+						if (Vector2.Distance(base.npc.Center, ChargePos) < 200f || base.npc.ai[2] >= 80f)
 						{
-							if (Vector2.Distance(base.npc.Center, ChargePos) < 200f || base.npc.ai[2] >= 80f)
-							{
-								base.npc.ai[3] = 1f;
-								this.Shoot(LaserPos, ModContent.ProjectileType<OONormalBeamR>(), 180, new Vector2((base.npc.spriteDirection != 1) ? -10f : 10f, 0f), false, true, SoundID.Item1, 0f, "Sounds/Custom/Laser1", (float)base.npc.whoAmI);
-								this.Shoot(LaserPos, ModContent.ProjectileType<OONormalBeamR2>(), 180, new Vector2((base.npc.spriteDirection != 1) ? -10f : 10f, 0f), false, true, SoundID.Item1, 0f, "Sounds/Custom/Laser1", (float)base.npc.whoAmI);
-								base.npc.velocity *= 0f;
-								base.npc.ai[2] = 200f;
-								base.npc.netUpdate = true;
-							}
-							else
-							{
-								this.LookAtPlayer();
-								base.npc.ai[3] = 2f;
-								this.MoveToVector2(ChargePos, 30f);
-							}
+							base.npc.ai[3] = 1f;
+							base.npc.Shoot(LaserPos, ModContent.ProjectileType<OONormalBeamR>(), 180, new Vector2((base.npc.spriteDirection != 1) ? -10f : 10f, 0f), true, SoundID.Item1, "Sounds/Custom/Laser1", (float)base.npc.whoAmI, 0f);
+							base.npc.Shoot(LaserPos, ModContent.ProjectileType<OONormalBeamR2>(), 180, new Vector2((base.npc.spriteDirection != 1) ? -10f : 10f, 0f), true, SoundID.Item1, "Sounds/Custom/Laser1", (float)base.npc.whoAmI, 0f);
+							base.npc.velocity *= 0f;
+							base.npc.ai[2] = 200f;
+							base.npc.netUpdate = true;
 						}
 						else
 						{
-							base.npc.ai[3] = 1f;
-							this.MoveToVector2(ChargePos, 6f);
-							if (base.npc.ai[2] > 320f)
-							{
-								base.npc.velocity *= 0.98f;
-							}
-							if (base.npc.ai[2] > 380f)
-							{
-								base.npc.velocity *= 0f;
-								base.npc.ai[0] = 3f;
-								base.npc.ai[2] = 0f;
-								base.npc.ai[3] = 0f;
-								base.npc.netUpdate = true;
-							}
+							base.npc.LookAtPlayer();
+							base.npc.ai[3] = 2f;
+							base.npc.MoveToVector2(ChargePos, 30f);
 						}
 					}
 					else
 					{
-						base.npc.ai[1] = (float)Main.rand.Next(8);
-						base.npc.ai[2] = 0f;
-						base.npc.netUpdate = true;
+						base.npc.ai[3] = 1f;
+						base.npc.MoveToVector2(ChargePos, 6f);
+						if (base.npc.ai[2] > 320f)
+						{
+							base.npc.velocity *= 0.98f;
+						}
+						if (base.npc.ai[2] > 380f)
+						{
+							base.npc.velocity *= 0f;
+							base.npc.ai[0] = 3f;
+							base.npc.ai[2] = 0f;
+							base.npc.ai[3] = 0f;
+							base.npc.netUpdate = true;
+						}
 					}
 					break;
 				}
@@ -876,7 +920,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 			case 5:
 				if (base.npc.ai[1] < 10f)
 				{
-					this.LookAtPlayer();
+					base.npc.LookAtPlayer();
 					this.frameCounters = 0;
 					base.npc.ai[3] = 3f;
 					base.npc.ai[0] = 5f;
@@ -886,6 +930,10 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 					this.MoveVector2 = RandPos;
 					base.npc.dontTakeDamage = true;
 					base.npc.netUpdate = true;
+					if (Main.netMode == 2 && base.npc.whoAmI < 200)
+					{
+						NetMessage.SendData(23, -1, -1, null, base.npc.whoAmI, 0f, 0f, 0f, 0, 0, 0);
+					}
 				}
 				else
 				{
@@ -900,7 +948,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 					{
 					case 10:
 						base.npc.dontTakeDamage = true;
-						this.LookAtPlayer();
+						base.npc.LookAtPlayer();
 						base.npc.velocity *= 0.8f;
 						if (base.npc.ai[2] == 0f)
 						{
@@ -921,19 +969,27 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 								Main.dust[dustIndex9].velocity *= 1.8f;
 							}
 							base.npc.ai[2] = 1f;
+							if (Main.netMode == 2 && base.npc.whoAmI < 200)
+							{
+								NetMessage.SendData(23, -1, -1, null, base.npc.whoAmI, 0f, 0f, 0f, 0, 0, 0);
+							}
 						}
 						else
 						{
+							if (base.npc.ai[2] < 500f)
+							{
+								player.GetModPlayer<ScreenPlayer>().lockScreen = true;
+							}
 							base.npc.ai[2] += 1f;
-							if (base.npc.ai[2] == 60f && !RedeConfigClient.Instance.NoBossText)
+							if (base.npc.ai[2] == 60f && !RedeConfigClient.Instance.NoLoreElements)
 							{
 								CombatText.NewText(base.npc.getRect(), Colors.RarityRed, "SYSTEM OVERLOAD...", true, false);
 							}
-							if (base.npc.ai[2] == 180f && !RedeConfigClient.Instance.NoBossText)
+							if (base.npc.ai[2] == 180f && !RedeConfigClient.Instance.NoLoreElements)
 							{
 								CombatText.NewText(base.npc.getRect(), Colors.RarityRed, "GIRUS, I REQUIRE ASSISTANCE...", true, false);
 							}
-							if (base.npc.ai[2] == 300f && !RedeConfigClient.Instance.NoBossText)
+							if (base.npc.ai[2] == 300f && !RedeConfigClient.Instance.NoLoreElements)
 							{
 								CombatText.NewText(base.npc.getRect(), Colors.RarityRed, "MESSAGE FAILED TO SEND...", true, false);
 							}
@@ -955,7 +1011,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 									int dustIndex12 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 31, 0f, 0f, 100, default(Color), 1.2f);
 									Main.dust[dustIndex12].velocity *= 1.8f;
 								}
-								if (!RedeConfigClient.Instance.NoBossText)
+								if (!RedeConfigClient.Instance.NoLoreElements)
 								{
 									CombatText.NewText(base.npc.getRect(), Colors.RarityRed, "OVERHEATING... OVERHEATING... OVERHEATING...", true, false);
 								}
@@ -972,7 +1028,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 						this.overheatAlpha -= 0.05f;
 						if (base.npc.velocity.Length() <= 12f)
 						{
-							this.LookAtPlayer();
+							base.npc.LookAtPlayer();
 							base.npc.netUpdate = true;
 						}
 						base.npc.ai[2] += 1f;
@@ -985,7 +1041,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 							}
 							else
 							{
-								this.Move(DefaultPos2, 40f);
+								base.npc.Move(DefaultPos2, 40f, 10f, true);
 							}
 						}
 						else
@@ -1002,8 +1058,8 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 							}
 							if (base.npc.ai[2] > 225f && base.npc.ai[2] % 3f == 0f && base.npc.velocity.Length() > 12f)
 							{
-								this.Shoot(base.npc.Center, ModContent.ProjectileType<OmegaBlast>(), 90, new Vector2((base.npc.spriteDirection != 1) ? 5f : -5f, 12f), false, false, SoundID.Item91, 0f, "", 0f);
-								this.Shoot(base.npc.Center, ModContent.ProjectileType<OmegaBlast>(), 90, new Vector2((base.npc.spriteDirection != 1) ? 5f : -5f, -12f), false, false, SoundID.Item91, 0f, "", 0f);
+								base.npc.Shoot(base.npc.Center, ModContent.ProjectileType<OmegaBlast>(), 90, new Vector2((base.npc.spriteDirection != 1) ? 5f : -5f, 12f), false, SoundID.Item91, "", 0f, 0f);
+								base.npc.Shoot(base.npc.Center, ModContent.ProjectileType<OmegaBlast>(), 90, new Vector2((base.npc.spriteDirection != 1) ? 5f : -5f, -12f), false, SoundID.Item91, "", 0f, 0f);
 								base.npc.netUpdate = true;
 							}
 							if (base.npc.ai[2] > 260f)
@@ -1030,13 +1086,13 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 						this.overheatAlpha -= 0.05f;
 						if (base.npc.ai[2] < 300f)
 						{
-							this.LookAtPlayer();
+							base.npc.LookAtPlayer();
 							base.npc.netUpdate = true;
 						}
 						base.npc.ai[2] += 1f;
 						if (base.npc.ai[2] % 5f == 0f && base.npc.ai[2] < 300f)
 						{
-							this.Shoot(GunPos, ModContent.ProjectileType<OOLaser>(), 90, new Vector2(0f, 0f), true, true, SoundID.Item1, 12f, "Sounds/Custom/Laser1", 0f);
+							base.npc.Shoot(GunPos, ModContent.ProjectileType<OOLaser>(), 90, RedeHelper.PolarVector(12f, Utils.ToRotation(player.Center - base.npc.Center)), true, SoundID.Item1, "Sounds/Custom/Laser1", 0f, 0f);
 							base.npc.netUpdate = true;
 						}
 						if (base.npc.ai[2] < 200f)
@@ -1064,7 +1120,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 							}
 							else
 							{
-								this.Move(this.MoveVector2, 50f);
+								base.npc.Move(this.MoveVector2, 50f, 10f, true);
 							}
 						}
 						else if (base.npc.ai[2] >= 200f && base.npc.ai[2] < 300f)
@@ -1090,10 +1146,10 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 						}
 						else
 						{
-							this.MoveToVector2(ShootPos, 10f);
+							base.npc.MoveToVector2(ShootPos, 10f);
 							if (base.npc.ai[2] >= 305f && base.npc.ai[2] % 4f == 0f && base.npc.ai[2] <= 355f)
 							{
-								this.Shoot(GunPos, ModContent.ProjectileType<OONormalBeamS>(), 180, new Vector2((base.npc.spriteDirection != 1) ? -10f : 10f, Utils.NextFloat(Main.rand, -3f, 3f)), false, true, SoundID.Item1, 0f, "Sounds/Custom/Laser1", (float)base.npc.whoAmI);
+								base.npc.Shoot(GunPos, ModContent.ProjectileType<OONormalBeamS>(), 180, new Vector2((base.npc.spriteDirection != 1) ? -10f : 10f, Utils.NextFloat(Main.rand, -3f, 3f)), true, SoundID.Item1, "Sounds/Custom/Laser1", (float)base.npc.whoAmI, 0f);
 								base.npc.netUpdate = true;
 							}
 							if (base.npc.ai[2] > 420f)
@@ -1108,7 +1164,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 						break;
 					case 13:
 						this.overheatAlpha -= 0.05f;
-						this.LookAtPlayer();
+						base.npc.LookAtPlayer();
 						base.npc.ai[2] += 1f;
 						if (base.npc.ai[2] < 200f)
 						{
@@ -1119,7 +1175,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 							}
 							else
 							{
-								this.Move(DefaultPos2, 25f);
+								base.npc.Move(DefaultPos2, 25f, 10f, true);
 							}
 						}
 						else
@@ -1127,7 +1183,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 							base.npc.velocity *= 0.96f;
 							if (base.npc.ai[2] > 200f && base.npc.ai[2] % 4f == 0f && base.npc.ai[2] < 320f)
 							{
-								this.Shoot(new Vector2(player.Center.X + (float)Main.rand.Next(-600, 600), player.Center.Y + (float)Main.rand.Next(-600, 600)), ModContent.ProjectileType<OOCrosshair>(), 160, new Vector2(0f, 0f), false, true, SoundID.Item1, 0f, "Sounds/Custom/Alarm2", (float)base.npc.whoAmI);
+								base.npc.Shoot(new Vector2(player.Center.X + (float)Main.rand.Next(-600, 600), player.Center.Y + (float)Main.rand.Next(-600, 600)), ModContent.ProjectileType<OOCrosshair>(), 160, new Vector2(0f, 0f), true, SoundID.Item1, "Sounds/Custom/Alarm2", (float)base.npc.whoAmI, 0f);
 								base.npc.netUpdate = true;
 							}
 							if (base.npc.ai[2] > 320f)
@@ -1142,7 +1198,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 						break;
 					case 14:
 						this.overheatAlpha -= 0.05f;
-						this.LookAtPlayer();
+						base.npc.LookAtPlayer();
 						base.npc.ai[2] += 1f;
 						if (base.npc.ai[2] < 200f)
 						{
@@ -1161,7 +1217,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 							}
 							else
 							{
-								this.Move(DefaultPos2, 24f);
+								base.npc.Move(DefaultPos2, 24f, 10f, true);
 							}
 						}
 						else
@@ -1172,7 +1228,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 							npc6.velocity.X = npc6.velocity.X * 0.1f;
 							if (base.npc.ai[2] > 200f && base.npc.ai[2] % 5f == 0f)
 							{
-								this.Shoot(LaserPos, ModContent.ProjectileType<OmegaPlasmaBall>(), 90, new Vector2((base.npc.spriteDirection != 1) ? -18f : 18f, 0f), false, true, SoundID.Item1, 0f, "Sounds/Custom/BallCreate", 0f);
+								base.npc.Shoot(LaserPos, ModContent.ProjectileType<OmegaPlasmaBall>(), 90, new Vector2((base.npc.spriteDirection != 1) ? -18f : 18f, 0f), true, SoundID.Item1, "Sounds/Custom/BallCreate", 0f, 0f);
 								base.npc.netUpdate = true;
 							}
 							if (base.npc.ai[2] > 240f)
@@ -1189,7 +1245,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 						this.overheatAlpha -= 0.05f;
 						if (base.npc.velocity.Length() > 12f)
 						{
-							this.LookAtPlayer();
+							base.npc.LookAtPlayer();
 							base.npc.netUpdate = true;
 						}
 						if (base.npc.ai[2] == 0f)
@@ -1269,14 +1325,14 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 							}
 							else
 							{
-								this.MoveToVector2(ShootPos, 24f);
+								base.npc.MoveToVector2(ShootPos, 24f);
 							}
 						}
 						else
 						{
 							if (base.npc.ai[2] < 210f || base.npc.ai[2] > 390f)
 							{
-								this.LookAtPlayer();
+								base.npc.LookAtPlayer();
 							}
 							if (base.npc.ai[2] == 210f && player.active && !player.dead)
 							{
@@ -1285,9 +1341,9 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 								int p4 = Projectile.NewProjectile(LaserPos, new Vector2(0f, 0f), ModContent.ProjectileType<Lasers>(), 0, 0f, 255, 0f, 0f);
 								Main.projectile[p4].netUpdate = true;
 							}
-							if (base.npc.ai[2] > 258f && base.npc.ai[2] <= 370f)
+							if (base.npc.ai[2] == 258f)
 							{
-								player.GetModPlayer<ShakeScreen>().shakeMega = true;
+								player.GetModPlayer<ScreenPlayer>().Rumble(112, 20);
 							}
 							if (base.npc.ai[2] == 400f)
 							{
@@ -1307,7 +1363,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 									int dustIndex21 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 31, 0f, 0f, 100, default(Color), 1.2f);
 									Main.dust[dustIndex21].velocity *= 1.8f;
 								}
-								if (!RedeConfigClient.Instance.NoBossText)
+								if (!RedeConfigClient.Instance.NoLoreElements)
 								{
 									CombatText.NewText(base.npc.getRect(), Colors.RarityRed, "CRITICAL CONDITION REACHED... SELF DESTRUCTING...", true, false);
 								}
@@ -1326,6 +1382,10 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 						base.npc.dontTakeDamage = false;
 						player.ApplyDamageToNPC(base.npc, 9999, 0f, 0, false);
 						base.npc.netUpdate = true;
+						if (Main.netMode == 2 && base.npc.whoAmI < 200)
+						{
+							NetMessage.SendData(23, -1, -1, null, base.npc.whoAmI, 0f, 0f, 0f, 0, 0, 0);
+						}
 						break;
 					}
 				}
@@ -1370,42 +1430,6 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 			return false;
 		}
 
-		public void Shoot(Vector2 position, int projType, int damage, Vector2 velocity, bool aimed, bool customSound, LegacySoundStyle sound, float speed = 0f, string soundString = "", float ai0 = 0f)
-		{
-			Player player = Main.player[base.npc.target];
-			if (aimed)
-			{
-				if (customSound)
-				{
-					if (!Main.dedServ)
-					{
-						Main.PlaySound(base.mod.GetLegacySoundSlot(50, soundString), (int)base.npc.position.X, (int)base.npc.position.Y);
-					}
-				}
-				else
-				{
-					Main.PlaySound(sound, (int)base.npc.position.X, (int)base.npc.position.Y);
-				}
-				float rotation = (float)Math.Atan2((double)(position.Y - player.Center.Y), (double)(position.X - player.Center.X));
-				int num54 = Projectile.NewProjectile(position.X, position.Y, (float)(Math.Cos((double)rotation) * (double)speed * -1.0), (float)(Math.Sin((double)rotation) * (double)speed * -1.0), projType, damage / 3, 0f, Main.myPlayer, ai0, 0f);
-				Main.projectile[num54].netUpdate = true;
-				return;
-			}
-			if (customSound)
-			{
-				if (!Main.dedServ)
-				{
-					Main.PlaySound(base.mod.GetLegacySoundSlot(50, soundString), (int)base.npc.position.X, (int)base.npc.position.Y);
-				}
-			}
-			else
-			{
-				Main.PlaySound(sound, (int)base.npc.position.X, (int)base.npc.position.Y);
-			}
-			int p = Projectile.NewProjectile(position, velocity, projType, damage / 3, 0f, Main.myPlayer, ai0, 0f);
-			Main.projectile[p].netUpdate = true;
-		}
-
 		public void Dash(int speed, bool directional)
 		{
 			Player player = Main.player[base.npc.target];
@@ -1417,16 +1441,6 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 				return;
 			}
 			base.npc.velocity.X = (float)((player.Center.X > base.npc.Center.X) ? speed : (-(float)speed));
-		}
-
-		public void LookAtPlayer()
-		{
-			if (Main.player[base.npc.target].Center.X > base.npc.Center.X)
-			{
-				base.npc.spriteDirection = 1;
-				return;
-			}
-			base.npc.spriteDirection = -1;
 		}
 
 		private void DespawnHandler()
@@ -1503,51 +1517,6 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 			}
 		}
 
-		public void MoveToVector2(Vector2 p, float moveSpeed)
-		{
-			float velMultiplier = 1f;
-			Vector2 dist = p - base.npc.Center;
-			float length = (dist == Vector2.Zero) ? 0f : dist.Length();
-			if (length < moveSpeed)
-			{
-				velMultiplier = MathHelper.Lerp(0f, 1f, length / moveSpeed);
-			}
-			if (length < 100f)
-			{
-				moveSpeed *= 0.5f;
-			}
-			if (length < 50f)
-			{
-				moveSpeed *= 0.5f;
-			}
-			base.npc.velocity = ((length == 0f) ? Vector2.Zero : Vector2.Normalize(dist));
-			base.npc.velocity *= moveSpeed;
-			base.npc.velocity *= velMultiplier;
-		}
-
-		private void Move(Vector2 offset, float speed)
-		{
-			Vector2 move = Main.player[base.npc.target].Center + offset - base.npc.Center;
-			float magnitude = this.Magnitude(move);
-			if (magnitude > speed)
-			{
-				move *= speed / magnitude;
-			}
-			float turnResistance = 10f;
-			move = (base.npc.velocity * turnResistance + move) / (turnResistance + 1f);
-			magnitude = this.Magnitude(move);
-			if (magnitude > speed)
-			{
-				move *= speed / magnitude;
-			}
-			base.npc.velocity = move;
-		}
-
-		private float Magnitude(Vector2 mag)
-		{
-			return (float)Math.Sqrt((double)(mag.X * mag.X + mag.Y * mag.Y));
-		}
-
 		public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
 		{
 			scale = 1.5f;
@@ -1581,9 +1550,8 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 			}
 			if (base.npc.ai[3] == 2f)
 			{
-				int num215 = chargeAni.Height / 2;
+				int num215 = chargeAni.Height / 3;
 				int y7 = num215 * this.chargeFrame;
-				new Vector2((float)chargeAni.Width * 0.5f, (float)chargeAni.Height * 0.5f);
 				for (int i = this.oldPos.Length - 1; i >= 0; i--)
 				{
 					float alpha = 1f - (float)(i + 1) / (float)(this.oldPos.Length + 2);
@@ -1609,8 +1577,6 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 
 		public Vector2 MoveVector2;
 
-		private Vector2 vector;
-
 		public int frameCounters;
 
 		public int pewFrame;
@@ -1626,5 +1592,19 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 		public float overheatAlpha = 255f;
 
 		private bool title;
+
+		public List<int> AttackList = new List<int>
+		{
+			0,
+			1,
+			2,
+			3,
+			4,
+			5,
+			6,
+			7
+		};
+
+		public List<int> CopyList;
 	}
 }

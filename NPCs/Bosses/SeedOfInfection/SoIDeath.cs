@@ -63,13 +63,13 @@ namespace Redemption.NPCs.Bosses.SeedOfInfection
 			{
 				Projectile.NewProjectile(base.projectile.Center, 10f * Utils.RotatedBy(Vector2.UnitX, 0.09817477042468103 * (double)i, default(Vector2)), ModContent.ProjectileType<InfectionDust>(), 0, 0f, Main.myPlayer, 0f, 0f);
 			}
-			Gore.NewGore(base.projectile.position, base.projectile.velocity, base.mod.GetGoreSlot("Gores/XenomiteCrystalGore1"), 1f);
-			Gore.NewGore(base.projectile.position, base.projectile.velocity, base.mod.GetGoreSlot("Gores/XenomiteCrystalGore2"), 1f);
-			Gore.NewGore(base.projectile.position, base.projectile.velocity, base.mod.GetGoreSlot("Gores/XenomiteCrystalGore3"), 1f);
-			Gore.NewGore(base.projectile.position, base.projectile.velocity, base.mod.GetGoreSlot("Gores/XenomiteCrystalGore4"), 1f);
-			Gore.NewGore(base.projectile.position, base.projectile.velocity, base.mod.GetGoreSlot("Gores/XenomiteCrystalGore5"), 1f);
-			Gore.NewGore(base.projectile.position, base.projectile.velocity, base.mod.GetGoreSlot("Gores/XenomiteCrystalGore6"), 1f);
-			Gore.NewGore(base.projectile.position, base.projectile.velocity, base.mod.GetGoreSlot("Gores/XenomiteCrystalGore7"), 1f);
+			Gore.NewGore(base.projectile.position, base.projectile.velocity, base.mod.GetGoreSlot("Gores/Boss/XenomiteCrystalGore1"), 1f);
+			Gore.NewGore(base.projectile.position, base.projectile.velocity, base.mod.GetGoreSlot("Gores/Boss/XenomiteCrystalGore2"), 1f);
+			Gore.NewGore(base.projectile.position, base.projectile.velocity, base.mod.GetGoreSlot("Gores/Boss/XenomiteCrystalGore3"), 1f);
+			Gore.NewGore(base.projectile.position, base.projectile.velocity, base.mod.GetGoreSlot("Gores/Boss/XenomiteCrystalGore4"), 1f);
+			Gore.NewGore(base.projectile.position, base.projectile.velocity, base.mod.GetGoreSlot("Gores/Boss/XenomiteCrystalGore5"), 1f);
+			Gore.NewGore(base.projectile.position, base.projectile.velocity, base.mod.GetGoreSlot("Gores/Boss/XenomiteCrystalGore6"), 1f);
+			Gore.NewGore(base.projectile.position, base.projectile.velocity, base.mod.GetGoreSlot("Gores/Boss/XenomiteCrystalGore7"), 1f);
 			for (int num67 = 0; num67 < 20; num67++)
 			{
 				int num68 = Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, 74, 0f, 0f, 100, default(Color), 3.5f);

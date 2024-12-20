@@ -10,7 +10,7 @@ namespace Redemption
 		public static void InitCache()
 		{
 			SubworldCache.cache = new List<SubworldCacheClass>();
-			SubworldCache.mod = Redemption.inst;
+			SubworldCache.mod = Redemption.Inst;
 		}
 
 		public static void UnloadCache()
@@ -28,15 +28,6 @@ namespace Redemption
 			for (int i = 0; i < SubworldCache.cache.Count; i++)
 			{
 				SubworldCacheClass cachee = SubworldCache.cache[i];
-				Redemption.inst.Logger.Debug(string.Concat(new object[]
-				{
-					"Mod: ",
-					SubworldCache.mod.GetType().Name,
-					" World: ",
-					cachee.modwld,
-					" bool: ",
-					cachee.mybool
-				}));
 				FieldInfo fild = SubworldCache.mod.GetModWorld(cachee.modwld).GetType().GetField(cachee.field, BindingFlags.Static | BindingFlags.Public);
 				if (cachee.myint != null)
 				{
@@ -56,15 +47,6 @@ namespace Redemption
 			SubworldCacheClass newone = new SubworldCacheClass(mod, modWorld, field, mybool, myint);
 			SubworldCache.cache.Add(newone);
 			SubworldCache.postCacheFields = true;
-			Redemption.inst.Logger.Debug(string.Concat(new object[]
-			{
-				"Added---- Mod: ",
-				mod.GetType().Name,
-				" World: ",
-				modWorld,
-				" bool: ",
-				mybool
-			}));
 			return true;
 		}
 

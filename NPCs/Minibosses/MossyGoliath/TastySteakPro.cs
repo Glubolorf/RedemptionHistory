@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -36,6 +35,16 @@ namespace Redemption.NPCs.Minibosses.MossyGoliath
 
 		public override void AI()
 		{
+			bool npcIntersect = false;
+			for (int i = 0; i < 200; i++)
+			{
+				NPC npc = Main.npc[i];
+				if (!npc.immortal && !npc.friendly && npc.CanBeChasedBy(null, false) && base.projectile.Hitbox.Intersects(npc.Hitbox))
+				{
+					npcIntersect = true;
+					break;
+				}
+			}
 			Projectile projectile = base.projectile;
 			projectile.velocity.Y = projectile.velocity.Y + 0.2f;
 			Point point = Utils.ToTileCoordinates(base.projectile.Bottom);
@@ -43,14 +52,17 @@ namespace Redemption.NPCs.Minibosses.MossyGoliath
 			int num = 0;
 			float num2 = localAI[num] + 1f;
 			localAI[num] = num2;
-			if (num2 == 140f)
+			if ((num2 == 140f || npcIntersect) && base.projectile.localAI[0] <= 140f)
 			{
-				if (Main.tile[point.X, point.Y + 1].type == 59 || Main.tile[point.X, point.Y].type == 60)
+				int tilePosY = BaseWorldGen.GetFirstTileFloor((int)base.projectile.Center.X / 16, (int)base.projectile.Center.Y / 16, true);
+				base.projectile.localAI[0] = 141f;
+				base.projectile.timeLeft = 20;
+				if (Main.tile[point.X, tilePosY].type == 59 || Main.tile[point.X, tilePosY].type == 60)
 				{
 					this.damage = 40;
 				}
 				base.projectile.velocity.X = 0f;
-				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.position.Y + 66f), new Vector2(0f, -4f), ModContent.ProjectileType<MossGoliath_nom>(), base.projectile.damage + this.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, (float)(tilePosY * 16 + 46)), new Vector2(0f, -4f), ModContent.ProjectileType<MossGoliath_nom>(), base.projectile.damage + this.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
 			}
 		}
 

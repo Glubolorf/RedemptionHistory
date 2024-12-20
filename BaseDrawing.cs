@@ -487,7 +487,7 @@ namespace Redemption
 				Main.dust[dustID].velocity.Y = 0.3f;
 				Dust dust = Main.dust[dustID];
 				dust.velocity.X = dust.velocity.X * 0.1f;
-				Main.dust[dustID].scale += (float)Main.rand.Next(3, 4) * 0.1f;
+				Main.dust[dustID].scale += (float)Main.rand.Next(3, 5) * 0.1f;
 				Main.dust[dustID].alpha = 100;
 				Main.dust[dustID].noGravity = true;
 				Main.dust[dustID].velocity += codable.velocity * 0.1f;
@@ -939,11 +939,12 @@ namespace Redemption
 			Vector2 rotOrigin = new Vector2(texOrigin.X - texOrigin.X * (float)direction, (float)((gravDir == -1f) ? 0 : tex.Height)) + new Vector2(xOffset, -yOffset);
 			if (gravDir == -1f)
 			{
+				DrawData drawData;
 				if (sb is List<DrawData>)
 				{
-					DrawData dd;
-					dd..ctor(tex, drawPos, frame, item.GetAlpha(lightColor), itemRotation, rotOrigin, itemScale, spriteEffect, 0);
-					dd.shader = shader;
+					drawData..ctor(tex, drawPos, frame, item.GetAlpha(lightColor), itemRotation, rotOrigin, itemScale, spriteEffect, 0);
+					drawData.shader = shader;
+					DrawData dd = drawData;
 					((List<DrawData>)sb).Add(dd);
 				}
 				else if (sb is SpriteBatch)
@@ -954,9 +955,9 @@ namespace Redemption
 				{
 					if (sb is List<DrawData>)
 					{
-						DrawData dd2;
-						dd2..ctor(tex, drawPos, frame, item.GetColor(wepColor), itemRotation, rotOrigin, itemScale, spriteEffect, 0);
-						dd2.shader = shader;
+						drawData..ctor(tex, drawPos, frame, item.GetColor(wepColor), itemRotation, rotOrigin, itemScale, spriteEffect, 0);
+						drawData.shader = shader;
+						DrawData dd2 = drawData;
 						((List<DrawData>)sb).Add(dd2);
 						return;
 					}
@@ -980,11 +981,12 @@ namespace Redemption
 						spriteEffect = (SpriteEffects.FlipHorizontally | SpriteEffects.FlipVertically);
 					}
 				}
+				DrawData drawData;
 				if (sb is List<DrawData>)
 				{
-					DrawData dd3;
-					dd3..ctor(tex, drawPos, frame, item.GetAlpha(lightColor), itemRotation, rotOrigin, itemScale, spriteEffect, 0);
-					dd3.shader = shader;
+					drawData..ctor(tex, drawPos, frame, item.GetAlpha(lightColor), itemRotation, rotOrigin, itemScale, spriteEffect, 0);
+					drawData.shader = shader;
+					DrawData dd3 = drawData;
 					((List<DrawData>)sb).Add(dd3);
 				}
 				else if (sb is SpriteBatch)
@@ -995,9 +997,9 @@ namespace Redemption
 				{
 					if (sb is List<DrawData>)
 					{
-						DrawData dd4;
-						dd4..ctor(tex, drawPos, frame, item.GetColor(wepColor), itemRotation, rotOrigin, itemScale, spriteEffect, 0);
-						dd4.shader = shader;
+						drawData..ctor(tex, drawPos, frame, item.GetColor(wepColor), itemRotation, rotOrigin, itemScale, spriteEffect, 0);
+						drawData.shader = shader;
+						DrawData dd4 = drawData;
 						((List<DrawData>)sb).Add(dd4);
 						return;
 					}
@@ -1063,11 +1065,12 @@ namespace Redemption
 			{
 				pos.Y += shakeScalarY * ((float)Main.rand.Next(-5, 6) / 9f);
 			}
+			DrawData drawData;
 			if (sb is List<DrawData>)
 			{
-				DrawData dd;
-				dd..ctor(tex, pos, frame, item.GetAlpha(lightColor), itemRotation, rotOrigin, itemScale, spriteEffect, 0);
-				dd.shader = shader;
+				drawData..ctor(tex, pos, frame, item.GetAlpha(lightColor), itemRotation, rotOrigin, itemScale, spriteEffect, 0);
+				drawData.shader = shader;
+				DrawData dd = drawData;
 				((List<DrawData>)sb).Add(dd);
 			}
 			else if (sb is SpriteBatch)
@@ -1078,9 +1081,9 @@ namespace Redemption
 			{
 				if (sb is List<DrawData>)
 				{
-					DrawData dd2;
-					dd2..ctor(tex, pos, frame, item.GetColor(wepColor), itemRotation, rotOrigin, itemScale, spriteEffect, 0);
-					dd2.shader = shader;
+					drawData..ctor(tex, pos, frame, item.GetColor(wepColor), itemRotation, rotOrigin, itemScale, spriteEffect, 0);
+					drawData.shader = shader;
+					DrawData dd2 = drawData;
 					((List<DrawData>)sb).Add(dd2);
 				}
 				else if (sb is SpriteBatch)
@@ -1109,9 +1112,10 @@ namespace Redemption
 			Vector2 offset = BaseUtility.RotateVector(p.Center, p.Center + new Vector2((p.direction == -1) ? offsetX : offsetY, (p.direction == 1) ? offsetX : offsetY), p.rotation - 2.355f) - p.Center;
 			if (sb is List<DrawData>)
 			{
-				DrawData dd;
-				dd..ctor(texture, p.Center - Main.screenPosition + offset, new Rectangle?(new Rectangle(0, 0, texture.Width, texture.Height)), lightColor, p.rotation, origin, p.scale, (p.direction == -1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
-				dd.shader = shader;
+				DrawData drawData;
+				drawData..ctor(texture, p.Center - Main.screenPosition + offset, new Rectangle?(new Rectangle(0, 0, texture.Width, texture.Height)), lightColor, p.rotation, origin, p.scale, (p.direction == -1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
+				drawData.shader = shader;
+				DrawData dd = drawData;
 				((List<DrawData>)sb).Add(dd);
 				return;
 			}
@@ -1521,6 +1525,7 @@ namespace Redemption
 				{
 					action = (<>9__0 = delegate()
 					{
+						DrawData drawData2;
 						if (textures[0] != null && Way == 0f)
 						{
 							float texWidth2 = (float)textures[0].Width;
@@ -1532,9 +1537,9 @@ namespace Redemption
 							{
 								if (sb is List<DrawData>)
 								{
-									DrawData dd2;
-									dd2..ctor(textures[0], v2 - texCenter2, new Rectangle?(new Rectangle(0, 0, (int)texWidth2, (int)texHeight2)), lightColor2, rotation, texCenter2, scale, SpriteEffects.None, 0);
-									dd2.shader = shader;
+									drawData2..ctor(textures[0], v2 - texCenter2, new Rectangle?(new Rectangle(0, 0, (int)texWidth2, (int)texHeight2)), lightColor2, rotation, texCenter2, scale, SpriteEffects.None, 0);
+									drawData2.shader = shader;
+									DrawData dd2 = drawData2;
 									((List<DrawData>)sb).Add(dd2);
 								}
 								else if (sb is SpriteBatch)
@@ -1554,9 +1559,9 @@ namespace Redemption
 							{
 								if (sb is List<DrawData>)
 								{
-									DrawData dd3;
-									dd3..ctor(textures[maxTextures + 1], v3 - texCenter3, new Rectangle?(new Rectangle(0, 0, (int)texWidth3, (int)texHeight3)), lightColor3, rotation, texCenter3, scale, SpriteEffects.None, 0);
-									dd3.shader = shader;
+									drawData2..ctor(textures[maxTextures + 1], v3 - texCenter3, new Rectangle?(new Rectangle(0, 0, (int)texWidth3, (int)texHeight3)), lightColor3, rotation, texCenter3, scale, SpriteEffects.None, 0);
+									drawData2.shader = shader;
+									DrawData dd3 = drawData2;
 									((List<DrawData>)sb).Add(dd3);
 									return;
 								}
@@ -1590,9 +1595,10 @@ namespace Redemption
 					{
 						if (sb is List<DrawData>)
 						{
-							DrawData dd;
-							dd..ctor(textures[texID + 1], v - texCenter, new Rectangle?(new Rectangle(0, 0, (int)texWidth, (int)texHeight)), lightColor, rotation, texCenter, scale, SpriteEffects.None, 0);
-							dd.shader = shader;
+							DrawData drawData;
+							drawData..ctor(textures[texID + 1], v - texCenter, new Rectangle?(new Rectangle(0, 0, (int)texWidth, (int)texHeight)), lightColor, rotation, texCenter, scale, SpriteEffects.None, 0);
+							drawData.shader = shader;
+							DrawData dd = drawData;
 							((List<DrawData>)sb).Add(dd);
 						}
 						else if (sb is SpriteBatch)
@@ -1638,6 +1644,7 @@ namespace Redemption
 				{
 					action = (<>9__0 = delegate()
 					{
+						DrawData drawData2;
 						if (textures[0] != null && Way == 0f)
 						{
 							float texWidth2 = (float)textures[0].Width;
@@ -1649,9 +1656,9 @@ namespace Redemption
 							{
 								if (sb is List<DrawData>)
 								{
-									DrawData dd2;
-									dd2..ctor(textures[0], v2 - texCenter2, new Rectangle?(new Rectangle(0, 0, (int)texWidth2, (int)texHeight2)), lightColor2, rotation, texCenter2, scale, SpriteEffects.None, 0);
-									dd2.shader = shader;
+									drawData2..ctor(textures[0], v2 - texCenter2, new Rectangle?(new Rectangle(0, 0, (int)texWidth2, (int)texHeight2)), lightColor2, rotation, texCenter2, scale, SpriteEffects.None, 0);
+									drawData2.shader = shader;
+									DrawData dd2 = drawData2;
 									((List<DrawData>)sb).Add(dd2);
 								}
 								else if (sb is SpriteBatch)
@@ -1671,9 +1678,9 @@ namespace Redemption
 							{
 								if (sb is List<DrawData>)
 								{
-									DrawData dd3;
-									dd3..ctor(textures[maxTextures + 1], v3 - texCenter3, new Rectangle?(new Rectangle(0, 0, (int)texWidth3, (int)texHeight3)), lightColor3, rotation, texCenter3, scale, SpriteEffects.None, 0);
-									dd3.shader = shader;
+									drawData2..ctor(textures[maxTextures + 1], v3 - texCenter3, new Rectangle?(new Rectangle(0, 0, (int)texWidth3, (int)texHeight3)), lightColor3, rotation, texCenter3, scale, SpriteEffects.None, 0);
+									drawData2.shader = shader;
+									DrawData dd3 = drawData2;
 									((List<DrawData>)sb).Add(dd3);
 									return;
 								}
@@ -1712,9 +1719,10 @@ namespace Redemption
 					{
 						if (sb is List<DrawData>)
 						{
-							DrawData dd;
-							dd..ctor(textures[texID + 1], v - texCenter, new Rectangle?(new Rectangle(0, 0, (int)texWidth, (int)texHeight)), lightColor, rotation, texCenter, scale, SpriteEffects.None, 0);
-							dd.shader = shader;
+							DrawData drawData;
+							drawData..ctor(textures[texID + 1], v - texCenter, new Rectangle?(new Rectangle(0, 0, (int)texWidth, (int)texHeight)), lightColor, rotation, texCenter, scale, SpriteEffects.None, 0);
+							drawData.shader = shader;
+							DrawData dd = drawData;
 							((List<DrawData>)sb).Add(dd);
 						}
 						else if (sb is SpriteBatch)
@@ -1760,9 +1768,10 @@ namespace Redemption
 			Color lightColor = (overrideColor != null) ? overrideColor.Value : BaseDrawing.GetLightColor(position + new Vector2((float)width * 0.5f, (float)height * 0.5f));
 			if (sb is List<DrawData>)
 			{
-				DrawData dd;
-				dd..ctor(texture, BaseDrawing.GetDrawPosition(position, origin, width, height, texture.Width, texture.Height, frame, framecount, framecountX, scale, drawCentered), new Rectangle?(frame), lightColor, rotation, origin, scale, (direction == 1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
-				dd.shader = shader;
+				DrawData drawData;
+				drawData..ctor(texture, BaseDrawing.GetDrawPosition(position, origin, width, height, texture.Width, texture.Height, frame, framecount, framecountX, scale, drawCentered), new Rectangle?(frame), lightColor, rotation, origin, scale, (direction == 1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
+				drawData.shader = shader;
+				DrawData dd = drawData;
 				((List<DrawData>)sb).Add(dd);
 				return;
 			}
@@ -1772,14 +1781,14 @@ namespace Redemption
 				if (flag)
 				{
 					((SpriteBatch)sb).End();
-					((SpriteBatch)sb).Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+					((SpriteBatch)sb).Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 					GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
 				}
 				((SpriteBatch)sb).Draw(texture, BaseDrawing.GetDrawPosition(position, origin, width, height, texture.Width, texture.Height, frame, framecount, framecountX, scale, drawCentered), new Rectangle?(frame), lightColor, rotation, origin, scale, (direction == 1) ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 				if (flag)
 				{
 					((SpriteBatch)sb).End();
-					((SpriteBatch)sb).Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+					((SpriteBatch)sb).Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
 				}
 			}
 		}
@@ -2162,9 +2171,10 @@ namespace Redemption
 			float scale = (scaleOverride > 0f) ? scaleOverride : 1f;
 			if (sb is List<DrawData>)
 			{
-				DrawData dd;
-				dd..ctor(texture, new Vector2((float)((int)(ediPos.X - (float)((int)Main.screenPosition.X) - (float)(frame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(ediPos.Y - (float)((int)Main.screenPosition.Y) + (float)drawPlayer.height - (float)frame.Height))) + new Vector2(offsetX * scale, offsetY * scale) + locationPos + frameCenter, new Rectangle?(frame), color, locationRot, frameCenter, scale, effect, 0);
-				dd.shader = shader;
+				DrawData drawData;
+				drawData..ctor(texture, new Vector2((float)((int)(ediPos.X - (float)((int)Main.screenPosition.X) - (float)(frame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(ediPos.Y - (float)((int)Main.screenPosition.Y) + (float)drawPlayer.height - (float)frame.Height))) + new Vector2(offsetX * scale, offsetY * scale) + locationPos + frameCenter, new Rectangle?(frame), color, locationRot, frameCenter, scale, effect, 0);
+				drawData.shader = shader;
+				DrawData dd = drawData;
 				((List<DrawData>)sb).Add(dd);
 				return;
 			}

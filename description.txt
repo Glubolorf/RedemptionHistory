@@ -1,59 +1,21 @@
-'Mod of Redemption' is a remastered version of 'Mod of Randomness', never heard of that mod? I'm not surprised, because it no longer works.
+This is a beta version I put on the mod browser for convenience.
 
-Please remember to update the mod when necessary.
+Mod of Redemption is a mod thats getting a big improvement in the full 0.8 update, which will be on 1.4 TModLoader once thats out.
+For now you have this, and yes its safe to play (just don't expect multiplayer to be good)
 
-Adds:
-- 1 Mount
-- 191 Buffs
-- 24 Walls
-- 289 Tiles
-- 295 NPCs (Including bosses & minibosses)
-- 11 Bosses
-- 11 Minibosses
-- 1206 Items
+If you've never heard of this mod before and wondering where the version before this is, don't worry about it, this version is better anyway :)
 
-Latest Major Update:
-- Complete Lab Overhaul
-- Slayer's Crashed Ship
-- Tons of fixes
-- Stuff
-For more, look at the mod's homepage
+(Also it says 0.8.0.3 because mod browser wont let me publish a new beta with the same version number)
 
-Thank you Pluto for making the Nebuleus backgrounds
+(And if mod browser can't download it, join the discord to get the links)
 
-Thank you to the epic Patreons:
-Luna!
-Lantard
-Arche
-clormss
 
-Main Features (So far):
-- Chicken Invasion!
-- Abandoned Lab (Larger than the Jungle Temple)
-- Space Boss (King Slayer III)
-- Druid Class!
-- Vlitch Overlord bosses (3/4 for now)
-- Rare Weapons (1/500 Chance of dropping from certain enemies)
-- Epic Weapons (1/1000 Chance of dropping from certain enemies in Hardmode)
-- Wasteland Biome (After Infected Eye boss)
-- Nature Guardians
-- Ancient Stone Blocks
-- Many Fantasy Weapons (Old Rapier, Noble's Swords, Warden's Bows)
-- King Chicken Boss!!
-- Chicken Stuff!
-- Lots of types of Skeletons (Assassin, Dueller, Noble)
-- Varients of Golems (Forest, Molten, Ancient)
-- Squire NPC
-- Pure-Iron & Ancient Brass Equipment
-- Pre-Hardmode Boss (Sprite by Zoomo, edited a bit)
-- Kanite Ore (Very early ore, around iron)
-- Ancient Trees (Place acorns on Ancient Dirt to grow them)
-- Ancient Wood Furniture
-- A few insects
-- A few Xenomite things.
-- Xenomite Crystal boss
-- Early Hardmode Boss
-- Xenomite Weapons/Tools/Armour
-- Infected Enemies
-- Stuff
-- Dirt Swords!
+
+
+
+
+
+
+
+
+Cheese.

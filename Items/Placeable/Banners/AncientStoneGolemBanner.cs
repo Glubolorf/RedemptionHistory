@@ -9,7 +9,7 @@ namespace Redemption.Items.Placeable.Banners
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Ancient Stone Golem Banner");
+			base.DisplayName.SetDefault("Ancient Gladestone Golem Banner");
 		}
 
 		public override void SetDefaults()

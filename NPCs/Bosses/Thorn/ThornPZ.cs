@@ -2,10 +2,12 @@
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.Items;
-using Redemption.Items.Armor.PostML;
-using Redemption.Items.Placeable;
-using Redemption.Items.Weapons.v08;
+using Redemption.Items.Armor.Vanity;
+using Redemption.Items.Materials.PostML;
+using Redemption.Items.Placeable.Trophies;
+using Redemption.Items.Usable;
+using Redemption.Items.Weapons.PostML.Melee;
+using Redemption.Items.Weapons.PostML.Ranged;
 using Redemption.NPCs.Bosses.EaglecrestGolem;
 using Terraria;
 using Terraria.ID;
@@ -89,7 +91,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 		public override void BossLoot(ref string name, ref int potionType)
 		{
 			potionType = 3544;
-			if (Main.netMode == 2)
+			if (Main.netMode != 0)
 			{
 				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 			}
@@ -133,6 +135,11 @@ namespace Redemption.NPCs.Bosses.Thorn
 				this.appearing = reader.ReadBool();
 				this.disappearing = reader.ReadBool();
 			}
+		}
+
+		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+		{
+			return this.transformTimer == 0;
 		}
 
 		public override void AI()
@@ -231,7 +238,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 				{
 					base.npc.life += 500;
 				}
-				if (!RedeConfigClient.Instance.NoBossText)
+				if (!RedeConfigClient.Instance.NoLoreElements)
 				{
 					this.transformTimer2++;
 					if (this.transformTimer2 == 10)

@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Redemption.NPCs.Bosses.EaglecrestGolem;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -33,7 +32,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 
 		public override void AI()
 		{
-			Main.player[base.projectile.owner].GetModPlayer<ShakeScreen>().shakeSubtle = true;
+			Main.player[base.projectile.owner].GetModPlayer<ScreenPlayer>().Rumble(2, 3);
 			if (base.projectile.alpha > 0 && base.projectile.timeLeft >= 60)
 			{
 				base.projectile.alpha -= 10;

@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Redemption.Buffs;
+using Redemption.Buffs.Minions;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

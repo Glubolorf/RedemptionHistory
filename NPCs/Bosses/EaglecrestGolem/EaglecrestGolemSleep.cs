@@ -34,7 +34,10 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 
 		public override bool CheckDead()
 		{
-			Redemption.ShowTitle(base.npc, 6);
+			if (!Main.dedServ)
+			{
+				Redemption.Inst.TitleCardUIElement.DisplayTitle("Eaglecrest Golem", 60, 90, 0.8f, 0, new Color?(Color.Gray), "Guardian of Eaglecrest Meadows", true);
+			}
 			base.npc.SetDefaults(ModContent.NPCType<EaglecrestGolem>(), -1f);
 			return false;
 		}
@@ -47,10 +50,6 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 				{
 					return 0f;
 				}
-			}
-			if (RedeWorld.golemLure)
-			{
-				return SpawnCondition.OverworldDay.Chance * ((!RedeWorld.downedEaglecrestGolem && !NPC.AnyNPCs(ModContent.NPCType<EaglecrestGolem>()) && !NPC.AnyNPCs(ModContent.NPCType<EaglecrestGolemSleep>())) ? 2f : 0f);
 			}
 			return SpawnCondition.OverworldDay.Chance * ((NPC.downedBoss2 && !RedeWorld.downedEaglecrestGolem && !NPC.AnyNPCs(ModContent.NPCType<EaglecrestGolem>()) && !NPC.AnyNPCs(ModContent.NPCType<EaglecrestGolemSleep>())) ? 0.1f : 0f);
 		}

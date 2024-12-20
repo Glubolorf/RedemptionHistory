@@ -104,10 +104,13 @@ namespace Redemption.NPCs.Bosses
 
 		public override void AI()
 		{
-			if (Main.player[base.npc.target].dead)
+			if (Main.dayTime)
 			{
-				base.npc.timeLeft = 0;
+				NPC npc = base.npc;
+				npc.position.Y = npc.position.Y - 300f;
 			}
+			this.Target();
+			this.DespawnHandler();
 			base.npc.ai[0] += 1f;
 			Player player = Main.player[base.npc.target];
 			if (base.npc.target < 0 || base.npc.target == 255 || Main.player[base.npc.target].dead || !Main.player[base.npc.target].active)
@@ -138,10 +141,10 @@ namespace Redemption.NPCs.Bosses
 			}
 			if (base.npc.ai[2] >= 20f)
 			{
-				NPC npc = base.npc;
-				npc.velocity.X = npc.velocity.X * 0.58f;
 				NPC npc2 = base.npc;
-				npc2.velocity.Y = npc2.velocity.Y * 0.58f;
+				npc2.velocity.X = npc2.velocity.X * 0.58f;
+				NPC npc3 = base.npc;
+				npc3.velocity.Y = npc3.velocity.Y * 0.58f;
 				Vector2 vector2;
 				vector2..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
 				float num5 = (float)Math.Atan2((double)(vector2.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector2.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
@@ -169,10 +172,10 @@ namespace Redemption.NPCs.Bosses
 			}
 			if (base.npc.ai[2] >= 20f)
 			{
-				NPC npc3 = base.npc;
-				npc3.velocity.X = npc3.velocity.X * 0.98f;
 				NPC npc4 = base.npc;
-				npc4.velocity.Y = npc4.velocity.Y * 0.98f;
+				npc4.velocity.X = npc4.velocity.X * 0.98f;
+				NPC npc5 = base.npc;
+				npc5.velocity.Y = npc5.velocity.Y * 0.98f;
 				Vector2 vector3;
 				vector3..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
 				float num8 = (float)Math.Atan2((double)(vector3.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector3.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
@@ -200,10 +203,10 @@ namespace Redemption.NPCs.Bosses
 			}
 			if (base.npc.ai[2] >= 20f)
 			{
-				NPC npc5 = base.npc;
-				npc5.velocity.X = npc5.velocity.X * 5.98f;
 				NPC npc6 = base.npc;
-				npc6.velocity.Y = npc6.velocity.Y * 5.98f;
+				npc6.velocity.X = npc6.velocity.X * 5.98f;
+				NPC npc7 = base.npc;
+				npc7.velocity.Y = npc7.velocity.Y * 5.98f;
 				Vector2 vector4;
 				vector4..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
 				float num11 = (float)Math.Atan2((double)(vector4.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector4.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
@@ -231,10 +234,10 @@ namespace Redemption.NPCs.Bosses
 			}
 			if (base.npc.ai[2] >= 20f)
 			{
-				NPC npc7 = base.npc;
-				npc7.velocity.X = npc7.velocity.X * 10.98f;
 				NPC npc8 = base.npc;
-				npc8.velocity.Y = npc8.velocity.Y * 10.98f;
+				npc8.velocity.X = npc8.velocity.X * 10.98f;
+				NPC npc9 = base.npc;
+				npc9.velocity.Y = npc9.velocity.Y * 10.98f;
 				Vector2 vector5;
 				vector5..ctor(base.npc.position.X + (float)base.npc.width * 1.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
 				float num14 = (float)Math.Atan2((double)(vector5.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector5.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
@@ -262,10 +265,10 @@ namespace Redemption.NPCs.Bosses
 			}
 			if (base.npc.ai[2] >= 20f)
 			{
-				NPC npc9 = base.npc;
-				npc9.velocity.X = npc9.velocity.X * 30.98f;
 				NPC npc10 = base.npc;
-				npc10.velocity.Y = npc10.velocity.Y * 30.98f;
+				npc10.velocity.X = npc10.velocity.X * 30.98f;
+				NPC npc11 = base.npc;
+				npc11.velocity.Y = npc11.velocity.Y * 30.98f;
 				Vector2 vector6;
 				vector6..ctor(base.npc.position.X + (float)base.npc.width * 4.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
 				float num17 = (float)Math.Atan2((double)(vector6.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector6.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 1.5f)));
@@ -287,6 +290,28 @@ namespace Redemption.NPCs.Bosses
 			}
 		}
 
+		private void Target()
+		{
+			this.player = Main.player[base.npc.target];
+		}
+
+		private void DespawnHandler()
+		{
+			if (!this.player.active || this.player.dead)
+			{
+				base.npc.TargetClosest(false);
+				this.player = Main.player[base.npc.target];
+				if (!this.player.active || this.player.dead)
+				{
+					base.npc.velocity = new Vector2(0f, -10f);
+					if (base.npc.timeLeft > 10)
+					{
+						base.npc.timeLeft = 10;
+					}
+				}
+			}
+		}
+
 		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
 		{
 			if (Main.rand.Next(2) == 0 || (Main.expertMode && Main.rand.Next(0) == 0))
@@ -298,5 +323,7 @@ namespace Redemption.NPCs.Bosses
 				target.AddBuff(base.mod.BuffType("XenomiteDebuff2"), Main.rand.Next(250, 500), true);
 			}
 		}
+
+		private Player player;
 	}
 }

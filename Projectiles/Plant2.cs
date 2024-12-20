@@ -27,6 +27,8 @@ namespace Redemption.Projectiles
 		public override void AI()
 		{
 			base.projectile.localAI[0] += 1f;
+			base.projectile.velocity.X = 0f;
+			base.projectile.velocity.Y = 0f;
 			if (base.projectile.localAI[0] == 10f)
 			{
 				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 40f, base.projectile.position.Y + 12f), base.projectile.velocity, base.mod.ProjectileType("SkyflowerPetal"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);

@@ -18,7 +18,7 @@ namespace Redemption.Items
 			base.item.height = 20;
 			base.item.damage = 3;
 			base.item.maxStack = 99;
-			base.item.value = 100;
+			base.item.value = 50;
 			base.item.rare = 0;
 			base.item.useStyle = 1;
 			base.item.useAnimation = 10;

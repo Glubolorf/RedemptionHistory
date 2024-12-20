@@ -4,10 +4,6 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items
 {
-	[AutoloadEquip(new EquipType[]
-	{
-		0
-	})]
 	public class IcarsFrost : ModItem
 	{
 		public override void SetStaticDefaults()

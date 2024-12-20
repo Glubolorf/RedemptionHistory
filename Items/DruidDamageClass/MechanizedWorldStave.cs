@@ -22,7 +22,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.useTime = 30;
 			base.item.useAnimation = 30;
 			base.item.useStyle = 5;
-			base.item.mana = 20;
+			base.item.mana = 100;
 			base.item.crit = 4;
 			base.item.knockBack = 0f;
 			base.item.value = Item.buyPrice(0, 5, 0, 0);

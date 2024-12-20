@@ -94,7 +94,7 @@ namespace Redemption.Projectiles
 
 		public override void Kill(int timeLeft)
 		{
-			Main.PlaySound(SoundID.Item15, base.projectile.position);
+			Main.PlaySound(SoundID.Item14, base.projectile.position);
 			for (int i = 0; i < 50; i++)
 			{
 				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 31, 0f, 0f, 100, default(Color), 2f);

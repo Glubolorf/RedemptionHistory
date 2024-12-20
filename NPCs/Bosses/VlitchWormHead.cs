@@ -84,11 +84,14 @@ namespace Redemption.NPCs.Bosses
 
 		public override bool PreAI()
 		{
-			if (Main.player[base.npc.target].dead)
+			if (Main.dayTime)
 			{
 				base.npc.timeLeft = 0;
-				base.npc.velocity.Y = -100f;
+				NPC npc = base.npc;
+				npc.position.Y = npc.position.Y - 300f;
 			}
+			this.Target();
+			this.DespawnHandler();
 			if (Main.netMode != 1)
 			{
 				if (base.npc.ai[0] == 0f)
@@ -364,6 +367,28 @@ namespace Redemption.NPCs.Bosses
 			return false;
 		}
 
+		private void Target()
+		{
+			this.player = Main.player[base.npc.target];
+		}
+
+		private void DespawnHandler()
+		{
+			if (!this.player.active || this.player.dead)
+			{
+				base.npc.TargetClosest(false);
+				this.player = Main.player[base.npc.target];
+				if (!this.player.active || this.player.dead)
+				{
+					base.npc.velocity = new Vector2(0f, -10f);
+					if (base.npc.timeLeft > 10)
+					{
+						base.npc.timeLeft = 10;
+					}
+				}
+			}
+		}
+
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Texture2D texture2D = Main.npcTexture[base.npc.type];
@@ -372,5 +397,7 @@ namespace Redemption.NPCs.Bosses
 			Main.spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, null, drawColor, base.npc.rotation, vector, base.npc.scale, 0, 0f);
 			return false;
 		}
+
+		private Player player;
 	}
 }

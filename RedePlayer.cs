@@ -82,25 +82,27 @@ namespace Redemption
 			this.fasterSeedbags = false;
 			this.fasterSpirits = false;
 			this.moreSpirits = false;
+			this.rainbowCatPet = false;
+			this.golemWateringCan = false;
 		}
 
 		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
 		{
 			if (base.player.FindBuffIndex(base.mod.BuffType("XenomiteDebuff")) != -1)
 			{
-				damageSource = PlayerDeathReason.ByCustomReason("You got infected");
+				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got infected");
 			}
 			if (base.player.FindBuffIndex(base.mod.BuffType("XenomiteDebuff2")) != -1)
 			{
-				damageSource = PlayerDeathReason.ByCustomReason("You got heavily infected");
+				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got heavily infected");
 			}
 			if (base.player.FindBuffIndex(base.mod.BuffType("EmpoweredBuff")) != -1)
 			{
-				damageSource = PlayerDeathReason.ByCustomReason("You got too empowered");
+				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got too empowered");
 			}
 			if (base.player.FindBuffIndex(base.mod.BuffType("RadioactiveFalloutDebuff")) != -1)
 			{
-				damageSource = PlayerDeathReason.ByCustomReason("You forgot to wear a gas mask");
+				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " forgot to wear a gas mask");
 			}
 			return true;
 		}
@@ -114,6 +116,20 @@ namespace Redemption
 			if (this.ZoneXeno && liquidType == 0 && questFish == base.mod.ItemType("XenChomper") && Main.rand.Next(1) == 0)
 			{
 				caughtType = base.mod.ItemType("XenChomper");
+			}
+		}
+
+		public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
+		{
+			if (this.golemWateringCan)
+			{
+				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 483, 60, 1f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 483, 60, 1f, Main.myPlayer, 0f, 0f);
+				if (this.moreSeeds)
+				{
+					Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 483, 60, 1f, Main.myPlayer, 0f, 0f);
+					Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 483, 60, 1f, Main.myPlayer, 0f, 0f);
+				}
 			}
 		}
 
@@ -150,5 +166,9 @@ namespace Redemption
 		public bool fasterSpirits;
 
 		public bool moreSpirits;
+
+		public bool rainbowCatPet;
+
+		public bool golemWateringCan;
 	}
 }

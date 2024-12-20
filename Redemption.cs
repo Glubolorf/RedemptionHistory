@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Redemption.Items;
 using Terraria;
 using Terraria.GameContent.UI;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Redemption
@@ -25,6 +26,36 @@ namespace Redemption
 			{
 				music = base.GetSoundSlot(51, "Sounds/Music/XenoCaves");
 			}
+		}
+
+		public override void AddRecipeGroups()
+		{
+			RecipeGroup recipeGroup = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Plant", new int[]
+			{
+				313,
+				317,
+				315,
+				316,
+				318,
+				314,
+				2358
+			});
+			RecipeGroup.RegisterGroup("Redemption:Plant", recipeGroup);
+			RecipeGroup recipeGroup2 = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Seedbag", new int[]
+			{
+				base.ItemType("Seedbag"),
+				base.ItemType("BlinkrootBushBag"),
+				base.ItemType("CorpseFlowerBag"),
+				base.ItemType("CrimthornBushBag"),
+				base.ItemType("DeathweedBag"),
+				base.ItemType("FireblossomBag"),
+				base.ItemType("IcarsFlowerBag"),
+				base.ItemType("ShiverthornBag"),
+				base.ItemType("SkyflowerBag"),
+				base.ItemType("VilethornBushBag"),
+				base.ItemType("WaterleafBag")
+			});
+			RecipeGroup.RegisterGroup("Redemption:Seedbag", recipeGroup2);
 		}
 
 		public override void Load()

@@ -45,7 +45,7 @@ namespace Redemption.Items.Armor
 
 		public override void ArmorSetShadows(Player player)
 		{
-			player.armorEffectDrawShadowLokis = true;
+			player.armorEffectDrawShadow = true;
 			player.armorEffectDrawOutlines = true;
 		}
 

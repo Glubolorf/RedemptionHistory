@@ -103,6 +103,8 @@ namespace Redemption.NPCs.Bosses
 
 		public override void AI()
 		{
+			this.Target();
+			this.DespawnHandler();
 			if (Main.rand.Next(2) == 0)
 			{
 				Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, base.mod.DustType("PuriumFlame"), 0f, 0f, 0, default(Color), 1f);
@@ -116,5 +118,29 @@ namespace Redemption.NPCs.Bosses
 				NPC.NewNPC((int)base.npc.position.X + 50, (int)base.npc.position.Y + 50, base.mod.NPCType("XenomitePiece"), 0, 0f, 0f, 0f, 0f, 255);
 			}
 		}
+
+		private void Target()
+		{
+			this.player = Main.player[base.npc.target];
+		}
+
+		private void DespawnHandler()
+		{
+			if (!this.player.active || this.player.dead)
+			{
+				base.npc.TargetClosest(false);
+				this.player = Main.player[base.npc.target];
+				if (!this.player.active || this.player.dead)
+				{
+					base.npc.velocity = new Vector2(0f, -10f);
+					if (base.npc.timeLeft > 10)
+					{
+						base.npc.timeLeft = 10;
+					}
+				}
+			}
+		}
+
+		private Player player;
 	}
 }

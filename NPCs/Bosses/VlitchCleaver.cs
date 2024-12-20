@@ -93,10 +93,14 @@ namespace Redemption.NPCs.Bosses
 
 		public override void AI()
 		{
-			if (Main.player[base.npc.target].dead)
+			if (Main.dayTime)
 			{
 				base.npc.timeLeft = 0;
+				NPC npc = base.npc;
+				npc.position.Y = npc.position.Y - 300f;
 			}
+			this.Target();
+			this.DespawnHandler();
 			base.npc.ai[1] += 1f;
 			Player player = Main.player[base.npc.target];
 			if (base.npc.target < 0 || base.npc.target == 255 || Main.player[base.npc.target].dead || !Main.player[base.npc.target].active)
@@ -162,13 +166,13 @@ namespace Redemption.NPCs.Bosses
 				this.timer2++;
 				if (this.timer2 <= 120)
 				{
-					NPC npc = base.npc;
-					npc.velocity.Y = npc.velocity.Y * 0.2f;
+					NPC npc2 = base.npc;
+					npc2.velocity.Y = npc2.velocity.Y * 0.2f;
 				}
 				if (this.timer2 >= 120)
 				{
-					NPC npc2 = base.npc;
-					npc2.velocity.Y = npc2.velocity.Y * -0.2f;
+					NPC npc3 = base.npc;
+					npc3.velocity.Y = npc3.velocity.Y * -0.2f;
 					if (this.timer2 == 240)
 					{
 						this.timer2 = 0;
@@ -180,6 +184,30 @@ namespace Redemption.NPCs.Bosses
 				base.npc.noTileCollide = true;
 			}
 		}
+
+		private void Target()
+		{
+			this.player = Main.player[base.npc.target];
+		}
+
+		private void DespawnHandler()
+		{
+			if (!this.player.active || this.player.dead)
+			{
+				base.npc.TargetClosest(false);
+				this.player = Main.player[base.npc.target];
+				if (!this.player.active || this.player.dead)
+				{
+					base.npc.velocity = new Vector2(0f, -10f);
+					if (base.npc.timeLeft > 10)
+					{
+						base.npc.timeLeft = 10;
+					}
+				}
+			}
+		}
+
+		private Player player;
 
 		public int timer;
 

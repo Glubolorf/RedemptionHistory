@@ -95,6 +95,12 @@ namespace Redemption.NPCs.Bosses
 
 		public override void AI()
 		{
+			if (Main.dayTime)
+			{
+				base.npc.timeLeft = 0;
+				NPC npc = base.npc;
+				npc.position.Y = npc.position.Y - 300f;
+			}
 			this.Target();
 			this.DespawnHandler();
 			this.Move(new Vector2(240f, 0f));

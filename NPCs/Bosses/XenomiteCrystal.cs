@@ -78,6 +78,8 @@ namespace Redemption.NPCs.Bosses
 
 		public override void AI()
 		{
+			this.Target();
+			this.DespawnHandler();
 			base.npc.rotation += base.npc.velocity.X / 40f * (float)base.npc.direction;
 			base.npc.rotation += base.npc.velocity.Y / 40f * (float)base.npc.direction;
 			base.npc.ai[0] += 1f;
@@ -112,5 +114,29 @@ namespace Redemption.NPCs.Bosses
 				NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("XenomitePiece"), 0, 0f, 0f, 0f, 0f, 255);
 			}
 		}
+
+		private void Target()
+		{
+			this.player = Main.player[base.npc.target];
+		}
+
+		private void DespawnHandler()
+		{
+			if (!this.player.active || this.player.dead)
+			{
+				base.npc.TargetClosest(false);
+				this.player = Main.player[base.npc.target];
+				if (!this.player.active || this.player.dead)
+				{
+					base.npc.velocity = new Vector2(0f, -10f);
+					if (base.npc.timeLeft > 10)
+					{
+						base.npc.timeLeft = 10;
+					}
+				}
+			}
+		}
+
+		private Player player;
 	}
 }

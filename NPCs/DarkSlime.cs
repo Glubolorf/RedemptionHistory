@@ -84,6 +84,8 @@ namespace Redemption.NPCs
 
 		public override void AI()
 		{
+			this.Target();
+			this.DespawnHandler();
 			this.timer++;
 			if (this.timer == 1)
 			{
@@ -137,6 +139,28 @@ namespace Redemption.NPCs
 			}
 		}
 
+		private void Target()
+		{
+			this.player = Main.player[base.npc.target];
+		}
+
+		private void DespawnHandler()
+		{
+			if (!this.player.active || this.player.dead)
+			{
+				base.npc.TargetClosest(false);
+				this.player = Main.player[base.npc.target];
+				if (!this.player.active || this.player.dead)
+				{
+					base.npc.velocity = new Vector2(0f, -10f);
+					if (base.npc.timeLeft > 10)
+					{
+						base.npc.timeLeft = 10;
+					}
+				}
+			}
+		}
+
 		public override void BossLoot(ref string name, ref int potionType)
 		{
 			potionType = 154;
@@ -145,8 +169,10 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.OverworldDay.Chance * ((Main.hardMode && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && !RedeWorld.downedDarkSlime) ? 0.001f : 0f);
+			return SpawnCondition.OverworldDay.Chance * ((Main.hardMode && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && !RedeWorld.downedDarkSlime) ? 0.003f : 0f);
 		}
+
+		private Player player;
 
 		public int timer;
 

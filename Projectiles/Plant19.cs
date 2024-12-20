@@ -27,40 +27,46 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			if (++base.projectile.frameCounter >= 8)
+			Projectile projectile = base.projectile;
+			int num = projectile.frameCounter + 1;
+			projectile.frameCounter = num;
+			if (num >= 8)
 			{
 				base.projectile.frameCounter = 0;
-				if (++base.projectile.frame >= 4)
+				Projectile projectile2 = base.projectile;
+				num = projectile2.frame + 1;
+				projectile2.frame = num;
+				if (num >= 4)
 				{
 					base.projectile.frame = 0;
 				}
 			}
 			base.projectile.localAI[0] += 1f;
-			Projectile projectile = base.projectile;
-			projectile.velocity.X = projectile.velocity.X * 0f;
-			Projectile projectile2 = base.projectile;
-			projectile2.velocity.Y = projectile2.velocity.Y + 1f;
-			if (Main.rand.Next(100) == 0)
+			Projectile projectile3 = base.projectile;
+			projectile3.velocity.X = projectile3.velocity.X * 0f;
+			Projectile projectile4 = base.projectile;
+			projectile4.velocity.Y = projectile4.velocity.Y + 1f;
+			if (Main.rand.Next(200) == 0)
 			{
 				Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 8f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), base.mod.ProjectileType("PoisonTearPro"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 			}
-			if (Main.rand.Next(100) == 0)
+			if (Main.rand.Next(200) == 0)
 			{
 				Projectile.NewProjectile(base.projectile.position.X + 28f, base.projectile.position.Y + 16f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), base.mod.ProjectileType("PoisonTearPro"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 			}
-			if (Main.rand.Next(100) == 0)
+			if (Main.rand.Next(200) == 0)
 			{
 				Projectile.NewProjectile(base.projectile.position.X + 8f, base.projectile.position.Y + 22f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), base.mod.ProjectileType("PoisonTearPro"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 			}
-			if (Main.rand.Next(100) == 0)
+			if (Main.rand.Next(200) == 0)
 			{
 				Projectile.NewProjectile(base.projectile.position.X + 30f, base.projectile.position.Y + 24f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), base.mod.ProjectileType("PoisonTearPro"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 			}
-			if (Main.rand.Next(100) == 0)
+			if (Main.rand.Next(200) == 0)
 			{
 				Projectile.NewProjectile(base.projectile.position.X + 6f, base.projectile.position.Y + 38f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), base.mod.ProjectileType("PoisonTearPro"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 			}
-			if (Main.rand.Next(100) == 0)
+			if (Main.rand.Next(200) == 0)
 			{
 				Projectile.NewProjectile(base.projectile.position.X + 26f, base.projectile.position.Y + 34f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-3 + Main.rand.Next(0, 6)), base.mod.ProjectileType("PoisonTearPro"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 			}

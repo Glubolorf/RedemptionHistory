@@ -35,9 +35,9 @@ namespace Redemption.Tiles.LabDeco
 			this.minPick = 300;
 			this.mineResist = 3f;
 			this.disableSmartCursor = true;
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Bot Hanger");
-			base.AddMapEntry(new Color(100, 150, 100), modTranslation);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Bot Hanger");
+			base.AddMapEntry(new Color(100, 150, 100), name);
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)

@@ -64,11 +64,11 @@ namespace Redemption.Items.Weapons
 			modRecipe.AddTile(null, "XenoTank1");
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddRecipeGroup("Redemption:XeniumTurret", 1);
-			modRecipe.AddTile(null, "XenoTank1");
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.AddRecipeGroup("Redemption:XeniumTurret", 1);
+			modRecipe2.AddTile(null, "XenoTank1");
+			modRecipe2.SetResult(this, 1);
+			modRecipe2.AddRecipe();
 		}
 	}
 }

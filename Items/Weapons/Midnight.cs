@@ -41,9 +41,9 @@ namespace Redemption.Items.Weapons
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			Vector2 vector = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(10f));
-			speedX = vector.X;
-			speedY = vector.Y;
+			Vector2 perturbedSpeed = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(10f));
+			speedX = perturbedSpeed.X;
+			speedY = perturbedSpeed.Y;
 			return true;
 		}
 
@@ -52,8 +52,7 @@ namespace Redemption.Items.Weapons
 			Color transparent = Color.Transparent;
 			if (base.item.modItem != null && base.item.modItem.mod == ModLoader.GetMod("Redemption"))
 			{
-				TooltipLine tooltipLine = Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName"));
-				tooltipLine.overrideColor = new Color?(new Color(170, 0, 255));
+				Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName")).overrideColor = new Color?(new Color(170, 0, 255));
 			}
 		}
 	}

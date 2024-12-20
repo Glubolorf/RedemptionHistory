@@ -18,7 +18,7 @@ namespace Redemption.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 42;
+			base.item.damage = 25;
 			base.item.magic = true;
 			base.item.mana = 5;
 			base.item.width = 32;
@@ -40,29 +40,27 @@ namespace Redemption.Items.Weapons
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			Vector2 vector = player.RotatedRelativePoint(player.MountedCenter, true);
-			float num = (float)Main.mouseX + Main.screenPosition.X - vector.X;
-			float num2 = (float)Main.mouseY + Main.screenPosition.Y - vector.Y;
-			Vector2 vector2;
-			vector2..ctor(num, num2);
-			vector2.Normalize();
-			Vector2 vector3;
-			vector3..ctor((float)Main.rand.Next(-100, 101), (float)Main.rand.Next(-100, 101));
-			vector3.Normalize();
-			vector2 = vector2 * 6f + vector3;
-			vector2.Normalize();
-			vector2 *= base.item.shootSpeed;
-			float num3 = (float)Main.rand.Next(10, 50) * 0.001f;
+			Vector2 vector2 = player.RotatedRelativePoint(player.MountedCenter, true);
+			float num78 = (float)Main.mouseX + Main.screenPosition.X - vector2.X;
+			float num79 = (float)Main.mouseY + Main.screenPosition.Y - vector2.Y;
+			Vector2 value2 = new Vector2(num78, num79);
+			value2.Normalize();
+			Vector2 value3 = new Vector2((float)Main.rand.Next(-100, 101), (float)Main.rand.Next(-100, 101));
+			value3.Normalize();
+			value2 = value2 * 6f + value3;
+			value2.Normalize();
+			value2 *= base.item.shootSpeed;
+			float num80 = (float)Main.rand.Next(10, 50) * 0.001f;
 			if (Main.rand.Next(2) == 0)
 			{
-				num3 *= -1f;
+				num80 *= -1f;
 			}
-			float num4 = (float)Main.rand.Next(10, 50) * 0.001f;
+			float num81 = (float)Main.rand.Next(10, 50) * 0.001f;
 			if (Main.rand.Next(2) == 0)
 			{
-				num4 *= -1f;
+				num81 *= -1f;
 			}
-			Projectile.NewProjectile(vector.X, vector.Y, vector2.X, vector2.Y, type, damage, knockBack, player.whoAmI, num4, num3);
+			Projectile.NewProjectile(vector2.X, vector2.Y, value2.X, value2.Y, type, damage, knockBack, player.whoAmI, num81, num80);
 			return false;
 		}
 	}

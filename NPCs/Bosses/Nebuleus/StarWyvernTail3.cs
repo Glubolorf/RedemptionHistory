@@ -43,17 +43,16 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 			{
 				for (int i = 0; i < 2; i++)
 				{
-					int num = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 58, 0f, 0f, 100, default(Color), 3f);
-					Main.dust[num].velocity *= 1.8f;
+					int dustIndex = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 58, 0f, 0f, 100, default(Color), 3f);
+					Main.dust[dustIndex].velocity *= 1.8f;
 				}
 			}
 		}
 
 		public override bool PreAI()
 		{
-			Vector2 center = Main.npc[(int)base.npc.ai[1]].Center;
-			Vector2 vector = center - base.npc.Center;
-			base.npc.spriteDirection = ((vector.X > 0f) ? 1 : -1);
+			Vector2 directionVector = Main.npc[(int)base.npc.ai[1]].Center - base.npc.Center;
+			base.npc.spriteDirection = ((directionVector.X > 0f) ? 1 : -1);
 			if (base.npc.ai[3] > 0f)
 			{
 				base.npc.realLife = (int)base.npc.ai[3];
@@ -75,16 +74,15 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 			}
 			if ((double)base.npc.ai[1] < (double)Main.npc.Length)
 			{
-				Vector2 vector2;
-				vector2..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
-				float num = Main.npc[(int)base.npc.ai[1]].position.X + (float)(Main.npc[(int)base.npc.ai[1]].width / 2) - vector2.X;
-				float num2 = Main.npc[(int)base.npc.ai[1]].position.Y + (float)(Main.npc[(int)base.npc.ai[1]].height / 2) - vector2.Y;
-				base.npc.rotation = (float)Math.Atan2((double)num2, (double)num) + 1.57f;
-				float num3 = (float)Math.Sqrt((double)(num * num + num2 * num2));
-				float num4 = (num3 - (float)base.npc.width) / num3;
-				float num5 = num * num4;
-				float num6 = num2 * num4;
-				if (num < 0f)
+				Vector2 npcCenter = new Vector2(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
+				float dirX = Main.npc[(int)base.npc.ai[1]].position.X + (float)(Main.npc[(int)base.npc.ai[1]].width / 2) - npcCenter.X;
+				float dirY = Main.npc[(int)base.npc.ai[1]].position.Y + (float)(Main.npc[(int)base.npc.ai[1]].height / 2) - npcCenter.Y;
+				base.npc.rotation = (float)Math.Atan2((double)dirY, (double)dirX) + 1.57f;
+				float length = (float)Math.Sqrt((double)(dirX * dirX + dirY * dirY));
+				float dist = (length - (float)base.npc.width) / length;
+				float posX = dirX * dist;
+				float posY = dirY * dist;
+				if (dirX < 0f)
 				{
 					base.npc.spriteDirection = 1;
 				}
@@ -93,8 +91,8 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					base.npc.spriteDirection = -1;
 				}
 				base.npc.velocity = Vector2.Zero;
-				base.npc.position.X = base.npc.position.X + num5;
-				base.npc.position.Y = base.npc.position.Y + num6;
+				base.npc.position.X = base.npc.position.X + posX;
+				base.npc.position.Y = base.npc.position.Y + posY;
 			}
 			Player player = Main.player[base.npc.target];
 			if (base.npc.target < 0 || base.npc.target == 255 || Main.player[base.npc.target].dead || !Main.player[base.npc.target].active)

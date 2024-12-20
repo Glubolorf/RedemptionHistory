@@ -30,7 +30,7 @@ namespace Redemption.Items.Weapons
 			base.item.scale = 1f;
 			base.item.rare = 9;
 			base.item.UseSound = SoundID.Item1;
-			base.item.shoot = base.mod.ProjectileType<PeaceKeeperPro>();
+			base.item.shoot = ModContent.ProjectileType<PeaceKeeperPro>();
 			base.item.value = Item.buyPrice(0, 10, 0, 0);
 			base.item.noMelee = true;
 			base.item.noUseGraphic = true;
@@ -43,8 +43,7 @@ namespace Redemption.Items.Weapons
 			Color transparent = Color.Transparent;
 			if (base.item.modItem != null && base.item.modItem.mod == ModLoader.GetMod("Redemption"))
 			{
-				TooltipLine tooltipLine = Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName"));
-				tooltipLine.overrideColor = new Color?(new Color(0, 120, 255));
+				Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName")).overrideColor = new Color?(new Color(0, 120, 255));
 			}
 		}
 

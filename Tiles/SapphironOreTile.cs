@@ -18,8 +18,7 @@ namespace Redemption.Tiles
 			this.minPick = 200;
 			this.mineResist = 3f;
 			this.soundType = 21;
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Sapphiron Ore");
+			base.CreateMapEntryName(null).SetDefault("Sapphiron Ore");
 			base.AddMapEntry(new Color(50, 50, 100), null);
 		}
 

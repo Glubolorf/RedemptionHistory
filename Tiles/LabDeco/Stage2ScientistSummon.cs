@@ -40,7 +40,7 @@ namespace Redemption.Tiles.LabDeco
 			return false;
 		}
 
-		public override void RightClick(int i, int j)
+		public override bool NewRightClick(int i, int j)
 		{
 			if (Main.netMode == 0)
 			{
@@ -50,11 +50,10 @@ namespace Redemption.Tiles.LabDeco
 					Main.tile[i, j];
 					i *= 16;
 					j *= 16;
-					int num = NPC.NewNPC(i + 1, j + 1, base.mod.NPCType("Stage2ScientistBoss"), 0, 0f, 0f, 0f, 0f, 255);
+					int k = NPC.NewNPC(i + 1, j + 1, base.mod.NPCType("Stage2ScientistBoss"), 0, 0f, 0f, 0f, 0f, 255);
 					if (Main.netMode == 2)
 					{
-						NetMessage.SendData(23, -1, -1, null, num, 0f, 0f, 0f, 0, 0, 0);
-						return;
+						NetMessage.SendData(23, -1, -1, null, k, 0f, 0f, 0f, 0, 0, 0);
 					}
 				}
 			}
@@ -65,6 +64,7 @@ namespace Redemption.Tiles.LabDeco
 				Utils.WriteVector2(packet, new Vector2((float)(i * 16), (float)(j * 16)));
 				packet.Send(-1, -1);
 			}
+			return true;
 		}
 
 		public override void AnimateTile(ref int frame, ref int frameCounter)

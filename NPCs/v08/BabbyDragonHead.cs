@@ -101,103 +101,102 @@ namespace Redemption.NPCs.v08
 			}
 			for (int i = 0; i < 2; i++)
 			{
-				int num = Dust.NewDust(base.npc.position - new Vector2(8f, 8f), base.npc.width + 16, base.npc.height + 16, 242, 0f, 0f, 0, Color.Black, 0.2f);
-				Main.dust[num].velocity *= 0f;
-				Main.dust[num].noGravity = true;
+				int dust = Dust.NewDust(base.npc.position - new Vector2(8f, 8f), base.npc.width + 16, base.npc.height + 16, 242, 0f, 0f, 0, Color.Black, 0.2f);
+				Main.dust[dust].velocity *= 0f;
+				Main.dust[dust].noGravity = true;
 			}
 			if (Main.netMode != 1 && base.npc.ai[0] == 0f)
 			{
 				base.npc.realLife = base.npc.whoAmI;
-				int num2 = base.npc.whoAmI;
+				int latestNPC = base.npc.whoAmI;
 				for (int j = 0; j < 4; j++)
 				{
-					num2 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("BabbyDragonBody"), base.npc.whoAmI, 0f, (float)num2, 0f, 0f, 255);
-					Main.npc[num2].realLife = base.npc.whoAmI;
-					Main.npc[num2].ai[3] = (float)base.npc.whoAmI;
-					num2 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("BabbyDragonLeg"), base.npc.whoAmI, 0f, (float)num2, 0f, 0f, 255);
-					Main.npc[num2].realLife = base.npc.whoAmI;
-					Main.npc[num2].ai[3] = (float)base.npc.whoAmI;
+					latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("BabbyDragonBody"), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
+					Main.npc[latestNPC].realLife = base.npc.whoAmI;
+					Main.npc[latestNPC].ai[3] = (float)base.npc.whoAmI;
+					latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("BabbyDragonLeg"), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
+					Main.npc[latestNPC].realLife = base.npc.whoAmI;
+					Main.npc[latestNPC].ai[3] = (float)base.npc.whoAmI;
 				}
-				num2 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("BabbyDragonTail1"), base.npc.whoAmI, 0f, (float)num2, 0f, 0f, 255);
-				Main.npc[num2].realLife = base.npc.whoAmI;
-				Main.npc[num2].ai[3] = (float)base.npc.whoAmI;
-				num2 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("BabbyDragonTail2"), base.npc.whoAmI, 0f, (float)num2, 0f, 0f, 255);
-				Main.npc[num2].realLife = base.npc.whoAmI;
-				Main.npc[num2].ai[3] = (float)base.npc.whoAmI;
+				latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("BabbyDragonTail1"), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
+				Main.npc[latestNPC].realLife = base.npc.whoAmI;
+				Main.npc[latestNPC].ai[3] = (float)base.npc.whoAmI;
+				latestNPC = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("BabbyDragonTail2"), base.npc.whoAmI, 0f, (float)latestNPC, 0f, 0f, 255);
+				Main.npc[latestNPC].realLife = base.npc.whoAmI;
+				Main.npc[latestNPC].ai[3] = (float)base.npc.whoAmI;
 				base.npc.ai[0] = 1f;
 				base.npc.netUpdate = true;
 			}
-			int num3 = (int)((double)base.npc.position.X / 16.0) - 1;
-			int num4 = (int)((double)(base.npc.position.X + (float)base.npc.width) / 16.0) + 2;
-			int num5 = (int)((double)base.npc.position.Y / 16.0) - 1;
-			int num6 = (int)((double)(base.npc.position.Y + (float)base.npc.height) / 16.0) + 2;
-			if (num3 < 0)
+			int minTilePosX = (int)((double)base.npc.position.X / 16.0) - 1;
+			int maxTilePosX = (int)((double)(base.npc.position.X + (float)base.npc.width) / 16.0) + 2;
+			int minTilePosY = (int)((double)base.npc.position.Y / 16.0) - 1;
+			int num3 = (int)((double)(base.npc.position.Y + (float)base.npc.height) / 16.0) + 2;
+			if (minTilePosX < 0)
 			{
 			}
-			if (num4 > Main.maxTilesX)
+			if (maxTilePosX > Main.maxTilesX)
 			{
-				num4 = Main.maxTilesX;
+				maxTilePosX = Main.maxTilesX;
 			}
-			if (num5 < 0)
+			if (minTilePosY < 0)
 			{
 			}
-			if (num6 > Main.maxTilesY)
+			if (num3 > Main.maxTilesY)
 			{
-				num6 = Main.maxTilesY;
+				int maxTilesY = Main.maxTilesY;
 			}
-			bool flag = true;
-			float num7 = 17f;
-			float num8 = 0.2f;
-			Vector2 vector;
-			vector..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
-			float num9 = Main.player[base.npc.target].position.X + (float)(Main.player[base.npc.target].width / 2);
-			float num10 = Main.player[base.npc.target].position.Y + (float)(Main.player[base.npc.target].height / 2);
-			float num11 = (float)((int)((double)num9 / 16.0) * 16);
-			float num12 = (float)((int)((double)num10 / 16.0) * 16);
-			vector.X = (float)((int)((double)vector.X / 16.0) * 16);
-			vector.Y = (float)((int)((double)vector.Y / 16.0) * 16);
-			float num13 = num11 - vector.X;
-			float num14 = num12 - vector.Y;
-			float num15 = (float)Math.Sqrt((double)(num13 * num13 + num14 * num14));
-			if (!flag)
+			bool collision = true;
+			float speed = 17f;
+			float acceleration = 0.2f;
+			Vector2 npcCenter = new Vector2(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
+			float targetXPos = Main.player[base.npc.target].position.X + (float)(Main.player[base.npc.target].width / 2);
+			double num4 = (double)(Main.player[base.npc.target].position.Y + (float)(Main.player[base.npc.target].height / 2));
+			float targetRoundedPosX = (float)((int)((double)targetXPos / 16.0) * 16);
+			float num5 = (float)((int)(num4 / 16.0) * 16);
+			npcCenter.X = (float)((int)((double)npcCenter.X / 16.0) * 16);
+			npcCenter.Y = (float)((int)((double)npcCenter.Y / 16.0) * 16);
+			float dirX = targetRoundedPosX - npcCenter.X;
+			float dirY = num5 - npcCenter.Y;
+			float length = (float)Math.Sqrt((double)(dirX * dirX + dirY * dirY));
+			if (!collision)
 			{
 				base.npc.TargetClosest(true);
 				base.npc.velocity.Y = base.npc.velocity.Y + 0.11f;
-				if (base.npc.velocity.Y > num7)
+				if (base.npc.velocity.Y > speed)
 				{
-					base.npc.velocity.Y = num7;
+					base.npc.velocity.Y = speed;
 				}
-				if ((double)(Math.Abs(base.npc.velocity.X) + Math.Abs(base.npc.velocity.Y)) < (double)num7 * 0.4)
+				if ((double)(Math.Abs(base.npc.velocity.X) + Math.Abs(base.npc.velocity.Y)) < (double)speed * 0.4)
 				{
 					if ((double)base.npc.velocity.X < 0.0)
 					{
-						base.npc.velocity.X = base.npc.velocity.X - num8 * 1.1f;
+						base.npc.velocity.X = base.npc.velocity.X - acceleration * 1.1f;
 					}
 					else
 					{
-						base.npc.velocity.X = base.npc.velocity.X + num8 * 1.1f;
+						base.npc.velocity.X = base.npc.velocity.X + acceleration * 1.1f;
 					}
 				}
-				else if (base.npc.velocity.Y == num7)
+				else if (base.npc.velocity.Y == speed)
 				{
-					if (base.npc.velocity.X < num13)
+					if (base.npc.velocity.X < dirX)
 					{
-						base.npc.velocity.X = base.npc.velocity.X + num8;
+						base.npc.velocity.X = base.npc.velocity.X + acceleration;
 					}
-					else if (base.npc.velocity.X > num13)
+					else if (base.npc.velocity.X > dirX)
 					{
-						base.npc.velocity.X = base.npc.velocity.X - num8;
+						base.npc.velocity.X = base.npc.velocity.X - acceleration;
 					}
 				}
 				else if ((double)base.npc.velocity.Y > 4.0)
 				{
 					if ((double)base.npc.velocity.X < 0.0)
 					{
-						base.npc.velocity.X = base.npc.velocity.X + num8 * 0.9f;
+						base.npc.velocity.X = base.npc.velocity.X + acceleration * 0.9f;
 					}
 					else
 					{
-						base.npc.velocity.X = base.npc.velocity.X - num8 * 0.9f;
+						base.npc.velocity.X = base.npc.velocity.X - acceleration * 0.9f;
 					}
 				}
 			}
@@ -205,104 +204,104 @@ namespace Redemption.NPCs.v08
 			{
 				if (base.npc.soundDelay == 0)
 				{
-					float num16 = num15 / 40f;
-					if ((double)num16 < 10.0)
+					float num = length / 40f;
+					if ((double)num < 10.0)
 					{
-						num16 = 10f;
+						num = 10f;
 					}
-					if ((double)num16 > 20.0)
+					if ((double)num > 20.0)
 					{
-						num16 = 20f;
+						num = 20f;
 					}
-					base.npc.soundDelay = (int)num16;
+					base.npc.soundDelay = (int)num;
 				}
-				float num17 = Math.Abs(num13);
-				float num18 = Math.Abs(num14);
-				float num19 = num7 / num15;
-				num13 *= num19;
-				num14 *= num19;
-				if (((double)base.npc.velocity.X > 0.0 && (double)num13 > 0.0) || ((double)base.npc.velocity.X < 0.0 && (double)num13 < 0.0) || ((double)base.npc.velocity.Y > 0.0 && (double)num14 > 0.0) || ((double)base.npc.velocity.Y < 0.0 && (double)num14 < 0.0))
+				float absDirX = Math.Abs(dirX);
+				float absDirY = Math.Abs(dirY);
+				float newSpeed = speed / length;
+				dirX *= newSpeed;
+				dirY *= newSpeed;
+				if (((double)base.npc.velocity.X > 0.0 && (double)dirX > 0.0) || ((double)base.npc.velocity.X < 0.0 && (double)dirX < 0.0) || ((double)base.npc.velocity.Y > 0.0 && (double)dirY > 0.0) || ((double)base.npc.velocity.Y < 0.0 && (double)dirY < 0.0))
 				{
-					if (base.npc.velocity.X < num13)
+					if (base.npc.velocity.X < dirX)
 					{
-						base.npc.velocity.X = base.npc.velocity.X + num8;
+						base.npc.velocity.X = base.npc.velocity.X + acceleration;
 					}
-					else if (base.npc.velocity.X > num13)
+					else if (base.npc.velocity.X > dirX)
 					{
-						base.npc.velocity.X = base.npc.velocity.X - num8;
+						base.npc.velocity.X = base.npc.velocity.X - acceleration;
 					}
-					if (base.npc.velocity.Y < num14)
+					if (base.npc.velocity.Y < dirY)
 					{
-						base.npc.velocity.Y = base.npc.velocity.Y + num8;
+						base.npc.velocity.Y = base.npc.velocity.Y + acceleration;
 					}
-					else if (base.npc.velocity.Y > num14)
+					else if (base.npc.velocity.Y > dirY)
 					{
-						base.npc.velocity.Y = base.npc.velocity.Y - num8;
+						base.npc.velocity.Y = base.npc.velocity.Y - acceleration;
 					}
-					if ((double)Math.Abs(num14) < (double)num7 * 0.2 && (((double)base.npc.velocity.X > 0.0 && (double)num13 < 0.0) || ((double)base.npc.velocity.X < 0.0 && (double)num13 > 0.0)))
+					if ((double)Math.Abs(dirY) < (double)speed * 0.2 && (((double)base.npc.velocity.X > 0.0 && (double)dirX < 0.0) || ((double)base.npc.velocity.X < 0.0 && (double)dirX > 0.0)))
 					{
 						if ((double)base.npc.velocity.Y > 0.0)
 						{
-							base.npc.velocity.Y = base.npc.velocity.Y + num8 * 2f;
+							base.npc.velocity.Y = base.npc.velocity.Y + acceleration * 2f;
 						}
 						else
 						{
-							base.npc.velocity.Y = base.npc.velocity.Y - num8 * 2f;
+							base.npc.velocity.Y = base.npc.velocity.Y - acceleration * 2f;
 						}
 					}
-					if ((double)Math.Abs(num13) < (double)num7 * 0.2 && (((double)base.npc.velocity.Y > 0.0 && (double)num14 < 0.0) || ((double)base.npc.velocity.Y < 0.0 && (double)num14 > 0.0)))
+					if ((double)Math.Abs(dirX) < (double)speed * 0.2 && (((double)base.npc.velocity.Y > 0.0 && (double)dirY < 0.0) || ((double)base.npc.velocity.Y < 0.0 && (double)dirY > 0.0)))
 					{
 						if ((double)base.npc.velocity.X > 0.0)
 						{
-							base.npc.velocity.X = base.npc.velocity.X + num8 * 2f;
+							base.npc.velocity.X = base.npc.velocity.X + acceleration * 2f;
 						}
 						else
 						{
-							base.npc.velocity.X = base.npc.velocity.X - num8 * 2f;
+							base.npc.velocity.X = base.npc.velocity.X - acceleration * 2f;
 						}
 					}
 				}
-				else if (num17 > num18)
+				else if (absDirX > absDirY)
 				{
-					if (base.npc.velocity.X < num13)
+					if (base.npc.velocity.X < dirX)
 					{
-						base.npc.velocity.X = base.npc.velocity.X + num8 * 1.1f;
+						base.npc.velocity.X = base.npc.velocity.X + acceleration * 1.1f;
 					}
-					else if (base.npc.velocity.X > num13)
+					else if (base.npc.velocity.X > dirX)
 					{
-						base.npc.velocity.X = base.npc.velocity.X - num8 * 1.1f;
+						base.npc.velocity.X = base.npc.velocity.X - acceleration * 1.1f;
 					}
-					if ((double)(Math.Abs(base.npc.velocity.X) + Math.Abs(base.npc.velocity.Y)) < (double)num7 * 0.5)
+					if ((double)(Math.Abs(base.npc.velocity.X) + Math.Abs(base.npc.velocity.Y)) < (double)speed * 0.5)
 					{
 						if ((double)base.npc.velocity.Y > 0.0)
 						{
-							base.npc.velocity.Y = base.npc.velocity.Y + num8;
+							base.npc.velocity.Y = base.npc.velocity.Y + acceleration;
 						}
 						else
 						{
-							base.npc.velocity.Y = base.npc.velocity.Y - num8;
+							base.npc.velocity.Y = base.npc.velocity.Y - acceleration;
 						}
 					}
 				}
 				else
 				{
-					if (base.npc.velocity.Y < num14)
+					if (base.npc.velocity.Y < dirY)
 					{
-						base.npc.velocity.Y = base.npc.velocity.Y + num8 * 1.1f;
+						base.npc.velocity.Y = base.npc.velocity.Y + acceleration * 1.1f;
 					}
-					else if (base.npc.velocity.Y > num14)
+					else if (base.npc.velocity.Y > dirY)
 					{
-						base.npc.velocity.Y = base.npc.velocity.Y - num8 * 1.1f;
+						base.npc.velocity.Y = base.npc.velocity.Y - acceleration * 1.1f;
 					}
-					if ((double)(Math.Abs(base.npc.velocity.X) + Math.Abs(base.npc.velocity.Y)) < (double)num7 * 0.5)
+					if ((double)(Math.Abs(base.npc.velocity.X) + Math.Abs(base.npc.velocity.Y)) < (double)speed * 0.5)
 					{
 						if ((double)base.npc.velocity.X > 0.0)
 						{
-							base.npc.velocity.X = base.npc.velocity.X + num8;
+							base.npc.velocity.X = base.npc.velocity.X + acceleration;
 						}
 						else
 						{
-							base.npc.velocity.X = base.npc.velocity.X - num8;
+							base.npc.velocity.X = base.npc.velocity.X - acceleration;
 						}
 					}
 				}
@@ -317,16 +316,16 @@ namespace Redemption.NPCs.v08
 				}
 				if ((double)base.npc.position.Y > Main.rockLayer * 16.0)
 				{
-					for (int k = 0; k < 200; k++)
+					for (int num2 = 0; num2 < 200; num2++)
 					{
-						if (Main.npc[k].aiStyle == base.npc.aiStyle)
+						if (Main.npc[num2].aiStyle == base.npc.aiStyle)
 						{
-							Main.npc[k].active = false;
+							Main.npc[num2].active = false;
 						}
 					}
 				}
 			}
-			if (flag)
+			if (collision)
 			{
 				if (base.npc.localAI[0] != 1f)
 				{

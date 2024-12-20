@@ -16,13 +16,13 @@ namespace Redemption.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 13;
+			base.item.damage = 10;
 			base.item.magic = true;
 			base.item.mana = 14;
 			base.item.width = 38;
 			base.item.height = 40;
-			base.item.useTime = 32;
-			base.item.useAnimation = 32;
+			base.item.useTime = 40;
+			base.item.useAnimation = 40;
 			base.item.useStyle = 5;
 			base.item.noMelee = true;
 			base.item.knockBack = 3f;
@@ -43,13 +43,13 @@ namespace Redemption.Items.Weapons
 			modRecipe.AddTile(16);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(1256, 1);
-			modRecipe.AddIngredient(null, "Nightshade", 10);
-			modRecipe.AddIngredient(109, 2);
-			modRecipe.AddTile(16);
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.AddIngredient(1256, 1);
+			modRecipe2.AddIngredient(null, "Nightshade", 10);
+			modRecipe2.AddIngredient(109, 2);
+			modRecipe2.AddTile(16);
+			modRecipe2.SetResult(this, 1);
+			modRecipe2.AddRecipe();
 		}
 	}
 }

@@ -84,6 +84,10 @@ namespace Redemption.Items
 			RedeWorld.keeperSaved = false;
 			RedeWorld.downedThorn = false;
 			RedeWorld.downedThornPZ = false;
+			RedeWorld.downedJanitor = false;
+			RedeWorld.downedVolt = false;
+			RedeWorld.KSRajahInteraction = false;
+			RedeWorld.voltBegin = false;
 			return true;
 		}
 	}

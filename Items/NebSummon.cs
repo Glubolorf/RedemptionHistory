@@ -42,10 +42,10 @@ namespace Redemption.Items
 				string text = "I have yet a reason to fight you, Terrarian...";
 				Color rarityPink = Colors.RarityPink;
 				byte r = rarityPink.R;
-				Color rarityPink2 = Colors.RarityPink;
-				byte g = rarityPink2.G;
-				Color rarityPink3 = Colors.RarityPink;
-				Main.NewText(text, r, g, rarityPink3.B, false);
+				rarityPink = Colors.RarityPink;
+				byte g = rarityPink.G;
+				rarityPink = Colors.RarityPink;
+				Main.NewText(text, r, g, rarityPink.B, false);
 			}
 			else
 			{
@@ -57,11 +57,11 @@ namespace Redemption.Items
 
 		public override void ModifyTooltips(List<TooltipLine> list)
 		{
-			foreach (TooltipLine tooltipLine in list)
+			foreach (TooltipLine line2 in list)
 			{
-				if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+				if (line2.mod == "Terraria" && line2.Name == "ItemName")
 				{
-					tooltipLine.overrideColor = new Color?(new Color(0, 255, 200));
+					line2.overrideColor = new Color?(new Color(0, 255, 200));
 				}
 			}
 		}

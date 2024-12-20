@@ -18,8 +18,7 @@ namespace Redemption.Tiles
 			this.minPick = 100;
 			this.mineResist = 2f;
 			this.soundType = 21;
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Starlite");
+			base.CreateMapEntryName(null).SetDefault("Starlite");
 			base.AddMapEntry(new Color(50, 120, 160), null);
 		}
 

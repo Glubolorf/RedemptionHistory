@@ -25,7 +25,7 @@ namespace Redemption.Items
 			base.item.height = 14;
 			base.item.value = 80;
 			base.item.rare = 1;
-			base.item.createTile = base.mod.TileType<NightshadeTile>();
+			base.item.createTile = ModContent.TileType<NightshadeTile>();
 		}
 	}
 }

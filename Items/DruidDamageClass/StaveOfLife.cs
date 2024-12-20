@@ -13,14 +13,14 @@ namespace Redemption.Items.DruidDamageClass
 		{
 			if (Main.netMode != 2)
 			{
-				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
 				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
 				{
-					array[i] = Main.glowMaskTexture[i];
+					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				array[array.Length - 1] = base.mod.GetTexture("Items/DruidDamageClass/" + base.GetType().Name + "_Glow");
-				StaveOfLife.customGlowMask = (short)(array.Length - 1);
-				Main.glowMaskTexture = array;
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Items/DruidDamageClass/" + base.GetType().Name + "_Glow");
+				StaveOfLife.customGlowMask = (short)(glowMasks.Length - 1);
+				Main.glowMaskTexture = glowMasks;
 			}
 			base.DisplayName.SetDefault("Stave of Life");
 			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nRapidly shoots barrages of ancient herbs\nRight-clicking will summon a Tree of Creation [c/bee7c9:(10 Second Duration)]\n[c/71ee8d:-Guardian Info-]\n[c/a0db98:Type:] Mystic\n[c/98dbc3:Special Ability:] Scatter-Shot/Quad-Shot/Swift-Swing/Creation's Embrace\n[c/98c1db:Effects:] Staves that shoot a single projectile will instead shoot a cluster,\nStaves that shoot a single projectile will shoot 4 more in an arc, Staves swing a lot faster,\nDefence Enhancement+/Mobility Enhancement+/Life & Mana Enhancement++");
@@ -50,13 +50,17 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			int num = 2 + Main.rand.Next(4);
-			for (int i = 0; i < num; i++)
+			if (player.altFunctionUse == 2 && player.itemAnimation == 0)
 			{
-				Vector2 vector = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(30f));
-				float num2 = 1f - Utils.NextFloat(Main.rand) * 0.5f;
-				vector *= num2;
-				Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
+				return true;
+			}
+			int numberProjectiles = 2 + Main.rand.Next(4);
+			for (int i = 0; i < numberProjectiles; i++)
+			{
+				Vector2 perturbedSpeed = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(30f));
+				float scale = 1f - Utils.NextFloat(Main.rand) * 0.5f;
+				perturbedSpeed *= scale;
+				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
 			}
 			return false;
 		}
@@ -68,11 +72,11 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override bool CanUseItem(Player player)
 		{
-			if (player.altFunctionUse == 2)
+			if (player.altFunctionUse == 2 && player.itemAnimation == 0)
 			{
 				base.item.mana = 1;
 				base.item.buffType = base.mod.BuffType("NatureGuardian18Buff");
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).longerGuardians)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().longerGuardians)
 				{
 					base.item.buffTime = 1200;
 				}
@@ -96,7 +100,7 @@ namespace Redemption.Items.DruidDamageClass
 		{
 			if (player.altFunctionUse == 2)
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
 				{
 					player.AddBuff(base.mod.BuffType("GuardianCooldownDebuff"), 2700, true);
 					return;
@@ -107,9 +111,9 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override float UseTimeMultiplier(Player player)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterStaves)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().fasterStaves)
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
 				{
 					return 1.45f;
 				}
@@ -117,7 +121,7 @@ namespace Redemption.Items.DruidDamageClass
 			}
 			else
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
 				{
 					return 1.35f;
 				}

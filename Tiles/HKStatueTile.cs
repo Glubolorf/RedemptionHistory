@@ -48,12 +48,12 @@ namespace Redemption.Tiles
 
 		public override void NearbyEffects(int i, int j, bool closer)
 		{
-			Player localPlayer = Main.LocalPlayer;
-			int num = (int)Vector2.Distance(localPlayer.Center / 16f, new Vector2((float)i, (float)j));
+			Player player = Main.LocalPlayer;
+			int num = (int)Vector2.Distance(player.Center / 16f, new Vector2((float)i, (float)j));
 			if (num <= 30)
 			{
 				Redemption.templeOfHeroes = true;
-				localPlayer.AddBuff(base.mod.BuffType("HKStatueBuff"), 10, true);
+				player.AddBuff(base.mod.BuffType("HKStatueBuff"), 10, true);
 			}
 			if (num > 30)
 			{
@@ -64,6 +64,11 @@ namespace Redemption.Tiles
 		public override bool CanKillTile(int i, int j, ref bool blockDamaged)
 		{
 			return false;
+		}
+
+		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
+		{
+			Redemption.templeOfHeroes = false;
 		}
 
 		public override bool CanExplode(int i, int j)

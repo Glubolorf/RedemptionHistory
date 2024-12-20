@@ -43,9 +43,9 @@ namespace Redemption.Items.Weapons
 		{
 			if (Main.rand.Next(4) == 0)
 			{
-				Vector2 vector = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(2f));
-				speedX = vector.X;
-				speedY = vector.Y;
+				Vector2 perturbedSpeed = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(2f));
+				speedX = perturbedSpeed.X;
+				speedY = perturbedSpeed.Y;
 				Projectile.NewProjectile(position.X, position.Y, speedX, speedY, base.mod.ProjectileType("ShootingStarArrow"), 10, 2f, player.whoAmI, 0f, 0f);
 				return false;
 			}
@@ -60,12 +60,12 @@ namespace Redemption.Items.Weapons
 			modRecipe.AddTile(16);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(3480, 1);
-			modRecipe.AddIngredient(null, "Nightshade", 5);
-			modRecipe.AddTile(16);
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.AddIngredient(3480, 1);
+			modRecipe2.AddIngredient(null, "Nightshade", 5);
+			modRecipe2.AddTile(16);
+			modRecipe2.SetResult(this, 1);
+			modRecipe2.AddRecipe();
 		}
 	}
 }

@@ -14,7 +14,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Dryad's Chestplate");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n4% increased druidic damage\n2% increased druidic critical strike chance");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n2% increased druidic damage\n2% increased druidic critical strike chance");
 		}
 
 		public override void SetDefaults()
@@ -23,13 +23,13 @@ namespace Redemption.Items.Armor
 			base.item.height = 26;
 			base.item.value = 75;
 			base.item.rare = 1;
-			base.item.defense = 5;
+			base.item.defense = 4;
 		}
 
 		public override void UpdateEquip(Player player)
 		{
 			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
-			druidDamagePlayer.druidDamage += 0.04f;
+			druidDamagePlayer.druidDamage += 0.02f;
 			druidDamagePlayer.druidCrit += 2;
 		}
 

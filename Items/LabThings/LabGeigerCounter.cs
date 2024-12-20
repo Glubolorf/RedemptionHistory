@@ -9,7 +9,7 @@ namespace Redemption.Items.LabThings
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("IO-Locator");
-			base.Tooltip.SetDefault("Points toward the Abandoned Lab");
+			base.Tooltip.SetDefault("Points toward the Abandoned Lab\nCURRENTLY BROKEN");
 		}
 
 		public override void SetDefaults()
@@ -23,7 +23,7 @@ namespace Redemption.Items.LabThings
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			player.GetModPlayer<GeigerEffect>(base.mod).effect = true;
+			player.GetModPlayer<GeigerEffect>().effect = true;
 		}
 	}
 }

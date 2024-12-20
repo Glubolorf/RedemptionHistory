@@ -37,7 +37,7 @@ namespace Redemption.NPCs
 
 		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
 		{
-			return !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).chickenPower;
+			return !Main.LocalPlayer.GetModPlayer<RedePlayer>().chickenPower;
 		}
 
 		public override void HitEffect(int hitDirection, double damage)

@@ -13,14 +13,14 @@ namespace Redemption.Items.Weapons
 		{
 			if (Main.netMode != 2)
 			{
-				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
 				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
 				{
-					array[i] = Main.glowMaskTexture[i];
+					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
-				TacticalBow.customGlowMask = (short)(array.Length - 1);
-				Main.glowMaskTexture = array;
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				TacticalBow.customGlowMask = (short)(glowMasks.Length - 1);
+				Main.glowMaskTexture = glowMasks;
 			}
 			base.item.glowMask = TacticalBow.customGlowMask;
 			base.DisplayName.SetDefault("Zombie Slayer's Tactical Bow");
@@ -33,8 +33,8 @@ namespace Redemption.Items.Weapons
 			base.item.ranged = true;
 			base.item.width = 36;
 			base.item.height = 60;
-			base.item.useTime = 42;
-			base.item.useAnimation = 42;
+			base.item.useTime = 60;
+			base.item.useAnimation = 60;
 			base.item.useStyle = 5;
 			base.item.noMelee = true;
 			base.item.knockBack = 0f;
@@ -59,24 +59,23 @@ namespace Redemption.Items.Weapons
 			{
 				type = base.mod.ProjectileType("TacticalArrowPro");
 			}
-			Vector2 vector = player.RotatedRelativePoint(player.MountedCenter, true);
-			float num = 0.31415927f;
-			int num2 = 6;
-			Vector2 vector2;
-			vector2..ctor(speedX, speedY);
-			vector2.Normalize();
-			vector2 *= 40f;
-			bool flag = Collision.CanHit(vector, 0, 0, vector + vector2, 0, 0);
-			for (int i = 0; i < num2; i++)
+			Vector2 vector2 = player.RotatedRelativePoint(player.MountedCenter, true);
+			float num117 = 0.31415927f;
+			int num118 = 6;
+			Vector2 vector3 = new Vector2(speedX, speedY);
+			vector3.Normalize();
+			vector3 *= 40f;
+			bool flag11 = Collision.CanHit(vector2, 0, 0, vector2 + vector3, 0, 0);
+			for (int num119 = 0; num119 < num118; num119++)
 			{
-				float num3 = (float)i - ((float)num2 - 1f) / 2f;
-				Vector2 vector3 = Utils.RotatedBy(vector2, (double)(num * num3), default(Vector2));
-				if (!flag)
+				float num120 = (float)num119 - ((float)num118 - 1f) / 2f;
+				Vector2 value9 = Utils.RotatedBy(vector3, (double)(num117 * num120), default(Vector2));
+				if (!flag11)
 				{
-					vector3 -= vector2;
+					value9 -= vector3;
 				}
-				int num4 = Projectile.NewProjectile(vector.X + vector3.X, vector.Y + vector3.Y, speedX, speedY, type, (int)((double)damage), knockBack, player.whoAmI, 0f, 0f);
-				Main.projectile[num4].noDropItem = true;
+				int num121 = Projectile.NewProjectile(vector2.X + value9.X, vector2.Y + value9.Y, speedX, speedY, type, (int)((double)damage), knockBack, player.whoAmI, 0f, 0f);
+				Main.projectile[num121].noDropItem = true;
 			}
 			Main.rand.Next(-25, 26);
 			Main.rand.Next(-25, 26);

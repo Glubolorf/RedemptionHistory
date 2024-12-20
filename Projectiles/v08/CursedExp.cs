@@ -29,18 +29,24 @@ namespace Redemption.Projectiles.v08
 
 		public override void AI()
 		{
-			if (++base.projectile.frameCounter >= 4)
+			Projectile projectile = base.projectile;
+			int num = projectile.frameCounter + 1;
+			projectile.frameCounter = num;
+			if (num >= 4)
 			{
 				base.projectile.frameCounter = 0;
-				if (++base.projectile.frame >= 6)
+				Projectile projectile2 = base.projectile;
+				num = projectile2.frame + 1;
+				projectile2.frame = num;
+				if (num >= 6)
 				{
 					base.projectile.Kill();
 				}
 			}
-			Projectile projectile = base.projectile;
-			projectile.velocity.X = projectile.velocity.X * 0f;
-			Projectile projectile2 = base.projectile;
-			projectile2.velocity.Y = projectile2.velocity.Y * 0f;
+			Projectile projectile3 = base.projectile;
+			projectile3.velocity.X = projectile3.velocity.X * 0f;
+			Projectile projectile4 = base.projectile;
+			projectile4.velocity.Y = projectile4.velocity.Y * 0f;
 		}
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

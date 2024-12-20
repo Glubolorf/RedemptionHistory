@@ -14,9 +14,9 @@ namespace Redemption.Tiles
 			Main.tileObsidianKill[(int)base.Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
 			TileObjectData.addTile((int)base.Type);
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Anglonic Mystic Blossom");
-			base.AddMapEntry(new Color(144, 148, 144), modTranslation);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Anglonic Mystic Blossom");
+			base.AddMapEntry(new Color(144, 148, 144), name);
 			this.disableSmartCursor = true;
 		}
 

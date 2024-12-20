@@ -15,8 +15,7 @@ namespace Redemption.Buffs
 
 		public override void Update(Player player, ref int buffIndex)
 		{
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.vendetta = true;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).vendetta = true;
 			player.thorns += 0.4f;
 		}
 	}

@@ -20,12 +20,19 @@ namespace Redemption.Items
 			base.item.height = 24;
 			base.item.rare = 11;
 			base.item.expert = true;
-			this.bossBagNPC = base.mod.NPCType("PatientZero");
 		}
 
 		public override bool CanRightClick()
 		{
 			return true;
+		}
+
+		public override int BossBagNPC
+		{
+			get
+			{
+				return base.mod.NPCType("PatientZero");
+			}
 		}
 
 		public override void OpenBossBag(Player player)
@@ -48,6 +55,7 @@ namespace Redemption.Items
 			}
 			player.QuickSpawnItem(base.mod.ItemType("MedicKit1"), 1);
 			player.QuickSpawnItem(base.mod.ItemType("BluePrints"), 1);
+			player.QuickSpawnItem(base.mod.ItemType("HeartOfInfection"), 1);
 		}
 	}
 }

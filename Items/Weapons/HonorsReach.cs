@@ -19,7 +19,7 @@ namespace Redemption.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 58;
+			base.item.damage = 45;
 			base.item.useStyle = 5;
 			base.item.useAnimation = 7;
 			base.item.useTime = 7;
@@ -30,7 +30,7 @@ namespace Redemption.Items.Weapons
 			base.item.scale = 1f;
 			base.item.rare = 11;
 			base.item.UseSound = SoundID.Item1;
-			base.item.shoot = base.mod.ProjectileType<HonorsReachPro>();
+			base.item.shoot = ModContent.ProjectileType<HonorsReachPro>();
 			base.item.value = Item.buyPrice(0, 20, 0, 0);
 			base.item.noMelee = true;
 			base.item.noUseGraphic = true;
@@ -49,8 +49,7 @@ namespace Redemption.Items.Weapons
 			Color transparent = Color.Transparent;
 			if (base.item.modItem != null && base.item.modItem.mod == ModLoader.GetMod("Redemption"))
 			{
-				TooltipLine tooltipLine = Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName"));
-				tooltipLine.overrideColor = new Color?(new Color(170, 0, 255));
+				Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName")).overrideColor = new Color?(new Color(170, 0, 255));
 			}
 		}
 

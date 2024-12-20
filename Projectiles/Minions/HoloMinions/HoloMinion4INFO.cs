@@ -13,53 +13,53 @@ namespace Redemption.Projectiles.Minions.HoloMinions
 		public override void Behavior()
 		{
 			Player player = Main.player[base.projectile.owner];
-			float num = (float)base.projectile.width * this.spacingMult;
+			float spacing = (float)base.projectile.width * this.spacingMult;
 			for (int i = 0; i < 1000; i++)
 			{
-				Projectile projectile = Main.projectile[i];
-				if (i != base.projectile.whoAmI && projectile.active && projectile.owner == base.projectile.owner && projectile.type == base.projectile.type && Math.Abs(base.projectile.position.X - projectile.position.X) + Math.Abs(base.projectile.position.Y - projectile.position.Y) < num)
+				Projectile otherProj = Main.projectile[i];
+				if (i != base.projectile.whoAmI && otherProj.active && otherProj.owner == base.projectile.owner && otherProj.type == base.projectile.type && Math.Abs(base.projectile.position.X - otherProj.position.X) + Math.Abs(base.projectile.position.Y - otherProj.position.Y) < spacing)
 				{
 					if (base.projectile.position.X < Main.projectile[i].position.X)
 					{
-						Projectile projectile2 = base.projectile;
-						projectile2.velocity.X = projectile2.velocity.X - this.idleAccel;
+						Projectile projectile = base.projectile;
+						projectile.velocity.X = projectile.velocity.X - this.idleAccel;
 					}
 					else
 					{
-						Projectile projectile3 = base.projectile;
-						projectile3.velocity.X = projectile3.velocity.X + this.idleAccel;
+						Projectile projectile2 = base.projectile;
+						projectile2.velocity.X = projectile2.velocity.X + this.idleAccel;
 					}
 					if (base.projectile.position.Y < Main.projectile[i].position.Y)
 					{
-						Projectile projectile4 = base.projectile;
-						projectile4.velocity.Y = projectile4.velocity.Y - this.idleAccel;
+						Projectile projectile3 = base.projectile;
+						projectile3.velocity.Y = projectile3.velocity.Y - this.idleAccel;
 					}
 					else
 					{
-						Projectile projectile5 = base.projectile;
-						projectile5.velocity.Y = projectile5.velocity.Y + this.idleAccel;
+						Projectile projectile4 = base.projectile;
+						projectile4.velocity.Y = projectile4.velocity.Y + this.idleAccel;
 					}
 				}
 			}
-			Vector2 vector = base.projectile.position;
-			float num2 = this.viewDist;
-			bool flag = false;
+			Vector2 targetPos = base.projectile.position;
+			float targetDist = this.viewDist;
+			bool target = false;
 			base.projectile.tileCollide = true;
 			for (int j = 0; j < 200; j++)
 			{
 				NPC npc = Main.npc[j];
 				if (npc.CanBeChasedBy(this, false))
 				{
-					float num3 = Vector2.Distance(npc.Center, base.projectile.Center);
-					if ((num3 < num2 || !flag) && Collision.CanHitLine(base.projectile.position, base.projectile.width, base.projectile.height, npc.position, npc.width, npc.height))
+					float distance = Vector2.Distance(npc.Center, base.projectile.Center);
+					if ((distance < targetDist || !target) && Collision.CanHitLine(base.projectile.position, base.projectile.width, base.projectile.height, npc.position, npc.width, npc.height))
 					{
-						num2 = num3;
-						vector = npc.Center;
-						flag = true;
+						targetDist = distance;
+						targetPos = npc.Center;
+						target = true;
 					}
 				}
 			}
-			if (Vector2.Distance(player.Center, base.projectile.Center) > (flag ? 1000f : 500f))
+			if (Vector2.Distance(player.Center, base.projectile.Center) > (target ? 1000f : 500f))
 			{
 				base.projectile.ai[0] = 1f;
 				base.projectile.netUpdate = true;
@@ -68,13 +68,13 @@ namespace Redemption.Projectiles.Minions.HoloMinions
 			{
 				base.projectile.tileCollide = false;
 			}
-			if (flag && base.projectile.ai[0] == 0f)
+			if (target && base.projectile.ai[0] == 0f)
 			{
-				Vector2 vector2 = vector - base.projectile.Center;
-				if (vector2.Length() > this.chaseDist)
+				Vector2 direction = targetPos - base.projectile.Center;
+				if (direction.Length() > this.chaseDist)
 				{
-					vector2.Normalize();
-					base.projectile.velocity = (base.projectile.velocity * this.inertia + vector2 * this.chaseAccel) / (this.inertia + 1f);
+					direction.Normalize();
+					base.projectile.velocity = (base.projectile.velocity * this.inertia + direction * this.chaseAccel) / (this.inertia + 1f);
 				}
 				else
 				{
@@ -87,45 +87,45 @@ namespace Redemption.Projectiles.Minions.HoloMinions
 				{
 					base.projectile.ai[0] = 1f;
 				}
-				float num4 = 6f;
+				float speed = 6f;
 				if (base.projectile.ai[0] == 1f)
 				{
-					num4 = 15f;
+					speed = 15f;
 				}
 				Vector2 center = base.projectile.Center;
-				Vector2 vector3 = player.Center - center;
+				Vector2 direction2 = player.Center - center;
 				base.projectile.ai[1] = 3600f;
 				base.projectile.netUpdate = true;
-				int num5 = 1;
+				int num = 1;
 				for (int k = 0; k < base.projectile.whoAmI; k++)
 				{
 					if (Main.projectile[k].active && Main.projectile[k].owner == base.projectile.owner && Main.projectile[k].type == base.projectile.type)
 					{
-						num5++;
+						num++;
 					}
 				}
-				vector3.X -= (float)((10 + num5 * 40) * player.direction);
-				vector3.Y -= 70f;
-				float num6 = vector3.Length();
-				if (num6 > 200f && num4 < 9f)
+				direction2.X -= (float)((10 + num * 40) * player.direction);
+				direction2.Y -= 70f;
+				float num2 = direction2.Length();
+				if (num2 > 200f && speed < 9f)
 				{
-					num4 = 9f;
+					speed = 9f;
 				}
-				if (num6 < 100f && base.projectile.ai[0] == 1f && !Collision.SolidCollision(base.projectile.position, base.projectile.width, base.projectile.height))
+				if (num2 < 100f && base.projectile.ai[0] == 1f && !Collision.SolidCollision(base.projectile.position, base.projectile.width, base.projectile.height))
 				{
 					base.projectile.ai[0] = 0f;
 					base.projectile.netUpdate = true;
 				}
-				if (num6 > 2000f)
+				if (num2 > 2000f)
 				{
 					base.projectile.Center = player.Center;
 				}
-				if (num6 > 48f)
+				if (num2 > 48f)
 				{
-					vector3.Normalize();
-					vector3 *= num4;
-					float num7 = this.inertia / 2f;
-					base.projectile.velocity = (base.projectile.velocity * num7 + vector3) / (num7 + 1f);
+					direction2.Normalize();
+					direction2 *= speed;
+					float temp = this.inertia / 2f;
+					base.projectile.velocity = (base.projectile.velocity * temp + direction2) / (temp + 1f);
 				}
 				else
 				{
@@ -157,13 +157,13 @@ namespace Redemption.Projectiles.Minions.HoloMinions
 				base.projectile.ai[1] = 0f;
 				base.projectile.netUpdate = true;
 			}
-			if (base.projectile.ai[0] == 0f && flag)
+			if (base.projectile.ai[0] == 0f && target)
 			{
-				if ((vector - base.projectile.Center).X > 0f)
+				if ((targetPos - base.projectile.Center).X > 0f)
 				{
 					base.projectile.spriteDirection = (base.projectile.direction = -1);
 				}
-				else if ((vector - base.projectile.Center).X < 0f)
+				else if ((targetPos - base.projectile.Center).X < 0f)
 				{
 					base.projectile.spriteDirection = (base.projectile.direction = 1);
 				}
@@ -172,16 +172,16 @@ namespace Redemption.Projectiles.Minions.HoloMinions
 					base.projectile.ai[1] = 1f;
 					if (Main.myPlayer == base.projectile.owner)
 					{
-						Vector2 vector4 = vector - base.projectile.Center;
-						if (vector4 == Vector2.Zero)
+						Vector2 shootVel = targetPos - base.projectile.Center;
+						if (shootVel == Vector2.Zero)
 						{
-							vector4..ctor(0f, 1f);
+							shootVel = new Vector2(0f, 1f);
 						}
-						vector4.Normalize();
-						vector4 *= this.shootSpeed;
-						int num8 = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, vector4.X, vector4.Y, this.shoot, base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
-						Main.projectile[num8].timeLeft = 300;
-						Main.projectile[num8].netUpdate = true;
+						shootVel.Normalize();
+						shootVel *= this.shootSpeed;
+						int proj = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, shootVel.X, shootVel.Y, this.shoot, base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
+						Main.projectile[proj].timeLeft = 300;
+						Main.projectile[proj].netUpdate = true;
 						base.projectile.netUpdate = true;
 					}
 				}

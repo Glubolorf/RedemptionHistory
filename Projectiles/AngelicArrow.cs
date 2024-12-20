@@ -27,17 +27,23 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			if (++base.projectile.frameCounter >= 10)
+			Projectile projectile = base.projectile;
+			int num = projectile.frameCounter + 1;
+			projectile.frameCounter = num;
+			if (num >= 10)
 			{
 				base.projectile.frameCounter = 0;
-				if (++base.projectile.frame >= 2)
+				Projectile projectile2 = base.projectile;
+				num = projectile2.frame + 1;
+				projectile2.frame = num;
+				if (num >= 2)
 				{
 					base.projectile.frame = 0;
 				}
 			}
-			int num = Dust.NewDust(new Vector2(base.projectile.Center.X - 4f, base.projectile.Center.Y - 6f), 1, 1, 90, 0f, 0f, 0, default(Color), 1f);
-			Main.dust[num].noGravity = true;
-			Dust dust = Main.dust[num];
+			int Dust = Dust.NewDust(new Vector2(base.projectile.Center.X - 4f, base.projectile.Center.Y - 6f), 1, 1, 90, 0f, 0f, 0, default(Color), 1f);
+			Main.dust[Dust].noGravity = true;
+			Dust dust = Main.dust[Dust];
 			dust.velocity.X = 0f;
 			dust.velocity.Y = 0f;
 			base.projectile.localAI[0] += 1f;
@@ -47,27 +53,27 @@ namespace Redemption.Projectiles
 				this.AdjustMagnitude(ref base.projectile.velocity);
 				base.projectile.localAI[0] = 1f;
 			}
-			Vector2 vector = Vector2.Zero;
-			float num2 = 400f;
-			bool flag = false;
+			Vector2 move = Vector2.Zero;
+			float distance = 400f;
+			bool target = false;
 			for (int i = 0; i < 200; i++)
 			{
 				if (Main.npc[i].active && !Main.npc[i].dontTakeDamage && !Main.npc[i].friendly && Main.npc[i].lifeMax > 5)
 				{
-					Vector2 vector2 = Main.npc[i].Center - base.projectile.Center;
-					float num3 = (float)Math.Sqrt((double)(vector2.X * vector2.X + vector2.Y * vector2.Y));
-					if (num3 < num2)
+					Vector2 newMove = Main.npc[i].Center - base.projectile.Center;
+					float distanceTo = (float)Math.Sqrt((double)(newMove.X * newMove.X + newMove.Y * newMove.Y));
+					if (distanceTo < distance)
 					{
-						vector = vector2;
-						num2 = num3;
-						flag = true;
+						move = newMove;
+						distance = distanceTo;
+						target = true;
 					}
 				}
 			}
-			if (flag)
+			if (target)
 			{
-				this.AdjustMagnitude(ref vector);
-				base.projectile.velocity = (18f * base.projectile.velocity + vector) / 11f;
+				this.AdjustMagnitude(ref move);
+				base.projectile.velocity = (18f * base.projectile.velocity + move) / 11f;
 				this.AdjustMagnitude(ref base.projectile.velocity);
 			}
 		}
@@ -87,20 +93,20 @@ namespace Redemption.Projectiles
 
 		private void AdjustMagnitude(ref Vector2 vector)
 		{
-			float num = (float)Math.Sqrt((double)(vector.X * vector.X + vector.Y * vector.Y));
-			if (num > 7f)
+			float magnitude = (float)Math.Sqrt((double)(vector.X * vector.X + vector.Y * vector.Y));
+			if (magnitude > 7f)
 			{
-				vector *= 7f / num;
+				vector *= 7f / magnitude;
 			}
 		}
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
 			Player player = Main.player[base.projectile.owner];
-			int crit2 = player.HeldItem.crit;
-			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref crit2);
-			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref crit2);
-			if (crit2 >= 100 || Main.rand.Next(1, 101) <= crit2)
+			int critChance = player.HeldItem.crit;
+			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref critChance);
+			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref critChance);
+			if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
 			{
 				crit = true;
 			}

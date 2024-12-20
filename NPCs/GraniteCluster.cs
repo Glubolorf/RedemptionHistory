@@ -111,13 +111,13 @@ namespace Redemption.NPCs
 			}
 			if (Main.rand.Next(50) == 0)
 			{
-				int num = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 357, 15, 3f, 255, 0f, 0f);
-				Main.projectile[num].netUpdate = true;
+				int p = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 357, 15, 3f, 255, 0f, 0f);
+				Main.projectile[p].netUpdate = true;
 			}
 			if (Main.rand.Next(50) == 0)
 			{
-				int num2 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 435, 15, 3f, 255, 0f, 0f);
-				Main.projectile[num2].netUpdate = true;
+				int p2 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 435, 15, 3f, 255, 0f, 0f);
+				Main.projectile[p2].netUpdate = true;
 			}
 		}
 
@@ -136,20 +136,19 @@ namespace Redemption.NPCs
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/GraniteClusterShield");
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D shieldAni = base.mod.GetTexture("NPCs/GraniteClusterShield");
 			int spriteDirection = base.npc.spriteDirection;
 			if (!this.shieldUp)
 			{
-				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.shieldUp)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num = texture.Height / 7;
-				int num2 = num * this.shieldFrame;
-				Main.spriteBatch.Draw(texture, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num214 = shieldAni.Height / 7;
+				int y6 = num214 * this.shieldFrame;
+				Main.spriteBatch.Draw(shieldAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, shieldAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)shieldAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
 		}

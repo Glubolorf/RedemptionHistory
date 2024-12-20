@@ -18,10 +18,10 @@ namespace Redemption.Buffs
 
 		public override void Update(Player player, ref int buffIndex)
 		{
-			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
-			if (modPlayer.omegaAccessoryPrevious)
+			RedePlayer p = player.GetModPlayer<RedePlayer>();
+			if (p.omegaAccessoryPrevious)
 			{
-				modPlayer.omegaPower = true;
+				p.omegaPower = true;
 				return;
 			}
 			player.DelBuff(buffIndex);

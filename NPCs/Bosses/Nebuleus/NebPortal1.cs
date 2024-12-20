@@ -33,67 +33,67 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 			if (base.projectile.localAI[0] == 60f)
 			{
 				Main.PlaySound(SoundID.Item8, base.projectile.position);
-				int num = 62;
-				int num2 = 16;
-				for (int i = 0; i < num2; i++)
+				int dustType = 62;
+				int pieCut = 16;
+				for (int i = 0; i < pieCut; i++)
 				{
-					int num3 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num, 0f, 0f, 100, Color.White, 1.6f);
-					Main.dust[num3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(8f, 0f), (float)i / (float)num2 * 6.28f);
-					Main.dust[num3].noLight = false;
-					Main.dust[num3].noGravity = true;
+					int dustID = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 1.6f);
+					Main.dust[dustID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(8f, 0f), (float)i / (float)pieCut * 6.28f);
+					Main.dust[dustID].noLight = false;
+					Main.dust[dustID].noGravity = true;
 				}
-				int num4 = Main.rand.Next(4);
-				if (num4 == 0 && Main.netMode != 1)
+				int num = Main.rand.Next(4);
+				if (num == 0 && Main.netMode != 1)
 				{
-					int num5 = NPC.NewNPC((int)base.projectile.Center.X, (int)base.projectile.Center.Y, 420, 0, 0f, 0f, 0f, 0f, 255);
-					Main.npc[num5].lifeMax = 4000;
-					Main.npc[num5].life = 4000;
+					int j = NPC.NewNPC((int)base.projectile.Center.X, (int)base.projectile.Center.Y, 420, 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[j].lifeMax = 4000;
+					Main.npc[j].life = 4000;
 					if (Main.netMode == 2)
 					{
-						NetMessage.SendData(23, -1, -1, null, num5, 0f, 0f, 0f, 0, 0, 0);
+						NetMessage.SendData(23, -1, -1, null, j, 0f, 0f, 0f, 0, 0, 0);
 					}
 				}
-				if (num4 == 1 && Main.netMode != 1)
+				if (num == 1 && Main.netMode != 1)
 				{
-					int num6 = NPC.NewNPC((int)base.projectile.Center.X, (int)base.projectile.Center.Y, 421, 0, 0f, 0f, 0f, 0f, 255);
-					Main.npc[num6].lifeMax = 4000;
-					Main.npc[num6].life = 4000;
+					int k = NPC.NewNPC((int)base.projectile.Center.X, (int)base.projectile.Center.Y, 421, 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[k].lifeMax = 4000;
+					Main.npc[k].life = 4000;
 					if (Main.netMode == 2)
 					{
-						NetMessage.SendData(23, -1, -1, null, num6, 0f, 0f, 0f, 0, 0, 0);
+						NetMessage.SendData(23, -1, -1, null, k, 0f, 0f, 0f, 0, 0, 0);
 					}
 				}
-				if (num4 == 2 && Main.netMode != 1)
+				if (num == 2 && Main.netMode != 1)
 				{
-					int num7 = NPC.NewNPC((int)base.projectile.Center.X, (int)base.projectile.Center.Y, 423, 0, 0f, 0f, 0f, 0f, 255);
-					Main.npc[num7].lifeMax = 4000;
-					Main.npc[num7].life = 4000;
+					int l = NPC.NewNPC((int)base.projectile.Center.X, (int)base.projectile.Center.Y, 423, 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[l].lifeMax = 4000;
+					Main.npc[l].life = 4000;
 					if (Main.netMode == 2)
 					{
-						NetMessage.SendData(23, -1, -1, null, num7, 0f, 0f, 0f, 0, 0, 0);
+						NetMessage.SendData(23, -1, -1, null, l, 0f, 0f, 0f, 0, 0, 0);
 					}
 				}
-				if (num4 == 3 && Main.netMode != 1)
+				if (num == 3 && Main.netMode != 1)
 				{
-					int num8 = NPC.NewNPC((int)base.projectile.Center.X, (int)base.projectile.Center.Y, 421, 0, 0f, 0f, 0f, 0f, 255);
-					Main.npc[num8].lifeMax = 4000;
-					Main.npc[num8].life = 4000;
+					int m = NPC.NewNPC((int)base.projectile.Center.X, (int)base.projectile.Center.Y, 421, 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[m].lifeMax = 4000;
+					Main.npc[m].life = 4000;
 					if (Main.netMode == 2)
 					{
-						NetMessage.SendData(23, -1, -1, null, num8, 0f, 0f, 0f, 0, 0, 0);
+						NetMessage.SendData(23, -1, -1, null, m, 0f, 0f, 0f, 0, 0, 0);
 					}
 				}
 			}
 			if (base.projectile.localAI[0] >= 120f)
 			{
-				int num9 = 62;
-				int num10 = 16;
-				for (int j = 0; j < num10; j++)
+				int dustType2 = 62;
+				int pieCut2 = 16;
+				for (int n = 0; n < pieCut2; n++)
 				{
-					int num11 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num9, 0f, 0f, 100, Color.White, 2f);
-					Main.dust[num11].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)j / (float)num10 * 6.28f);
-					Main.dust[num11].noLight = false;
-					Main.dust[num11].noGravity = true;
+					int dustID2 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType2, 0f, 0f, 100, Color.White, 2f);
+					Main.dust[dustID2].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)n / (float)pieCut2 * 6.28f);
+					Main.dust[dustID2].noLight = false;
+					Main.dust[dustID2].noGravity = true;
 				}
 				base.projectile.Kill();
 			}
@@ -101,14 +101,14 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 
 		public override void Kill(int timeLeft)
 		{
-			int num = 62;
-			int num2 = 20;
-			for (int i = 0; i < num2; i++)
+			int dustType = 62;
+			int pieCut = 18;
+			for (int i = 0; i < pieCut; i++)
 			{
-				int num3 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num, 0f, 0f, 100, Color.White, 2f);
-				Main.dust[num3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)i / (float)num2 * 6.28f);
-				Main.dust[num3].noLight = false;
-				Main.dust[num3].noGravity = true;
+				int dustID = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 2f);
+				Main.dust[dustID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)i / (float)pieCut * 6.28f);
+				Main.dust[dustID].noLight = false;
+				Main.dust[dustID].noGravity = true;
 			}
 		}
 	}

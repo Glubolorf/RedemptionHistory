@@ -41,8 +41,8 @@ namespace Redemption.NPCs.LabNPCs
 			{
 				for (int i = 0; i < 50; i++)
 				{
-					int num = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 273, 0f, 0f, 100, default(Color), 1.2f);
-					Main.dust[num].velocity *= 1.9f;
+					int dustIndex = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 273, 0f, 0f, 100, default(Color), 1.2f);
+					Main.dust[dustIndex].velocity *= 1.9f;
 				}
 			}
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 273, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
@@ -84,13 +84,11 @@ namespace Redemption.NPCs.LabNPCs
 			base.npc.ai[0] += 1f;
 			if (base.npc.ai[0] == 1f && Main.netMode != 1)
 			{
-				Vector2 vector;
-				vector..ctor(-30f, -15f);
-				base.npc.Center = base.npc.position + vector;
+				Vector2 newPos = new Vector2(-30f, -15f);
+				base.npc.Center = base.npc.position + newPos;
 				base.npc.netUpdate = true;
 			}
-			float num = base.npc.Distance(Main.player[base.npc.target].Center);
-			if (num <= 300f && Main.rand.Next(100) == 0 && !this.sludgeAttack)
+			if (base.npc.Distance(Main.player[base.npc.target].Center) <= 300f && Main.rand.Next(100) == 0 && !this.sludgeAttack)
 			{
 				this.sludgeAttack = true;
 			}
@@ -108,14 +106,14 @@ namespace Redemption.NPCs.LabNPCs
 					if (base.npc.direction == -1)
 					{
 						Main.PlaySound(SoundID.Item7, (int)base.npc.position.X, (int)base.npc.position.Y);
-						int num2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 42f, base.npc.position.Y + 24f), new Vector2((float)(-6 + Main.rand.Next(-6, 0)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("GloopBallPro1"), 40, 3f, 255, 0f, 0f);
-						Main.projectile[num2].netUpdate = true;
+						int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 42f, base.npc.position.Y + 24f), new Vector2((float)(-6 + Main.rand.Next(-6, 0)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("GloopBallPro1"), 40, 3f, 255, 0f, 0f);
+						Main.projectile[p].netUpdate = true;
 					}
 					else
 					{
 						Main.PlaySound(SoundID.Item7, (int)base.npc.position.X, (int)base.npc.position.Y);
-						int num3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 12f, base.npc.position.Y + 24f), new Vector2((float)(6 + Main.rand.Next(0, 6)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("GloopBallPro1"), 40, 3f, 255, 0f, 0f);
-						Main.projectile[num3].netUpdate = true;
+						int p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 12f, base.npc.position.Y + 24f), new Vector2((float)(6 + Main.rand.Next(0, 6)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("GloopBallPro1"), 40, 3f, 255, 0f, 0f);
+						Main.projectile[p2].netUpdate = true;
 					}
 				}
 				if (base.npc.ai[1] >= 30f)
@@ -130,20 +128,19 @@ namespace Redemption.NPCs.LabNPCs
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/LabNPCs/Stage2ScientistBossNYEH");
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D throwAni = base.mod.GetTexture("NPCs/LabNPCs/Stage2ScientistBossNYEH");
 			int spriteDirection = base.npc.spriteDirection;
 			if (!this.sludgeAttack)
 			{
-				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.sludgeAttack)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num = texture.Height / 6;
-				int num2 = num * this.throwFrame;
-				Main.spriteBatch.Draw(texture, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num214 = throwAni.Height / 6;
+				int y6 = num214 * this.throwFrame;
+				Main.spriteBatch.Draw(throwAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, throwAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)throwAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
 		}

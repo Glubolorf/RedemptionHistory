@@ -34,16 +34,16 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.autoReuse = true;
 			base.item.UseSound = SoundID.Item1;
 			base.item.value = Item.sellPrice(0, 25, 0, 0);
-			base.item.shoot = base.mod.ProjectileType<DruidDagger2Pro>();
+			base.item.shoot = ModContent.ProjectileType<DruidDagger2Pro>();
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			int num = 4 + Main.rand.Next(4);
-			for (int i = 0; i < num; i++)
+			int numberProjectiles = 4 + Main.rand.Next(2);
+			for (int i = 0; i < numberProjectiles; i++)
 			{
-				Vector2 vector = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(45f));
-				Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
+				Vector2 perturbedSpeed = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(45f));
+				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
 			}
 			return false;
 		}

@@ -8,7 +8,7 @@ namespace Redemption.Items.Placeable
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Dead Rock");
+			base.DisplayName.SetDefault("Irradiated Stone");
 		}
 
 		public override void SetDefaults()

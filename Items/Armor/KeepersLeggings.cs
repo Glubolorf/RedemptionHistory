@@ -13,7 +13,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Leggings of the Fallen");
-			base.Tooltip.SetDefault("Increases movement speed by 10%\nImmune to fall damage");
+			base.Tooltip.SetDefault("Increases movement speed by 10%");
 		}
 
 		public override void SetDefaults()
@@ -22,13 +22,12 @@ namespace Redemption.Items.Armor
 			base.item.height = 18;
 			base.item.value = Item.sellPrice(0, 0, 75, 0);
 			base.item.rare = 3;
-			base.item.defense = 5;
+			base.item.defense = 4;
 		}
 
 		public override void UpdateEquip(Player player)
 		{
 			player.moveSpeed += 1.1f;
-			player.noFallDmg = true;
 		}
 
 		public override void AddRecipes()

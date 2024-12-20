@@ -19,8 +19,7 @@ namespace Redemption.Tiles
 			this.minPick = 0;
 			this.mineResist = 1f;
 			this.soundType = 6;
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Plant Matter");
+			base.CreateMapEntryName(null).SetDefault("Plant Matter");
 			base.AddMapEntry(new Color(60, 200, 60), null);
 		}
 

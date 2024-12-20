@@ -95,8 +95,8 @@ namespace Redemption.NPCs.ChickenInvasion
 					}
 					for (int i = 0; i < 8; i++)
 					{
-						int num = NPC.NewNPC((int)player.position.X + Main.rand.Next(-200, 200), (int)player.position.Y + Main.rand.Next(-200, 200) - 1000, base.mod.NPCType("ChickenSwarmer"), 0, 0f, 0f, 0f, 0f, 255);
-						Main.npc[num].netUpdate = true;
+						int Minion = NPC.NewNPC((int)player.position.X + Main.rand.Next(-200, 200), (int)player.position.Y + Main.rand.Next(-200, 200) - 1000, base.mod.NPCType("ChickenSwarmer"), 0, 0f, 0f, 0f, 0f, 255);
+						Main.npc[Minion].netUpdate = true;
 					}
 				}
 				if (this.roarTimer2 >= 180)
@@ -136,20 +136,19 @@ namespace Redemption.NPCs.ChickenInvasion
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/ChickenInvasion/RoosterKingRoar");
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D attackAni = base.mod.GetTexture("NPCs/ChickenInvasion/RoosterKingRoar");
 			int spriteDirection = base.npc.spriteDirection;
 			if (!this.roar)
 			{
-				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.roar)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num = texture.Height / 1;
-				int num2 = num * this.roarFrame;
-				Main.spriteBatch.Draw(texture, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num214 = attackAni.Height / 1;
+				int y6 = num214 * this.roarFrame;
+				Main.spriteBatch.Draw(attackAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, attackAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)attackAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
 		}
@@ -166,8 +165,8 @@ namespace Redemption.NPCs.ChickenInvasion
 			{
 				for (int i = 0; i < 15; i++)
 				{
-					int num = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 5, 0f, 0f, 100, default(Color), 1.2f);
-					Main.dust[num].velocity *= 1.8f;
+					int dustIndex = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 5, 0f, 0f, 100, default(Color), 1.2f);
+					Main.dust[dustIndex].velocity *= 1.8f;
 				}
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/RoosterKingGore1"), 1f);
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/v08/RoosterKingGore2"), 1f);

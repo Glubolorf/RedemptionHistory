@@ -20,12 +20,19 @@ namespace Redemption.Items
 			base.item.height = 32;
 			base.item.rare = 9;
 			base.item.expert = true;
-			this.bossBagNPC = base.mod.NPCType("KSEntrance");
 		}
 
 		public override bool CanRightClick()
 		{
 			return true;
+		}
+
+		public override int BossBagNPC
+		{
+			get
+			{
+				return base.mod.NPCType("KSEntrance");
+			}
 		}
 
 		public override void OpenBossBag(Player player)
@@ -53,7 +60,9 @@ namespace Redemption.Items
 			}
 			player.QuickSpawnItem(base.mod.ItemType("KingCore"), 1);
 			player.QuickSpawnItem(base.mod.ItemType("SlayerMedal"), 1);
+			player.QuickSpawnItem(base.mod.ItemType("Holokey"), 1);
 			player.QuickSpawnItem(base.mod.ItemType("CyberPlating"), Main.rand.Next(12, 16));
+			player.QuickSpawnItem(base.mod.ItemType("PocketShieldProjector"), 1);
 		}
 	}
 }

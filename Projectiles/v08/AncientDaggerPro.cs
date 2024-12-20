@@ -28,10 +28,16 @@ namespace Redemption.Projectiles.v08
 
 		public override void AI()
 		{
-			if (++base.projectile.frameCounter >= 3)
+			Projectile projectile = base.projectile;
+			int num = projectile.frameCounter + 1;
+			projectile.frameCounter = num;
+			if (num >= 3)
 			{
 				base.projectile.frameCounter = 0;
-				if (++base.projectile.frame >= 2)
+				Projectile projectile2 = base.projectile;
+				num = projectile2.frame + 1;
+				projectile2.frame = num;
+				if (num >= 2)
 				{
 					base.projectile.frame = 0;
 				}
@@ -42,14 +48,14 @@ namespace Redemption.Projectiles.v08
 			base.projectile.alpha += 4;
 			if (base.projectile.localAI[0] == 1f)
 			{
-				int num = 6;
-				int num2 = 16;
-				for (int i = 0; i < num2; i++)
+				int dustType = 6;
+				int pieCut = 16;
+				for (int i = 0; i < pieCut; i++)
 				{
-					int num3 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num, 0f, 0f, 100, Color.White, 2f);
-					Main.dust[num3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)num2 * 6.28f);
-					Main.dust[num3].noLight = false;
-					Main.dust[num3].noGravity = true;
+					int dustID = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 2f);
+					Main.dust[dustID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)pieCut * 6.28f);
+					Main.dust[dustID].noLight = false;
+					Main.dust[dustID].noGravity = true;
 				}
 			}
 			if (base.projectile.alpha >= 255)

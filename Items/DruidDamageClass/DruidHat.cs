@@ -27,8 +27,7 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override void UpdateEquip(Player player)
 		{
-			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
-			druidDamagePlayer.druidDamage += 0.15f;
+			DruidDamagePlayer.ModPlayer(player).druidDamage += 0.15f;
 		}
 
 		public override bool DrawHead()

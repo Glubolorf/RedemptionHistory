@@ -41,10 +41,16 @@ namespace Redemption.Projectiles.v08
 			{
 				base.projectile.spriteDirection = -1;
 			}
-			if (++base.projectile.frameCounter >= 10)
+			Projectile projectile = base.projectile;
+			int num = projectile.frameCounter + 1;
+			projectile.frameCounter = num;
+			if (num >= 10)
 			{
 				base.projectile.frameCounter = 0;
-				if (++base.projectile.frame >= 4)
+				Projectile projectile2 = base.projectile;
+				num = projectile2.frame + 1;
+				projectile2.frame = num;
+				if (num >= 4)
 				{
 					base.projectile.frame = 0;
 				}

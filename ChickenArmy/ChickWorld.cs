@@ -50,7 +50,7 @@ namespace Redemption.ChickenArmy
 			}
 		}
 
-		public static int ChickPoints = 0;
+		public static int ChickPoints;
 
 		public static int ChickPoints2;
 

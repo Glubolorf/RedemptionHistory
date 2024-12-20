@@ -33,8 +33,8 @@ namespace Redemption.Projectiles
 				Main.PlaySound(2, (int)base.projectile.position.X, (int)base.projectile.position.Y, 20, 1f, 0f);
 				base.projectile.localAI[0] = 1f;
 			}
-			int num = Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, 74, 0f, 0f, 100, Color.White, 1.6f);
-			Main.dust[num].velocity /= 2f;
+			int dust = Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, 74, 0f, 0f, 100, Color.White, 1.6f);
+			Main.dust[dust].velocity /= 2f;
 		}
 	}
 }

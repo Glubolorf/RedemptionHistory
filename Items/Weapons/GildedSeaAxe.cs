@@ -19,8 +19,8 @@ namespace Redemption.Items.Weapons
 			base.item.melee = true;
 			base.item.width = 52;
 			base.item.height = 46;
-			base.item.useTime = 6;
-			base.item.axe = 5;
+			base.item.useTime = 9;
+			base.item.axe = 7;
 			base.item.useAnimation = 26;
 			base.item.useStyle = 1;
 			base.item.knockBack = 5f;

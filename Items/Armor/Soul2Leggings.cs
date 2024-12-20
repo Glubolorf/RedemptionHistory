@@ -28,8 +28,7 @@ namespace Redemption.Items.Armor
 
 		public override void UpdateEquip(Player player)
 		{
-			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
-			druidDamagePlayer.druidDamage += 0.02f;
+			DruidDamagePlayer.ModPlayer(player).druidDamage += 0.02f;
 			player.endurance += 0.03f;
 			player.slowFall = true;
 			player.moveSpeed += 0.5f;

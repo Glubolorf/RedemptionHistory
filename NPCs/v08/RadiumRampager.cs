@@ -50,8 +50,8 @@ namespace Redemption.NPCs.v08
 					base.npc.frame.Y = 0;
 				}
 			}
-			Vector2 vector = Main.player[base.npc.target].Center - base.npc.Center;
-			if (vector.X > 0f)
+			Vector2 delta = Main.player[base.npc.target].Center - base.npc.Center;
+			if (delta.X > 0f)
 			{
 				base.npc.spriteDirection = 1;
 			}
@@ -59,25 +59,25 @@ namespace Redemption.NPCs.v08
 			{
 				base.npc.spriteDirection = -1;
 			}
-			if (Math.Abs(vector.X) > 300f)
+			if (Math.Abs(delta.X) > 300f)
 			{
 				this.dash = 1;
 			}
-			if (Math.Abs(vector.X) < 40f)
+			if (Math.Abs(delta.X) < 40f)
 			{
 				this.dash = 0;
 			}
-			if (vector.Y < -500f)
+			if (delta.Y < -500f)
 			{
 				this.jump = 1;
 			}
-			if (vector.Y > 0f)
+			if (delta.Y > 0f)
 			{
 				this.jump = 0;
 			}
 			if (this.dash == 1)
 			{
-				if (vector.X > 2f)
+				if (delta.X > 2f)
 				{
 					base.npc.velocity.X = this.dashSp;
 					if (this.jump == 1)
@@ -85,7 +85,7 @@ namespace Redemption.NPCs.v08
 						base.npc.velocity.Y = -8f;
 					}
 				}
-				if (vector.X < -2f)
+				if (delta.X < -2f)
 				{
 					base.npc.velocity.X = -this.dashSp;
 					if (this.jump == 1)
@@ -97,7 +97,7 @@ namespace Redemption.NPCs.v08
 			}
 			else if (this.jump == 1)
 			{
-				if (vector.X > 2f)
+				if (delta.X > 2f)
 				{
 					if (base.npc.velocity.X < 2f)
 					{
@@ -105,7 +105,7 @@ namespace Redemption.NPCs.v08
 					}
 					base.npc.velocity.Y = -8f;
 				}
-				if (vector.X < -2f)
+				if (delta.X < -2f)
 				{
 					if (base.npc.velocity.X > -2f)
 					{

@@ -13,7 +13,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Shining Hikarite Breastplate");
-			base.Tooltip.SetDefault("12% increased magic and summon damage\n4% increased magic crit");
+			base.Tooltip.SetDefault("12% increased magic and minion damage\n4% increased magic crit");
 		}
 
 		public override void SetDefaults()

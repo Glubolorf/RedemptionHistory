@@ -18,12 +18,12 @@ namespace Redemption.Buffs
 
 		public override void Update(Player player, ref int buffIndex)
 		{
-			player.GetModPlayer<RedePlayer>(base.mod).sandDust = true;
+			player.GetModPlayer<RedePlayer>().sandDust = true;
 		}
 
 		public override void Update(NPC npc, ref int buffIndex)
 		{
-			npc.GetGlobalNPC<RedeGlobalNPC>(base.mod).sandDust = true;
+			npc.GetGlobalNPC<RedeGlobalNPC>().sandDust = true;
 		}
 	}
 }

@@ -44,10 +44,10 @@ namespace Redemption.Projectiles.v08
 				string text = "*cluck cluck* What, You egg? *cluck cluck*";
 				Color rarityOrange = Colors.RarityOrange;
 				byte r = rarityOrange.R;
-				Color rarityOrange2 = Colors.RarityOrange;
-				byte g = rarityOrange2.G;
-				Color rarityOrange3 = Colors.RarityOrange;
-				Main.NewText(text, r, g, rarityOrange3.B, false);
+				rarityOrange = Colors.RarityOrange;
+				byte g = rarityOrange.G;
+				rarityOrange = Colors.RarityOrange;
+				Main.NewText(text, r, g, rarityOrange.B, false);
 			}
 			if (target.type == base.mod.NPCType("VlitchCleaver") && target.life <= 0)
 			{
@@ -67,18 +67,18 @@ namespace Redemption.Projectiles.v08
 			{
 				if (Main.rand.Next(4) == 0)
 				{
-					int num = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, base.mod.NPCType("LongChicken"), 0, 0f, 0f, 0f, 0f, 255);
+					int i = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, base.mod.NPCType("LongChicken"), 0, 0f, 0f, 0f, 0f, 255);
 					if (Main.netMode == 2)
 					{
-						NetMessage.SendData(23, -1, -1, null, num, 0f, 0f, 0f, 0, 0, 0);
+						NetMessage.SendData(23, -1, -1, null, i, 0f, 0f, 0f, 0, 0, 0);
 					}
 				}
 				if (Main.rand.Next(999) == 0)
 				{
-					int num2 = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, base.mod.NPCType("RainbowChicken"), 0, 0f, 0f, 0f, 0f, 255);
+					int j = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, base.mod.NPCType("RainbowChicken"), 0, 0f, 0f, 0f, 0f, 255);
 					if (Main.netMode == 2)
 					{
-						NetMessage.SendData(23, -1, -1, null, num2, 0f, 0f, 0f, 0, 0, 0);
+						NetMessage.SendData(23, -1, -1, null, j, 0f, 0f, 0f, 0, 0, 0);
 					}
 				}
 			}

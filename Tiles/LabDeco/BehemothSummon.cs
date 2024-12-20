@@ -35,7 +35,7 @@ namespace Redemption.Tiles.LabDeco
 			this.animationFrameHeight = 36;
 		}
 
-		public override void RightClick(int i, int j)
+		public override bool NewRightClick(int i, int j)
 		{
 			if (Main.netMode == 0)
 			{
@@ -44,21 +44,21 @@ namespace Redemption.Tiles.LabDeco
 					Main.tile[i, j];
 					i *= 16;
 					j *= 16;
-					int num = NPC.NewNPC(i + 1, j + 1, base.mod.NPCType("IrradiatedBehemoth"), 0, 0f, 0f, 0f, 0f, 255);
+					int k = NPC.NewNPC(i + 1, j + 1, base.mod.NPCType("IrradiatedBehemoth"), 0, 0f, 0f, 0f, 0f, 255);
 					if (Main.netMode == 2)
 					{
-						NetMessage.SendData(23, -1, -1, null, num, 0f, 0f, 0f, 0, 0, 0);
-						return;
+						NetMessage.SendData(23, -1, -1, null, k, 0f, 0f, 0f, 0, 0, 0);
 					}
 				}
 			}
 			else if (!NPC.AnyNPCs(base.mod.NPCType("IrradiatedBehemoth")) && RedeWorld.downedStage2Scientist && RedeWorld.downedStage3Scientist && (!RedeWorld.labAccess3 || RedeWorld.downedPatientZero))
 			{
 				ModPacket packet = base.mod.GetPacket(256);
-				packet.Write(2);
+				packet.Write(3);
 				Utils.WriteVector2(packet, new Vector2((float)(i * 16), (float)(j * 16)));
 				packet.Send(-1, -1);
 			}
+			return true;
 		}
 
 		public override bool CanKillTile(int i, int j, ref bool blockDamaged)

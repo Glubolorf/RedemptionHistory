@@ -13,14 +13,14 @@ namespace Redemption.Items.Weapons
 		{
 			if (Main.netMode != 2)
 			{
-				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
 				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
 				{
-					array[i] = Main.glowMaskTexture[i];
+					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
-				XeniumBlade.customGlowMask = (short)(array.Length - 1);
-				Main.glowMaskTexture = array;
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				XeniumBlade.customGlowMask = (short)(glowMasks.Length - 1);
+				Main.glowMaskTexture = glowMasks;
 			}
 			base.item.glowMask = XeniumBlade.customGlowMask;
 			base.DisplayName.SetDefault("Xenium Blade");

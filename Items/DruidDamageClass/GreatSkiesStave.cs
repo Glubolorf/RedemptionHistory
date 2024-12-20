@@ -34,14 +34,14 @@ namespace Redemption.Items.DruidDamageClass
 		public override bool UseItem(Player player)
 		{
 			player.AddBuff(base.mod.BuffType("GSSBuff"), 20, true);
-			Vector2 vector = Utils.SafeNormalize(Main.MouseWorld - player.Center, -Vector2.UnitY) * 8f;
-			player.velocity += vector;
+			Vector2 MyVelocity = Utils.SafeNormalize(Main.MouseWorld - player.Center, -Vector2.UnitY) * 8f;
+			player.velocity += MyVelocity;
 			return true;
 		}
 
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).burnStaves)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().burnStaves)
 			{
 				target.AddBuff(24, 180, false);
 			}
@@ -49,9 +49,9 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override float UseTimeMultiplier(Player player)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterStaves)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().fasterStaves)
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
 				{
 					return 1.45f;
 				}
@@ -59,7 +59,7 @@ namespace Redemption.Items.DruidDamageClass
 			}
 			else
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
 				{
 					return 1.35f;
 				}

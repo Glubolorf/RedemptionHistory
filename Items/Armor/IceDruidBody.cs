@@ -14,7 +14,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Coldblooded Druid's Chestplate");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n5% increased druidic damage\n4% increased druidic critical strike chance\nThrows seedbags faster");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n3% increased druidic damage\n2% increased druidic critical strike chance\nThrows seedbags faster");
 		}
 
 		public override void SetDefaults()
@@ -23,16 +23,15 @@ namespace Redemption.Items.Armor
 			base.item.height = 30;
 			base.item.value = 875;
 			base.item.rare = 1;
-			base.item.defense = 5;
+			base.item.defense = 4;
 		}
 
 		public override void UpdateEquip(Player player)
 		{
 			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
-			druidDamagePlayer.druidDamage += 0.05f;
-			druidDamagePlayer.druidCrit += 4;
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.fasterSeedbags = true;
+			druidDamagePlayer.druidDamage += 0.03f;
+			druidDamagePlayer.druidCrit += 2;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).fasterSeedbags = true;
 		}
 
 		public override void AddRecipes()
@@ -43,12 +42,12 @@ namespace Redemption.Items.Armor
 			modRecipe.AddTile(null, "DruidicAltarTile");
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(664, 35);
-			modRecipe.AddIngredient(1257, 18);
-			modRecipe.AddTile(null, "DruidicAltarTile");
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.AddIngredient(664, 35);
+			modRecipe2.AddIngredient(1257, 18);
+			modRecipe2.AddTile(null, "DruidicAltarTile");
+			modRecipe2.SetResult(this, 1);
+			modRecipe2.AddRecipe();
 		}
 	}
 }

@@ -23,7 +23,7 @@ namespace Redemption.Items
 			base.item.useTime = 30;
 			base.item.useStyle = 4;
 			base.item.consumable = true;
-			base.item.makeNPC = (short)base.mod.NPCType<Chicken>();
+			base.item.makeNPC = (short)ModContent.NPCType<Chicken>();
 		}
 	}
 }

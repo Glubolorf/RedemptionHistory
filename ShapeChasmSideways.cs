@@ -31,29 +31,28 @@ namespace Redemption
 
 		private bool DoChasm(Point origin, GenAction action, int startheight, int endheight, int length, int variance, int randomHeading, float[] heightVariance, bool dir)
 		{
-			Point point = origin;
 			for (int i = 0; i < length; i++)
 			{
-				int num = (int)MathHelper.Lerp((float)startheight, (float)endheight, (float)i / (float)length);
+				int height = (int)MathHelper.Lerp((float)startheight, (float)endheight, (float)i / (float)length);
 				if (heightVariance != null)
 				{
-					num = Math.Max(endheight, (int)((float)startheight * BaseUtility.MultiLerp((float)i / (float)length, heightVariance)));
+					height = Math.Max(endheight, (int)((float)startheight * BaseUtility.MultiLerp((float)i / (float)length, heightVariance)));
 				}
-				int num2 = point.X + (dir ? i : (-i));
-				int num3 = point.Y + (startheight - num);
+				int x = origin.X + (dir ? i : (-i));
+				int y = origin.Y + (startheight - height);
 				if (variance != 0)
 				{
-					num3 += ((Main.rand.Next(2) == 0) ? (-Main.rand.Next(variance)) : Main.rand.Next(variance));
+					y += ((Main.rand.Next(2) == 0) ? (-Main.rand.Next(variance)) : Main.rand.Next(variance));
 				}
 				if (randomHeading != 0)
 				{
-					num3 += randomHeading * (i / 2);
+					y += randomHeading * (i / 2);
 				}
-				int num4 = num3 + num - (startheight - num);
-				for (int j = num3; j < num4; j++)
+				int yend = y + height - (startheight - height);
+				for (int m2 = y; m2 < yend; m2++)
 				{
-					int num5 = j;
-					if (!base.UnitApply(action, point, num2, num5, new object[0]) && this._quitOnFail)
+					int y2 = m2;
+					if (!base.UnitApply(action, origin, x, y2, new object[0]) && this._quitOnFail)
 					{
 						return false;
 					}

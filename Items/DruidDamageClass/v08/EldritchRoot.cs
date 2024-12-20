@@ -23,12 +23,11 @@ namespace Redemption.Items.DruidDamageClass.v08
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.eldritchRoot = true;
+			DruidDamagePlayer modPlayer = DruidDamagePlayer.ModPlayer(player);
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).eldritchRoot = true;
 			if ((float)player.statLife <= (float)player.statLifeMax2 * 0.5f)
 			{
-				druidDamagePlayer.druidDamage += 0.15f;
+				modPlayer.druidDamage += 0.15f;
 			}
 		}
 	}

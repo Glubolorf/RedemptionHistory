@@ -37,13 +37,13 @@ namespace Redemption.Items.Placeable
 			modRecipe.AddTile(16);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.anyWood = true;
-			modRecipe.AddIngredient(9, 20);
-			modRecipe.AddIngredient(706, 6);
-			modRecipe.AddTile(16);
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.anyWood = true;
+			modRecipe2.AddIngredient(9, 20);
+			modRecipe2.AddIngredient(706, 6);
+			modRecipe2.AddTile(16);
+			modRecipe2.SetResult(this, 1);
+			modRecipe2.AddRecipe();
 		}
 	}
 }

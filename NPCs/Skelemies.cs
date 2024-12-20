@@ -57,7 +57,7 @@ namespace Redemption.NPCs
 
 		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
 		{
-			return !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).skeletonFriendly;
+			return !Main.LocalPlayer.GetModPlayer<RedePlayer>().skeletonFriendly;
 		}
 	}
 }

@@ -34,10 +34,16 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			if (++base.projectile.frameCounter >= 4)
+			Projectile projectile = base.projectile;
+			int num = projectile.frameCounter + 1;
+			projectile.frameCounter = num;
+			if (num >= 4)
 			{
 				base.projectile.frameCounter = 0;
-				if (++base.projectile.frame >= 20)
+				Projectile projectile2 = base.projectile;
+				num = projectile2.frame + 1;
+				projectile2.frame = num;
+				if (num >= 20)
 				{
 					base.projectile.frame = 0;
 				}

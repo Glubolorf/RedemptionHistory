@@ -22,14 +22,13 @@ namespace Redemption.Items.Armor.Domain
 			base.item.height = 24;
 			base.item.value = Item.sellPrice(0, 0, 18, 0);
 			base.item.rare = 1;
-			base.item.defense = 6;
+			base.item.defense = 5;
 		}
 
 		public override void UpdateEquip(Player player)
 		{
 			player.magicCrit += 10;
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.vendetta = true;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).vendetta = true;
 			player.thorns += 0.4f;
 		}
 
@@ -59,14 +58,14 @@ namespace Redemption.Items.Armor.Domain
 			modRecipe.AddTile(16);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.anyIronBar = true;
-			modRecipe.AddIngredient(696, 1);
-			modRecipe.AddIngredient(22, 10);
-			modRecipe.AddIngredient(null, "Nightshade", 6);
-			modRecipe.AddTile(16);
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.anyIronBar = true;
+			modRecipe2.AddIngredient(696, 1);
+			modRecipe2.AddIngredient(22, 10);
+			modRecipe2.AddIngredient(null, "Nightshade", 6);
+			modRecipe2.AddTile(16);
+			modRecipe2.SetResult(this, 1);
+			modRecipe2.AddRecipe();
 		}
 	}
 }

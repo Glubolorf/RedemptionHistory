@@ -32,10 +32,16 @@ namespace Redemption.Projectiles.v08
 				dust.velocity += base.projectile.velocity * 0.3f;
 				dust.velocity *= 0.2f;
 			}
-			if (++base.projectile.frameCounter >= 5)
+			Projectile projectile = base.projectile;
+			int num = projectile.frameCounter + 1;
+			projectile.frameCounter = num;
+			if (num >= 5)
 			{
 				base.projectile.frameCounter = 0;
-				if (++base.projectile.frame >= 3)
+				Projectile projectile2 = base.projectile;
+				num = projectile2.frame + 1;
+				projectile2.frame = num;
+				if (num >= 3)
 				{
 					base.projectile.frame = 0;
 				}
@@ -47,35 +53,33 @@ namespace Redemption.Projectiles.v08
 		{
 			Player player = Main.player[base.projectile.owner];
 			Main.PlaySound(2, target.Center, 124);
-			Vector2 vector;
-			vector..ctor(target.Center.X, target.Center.Y);
-			Vector2 vector2 = player.RotatedRelativePoint(player.MountedCenter, true);
-			float num = 20f;
-			float num2 = vector.Y;
-			if (num2 > player.Center.Y - 200f)
+			Vector2 vector12 = new Vector2(target.Center.X, target.Center.Y);
+			Vector2 vector13 = player.RotatedRelativePoint(player.MountedCenter, true);
+			float num75 = 20f;
+			if (vector12.Y > player.Center.Y - 200f)
 			{
-				num2 = player.Center.Y - 200f;
+				Vector2 center = player.Center;
 			}
-			for (int i = 0; i < 6; i++)
+			for (int num76 = 0; num76 < 6; num76++)
 			{
-				vector2 = player.Center + new Vector2(-(float)Main.rand.Next(0, 401) * (float)player.direction, -600f);
-				vector2.Y -= (float)(100 * i);
-				Vector2 vector3 = vector - vector2;
-				if (vector3.Y < 0f)
+				vector13 = player.Center + new Vector2(-(float)Main.rand.Next(0, 401) * (float)player.direction, -600f);
+				vector13.Y -= (float)(100 * num76);
+				Vector2 vector14 = vector12 - vector13;
+				if (vector14.Y < 0f)
 				{
-					vector3.Y *= -1f;
+					vector14.Y *= -1f;
 				}
-				if (vector3.Y < 20f)
+				if (vector14.Y < 20f)
 				{
-					vector3.Y = 20f;
+					vector14.Y = 20f;
 				}
-				vector3.Normalize();
-				vector3 *= num;
-				float x = vector3.X;
-				float y = vector3.Y;
-				float num3 = x;
-				float num4 = y + (float)Main.rand.Next(-40, 41) * 0.02f;
-				Projectile.NewProjectile(vector2.X, vector2.Y, num3, num4, base.mod.ProjectileType("CursedBoltPro2"), damage / 2, 0f, Main.myPlayer, 0f, 0f);
+				vector14.Normalize();
+				vector14 *= num75;
+				float num77 = vector14.X;
+				float y = vector14.Y;
+				float speedX5 = num77;
+				float speedY6 = y + (float)Main.rand.Next(-40, 41) * 0.02f;
+				Projectile.NewProjectile(vector13.X, vector13.Y, speedX5, speedY6, base.mod.ProjectileType("CursedBoltPro2"), damage / 2, 0f, Main.myPlayer, 0f, 0f);
 			}
 		}
 
@@ -87,11 +91,11 @@ namespace Redemption.Projectiles.v08
 		public override void Kill(int timeLeft)
 		{
 			Main.PlaySound(SoundID.DD2_ExplosiveTrapExplode, base.projectile.position);
-			for (int i = 0; i < 20; i++)
+			for (int index = 0; index < 20; index++)
 			{
-				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 75, 0f, 0f, 100, default(Color), 1f);
-				Main.dust[num].velocity *= 1.1f;
-				Main.dust[num].scale *= 0.99f;
+				int index2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 75, 0f, 0f, 100, default(Color), 1f);
+				Main.dust[index2].velocity *= 1.1f;
+				Main.dust[index2].scale *= 0.99f;
 			}
 		}
 	}

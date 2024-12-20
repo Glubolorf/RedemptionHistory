@@ -18,7 +18,7 @@ namespace Redemption.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 35;
+			base.item.damage = 25;
 			base.item.ranged = true;
 			base.item.width = 28;
 			base.item.height = 94;
@@ -57,9 +57,9 @@ namespace Redemption.Items.Weapons
 			{
 				type = base.mod.ProjectileType("WhisperwindPro");
 			}
-			Vector2 vector = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(3f));
-			speedX = vector.X;
-			speedY = vector.Y;
+			Vector2 perturbedSpeed = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(3f));
+			speedX = perturbedSpeed.X;
+			speedY = perturbedSpeed.Y;
 			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, 206, damage / 5, knockBack, player.whoAmI, 0f, 0f);
 			return true;
 		}
@@ -69,8 +69,7 @@ namespace Redemption.Items.Weapons
 			Color transparent = Color.Transparent;
 			if (base.item.modItem != null && base.item.modItem.mod == ModLoader.GetMod("Redemption"))
 			{
-				TooltipLine tooltipLine = Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName"));
-				tooltipLine.overrideColor = new Color?(new Color(170, 0, 255));
+				Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName")).overrideColor = new Color?(new Color(170, 0, 255));
 			}
 		}
 	}

@@ -28,7 +28,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.scale = 1f;
 			base.item.rare = 1;
 			base.item.UseSound = SoundID.Item1;
-			base.item.shoot = base.mod.ProjectileType<CavalryLancePro>();
+			base.item.shoot = ModContent.ProjectileType<CavalryLancePro>();
 			base.item.value = Item.buyPrice(0, 0, 35, 0);
 			base.item.noMelee = true;
 			base.item.noUseGraphic = true;
@@ -38,8 +38,8 @@ namespace Redemption.Items.Weapons.v08
 
 		public override bool UseItem(Player player)
 		{
-			Vector2 vector = Utils.SafeNormalize(Main.MouseWorld - player.Center, -Vector2.UnitY) * 3f;
-			player.velocity += vector;
+			Vector2 MyVelocity = Utils.SafeNormalize(Main.MouseWorld - player.Center, -Vector2.UnitY) * 3f;
+			player.velocity += MyVelocity;
 			return true;
 		}
 

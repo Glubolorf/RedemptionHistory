@@ -18,9 +18,9 @@ namespace Redemption.Tiles
 			TileObjectData.addTile((int)base.Type);
 			this.dustType = 7;
 			this.disableSmartCursor = true;
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Vlitch Overlord Trophy");
-			base.AddMapEntry(new Color(120, 85, 60), modTranslation);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Vlitch Overlord Trophy");
+			base.AddMapEntry(new Color(120, 85, 60), name);
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)

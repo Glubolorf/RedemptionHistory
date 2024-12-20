@@ -32,14 +32,14 @@ namespace Redemption.NPCs.Bosses.Thorn
 			base.projectile.velocity.X = 0f;
 			if (!this.spawnDust)
 			{
-				int num = 2;
-				int num2 = 8;
-				for (int i = 0; i < num2; i++)
+				int dustType = 2;
+				int pieCut = 8;
+				for (int i = 0; i < pieCut; i++)
 				{
-					int num3 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num, 0f, 0f, 100, Color.White, 1.6f);
-					Main.dust[num3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)num2 * 6.28f);
-					Main.dust[num3].noLight = false;
-					Main.dust[num3].noGravity = true;
+					int dustID = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 1.6f);
+					Main.dust[dustID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)pieCut * 6.28f);
+					Main.dust[dustID].noLight = false;
+					Main.dust[dustID].noGravity = true;
 				}
 				this.spawnDust = true;
 			}

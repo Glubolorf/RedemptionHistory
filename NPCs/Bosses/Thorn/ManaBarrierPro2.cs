@@ -40,8 +40,8 @@ namespace Redemption.NPCs.Bosses.Thorn
 			if (base.npc.frameCounter >= 5.0)
 			{
 				base.npc.frameCounter = 0.0;
-				NPC npc = base.npc;
-				npc.frame.Y = npc.frame.Y + 82;
+				NPC npc3 = base.npc;
+				npc3.frame.Y = npc3.frame.Y + 82;
 				if (base.npc.frame.Y > 164)
 				{
 					base.npc.frameCounter = 0.0;
@@ -49,18 +49,18 @@ namespace Redemption.NPCs.Bosses.Thorn
 				}
 			}
 			base.npc.TargetClosest(true);
-			int num = (int)base.npc.ai[0];
-			if (num < 0 || num >= 200 || !Main.npc[num].active || Main.npc[num].type != base.mod.NPCType("ThornPZ"))
+			int boss = (int)base.npc.ai[0];
+			if (boss < 0 || boss >= 200 || !Main.npc[boss].active || Main.npc[boss].type != base.mod.NPCType("ThornPZ"))
 			{
 				base.npc.active = false;
 				return false;
 			}
 			this.rot += 0.07f;
 			base.npc.netUpdate = true;
-			Vector2 vector = Main.npc[num].Center - base.npc.Center;
-			vector.Normalize();
-			vector *= 9f;
-			base.npc.rotation = Utils.ToRotation(vector);
+			Vector2 v = Main.npc[boss].Center - base.npc.Center;
+			v.Normalize();
+			v *= 9f;
+			base.npc.rotation = Utils.ToRotation(v);
 			NPC npc2 = Main.npc[(int)base.npc.ai[0]];
 			base.npc.Center = npc2.Center + RedeHelper.RotateVector(default(Vector2), this.rotVec, this.rot + base.npc.ai[2] * 0.628f);
 			return false;

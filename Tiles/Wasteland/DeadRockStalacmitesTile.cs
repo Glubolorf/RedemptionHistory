@@ -24,7 +24,7 @@ namespace Redemption.Tiles.Wasteland
 		{
 			if (i % 4 < 3)
 			{
-				spriteEffects = 1;
+				spriteEffects = SpriteEffects.FlipHorizontally;
 			}
 		}
 

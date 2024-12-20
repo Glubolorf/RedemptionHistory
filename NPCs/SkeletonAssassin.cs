@@ -68,8 +68,7 @@ namespace Redemption.NPCs
 					this.stabFrame = 0;
 				}
 			}
-			float num2 = base.npc.Distance(Main.player[base.npc.target].Center);
-			if (num2 <= 80f && !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).skeletonFriendly && Main.rand.Next(20) == 0 && !this.stabAttack)
+			if (base.npc.Distance(Main.player[base.npc.target].Center) <= 80f && !Main.LocalPlayer.GetModPlayer<RedePlayer>().skeletonFriendly && Main.rand.Next(20) == 0 && !this.stabAttack)
 			{
 				this.stabAttack = true;
 			}
@@ -82,7 +81,7 @@ namespace Redemption.NPCs
 				this.stabTimer++;
 				base.npc.aiStyle = 0;
 				base.npc.velocity.X = 0f;
-				if (this.stabTimer == 1 && !Config.NoCombatText)
+				if (this.stabTimer == 1 && !RedeConfigClient.Instance.NoCombatText)
 				{
 					CombatText.NewText(base.npc.getRect(), Color.Gray, "Stab!", true, true);
 				}
@@ -90,14 +89,14 @@ namespace Redemption.NPCs
 				{
 					if (base.npc.direction == -1)
 					{
-						int num3 = Projectile.NewProjectile(base.npc.position.X + -14f, base.npc.position.Y + 28f, 0f, 0f, base.mod.ProjectileType("DamagePro1"), 5, 3f, 255, 0f, 0f);
-						Main.projectile[num3].netUpdate = true;
+						int p = Projectile.NewProjectile(base.npc.position.X + -14f, base.npc.position.Y + 28f, 0f, 0f, base.mod.ProjectileType("DamagePro1"), 5, 3f, 255, 0f, 0f);
+						Main.projectile[p].netUpdate = true;
 						Main.PlaySound(SoundID.Item19, (int)base.npc.position.X, (int)base.npc.position.Y);
 					}
 					else
 					{
-						int num4 = Projectile.NewProjectile(base.npc.position.X + 48f, base.npc.position.Y + 28f, 0f, 0f, base.mod.ProjectileType("DamagePro1"), 5, 3f, 255, 0f, 0f);
-						Main.projectile[num4].netUpdate = true;
+						int p2 = Projectile.NewProjectile(base.npc.position.X + 48f, base.npc.position.Y + 28f, 0f, 0f, base.mod.ProjectileType("DamagePro1"), 5, 3f, 255, 0f, 0f);
+						Main.projectile[p2].netUpdate = true;
 						Main.PlaySound(SoundID.Item19, (int)base.npc.position.X, (int)base.npc.position.Y);
 					}
 				}
@@ -132,27 +131,26 @@ namespace Redemption.NPCs
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/SkeletonAssassinStab");
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D stabAni = base.mod.GetTexture("NPCs/SkeletonAssassinStab");
 			int spriteDirection = base.npc.spriteDirection;
 			if (!this.stabAttack)
 			{
-				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.stabAttack)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num = texture.Height / 6;
-				int num2 = num * this.stabFrame;
-				Main.spriteBatch.Draw(texture, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num214 = stabAni.Height / 6;
+				int y6 = num214 * this.stabFrame;
+				Main.spriteBatch.Draw(stabAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, stabAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)stabAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
 		}
 
 		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
 		{
-			return !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).skeletonFriendly;
+			return !Main.LocalPlayer.GetModPlayer<RedePlayer>().skeletonFriendly;
 		}
 
 		private bool stabAttack;

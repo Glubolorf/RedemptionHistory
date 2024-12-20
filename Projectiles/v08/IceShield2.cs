@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
@@ -28,8 +27,8 @@ namespace Redemption.Projectiles.v08
 		public override void AI()
 		{
 			Player player = Main.player[base.projectile.owner];
-			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>(base.mod);
-			if (!player.HasBuff(base.mod.BuffType("NatureGuardian26Buff")) || !modPlayer.iceShield)
+			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
+			if (!player.HasBuff(base.mod.BuffType("NatureGuardian26Buff")))
 			{
 				this.deadTimer++;
 				if (this.deadTimer <= 20)
@@ -51,26 +50,25 @@ namespace Redemption.Projectiles.v08
 			Lighting.AddLight(base.projectile.Center, (float)(255 - base.projectile.alpha) * 0f / 255f, (float)(255 - base.projectile.alpha) * 0.2f / 255f, (float)(255 - base.projectile.alpha) * 0.2f / 255f);
 			base.projectile.position.X = player.Center.X - 16f;
 			base.projectile.position.Y = player.Center.Y - 21f;
-			IEnumerable<Projectile> enumerable = Enumerable.Where<Projectile>(Main.projectile, (Projectile x) => x.Hitbox.Intersects(base.projectile.Hitbox));
-			foreach (Projectile projectile in enumerable)
+			foreach (Projectile proj in Enumerable.Where<Projectile>(Main.projectile, (Projectile x) => x.Hitbox.Intersects(base.projectile.Hitbox)))
 			{
-				if (base.projectile != projectile && !projectile.friendly && !projectile.minion && projectile.velocity.X != 0f && projectile.velocity.Y != 0f)
+				if (base.projectile != proj && !proj.friendly && !proj.minion && proj.velocity.X != 0f && proj.velocity.Y != 0f)
 				{
-					if (projectile.penetrate == 1)
+					if (proj.penetrate == 1)
 					{
-						projectile.penetrate = 2;
+						proj.penetrate = 2;
 					}
-					projectile.friendly = true;
-					projectile.hostile = false;
-					projectile.velocity.X = -projectile.velocity.X * 1.5f;
-					projectile.velocity.Y = -projectile.velocity.Y * 1.5f;
+					proj.friendly = true;
+					proj.hostile = false;
+					proj.velocity.X = -proj.velocity.X * 1.5f;
+					proj.velocity.Y = -proj.velocity.Y * 1.5f;
 				}
 			}
 			if (player.dead)
 			{
 				modPlayer.natureGuardian26 = false;
 			}
-			if (modPlayer.natureGuardian26 || modPlayer.iceShield)
+			if (modPlayer.natureGuardian26)
 			{
 				base.projectile.timeLeft = 60;
 			}

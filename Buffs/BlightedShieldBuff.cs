@@ -17,12 +17,12 @@ namespace Redemption.Buffs
 		{
 			player.statDefense += 18;
 			player.noKnockback = true;
-			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>(base.mod);
+			RedePlayer modPlayer2 = player.GetModPlayer<RedePlayer>();
 			if (player.ownedProjectileCounts[base.mod.ProjectileType("BlightedShield")] > 0)
 			{
-				modPlayer.blightedShield = true;
+				modPlayer2.blightedShield = true;
 			}
-			if (!modPlayer.blightedShield)
+			if (!modPlayer2.blightedShield)
 			{
 				player.DelBuff(buffIndex);
 				buffIndex--;

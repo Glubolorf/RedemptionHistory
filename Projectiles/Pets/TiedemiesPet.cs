@@ -21,15 +21,14 @@ namespace Redemption.Projectiles.Pets
 
 		public override bool PreAI()
 		{
-			Player player = Main.player[base.projectile.owner];
-			player.wisp = false;
+			Main.player[base.projectile.owner].wisp = false;
 			return true;
 		}
 
 		public override void AI()
 		{
 			Player player = Main.player[base.projectile.owner];
-			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>(base.mod);
+			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
 			if (player.dead)
 			{
 				modPlayer.examplePet = false;

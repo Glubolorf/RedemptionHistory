@@ -36,7 +36,7 @@ namespace Redemption.NPCs
 		public override void AI()
 		{
 			base.npc.ai[0] += 1f;
-			Player player = Main.player[base.npc.target];
+			Player P = Main.player[base.npc.target];
 			if (base.npc.target < 0 || base.npc.target == 255 || Main.player[base.npc.target].dead || !Main.player[base.npc.target].active)
 			{
 				base.npc.TargetClosest(true);
@@ -45,79 +45,72 @@ namespace Redemption.NPCs
 			base.npc.ai[1] += 1f;
 			if (base.npc.ai[1] >= 90f)
 			{
-				float num = 10f;
-				Vector2 vector;
-				vector..ctor(base.npc.position.X + 110f, base.npc.position.Y + 50f);
-				int num2 = 100;
-				int num3 = base.mod.ProjectileType("HolyBeam");
-				float num4 = (float)Math.Atan2((double)(vector.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector.X - (player.position.X + (float)player.width * 0.5f)));
-				Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num4) * (double)num * -1.0), (float)(Math.Sin((double)num4) * (double)num * -1.0), num3, num2, 0f, 0, 0f, 0f);
+				float Speed = 10f;
+				Vector2 vector8 = new Vector2(base.npc.position.X + 110f, base.npc.position.Y + 50f);
+				int damage = 100;
+				int type = base.mod.ProjectileType("HolyBeam");
+				float rotation = (float)Math.Atan2((double)(vector8.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector8.X - (P.position.X + (float)P.width * 0.5f)));
+				Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
 				base.npc.ai[1] = 0f;
 			}
 			if (base.npc.life <= 30000 && base.npc.ai[1] >= 60f)
 			{
-				float num5 = 14f;
-				Vector2 vector2;
-				vector2..ctor(base.npc.position.X + 110f, base.npc.position.Y + 50f);
-				int num6 = 110;
-				int num7 = base.mod.ProjectileType("HolyBeam2");
-				float num8 = (float)Math.Atan2((double)(vector2.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector2.X - (player.position.X + (float)player.width * 0.5f)));
-				Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num8) * (double)num5 * -1.0), (float)(Math.Sin((double)num8) * (double)num5 * -1.0), num7, num6, 0f, 0, 0f, 0f);
+				float Speed2 = 14f;
+				Vector2 vector9 = new Vector2(base.npc.position.X + 110f, base.npc.position.Y + 50f);
+				int damage2 = 110;
+				int type2 = base.mod.ProjectileType("HolyBeam2");
+				float rotation2 = (float)Math.Atan2((double)(vector9.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector9.X - (P.position.X + (float)P.width * 0.5f)));
+				Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0), type2, damage2, 0f, 0, 0f, 0f);
 				base.npc.ai[1] = 0f;
 			}
 			if (base.npc.life <= 20000 && base.npc.ai[1] >= 40f)
 			{
-				float num9 = 17f;
-				Vector2 vector3;
-				vector3..ctor(base.npc.position.X + 110f, base.npc.position.Y + 50f);
-				int num10 = 120;
-				int num11 = base.mod.ProjectileType("HolyBeam3");
-				float num12 = (float)Math.Atan2((double)(vector3.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector3.X - (player.position.X + (float)player.width * 0.5f)));
-				Projectile.NewProjectile(vector3.X, vector3.Y, (float)(Math.Cos((double)num12) * (double)num9 * -1.0), (float)(Math.Sin((double)num12) * (double)num9 * -1.0), num11, num10, 0f, 0, 0f, 0f);
+				float Speed3 = 17f;
+				Vector2 vector10 = new Vector2(base.npc.position.X + 110f, base.npc.position.Y + 50f);
+				int damage3 = 120;
+				int type3 = base.mod.ProjectileType("HolyBeam3");
+				float rotation3 = (float)Math.Atan2((double)(vector10.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector10.X - (P.position.X + (float)P.width * 0.5f)));
+				Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)rotation3) * (double)Speed3 * -1.0), (float)(Math.Sin((double)rotation3) * (double)Speed3 * -1.0), type3, damage3, 0f, 0, 0f, 0f);
 				base.npc.ai[1] = 0f;
 			}
 			if (base.npc.life <= 10000 && base.npc.ai[1] >= 20f)
 			{
-				float num13 = 26f;
-				Vector2 vector4;
-				vector4..ctor(base.npc.position.X + 110f, base.npc.position.Y + 50f);
-				int num14 = 120;
-				int num15 = base.mod.ProjectileType("HolyBeam3");
-				float num16 = (float)Math.Atan2((double)(vector4.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector4.X - (player.position.X + (float)player.width * 0.5f)));
-				Projectile.NewProjectile(vector4.X, vector4.Y, (float)(Math.Cos((double)num16) * (double)num13 * -1.0), (float)(Math.Sin((double)num16) * (double)num13 * -1.0), num15, num14, 0f, 0, 0f, 0f);
+				float Speed4 = 26f;
+				Vector2 vector11 = new Vector2(base.npc.position.X + 110f, base.npc.position.Y + 50f);
+				int damage4 = 120;
+				int type4 = base.mod.ProjectileType("HolyBeam3");
+				float rotation4 = (float)Math.Atan2((double)(vector11.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector11.X - (P.position.X + (float)P.width * 0.5f)));
+				Projectile.NewProjectile(vector11.X, vector11.Y, (float)(Math.Cos((double)rotation4) * (double)Speed4 * -1.0), (float)(Math.Sin((double)rotation4) * (double)Speed4 * -1.0), type4, damage4, 0f, 0, 0f, 0f);
 				base.npc.ai[1] = 0f;
 			}
 			if (base.npc.life <= 7000 && base.npc.ai[1] >= 10f)
 			{
-				float num17 = 30f;
-				Vector2 vector5;
-				vector5..ctor(base.npc.position.X + 110f, base.npc.position.Y + 50f);
-				int num18 = 130;
-				int num19 = base.mod.ProjectileType("HolyBeam4");
-				float num20 = (float)Math.Atan2((double)(vector5.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector5.X - (player.position.X + (float)player.width * 0.5f)));
-				Projectile.NewProjectile(vector5.X, vector5.Y, (float)(Math.Cos((double)num20) * (double)num17 * -1.0), (float)(Math.Sin((double)num20) * (double)num17 * -1.0), num19, num18, 0f, 0, 0f, 0f);
+				float Speed5 = 30f;
+				Vector2 vector12 = new Vector2(base.npc.position.X + 110f, base.npc.position.Y + 50f);
+				int damage5 = 130;
+				int type5 = base.mod.ProjectileType("HolyBeam4");
+				float rotation5 = (float)Math.Atan2((double)(vector12.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector12.X - (P.position.X + (float)P.width * 0.5f)));
+				Projectile.NewProjectile(vector12.X, vector12.Y, (float)(Math.Cos((double)rotation5) * (double)Speed5 * -1.0), (float)(Math.Sin((double)rotation5) * (double)Speed5 * -1.0), type5, damage5, 0f, 0, 0f, 0f);
 				base.npc.ai[1] = 0f;
 			}
 			if (base.npc.life <= 5000 && base.npc.ai[1] >= 4f)
 			{
-				float num21 = 35f;
-				Vector2 vector6;
-				vector6..ctor(base.npc.position.X + 110f, base.npc.position.Y + 50f);
-				int num22 = 160;
-				int num23 = base.mod.ProjectileType("HolyBeam5");
-				float num24 = (float)Math.Atan2((double)(vector6.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector6.X - (player.position.X + (float)player.width * 0.5f)));
-				Projectile.NewProjectile(vector6.X, vector6.Y, (float)(Math.Cos((double)num24) * (double)num21 * -1.0), (float)(Math.Sin((double)num24) * (double)num21 * -1.0), num23, num22, 0f, 0, 0f, 0f);
+				float Speed6 = 35f;
+				Vector2 vector13 = new Vector2(base.npc.position.X + 110f, base.npc.position.Y + 50f);
+				int damage6 = 160;
+				int type6 = base.mod.ProjectileType("HolyBeam5");
+				float rotation6 = (float)Math.Atan2((double)(vector13.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector13.X - (P.position.X + (float)P.width * 0.5f)));
+				Projectile.NewProjectile(vector13.X, vector13.Y, (float)(Math.Cos((double)rotation6) * (double)Speed6 * -1.0), (float)(Math.Sin((double)rotation6) * (double)Speed6 * -1.0), type6, damage6, 0f, 0, 0f, 0f);
 				base.npc.ai[1] = 0f;
 			}
 			if (base.npc.life <= 1000 && base.npc.ai[1] >= 2f)
 			{
-				float num25 = 45f;
-				Vector2 vector7;
-				vector7..ctor(base.npc.position.X + 110f, base.npc.position.Y + 50f);
-				int num26 = 180;
-				int num27 = base.mod.ProjectileType("HolyBeam5");
-				float num28 = (float)Math.Atan2((double)(vector7.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector7.X - (player.position.X + (float)player.width * 0.5f)));
-				Projectile.NewProjectile(vector7.X, vector7.Y, (float)(Math.Cos((double)num28) * (double)num25 * -1.0), (float)(Math.Sin((double)num28) * (double)num25 * -1.0), num27, num26, 0f, 0, 0f, 0f);
+				float Speed7 = 45f;
+				Vector2 vector14 = new Vector2(base.npc.position.X + 110f, base.npc.position.Y + 50f);
+				int damage7 = 180;
+				int type7 = base.mod.ProjectileType("HolyBeam5");
+				float rotation7 = (float)Math.Atan2((double)(vector14.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector14.X - (P.position.X + (float)P.width * 0.5f)));
+				Projectile.NewProjectile(vector14.X, vector14.Y, (float)(Math.Cos((double)rotation7) * (double)Speed7 * -1.0), (float)(Math.Sin((double)rotation7) * (double)Speed7 * -1.0), type7, damage7, 0f, 0, 0f, 0f);
 				base.npc.ai[1] = 0f;
 			}
 			if (base.npc.life > 10000)

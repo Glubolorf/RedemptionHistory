@@ -18,12 +18,12 @@ namespace Redemption.Buffs
 
 		public override void Update(Player player, ref int buffIndex)
 		{
-			player.GetModPlayer<RedePlayer>(base.mod).sleepPowder = true;
+			player.GetModPlayer<RedePlayer>().sleepPowder = true;
 		}
 
 		public override void Update(NPC npc, ref int buffIndex)
 		{
-			npc.GetGlobalNPC<RedeGlobalNPC>(base.mod).sleepPowder = true;
+			npc.GetGlobalNPC<RedeGlobalNPC>().sleepPowder = true;
 		}
 	}
 }

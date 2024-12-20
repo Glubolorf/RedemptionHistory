@@ -28,10 +28,10 @@ namespace Redemption.Projectiles
 		{
 			if (base.projectile.ai[0] == 1f)
 			{
-				int num = (int)base.projectile.ai[1];
-				if (num >= 0 && num < 200 && Main.npc[num].active)
+				int npcIndex = (int)base.projectile.ai[1];
+				if (npcIndex >= 0 && npcIndex < 200 && Main.npc[npcIndex].active)
 				{
-					if (Main.npc[num].behindTiles)
+					if (Main.npc[npcIndex].behindTiles)
 					{
 						drawCacheProjsBehindNPCsAndTiles.Add(index);
 						return;
@@ -61,17 +61,17 @@ namespace Redemption.Projectiles
 		public override void Kill(int timeLeft)
 		{
 			Main.PlaySound(0, (int)base.projectile.position.X, (int)base.projectile.position.Y, 1, 1f, 0f);
-			Vector2 vector = base.projectile.position;
-			Vector2 vector2 = Utils.ToRotationVector2(base.projectile.rotation - MathHelper.ToRadians(90f));
-			vector += vector2 * 16f;
+			Vector2 usePos = base.projectile.position;
+			Vector2 rotVector = Utils.ToRotationVector2(base.projectile.rotation - MathHelper.ToRadians(90f));
+			usePos += rotVector * 16f;
 			for (int i = 0; i < 2; i++)
 			{
-				Dust dust = Dust.NewDustDirect(vector, base.projectile.width, base.projectile.height, 226, 0f, 0f, 0, default(Color), 1f);
+				Dust dust = Dust.NewDustDirect(usePos, base.projectile.width, base.projectile.height, 226, 0f, 0f, 0, default(Color), 1f);
 				dust.position = (dust.position + base.projectile.Center) / 2f;
-				dust.velocity += vector2 * 2f;
+				dust.velocity += rotVector * 2f;
 				dust.velocity *= 0.5f;
 				dust.noGravity = true;
-				vector -= vector2 * 8f;
+				usePos -= rotVector * 8f;
 			}
 		}
 
@@ -105,40 +105,39 @@ namespace Redemption.Projectiles
 			this.targetWhoAmI = (float)target.whoAmI;
 			base.projectile.velocity = (target.Center - base.projectile.Center) * 0.75f;
 			base.projectile.netUpdate = true;
-			target.AddBuff(base.mod.BuffType<NeedleDebuff>(), 900, false);
+			target.AddBuff(ModContent.BuffType<NeedleDebuff>(), 900, false);
 			base.projectile.damage = 0;
-			int num = 20;
-			Point[] array = new Point[num];
-			int num2 = 0;
+			Point[] stickingJavelins = new Point[20];
+			int javelinIndex = 0;
 			for (int i = 0; i < 1000; i++)
 			{
-				Projectile projectile = Main.projectile[i];
-				if (i != base.projectile.whoAmI && projectile.active && projectile.owner == Main.myPlayer && projectile.type == base.projectile.type && projectile.ai[0] == 1f && projectile.ai[1] == (float)target.whoAmI)
+				Projectile currentProjectile = Main.projectile[i];
+				if (i != base.projectile.whoAmI && currentProjectile.active && currentProjectile.owner == Main.myPlayer && currentProjectile.type == base.projectile.type && currentProjectile.ai[0] == 1f && currentProjectile.ai[1] == (float)target.whoAmI)
 				{
-					array[num2++] = new Point(i, projectile.timeLeft);
-					if (num2 >= array.Length)
+					stickingJavelins[javelinIndex++] = new Point(i, currentProjectile.timeLeft);
+					if (javelinIndex >= stickingJavelins.Length)
 					{
 						break;
 					}
 				}
 			}
-			if (num2 >= array.Length)
+			if (javelinIndex >= stickingJavelins.Length)
 			{
-				int num3 = 0;
-				for (int j = 1; j < array.Length; j++)
+				int oldJavelinIndex = 0;
+				for (int j = 1; j < stickingJavelins.Length; j++)
 				{
-					if (array[j].Y < array[num3].Y)
+					if (stickingJavelins[j].Y < stickingJavelins[oldJavelinIndex].Y)
 					{
-						num3 = j;
+						oldJavelinIndex = j;
 					}
 				}
-				Main.projectile[array[num3].X].Kill();
+				Main.projectile[stickingJavelins[oldJavelinIndex].X].Kill();
 			}
 			Player player = Main.player[base.projectile.owner];
-			int crit2 = player.HeldItem.crit;
-			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref crit2);
-			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref crit2);
-			if (crit2 >= 100 || Main.rand.Next(1, 101) <= crit2)
+			int critChance = player.HeldItem.crit;
+			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref critChance);
+			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref critChance);
+			if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
 			{
 				crit = true;
 			}
@@ -151,11 +150,11 @@ namespace Redemption.Projectiles
 				this.targetWhoAmI += 1f;
 				if (this.targetWhoAmI >= 45f)
 				{
-					float num = 0.98f;
-					float num2 = 0.35f;
+					float velXmult = 0.98f;
+					float velYmult = 0.35f;
 					this.targetWhoAmI = 45f;
-					base.projectile.velocity.X = base.projectile.velocity.X * num;
-					base.projectile.velocity.Y = base.projectile.velocity.Y + num2;
+					base.projectile.velocity.X = base.projectile.velocity.X * velXmult;
+					base.projectile.velocity.Y = base.projectile.velocity.Y + velYmult;
 				}
 				base.projectile.rotation = Utils.ToRotation(base.projectile.velocity) + MathHelper.ToRadians(90f);
 			}
@@ -163,29 +162,29 @@ namespace Redemption.Projectiles
 			{
 				base.projectile.ignoreWater = true;
 				base.projectile.tileCollide = false;
-				int num3 = 15;
-				bool flag = false;
+				int aiFactor = 15;
+				bool killProj = false;
 				base.projectile.localAI[0] += 1f;
-				bool flag2 = base.projectile.localAI[0] % 30f == 0f;
-				int num4 = (int)this.targetWhoAmI;
-				if (base.projectile.localAI[0] >= (float)(60 * num3) || num4 < 0 || num4 >= 200)
+				bool hitEffect = base.projectile.localAI[0] % 30f == 0f;
+				int projTargetIndex = (int)this.targetWhoAmI;
+				if (base.projectile.localAI[0] >= (float)(60 * aiFactor) || projTargetIndex < 0 || projTargetIndex >= 200)
 				{
-					flag = true;
+					killProj = true;
 				}
-				else if (Main.npc[num4].active && !Main.npc[num4].dontTakeDamage)
+				else if (Main.npc[projTargetIndex].active && !Main.npc[projTargetIndex].dontTakeDamage)
 				{
-					base.projectile.Center = Main.npc[num4].Center - base.projectile.velocity * 2f;
-					base.projectile.gfxOffY = Main.npc[num4].gfxOffY;
-					if (flag2)
+					base.projectile.Center = Main.npc[projTargetIndex].Center - base.projectile.velocity * 2f;
+					base.projectile.gfxOffY = Main.npc[projTargetIndex].gfxOffY;
+					if (hitEffect)
 					{
-						Main.npc[num4].HitEffect(0, 1.0);
+						Main.npc[projTargetIndex].HitEffect(0, 1.0);
 					}
 				}
 				else
 				{
-					flag = true;
+					killProj = true;
 				}
-				if (flag)
+				if (killProj)
 				{
 					base.projectile.Kill();
 				}

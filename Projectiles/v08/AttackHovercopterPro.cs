@@ -29,8 +29,8 @@ namespace Redemption.Projectiles.v08
 		{
 			if (Main.rand.Next(5) == 0)
 			{
-				int num = Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 31, base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 0, default(Color), 1f);
-				Main.dust[num].noGravity = true;
+				int dust = Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 31, base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 0, default(Color), 1f);
+				Main.dust[dust].noGravity = true;
 			}
 			Projectile projectile = base.projectile;
 			projectile.velocity.Y = projectile.velocity.Y + 0.2f;
@@ -52,18 +52,18 @@ namespace Redemption.Projectiles.v08
 			}
 			for (int j = 0; j < 25; j++)
 			{
-				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 235, 0f, 0f, 100, default(Color), 1.2f);
-				Main.dust[num].velocity *= 1.9f;
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 235, 0f, 0f, 100, default(Color), 1.2f);
+				Main.dust[dustIndex].velocity *= 1.9f;
 			}
 			for (int k = 0; k < 65; k++)
 			{
-				int num2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 6, 0f, 0f, 100, default(Color), 5f);
-				Main.dust[num2].velocity *= 4.8f;
+				int dustIndex2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 6, 0f, 0f, 100, default(Color), 5f);
+				Main.dust[dustIndex2].velocity *= 4.8f;
 			}
 			for (int l = 0; l < 45; l++)
 			{
-				int num3 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 31, 0f, 0f, 100, default(Color), 5f);
-				Main.dust[num3].velocity *= 2.3f;
+				int dustIndex3 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 31, 0f, 0f, 100, default(Color), 5f);
+				Main.dust[dustIndex3].velocity *= 2.3f;
 			}
 		}
 	}

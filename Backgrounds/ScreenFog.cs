@@ -19,7 +19,7 @@ namespace Redemption.Backgrounds
 				return;
 			}
 			Player player = Main.player[Main.myPlayer];
-			bool zoneXeno = Main.player[Main.myPlayer].GetModPlayer<RedePlayer>(Redemption.inst).ZoneXeno;
+			bool flag = Main.player[Main.myPlayer].GetModPlayer<RedePlayer>().ZoneXeno || Main.player[Main.myPlayer].GetModPlayer<RedePlayer>().ZoneEvilXeno;
 			if (!this.backgroundFog && BasePlayer.HasAccessory(player, Redemption.inst.ItemType("GasMask"), true, false))
 			{
 				this.fogOffsetX++;
@@ -28,7 +28,7 @@ namespace Redemption.Backgrounds
 			{
 				this.fogOffsetX = 0;
 			}
-			if (zoneXeno)
+			if (flag || Main.player[Main.myPlayer].GetModPlayer<RedePlayer>().irradiatedEffect >= 4)
 			{
 				this.fadeOpacity += 0.05f;
 				if (this.fadeOpacity > 1f)
@@ -83,19 +83,18 @@ namespace Redemption.Backgrounds
 				Main.spriteBatch.Begin();
 			}
 			Redemption inst = Redemption.inst;
-			Color newColor;
-			newColor..ctor(49, 100, 60);
+			Color DefaultFog = new Color(49, 100, 60);
 			this.GetAlpha(defaultColor, 0.2f * this.fadeOpacity * this.dayTimeOpacity);
-			Color alpha = this.GetAlpha(newColor, 0.4f * this.fadeOpacity * this.dayTimeOpacity);
+			Color fogColor = this.GetAlpha(DefaultFog, 0.4f * this.fadeOpacity * this.dayTimeOpacity);
 			int num = -texture.Width;
-			int num2 = -texture.Height;
-			int num3 = Main.screenWidth + texture.Width;
-			int num4 = Main.screenHeight + texture.Height;
-			for (int i = num; i < num3; i += texture.Width)
+			int minY = -texture.Height;
+			int maxX = Main.screenWidth + texture.Width;
+			int maxY = Main.screenHeight + texture.Height;
+			for (int i = num; i < maxX; i += texture.Width)
 			{
-				for (int j = num2; j < num4; j += texture.Height)
+				for (int j = minY; j < maxY; j += texture.Height)
 				{
-					Main.spriteBatch.Draw(texture, new Rectangle(i + (dir ? (-this.fogOffsetX) : this.fogOffsetX), j, texture.Width, texture.Height), null, alpha, 0f, Vector2.Zero, 0, 0f);
+					Main.spriteBatch.Draw(texture, new Rectangle(i + (dir ? (-this.fogOffsetX) : this.fogOffsetX), j, texture.Width, texture.Height), null, fogColor, 0f, Vector2.Zero, SpriteEffects.None, 0f);
 				}
 			}
 			if (setSB)
@@ -106,21 +105,21 @@ namespace Redemption.Backgrounds
 
 		public Color GetAlpha(Color newColor, float alph)
 		{
-			int num = 255 - (int)(255f * alph);
-			float num2 = (float)(255 - num) / 255f;
-			int num3 = (int)((float)newColor.R * num2);
-			int num4 = (int)((float)newColor.G * num2);
-			int num5 = (int)((float)newColor.B * num2);
-			int num6 = (int)newColor.A - num;
-			if (num6 < 0)
+			int alpha = 255 - (int)(255f * alph);
+			float alphaDiff = (float)(255 - alpha) / 255f;
+			int r = (int)((float)newColor.R * alphaDiff);
+			int newG = (int)((float)newColor.G * alphaDiff);
+			int newB = (int)((float)newColor.B * alphaDiff);
+			int newA = (int)newColor.A - alpha;
+			if (newA < 0)
 			{
-				num6 = 0;
+				newA = 0;
 			}
-			if (num6 > 255)
+			if (newA > 255)
 			{
-				num6 = 255;
+				newA = 255;
 			}
-			return new Color(num3, num4, num5, num6);
+			return new Color(r, newG, newB, newA);
 		}
 
 		public int fogOffsetX;

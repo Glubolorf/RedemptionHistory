@@ -42,9 +42,9 @@ namespace Redemption.Tiles
 			TileObjectData.addAlternate(0);
 			TileObjectData.addTile((int)base.Type);
 			base.AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Petrified Wood Door");
-			base.AddMapEntry(new Color(200, 200, 200), modTranslation);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Petrified Wood Door");
+			base.AddMapEntry(new Color(200, 200, 200), name);
 			this.disableSmartCursor = true;
 			this.adjTiles = new int[]
 			{

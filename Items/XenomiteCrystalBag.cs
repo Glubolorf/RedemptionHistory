@@ -20,12 +20,19 @@ namespace Redemption.Items
 			base.item.height = 24;
 			base.item.rare = 9;
 			base.item.expert = true;
-			this.bossBagNPC = base.mod.NPCType("XenomiteCrystalPhase2");
 		}
 
 		public override bool CanRightClick()
 		{
 			return true;
+		}
+
+		public override int BossBagNPC
+		{
+			get
+			{
+				return base.mod.NPCType("XenomiteCrystalPhase2");
+			}
 		}
 
 		public override void OpenBossBag(Player player)

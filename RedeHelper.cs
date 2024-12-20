@@ -48,29 +48,29 @@ namespace Redemption
 
 		public static Vector2 RandomPositin(Vector2 pos1, Vector2 pos2)
 		{
-			Random random = new Random();
-			return new Vector2((float)(random.Next((int)pos1.X, (int)pos2.X) + 1), (float)(random.Next((int)pos1.Y, (int)pos2.Y) + 1));
+			Random rand = new Random();
+			return new Vector2((float)(rand.Next((int)pos1.X, (int)pos2.X) + 1), (float)(rand.Next((int)pos1.Y, (int)pos2.Y) + 1));
 		}
 
 		public static int GetNearestAlivePlayer(NPC npc)
 		{
-			float num = 4.8151624E+09f;
-			int result = -1;
-			foreach (Player player2 in Main.player)
+			float NearestPlayerDist = 4.8151624E+09f;
+			int NearestPlayer = -1;
+			foreach (Player player in Main.player)
 			{
-				if (player2.Distance(npc.Center) < num && player2.active)
+				if (player.Distance(npc.Center) < NearestPlayerDist && player.active)
 				{
-					num = player2.Distance(npc.Center);
-					result = player2.whoAmI;
+					NearestPlayerDist = player.Distance(npc.Center);
+					NearestPlayer = player.whoAmI;
 				}
 			}
-			return result;
+			return NearestPlayer;
 		}
 
 		public static Vector2 VelocityFPTP(Vector2 pos1, Vector2 pos2, float speed)
 		{
-			Vector2 vector = pos2 - pos1;
-			return vector * (speed / (float)Math.Sqrt((double)(vector.X * vector.X + vector.Y * vector.Y)));
+			Vector2 move = pos2 - pos1;
+			return move * (speed / (float)Math.Sqrt((double)(move.X * move.X + move.Y * move.Y)));
 		}
 
 		public static float RadtoGrad(float Rad)
@@ -80,38 +80,38 @@ namespace Redemption
 
 		public static int GetNearestNPC(Vector2 Point, bool Friendly = false, bool NoBoss = false)
 		{
-			float num = -1f;
-			int result = -1;
-			foreach (NPC npc2 in Main.npc)
+			float NearestNPCDist = -1f;
+			int NearestNPC = -1;
+			foreach (NPC npc in Main.npc)
 			{
-				if (npc2.active && (!NoBoss || !npc2.boss) && (Friendly || (!npc2.friendly && npc2.lifeMax > 5)) && (num == -1f || npc2.Distance(Point) < num))
+				if (npc.active && (!NoBoss || !npc.boss) && (Friendly || (!npc.friendly && npc.lifeMax > 5)) && (NearestNPCDist == -1f || npc.Distance(Point) < NearestNPCDist))
 				{
-					num = npc2.Distance(Point);
-					result = npc2.whoAmI;
+					NearestNPCDist = npc.Distance(Point);
+					NearestNPC = npc.whoAmI;
 				}
 			}
-			return result;
+			return NearestNPC;
 		}
 
 		public static int GetNearestPlayer(Vector2 Point, bool Alive = false)
 		{
-			float num = -1f;
-			int result = -1;
-			foreach (Player player2 in Main.player)
+			float NearestPlayerDist = -1f;
+			int NearestPlayer = -1;
+			foreach (Player player in Main.player)
 			{
-				if ((!Alive || (player2.active && !player2.dead)) && (num == -1f || player2.Distance(Point) < num))
+				if ((!Alive || (player.active && !player.dead)) && (NearestPlayerDist == -1f || player.Distance(Point) < NearestPlayerDist))
 				{
-					num = player2.Distance(Point);
-					result = player2.whoAmI;
+					NearestPlayerDist = player.Distance(Point);
+					NearestPlayer = player.whoAmI;
 				}
 			}
-			return result;
+			return NearestPlayer;
 		}
 
 		public static Vector2 VelocityToPoint(Vector2 A, Vector2 B, float Speed)
 		{
-			Vector2 vector = B - A;
-			return vector * (Speed / (float)Math.Sqrt((double)(vector.X * vector.X + vector.Y * vector.Y)));
+			Vector2 Move = B - A;
+			return Move * (Speed / (float)Math.Sqrt((double)(Move.X * Move.X + Move.Y * Move.Y)));
 		}
 
 		public static Vector2 RandomPointInArea(Vector2 A, Vector2 B)
@@ -136,10 +136,11 @@ namespace Redemption
 
 		public static Vector2 PolarPos(Vector2 Point, float Distance, float Angle, int XOffset = 0, int YOffset = 0)
 		{
-			Vector2 result = default(Vector2);
-			result.X = Distance * (float)Math.Sin((double)RedeHelper.RadtoGrad(Angle)) + Point.X + (float)XOffset;
-			result.Y = Distance * (float)Math.Cos((double)RedeHelper.RadtoGrad(Angle)) + Point.Y + (float)YOffset;
-			return result;
+			return new Vector2
+			{
+				X = Distance * (float)Math.Sin((double)RedeHelper.RadtoGrad(Angle)) + Point.X + (float)XOffset,
+				Y = Distance * (float)Math.Cos((double)RedeHelper.RadtoGrad(Angle)) + Point.Y + (float)YOffset
+			};
 		}
 
 		public static bool Chance(float chance)
@@ -154,46 +155,43 @@ namespace Redemption
 
 		public static float DistortFloat(float Float, float Percent)
 		{
-			float num = Float * Percent;
-			int num2 = 0;
-			while (num.ToString().Split(new char[]
+			float DistortNumber = Float * Percent;
+			int Counter = 0;
+			while (DistortNumber.ToString().Split(new char[]
 			{
 				','
 			}).Length > 1)
 			{
-				num *= 10f;
-				num2++;
+				DistortNumber *= 10f;
+				Counter++;
 			}
-			return Float + (float)Main.rand.Next(0, (int)num + 1) / (float)Math.Pow(10.0, (double)num2) * (float)((Main.rand.Next(2) == 0) ? -1 : 1);
+			return Float + (float)Main.rand.Next(0, (int)DistortNumber + 1) / (float)Math.Pow(10.0, (double)Counter) * (float)((Main.rand.Next(2) == 0) ? -1 : 1);
 		}
 
 		public static Vector2 FoundPosition(Vector2 tilePos)
 		{
-			Vector2 vector;
-			vector..ctor((float)(Main.screenWidth / 2), (float)(Main.screenHeight / 2));
-			Vector2 vector2 = tilePos - Main.mapFullscreenPos;
-			vector2 *= Main.mapFullscreenScale / 16f;
-			vector2 = vector2 * 16f + vector;
-			Vector2 result;
-			result..ctor((float)((int)vector2.X), (float)((int)vector2.Y));
-			return result;
+			Vector2 Screen = new Vector2((float)(Main.screenWidth / 2), (float)(Main.screenHeight / 2));
+			Vector2 FullScreen = tilePos - Main.mapFullscreenPos;
+			FullScreen *= Main.mapFullscreenScale / 16f;
+			FullScreen = FullScreen * 16f + Screen;
+			return new Vector2((float)((int)FullScreen.X), (float)((int)FullScreen.Y));
 		}
 
 		public static void MoveTowards(this NPC npc, Vector2 playerTarget, float speed, float turnResistance)
 		{
-			Vector2 vector = playerTarget - npc.Center;
-			float num = vector.Length();
-			if (num > speed)
+			Vector2 Move = playerTarget - npc.Center;
+			float Length = Move.Length();
+			if (Length > speed)
 			{
-				vector *= speed / num;
+				Move *= speed / Length;
 			}
-			vector = (npc.velocity * turnResistance + vector) / (turnResistance + 1f);
-			num = vector.Length();
-			if (num > speed)
+			Move = (npc.velocity * turnResistance + Move) / (turnResistance + 1f);
+			Length = Move.Length();
+			if (Length > speed)
 			{
-				vector *= speed / num;
+				Move *= speed / Length;
 			}
-			npc.velocity = vector;
+			npc.velocity = Move;
 		}
 
 		public static bool Placement(int x, int y)
@@ -206,7 +204,7 @@ namespace Redemption
 					{
 						return false;
 					}
-					int[] array = new int[]
+					int[] TileArray = new int[]
 					{
 						41,
 						43,
@@ -222,9 +220,9 @@ namespace Redemption
 						25,
 						203
 					};
-					for (int k = 0; k < array.Length - 1; k++)
+					for (int ohgodilovememes = 0; ohgodilovememes < TileArray.Length - 1; ohgodilovememes++)
 					{
-						if (Main.tile[i, j].type == (ushort)array[k])
+						if (Main.tile[i, j].type == (ushort)TileArray[ohgodilovememes])
 						{
 							return false;
 						}
@@ -244,7 +242,7 @@ namespace Redemption
 					{
 						return false;
 					}
-					int[] array = new int[]
+					int[] TileArray = new int[]
 					{
 						41,
 						43,
@@ -256,9 +254,9 @@ namespace Redemption
 						60,
 						40
 					};
-					for (int k = 0; k < array.Length - 1; k++)
+					for (int ohgodilovememes = 0; ohgodilovememes < TileArray.Length - 1; ohgodilovememes++)
 					{
-						if (Main.tile[i, j].type == (ushort)array[k])
+						if (Main.tile[i, j].type == (ushort)TileArray[ohgodilovememes])
 						{
 							return false;
 						}

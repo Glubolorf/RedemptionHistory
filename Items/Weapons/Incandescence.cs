@@ -66,11 +66,11 @@ namespace Redemption.Items.Weapons
 			if (player.altFunctionUse == 2)
 			{
 				position = Main.MouseWorld;
-				int num = 20;
-				for (int i = 0; i < num; i++)
+				int pieCut = 20;
+				for (int i = 0; i < pieCut; i++)
 				{
-					int num2 = Projectile.NewProjectile(position.X, position.Y, 0f, 0f, base.mod.ProjectileType("HolyFirePro1"), damage * 3, knockBack, Main.myPlayer, 0f, 0f);
-					Main.projectile[num2].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)num * 6.28f);
+					int projID = Projectile.NewProjectile(position.X, position.Y, 0f, 0f, base.mod.ProjectileType("HolyFirePro1"), damage * 3, knockBack, Main.myPlayer, 0f, 0f);
+					Main.projectile[projID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)pieCut * 6.28f);
 				}
 				return false;
 			}

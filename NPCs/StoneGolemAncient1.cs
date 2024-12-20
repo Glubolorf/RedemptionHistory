@@ -22,7 +22,7 @@ namespace Redemption.NPCs
 			base.npc.friendly = false;
 			base.npc.defense = 20;
 			base.npc.lifeMax = 85;
-			base.npc.HitSound = base.mod.GetLegacySoundSlot(3, "Sounds/NPCHit/StoneHit");
+			base.npc.HitSound = SoundID.NPCHit3;
 			base.npc.DeathSound = SoundID.NPCDeath3;
 			base.npc.value = 100f;
 			base.npc.knockBackResist = 0.25f;

@@ -72,28 +72,28 @@ namespace Redemption.NPCs.Bosses
 			base.npc.ai[1] += 1f;
 			if (base.npc.ai[1] == 200f)
 			{
-				int num = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(0f, -8f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				num = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(0f, 8f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				num = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-8f, 0f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				num = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(8f, 0f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				num = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(6f, 6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				num = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(6f, -6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				num = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-6f, 6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				num = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-6f, -6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				Main.projectile[num].netUpdate = true;
+				int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(0f, -8f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+				p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(0f, 8f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+				p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-8f, 0f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+				p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(8f, 0f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+				p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(6f, 6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+				p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(6f, -6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+				p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-6f, 6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+				p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-6f, -6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+				Main.projectile[p].netUpdate = true;
 				base.npc.ai[1] = 0f;
 			}
 			if (base.npc.life < 10000 && base.npc.ai[1] == 100f)
 			{
-				int num2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(0f, -8f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				num2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(0f, 8f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				num2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-8f, 0f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				num2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(8f, 0f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				num2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(6f, 6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				num2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(6f, -6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				num2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-6f, 6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				num2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-6f, -6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				Main.projectile[num2].netUpdate = true;
+				int p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(0f, -8f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+				p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(0f, 8f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+				p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-8f, 0f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+				p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(8f, 0f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+				p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(6f, 6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+				p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(6f, -6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+				p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-6f, 6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+				p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-6f, -6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+				Main.projectile[p2].netUpdate = true;
 			}
 		}
 
@@ -115,17 +115,18 @@ namespace Redemption.NPCs.Bosses
 					{
 						base.npc.timeLeft = 10;
 					}
+					return;
 				}
 			}
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/Bosses/VlitchCore_Glow");
-			SpriteEffects spriteEffects = (base.npc.spriteDirection == -1) ? 0 : 1;
-			spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
-			spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, spriteEffects, 0f);
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D glowMask = base.mod.GetTexture("NPCs/Bosses/VlitchCore_Glow");
+			SpriteEffects effects = (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+			spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			spriteBatch.Draw(glowMask, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, effects, 0f);
 			return false;
 		}
 

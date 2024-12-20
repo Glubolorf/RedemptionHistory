@@ -12,14 +12,14 @@ namespace Redemption.Projectiles
 		{
 			if (Main.netMode != 2)
 			{
-				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
 				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
 				{
-					array[i] = Main.glowMaskTexture[i];
+					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				array[array.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
-				Plant3.customGlowMask = (short)(array.Length - 1);
-				Main.glowMaskTexture = array;
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
+				Plant3.customGlowMask = (short)(glowMasks.Length - 1);
+				Main.glowMaskTexture = glowMasks;
 			}
 			base.DisplayName.SetDefault("Blinkroot Bush");
 		}
@@ -38,8 +38,8 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y + 2f), base.projectile.width + 12, base.projectile.height + 2, 64, base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 1f);
-			Main.dust[num].noGravity = true;
+			int DustID2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y + 2f), base.projectile.width + 12, base.projectile.height + 2, 64, base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 1f);
+			Main.dust[DustID2].noGravity = true;
 			base.projectile.localAI[0] += 1f;
 			Projectile projectile = base.projectile;
 			projectile.velocity.X = projectile.velocity.X * 0f;

@@ -9,14 +9,14 @@ namespace Redemption
 	{
 		public static void SetStyleHarpoon(Player player, Item item, int projType, bool isIndex = false)
 		{
-			int num = isIndex ? projType : BaseAI.GetProjectile(player.Center, projType, player.whoAmI, null, -1f, null);
-			if (num != -1)
+			int projID = isIndex ? projType : BaseAI.GetProjectile(player.Center, projType, player.whoAmI, null, -1f, null);
+			if (projID != -1)
 			{
-				Vector2 center = Main.projectile[num].Center;
-				float num2 = center.X - player.Center.X;
-				float num3 = center.Y - player.Center.Y;
+				Vector2 center = Main.projectile[projID].Center;
+				float distX = center.X - player.Center.X;
+				float distY = center.Y - player.Center.Y;
 				player.direction = ((center.X > player.Center.X) ? 1 : -1);
-				player.itemRotation = (float)Math.Atan2((double)(num3 * (float)player.direction), (double)(num2 * (float)player.direction));
+				player.itemRotation = (float)Math.Atan2((double)(distY * (float)player.direction), (double)(distX * (float)player.direction));
 				if (player.whoAmI == Main.myPlayer && Main.netMode != 0)
 				{
 					NetMessage.SendData(13, -1, -1, NetworkText.FromLiteral(""), player.whoAmI, 0f, 0f, 0f, 0, 0, 0);
@@ -28,10 +28,10 @@ namespace Redemption
 
 		public static void SetStyleBoss(Player player, Item item, bool useItemHitbox = false, bool center = false)
 		{
-			Rectangle rectangle = (useItemHitbox || Main.netMode == 2 || Main.dedServ) ? item.Hitbox : new Rectangle(0, 0, Main.itemTexture[item.type].Width, Main.itemTexture[item.type].Height);
+			Rectangle hitbox = (useItemHitbox || Main.netMode == 2 || Main.dedServ) ? item.Hitbox : new Rectangle(0, 0, Main.itemTexture[item.type].Width, Main.itemTexture[item.type].Height);
 			player.itemRotation = 0f;
-			player.itemLocation.X = player.position.X + (float)player.width * 0.5f + ((center ? 0f : ((float)rectangle.Width * 0.5f)) - 9f - player.itemRotation * 14f * (float)player.direction - 4f) * (float)player.direction;
-			player.itemLocation.Y = player.position.Y + (float)rectangle.Height * 0.5f + 4f;
+			player.itemLocation.X = player.position.X + (float)player.width * 0.5f + ((center ? 0f : ((float)hitbox.Width * 0.5f)) - 9f - player.itemRotation * 14f * (float)player.direction - 4f) * (float)player.direction;
+			player.itemLocation.Y = player.position.Y + (float)hitbox.Height * 0.5f + 4f;
 			if (player.gravDir == -1f)
 			{
 				player.itemRotation = -player.itemRotation;
@@ -53,9 +53,9 @@ namespace Redemption
 		{
 			if (player.whoAmI == Main.myPlayer && (ignoreItemTime || player.itemTime == item.useTime - 1))
 			{
-				float num = (float)Main.mouseX + Main.screenPosition.X - player.Center.X;
-				float num2 = (float)Main.mouseY + Main.screenPosition.Y - player.Center.Y;
-				player.itemRotation = (float)Math.Atan2((double)(num2 * (float)player.direction), (double)(num * (float)player.direction));
+				float distX = (float)Main.mouseX + Main.screenPosition.X - player.Center.X;
+				float distY = (float)Main.mouseY + Main.screenPosition.Y - player.Center.Y;
+				player.itemRotation = (float)Math.Atan2((double)(distY * (float)player.direction), (double)(distX * (float)player.direction));
 				if (Main.netMode != 0)
 				{
 					NetMessage.SendData(13, -1, -1, NetworkText.FromLiteral(""), player.whoAmI, 0f, 0f, 0f, 0, 0, 0);
@@ -69,9 +69,9 @@ namespace Redemption
 		{
 			if (ignoreItemTime || itemTime == useTime - 1)
 			{
-				float num = target.X - center.X;
-				float num2 = target.Y - center.Y;
-				itemRotation = (float)Math.Atan2((double)(num2 * (float)direction), (double)(num * (float)direction));
+				float distX = target.X - center.X;
+				float distY = target.Y - center.Y;
+				itemRotation = (float)Math.Atan2((double)(distY * (float)direction), (double)(distX * (float)direction));
 			}
 			itemLocation = BaseUseStyle.MoveItemLocationGun(center, itemLocation, direction, item);
 		}
@@ -120,65 +120,65 @@ namespace Redemption
 
 		public static Vector2 MoveItemLocationSword(Vector2 position, int width, int height, Vector2 itemLocation, int itemAnimation, int itemAnimationMax, float itemRotation, int direction, float gravDir, Item item, bool basedOnRot = false)
 		{
-			float num = (!basedOnRot) ? 0f : (((float)itemAnimationMax * 0.33f * 0.75f / (float)itemAnimationMax - 0.5f) * (float)(-(float)direction) * 3.5f - (float)direction * 0.3f);
-			float num2 = (!basedOnRot) ? 0f : (((float)itemAnimationMax * 0.66f * 0.75f / (float)itemAnimationMax - 0.5f) * (float)(-(float)direction) * 3.5f - (float)direction * 0.3f);
-			bool flag = itemRotation > num;
-			bool flag2 = itemRotation > num2;
-			if ((!basedOnRot) ? ((float)itemAnimation < (float)itemAnimationMax * 0.33f) : ((gravDir == 1f && ((direction == 1 && flag) || (direction == -1 && !flag))) || (gravDir == -1f && ((direction == 1 && !flag) || (direction == -1 && flag)))))
+			float rot30 = (!basedOnRot) ? 0f : (((float)itemAnimationMax * 0.33f * 0.75f / (float)itemAnimationMax - 0.5f) * (float)(-(float)direction) * 3.5f - (float)direction * 0.3f);
+			float rot31 = (!basedOnRot) ? 0f : (((float)itemAnimationMax * 0.66f * 0.75f / (float)itemAnimationMax - 0.5f) * (float)(-(float)direction) * 3.5f - (float)direction * 0.3f);
+			bool is30 = itemRotation > rot30;
+			bool is31 = itemRotation > rot31;
+			if ((!basedOnRot) ? ((float)itemAnimation < (float)itemAnimationMax * 0.33f) : ((gravDir == 1f && ((direction == 1 && is30) || (direction == -1 && !is30))) || (gravDir == -1f && ((direction == 1 && !is30) || (direction == -1 && is30)))))
 			{
-				float num3 = 10f;
+				float OffsetX = 10f;
 				if (Main.itemTexture[item.type].Width > 64)
 				{
-					num3 = 28f;
+					OffsetX = 28f;
 				}
 				else if (Main.itemTexture[item.type].Width > 32)
 				{
-					num3 = 14f;
+					OffsetX = 14f;
 				}
-				itemLocation.X = position.X + (float)width * 0.5f + ((float)Main.itemTexture[item.type].Width * 0.5f - num3) * (float)direction;
+				itemLocation.X = position.X + (float)width * 0.5f + ((float)Main.itemTexture[item.type].Width * 0.5f - OffsetX) * (float)direction;
 				itemLocation.Y = position.Y + 24f;
 			}
-			else if ((!basedOnRot) ? ((float)itemAnimation < (float)itemAnimationMax * 0.66f) : ((gravDir == 1f && ((direction == 1 && flag2) || (direction == -1 && !flag2))) || (gravDir == -1f && ((direction == 1 && !flag2) || (direction == -1 && flag2)))))
+			else if ((!basedOnRot) ? ((float)itemAnimation < (float)itemAnimationMax * 0.66f) : ((gravDir == 1f && ((direction == 1 && is31) || (direction == -1 && !is31))) || (gravDir == -1f && ((direction == 1 && !is31) || (direction == -1 && is31)))))
 			{
-				float num4 = 10f;
+				float OffsetX2 = 10f;
 				if (Main.itemTexture[item.type].Width > 64)
 				{
-					num4 = 28f;
+					OffsetX2 = 28f;
 				}
 				else if (Main.itemTexture[item.type].Width > 32)
 				{
-					num4 = 18f;
+					OffsetX2 = 18f;
 				}
-				itemLocation.X = position.X + (float)width * 0.5f + ((float)Main.itemTexture[item.type].Width * 0.5f - num4) * (float)direction;
-				num4 = 10f;
+				itemLocation.X = position.X + (float)width * 0.5f + ((float)Main.itemTexture[item.type].Width * 0.5f - OffsetX2) * (float)direction;
+				OffsetX2 = 10f;
 				if (Main.itemTexture[item.type].Height > 64)
 				{
-					num4 = 14f;
+					OffsetX2 = 14f;
 				}
 				else if (Main.itemTexture[item.type].Height > 32)
 				{
-					num4 = 8f;
+					OffsetX2 = 8f;
 				}
-				itemLocation.Y = position.Y + num4;
+				itemLocation.Y = position.Y + OffsetX2;
 			}
 			else
 			{
-				float num5 = 6f;
+				float OffsetX3 = 6f;
 				if (Main.itemTexture[item.type].Width > 64)
 				{
-					num5 = 28f;
+					OffsetX3 = 28f;
 				}
 				else if (Main.itemTexture[item.type].Width > 32)
 				{
-					num5 = 14f;
+					OffsetX3 = 14f;
 				}
-				itemLocation.X = position.X + (float)width * 0.5f - ((float)Main.itemTexture[item.type].Width * 0.5f - num5) * (float)direction;
-				num5 = 10f;
+				itemLocation.X = position.X + (float)width * 0.5f - ((float)Main.itemTexture[item.type].Width * 0.5f - OffsetX3) * (float)direction;
+				OffsetX3 = 10f;
 				if (Main.itemTexture[item.type].Height > 64)
 				{
-					num5 = 14f;
+					OffsetX3 = 14f;
 				}
-				itemLocation.Y = position.Y + num5;
+				itemLocation.Y = position.Y + OffsetX3;
 			}
 			if (gravDir == -1f)
 			{
@@ -222,15 +222,15 @@ namespace Redemption
 
 		public static Rectangle SetFrameSword(Rectangle bodyFrame, int itemAnimation, int itemAnimationMax, float itemRotation, int direction, float gravDir, Item item, bool basedOnRot = false)
 		{
-			float num = (!basedOnRot) ? 0f : (((float)itemAnimationMax * 0.33f * 0.75f / (float)itemAnimationMax - 0.5f) * (float)(-(float)direction) * 3.5f - (float)direction * 0.3f);
-			float num2 = (!basedOnRot) ? 0f : (((float)itemAnimationMax * 0.66f * 0.75f / (float)itemAnimationMax - 0.5f) * (float)(-(float)direction) * 3.5f - (float)direction * 0.3f);
-			bool flag = itemRotation > num;
-			bool flag2 = itemRotation > num2;
-			if ((!basedOnRot) ? ((float)itemAnimation < (float)itemAnimationMax * 0.33f) : ((gravDir == 1f && ((direction == 1 && flag) || (direction == -1 && !flag))) || (gravDir == -1f && ((direction == 1 && !flag) || (direction == -1 && flag)))))
+			float rot30 = (!basedOnRot) ? 0f : (((float)itemAnimationMax * 0.33f * 0.75f / (float)itemAnimationMax - 0.5f) * (float)(-(float)direction) * 3.5f - (float)direction * 0.3f);
+			float rot31 = (!basedOnRot) ? 0f : (((float)itemAnimationMax * 0.66f * 0.75f / (float)itemAnimationMax - 0.5f) * (float)(-(float)direction) * 3.5f - (float)direction * 0.3f);
+			bool is30 = itemRotation > rot30;
+			bool is31 = itemRotation > rot31;
+			if ((!basedOnRot) ? ((float)itemAnimation < (float)itemAnimationMax * 0.33f) : ((gravDir == 1f && ((direction == 1 && is30) || (direction == -1 && !is30))) || (gravDir == -1f && ((direction == 1 && !is30) || (direction == -1 && is30)))))
 			{
 				bodyFrame.Y = bodyFrame.Height * 3;
 			}
-			else if ((!basedOnRot) ? ((float)itemAnimation < (float)itemAnimationMax * 0.66f) : ((gravDir == 1f && ((direction == 1 && flag2) || (direction == -1 && !flag2))) || (gravDir == -1f && ((direction == 1 && !flag2) || (direction == -1 && flag2)))))
+			else if ((!basedOnRot) ? ((float)itemAnimation < (float)itemAnimationMax * 0.66f) : ((gravDir == 1f && ((direction == 1 && is31) || (direction == -1 && !is31))) || (gravDir == -1f && ((direction == 1 && !is31) || (direction == -1 && is31)))))
 			{
 				bodyFrame.Y = bodyFrame.Height * 2;
 			}
@@ -248,11 +248,11 @@ namespace Redemption
 
 		public static Rectangle UpdateHitBoxSword(int itemAnimation, int itemAnimationMax, float itemRotation, int direction, float gravDir, Item item, Rectangle ItemRect, bool basedOnRot = false)
 		{
-			float num = (!basedOnRot) ? 0f : (((float)itemAnimationMax * 0.33f * 0.75f / (float)itemAnimationMax - 0.5f) * (float)(-(float)direction) * 3.5f - (float)direction * 0.3f);
-			float num2 = (!basedOnRot) ? 0f : (((float)itemAnimationMax * 0.66f * 0.75f / (float)itemAnimationMax - 0.5f) * (float)(-(float)direction) * 3.5f - (float)direction * 0.3f);
-			bool flag = itemRotation > num;
-			bool flag2 = itemRotation > num2;
-			if ((!basedOnRot) ? ((float)itemAnimation < (float)itemAnimationMax * 0.33f) : ((gravDir == 1f && ((direction == 1 && flag) || (direction == -1 && !flag))) || (gravDir == -1f && ((direction == 1 && !flag) || (direction == -1 && flag)))))
+			float rot30 = (!basedOnRot) ? 0f : (((float)itemAnimationMax * 0.33f * 0.75f / (float)itemAnimationMax - 0.5f) * (float)(-(float)direction) * 3.5f - (float)direction * 0.3f);
+			float rot31 = (!basedOnRot) ? 0f : (((float)itemAnimationMax * 0.66f * 0.75f / (float)itemAnimationMax - 0.5f) * (float)(-(float)direction) * 3.5f - (float)direction * 0.3f);
+			bool is30 = itemRotation > rot30;
+			bool is31 = itemRotation > rot31;
+			if ((!basedOnRot) ? ((float)itemAnimation < (float)itemAnimationMax * 0.33f) : ((gravDir == 1f && ((direction == 1 && is30) || (direction == -1 && !is30))) || (gravDir == -1f && ((direction == 1 && !is30) || (direction == -1 && is30)))))
 			{
 				if (direction == -1)
 				{
@@ -262,7 +262,7 @@ namespace Redemption
 				ItemRect.Height = (int)((float)ItemRect.Height * 1.1f);
 				ItemRect.Y += (int)((float)ItemRect.Height * 0.5f * gravDir);
 			}
-			else if ((!basedOnRot) ? ((float)itemAnimation < (float)itemAnimationMax * 0.66f) : ((gravDir == 1f && ((direction == 1 && flag2) || (direction == -1 && !flag2))) || (gravDir == -1f && ((direction == 1 && !flag2) || (direction == -1 && flag2)))))
+			else if ((!basedOnRot) ? ((float)itemAnimation < (float)itemAnimationMax * 0.66f) : ((gravDir == 1f && ((direction == 1 && is31) || (direction == -1 && !is31))) || (gravDir == -1f && ((direction == 1 && !is31) || (direction == -1 && is31)))))
 			{
 				if (direction == 1)
 				{

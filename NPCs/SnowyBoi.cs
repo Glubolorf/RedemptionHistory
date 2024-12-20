@@ -62,51 +62,47 @@ namespace Redemption.NPCs
 			Player player = Main.player[base.npc.target];
 			if (this.timer == 120)
 			{
-				float num = 8f;
-				Vector2 vector;
-				vector..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-				int num2 = 35;
-				int num3 = base.mod.ProjectileType("SnowyBall2");
+				float Speed = 8f;
+				Vector2 vector8 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
+				int damage = 35;
+				int type = base.mod.ProjectileType("SnowyBall2");
 				Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 12, 1f, 0f);
-				float num4 = (float)Math.Atan2((double)(vector.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector.X - (player.position.X + (float)player.width * 0.5f)));
-				int num5 = Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num4) * (double)num * -1.0), (float)(Math.Sin((double)num4) * (double)num * -1.0), num3, num2, 0f, 0, 0f, 0f);
-				Main.projectile[num5].netUpdate = true;
+				float rotation = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
+				int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
+				Main.projectile[num54].netUpdate = true;
 			}
 			if (this.timer == 130)
 			{
-				float num6 = 10f;
-				Vector2 vector2;
-				vector2..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-				int num7 = 35;
-				int num8 = base.mod.ProjectileType("SnowyBall2");
+				float Speed2 = 10f;
+				Vector2 vector9 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
+				int damage2 = 35;
+				int type2 = base.mod.ProjectileType("SnowyBall2");
 				Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 12, 1f, 0f);
-				float num9 = (float)Math.Atan2((double)(vector2.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector2.X - (player.position.X + (float)player.width * 0.5f)));
-				int num10 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num9) * (double)num6 * -1.0), (float)(Math.Sin((double)num9) * (double)num6 * -1.0), num8, num7, 0f, 0, 0f, 0f);
-				Main.projectile[num10].netUpdate = true;
+				float rotation2 = (float)Math.Atan2((double)(vector9.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector9.X - (player.position.X + (float)player.width * 0.5f)));
+				int num55 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0), type2, damage2, 0f, 0, 0f, 0f);
+				Main.projectile[num55].netUpdate = true;
 			}
 			if (this.timer == 140)
 			{
-				float num11 = 12f;
-				Vector2 vector3;
-				vector3..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-				int num12 = 35;
-				int num13 = base.mod.ProjectileType("SnowyBall2");
+				float Speed3 = 12f;
+				Vector2 vector10 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
+				int damage3 = 35;
+				int type3 = base.mod.ProjectileType("SnowyBall2");
 				Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 12, 1f, 0f);
-				float num14 = (float)Math.Atan2((double)(vector3.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector3.X - (player.position.X + (float)player.width * 0.5f)));
-				int num15 = Projectile.NewProjectile(vector3.X, vector3.Y, (float)(Math.Cos((double)num14) * (double)num11 * -1.0), (float)(Math.Sin((double)num14) * (double)num11 * -1.0), num13, num12, 0f, 0, 0f, 0f);
-				Main.projectile[num15].netUpdate = true;
+				float rotation3 = (float)Math.Atan2((double)(vector10.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector10.X - (player.position.X + (float)player.width * 0.5f)));
+				int num56 = Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)rotation3) * (double)Speed3 * -1.0), (float)(Math.Sin((double)rotation3) * (double)Speed3 * -1.0), type3, damage3, 0f, 0, 0f, 0f);
+				Main.projectile[num56].netUpdate = true;
 			}
 			if (this.timer == 150)
 			{
-				float num16 = 14f;
-				Vector2 vector4;
-				vector4..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-				int num17 = 35;
-				int num18 = base.mod.ProjectileType("SnowyBall2");
+				float Speed4 = 14f;
+				Vector2 vector11 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
+				int damage4 = 35;
+				int type4 = base.mod.ProjectileType("SnowyBall2");
 				Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 12, 1f, 0f);
-				float num19 = (float)Math.Atan2((double)(vector4.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector4.X - (player.position.X + (float)player.width * 0.5f)));
-				int num20 = Projectile.NewProjectile(vector4.X, vector4.Y, (float)(Math.Cos((double)num19) * (double)num16 * -1.0), (float)(Math.Sin((double)num19) * (double)num16 * -1.0), num18, num17, 0f, 0, 0f, 0f);
-				Main.projectile[num20].netUpdate = true;
+				float rotation4 = (float)Math.Atan2((double)(vector11.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector11.X - (player.position.X + (float)player.width * 0.5f)));
+				int num57 = Projectile.NewProjectile(vector11.X, vector11.Y, (float)(Math.Cos((double)rotation4) * (double)Speed4 * -1.0), (float)(Math.Sin((double)rotation4) * (double)Speed4 * -1.0), type4, damage4, 0f, 0, 0f, 0f);
+				Main.projectile[num57].netUpdate = true;
 			}
 			if (this.timer >= 160)
 			{
@@ -117,11 +113,11 @@ namespace Redemption.NPCs
 			if (base.npc.ai[2] != 0f && base.npc.ai[3] != 0f)
 			{
 				Main.PlaySound(SoundID.Item8, base.npc.position);
-				for (int i = 0; i < 25; i++)
+				for (int num58 = 0; num58 < 25; num58++)
 				{
-					int num21 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 113, 0f, 0f, 100, default(Color), 2.5f);
-					Main.dust[num21].velocity *= 3f;
-					Main.dust[num21].noGravity = true;
+					int num59 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 113, 0f, 0f, 100, default(Color), 2.5f);
+					Main.dust[num59].velocity *= 3f;
+					Main.dust[num59].noGravity = true;
 				}
 				base.npc.position.X = base.npc.ai[2] * 16f - (float)(base.npc.width / 2) + 8f;
 				base.npc.position.Y = base.npc.ai[3] * 16f - (float)base.npc.height;
@@ -130,11 +126,11 @@ namespace Redemption.NPCs
 				base.npc.ai[2] = 0f;
 				base.npc.ai[3] = 0f;
 				Main.PlaySound(SoundID.Item8, base.npc.position);
-				for (int j = 0; j < 25; j++)
+				for (int num60 = 0; num60 < 25; num60++)
 				{
-					int num22 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 113, 0f, 0f, 100, default(Color), 2.5f);
-					Main.dust[num22].velocity *= 3f;
-					Main.dust[num22].noGravity = true;
+					int num61 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 113, 0f, 0f, 100, default(Color), 2.5f);
+					Main.dust[num61].velocity *= 3f;
+					Main.dust[num61].noGravity = true;
 				}
 			}
 			if (Math.Abs(base.npc.position.X - Main.player[base.npc.target].position.X) + Math.Abs(base.npc.position.Y - Main.player[base.npc.target].position.Y) > 2000f)
@@ -144,31 +140,30 @@ namespace Redemption.NPCs
 			if (base.npc.ai[0] >= 650f && Main.netMode != 1)
 			{
 				base.npc.ai[0] = 1f;
-				int num23 = (int)Main.player[base.npc.target].position.X / 16;
-				int num24 = (int)Main.player[base.npc.target].position.Y / 16;
-				int num25 = (int)base.npc.position.X / 16;
-				int num26 = (int)base.npc.position.Y / 16;
-				int num27 = 40;
-				int num28 = 0;
-				for (int k = 0; k < 100; k++)
+				int playerTilePositionX = (int)Main.player[base.npc.target].position.X / 16;
+				int playerTilePositionY = (int)Main.player[base.npc.target].position.Y / 16;
+				int npcTilePositionX = (int)base.npc.position.X / 16;
+				int npcTilePositionY = (int)base.npc.position.Y / 16;
+				int playerTargetShift = 40;
+				int num62 = 0;
+				for (int s = 0; s < 100; s++)
 				{
-					num28++;
-					int num29 = Main.rand.Next(num23 - num27, num23 + num27);
-					int num30 = Main.rand.Next(num24 - num27, num24 + num27);
-					for (int l = num30; l < num24 + num27; l++)
+					num62++;
+					int nearPlayerX = Main.rand.Next(playerTilePositionX - playerTargetShift, playerTilePositionX + playerTargetShift);
+					for (int num63 = Main.rand.Next(playerTilePositionY - playerTargetShift, playerTilePositionY + playerTargetShift); num63 < playerTilePositionY + playerTargetShift; num63++)
 					{
-						if ((num29 < num23 - 12 || num29 > num23 + 12) && (l < num26 - 1 || l > num26 + 1 || num29 < num25 - 1 || num29 > num25 + 1) && Main.tile[num29, l].nactive())
+						if ((nearPlayerX < playerTilePositionX - 12 || nearPlayerX > playerTilePositionX + 12) && (num63 < npcTilePositionY - 1 || num63 > npcTilePositionY + 1 || nearPlayerX < npcTilePositionX - 1 || nearPlayerX > npcTilePositionX + 1) && Main.tile[nearPlayerX, num63].nactive())
 						{
-							bool flag = true;
-							if (Main.tile[num29, l - 1].lava())
+							bool flag5 = true;
+							if (Main.tile[nearPlayerX, num63 - 1].lava())
 							{
-								flag = false;
+								flag5 = false;
 							}
-							if (flag && Main.tileSolid[(int)Main.tile[num29, l].type] && !Collision.SolidTiles(num29 - 1, num29 + 1, l - 4, l - 1))
+							if (flag5 && Main.tileSolid[(int)Main.tile[nearPlayerX, num63].type] && !Collision.SolidTiles(nearPlayerX - 1, nearPlayerX + 1, num63 - 4, num63 - 1))
 							{
 								base.npc.ai[1] = 20f;
-								base.npc.ai[2] = (float)num29;
-								base.npc.ai[3] = (float)l - 1f;
+								base.npc.ai[2] = (float)nearPlayerX;
+								base.npc.ai[3] = (float)num63 - 1f;
 								break;
 							}
 						}

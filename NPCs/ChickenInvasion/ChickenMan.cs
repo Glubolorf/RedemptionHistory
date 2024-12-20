@@ -29,7 +29,7 @@ namespace Redemption.NPCs.ChickenInvasion
 			{
 				base.npc.damage = 20;
 				base.npc.defense = 0;
-				base.npc.lifeMax = 60;
+				base.npc.lifeMax = 50;
 			}
 			base.npc.HitSound = SoundID.NPCHit1;
 			base.npc.DeathSound = SoundID.NPCDeath1;
@@ -55,8 +55,8 @@ namespace Redemption.NPCs.ChickenInvasion
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/ChickenGore1"), 1f);
 				for (int i = 0; i < 7; i++)
 				{
-					int num = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 5, 0f, 0f, 100, default(Color), 1.5f);
-					Main.dust[num].velocity *= 1.4f;
+					int dustIndex = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 5, 0f, 0f, 100, default(Color), 1.5f);
+					Main.dust[dustIndex].velocity *= 1.4f;
 				}
 				if (base.npc.FindBuffIndex(24) != -1)
 				{

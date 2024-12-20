@@ -33,13 +33,21 @@ namespace Redemption.Items.Weapons.v08
 			base.item.shoot = 55;
 		}
 
+		public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
+		{
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().thornCrown)
+			{
+				flat += 50f;
+			}
+		}
+
 		public override void ModifyTooltips(List<TooltipLine> list)
 		{
-			foreach (TooltipLine tooltipLine in list)
+			foreach (TooltipLine line2 in list)
 			{
-				if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+				if (line2.mod == "Terraria" && line2.Name == "ItemName")
 				{
-					tooltipLine.overrideColor = new Color?(new Color(0, 255, 200));
+					line2.overrideColor = new Color?(new Color(0, 255, 200));
 				}
 			}
 		}
@@ -55,24 +63,24 @@ namespace Redemption.Items.Weapons.v08
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			int num = 4 + Main.rand.Next(2);
-			for (int i = 0; i < num; i++)
+			int numberProjectiles = 4 + Main.rand.Next(2);
+			for (int i = 0; i < numberProjectiles; i++)
 			{
-				Vector2 vector = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(30f));
-				float num2 = 1f - Utils.NextFloat(Main.rand) * 0.4f;
-				vector *= num2;
-				int num3 = Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
-				Main.projectile[num3].hostile = false;
-				Main.projectile[num3].friendly = true;
-				Main.projectile[num3].timeLeft = 60;
+				Vector2 perturbedSpeed = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(30f));
+				float scale = 1f - Utils.NextFloat(Main.rand) * 0.4f;
+				perturbedSpeed *= scale;
+				int proj = Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
+				Main.projectile[proj].hostile = false;
+				Main.projectile[proj].friendly = true;
+				Main.projectile[proj].timeLeft = 60;
 			}
-			int num4 = 1 + Main.rand.Next(1);
-			for (int j = 0; j < num4; j++)
+			int numberProjectiles2 = 1 + Main.rand.Next(1);
+			for (int j = 0; j < numberProjectiles2; j++)
 			{
-				Vector2 vector2 = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(30f));
-				float num5 = 1f - Utils.NextFloat(Main.rand) * 0.4f;
-				vector2 *= num5;
-				Projectile.NewProjectile(position.X, position.Y, vector2.X, vector2.Y, base.mod.ProjectileType("CursedThornPro5"), damage, knockBack, player.whoAmI, 0f, 0f);
+				Vector2 perturbedSpeed2 = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(30f));
+				float scale2 = 1f - Utils.NextFloat(Main.rand) * 0.4f;
+				perturbedSpeed2 *= scale2;
+				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed2.X, perturbedSpeed2.Y, base.mod.ProjectileType("CursedThornPro5"), damage, knockBack, player.whoAmI, 0f, 0f);
 			}
 			return false;
 		}

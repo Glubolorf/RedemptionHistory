@@ -155,65 +155,65 @@ namespace Redemption.NPCs
 			{
 				return "You defeated the Moonlord, wow, good job, I totally could've done that...";
 			}
-			int num = NPC.FindFirstNPC(22);
-			if (num >= 0 && Main.rand.Next(15) == 0)
+			int GuideID = NPC.FindFirstNPC(22);
+			if (GuideID >= 0 && Main.rand.Next(15) == 0)
 			{
-				return "If you want to know what materials can be crafted into, just ask " + Main.npc[num].GivenName + ".";
+				return "If you want to know what materials can be crafted into, just ask " + Main.npc[GuideID].GivenName + ".";
 			}
-			int num2 = NPC.FindFirstNPC(17);
-			if (num2 >= 0 && Main.rand.Next(15) == 0)
+			int MerchantID = NPC.FindFirstNPC(17);
+			if (MerchantID >= 0 && Main.rand.Next(15) == 0)
 			{
-				return Main.npc[num2].GivenName + " is a pretty nice guy, but I feel like he's ripping me off...";
+				return Main.npc[MerchantID].GivenName + " is a pretty nice guy, but I feel like he's ripping me off...";
 			}
-			int num3 = NPC.FindFirstNPC(18);
-			if (num3 >= 0 && Main.rand.Next(15) == 0)
+			int NurseID = NPC.FindFirstNPC(18);
+			if (NurseID >= 0 && Main.rand.Next(15) == 0)
 			{
-				return Main.npc[num3].GivenName + " seems helpful... but let's be honest, you only need her to cheese a boss fight.";
+				return Main.npc[NurseID].GivenName + " seems helpful... but let's be honest, you only need her to cheese a boss fight.";
 			}
-			int num4 = NPC.FindFirstNPC(20);
-			if (num4 >= 0 && Main.rand.Next(15) == 0)
+			int DryadID = NPC.FindFirstNPC(20);
+			if (DryadID >= 0 && Main.rand.Next(15) == 0)
 			{
-				return "This land is a nice place to be in, so I guess that's why " + Main.npc[num4].GivenName + " seems pretty determined to stop the evil from spreading.";
+				return "This land is a nice place to be in, so I guess that's why " + Main.npc[DryadID].GivenName + " seems pretty determined to stop the evil from spreading.";
 			}
-			int num5 = NPC.FindFirstNPC(19);
-			if (num5 >= 0 && Main.rand.Next(15) == 0)
+			int ArmsDealerID = NPC.FindFirstNPC(19);
+			if (ArmsDealerID >= 0 && Main.rand.Next(15) == 0)
 			{
-				return Main.npc[num5].GivenName + "'s weaponry is very strange, they are like bows, but shoot tiny balls of metal...";
+				return Main.npc[ArmsDealerID].GivenName + "'s weaponry is very strange, they are like bows, but shoot tiny balls of metal...";
 			}
-			int num6 = NPC.FindFirstNPC(353);
-			if (num6 >= 0 && Main.rand.Next(15) == 0)
+			int StylistID = NPC.FindFirstNPC(353);
+			if (StylistID >= 0 && Main.rand.Next(15) == 0)
 			{
-				return Main.npc[num6].GivenName + " was stuck in a spider's nest! I hate spiders! A colossal Dragon is fine, but SPIDERS!";
+				return Main.npc[StylistID].GivenName + " was stuck in a spider's nest! I hate spiders! A colossal Dragon is fine, but SPIDERS!";
 			}
-			int num7 = NPC.FindFirstNPC(369);
-			if (num7 >= 0 && Main.rand.Next(15) == 0)
+			int AnglerID = NPC.FindFirstNPC(369);
+			if (AnglerID >= 0 && Main.rand.Next(15) == 0)
 			{
-				return Main.npc[num7].GivenName + " is pretty bossy, we did 'Rock, Paper, Scissors', and when I won, he smacked me with a salmon...";
+				return Main.npc[AnglerID].GivenName + " is pretty bossy, we did 'Rock, Paper, Scissors', and when I won, he smacked me with a salmon...";
 			}
-			int num8 = NPC.FindFirstNPC(107);
-			if (num8 >= 0 && Main.rand.Next(15) == 0)
+			int GoblinTinkererID = NPC.FindFirstNPC(107);
+			if (GoblinTinkererID >= 0 && Main.rand.Next(15) == 0)
 			{
-				return Main.npc[num8].GivenName + " sells boots... that make you fly! Mind... Blown...";
+				return Main.npc[GoblinTinkererID].GivenName + " sells boots... that make you fly! Mind... Blown...";
 			}
-			int num9 = NPC.FindFirstNPC(54);
-			if (num9 >= 0 && Main.rand.Next(15) == 0)
+			int ClothierID = NPC.FindFirstNPC(54);
+			if (ClothierID >= 0 && Main.rand.Next(15) == 0)
 			{
-				return "I think " + Main.npc[num9].GivenName + " is a creepy guy, he keeps on saying that he remembers throwing a girl into a dungeon...";
+				return "I think " + Main.npc[ClothierID].GivenName + " is a creepy guy, he keeps on saying that he remembers throwing a girl into a dungeon...";
 			}
-			int num10 = NPC.FindFirstNPC(208);
-			if (num10 >= 0 && Main.rand.Next(15) == 0)
+			int PartyGirlID = NPC.FindFirstNPC(208);
+			if (PartyGirlID >= 0 && Main.rand.Next(15) == 0)
 			{
-				return "Is it just me, or does " + Main.npc[num10].GivenName + " remind you of technicoloured ponies from another universe...";
+				return "Is it just me, or does " + Main.npc[PartyGirlID].GivenName + " remind you of technicoloured ponies from another universe...";
 			}
-			int num11 = NPC.FindFirstNPC(108);
-			if (num11 >= 0 && Main.rand.Next(15) == 0)
+			int WizardID = NPC.FindFirstNPC(108);
+			if (WizardID >= 0 && Main.rand.Next(15) == 0)
 			{
-				return Main.npc[num11].GivenName + " is a wizard... He is now my favourite NPC.";
+				return Main.npc[WizardID].GivenName + " is a wizard... He is now my favourite NPC.";
 			}
-			int num12 = NPC.FindFirstNPC(209);
-			if (num12 >= 0 && Main.rand.Next(15) == 0)
+			int CyborgID = NPC.FindFirstNPC(209);
+			if (CyborgID >= 0 && Main.rand.Next(15) == 0)
 			{
-				return Main.npc[num12].GivenName + "'s equipment is witch craft...";
+				return Main.npc[CyborgID].GivenName + "'s equipment is witch craft...";
 			}
 			switch (Main.rand.Next(5))
 			{
@@ -270,6 +270,11 @@ namespace Redemption.NPCs
 				shop.item[nextSlot].SetDefaults(base.mod.ItemType("ForestGolemPainting"), false);
 				nextSlot++;
 			}
+			if (NPC.downedBoss2)
+			{
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("EaglecrestSpelltome"), false);
+				nextSlot++;
+			}
 			if (NPC.downedBoss3)
 			{
 				shop.item[nextSlot].SetDefaults(base.mod.ItemType("GathicCryoCrystal"), false);
@@ -297,7 +302,7 @@ namespace Redemption.NPCs
 		public override void DrawTownAttackSwing(ref Texture2D item, ref int itemSize, ref float scale, ref Vector2 offset)
 		{
 			scale = 1f;
-			item = Main.itemTexture[base.mod.ItemType<NoblesSword>()];
+			item = Main.itemTexture[ModContent.ItemType<NoblesSword>()];
 			itemSize = 36;
 		}
 

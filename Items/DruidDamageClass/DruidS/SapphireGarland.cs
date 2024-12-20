@@ -46,9 +46,8 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 		public override void UpdateArmorSet(Player player)
 		{
 			player.setBonus = "You are surrounded by 3 Corruption Spirits, damages foes and reforms quickly after death";
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.sapphireBonus = true;
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).sapphireBonus && Main.rand.Next(100) == 0 && player.ownedProjectileCounts[base.mod.ProjectileType("CorruptSoul2")] <= 2)
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).sapphireBonus = true;
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().sapphireBonus && Main.rand.Next(100) == 0 && player.ownedProjectileCounts[base.mod.ProjectileType("CorruptSoul2")] <= 2)
 			{
 				Projectile.NewProjectile(player.position, Vector2.Zero, base.mod.ProjectileType("CorruptSoul2"), 60, 0f, player.whoAmI, 0f, 0f);
 			}

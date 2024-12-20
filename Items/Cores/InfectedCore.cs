@@ -24,16 +24,16 @@ namespace Redemption.Items.Cores
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
+			DruidDamagePlayer modPlayer = DruidDamagePlayer.ModPlayer(player);
+			RedePlayer modPlayer2 = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
 			player.statLifeMax2 += 50;
 			player.thorns = 1f;
 			player.buffImmune[base.mod.BuffType("XenomiteDebuff")] = true;
 			player.buffImmune[base.mod.BuffType("XenomiteDebuff2")] = true;
 			player.buffImmune[base.mod.BuffType("RadioactiveFalloutDebuff")] = true;
-			if (redePlayer.ZoneXeno)
+			if (modPlayer2.ZoneXeno || modPlayer2.ZoneEvilXeno)
 			{
-				druidDamagePlayer.druidDamage *= 1.1f;
+				modPlayer.druidDamage *= 1.1f;
 				player.magicDamage *= 1.1f;
 				player.meleeDamage *= 1.1f;
 				player.minionDamage *= 1.1f;
@@ -46,12 +46,10 @@ namespace Redemption.Items.Cores
 				player.moveSpeed += 50f;
 				player.jumpBoost = true;
 				player.blind = false;
+				return;
 			}
-			if (!redePlayer.ZoneXeno)
-			{
-				player.blind = true;
-				player.moveSpeed *= 0.85f;
-			}
+			player.blind = true;
+			player.moveSpeed *= 0.85f;
 		}
 
 		public override void AddRecipes()

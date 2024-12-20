@@ -14,7 +14,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Dragon-Lead Helm");
-			base.Tooltip.SetDefault("[c/daf73a:---Druid Class---]\n6% increased ranged damage and crit\n6% increased druidic damage and crit");
+			base.Tooltip.SetDefault("[c/daf73a:---Druid Class---]\n4% increased ranged damage and crit\n7% increased druidic damage and crit");
 		}
 
 		public override void SetDefaults()
@@ -23,16 +23,16 @@ namespace Redemption.Items.Armor
 			base.item.height = 28;
 			base.item.value = Item.sellPrice(0, 8, 50, 0);
 			base.item.rare = 4;
-			base.item.defense = 8;
+			base.item.defense = 4;
 		}
 
 		public override void UpdateEquip(Player player)
 		{
-			player.rangedDamage *= 1.06f;
-			player.rangedCrit += 6;
+			player.rangedDamage *= 1.04f;
+			player.rangedCrit += 4;
 			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
-			druidDamagePlayer.druidDamage += 0.06f;
-			druidDamagePlayer.druidCrit += 6;
+			druidDamagePlayer.druidDamage += 0.07f;
+			druidDamagePlayer.druidCrit += 7;
 		}
 
 		public override void ArmorSetShadows(Player player)

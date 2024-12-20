@@ -37,8 +37,8 @@ namespace Redemption.NPCs.v08
 			{
 				for (int i = 0; i < 25; i++)
 				{
-					int num = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 273, 0f, 0f, 100, default(Color), 3f);
-					Main.dust[num].velocity *= 2.6f;
+					int dustIndex2 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 273, 0f, 0f, 100, default(Color), 3f);
+					Main.dust[dustIndex2].velocity *= 2.6f;
 				}
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/XenomiteGore"), 1f);
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/XenomiteGore"), 1f);
@@ -61,8 +61,7 @@ namespace Redemption.NPCs.v08
 		public override void AI()
 		{
 			base.npc.TargetClosest(true);
-			Player player = Main.player[base.npc.target];
-			if (player.Center.X > base.npc.Center.X)
+			if (Main.player[base.npc.target].Center.X > base.npc.Center.X)
 			{
 				base.npc.spriteDirection = 1;
 			}
@@ -114,12 +113,12 @@ namespace Redemption.NPCs.v08
 					base.npc.velocity.X = 0f;
 					if (this.fakeDeathTimer >= 240)
 					{
-						int num = 16;
-						for (int i = 0; i < num; i++)
+						int pieCut = 16;
+						for (int i = 0; i < pieCut; i++)
 						{
-							int num2 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("InfectedFlinxWave"), 1, 3f, 255, 0f, 0f);
-							Main.projectile[num2].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(26f, 0f), (float)i / (float)num * 6.28f);
-							Main.projectile[num2].netUpdate = true;
+							int projID = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("InfectedFlinxWave"), 1, 3f, 255, 0f, 0f);
+							Main.projectile[projID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(26f, 0f), (float)i / (float)pieCut * 6.28f);
+							Main.projectile[projID].netUpdate = true;
 						}
 						this.fakeDeathTimer = 0;
 						return;
@@ -134,29 +133,27 @@ namespace Redemption.NPCs.v08
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/v08/InfectedSnowFlinxHop");
-			Texture2D texture2 = base.mod.GetTexture("NPCs/v08/InfectedSnowFlinxFakeDeath");
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D hopAni = base.mod.GetTexture("NPCs/v08/InfectedSnowFlinxHop");
+			Texture2D fakeDeathAni = base.mod.GetTexture("NPCs/v08/InfectedSnowFlinxFakeDeath");
 			int spriteDirection = base.npc.spriteDirection;
 			if (!this.hop && !this.fakeDeath)
 			{
-				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.hop && !this.fakeDeath)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num = texture.Height / 1;
-				int num2 = num * this.hopFrame;
-				Main.spriteBatch.Draw(texture, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num214 = hopAni.Height / 1;
+				int y6 = num214 * this.hopFrame;
+				Main.spriteBatch.Draw(hopAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, hopAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)hopAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.fakeDeath)
 			{
-				Vector2 vector2;
-				vector2..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num3 = texture2.Height / 8;
-				int num4 = num3 * this.fakeDeathFrame;
-				Main.spriteBatch.Draw(texture2, vector2 - Main.screenPosition, new Rectangle?(new Rectangle(0, num4, texture2.Width, num3)), drawColor, base.npc.rotation, new Vector2((float)texture2.Width / 2f, (float)num3 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter2 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num215 = fakeDeathAni.Height / 8;
+				int y7 = num215 * this.fakeDeathFrame;
+				Main.spriteBatch.Draw(fakeDeathAni, drawCenter2 - Main.screenPosition, new Rectangle?(new Rectangle(0, y7, fakeDeathAni.Width, num215)), drawColor, base.npc.rotation, new Vector2((float)fakeDeathAni.Width / 2f, (float)num215 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
 		}

@@ -38,14 +38,14 @@ namespace Redemption.NPCs.v08
 		{
 			if (base.npc.life <= 0)
 			{
-				if (Config.NoCombatText)
+				if (RedeConfigClient.Instance.NoCombatText)
 				{
 					CombatText.NewText(base.npc.getRect(), Color.Orange, "BOOM!", true, false);
 				}
 				for (int i = 0; i < 15; i++)
 				{
-					int num = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, base.mod.DustType("SludgeSpoonDust"), 0f, 0f, 100, default(Color), 3f);
-					Main.dust[num].velocity *= 4.6f;
+					int dustIndex2 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, base.mod.DustType("SludgeSpoonDust"), 0f, 0f, 100, default(Color), 3f);
+					Main.dust[dustIndex2].velocity *= 4.6f;
 				}
 				Main.PlaySound(SoundID.Item14, base.npc.position);
 				if (Main.netMode != 1)
@@ -57,39 +57,39 @@ namespace Redemption.NPCs.v08
 				}
 				for (int k = 0; k < 30; k++)
 				{
-					int num2 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 31, 0f, 0f, 100, default(Color), 5f);
-					Main.dust[num2].velocity *= 1.4f;
+					int dustIndex3 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 31, 0f, 0f, 100, default(Color), 5f);
+					Main.dust[dustIndex3].velocity *= 1.4f;
 				}
 				for (int l = 0; l < 40; l++)
 				{
-					int num3 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 6, 0f, 0f, 100, default(Color), 3f);
-					Main.dust[num3].noGravity = true;
-					Main.dust[num3].velocity *= 5f;
-					num3 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 6, 0f, 0f, 100, default(Color), 2f);
-					Main.dust[num3].velocity *= 3f;
+					int dustIndex4 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 6, 0f, 0f, 100, default(Color), 3f);
+					Main.dust[dustIndex4].noGravity = true;
+					Main.dust[dustIndex4].velocity *= 5f;
+					dustIndex4 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 6, 0f, 0f, 100, default(Color), 2f);
+					Main.dust[dustIndex4].velocity *= 3f;
 				}
-				for (int m = 0; m < 2; m++)
+				for (int g = 0; g < 2; g++)
 				{
-					int num4 = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-					Main.gore[num4].scale = 1.5f;
-					Main.gore[num4].velocity.X = Main.gore[num4].velocity.X + 1.5f;
-					Main.gore[num4].velocity.Y = Main.gore[num4].velocity.Y + 1.5f;
-					num4 = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-					Main.gore[num4].scale = 1.5f;
-					Main.gore[num4].velocity.X = Main.gore[num4].velocity.X - 1.5f;
-					Main.gore[num4].velocity.Y = Main.gore[num4].velocity.Y + 1.5f;
-					num4 = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-					Main.gore[num4].scale = 1.5f;
-					Main.gore[num4].velocity.X = Main.gore[num4].velocity.X + 1.5f;
-					Main.gore[num4].velocity.Y = Main.gore[num4].velocity.Y - 1.5f;
-					num4 = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-					Main.gore[num4].scale = 1.5f;
-					Main.gore[num4].velocity.X = Main.gore[num4].velocity.X - 1.5f;
-					Main.gore[num4].velocity.Y = Main.gore[num4].velocity.Y - 1.5f;
+					int goreIndex = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+					Main.gore[goreIndex].scale = 1.5f;
+					Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.5f;
+					Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
+					goreIndex = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+					Main.gore[goreIndex].scale = 1.5f;
+					Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X - 1.5f;
+					Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
+					goreIndex = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+					Main.gore[goreIndex].scale = 1.5f;
+					Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.5f;
+					Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y - 1.5f;
+					goreIndex = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+					Main.gore[goreIndex].scale = 1.5f;
+					Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X - 1.5f;
+					Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y - 1.5f;
 				}
 			}
-			int num5 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, base.mod.DustType("SludgeSpoonDust"), 0f, 0f, 100, default(Color), 2f);
-			Main.dust[num5].velocity *= 1.6f;
+			int dustIndex5 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, base.mod.DustType("SludgeSpoonDust"), 0f, 0f, 100, default(Color), 2f);
+			Main.dust[dustIndex5].velocity *= 1.6f;
 		}
 	}
 }

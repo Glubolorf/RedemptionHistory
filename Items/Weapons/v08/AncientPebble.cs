@@ -27,7 +27,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.noMelee = true;
 			base.item.rare = 3;
 			base.item.knockBack = 5f;
-			base.item.value = Item.sellPrice(0, 50, 0, 0);
+			base.item.value = Item.sellPrice(0, 0, 60, 0);
 			base.item.UseSound = SoundID.Item44;
 			base.item.shoot = base.mod.ProjectileType("AncientStoneMinion");
 			base.item.shootSpeed = 10f;

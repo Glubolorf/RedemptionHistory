@@ -59,8 +59,8 @@ namespace Redemption.NPCs
 
 		public override void AI()
 		{
-			float num = base.npc.Distance(Main.player[base.npc.target].Center);
-			if (num <= 400f && Main.rand.Next(150) == 0 && !this.minigunAttack)
+			Player player = Main.player[base.npc.target];
+			if (base.npc.Distance(Main.player[base.npc.target].Center) <= 400f && Main.rand.Next(150) == 0 && !this.minigunAttack)
 			{
 				this.minigunAttack = true;
 			}
@@ -78,13 +78,13 @@ namespace Redemption.NPCs
 					{
 						if (base.npc.direction == -1)
 						{
-							int num2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 26f, base.npc.position.Y + 54f), new Vector2(-6f, 0f), 302, 40, 3f, 255, 0f, 0f);
-							Main.projectile[num2].netUpdate = true;
+							int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 26f, base.npc.position.Y + 54f), new Vector2(-6f, 0f), 302, 40, 3f, 255, 0f, 0f);
+							Main.projectile[p].netUpdate = true;
 						}
 						else
 						{
-							int num3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 62f, base.npc.position.Y + 54f), new Vector2(6f, 0f), 302, 40, 3f, 255, 0f, 0f);
-							Main.projectile[num3].netUpdate = true;
+							int p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 62f, base.npc.position.Y + 54f), new Vector2(6f, 0f), 302, 40, 3f, 255, 0f, 0f);
+							Main.projectile[p2].netUpdate = true;
 						}
 					}
 					if (this.spamTimer >= 3)
@@ -102,17 +102,17 @@ namespace Redemption.NPCs
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/OmegaSpacePaladin_Glow");
-			SpriteEffects spriteEffects = (base.npc.spriteDirection == -1) ? 0 : 1;
-			spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
-			spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, spriteEffects, 0f);
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D glowMask = base.mod.GetTexture("NPCs/OmegaSpacePaladin_Glow");
+			SpriteEffects effects = (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+			spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			spriteBatch.Draw(glowMask, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, effects, 0f);
 			return false;
 		}
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.OverworldNightMonster.Chance * ((Main.hardMode && NPC.downedPlantBoss && RedeWorld.downedVlitch3) ? 0.004f : 0f);
+			return SpawnCondition.OverworldNightMonster.Chance * ((!RedeWorld.girusCloaked && Main.hardMode && NPC.downedPlantBoss && RedeWorld.downedVlitch3) ? 0.004f : 0f);
 		}
 
 		private bool minigunAttack;

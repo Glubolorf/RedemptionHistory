@@ -2,7 +2,6 @@
 using System.IO;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ModLoader;
 
 namespace Redemption
 {
@@ -10,37 +9,37 @@ namespace Redemption
 	{
 		public static void HandlePacket(BinaryReader bb, int whoAmI)
 		{
-			byte b = bb.ReadByte();
+			byte msg = bb.ReadByte();
 			if (RedeNet.DEBUG)
 			{
-				ErrorLogger.Log(((Main.netMode == 2) ? "--SERVER-- " : "--CLIENT-- ") + "HANDING MESSAGE: " + b);
+				Redemption.inst.Logger.Debug(((Main.netMode == 2) ? "--SERVER-- " : "--CLIENT-- ") + "HANDING MESSAGE: " + msg);
 			}
 			try
 			{
-				if (b == 0 && Main.netMode == 2)
+				if (msg == 0 && Main.netMode == 2)
 				{
-					int num = (int)bb.ReadByte();
+					int playerID = (int)bb.ReadByte();
 					int bossType = (int)bb.ReadShort();
 					bool spawnMessage = bb.ReadBool();
-					int num2 = bb.ReadInt();
-					int num3 = bb.ReadInt();
+					int npcCenterX = bb.ReadInt();
+					int npcCenterY = bb.ReadInt();
 					string overrideDisplayName = bb.ReadString();
 					bool namePlural = bb.ReadBool();
-					Redemption.SpawnBoss(Main.player[num], bossType, spawnMessage, new Vector2((float)num2, (float)num3), overrideDisplayName, namePlural);
+					Redemption.SpawnBoss(Main.player[playerID], bossType, spawnMessage, new Vector2((float)npcCenterX, (float)npcCenterY), overrideDisplayName, namePlural);
 				}
 			}
-			catch (Exception ex)
+			catch (Exception e)
 			{
-				ErrorLogger.Log(string.Concat(new string[]
+				Redemption.inst.Logger.Debug(string.Concat(new string[]
 				{
 					(Main.netMode == 2) ? "--SERVER-- " : "--CLIENT-- ",
 					"ERROR HANDLING MSG: ",
-					b.ToString(),
+					msg.ToString(),
 					": ",
-					ex.Message
+					e.Message
 				}));
-				ErrorLogger.Log(ex.StackTrace);
-				ErrorLogger.Log("-------");
+				Redemption.inst.Logger.Debug(e.StackTrace);
+				Redemption.inst.Logger.Debug("-------");
 			}
 		}
 
@@ -48,11 +47,11 @@ namespace Redemption
 		{
 			if (RedeNet.DEBUG)
 			{
-				ErrorLogger.Log(string.Concat(new object[]
+				Redemption.inst.Logger.Debug(string.Concat(new object[]
 				{
 					(Main.netMode == 2) ? "--SERVER-- " : "--CLIENT-- ",
 					"SYNC PLAYER CALLED! NEWPLAYER: ",
-					newPlayer,
+					newPlayer.ToString(),
 					". TOWHO: ",
 					toWho,
 					". FROMWHO:",
@@ -69,7 +68,7 @@ namespace Redemption
 		{
 			if (RedeNet.DEBUG)
 			{
-				ErrorLogger.Log("--SERVER-- PLAYER JOINED!");
+				Redemption.inst.Logger.Debug("--SERVER-- PLAYER JOINED!");
 			}
 		}
 
@@ -87,25 +86,25 @@ namespace Redemption
 					BaseNet.WriteToPacket(Redemption.inst.GetPacket(256), (byte)msg, param).Send(client, -1);
 				}
 			}
-			catch (Exception ex)
+			catch (Exception e)
 			{
-				ErrorLogger.Log(string.Concat(new string[]
+				Redemption.inst.Logger.Debug(string.Concat(new string[]
 				{
 					(Main.netMode == 2) ? "--SERVER-- " : "--CLIENT-- ",
 					"ERROR SENDING MSG: ",
 					msg.ToString(),
 					": ",
-					ex.Message
+					e.Message
 				}));
-				ErrorLogger.Log(ex.StackTrace);
-				ErrorLogger.Log("-------");
-				string text = "";
+				Redemption.inst.Logger.Debug(e.StackTrace);
+				Redemption.inst.Logger.Debug("-------");
+				string param2 = "";
 				for (int i = 0; i < param.Length; i++)
 				{
-					text += param[i];
+					param2 += param[i];
 				}
-				ErrorLogger.Log("PARAMS: " + text);
-				ErrorLogger.Log("-------");
+				Redemption.inst.Logger.Debug("PARAMS: " + param2);
+				Redemption.inst.Logger.Debug("-------");
 			}
 		}
 

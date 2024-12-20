@@ -46,27 +46,26 @@ namespace Redemption.Projectiles.v08
 					Main.player[base.projectile.owner].ChangeDir(-1);
 				}
 			}
-			Vector2 vector;
-			vector..ctor(base.projectile.position.X + (float)base.projectile.width * 0.5f, base.projectile.position.Y + (float)base.projectile.height * 0.5f);
-			float num = Main.player[base.projectile.owner].position.X + (float)(Main.player[base.projectile.owner].width / 2) - vector.X;
-			float num2 = Main.player[base.projectile.owner].position.Y + (float)(Main.player[base.projectile.owner].height / 2) - vector.Y;
-			float num3 = (float)Math.Sqrt((double)(num * num + num2 * num2));
+			Vector2 vector14 = new Vector2(base.projectile.position.X + (float)base.projectile.width * 0.5f, base.projectile.position.Y + (float)base.projectile.height * 0.5f);
+			float num166 = Main.player[base.projectile.owner].position.X + (float)(Main.player[base.projectile.owner].width / 2) - vector14.X;
+			float num167 = Main.player[base.projectile.owner].position.Y + (float)(Main.player[base.projectile.owner].height / 2) - vector14.Y;
+			float num168 = (float)Math.Sqrt((double)(num166 * num166 + num167 * num167));
 			if (base.projectile.ai[0] != 0f)
 			{
 				if (base.projectile.ai[0] == 1f)
 				{
 					base.projectile.tileCollide = false;
-					base.projectile.rotation = (float)Math.Atan2((double)num2, (double)num) - 1.57f;
-					float num4 = 30f;
-					if (num3 < 50f)
+					base.projectile.rotation = (float)Math.Atan2((double)num167, (double)num166) - 1.57f;
+					float num169 = 30f;
+					if (num168 < 50f)
 					{
 						base.projectile.Kill();
 					}
-					num3 = num4 / num3;
-					num *= num3;
-					num2 *= num3;
-					base.projectile.velocity.X = num;
-					base.projectile.velocity.Y = num2;
+					num168 = num169 / num168;
+					num166 *= num168;
+					num167 *= num168;
+					base.projectile.velocity.X = num166;
+					base.projectile.velocity.Y = num167;
 					if (base.projectile.velocity.X < 0f)
 					{
 						base.projectile.spriteDirection = 1;
@@ -76,11 +75,11 @@ namespace Redemption.Projectiles.v08
 				}
 				return;
 			}
-			if (num3 > 700f)
+			if (num168 > 700f)
 			{
 				base.projectile.ai[0] = 1f;
 			}
-			else if (num3 > 500f)
+			else if (num168 > 500f)
 			{
 				base.projectile.ai[0] = 1f;
 			}
@@ -122,39 +121,38 @@ namespace Redemption.Projectiles.v08
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = ModLoader.GetTexture("Redemption/Projectiles/v08/CursedRootFlail2");
-			Vector2 vector = base.projectile.Center;
+			Texture2D texture = ModContent.GetTexture("Redemption/Projectiles/v08/CursedRootFlail2");
+			Vector2 position = base.projectile.Center;
 			Vector2 mountedCenter = Main.player[base.projectile.owner].MountedCenter;
-			Rectangle? rectangle = null;
-			Vector2 vector2;
-			vector2..ctor((float)texture.Width * 0.5f, (float)texture.Height * 0.5f);
+			Rectangle? sourceRectangle = null;
+			Vector2 origin = new Vector2((float)texture.Width * 0.5f, (float)texture.Height * 0.5f);
 			float num = (float)texture.Height;
-			Vector2 vector3 = mountedCenter - vector;
-			float num2 = (float)Math.Atan2((double)vector3.Y, (double)vector3.X) - 1.57f;
+			Vector2 vector24 = mountedCenter - position;
+			float rotation = (float)Math.Atan2((double)vector24.Y, (double)vector24.X) - 1.57f;
 			bool flag = true;
-			if (float.IsNaN(vector.X) && float.IsNaN(vector.Y))
+			if (float.IsNaN(position.X) && float.IsNaN(position.Y))
 			{
 				flag = false;
 			}
-			if (float.IsNaN(vector3.X) && float.IsNaN(vector3.Y))
+			if (float.IsNaN(vector24.X) && float.IsNaN(vector24.Y))
 			{
 				flag = false;
 			}
 			while (flag)
 			{
-				if ((double)vector3.Length() < (double)num + 1.0)
+				if ((double)vector24.Length() < (double)num + 1.0)
 				{
 					flag = false;
 				}
 				else
 				{
-					Vector2 vector4 = vector3;
-					vector4.Normalize();
-					vector += vector4 * num;
-					vector3 = mountedCenter - vector;
-					Color color = Lighting.GetColor((int)vector.X / 16, (int)((double)vector.Y / 16.0));
-					color = base.projectile.GetAlpha(color);
-					Main.spriteBatch.Draw(texture, vector - Main.screenPosition, rectangle, Color.White, num2, vector2, 1f, 0, 0f);
+					Vector2 vector25 = vector24;
+					vector25.Normalize();
+					position += vector25 * num;
+					vector24 = mountedCenter - position;
+					Color color2 = Lighting.GetColor((int)position.X / 16, (int)((double)position.Y / 16.0));
+					color2 = base.projectile.GetAlpha(color2);
+					Main.spriteBatch.Draw(texture, position - Main.screenPosition, sourceRectangle, Color.White, rotation, origin, 1f, SpriteEffects.None, 0f);
 				}
 			}
 			return true;

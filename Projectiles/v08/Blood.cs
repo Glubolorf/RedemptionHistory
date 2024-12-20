@@ -25,9 +25,9 @@ namespace Redemption.Projectiles.v08
 
 		public override void AI()
 		{
-			int num = Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 5, base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 0, default(Color), 1f);
-			Main.dust[num].scale = 3f;
-			Main.dust[num].noGravity = true;
+			int dust = Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 5, base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 0, default(Color), 1f);
+			Main.dust[dust].scale = 3f;
+			Main.dust[dust].noGravity = true;
 			Projectile projectile = base.projectile;
 			projectile.velocity.Y = projectile.velocity.Y + 0.7f;
 		}

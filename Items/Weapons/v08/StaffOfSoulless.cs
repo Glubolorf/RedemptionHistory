@@ -37,11 +37,11 @@ namespace Redemption.Items.Weapons.v08
 
 		public override void ModifyTooltips(List<TooltipLine> list)
 		{
-			foreach (TooltipLine tooltipLine in list)
+			foreach (TooltipLine line2 in list)
 			{
-				if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+				if (line2.mod == "Terraria" && line2.Name == "ItemName")
 				{
-					tooltipLine.overrideColor = new Color?(RedeColor.SoullessColour);
+					line2.overrideColor = new Color?(RedeColor.SoullessColour);
 				}
 			}
 		}
@@ -53,15 +53,15 @@ namespace Redemption.Items.Weapons.v08
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			float num = 5f;
-			float num2 = MathHelper.ToRadians(25f);
+			float numberProjectiles = 5f;
+			float rotation = MathHelper.ToRadians(25f);
 			position += Vector2.Normalize(new Vector2(speedX, speedY)) * 45f;
-			int num3 = 0;
-			while ((float)num3 < num)
+			int i = 0;
+			while ((float)i < numberProjectiles)
 			{
-				Vector2 vector = Utils.RotatedBy(new Vector2(speedX, speedY), (double)MathHelper.Lerp(-num2, num2, (float)num3 / (num - 1f)), default(Vector2)) * 0.2f;
-				Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
-				num3++;
+				Vector2 perturbedSpeed = Utils.RotatedBy(new Vector2(speedX, speedY), (double)MathHelper.Lerp(-rotation, rotation, (float)i / (numberProjectiles - 1f)), default(Vector2)) * 0.2f;
+				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
+				i++;
 			}
 			return false;
 		}

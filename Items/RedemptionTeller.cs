@@ -39,7 +39,7 @@ namespace Redemption.Items
 
 		public override bool UseItem(Player player)
 		{
-			Main.NewText(string.Concat(RedeWorld.redemptionPoints), Color.Gold, false);
+			Main.NewText(string.Concat(RedeWorld.redemptionPoints) ?? "", Color.Gold, false);
 			if (RedeWorld.redemptionPoints < 10 && RedeWorld.downedNebuleus)
 			{
 				Main.NewText("<Chalice of Alignment> ... What have you done...", Color.DarkGoldenrod, false);

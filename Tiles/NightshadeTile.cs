@@ -36,20 +36,20 @@ namespace Redemption.Tiles
 		{
 			if (i % 2 == 1)
 			{
-				spriteEffects = 1;
+				spriteEffects = SpriteEffects.FlipHorizontally;
 			}
 		}
 
 		public override bool Drop(int i, int j)
 		{
-			int num = (int)(Main.tile[i, j].frameX / 18);
+			short num = Main.tile[i, j].frameX / 18;
 			if (num >= 1 && Main.rand.Next(4) == 0)
 			{
-				Item.NewItem(i * 16, j * 16, 0, 0, base.mod.ItemType<NightshadeSeeds>(), 1, false, 0, false, false);
+				Item.NewItem(i * 16, j * 16, 0, 0, ModContent.ItemType<NightshadeSeeds>(), 1, false, 0, false, false);
 			}
 			if (num == 2)
 			{
-				Item.NewItem(i * 16, j * 16, 0, 0, base.mod.ItemType<Nightshade>(), 1, false, 0, false, false);
+				Item.NewItem(i * 16, j * 16, 0, 0, ModContent.ItemType<Nightshade>(), 1, false, 0, false, false);
 			}
 			return false;
 		}
@@ -77,7 +77,7 @@ namespace Redemption.Tiles
 
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
-			int num = (int)(Main.tile[i, j].frameX / 18);
+			short num = Main.tile[i, j].frameX / 18;
 			if (num == 2)
 			{
 				r = 0.1f;

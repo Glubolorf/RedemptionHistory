@@ -52,10 +52,10 @@ namespace Redemption.Projectiles.v08
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
 			Player player = Main.player[base.projectile.owner];
-			int crit2 = player.HeldItem.crit;
-			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref crit2);
-			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref crit2);
-			if (crit2 >= 100 || Main.rand.Next(1, 101) <= crit2)
+			int critChance = player.HeldItem.crit;
+			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref critChance);
+			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref critChance);
+			if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
 			{
 				crit = true;
 			}
@@ -63,16 +63,16 @@ namespace Redemption.Projectiles.v08
 
 		public override void Kill(int timeLeft)
 		{
-			int num = 8;
-			for (int i = 0; i < num; i++)
+			int pieCut = 8;
+			for (int i = 0; i < pieCut; i++)
 			{
-				int num2 = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, base.mod.ProjectileType("BloodrootRoot"), base.projectile.damage, 3f, Main.myPlayer, 0f, 0f);
-				Main.projectile[num2].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(12f, 0f), (float)i / (float)num * 6.28f);
+				int projID = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, base.mod.ProjectileType("BloodrootRoot"), base.projectile.damage, 3f, Main.myPlayer, 0f, 0f);
+				Main.projectile[projID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(12f, 0f), (float)i / (float)pieCut * 6.28f);
 			}
 			for (int j = 0; j < 5; j++)
 			{
-				int num3 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 5, 0f, 0f, 100, default(Color), 1.2f);
-				Main.dust[num3].velocity *= 1.8f;
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 5, 0f, 0f, 100, default(Color), 1.2f);
+				Main.dust[dustIndex].velocity *= 1.8f;
 			}
 		}
 	}

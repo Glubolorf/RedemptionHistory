@@ -43,13 +43,13 @@ namespace Redemption.Items.Weapons
 			modRecipe.AddTile(16);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(3483, 1);
-			modRecipe.AddIngredient(null, "Nightshade", 3);
-			modRecipe.AddRecipeGroup("Redemption:EvilWood", 5);
-			modRecipe.AddTile(16);
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.AddIngredient(3483, 1);
+			modRecipe2.AddIngredient(null, "Nightshade", 3);
+			modRecipe2.AddRecipeGroup("Redemption:EvilWood", 5);
+			modRecipe2.AddTile(16);
+			modRecipe2.SetResult(this, 1);
+			modRecipe2.AddRecipe();
 		}
 	}
 }

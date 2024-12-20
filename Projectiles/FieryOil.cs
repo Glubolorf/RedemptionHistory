@@ -26,8 +26,8 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y + 2f), base.projectile.width + 2, base.projectile.height + 2, 6, base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 1f);
-			Main.dust[num].noGravity = true;
+			int DustID2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y + 2f), base.projectile.width + 2, base.projectile.height + 2, 6, base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 1f);
+			Main.dust[DustID2].noGravity = true;
 			base.projectile.localAI[0] += 1f;
 			base.projectile.rotation += 0.06f;
 			Projectile projectile = base.projectile;
@@ -51,14 +51,14 @@ namespace Redemption.Projectiles
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
 			Player player = Main.player[base.projectile.owner];
-			int crit2 = player.HeldItem.crit;
-			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref crit2);
-			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref crit2);
-			if (crit2 >= 100 || Main.rand.Next(1, 101) <= crit2)
+			int critChance = player.HeldItem.crit;
+			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref critChance);
+			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref critChance);
+			if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
 			{
 				crit = true;
 			}
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).frostburnSeedbag)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().frostburnSeedbag)
 			{
 				target.AddBuff(44, 160, false);
 			}

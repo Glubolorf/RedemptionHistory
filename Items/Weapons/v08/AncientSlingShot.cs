@@ -23,7 +23,7 @@ namespace Redemption.Items.Weapons.v08
 			base.item.useAnimation = 10;
 			base.item.useStyle = 5;
 			base.item.channel = true;
-			Item.sellPrice(0, 50, 0, 0);
+			Item.sellPrice(0, 0, 60, 0);
 			base.item.noMelee = true;
 			base.item.shootSpeed = 12f;
 			base.item.noUseGraphic = true;

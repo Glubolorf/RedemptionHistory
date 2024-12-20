@@ -72,8 +72,7 @@ namespace Redemption.NPCs.Varients
 						this.slashFrame = 0;
 					}
 				}
-				float num = base.npc.Distance(Main.player[base.npc.target].Center);
-				if (num <= 200f && Main.rand.Next(150) == 0 && !this.slashAttack)
+				if (base.npc.Distance(Main.player[base.npc.target].Center) <= 200f && Main.rand.Next(150) == 0 && !this.slashAttack)
 				{
 					this.slashAttack = true;
 				}
@@ -86,7 +85,7 @@ namespace Redemption.NPCs.Varients
 					this.slashTimer++;
 					base.npc.aiStyle = 0;
 					base.npc.velocity.X = 0f;
-					if (this.slashTimer == 1 && !Config.NoCombatText)
+					if (this.slashTimer == 1 && !RedeConfigClient.Instance.NoCombatText)
 					{
 						CombatText.NewText(base.npc.getRect(), Color.Pink, "Crystal Scythes!", true, true);
 					}
@@ -95,26 +94,24 @@ namespace Redemption.NPCs.Varients
 						if (base.npc.direction == -1)
 						{
 							Main.PlaySound(SoundID.Item27, (int)base.npc.position.X, (int)base.npc.position.Y);
-							float num2 = 7f;
-							Vector2 vector;
-							vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-							int num3 = 23;
-							int num4 = base.mod.ProjectileType("CrystalScythe");
-							float num5 = (float)Math.Atan2((double)(vector.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector.X - (player.position.X + (float)player.width * 0.5f)));
-							int num6 = Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num5) * (double)num2 * -1.0), (float)(Math.Sin((double)num5) * (double)num2 * -1.0), num4, num3, 0f, 0, 0f, 0f);
-							Main.projectile[num6].netUpdate = true;
+							float Speed = 7f;
+							Vector2 vector8 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+							int damage = 23;
+							int type = base.mod.ProjectileType("CrystalScythe");
+							float rotation = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
+							int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
+							Main.projectile[num54].netUpdate = true;
 						}
 						else
 						{
 							Main.PlaySound(SoundID.Item27, (int)base.npc.position.X, (int)base.npc.position.Y);
-							float num7 = 11f;
-							Vector2 vector2;
-							vector2..ctor(base.npc.Center.X, base.npc.Center.Y);
-							int num8 = 23;
-							int num9 = base.mod.ProjectileType("CrystalScythe");
-							float num10 = (float)Math.Atan2((double)(vector2.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector2.X - (player.position.X + (float)player.width * 0.5f)));
-							int num11 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num10) * (double)num7 * -1.0), (float)(Math.Sin((double)num10) * (double)num7 * -1.0), num9, num8, 0f, 0, 0f, 0f);
-							Main.projectile[num11].netUpdate = true;
+							float Speed2 = 11f;
+							Vector2 vector9 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+							int damage2 = 23;
+							int type2 = base.mod.ProjectileType("CrystalScythe");
+							float rotation2 = (float)Math.Atan2((double)(vector9.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector9.X - (player.position.X + (float)player.width * 0.5f)));
+							int num55 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0), type2, damage2, 0f, 0, 0f, 0f);
+							Main.projectile[num55].netUpdate = true;
 						}
 					}
 					if (this.slashTimer >= 20)
@@ -161,13 +158,13 @@ namespace Redemption.NPCs.Varients
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/FNymphGore2"), 1f);
 				for (int i = 0; i < 10; i++)
 				{
-					int num = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 5, 0f, 0f, 100, default(Color), 1.5f);
-					Main.dust[num].velocity *= 1.4f;
+					int dustIndex = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 5, 0f, 0f, 100, default(Color), 1.5f);
+					Main.dust[dustIndex].velocity *= 1.4f;
 				}
 				for (int j = 0; j < 10; j++)
 				{
-					int num2 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 254, 0f, 0f, 100, default(Color), 1.5f);
-					Main.dust[num2].velocity *= 1.4f;
+					int dustIndex2 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 254, 0f, 0f, 100, default(Color), 1.5f);
+					Main.dust[dustIndex2].velocity *= 1.4f;
 				}
 			}
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
@@ -175,29 +172,27 @@ namespace Redemption.NPCs.Varients
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/Varients/HallowNymphHop");
-			Texture2D texture2 = base.mod.GetTexture("NPCs/Varients/HallowNymphMAGIC");
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D hopAni = base.mod.GetTexture("NPCs/Varients/HallowNymphHop");
+			Texture2D slashAni = base.mod.GetTexture("NPCs/Varients/HallowNymphMAGIC");
 			int spriteDirection = base.npc.spriteDirection;
 			if (!this.hop && !this.slashAttack)
 			{
-				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.hop)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num = texture.Height / 1;
-				int num2 = num * this.hopFrame;
-				Main.spriteBatch.Draw(texture, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num214 = hopAni.Height / 1;
+				int y6 = num214 * this.hopFrame;
+				Main.spriteBatch.Draw(hopAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, hopAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)hopAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.slashAttack)
 			{
-				Vector2 vector2;
-				vector2..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num3 = texture2.Height / 4;
-				int num4 = num3 * this.slashFrame;
-				Main.spriteBatch.Draw(texture2, vector2 - Main.screenPosition, new Rectangle?(new Rectangle(0, num4, texture2.Width, num3)), drawColor, base.npc.rotation, new Vector2((float)texture2.Width / 2f, (float)num3 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter2 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num215 = slashAni.Height / 4;
+				int y7 = num215 * this.slashFrame;
+				Main.spriteBatch.Draw(slashAni, drawCenter2 - Main.screenPosition, new Rectangle?(new Rectangle(0, y7, slashAni.Width, num215)), drawColor, base.npc.rotation, new Vector2((float)slashAni.Width / 2f, (float)num215 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
 		}

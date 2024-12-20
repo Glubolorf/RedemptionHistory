@@ -33,10 +33,16 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			if (++base.projectile.frameCounter >= 5)
+			Projectile projectile = base.projectile;
+			int num = projectile.frameCounter + 1;
+			projectile.frameCounter = num;
+			if (num >= 5)
 			{
 				base.projectile.frameCounter = 0;
-				if (++base.projectile.frame >= 5)
+				Projectile projectile2 = base.projectile;
+				num = projectile2.frame + 1;
+				projectile2.frame = num;
+				if (num >= 5)
 				{
 					base.projectile.frame = 0;
 				}
@@ -59,8 +65,8 @@ namespace Redemption.Projectiles
 			{
 				for (int i = 0; i < 25; i++)
 				{
-					int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 38, 0f, 0f, 100, default(Color), 1.2f);
-					Main.dust[num].velocity *= 1.4f;
+					int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 38, 0f, 0f, 100, default(Color), 1.2f);
+					Main.dust[dustIndex].velocity *= 1.4f;
 				}
 				Projectile.NewProjectile(player.position, Vector2.Zero, base.mod.ProjectileType("MudAura"), 0, 0f, player.whoAmI, 0f, 0f);
 				Main.PlaySound(SoundID.Item74, base.projectile.position);
@@ -98,7 +104,7 @@ namespace Redemption.Projectiles
 				}
 				this.shootTimer = 0;
 			}
-			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>(base.mod);
+			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
 			if (player.dead)
 			{
 				modPlayer.natureGuardian11 = false;
@@ -114,8 +120,8 @@ namespace Redemption.Projectiles
 		{
 			for (int i = 0; i < 25; i++)
 			{
-				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 38, 0f, 0f, 100, default(Color), 1.2f);
-				Main.dust[num].velocity *= 1.4f;
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 38, 0f, 0f, 100, default(Color), 1.2f);
+				Main.dust[dustIndex].velocity *= 1.4f;
 			}
 		}
 

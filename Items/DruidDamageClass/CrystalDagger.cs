@@ -21,8 +21,8 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.damage = 44;
 			base.item.knockBack = 5f;
 			base.item.useStyle = 1;
-			base.item.useAnimation = 23;
-			base.item.useTime = 23;
+			base.item.useAnimation = 27;
+			base.item.useTime = 27;
 			base.item.width = 14;
 			base.item.height = 56;
 			base.item.maxStack = 999;
@@ -33,7 +33,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.autoReuse = true;
 			base.item.UseSound = SoundID.Item9;
 			base.item.value = Item.sellPrice(0, 0, 1, 5);
-			base.item.shoot = base.mod.ProjectileType<CrystalDaggerPro>();
+			base.item.shoot = ModContent.ProjectileType<CrystalDaggerPro>();
 		}
 
 		public override void AddRecipes()

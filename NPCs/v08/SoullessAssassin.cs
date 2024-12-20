@@ -81,8 +81,7 @@ namespace Redemption.NPCs.v08
 						this.stabFrame = 0;
 					}
 				}
-				float num = base.npc.Distance(Main.player[base.npc.target].Center);
-				if (num <= 500f && Main.rand.Next(200) == 0 && !this.stabAttack)
+				if (base.npc.Distance(Main.player[base.npc.target].Center) <= 500f && Main.rand.Next(200) == 0 && !this.stabAttack)
 				{
 					this.stabAttack = true;
 				}
@@ -94,38 +93,38 @@ namespace Redemption.NPCs.v08
 				{
 					this.stabTimer++;
 					base.npc.velocity.X = 0f;
-					if (this.stabTimer == 1 && !Config.NoCombatText)
+					if (this.stabTimer == 1 && !RedeConfigClient.Instance.NoCombatText)
 					{
-						int num2 = Main.rand.Next(8);
-						if (num2 == 0)
+						int num55 = Main.rand.Next(8);
+						if (num55 == 0)
 						{
 							CombatText.NewText(base.npc.getRect(), Color.Black, "Sikk!", true, true);
 						}
-						if (num2 == 1)
+						if (num55 == 1)
 						{
 							CombatText.NewText(base.npc.getRect(), Color.Black, "Sibu!", true, true);
 						}
-						if (num2 == 2)
+						if (num55 == 2)
 						{
-							CombatText.NewText(base.npc.getRect(), Color.Black, "Cut’nin doz.", true, true);
+							CombatText.NewText(base.npc.getRect(), Color.Black, "Cut�nin doz.", true, true);
 						}
-						if (num2 == 3)
+						if (num55 == 3)
 						{
-							CombatText.NewText(base.npc.getRect(), Color.Black, "Uf cul’ ut ufe...", true, true);
+							CombatText.NewText(base.npc.getRect(), Color.Black, "Uf cul� ut ufe...", true, true);
 						}
-						if (num2 == 4)
+						if (num55 == 4)
 						{
-							CombatText.NewText(base.npc.getRect(), Color.Black, "Ka dosmok cul’...", true, true);
+							CombatText.NewText(base.npc.getRect(), Color.Black, "Ka dosmok cul�...", true, true);
 						}
-						if (num2 == 5)
+						if (num55 == 5)
 						{
-							CombatText.NewText(base.npc.getRect(), Color.Black, "Cult’nin un yei ruk’...", true, true);
+							CombatText.NewText(base.npc.getRect(), Color.Black, "Cult�nin un yei ruk�...", true, true);
 						}
-						if (num2 == 6)
+						if (num55 == 6)
 						{
-							CombatText.NewText(base.npc.getRect(), Color.Black, "Consu’nin yei min’...", true, true);
+							CombatText.NewText(base.npc.getRect(), Color.Black, "Consu�nin yei min�...", true, true);
 						}
-						if (num2 == 7)
+						if (num55 == 7)
 						{
 							CombatText.NewText(base.npc.getRect(), Color.Black, "Jugh niqui tie...", true, true);
 						}
@@ -134,8 +133,8 @@ namespace Redemption.NPCs.v08
 					{
 						for (int i = 0; i < 20; i++)
 						{
-							int num3 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, base.mod.DustType("VoidFlame"), 0f, 0f, 100, default(Color), 1.2f);
-							Main.dust[num3].velocity *= 1.4f;
+							int dustIndex = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, base.mod.DustType("VoidFlame"), 0f, 0f, 100, default(Color), 1.2f);
+							Main.dust[dustIndex].velocity *= 1.4f;
 						}
 						base.npc.netUpdate = true;
 					}
@@ -143,16 +142,14 @@ namespace Redemption.NPCs.v08
 					{
 						if (player.direction == 1)
 						{
-							Vector2 vector;
-							vector..ctor((float)Main.rand.Next(-34, -32), 0f);
-							base.npc.Center = Main.player[base.npc.target].Center + vector;
+							Vector2 newPos = new Vector2((float)Main.rand.Next(-34, -32), 0f);
+							base.npc.Center = Main.player[base.npc.target].Center + newPos;
 							base.npc.netUpdate = true;
 						}
 						else
 						{
-							Vector2 vector2;
-							vector2..ctor((float)Main.rand.Next(32, 34), 0f);
-							base.npc.Center = Main.player[base.npc.target].Center + vector2;
+							Vector2 newPos2 = new Vector2((float)Main.rand.Next(32, 34), 0f);
+							base.npc.Center = Main.player[base.npc.target].Center + newPos2;
 							base.npc.netUpdate = true;
 						}
 					}
@@ -160,22 +157,21 @@ namespace Redemption.NPCs.v08
 					{
 						for (int j = 0; j < 20; j++)
 						{
-							int num4 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, base.mod.DustType("VoidFlame"), 0f, 0f, 100, default(Color), 1.2f);
-							Main.dust[num4].velocity *= 1.4f;
+							int dustIndex2 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, base.mod.DustType("VoidFlame"), 0f, 0f, 100, default(Color), 1.2f);
+							Main.dust[dustIndex2].velocity *= 1.4f;
 						}
 						base.npc.netUpdate = true;
 					}
 					if (this.stabTimer == 24)
 					{
 						Main.PlaySound(SoundID.Item1, (int)base.npc.position.X, (int)base.npc.position.Y);
-						float num5 = 5f;
-						Vector2 vector3;
-						vector3..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-						int num6 = 55;
-						int num7 = base.mod.ProjectileType("DamagePro1");
-						float num8 = (float)Math.Atan2((double)(vector3.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector3.X - (player.position.X + (float)player.width * 0.5f)));
-						int num9 = Projectile.NewProjectile(vector3.X, vector3.Y, (float)(Math.Cos((double)num8) * (double)num5 * -1.0) + (float)Main.rand.Next(-1, 1), (float)(Math.Sin((double)num8) * (double)num5 * -1.0) + (float)Main.rand.Next(-1, 1), num7, num6, 0f, 0, 0f, 0f);
-						Main.projectile[num9].netUpdate = true;
+						float Speed = 5f;
+						Vector2 vector8 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
+						int damage = 55;
+						int type = base.mod.ProjectileType("DamagePro1");
+						float rotation = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
+						int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0) + (float)Main.rand.Next(-1, 1), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0) + (float)Main.rand.Next(-1, 1), type, damage, 0f, 0, 0f, 0f);
+						Main.projectile[num54].netUpdate = true;
 					}
 					if (this.stabTimer >= 30)
 					{
@@ -211,39 +207,37 @@ namespace Redemption.NPCs.v08
 			{
 				for (int i = 0; i < 40; i++)
 				{
-					int num = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, base.mod.DustType("VoidFlame"), 0f, 0f, 100, default(Color), 2f);
-					Main.dust[num].velocity *= 2.6f;
+					int dustIndex2 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, base.mod.DustType("VoidFlame"), 0f, 0f, 100, default(Color), 2f);
+					Main.dust[dustIndex2].velocity *= 2.6f;
 				}
 			}
-			int num2 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, base.mod.DustType("VoidFlame"), 0f, 0f, 100, default(Color), 1f);
-			Main.dust[num2].velocity *= 1.6f;
+			int dustIndex3 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, base.mod.DustType("VoidFlame"), 0f, 0f, 100, default(Color), 1f);
+			Main.dust[dustIndex3].velocity *= 1.6f;
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/v08/SoullessAssassinHop");
-			Texture2D texture2 = base.mod.GetTexture("NPCs/v08/SoullessAssassinStab");
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D hopAni = base.mod.GetTexture("NPCs/v08/SoullessAssassinHop");
+			Texture2D throwAni = base.mod.GetTexture("NPCs/v08/SoullessAssassinStab");
 			int spriteDirection = base.npc.spriteDirection;
 			if (!this.stabAttack && !this.hop)
 			{
-				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.hop && !this.stabAttack)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num = texture.Height / 1;
-				int num2 = num * this.hopFrame;
-				Main.spriteBatch.Draw(texture, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num214 = hopAni.Height / 1;
+				int y6 = num214 * this.hopFrame;
+				Main.spriteBatch.Draw(hopAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, hopAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)hopAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.stabAttack)
 			{
-				Vector2 vector2;
-				vector2..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num3 = texture2.Height / 6;
-				int num4 = num3 * this.stabFrame;
-				Main.spriteBatch.Draw(texture2, vector2 - Main.screenPosition, new Rectangle?(new Rectangle(0, num4, texture2.Width, num3)), drawColor, base.npc.rotation, new Vector2((float)texture2.Width / 2f, (float)num3 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter2 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num215 = throwAni.Height / 6;
+				int y7 = num215 * this.stabFrame;
+				Main.spriteBatch.Draw(throwAni, drawCenter2 - Main.screenPosition, new Rectangle?(new Rectangle(0, y7, throwAni.Width, num215)), drawColor, base.npc.rotation, new Vector2((float)throwAni.Width / 2f, (float)num215 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
 		}

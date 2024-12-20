@@ -34,8 +34,8 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			int num = Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 64, 0f, 0f, 100, default(Color), 3f);
-			Main.dust[num].noGravity = true;
+			int dust = Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 64, 0f, 0f, 100, default(Color), 3f);
+			Main.dust[dust].noGravity = true;
 		}
 
 		public override void Kill(int timeLeft)

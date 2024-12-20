@@ -42,9 +42,9 @@ namespace Redemption.NPCs.v08
 
 		public override void AI()
 		{
-			Player player = Main.player[base.npc.target];
-			float num = base.npc.Distance(Main.player[base.npc.target].Center);
-			if (player.Center.X > base.npc.Center.X)
+			Entity entity = Main.player[base.npc.target];
+			float distance = base.npc.Distance(Main.player[base.npc.target].Center);
+			if (entity.Center.X > base.npc.Center.X)
 			{
 				base.npc.spriteDirection = 1;
 			}
@@ -93,11 +93,11 @@ namespace Redemption.NPCs.v08
 						this.shieldFrame = 5;
 					}
 				}
-				if (num <= 140f && Main.rand.Next(25) == 0 && !this.slash && !this.shield)
+				if (distance <= 140f && Main.rand.Next(25) == 0 && !this.slash && !this.shield)
 				{
 					this.slash = true;
 				}
-				if (num <= 400f && Main.rand.Next(300) == 0 && !this.slash && !this.shield)
+				if (distance <= 400f && Main.rand.Next(300) == 0 && !this.slash && !this.shield)
 				{
 					this.shield = true;
 				}
@@ -105,7 +105,7 @@ namespace Redemption.NPCs.v08
 				{
 					this.slashTimer++;
 					base.npc.velocity.X = 0f;
-					if (this.slashTimer == 1 && !Config.NoCombatText)
+					if (this.slashTimer == 1 && !RedeConfigClient.Instance.NoCombatText)
 					{
 						CombatText.NewText(base.npc.getRect(), Color.DarkGoldenrod, "Hyaar!", true, true);
 					}
@@ -114,13 +114,13 @@ namespace Redemption.NPCs.v08
 						Main.PlaySound(SoundID.Item71, (int)base.npc.position.X, (int)base.npc.position.Y);
 						if (base.npc.direction == -1)
 						{
-							int num2 = Projectile.NewProjectile(base.npc.Center.X + -90f, base.npc.Center.Y + 18f, 0f, 0f, base.mod.ProjectileType("DamagePro4"), 140, 3f, 255, 0f, 0f);
-							Main.projectile[num2].netUpdate = true;
+							int p = Projectile.NewProjectile(base.npc.Center.X + -90f, base.npc.Center.Y + 18f, 0f, 0f, base.mod.ProjectileType("DamagePro4"), 140, 3f, 255, 0f, 0f);
+							Main.projectile[p].netUpdate = true;
 						}
 						else
 						{
-							int num3 = Projectile.NewProjectile(base.npc.Center.X + 62f, base.npc.Center.Y + 18f, 0f, 0f, base.mod.ProjectileType("DamagePro4"), 140, 3f, 255, 0f, 0f);
-							Main.projectile[num3].netUpdate = true;
+							int p2 = Projectile.NewProjectile(base.npc.Center.X + 62f, base.npc.Center.Y + 18f, 0f, 0f, base.mod.ProjectileType("DamagePro4"), 140, 3f, 255, 0f, 0f);
+							Main.projectile[p2].netUpdate = true;
 						}
 					}
 					if (this.slashTimer >= 40)
@@ -150,7 +150,7 @@ namespace Redemption.NPCs.v08
 			}
 			if (!this.slash && !this.shield)
 			{
-				if (num <= 500f)
+				if (distance <= 500f)
 				{
 					BaseAI.AIZombie(base.npc, ref base.npc.ai, false, false, -1, 0.1f, 4f, 10, 10, 60, true, 10, 60, false, null, false);
 					return;
@@ -186,38 +186,35 @@ namespace Redemption.NPCs.v08
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/v08/FallenAncientHop");
-			Texture2D texture2 = base.mod.GetTexture("NPCs/v08/FallenAncientSlash");
-			Texture2D texture3 = base.mod.GetTexture("NPCs/v08/FallenAncientShield1");
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D hopAni = base.mod.GetTexture("NPCs/v08/FallenAncientHop");
+			Texture2D slashAni = base.mod.GetTexture("NPCs/v08/FallenAncientSlash");
+			Texture2D shieldAni = base.mod.GetTexture("NPCs/v08/FallenAncientShield1");
 			int spriteDirection = base.npc.spriteDirection;
 			if (!this.hop && !this.slash && !this.shield)
 			{
-				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.hop && !this.slash && !this.shield)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num = texture.Height / 1;
-				int num2 = num * this.hopFrame;
-				Main.spriteBatch.Draw(texture, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num214 = hopAni.Height / 1;
+				int y6 = num214 * this.hopFrame;
+				Main.spriteBatch.Draw(hopAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, hopAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)hopAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.slash)
 			{
-				Vector2 vector2;
-				vector2..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num3 = texture2.Height / 8;
-				int num4 = num3 * this.slashFrame;
-				Main.spriteBatch.Draw(texture2, vector2 - Main.screenPosition, new Rectangle?(new Rectangle(0, num4, texture2.Width, num3)), drawColor, base.npc.rotation, new Vector2((float)texture2.Width / 2f, (float)num3 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter2 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num215 = slashAni.Height / 8;
+				int y7 = num215 * this.slashFrame;
+				Main.spriteBatch.Draw(slashAni, drawCenter2 - Main.screenPosition, new Rectangle?(new Rectangle(0, y7, slashAni.Width, num215)), drawColor, base.npc.rotation, new Vector2((float)slashAni.Width / 2f, (float)num215 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.shield)
 			{
-				Vector2 vector3;
-				vector3..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num5 = texture3.Height / 7;
-				int num6 = num5 * this.shieldFrame;
-				Main.spriteBatch.Draw(texture3, vector3 - Main.screenPosition, new Rectangle?(new Rectangle(0, num6, texture3.Width, num5)), drawColor, base.npc.rotation, new Vector2((float)texture3.Width / 2f, (float)num5 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter3 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num216 = shieldAni.Height / 7;
+				int y8 = num216 * this.shieldFrame;
+				Main.spriteBatch.Draw(shieldAni, drawCenter3 - Main.screenPosition, new Rectangle?(new Rectangle(0, y8, shieldAni.Width, num216)), drawColor, base.npc.rotation, new Vector2((float)shieldAni.Width / 2f, (float)num216 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
 		}
@@ -237,17 +234,17 @@ namespace Redemption.NPCs.v08
 				}
 				for (int i = 0; i < 40; i++)
 				{
-					int num = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 1, 0f, 0f, 100, default(Color), 2f);
-					Main.dust[num].velocity *= 4.6f;
+					int dustIndex2 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 1, 0f, 0f, 100, default(Color), 2f);
+					Main.dust[dustIndex2].velocity *= 4.6f;
 				}
 				for (int j = 0; j < 20; j++)
 				{
-					int num2 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 6, 0f, 0f, 100, default(Color), 2f);
-					Main.dust[num2].velocity *= 4.6f;
+					int dustIndex3 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 6, 0f, 0f, 100, default(Color), 2f);
+					Main.dust[dustIndex3].velocity *= 4.6f;
 				}
 			}
-			int num3 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 1, 0f, 0f, 100, default(Color), 1f);
-			Main.dust[num3].velocity *= 4.6f;
+			int dustIndex4 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 1, 0f, 0f, 100, default(Color), 1f);
+			Main.dust[dustIndex4].velocity *= 4.6f;
 		}
 
 		private bool hop;

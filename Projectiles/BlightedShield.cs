@@ -41,18 +41,18 @@ namespace Redemption.Projectiles
 			base.projectile.position.Y = player.Center.Y - 25f;
 			if (base.projectile.localAI[0] == 1f)
 			{
-				int num = 74;
-				int num2 = 8;
-				for (int i = 0; i < num2; i++)
+				int dustType = 74;
+				int pieCut = 8;
+				for (int i = 0; i < pieCut; i++)
 				{
-					int num3 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num, 0f, 0f, 100, Color.White, 1.6f);
-					Main.dust[num3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)num2 * 6.28f);
-					Main.dust[num3].noLight = false;
-					Main.dust[num3].noGravity = true;
+					int dustID = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 1.6f);
+					Main.dust[dustID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)pieCut * 6.28f);
+					Main.dust[dustID].noLight = false;
+					Main.dust[dustID].noGravity = true;
 				}
 				Main.PlaySound(SoundID.Item62, (int)base.projectile.position.X, (int)base.projectile.position.Y);
 			}
-			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>(base.mod);
+			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
 			if (player.dead)
 			{
 				modPlayer.blightedShield = false;
@@ -61,14 +61,14 @@ namespace Redemption.Projectiles
 
 		public override void Kill(int timeLeft)
 		{
-			int num = 74;
-			int num2 = 8;
-			for (int i = 0; i < num2; i++)
+			int dustType = 74;
+			int pieCut = 8;
+			for (int i = 0; i < pieCut; i++)
 			{
-				int num3 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num, 0f, 0f, 100, Color.White, 1.6f);
-				Main.dust[num3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)num2 * 6.28f);
-				Main.dust[num3].noLight = false;
-				Main.dust[num3].noGravity = true;
+				int dustID = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 1.6f);
+				Main.dust[dustID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)pieCut * 6.28f);
+				Main.dust[dustID].noLight = false;
+				Main.dust[dustID].noGravity = true;
 			}
 			Main.PlaySound(SoundID.Item62, (int)base.projectile.position.X, (int)base.projectile.position.Y);
 		}

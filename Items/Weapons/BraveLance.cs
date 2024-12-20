@@ -27,7 +27,7 @@ namespace Redemption.Items.Weapons
 			base.item.scale = 1f;
 			base.item.rare = 5;
 			base.item.UseSound = SoundID.Item1;
-			base.item.shoot = base.mod.ProjectileType<BraveLancePro>();
+			base.item.shoot = ModContent.ProjectileType<BraveLancePro>();
 			base.item.value = Item.buyPrice(0, 5, 0, 0);
 			base.item.noMelee = true;
 			base.item.noUseGraphic = true;

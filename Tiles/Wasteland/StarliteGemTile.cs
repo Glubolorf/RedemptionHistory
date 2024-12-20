@@ -16,16 +16,16 @@ namespace Redemption.Tiles.Wasteland
 			Main.tileLighted[(int)base.Type] = true;
 			this.dustType = 61;
 			this.drop = base.mod.ItemType("Starlite");
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Starlite");
-			base.AddMapEntry(new Color(30, 180, 90), modTranslation);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Starlite");
+			base.AddMapEntry(new Color(30, 180, 90), name);
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
 			Main.tileFrameImportant[(int)base.Type] = true;
 			Main.tileLavaDeath[(int)base.Type] = false;
 			TileObjectData.newTile.AnchorValidTiles = new int[]
 			{
-				base.mod.TileType<RadioactiveSandstoneTile>(),
-				base.mod.TileType<DeadRockTile>()
+				ModContent.TileType<RadioactiveSandstoneTile>(),
+				ModContent.TileType<DeadRockTile>()
 			};
 			TileObjectData.addTile((int)base.Type);
 		}
@@ -34,7 +34,7 @@ namespace Redemption.Tiles.Wasteland
 		{
 			if (i % 10 < 4)
 			{
-				spriteEffects = 1;
+				spriteEffects = SpriteEffects.FlipHorizontally;
 			}
 		}
 

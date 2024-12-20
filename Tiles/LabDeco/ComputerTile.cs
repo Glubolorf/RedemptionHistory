@@ -32,9 +32,9 @@ namespace Redemption.Tiles.LabDeco
 			this.minPick = 300;
 			this.mineResist = 3f;
 			this.disableSmartCursor = true;
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Computer");
-			base.AddMapEntry(new Color(150, 170, 150), modTranslation);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Computer");
+			base.AddMapEntry(new Color(150, 170, 150), name);
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)

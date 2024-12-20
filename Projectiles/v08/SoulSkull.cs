@@ -28,15 +28,21 @@ namespace Redemption.Projectiles.v08
 
 		public override void AI()
 		{
-			if (++base.projectile.frameCounter >= 5)
+			Projectile projectile = base.projectile;
+			int num = projectile.frameCounter + 1;
+			projectile.frameCounter = num;
+			if (num >= 5)
 			{
 				base.projectile.frameCounter = 0;
-				if (++base.projectile.frame >= 4)
+				Projectile projectile2 = base.projectile;
+				num = projectile2.frame + 1;
+				projectile2.frame = num;
+				if (num >= 4)
 				{
 					base.projectile.frame = 0;
 				}
 			}
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).spiritPierce)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritPierce)
 			{
 				base.projectile.penetrate = 6;
 			}
@@ -63,44 +69,44 @@ namespace Redemption.Projectiles.v08
 			base.projectile.localAI[0] += 1f;
 			if (base.projectile.localAI[0] == 1f)
 			{
-				int num = 206;
-				int num2 = 8;
-				for (int i = 0; i < num2; i++)
+				int dustType = 206;
+				int pieCut = 8;
+				for (int i = 0; i < pieCut; i++)
 				{
-					int num3 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num, 0f, 0f, 100, Color.White, 1.6f);
-					Main.dust[num3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)i / (float)num2 * 6.28f);
-					Main.dust[num3].noLight = false;
-					Main.dust[num3].noGravity = true;
+					int dustID = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 1.6f);
+					Main.dust[dustID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)i / (float)pieCut * 6.28f);
+					Main.dust[dustID].noLight = false;
+					Main.dust[dustID].noGravity = true;
 				}
 			}
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).spiritHoming)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritHoming)
 			{
 				if (base.projectile.localAI[0] == 0f)
 				{
 					this.AdjustMagnitude(ref base.projectile.velocity);
 					base.projectile.localAI[0] = 1f;
 				}
-				Vector2 vector2 = Vector2.Zero;
-				float num4 = 400f;
-				bool flag = false;
+				Vector2 move = Vector2.Zero;
+				float distance = 400f;
+				bool target = false;
 				for (int j = 0; j < 200; j++)
 				{
 					if (Main.npc[j].active && !Main.npc[j].dontTakeDamage && !Main.npc[j].friendly && Main.npc[j].lifeMax > 5)
 					{
-						Vector2 vector3 = Main.npc[j].Center - base.projectile.Center;
-						float num5 = (float)Math.Sqrt((double)(vector3.X * vector3.X + vector3.Y * vector3.Y));
-						if (num5 < num4)
+						Vector2 newMove = Main.npc[j].Center - base.projectile.Center;
+						float distanceTo = (float)Math.Sqrt((double)(newMove.X * newMove.X + newMove.Y * newMove.Y));
+						if (distanceTo < distance)
 						{
-							vector2 = vector3;
-							num4 = num5;
-							flag = true;
+							move = newMove;
+							distance = distanceTo;
+							target = true;
 						}
 					}
 				}
-				if (flag)
+				if (target)
 				{
-					this.AdjustMagnitude(ref vector2);
-					base.projectile.velocity = (10f * base.projectile.velocity + vector2) / 11f;
+					this.AdjustMagnitude(ref move);
+					base.projectile.velocity = (10f * base.projectile.velocity + move) / 11f;
 					this.AdjustMagnitude(ref base.projectile.velocity);
 				}
 			}
@@ -108,38 +114,38 @@ namespace Redemption.Projectiles.v08
 
 		private void AdjustMagnitude(ref Vector2 vector)
 		{
-			float num = (float)Math.Sqrt((double)(vector.X * vector.X + vector.Y * vector.Y));
-			if (num > 28f)
+			float magnitude = (float)Math.Sqrt((double)(vector.X * vector.X + vector.Y * vector.Y));
+			if (magnitude > 28f)
 			{
-				vector *= 27f / num;
+				vector *= 27f / magnitude;
 			}
 		}
 
 		public override void Kill(int timeLeft)
 		{
 			Main.PlaySound(SoundID.Item62, (int)base.projectile.position.X, (int)base.projectile.position.Y);
-			int num = 206;
-			int num2 = 20;
-			for (int i = 0; i < num2; i++)
+			int dustType = 206;
+			int pieCut = 20;
+			for (int i = 0; i < pieCut; i++)
 			{
-				int num3 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num, 0f, 0f, 100, Color.White, 1.6f);
-				Main.dust[num3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)i / (float)num2 * 6.28f);
-				Main.dust[num3].noLight = false;
-				Main.dust[num3].noGravity = true;
+				int dustID = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 1.6f);
+				Main.dust[dustID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)i / (float)pieCut * 6.28f);
+				Main.dust[dustID].noLight = false;
+				Main.dust[dustID].noGravity = true;
 			}
 		}
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
 			Player player = Main.player[base.projectile.owner];
-			int crit2 = player.HeldItem.crit;
-			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref crit2);
-			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref crit2);
-			if (crit2 >= 100 || Main.rand.Next(1, 101) <= crit2)
+			int critChance = player.HeldItem.crit;
+			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref critChance);
+			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref critChance);
+			if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
 			{
 				crit = true;
 			}
-			if (!Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).spiritPierce)
+			if (!Main.LocalPlayer.GetModPlayer<RedePlayer>().spiritPierce)
 			{
 				base.projectile.Kill();
 			}

@@ -13,14 +13,14 @@ namespace Redemption.Items.Weapons
 		{
 			if (Main.netMode != 2)
 			{
-				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
 				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
 				{
-					array[i] = Main.glowMaskTexture[i];
+					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
-				SlayerNanogun.customGlowMask = (short)(array.Length - 1);
-				Main.glowMaskTexture = array;
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				SlayerNanogun.customGlowMask = (short)(glowMasks.Length - 1);
+				Main.glowMaskTexture = glowMasks;
 			}
 			base.item.glowMask = SlayerNanogun.customGlowMask;
 			base.DisplayName.SetDefault("Nanobot Launcher");
@@ -50,13 +50,13 @@ namespace Redemption.Items.Weapons
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			int num = 8 + Main.rand.Next(4);
-			for (int i = 0; i < num; i++)
+			int numberProjectiles = 8 + Main.rand.Next(4);
+			for (int i = 0; i < numberProjectiles; i++)
 			{
-				Vector2 vector = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(10f));
-				float num2 = 1f - Utils.NextFloat(Main.rand) * 0.4f;
-				vector *= num2;
-				Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
+				Vector2 perturbedSpeed = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(10f));
+				float scale = 1f - Utils.NextFloat(Main.rand) * 0.4f;
+				perturbedSpeed *= scale;
+				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
 			}
 			return false;
 		}

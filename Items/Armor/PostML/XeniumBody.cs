@@ -33,8 +33,7 @@ namespace Redemption.Items.Armor.PostML
 			{
 				player.endurance += 0.07f;
 			}
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.xeniumDischarge = true;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).xeniumDischarge = true;
 		}
 
 		public override void AddRecipes()
@@ -46,20 +45,20 @@ namespace Redemption.Items.Armor.PostML
 			modRecipe.AddTile(null, "XenoTank1");
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "XeniumBar", 18);
-			modRecipe.AddIngredient(null, "ArtificalMuscle", 4);
-			modRecipe.AddIngredient(null, "Mk2Capacitator", 2);
-			modRecipe.AddTile(null, "XenoTank1");
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "XeniumBar", 18);
-			modRecipe.AddIngredient(null, "ArtificalMuscle", 4);
-			modRecipe.AddIngredient(null, "Mk1Capacitator", 4);
-			modRecipe.AddTile(null, "XenoTank1");
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.AddIngredient(null, "XeniumBar", 18);
+			modRecipe2.AddIngredient(null, "ArtificalMuscle", 4);
+			modRecipe2.AddIngredient(null, "Mk2Capacitator", 2);
+			modRecipe2.AddTile(null, "XenoTank1");
+			modRecipe2.SetResult(this, 1);
+			modRecipe2.AddRecipe();
+			ModRecipe modRecipe3 = new ModRecipe(base.mod);
+			modRecipe3.AddIngredient(null, "XeniumBar", 18);
+			modRecipe3.AddIngredient(null, "ArtificalMuscle", 4);
+			modRecipe3.AddIngredient(null, "Mk1Capacitator", 4);
+			modRecipe3.AddTile(null, "XenoTank1");
+			modRecipe3.SetResult(this, 1);
+			modRecipe3.AddRecipe();
 		}
 	}
 }

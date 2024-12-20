@@ -28,10 +28,8 @@ namespace Redemption.Items.Armor
 
 		public override void UpdateEquip(Player player)
 		{
-			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
-			druidDamagePlayer.druidDamage += 0.06f;
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.fasterSpirits = true;
+			DruidDamagePlayer.ModPlayer(player).druidDamage += 0.06f;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).fasterSpirits = true;
 		}
 
 		public override bool IsArmorSet(Item head, Item body, Item legs)
@@ -47,8 +45,7 @@ namespace Redemption.Items.Armor
 		public override void UpdateArmorSet(Player player)
 		{
 			player.setBonus = "Spirits home in on enemies";
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.spiritHoming = true;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).spiritHoming = true;
 		}
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)

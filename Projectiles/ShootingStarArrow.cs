@@ -12,14 +12,14 @@ namespace Redemption.Projectiles
 		{
 			if (Main.netMode != 2)
 			{
-				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
 				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
 				{
-					array[i] = Main.glowMaskTexture[i];
+					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				array[array.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
-				ShootingStarArrow.customGlowMask = (short)(array.Length - 1);
-				Main.glowMaskTexture = array;
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
+				ShootingStarArrow.customGlowMask = (short)(glowMasks.Length - 1);
+				Main.glowMaskTexture = glowMasks;
 			}
 			base.DisplayName.SetDefault("Shooting Star Arrow");
 		}
@@ -54,8 +54,8 @@ namespace Redemption.Projectiles
 		{
 			for (int i = 0; i < 10; i++)
 			{
-				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 21, 0f, 0f, 100, default(Color), 1.2f);
-				Main.dust[num].velocity *= 1.4f;
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 21, 0f, 0f, 100, default(Color), 1.2f);
+				Main.dust[dustIndex].velocity *= 1.4f;
 			}
 			Projectile.NewProjectile(base.projectile.position.X + 10f, base.projectile.position.Y + 14f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("PoisonShard"), 4, 1f, base.projectile.owner, 0f, 1f);
 			Projectile.NewProjectile(base.projectile.position.X + 10f, base.projectile.position.Y + 14f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("PoisonShard"), 4, 1f, base.projectile.owner, 0f, 1f);

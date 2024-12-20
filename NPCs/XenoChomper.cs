@@ -29,6 +29,8 @@ namespace Redemption.NPCs
 			base.npc.aiStyle = 16;
 			this.aiType = 58;
 			this.animationType = 58;
+			this.banner = base.npc.type;
+			this.bannerItem = base.mod.ItemType("XenoChomperBanner");
 		}
 
 		public override void HitEffect(int hitDirection, double damage)

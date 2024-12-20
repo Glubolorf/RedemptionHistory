@@ -73,16 +73,15 @@ namespace Redemption.NPCs
 			}
 			if ((double)base.npc.ai[1] < (double)Main.npc.Length)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
-				float num = Main.npc[(int)base.npc.ai[1]].position.X + (float)(Main.npc[(int)base.npc.ai[1]].width / 2) - vector.X;
-				float num2 = Main.npc[(int)base.npc.ai[1]].position.Y + (float)(Main.npc[(int)base.npc.ai[1]].height / 2) - vector.Y;
-				base.npc.rotation = (float)Math.Atan2((double)num2, (double)num) + 1.57f;
-				float num3 = (float)Math.Sqrt((double)(num * num + num2 * num2));
-				float num4 = (num3 - (float)base.npc.width) / num3;
-				float num5 = num * num4;
-				float num6 = num2 * num4;
-				if (num < 0f)
+				Vector2 npcCenter = new Vector2(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
+				float dirX = Main.npc[(int)base.npc.ai[1]].position.X + (float)(Main.npc[(int)base.npc.ai[1]].width / 2) - npcCenter.X;
+				float dirY = Main.npc[(int)base.npc.ai[1]].position.Y + (float)(Main.npc[(int)base.npc.ai[1]].height / 2) - npcCenter.Y;
+				base.npc.rotation = (float)Math.Atan2((double)dirY, (double)dirX) + 1.57f;
+				float length = (float)Math.Sqrt((double)(dirX * dirX + dirY * dirY));
+				float dist = (length - (float)base.npc.width) / length;
+				float posX = dirX * dist;
+				float posY = dirY * dist;
+				if (dirX < 0f)
 				{
 					base.npc.spriteDirection = 1;
 				}
@@ -90,21 +89,20 @@ namespace Redemption.NPCs
 				{
 					base.npc.spriteDirection = -1;
 				}
-				base.npc.position.X = base.npc.position.X + num5;
-				base.npc.position.Y = base.npc.position.Y + num6;
+				base.npc.position.X = base.npc.position.X + posX;
+				base.npc.position.Y = base.npc.position.Y + posY;
 			}
 			return false;
 		}
 
 		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
 		{
-			return !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).skeletonFriendly;
+			return !Main.LocalPlayer.GetModPlayer<RedePlayer>().skeletonFriendly;
 		}
 
 		public override bool CheckActive()
 		{
-			NPC npc = Main.npc[(int)base.npc.ai[1]];
-			return !npc.active;
+			return !Main.npc[(int)base.npc.ai[1]].active;
 		}
 	}
 }

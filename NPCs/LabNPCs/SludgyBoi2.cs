@@ -35,8 +35,7 @@ namespace Redemption.NPCs.LabNPCs
 
 		public override void AI()
 		{
-			float num = base.npc.Distance(Main.player[base.npc.target].Center);
-			if (num >= 500f)
+			if (base.npc.Distance(Main.player[base.npc.target].Center) >= 500f)
 			{
 				base.npc.active = false;
 			}

@@ -16,12 +16,12 @@ namespace Redemption.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 10;
+			base.item.damage = 12;
 			base.item.melee = true;
 			base.item.width = 58;
 			base.item.height = 58;
-			base.item.useTime = 19;
-			base.item.useAnimation = 19;
+			base.item.useTime = 15;
+			base.item.useAnimation = 15;
 			base.item.useStyle = 3;
 			base.item.knockBack = 4f;
 			base.item.value = Item.sellPrice(0, 2, 0, 0);
@@ -44,9 +44,9 @@ namespace Redemption.Items.Weapons
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			Vector2 vector = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(10f));
-			speedX = vector.X;
-			speedY = vector.Y;
+			Vector2 perturbedSpeed = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(10f));
+			speedX = perturbedSpeed.X;
+			speedY = perturbedSpeed.Y;
 			return true;
 		}
 	}

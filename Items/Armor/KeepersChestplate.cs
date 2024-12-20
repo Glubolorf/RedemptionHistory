@@ -22,13 +22,13 @@ namespace Redemption.Items.Armor
 			base.item.height = 20;
 			base.item.value = Item.sellPrice(0, 1, 0, 0);
 			base.item.rare = 3;
-			base.item.defense = 6;
+			base.item.defense = 5;
 		}
 
 		public override void UpdateEquip(Player player)
 		{
-			player.lifeRegen += 5;
-			player.statLifeMax2 += 50;
+			player.lifeRegen += 3;
+			player.statLifeMax2 += 25;
 		}
 
 		public override void AddRecipes()

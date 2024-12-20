@@ -13,14 +13,14 @@ namespace Redemption.Items.DruidDamageClass
 		{
 			if (Main.netMode != 2)
 			{
-				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
 				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
 				{
-					array[i] = Main.glowMaskTexture[i];
+					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				array[array.Length - 1] = base.mod.GetTexture("Items/DruidDamageClass/" + base.GetType().Name + "_Glow");
-				Belrose1.customGlowMask = (short)(array.Length - 1);
-				Main.glowMaskTexture = array;
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Items/DruidDamageClass/" + base.GetType().Name + "_Glow");
+				Belrose1.customGlowMask = (short)(glowMasks.Length - 1);
+				Main.glowMaskTexture = glowMasks;
 			}
 			base.DisplayName.SetDefault("The Belrose");
 			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Shifting from bones to dust'\nRight Clicks throws 3 Belroses out like boomerangs");
@@ -28,7 +28,7 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override void SafeSetDefaults()
 		{
-			base.item.damage = 99;
+			base.item.damage = 75;
 			base.item.width = 50;
 			base.item.height = 50;
 			base.item.useTime = 23;
@@ -48,7 +48,7 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).burnStaves)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().burnStaves)
 			{
 				target.AddBuff(24, 180, false);
 			}
@@ -78,13 +78,13 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			int num = 3;
-			for (int i = 0; i < num; i++)
+			int numberProjectiles = 3;
+			for (int i = 0; i < numberProjectiles; i++)
 			{
-				Vector2 vector = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(15f));
-				float num2 = 1f - Utils.NextFloat(Main.rand) * 0.3f;
-				vector *= num2;
-				Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
+				Vector2 perturbedSpeed = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(15f));
+				float scale = 1f - Utils.NextFloat(Main.rand) * 0.3f;
+				perturbedSpeed *= scale;
+				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
 			}
 			return false;
 		}

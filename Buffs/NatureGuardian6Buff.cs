@@ -17,10 +17,9 @@ namespace Redemption.Buffs
 		public override void Update(Player player, ref int buffIndex)
 		{
 			DruidDamagePlayer.ModPlayer(player);
-			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
-			modPlayer.staveTripleShot = true;
+			player.GetModPlayer<RedePlayer>().staveTripleShot = true;
 			player.nightVision = true;
-			RedePlayer modPlayer2 = player.GetModPlayer<RedePlayer>(base.mod);
+			RedePlayer modPlayer2 = player.GetModPlayer<RedePlayer>();
 			if (player.ownedProjectileCounts[base.mod.ProjectileType("NatureGuardian6")] > 0)
 			{
 				modPlayer2.natureGuardian6 = true;

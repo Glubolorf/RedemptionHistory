@@ -64,8 +64,7 @@ namespace Redemption.NPCs.v08
 					this.change = true;
 				}
 			}
-			Player player = Main.player[base.npc.target];
-			if (player.Center.X > base.npc.Center.X)
+			if (Main.player[base.npc.target].Center.X > base.npc.Center.X)
 			{
 				base.npc.spriteDirection = 1;
 			}
@@ -118,20 +117,19 @@ namespace Redemption.NPCs.v08
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/v08/ElderForestGolemHop");
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D hopAni = base.mod.GetTexture("NPCs/v08/ElderForestGolemHop");
 			int spriteDirection = base.npc.spriteDirection;
 			if (!this.hop)
 			{
-				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.hop)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num = texture.Height / 1;
-				int num2 = num * this.hopFrame;
-				Main.spriteBatch.Draw(texture, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num214 = hopAni.Height / 1;
+				int y6 = num214 * this.hopFrame;
+				Main.spriteBatch.Draw(hopAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, hopAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)hopAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
 		}
@@ -147,12 +145,12 @@ namespace Redemption.NPCs.v08
 			{
 				for (int i = 0; i < 40; i++)
 				{
-					int num = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 78, 0f, 0f, 100, default(Color), 2f);
-					Main.dust[num].velocity *= 4.6f;
+					int dustIndex2 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 78, 0f, 0f, 100, default(Color), 2f);
+					Main.dust[dustIndex2].velocity *= 4.6f;
 				}
 			}
-			int num2 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 78, 0f, 0f, 100, default(Color), 1f);
-			Main.dust[num2].velocity *= 4.6f;
+			int dustIndex3 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 78, 0f, 0f, 100, default(Color), 1f);
+			Main.dust[dustIndex3].velocity *= 4.6f;
 		}
 
 		private bool hop;

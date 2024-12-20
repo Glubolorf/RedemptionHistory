@@ -32,7 +32,14 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 			base.npc.noGravity = true;
 			base.npc.boss = true;
 			base.npc.netAlways = true;
-			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossStarGod2");
+			if (RedeConfigClient.Instance.AntiAntti)
+			{
+				this.music = 38;
+			}
+			else
+			{
+				this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossStarGod2");
+			}
 			base.npc.noTileCollide = false;
 			this.bossBag = base.mod.ItemType("NebBag");
 		}
@@ -59,44 +66,44 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 		{
 			if (base.npc.life <= 0)
 			{
-				int num = 58;
-				int num2 = 8;
-				for (int i = 0; i < num2; i++)
+				int dustType = 58;
+				int pieCut = 8;
+				for (int i = 0; i < pieCut; i++)
 				{
-					int num3 = Dust.NewDust(new Vector2(base.npc.Center.X - 1f, base.npc.Center.Y - 1f), 2, 2, num, 0f, 0f, 100, Color.White, 5f);
-					Main.dust[num3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)i / (float)num2 * 6.28f);
-					Main.dust[num3].noLight = false;
-					Main.dust[num3].noGravity = true;
+					int dustID = Dust.NewDust(new Vector2(base.npc.Center.X - 1f, base.npc.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 5f);
+					Main.dust[dustID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)i / (float)pieCut * 6.28f);
+					Main.dust[dustID].noLight = false;
+					Main.dust[dustID].noGravity = true;
 				}
-				int num4 = 59;
-				int num5 = 10;
-				for (int j = 0; j < num5; j++)
+				int dustType2 = 59;
+				int pieCut2 = 10;
+				for (int j = 0; j < pieCut2; j++)
 				{
-					int num6 = Dust.NewDust(new Vector2(base.npc.Center.X - 1f, base.npc.Center.Y - 1f), 2, 2, num4, 0f, 0f, 100, Color.White, 5f);
-					Main.dust[num6].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(14f, 0f), (float)j / (float)num5 * 6.28f);
-					Main.dust[num6].noLight = false;
-					Main.dust[num6].noGravity = true;
+					int dustID2 = Dust.NewDust(new Vector2(base.npc.Center.X - 1f, base.npc.Center.Y - 1f), 2, 2, dustType2, 0f, 0f, 100, Color.White, 5f);
+					Main.dust[dustID2].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(14f, 0f), (float)j / (float)pieCut2 * 6.28f);
+					Main.dust[dustID2].noLight = false;
+					Main.dust[dustID2].noGravity = true;
 				}
-				int num7 = 60;
-				int num8 = 12;
-				for (int k = 0; k < num8; k++)
+				int dustType3 = 60;
+				int pieCut3 = 12;
+				for (int k = 0; k < pieCut3; k++)
 				{
-					int num9 = Dust.NewDust(new Vector2(base.npc.Center.X - 1f, base.npc.Center.Y - 1f), 2, 2, num7, 0f, 0f, 100, Color.White, 5f);
-					Main.dust[num9].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(18f, 0f), (float)k / (float)num8 * 6.28f);
-					Main.dust[num9].noLight = false;
-					Main.dust[num9].noGravity = true;
+					int dustID3 = Dust.NewDust(new Vector2(base.npc.Center.X - 1f, base.npc.Center.Y - 1f), 2, 2, dustType3, 0f, 0f, 100, Color.White, 5f);
+					Main.dust[dustID3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(18f, 0f), (float)k / (float)pieCut3 * 6.28f);
+					Main.dust[dustID3].noLight = false;
+					Main.dust[dustID3].noGravity = true;
 				}
-				int num10 = 62;
-				int num11 = 14;
-				for (int l = 0; l < num11; l++)
+				int dustType4 = 62;
+				int pieCut4 = 14;
+				for (int l = 0; l < pieCut4; l++)
 				{
-					int num12 = Dust.NewDust(new Vector2(base.npc.Center.X - 1f, base.npc.Center.Y - 1f), 2, 2, num10, 0f, 0f, 100, Color.White, 5f);
-					Main.dust[num12].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(20f, 0f), (float)l / (float)num11 * 6.28f);
-					Main.dust[num12].noLight = false;
-					Main.dust[num12].noGravity = true;
+					int dustID4 = Dust.NewDust(new Vector2(base.npc.Center.X - 1f, base.npc.Center.Y - 1f), 2, 2, dustType4, 0f, 0f, 100, Color.White, 5f);
+					Main.dust[dustID4].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(20f, 0f), (float)l / (float)pieCut4 * 6.28f);
+					Main.dust[dustID4].noLight = false;
+					Main.dust[dustID4].noGravity = true;
 				}
-				int num13 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("NebFalling"), 0, 3f, 255, 0f, 0f);
-				Main.npc[num13].netUpdate = true;
+				int Proj = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("NebFalling"), 0, 3f, 255, 0f, 0f);
+				Main.npc[Proj].netUpdate = true;
 			}
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 58, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
 		}
@@ -199,7 +206,15 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 			if (!this.beginFight)
 			{
 				base.npc.dontTakeDamage = true;
-				if (RedeWorld.downedNebuleus)
+				if (RedeConfigClient.Instance.NoBossText)
+				{
+					if (this.customAI[0] == 300f)
+					{
+						this.beginFight = true;
+						base.npc.netUpdate = true;
+					}
+				}
+				else if (RedeWorld.downedNebuleus)
 				{
 					if (this.customAI[0] == 80f)
 					{
@@ -336,21 +351,21 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 				if (this.customAI[0] >= 3180f && this.customAI[0] <= 6390f && Main.rand.Next(60) == 0)
 				{
 					Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 8, 1f, 0f);
-					int num = Main.rand.Next(-200, 200) * 6;
-					int num2 = Main.rand.Next(-200, 200) - 1000;
-					int num3 = Projectile.NewProjectile(player.Center.X + (float)num, player.Center.Y + (float)num2, 2f, 6f, base.mod.ProjectileType("StarFallPro2"), 45, 1f, Main.myPlayer, 0f, 0f);
-					Main.projectile[num3].netUpdate = true;
+					int A = Main.rand.Next(-200, 200) * 6;
+					int B = Main.rand.Next(-200, 200) - 1000;
+					int p = Projectile.NewProjectile(player.Center.X + (float)A, player.Center.Y + (float)B, 2f, 6f, base.mod.ProjectileType("StarFallPro2"), 45, 1f, Main.myPlayer, 0f, 0f);
+					Main.projectile[p].netUpdate = true;
 				}
 				if (this.customAI[0] >= 6390f && Main.rand.Next(50) == 0)
 				{
 					Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 8, 1f, 0f);
-					int num4 = Main.rand.Next(-200, 200) - 1000;
-					int num5 = Main.rand.Next(-200, 200) * 4;
-					int num6 = Projectile.NewProjectile(player.Center.X + (float)num4, player.Center.Y + (float)num5, 6f, 0f, base.mod.ProjectileType("StarFallPro2"), 45, 1f, Main.myPlayer, 0f, 0f);
-					Main.projectile[num6].netUpdate = true;
+					int A2 = Main.rand.Next(-200, 200) - 1000;
+					int B2 = Main.rand.Next(-200, 200) * 4;
+					int p2 = Projectile.NewProjectile(player.Center.X + (float)A2, player.Center.Y + (float)B2, 6f, 0f, base.mod.ProjectileType("StarFallPro2"), 45, 1f, Main.myPlayer, 0f, 0f);
+					Main.projectile[p2].netUpdate = true;
 				}
 				base.npc.dontTakeDamage = false;
-				if (this.customAI[0] == 750f)
+				if (this.customAI[0] == 750f || (this.customAI[0] == 350f && RedeConfigClient.Instance.NoBossText))
 				{
 					base.npc.ai[2] = 1f;
 					base.npc.netUpdate = true;
@@ -396,22 +411,22 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 				base.npc.ai[3] += 1f;
 				if (base.npc.ai[3] == 5f)
 				{
-					int num7 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout5"), 0, 1f, Main.myPlayer, 0f, 0f);
-					Main.projectile[num7].netUpdate = true;
+					int p3 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout5"), 0, 1f, Main.myPlayer, 0f, 0f);
+					Main.projectile[p3].netUpdate = true;
 				}
 				if (base.npc.ai[3] >= 60f && base.npc.ai[3] < 120f)
 				{
 					if (Main.rand.Next(20) == 0)
 					{
 						Main.PlaySound(SoundID.Item117, (int)base.npc.position.X, (int)base.npc.position.Y);
-						int num8 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-4 + Main.rand.Next(0, 8)), (float)(-4 + Main.rand.Next(0, 8)), base.mod.ProjectileType("CurvingStar2"), 50, 1f, 255, 0f, 0f);
-						Main.projectile[num8].netUpdate = true;
+						int p4 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-4 + Main.rand.Next(0, 8)), (float)(-4 + Main.rand.Next(0, 8)), base.mod.ProjectileType("CurvingStar2"), 50, 1f, 255, 0f, 0f);
+						Main.projectile[p4].netUpdate = true;
 					}
 					if (Main.rand.Next(20) == 0)
 					{
 						Main.PlaySound(SoundID.Item117, (int)base.npc.position.X, (int)base.npc.position.Y);
-						int num9 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-4 + Main.rand.Next(0, 8)), (float)(-4 + Main.rand.Next(0, 8)), base.mod.ProjectileType("CurvingStar2O"), 50, 1f, 255, 0f, 0f);
-						Main.projectile[num9].netUpdate = true;
+						int p5 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-4 + Main.rand.Next(0, 8)), (float)(-4 + Main.rand.Next(0, 8)), base.mod.ProjectileType("CurvingStar2O"), 50, 1f, 255, 0f, 0f);
+						Main.projectile[p5].netUpdate = true;
 					}
 				}
 				if (base.npc.ai[3] >= 160f)
@@ -428,24 +443,24 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 				base.npc.ai[3] += 1f;
 				if (base.npc.ai[3] == 5f)
 				{
-					int num10 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout6"), 0, 1f, Main.myPlayer, 0f, 0f);
-					Main.projectile[num10].netUpdate = true;
+					int p6 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout6"), 0, 1f, Main.myPlayer, 0f, 0f);
+					Main.projectile[p6].netUpdate = true;
 				}
 				if (base.npc.ai[3] == 60f || base.npc.ai[3] == 90f)
 				{
 					Main.PlaySound(SoundID.Item117, (int)base.npc.position.X, (int)base.npc.position.Y);
-					int num11 = 8;
-					for (int i = 0; i < num11; i++)
+					int pieCut = 8;
+					for (int i = 0; i < pieCut; i++)
 					{
-						int num12 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("PNebula1"), 50, 3f, 255, 0f, 0f);
-						Main.projectile[num12].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(14f, 0f), (float)i / (float)num11 * 6.28f);
-						int num13 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("PNebula2"), 50, 3f, 255, 0f, 0f);
-						Main.projectile[num13].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(14f, 0f), (float)i / (float)num11 * 6.28f);
-						int num14 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("PNebula3"), 50, 3f, 255, 0f, 0f);
-						Main.projectile[num14].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(14f, 0f), (float)i / (float)num11 * 6.28f);
-						Main.projectile[num12].netUpdate = true;
-						Main.projectile[num13].netUpdate = true;
-						Main.projectile[num14].netUpdate = true;
+						int projID = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("PNebula1"), 50, 3f, 255, 0f, 0f);
+						Main.projectile[projID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(14f, 0f), (float)i / (float)pieCut * 6.28f);
+						int projID2 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("PNebula2"), 50, 3f, 255, 0f, 0f);
+						Main.projectile[projID2].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(14f, 0f), (float)i / (float)pieCut * 6.28f);
+						int projID3 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("PNebula3"), 50, 3f, 255, 0f, 0f);
+						Main.projectile[projID3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(14f, 0f), (float)i / (float)pieCut * 6.28f);
+						Main.projectile[projID].netUpdate = true;
+						Main.projectile[projID2].netUpdate = true;
+						Main.projectile[projID3].netUpdate = true;
 					}
 				}
 				if (base.npc.ai[3] >= 80f)
@@ -462,17 +477,17 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 				base.npc.ai[3] += 1f;
 				if (base.npc.ai[3] == 5f)
 				{
-					int num15 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout7"), 0, 1f, Main.myPlayer, 0f, 0f);
-					Main.projectile[num15].netUpdate = true;
+					int p7 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout7"), 0, 1f, Main.myPlayer, 0f, 0f);
+					Main.projectile[p7].netUpdate = true;
 				}
 				if (base.npc.ai[3] == 20f)
 				{
-					int num16 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("NebPortal1"), 50, 1f, Main.myPlayer, 0f, 0f);
-					int num17 = Projectile.NewProjectile(base.npc.Center.X - 100f, base.npc.Center.Y + 100f, 0f, 0f, base.mod.ProjectileType("NebPortal1"), 50, 1f, Main.myPlayer, 0f, 0f);
-					int num18 = Projectile.NewProjectile(base.npc.Center.X + 100f, base.npc.Center.Y + 100f, 0f, 0f, base.mod.ProjectileType("NebPortal1"), 50, 1f, Main.myPlayer, 0f, 0f);
-					Main.projectile[num16].netUpdate = true;
-					Main.projectile[num17].netUpdate = true;
-					Main.projectile[num18].netUpdate = true;
+					int p8 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("NebPortal1"), 50, 1f, Main.myPlayer, 0f, 0f);
+					int p9 = Projectile.NewProjectile(base.npc.Center.X - 100f, base.npc.Center.Y + 100f, 0f, 0f, base.mod.ProjectileType("NebPortal1"), 50, 1f, Main.myPlayer, 0f, 0f);
+					int p10 = Projectile.NewProjectile(base.npc.Center.X + 100f, base.npc.Center.Y + 100f, 0f, 0f, base.mod.ProjectileType("NebPortal1"), 50, 1f, Main.myPlayer, 0f, 0f);
+					Main.projectile[p8].netUpdate = true;
+					Main.projectile[p9].netUpdate = true;
+					Main.projectile[p10].netUpdate = true;
 				}
 				if (base.npc.ai[3] >= 100f)
 				{
@@ -488,20 +503,19 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 				base.npc.ai[3] += 1f;
 				if (base.npc.ai[3] == 5f)
 				{
-					int num19 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout9"), 0, 1f, Main.myPlayer, 0f, 0f);
-					Main.projectile[num19].netUpdate = true;
+					int p11 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout9"), 0, 1f, Main.myPlayer, 0f, 0f);
+					Main.projectile[p11].netUpdate = true;
 				}
 				if (base.npc.ai[3] == 60f || base.npc.ai[3] == 80f || base.npc.ai[3] == 100f || base.npc.ai[3] == 120f)
 				{
 					Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-					float num20 = 26f;
-					Vector2 vector;
-					vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-					int num21 = 10;
-					int num22 = base.mod.ProjectileType("CosmosChain1");
-					float num23 = (float)Math.Atan2((double)(vector.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector.X - (player.position.X + (float)player.width * 0.5f)));
-					int num24 = Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num23) * (double)num20 * -1.0), (float)(Math.Sin((double)num23) * (double)num20 * -1.0), num22, num21, 0f, 0, 0f, 0f);
-					Main.projectile[num24].netUpdate = true;
+					float Speed = 26f;
+					Vector2 vector8 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+					int damage = 10;
+					int type = base.mod.ProjectileType("CosmosChain1");
+					float rotation = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
+					int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
+					Main.projectile[num54].netUpdate = true;
 				}
 				if (base.npc.ai[3] >= 150f)
 				{
@@ -517,50 +531,50 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 				base.npc.ai[3] += 1f;
 				if (base.npc.ai[3] == 5f)
 				{
-					int num25 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout10"), 0, 1f, Main.myPlayer, 0f, 0f);
-					int num26 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("NebRing"), 0, 1f, Main.myPlayer, 0f, 0f);
-					Main.projectile[num25].netUpdate = true;
-					Main.projectile[num26].netUpdate = true;
+					int p12 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout10"), 0, 1f, Main.myPlayer, 0f, 0f);
+					int p13 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("NebRing"), 0, 1f, Main.myPlayer, 0f, 0f);
+					Main.projectile[p12].netUpdate = true;
+					Main.projectile[p13].netUpdate = true;
 				}
 				if (base.npc.ai[3] == 60f)
 				{
-					int num27 = NPC.NewNPC((int)base.npc.Center.X - 100, (int)base.npc.Center.Y + 100, base.mod.NPCType("NebEye1"), 0, 0f, 0f, 0f, 0f, 255);
-					Main.npc[num27].netUpdate = true;
+					int Minion = NPC.NewNPC((int)base.npc.Center.X - 100, (int)base.npc.Center.Y + 100, base.mod.NPCType("NebEye1"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[Minion].netUpdate = true;
 				}
 				if (base.npc.ai[3] == 70f)
 				{
-					int num28 = NPC.NewNPC((int)base.npc.Center.X - 100, (int)base.npc.Center.Y - 100, base.mod.NPCType("NebEye1"), 0, 0f, 0f, 0f, 0f, 255);
-					Main.npc[num28].netUpdate = true;
+					int Minion2 = NPC.NewNPC((int)base.npc.Center.X - 100, (int)base.npc.Center.Y - 100, base.mod.NPCType("NebEye1"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[Minion2].netUpdate = true;
 				}
 				if (base.npc.ai[3] == 80f)
 				{
-					int num29 = NPC.NewNPC((int)base.npc.Center.X + 100, (int)base.npc.Center.Y - 100, base.mod.NPCType("NebEye1"), 0, 0f, 0f, 0f, 0f, 255);
-					Main.npc[num29].netUpdate = true;
+					int Minion3 = NPC.NewNPC((int)base.npc.Center.X + 100, (int)base.npc.Center.Y - 100, base.mod.NPCType("NebEye1"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[Minion3].netUpdate = true;
 				}
 				if (base.npc.ai[3] == 90f)
 				{
-					int num30 = NPC.NewNPC((int)base.npc.Center.X + 100, (int)base.npc.Center.Y + 100, base.mod.NPCType("NebEye1"), 0, 0f, 0f, 0f, 0f, 255);
-					Main.npc[num30].netUpdate = true;
+					int Minion4 = NPC.NewNPC((int)base.npc.Center.X + 100, (int)base.npc.Center.Y + 100, base.mod.NPCType("NebEye1"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[Minion4].netUpdate = true;
 				}
 				if (base.npc.ai[3] == 100f)
 				{
-					int num31 = NPC.NewNPC((int)base.npc.Center.X + 200, (int)base.npc.Center.Y, base.mod.NPCType("NebEye1"), 0, 0f, 0f, 0f, 0f, 255);
-					Main.npc[num31].netUpdate = true;
+					int Minion5 = NPC.NewNPC((int)base.npc.Center.X + 200, (int)base.npc.Center.Y, base.mod.NPCType("NebEye1"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[Minion5].netUpdate = true;
 				}
 				if (base.npc.ai[3] == 110f)
 				{
-					int num32 = NPC.NewNPC((int)base.npc.Center.X - 200, (int)base.npc.Center.Y, base.mod.NPCType("NebEye1"), 0, 0f, 0f, 0f, 0f, 255);
-					Main.npc[num32].netUpdate = true;
+					int Minion6 = NPC.NewNPC((int)base.npc.Center.X - 200, (int)base.npc.Center.Y, base.mod.NPCType("NebEye1"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[Minion6].netUpdate = true;
 				}
 				if (base.npc.ai[3] == 120f)
 				{
-					int num33 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y + 200, base.mod.NPCType("NebEye1"), 0, 0f, 0f, 0f, 0f, 255);
-					Main.npc[num33].netUpdate = true;
+					int Minion7 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y + 200, base.mod.NPCType("NebEye1"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[Minion7].netUpdate = true;
 				}
 				if (base.npc.ai[3] == 130f)
 				{
-					int num34 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y - 200, base.mod.NPCType("NebEye1"), 0, 0f, 0f, 0f, 0f, 255);
-					Main.npc[num34].netUpdate = true;
+					int Minion8 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y - 200, base.mod.NPCType("NebEye1"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[Minion8].netUpdate = true;
 				}
 				if (base.npc.ai[3] >= 240f)
 				{
@@ -576,29 +590,29 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 				base.npc.ai[3] += 1f;
 				if (base.npc.ai[3] == 5f)
 				{
-					int num35 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout1"), 0, 1f, Main.myPlayer, 0f, 0f);
-					Main.projectile[num35].netUpdate = true;
+					int p14 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout1"), 0, 1f, Main.myPlayer, 0f, 0f);
+					Main.projectile[p14].netUpdate = true;
 				}
 				if (base.npc.ai[3] == 60f || base.npc.ai[3] == 120f || base.npc.ai[3] == 180f || base.npc.ai[3] == 250f)
 				{
 					Main.PlaySound(SoundID.Item117, (int)base.npc.position.X, (int)base.npc.position.Y);
-					int num36 = 8;
-					for (int j = 0; j < num36; j++)
+					int pieCut2 = 8;
+					for (int j = 0; j < pieCut2; j++)
 					{
-						int num37 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("CurvingStar2"), 50, 3f, 255, 0f, 0f);
-						Main.projectile[num37].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(5f, 0f), (float)j / (float)num36 * 6.28f);
-						Main.projectile[num37].netUpdate = true;
+						int projID4 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("CurvingStar2"), 50, 3f, 255, 0f, 0f);
+						Main.projectile[projID4].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(5f, 0f), (float)j / (float)pieCut2 * 6.28f);
+						Main.projectile[projID4].netUpdate = true;
 					}
 				}
 				if (base.npc.ai[3] == 90f || base.npc.ai[3] == 210f)
 				{
 					Main.PlaySound(SoundID.Item117, (int)base.npc.position.X, (int)base.npc.position.Y);
-					int num38 = 8;
-					for (int k = 0; k < num38; k++)
+					int pieCut3 = 8;
+					for (int k = 0; k < pieCut3; k++)
 					{
-						int num39 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("CurvingStar2O"), 50, 3f, 255, 0f, 0f);
-						Main.projectile[num39].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(5f, 0f), (float)k / (float)num38 * 6.28f);
-						Main.projectile[num39].netUpdate = true;
+						int projID5 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("CurvingStar2O"), 50, 3f, 255, 0f, 0f);
+						Main.projectile[projID5].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(5f, 0f), (float)k / (float)pieCut3 * 6.28f);
+						Main.projectile[projID5].netUpdate = true;
 					}
 				}
 				if (base.npc.ai[3] >= 340f)
@@ -615,26 +629,25 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 				base.npc.ai[3] += 1f;
 				if (base.npc.ai[3] == 5f)
 				{
-					int num40 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout3"), 0, 1f, Main.myPlayer, 0f, 0f);
-					Main.projectile[num40].netUpdate = true;
+					int p15 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout3"), 0, 1f, Main.myPlayer, 0f, 0f);
+					Main.projectile[p15].netUpdate = true;
 				}
 				if (base.npc.ai[3] == 60f || base.npc.ai[3] == 70f || base.npc.ai[3] == 80f || base.npc.ai[3] == 90f || base.npc.ai[3] == 100f)
 				{
 					Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-					float num41 = 15f;
-					Vector2 vector2;
-					vector2..ctor(base.npc.Center.X, base.npc.Center.Y);
-					int num42 = 50;
-					int num43 = base.mod.ProjectileType("PNebula1");
-					int num44 = base.mod.ProjectileType("PNebula2");
-					int num45 = base.mod.ProjectileType("PNebula3");
-					float num46 = (float)Math.Atan2((double)(vector2.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector2.X - (player.position.X + (float)player.width * 0.5f)));
-					int num47 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num46) * (double)num41 * -1.0), (float)(Math.Sin((double)num46) * (double)num41 * -1.0), num43, num42, 0f, 0, 0f, 0f);
-					int num48 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num46) * (double)num41 * -1.0), (float)(Math.Sin((double)num46) * (double)num41 * -1.0), num44, num42, 0f, 0, 0f, 0f);
-					int num49 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num46) * (double)num41 * -1.0), (float)(Math.Sin((double)num46) * (double)num41 * -1.0), num45, num42, 0f, 0, 0f, 0f);
-					Main.projectile[num47].netUpdate = true;
-					Main.projectile[num48].netUpdate = true;
-					Main.projectile[num49].netUpdate = true;
+					float Speed2 = 15f;
+					Vector2 vector9 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+					int damage2 = 50;
+					int type2 = base.mod.ProjectileType("PNebula1");
+					int type3 = base.mod.ProjectileType("PNebula2");
+					int type4 = base.mod.ProjectileType("PNebula3");
+					float rotation2 = (float)Math.Atan2((double)(vector9.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector9.X - (player.position.X + (float)player.width * 0.5f)));
+					int num55 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0), type2, damage2, 0f, 0, 0f, 0f);
+					int num56 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0), type3, damage2, 0f, 0, 0f, 0f);
+					int num57 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0), type4, damage2, 0f, 0, 0f, 0f);
+					Main.projectile[num55].netUpdate = true;
+					Main.projectile[num56].netUpdate = true;
+					Main.projectile[num57].netUpdate = true;
 				}
 				if (base.npc.ai[3] >= 140f)
 				{
@@ -650,23 +663,22 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 				base.npc.ai[3] += 1f;
 				if (base.npc.ai[3] == 5f)
 				{
-					int num50 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout4"), 0, 1f, Main.myPlayer, 0f, 0f);
-					Main.projectile[num50].netUpdate = true;
+					int p16 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout4"), 0, 1f, Main.myPlayer, 0f, 0f);
+					Main.projectile[p16].netUpdate = true;
 				}
 				if (base.npc.ai[3] == 80f || base.npc.ai[3] == 140f)
 				{
 					Main.PlaySound(SoundID.Item121, (int)base.npc.position.X, (int)base.npc.position.Y);
-					float num51 = 7f;
-					Vector2 vector3;
-					vector3..ctor(base.npc.Center.X, base.npc.Center.Y);
-					int num52 = 40;
-					int num53 = base.mod.ProjectileType("StarVortex1");
-					int num54 = base.mod.ProjectileType("StarVortex2");
-					float num55 = (float)Math.Atan2((double)(vector3.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector3.X - (player.position.X + (float)player.width * 0.5f)));
-					int num56 = Projectile.NewProjectile(vector3.X, vector3.Y, (float)(Math.Cos((double)num55) * (double)num51 * -1.0), (float)(Math.Sin((double)num55) * (double)num51 * -1.0), num53, num52, 0f, 0, 0f, 0f);
-					int num57 = Projectile.NewProjectile(vector3.X, vector3.Y, (float)(Math.Cos((double)num55) * (double)num51 * -1.0), (float)(Math.Sin((double)num55) * (double)num51 * -1.0), num54, num52, 0f, 0, 0f, 0f);
-					Main.projectile[num56].netUpdate = true;
-					Main.projectile[num57].netUpdate = true;
+					float Speed3 = 7f;
+					Vector2 vector10 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+					int damage3 = 40;
+					int type5 = base.mod.ProjectileType("StarVortex1");
+					int type6 = base.mod.ProjectileType("StarVortex2");
+					float rotation3 = (float)Math.Atan2((double)(vector10.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector10.X - (player.position.X + (float)player.width * 0.5f)));
+					int num58 = Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)rotation3) * (double)Speed3 * -1.0), (float)(Math.Sin((double)rotation3) * (double)Speed3 * -1.0), type5, damage3, 0f, 0, 0f, 0f);
+					int num59 = Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)rotation3) * (double)Speed3 * -1.0), (float)(Math.Sin((double)rotation3) * (double)Speed3 * -1.0), type6, damage3, 0f, 0, 0f, 0f);
+					Main.projectile[num58].netUpdate = true;
+					Main.projectile[num59].netUpdate = true;
 				}
 				if (base.npc.ai[3] >= 200f)
 				{
@@ -682,16 +694,16 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 				base.npc.ai[3] += 1f;
 				if (base.npc.ai[3] == 5f)
 				{
-					int num58 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout11"), 0, 1f, Main.myPlayer, 0f, 0f);
-					Main.projectile[num58].netUpdate = true;
+					int p17 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y - 100f, 0f, 0f, base.mod.ProjectileType("Shout11"), 0, 1f, Main.myPlayer, 0f, 0f);
+					Main.projectile[p17].netUpdate = true;
 				}
 				if (base.npc.ai[3] >= 60f && base.npc.ai[3] <= 120f && Main.rand.Next(20) == 0)
 				{
 					Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 8, 1f, 0f);
-					int num59 = Main.rand.Next(-200, 200) * 6;
-					int num60 = Main.rand.Next(-200, 200) - 1000;
-					int num61 = Projectile.NewProjectile(player.Center.X + (float)num59, player.Center.Y + (float)num60, 2f, 6f, base.mod.ProjectileType("CrystalStarPro1"), 50, 1f, Main.myPlayer, 0f, 0f);
-					Main.projectile[num61].netUpdate = true;
+					int A3 = Main.rand.Next(-200, 200) * 6;
+					int B3 = Main.rand.Next(-200, 200) - 1000;
+					int p18 = Projectile.NewProjectile(player.Center.X + (float)A3, player.Center.Y + (float)B3, 2f, 6f, base.mod.ProjectileType("CrystalStarPro1"), 50, 1f, Main.myPlayer, 0f, 0f);
+					Main.projectile[p18].netUpdate = true;
 				}
 				if (base.npc.ai[3] >= 160f)
 				{
@@ -702,8 +714,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					base.npc.netUpdate = true;
 				}
 			}
-			float num62 = base.npc.Distance(Main.player[base.npc.target].Center);
-			if (num62 >= 950f && !this.teleport)
+			if (base.npc.Distance(Main.player[base.npc.target].Center) >= 950f && !this.teleport)
 			{
 				this.teleport = true;
 				base.npc.netUpdate = true;
@@ -718,19 +729,17 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 				}
 				if (this.teleportTimer == 4 && Main.netMode != 1)
 				{
-					int num63 = Main.rand.Next(2);
-					if (num63 == 0)
+					int num60 = Main.rand.Next(2);
+					if (num60 == 0)
 					{
-						Vector2 vector4;
-						vector4..ctor((float)Main.rand.Next(-400, -250), (float)Main.rand.Next(-200, 50));
-						base.npc.Center = Main.player[base.npc.target].Center + vector4;
+						Vector2 newPos = new Vector2((float)Main.rand.Next(-400, -250), (float)Main.rand.Next(-200, 50));
+						base.npc.Center = Main.player[base.npc.target].Center + newPos;
 						base.npc.netUpdate = true;
 					}
-					if (num63 == 1)
+					if (num60 == 1)
 					{
-						Vector2 vector5;
-						vector5..ctor((float)Main.rand.Next(250, 400), (float)Main.rand.Next(-200, 50));
-						base.npc.Center = Main.player[base.npc.target].Center + vector5;
+						Vector2 newPos2 = new Vector2((float)Main.rand.Next(250, 400), (float)Main.rand.Next(-200, 50));
+						base.npc.Center = Main.player[base.npc.target].Center + newPos2;
 						base.npc.netUpdate = true;
 					}
 				}
@@ -744,41 +753,41 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 			}
 			if (this.razzleDazzle)
 			{
-				int num64 = 58;
-				int num65 = 8;
-				for (int l = 0; l < num65; l++)
+				int dustType = 58;
+				int pieCut4 = 8;
+				for (int l = 0; l < pieCut4; l++)
 				{
-					int num66 = Dust.NewDust(new Vector2(base.npc.Center.X - 1f, base.npc.Center.Y - 1f), 2, 2, num64, 0f, 0f, 100, Color.White, 4f);
-					Main.dust[num66].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)l / (float)num65 * 6.28f);
-					Main.dust[num66].noLight = false;
-					Main.dust[num66].noGravity = true;
+					int dustID = Dust.NewDust(new Vector2(base.npc.Center.X - 1f, base.npc.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 4f);
+					Main.dust[dustID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)l / (float)pieCut4 * 6.28f);
+					Main.dust[dustID].noLight = false;
+					Main.dust[dustID].noGravity = true;
 				}
-				int num67 = 59;
-				int num68 = 10;
-				for (int m = 0; m < num68; m++)
+				int dustType2 = 59;
+				int pieCut5 = 10;
+				for (int m = 0; m < pieCut5; m++)
 				{
-					int num69 = Dust.NewDust(new Vector2(base.npc.Center.X - 1f, base.npc.Center.Y - 1f), 2, 2, num67, 0f, 0f, 100, Color.White, 4f);
-					Main.dust[num69].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(12f, 0f), (float)m / (float)num68 * 6.28f);
-					Main.dust[num69].noLight = false;
-					Main.dust[num69].noGravity = true;
+					int dustID2 = Dust.NewDust(new Vector2(base.npc.Center.X - 1f, base.npc.Center.Y - 1f), 2, 2, dustType2, 0f, 0f, 100, Color.White, 4f);
+					Main.dust[dustID2].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(12f, 0f), (float)m / (float)pieCut5 * 6.28f);
+					Main.dust[dustID2].noLight = false;
+					Main.dust[dustID2].noGravity = true;
 				}
-				int num70 = 60;
-				int num71 = 12;
-				for (int n = 0; n < num71; n++)
+				int dustType3 = 60;
+				int pieCut6 = 12;
+				for (int n = 0; n < pieCut6; n++)
 				{
-					int num72 = Dust.NewDust(new Vector2(base.npc.Center.X - 1f, base.npc.Center.Y - 1f), 2, 2, num70, 0f, 0f, 100, Color.White, 4f);
-					Main.dust[num72].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(14f, 0f), (float)n / (float)num71 * 6.28f);
-					Main.dust[num72].noLight = false;
-					Main.dust[num72].noGravity = true;
+					int dustID3 = Dust.NewDust(new Vector2(base.npc.Center.X - 1f, base.npc.Center.Y - 1f), 2, 2, dustType3, 0f, 0f, 100, Color.White, 4f);
+					Main.dust[dustID3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(14f, 0f), (float)n / (float)pieCut6 * 6.28f);
+					Main.dust[dustID3].noLight = false;
+					Main.dust[dustID3].noGravity = true;
 				}
-				int num73 = 62;
-				int num74 = 14;
-				for (int num75 = 0; num75 < num74; num75++)
+				int dustType4 = 62;
+				int pieCut7 = 14;
+				for (int m2 = 0; m2 < pieCut7; m2++)
 				{
-					int num76 = Dust.NewDust(new Vector2(base.npc.Center.X - 1f, base.npc.Center.Y - 1f), 2, 2, num73, 0f, 0f, 100, Color.White, 4f);
-					Main.dust[num76].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(16f, 0f), (float)num75 / (float)num74 * 6.28f);
-					Main.dust[num76].noLight = false;
-					Main.dust[num76].noGravity = true;
+					int dustID4 = Dust.NewDust(new Vector2(base.npc.Center.X - 1f, base.npc.Center.Y - 1f), 2, 2, dustType4, 0f, 0f, 100, Color.White, 4f);
+					Main.dust[dustID4].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(16f, 0f), (float)m2 / (float)pieCut7 * 6.28f);
+					Main.dust[dustID4].noLight = false;
+					Main.dust[dustID4].noGravity = true;
 				}
 				this.razzleDazzle = false;
 				base.npc.netUpdate = true;
@@ -787,13 +796,13 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Vector2 vector = base.npc.Center - Main.screenPosition + new Vector2(0f, base.npc.gfxOffY);
-			int shaderIdFromItemId = GameShaders.Armor.GetShaderIdFromItemId(2870);
-			Texture2D texture = base.mod.GetTexture("NPCs/Bosses/Nebuleus/BigNebuleus_Wings");
-			SpriteEffects spriteEffects = (base.npc.spriteDirection == -1) ? 0 : 1;
-			spriteBatch.Draw(texture2D, vector, new Rectangle?(base.npc.frame), base.npc.GetAlpha(drawColor), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, spriteEffects, 0f);
-			BaseDrawing.DrawTexture(spriteBatch, texture, shaderIdFromItemId, base.npc, new Color?(base.npc.GetAlpha(Color.White)), true, Utils.Size(base.npc.frame) / 2f);
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Vector2 Drawpos = base.npc.Center - Main.screenPosition + new Vector2(0f, base.npc.gfxOffY);
+			int shader = GameShaders.Armor.GetShaderIdFromItemId(2870);
+			Texture2D myGlowTex = base.mod.GetTexture("NPCs/Bosses/Nebuleus/BigNebuleus_Wings");
+			SpriteEffects effects = (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+			spriteBatch.Draw(texture, Drawpos, new Rectangle?(base.npc.frame), base.npc.GetAlpha(drawColor), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, effects, 0f);
+			BaseDrawing.DrawTexture(spriteBatch, myGlowTex, shader, base.npc, new Color?(base.npc.GetAlpha(Color.White)), true, Utils.Size(base.npc.frame) / 2f);
 			return false;
 		}
 
@@ -815,6 +824,7 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 					{
 						base.npc.timeLeft = 10;
 					}
+					return;
 				}
 			}
 		}
@@ -828,87 +838,87 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 				string text = "...the Hero of Legend...";
 				Color rarityPink = Colors.RarityPink;
 				byte r = rarityPink.R;
-				Color rarityPink2 = Colors.RarityPink;
-				byte g = rarityPink2.G;
-				Color rarityPink3 = Colors.RarityPink;
-				Main.NewText(text, r, g, rarityPink3.B, false);
+				rarityPink = Colors.RarityPink;
+				byte g = rarityPink.G;
+				rarityPink = Colors.RarityPink;
+				Main.NewText(text, r, g, rarityPink.B, false);
 				return;
 			}
 			case 1:
 			{
 				string text2 = "...the giant of steel and darkness...";
-				Color rarityPink4 = Colors.RarityPink;
-				byte r2 = rarityPink4.R;
-				Color rarityPink5 = Colors.RarityPink;
-				byte g2 = rarityPink5.G;
-				Color rarityPink6 = Colors.RarityPink;
-				Main.NewText(text2, r2, g2, rarityPink6.B, false);
+				Color rarityPink = Colors.RarityPink;
+				byte r2 = rarityPink.R;
+				rarityPink = Colors.RarityPink;
+				byte g2 = rarityPink.G;
+				rarityPink = Colors.RarityPink;
+				Main.NewText(text2, r2, g2, rarityPink.B, false);
 				return;
 			}
 			case 2:
 			{
 				string text3 = "...the forgotten soul of the destroyer titan...";
-				Color rarityPink7 = Colors.RarityPink;
-				byte r3 = rarityPink7.R;
-				Color rarityPink8 = Colors.RarityPink;
-				byte g3 = rarityPink8.G;
-				Color rarityPink9 = Colors.RarityPink;
-				Main.NewText(text3, r3, g3, rarityPink9.B, false);
+				Color rarityPink = Colors.RarityPink;
+				byte r3 = rarityPink.R;
+				rarityPink = Colors.RarityPink;
+				byte g3 = rarityPink.G;
+				rarityPink = Colors.RarityPink;
+				Main.NewText(text3, r3, g3, rarityPink.B, false);
 				return;
 			}
 			case 3:
 			{
 				string text4 = "...the overmind of fungus...";
-				Color rarityPink10 = Colors.RarityPink;
-				byte r4 = rarityPink10.R;
-				Color rarityPink11 = Colors.RarityPink;
-				byte g4 = rarityPink11.G;
-				Color rarityPink12 = Colors.RarityPink;
-				Main.NewText(text4, r4, g4, rarityPink12.B, false);
+				Color rarityPink = Colors.RarityPink;
+				byte r4 = rarityPink.R;
+				rarityPink = Colors.RarityPink;
+				byte g4 = rarityPink.G;
+				rarityPink = Colors.RarityPink;
+				Main.NewText(text4, r4, g4, rarityPink.B, false);
 				return;
 			}
 			case 4:
 			{
 				string text5 = "...the evil warden of that horrid dungeon...";
-				Color rarityPink13 = Colors.RarityPink;
-				byte r5 = rarityPink13.R;
-				Color rarityPink14 = Colors.RarityPink;
-				byte g5 = rarityPink14.G;
-				Color rarityPink15 = Colors.RarityPink;
-				Main.NewText(text5, r5, g5, rarityPink15.B, false);
+				Color rarityPink = Colors.RarityPink;
+				byte r5 = rarityPink.R;
+				rarityPink = Colors.RarityPink;
+				byte g5 = rarityPink.G;
+				rarityPink = Colors.RarityPink;
+				Main.NewText(text5, r5, g5, rarityPink.B, false);
 				return;
 			}
 			case 5:
 			{
 				string text6 = "...the Emperor of Discord...";
-				Color rarityPink16 = Colors.RarityPink;
-				byte r6 = rarityPink16.R;
-				Color rarityPink17 = Colors.RarityPink;
-				byte g6 = rarityPink17.G;
-				Color rarityPink18 = Colors.RarityPink;
-				Main.NewText(text6, r6, g6, rarityPink18.B, false);
+				Color rarityPink = Colors.RarityPink;
+				byte r6 = rarityPink.R;
+				rarityPink = Colors.RarityPink;
+				byte g6 = rarityPink.G;
+				rarityPink = Colors.RarityPink;
+				Main.NewText(text6, r6, g6, rarityPink.B, false);
 				return;
 			}
 			case 6:
 			{
 				string text7 = "...the shadow of death...";
-				Color rarityPink19 = Colors.RarityPink;
-				byte r7 = rarityPink19.R;
-				Color rarityPink20 = Colors.RarityPink;
-				byte g7 = rarityPink20.G;
-				Color rarityPink21 = Colors.RarityPink;
-				Main.NewText(text7, r7, g7, rarityPink21.B, false);
+				Color rarityPink = Colors.RarityPink;
+				byte r7 = rarityPink.R;
+				rarityPink = Colors.RarityPink;
+				byte g7 = rarityPink.G;
+				rarityPink = Colors.RarityPink;
+				Main.NewText(text7, r7, g7, rarityPink.B, false);
 				return;
 			}
 			case 7:
 			{
 				string text8 = "...he who created all...";
-				Color rarityPink22 = Colors.RarityPink;
-				byte r8 = rarityPink22.R;
-				Color rarityPink23 = Colors.RarityPink;
-				byte g8 = rarityPink23.G;
-				Color rarityPink24 = Colors.RarityPink;
-				Main.NewText(text8, r8, g8, rarityPink24.B, false);
+				Color rarityPink = Colors.RarityPink;
+				byte r8 = rarityPink.R;
+				rarityPink = Colors.RarityPink;
+				byte g8 = rarityPink.G;
+				rarityPink = Colors.RarityPink;
+				Main.NewText(text8, r8, g8, rarityPink.B, false);
 				return;
 			}
 			default:
@@ -925,43 +935,43 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 				string text = "...the Tyrant of the Jungle...";
 				Color rarityPink = Colors.RarityPink;
 				byte r = rarityPink.R;
-				Color rarityPink2 = Colors.RarityPink;
-				byte g = rarityPink2.G;
-				Color rarityPink3 = Colors.RarityPink;
-				Main.NewText(text, r, g, rarityPink3.B, false);
+				rarityPink = Colors.RarityPink;
+				byte g = rarityPink.G;
+				rarityPink = Colors.RarityPink;
+				Main.NewText(text, r, g, rarityPink.B, false);
 				return;
 			}
 			case 1:
 			{
 				string text2 = "...the witch of unyielding fury...";
-				Color rarityPink4 = Colors.RarityPink;
-				byte r2 = rarityPink4.R;
-				Color rarityPink5 = Colors.RarityPink;
-				byte g2 = rarityPink5.G;
-				Color rarityPink6 = Colors.RarityPink;
-				Main.NewText(text2, r2, g2, rarityPink6.B, false);
+				Color rarityPink = Colors.RarityPink;
+				byte r2 = rarityPink.R;
+				rarityPink = Colors.RarityPink;
+				byte g2 = rarityPink.G;
+				rarityPink = Colors.RarityPink;
+				Main.NewText(text2, r2, g2, rarityPink.B, false);
 				return;
 			}
 			case 2:
 			{
 				string text3 = "...the sphere of terror...";
-				Color rarityPink7 = Colors.RarityPink;
-				byte r3 = rarityPink7.R;
-				Color rarityPink8 = Colors.RarityPink;
-				byte g3 = rarityPink8.G;
-				Color rarityPink9 = Colors.RarityPink;
-				Main.NewText(text3, r3, g3, rarityPink9.B, false);
+				Color rarityPink = Colors.RarityPink;
+				byte r3 = rarityPink.R;
+				rarityPink = Colors.RarityPink;
+				byte g3 = rarityPink.G;
+				rarityPink = Colors.RarityPink;
+				Main.NewText(text3, r3, g3, rarityPink.B, false);
 				return;
 			}
 			case 3:
 			{
 				string text4 = "...the tyrant's dragon...";
-				Color rarityPink10 = Colors.RarityPink;
-				byte r4 = rarityPink10.R;
-				Color rarityPink11 = Colors.RarityPink;
-				byte g4 = rarityPink11.G;
-				Color rarityPink12 = Colors.RarityPink;
-				Main.NewText(text4, r4, g4, rarityPink12.B, false);
+				Color rarityPink = Colors.RarityPink;
+				byte r4 = rarityPink.R;
+				rarityPink = Colors.RarityPink;
+				byte g4 = rarityPink.G;
+				rarityPink = Colors.RarityPink;
+				Main.NewText(text4, r4, g4, rarityPink.B, false);
 				return;
 			}
 			case 4:
@@ -969,23 +979,23 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 			case 5:
 			{
 				string text5 = "...the cosmic blacksmith...";
-				Color rarityPink13 = Colors.RarityPink;
-				byte r5 = rarityPink13.R;
-				Color rarityPink14 = Colors.RarityPink;
-				byte g5 = rarityPink14.G;
-				Color rarityPink15 = Colors.RarityPink;
-				Main.NewText(text5, r5, g5, rarityPink15.B, false);
+				Color rarityPink = Colors.RarityPink;
+				byte r5 = rarityPink.R;
+				rarityPink = Colors.RarityPink;
+				byte g5 = rarityPink.G;
+				rarityPink = Colors.RarityPink;
+				Main.NewText(text5, r5, g5, rarityPink.B, false);
 				return;
 			}
 			case 6:
 			{
 				string text6 = "...the god of unimaginable power...";
-				Color rarityPink16 = Colors.RarityPink;
-				byte r6 = rarityPink16.R;
-				Color rarityPink17 = Colors.RarityPink;
-				byte g6 = rarityPink17.G;
-				Color rarityPink18 = Colors.RarityPink;
-				Main.NewText(text6, r6, g6, rarityPink18.B, false);
+				Color rarityPink = Colors.RarityPink;
+				byte r6 = rarityPink.R;
+				rarityPink = Colors.RarityPink;
+				byte g6 = rarityPink.G;
+				rarityPink = Colors.RarityPink;
+				Main.NewText(text6, r6, g6, rarityPink.B, false);
 				break;
 			}
 			default:

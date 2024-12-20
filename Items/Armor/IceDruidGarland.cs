@@ -23,7 +23,7 @@ namespace Redemption.Items.Armor
 			base.item.height = 22;
 			base.item.value = 850;
 			base.item.rare = 1;
-			base.item.defense = 4;
+			base.item.defense = 3;
 		}
 
 		public override void UpdateEquip(Player player)
@@ -41,8 +41,7 @@ namespace Redemption.Items.Armor
 		public override void UpdateArmorSet(Player player)
 		{
 			player.setBonus = "Seedbags inflict frostburn & extra mobility on ice";
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.frostburnSeedbag = true;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).frostburnSeedbag = true;
 			player.iceSkate = true;
 		}
 
@@ -59,12 +58,12 @@ namespace Redemption.Items.Armor
 			modRecipe.AddTile(null, "DruidicAltarTile");
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(664, 25);
-			modRecipe.AddIngredient(1257, 8);
-			modRecipe.AddTile(null, "DruidicAltarTile");
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.AddIngredient(664, 25);
+			modRecipe2.AddIngredient(1257, 8);
+			modRecipe2.AddTile(null, "DruidicAltarTile");
+			modRecipe2.SetResult(this, 1);
+			modRecipe2.AddRecipe();
 		}
 	}
 }

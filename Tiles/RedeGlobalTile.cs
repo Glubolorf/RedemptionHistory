@@ -12,6 +12,10 @@ namespace Redemption.Tiles
 			{
 				WorldGen.PlaceTile(i, j - 1, base.mod.TileType("NightshadeTile"), true, false, -1, 0);
 			}
+			if (type == base.mod.TileType("DeadGrassTileCorruption") && type == base.mod.TileType("IrradiatedEbonstoneTile") && type == base.mod.TileType("DeadGrassTileCrimson") && type == base.mod.TileType("IrradiatedCrimstoneTile") && Main.tile[i, j - 1].type == 0 && Main.tile[i, j].active() && Main.rand.Next(400) == 0)
+			{
+				WorldGen.PlaceTile(i, j - 1, base.mod.TileType("RadRootTile"), true, false, -1, 0);
+			}
 		}
 	}
 }

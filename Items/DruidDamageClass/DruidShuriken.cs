@@ -33,7 +33,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.autoReuse = true;
 			base.item.UseSound = SoundID.Item1;
 			base.item.value = Item.sellPrice(0, 0, 0, 75);
-			base.item.shoot = base.mod.ProjectileType<DruidShurikenPro>();
+			base.item.shoot = ModContent.ProjectileType<DruidShurikenPro>();
 		}
 
 		public override void AddRecipes()

@@ -81,8 +81,8 @@ namespace Redemption.NPCs
 				base.npc.defense = 0;
 				if (Main.rand.Next(25) == 0)
 				{
-					int num = Projectile.NewProjectile(base.npc.position.X + 24f, base.npc.position.Y + 18f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("FireSparkle"), 5, 3f, 255, 0f, 0f);
-					Main.projectile[num].netUpdate = true;
+					int p = Projectile.NewProjectile(base.npc.position.X + 24f, base.npc.position.Y + 18f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("FireSparkle"), 5, 3f, 255, 0f, 0f);
+					Main.projectile[p].netUpdate = true;
 				}
 			}
 		}
@@ -94,20 +94,19 @@ namespace Redemption.NPCs
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/MarbleChessHorseBroken");
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D weakenedAni = base.mod.GetTexture("NPCs/MarbleChessHorseBroken");
 			int spriteDirection = base.npc.spriteDirection;
 			if (!this.weakened)
 			{
-				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.weakened)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num = texture.Height / 2;
-				int num2 = num * this.weakenFrame;
-				Main.spriteBatch.Draw(texture, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num214 = weakenedAni.Height / 2;
+				int y6 = num214 * this.weakenFrame;
+				Main.spriteBatch.Draw(weakenedAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, weakenedAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)weakenedAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
 		}

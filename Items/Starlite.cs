@@ -28,17 +28,17 @@ namespace Redemption.Items
 			modRecipe.AddTile(null, "XenoForgeTile");
 			modRecipe.SetResult(this, 10);
 			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(366, 2);
-			modRecipe.AddIngredient(182, 1);
-			modRecipe.AddTile(null, "XenoForgeTile");
-			modRecipe.SetResult(this, 10);
-			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "StarliteBar", 1);
-			modRecipe.AddTile(null, "XenoTank1");
-			modRecipe.SetResult(this, 2);
-			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.AddIngredient(366, 2);
+			modRecipe2.AddIngredient(182, 1);
+			modRecipe2.AddTile(null, "XenoForgeTile");
+			modRecipe2.SetResult(this, 10);
+			modRecipe2.AddRecipe();
+			ModRecipe modRecipe3 = new ModRecipe(base.mod);
+			modRecipe3.AddIngredient(null, "StarliteBar", 1);
+			modRecipe3.AddTile(null, "XenoTank1");
+			modRecipe3.SetResult(this, 2);
+			modRecipe3.AddRecipe();
 		}
 	}
 }

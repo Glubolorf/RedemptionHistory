@@ -30,23 +30,29 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			if (++base.projectile.frameCounter >= 3)
+			Projectile projectile = base.projectile;
+			int num = projectile.frameCounter + 1;
+			projectile.frameCounter = num;
+			if (num >= 3)
 			{
 				base.projectile.frameCounter = 0;
-				if (++base.projectile.frame >= 10)
+				Projectile projectile2 = base.projectile;
+				num = projectile2.frame + 1;
+				projectile2.frame = num;
+				if (num >= 10)
 				{
 					base.projectile.frame = 0;
 				}
 			}
-			Player player = Main.player[base.projectile.owner];
-			Vector2 vector = player.RotatedRelativePoint(player.MountedCenter, true);
-			base.projectile.direction = player.direction;
-			player.heldProj = base.projectile.whoAmI;
-			player.itemTime = player.itemAnimation;
-			base.projectile.position.X = vector.X - (float)(base.projectile.width / 2);
-			base.projectile.position.Y = vector.Y - (float)(base.projectile.height / 2);
-			int num = Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 235, base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 1.5f);
-			Main.dust[num].noGravity = true;
+			Player projOwner = Main.player[base.projectile.owner];
+			Vector2 ownerMountedCenter = projOwner.RotatedRelativePoint(projOwner.MountedCenter, true);
+			base.projectile.direction = projOwner.direction;
+			projOwner.heldProj = base.projectile.whoAmI;
+			projOwner.itemTime = projOwner.itemAnimation;
+			base.projectile.position.X = ownerMountedCenter.X - (float)(base.projectile.width / 2);
+			base.projectile.position.Y = ownerMountedCenter.Y - (float)(base.projectile.height / 2);
+			int DustID2 = Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 235, base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 1.5f);
+			Main.dust[DustID2].noGravity = true;
 		}
 
 		public override Color? GetAlpha(Color lightColor)

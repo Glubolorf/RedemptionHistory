@@ -11,14 +11,14 @@ namespace Redemption.Items
 		{
 			if (Main.netMode != 2)
 			{
-				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
 				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
 				{
-					array[i] = Main.glowMaskTexture[i];
+					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				array[array.Length - 1] = base.mod.GetTexture("Items/" + base.GetType().Name + "_Glow");
-				TheKeeperBag.customGlowMask = (short)(array.Length - 1);
-				Main.glowMaskTexture = array;
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Items/" + base.GetType().Name + "_Glow");
+				TheKeeperBag.customGlowMask = (short)(glowMasks.Length - 1);
+				Main.glowMaskTexture = glowMasks;
 			}
 			base.DisplayName.SetDefault("Treasure Bag");
 			base.Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
@@ -32,13 +32,20 @@ namespace Redemption.Items
 			base.item.height = 24;
 			base.item.rare = 9;
 			base.item.expert = true;
-			this.bossBagNPC = base.mod.NPCType("TheKeeper");
 			base.item.glowMask = TheKeeperBag.customGlowMask;
 		}
 
 		public override bool CanRightClick()
 		{
 			return true;
+		}
+
+		public override int BossBagNPC
+		{
+			get
+			{
+				return base.mod.NPCType("TheKeeper");
+			}
 		}
 
 		public override void OpenBossBag(Player player)

@@ -28,10 +28,8 @@ namespace Redemption.Items.Armor
 
 		public override void UpdateEquip(Player player)
 		{
-			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
-			druidDamagePlayer.druidDamage += 0.08f;
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.fasterSpirits = true;
+			DruidDamagePlayer.ModPlayer(player).druidDamage += 0.08f;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).fasterSpirits = true;
 			player.statManaMax2 += 40;
 			player.buffImmune[20] = true;
 			player.buffImmune[70] = true;
@@ -50,8 +48,7 @@ namespace Redemption.Items.Armor
 		public override void UpdateArmorSet(Player player)
 		{
 			player.setBonus = "Has a chance to unleash an explosive seed upon getting hit";
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.seedHit = true;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).seedHit = true;
 		}
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)

@@ -47,8 +47,8 @@ namespace Redemption.NPCs.ChickenInvasion
 			{
 				for (int i = 0; i < 3; i++)
 				{
-					int num = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 5, 0f, 0f, 100, default(Color), 1.5f);
-					Main.dust[num].velocity *= 1.4f;
+					int dustIndex = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 5, 0f, 0f, 100, default(Color), 1.5f);
+					Main.dust[dustIndex].velocity *= 1.4f;
 				}
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/ChickenGore1"), 1f);
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/ChickenGore2"), 1f);
@@ -74,6 +74,10 @@ namespace Redemption.NPCs.ChickenInvasion
 			{
 				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ChickenMountItem"), 1, false, 0, false, false);
 			}
+			if (Main.rand.Next(200) == 0)
+			{
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("CavalryLance"), 1, false, 0, false, false);
+			}
 			if (RedeWorld.downedPatientZero && Main.rand.Next(1200) == 0)
 			{
 				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ChickLauncher"), 1, false, 0, false, false);
@@ -83,8 +87,7 @@ namespace Redemption.NPCs.ChickenInvasion
 		public override void AI()
 		{
 			base.npc.TargetClosest(true);
-			Player player = Main.player[base.npc.target];
-			if (player.Center.X > base.npc.Center.X)
+			if (Main.player[base.npc.target].Center.X > base.npc.Center.X)
 			{
 				base.npc.spriteDirection = 1;
 			}
@@ -112,10 +115,9 @@ namespace Redemption.NPCs.ChickenInvasion
 			{
 				this.hop = true;
 			}
-			float num = base.npc.Distance(Main.player[base.npc.target].Center);
-			if (num <= 360f && !this.charrrge)
+			if (base.npc.Distance(Main.player[base.npc.target].Center) <= 360f && !this.charrrge)
 			{
-				if (!Config.NoCombatText)
+				if (!RedeConfigClient.Instance.NoCombatText)
 				{
 					CombatText.NewText(base.npc.getRect(), Colors.RarityOrange, "Charge!", true, true);
 				}
@@ -125,20 +127,19 @@ namespace Redemption.NPCs.ChickenInvasion
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/ChickenInvasion/ChickenCavalryHop");
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D hopAni = base.mod.GetTexture("NPCs/ChickenInvasion/ChickenCavalryHop");
 			int spriteDirection = base.npc.spriteDirection;
 			if (!this.hop)
 			{
-				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.hop)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num = texture.Height / 1;
-				int num2 = num * this.hopFrame;
-				Main.spriteBatch.Draw(texture, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num214 = hopAni.Height / 1;
+				int y6 = num214 * this.hopFrame;
+				Main.spriteBatch.Draw(hopAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, hopAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)hopAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
 		}

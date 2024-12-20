@@ -35,17 +35,16 @@ namespace Redemption.Items
 
 		public override bool UseItem(Player player)
 		{
-			Mod mod = ModLoader.GetMod("AAMod");
-			if (RedeWorld.KSRajahInteraction && NPC.AnyNPCs(mod.NPCType("Rajah")))
+			Mod AAMod = ModLoader.GetMod("AAMod");
+			if (RedeWorld.KSRajahInteraction && NPC.AnyNPCs(AAMod.NPCType("Rajah")))
 			{
 				string text = "Nope. You deal with the oversized rabbit.";
 				Color rarityCyan = Colors.RarityCyan;
 				byte r = rarityCyan.R;
-				Color rarityCyan2 = Colors.RarityCyan;
-				byte g = rarityCyan2.G;
-				Color rarityCyan3 = Colors.RarityCyan;
-				Main.NewText(text, r, g, rarityCyan3.B, false);
-				return false;
+				rarityCyan = Colors.RarityCyan;
+				byte g = rarityCyan.G;
+				rarityCyan = Colors.RarityCyan;
+				Main.NewText(text, r, g, rarityCyan.B, false);
 			}
 			if (RedeWorld.girusTalk3)
 			{
@@ -53,9 +52,19 @@ namespace Redemption.Items
 				Redemption.SpawnBoss(player, "KSEntranceClone", false, new Vector2(player.position.X + (float)Main.rand.Next(100, 200), player.position.Y - 80f), " ", false);
 				Main.PlaySound(15, player.position, 0);
 			}
+			else if (RedeWorld.slayerRep >= 4)
+			{
+				string text2 = "Oh, It's you. Sorry, not interested in fighting.";
+				Color rarityCyan = Colors.RarityCyan;
+				byte r2 = rarityCyan.R;
+				rarityCyan = Colors.RarityCyan;
+				byte g2 = rarityCyan.G;
+				rarityCyan = Colors.RarityCyan;
+				Main.NewText(text2, r2, g2, rarityCyan.B, false);
+			}
 			else
 			{
-				if (mod != null && NPC.AnyNPCs(mod.NPCType("Rajah")))
+				if (AAMod != null && NPC.AnyNPCs(AAMod.NPCType("Rajah")))
 				{
 					Main.NewText("The King Slayer III emerges!", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B, false);
 					Redemption.SpawnBoss(player, "KSNope", false, new Vector2(player.position.X + (float)Main.rand.Next(100, 200), player.position.Y - 80f), " ", false);

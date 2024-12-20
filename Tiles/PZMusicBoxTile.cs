@@ -19,9 +19,9 @@ namespace Redemption.Tiles
 			TileObjectData.newTile.DrawYOffset = 2;
 			TileObjectData.addTile((int)base.Type);
 			this.disableSmartCursor = true;
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Music Box");
-			base.AddMapEntry(new Color(200, 200, 200), modTranslation);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Music Box");
+			base.AddMapEntry(new Color(200, 200, 200), name);
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)

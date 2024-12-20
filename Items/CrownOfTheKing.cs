@@ -24,11 +24,11 @@ namespace Redemption.Items
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
-			modPlayer.chickenAccessory = true;
+			RedePlayer p = player.GetModPlayer<RedePlayer>();
+			p.chickenAccessory = true;
 			if (hideVisual)
 			{
-				modPlayer.chickenHideVanity = true;
+				p.chickenHideVanity = true;
 			}
 		}
 	}

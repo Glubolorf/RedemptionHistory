@@ -35,10 +35,10 @@ namespace Redemption.Tiles.LabDeco
 			this.minPick = 300;
 			this.mineResist = 3f;
 			this.disableSmartCursor = true;
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
+			ModTranslation name = base.CreateMapEntryName(null);
 			base.AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
-			modTranslation.SetDefault("Server Cabinet");
-			base.AddMapEntry(new Color(140, 170, 120), modTranslation);
+			name.SetDefault("Server Cabinet");
+			base.AddMapEntry(new Color(140, 170, 120), name);
 			this.animationFrameHeight = 72;
 		}
 

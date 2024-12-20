@@ -35,43 +35,49 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 			base.projectile.rotation -= 0.01f;
 			if (base.projectile.localAI[0] == 1f)
 			{
-				int num = 58;
-				int num2 = 8;
-				for (int i = 0; i < num2; i++)
+				int dustType = 58;
+				int pieCut = 8;
+				for (int i = 0; i < pieCut; i++)
 				{
-					int num3 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num, 0f, 0f, 100, Color.White, 3f);
-					Main.dust[num3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)num2 * 6.28f);
-					Main.dust[num3].noLight = false;
-					Main.dust[num3].noGravity = true;
+					int dustID = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 3f);
+					Main.dust[dustID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)pieCut * 6.28f);
+					Main.dust[dustID].noLight = false;
+					Main.dust[dustID].noGravity = true;
 				}
-				int num4 = 59;
-				int num5 = 10;
-				for (int j = 0; j < num5; j++)
+				int dustType2 = 59;
+				int pieCut2 = 10;
+				for (int j = 0; j < pieCut2; j++)
 				{
-					int num6 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num4, 0f, 0f, 100, Color.White, 3f);
-					Main.dust[num6].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(8f, 0f), (float)j / (float)num5 * 6.28f);
-					Main.dust[num6].noLight = false;
-					Main.dust[num6].noGravity = true;
+					int dustID2 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType2, 0f, 0f, 100, Color.White, 3f);
+					Main.dust[dustID2].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(8f, 0f), (float)j / (float)pieCut2 * 6.28f);
+					Main.dust[dustID2].noLight = false;
+					Main.dust[dustID2].noGravity = true;
 				}
-				int num7 = 60;
-				int num8 = 12;
-				for (int k = 0; k < num8; k++)
+				int dustType3 = 60;
+				int pieCut3 = 12;
+				for (int k = 0; k < pieCut3; k++)
 				{
-					int num9 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num7, 0f, 0f, 100, Color.White, 3f);
-					Main.dust[num9].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)k / (float)num8 * 6.28f);
-					Main.dust[num9].noLight = false;
-					Main.dust[num9].noGravity = true;
+					int dustID3 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType3, 0f, 0f, 100, Color.White, 3f);
+					Main.dust[dustID3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)k / (float)pieCut3 * 6.28f);
+					Main.dust[dustID3].noLight = false;
+					Main.dust[dustID3].noGravity = true;
 				}
-				int num10 = 62;
-				int num11 = 14;
-				for (int l = 0; l < num11; l++)
+				int dustType4 = 62;
+				int pieCut4 = 14;
+				for (int l = 0; l < pieCut4; l++)
 				{
-					int num12 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num10, 0f, 0f, 100, Color.White, 3f);
-					Main.dust[num12].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)l / (float)num11 * 6.28f);
-					Main.dust[num12].noLight = false;
-					Main.dust[num12].noGravity = true;
+					int dustID4 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType4, 0f, 0f, 100, Color.White, 3f);
+					Main.dust[dustID4].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)l / (float)pieCut4 * 6.28f);
+					Main.dust[dustID4].noLight = false;
+					Main.dust[dustID4].noGravity = true;
 				}
 			}
+		}
+
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+		{
+			fallThrough = false;
+			return true;
 		}
 
 		public override void Kill(int timeLeft)
@@ -79,8 +85,8 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 			Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, base.mod.ProjectileType("NebDefeated"), 0, 3f, 255, 0f, 0f);
 			for (int i = 0; i < 25; i++)
 			{
-				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 58, 0f, 0f, 100, default(Color), 4f);
-				Main.dust[num].velocity *= 1.9f;
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 58, 0f, 0f, 100, default(Color), 4f);
+				Main.dust[dustIndex].velocity *= 1.9f;
 			}
 		}
 	}

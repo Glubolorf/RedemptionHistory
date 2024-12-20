@@ -12,14 +12,14 @@ namespace Redemption.Items.Weapons
 		{
 			if (Main.netMode != 2)
 			{
-				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
 				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
 				{
-					array[i] = Main.glowMaskTexture[i];
+					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
-				CorruptedRocketLauncher.customGlowMask = (short)(array.Length - 1);
-				Main.glowMaskTexture = array;
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				CorruptedRocketLauncher.customGlowMask = (short)(glowMasks.Length - 1);
+				Main.glowMaskTexture = glowMasks;
 			}
 			base.item.glowMask = CorruptedRocketLauncher.customGlowMask;
 			base.DisplayName.SetDefault("Vlitch Annihilator");
@@ -76,13 +76,13 @@ namespace Redemption.Items.Weapons
 		{
 			if (player.altFunctionUse == 2)
 			{
-				int num = 4 + Main.rand.Next(2);
-				for (int i = 0; i < num; i++)
+				int numberProjectiles = 4 + Main.rand.Next(2);
+				for (int i = 0; i < numberProjectiles; i++)
 				{
-					Vector2 vector = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(10f));
-					float num2 = 1f - Utils.NextFloat(Main.rand) * 0.1f;
-					vector *= num2;
-					Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
+					Vector2 perturbedSpeed = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(10f));
+					float scale = 1f - Utils.NextFloat(Main.rand) * 0.1f;
+					perturbedSpeed *= scale;
+					Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
 				}
 				return false;
 			}

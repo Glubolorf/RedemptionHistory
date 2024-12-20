@@ -48,13 +48,13 @@ namespace Redemption.Projectiles.Minions
 		public override void CheckActive()
 		{
 			Player player = Main.player[base.projectile.owner];
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
+			RedePlayer modPlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
 			if (player.dead || !player.HasBuff(base.mod.BuffType("AncientStoneMinionBuff")))
 			{
-				redePlayer.ancientStoneMinion = false;
+				modPlayer.ancientStoneMinion = false;
 				base.projectile.Kill();
 			}
-			if (redePlayer.ancientStoneMinion)
+			if (modPlayer.ancientStoneMinion)
 			{
 				base.projectile.timeLeft = 2;
 			}

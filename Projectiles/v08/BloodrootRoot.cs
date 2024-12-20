@@ -35,13 +35,12 @@ namespace Redemption.Projectiles.v08
 
 		public override bool PreDraw(SpriteBatch sb, Color drawColor)
 		{
-			Color color;
-			color..ctor(Math.Max(0, (int)BloodrootRoot.lightColor.R + Math.Min(0, -base.projectile.alpha + 20)), Math.Max(0, (int)BloodrootRoot.lightColor.G + Math.Min(0, -base.projectile.alpha + 20)), Math.Max(0, (int)BloodrootRoot.lightColor.B + Math.Min(0, -base.projectile.alpha + 20)));
-			BaseDrawing.AddLight(base.projectile.Center, color, 1f);
+			Color newLightColor = new Color(Math.Max(0, (int)BloodrootRoot.lightColor.R + Math.Min(0, -base.projectile.alpha + 20)), Math.Max(0, (int)BloodrootRoot.lightColor.G + Math.Min(0, -base.projectile.alpha + 20)), Math.Max(0, (int)BloodrootRoot.lightColor.B + Math.Min(0, -base.projectile.alpha + 20)));
+			BaseDrawing.AddLight(base.projectile.Center, newLightColor, 1f);
 			if (BloodrootRoot.mainTex == null)
 			{
 				BloodrootRoot.mainTex = Main.projectileTexture[base.projectile.type];
-				BloodrootRoot.endTex = ModLoader.GetTexture("Redemption/Projectiles/v08/BloodrootEnd");
+				BloodrootRoot.endTex = ModContent.GetTexture("Redemption/Projectiles/v08/BloodrootEnd");
 			}
 			BaseDrawing.DrawTexture(sb, this.spineEnd ? BloodrootRoot.endTex : BloodrootRoot.mainTex, 0, base.projectile, null, false, default(Vector2));
 			return false;

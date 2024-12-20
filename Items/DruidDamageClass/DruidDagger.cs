@@ -33,7 +33,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.autoReuse = true;
 			base.item.UseSound = SoundID.Item1;
 			base.item.value = Item.sellPrice(0, 0, 0, 75);
-			base.item.shoot = base.mod.ProjectileType<DruidDaggerPro>();
+			base.item.shoot = ModContent.ProjectileType<DruidDaggerPro>();
 		}
 
 		public override void AddRecipes()
@@ -44,12 +44,12 @@ namespace Redemption.Items.DruidDamageClass
 			modRecipe.AddTile(null, "DruidicAltarTile");
 			modRecipe.SetResult(this, 200);
 			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddRecipeGroup("Redemption:Plant", 2);
-			modRecipe.AddIngredient(706, 1);
-			modRecipe.AddTile(null, "DruidicAltarTile");
-			modRecipe.SetResult(this, 200);
-			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.AddRecipeGroup("Redemption:Plant", 2);
+			modRecipe2.AddIngredient(706, 1);
+			modRecipe2.AddTile(null, "DruidicAltarTile");
+			modRecipe2.SetResult(this, 200);
+			modRecipe2.AddRecipe();
 		}
 	}
 }

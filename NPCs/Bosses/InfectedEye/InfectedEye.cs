@@ -94,12 +94,12 @@ namespace Redemption.NPCs.Bosses.InfectedEye
 				CombatText.NewText(this.player.getRect(), Color.Gray, "+0", true, false);
 				for (int i = 0; i < 255; i++)
 				{
-					Player player = Main.player[i];
-					if (player.active)
+					Player player2 = Main.player[i];
+					if (player2.active)
 					{
-						for (int j = 0; j < player.inventory.Length; j++)
+						for (int j = 0; j < player2.inventory.Length; j++)
 						{
-							if (player.inventory[j].type == base.mod.ItemType("RedemptionTeller"))
+							if (player2.inventory[j].type == base.mod.ItemType("RedemptionTeller"))
 							{
 								Main.NewText("<Chalice of Alignment> Oh... That's only made the Infection worse... Well, it doesn't matter, at least Cthulhu's other eye is no more!", Color.DarkGoldenrod, false);
 							}
@@ -122,7 +122,7 @@ namespace Redemption.NPCs.Bosses.InfectedEye
 
 		public override void AI()
 		{
-			if (Config.classicRedeIE)
+			if (RedeConfigClient.Instance.classicRedeIE)
 			{
 				this.oldCounter++;
 				if (this.oldCounter > 20)
@@ -152,102 +152,93 @@ namespace Redemption.NPCs.Bosses.InfectedEye
 			base.npc.ai[3] += 1f;
 			if (base.npc.ai[3] == 100f)
 			{
-				float num = 12f;
-				Vector2 vector;
-				vector..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-				int num2 = 36;
-				int num3 = base.mod.ProjectileType("ToxicSludge2");
-				float num4 = (float)Math.Atan2((double)(vector.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector.X - (this.player.position.X + (float)this.player.width * 0.5f)));
-				int num5 = Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num4) * (double)num * -1.0) + (float)Main.rand.Next(-2, 2), (float)(Math.Sin((double)num4) * (double)num * -1.0) + (float)Main.rand.Next(-2, 2), num3, num2, 0f, 0, 0f, 0f);
-				Main.projectile[num5].netUpdate = true;
-				int num6 = Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num4) * (double)num * -1.0) + (float)Main.rand.Next(-2, 2), (float)(Math.Sin((double)num4) * (double)num * -1.0) + (float)Main.rand.Next(-2, 2), num3, num2, 0f, 0, 0f, 0f);
-				Main.projectile[num6].netUpdate = true;
-				int num7 = Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num4) * (double)num * -1.0) + (float)Main.rand.Next(-2, 2), (float)(Math.Sin((double)num4) * (double)num * -1.0) + (float)Main.rand.Next(-2, 2), num3, num2, 0f, 0, 0f, 0f);
-				Main.projectile[num7].netUpdate = true;
+				float Speed = 12f;
+				Vector2 vector8 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
+				int damage = 36;
+				int type = base.mod.ProjectileType("ToxicSludge2");
+				float rotation = (float)Math.Atan2((double)(vector8.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector8.X - (this.player.position.X + (float)this.player.width * 0.5f)));
+				int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0) + (float)Main.rand.Next(-2, 2), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0) + (float)Main.rand.Next(-2, 2), type, damage, 0f, 0, 0f, 0f);
+				Main.projectile[num54].netUpdate = true;
+				int num55 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0) + (float)Main.rand.Next(-2, 2), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0) + (float)Main.rand.Next(-2, 2), type, damage, 0f, 0, 0f, 0f);
+				Main.projectile[num55].netUpdate = true;
+				int num56 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0) + (float)Main.rand.Next(-2, 2), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0) + (float)Main.rand.Next(-2, 2), type, damage, 0f, 0, 0f, 0f);
+				Main.projectile[num56].netUpdate = true;
 				if (Main.expertMode)
 				{
-					int num8 = Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num4) * (double)num * -1.0) + (float)Main.rand.Next(-2, 2), (float)(Math.Sin((double)num4) * (double)num * -1.0) + (float)Main.rand.Next(-2, 2), num3, num2, 0f, 0, 0f, 0f);
-					Main.projectile[num8].netUpdate = true;
-					int num9 = Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num4) * (double)num * -1.0) + (float)Main.rand.Next(-2, 2), (float)(Math.Sin((double)num4) * (double)num * -1.0) + (float)Main.rand.Next(-2, 2), num3, num2, 0f, 0, 0f, 0f);
-					Main.projectile[num9].netUpdate = true;
+					int num57 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0) + (float)Main.rand.Next(-2, 2), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0) + (float)Main.rand.Next(-2, 2), type, damage, 0f, 0, 0f, 0f);
+					Main.projectile[num57].netUpdate = true;
+					int num58 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0) + (float)Main.rand.Next(-2, 2), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0) + (float)Main.rand.Next(-2, 2), type, damage, 0f, 0, 0f, 0f);
+					Main.projectile[num58].netUpdate = true;
 				}
 			}
 			if (base.npc.ai[3] == 160f || base.npc.ai[3] == 220f)
 			{
-				float num10 = 18f;
-				Vector2 vector2;
-				vector2..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-				int num11 = 34;
-				int num12 = base.mod.ProjectileType("XenomiteShot2");
-				float num13 = (float)Math.Atan2((double)(vector2.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector2.X - (this.player.position.X + (float)this.player.width * 0.5f)));
-				int num14 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num13) * (double)num10 * -1.0) + (float)Main.rand.Next(-2, 2), (float)(Math.Sin((double)num13) * (double)num10 * -1.0) + (float)Main.rand.Next(-2, 2), num12, num11, 0f, 0, 0f, 0f);
-				int num15 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num13) * (double)num10 * -1.0) + (float)Main.rand.Next(-2, 2), (float)(Math.Sin((double)num13) * (double)num10 * -1.0) + (float)Main.rand.Next(-2, 2), num12, num11, 0f, 0, 0f, 0f);
-				int num16 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num13) * (double)num10 * -1.0) + (float)Main.rand.Next(-2, 2), (float)(Math.Sin((double)num13) * (double)num10 * -1.0) + (float)Main.rand.Next(-2, 2), num12, num11, 0f, 0, 0f, 0f);
-				int num17 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num13) * (double)num10 * -1.0) + (float)Main.rand.Next(-2, 2), (float)(Math.Sin((double)num13) * (double)num10 * -1.0) + (float)Main.rand.Next(-2, 2), num12, num11, 0f, 0, 0f, 0f);
-				int num18 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num13) * (double)num10 * -1.0) + (float)Main.rand.Next(-2, 2), (float)(Math.Sin((double)num13) * (double)num10 * -1.0) + (float)Main.rand.Next(-2, 2), num12, num11, 0f, 0, 0f, 0f);
-				Main.projectile[num14].netUpdate = true;
-				Main.projectile[num15].netUpdate = true;
-				Main.projectile[num16].netUpdate = true;
-				Main.projectile[num17].netUpdate = true;
-				Main.projectile[num18].netUpdate = true;
+				float Speed2 = 18f;
+				Vector2 vector9 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
+				int damage2 = 34;
+				int type2 = base.mod.ProjectileType("XenomiteShot2");
+				float rotation2 = (float)Math.Atan2((double)(vector9.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector9.X - (this.player.position.X + (float)this.player.width * 0.5f)));
+				int num59 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0) + (float)Main.rand.Next(-2, 2), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0) + (float)Main.rand.Next(-2, 2), type2, damage2, 0f, 0, 0f, 0f);
+				int num60 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0) + (float)Main.rand.Next(-2, 2), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0) + (float)Main.rand.Next(-2, 2), type2, damage2, 0f, 0, 0f, 0f);
+				int num61 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0) + (float)Main.rand.Next(-2, 2), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0) + (float)Main.rand.Next(-2, 2), type2, damage2, 0f, 0, 0f, 0f);
+				int num62 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0) + (float)Main.rand.Next(-2, 2), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0) + (float)Main.rand.Next(-2, 2), type2, damage2, 0f, 0, 0f, 0f);
+				int num63 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0) + (float)Main.rand.Next(-2, 2), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0) + (float)Main.rand.Next(-2, 2), type2, damage2, 0f, 0, 0f, 0f);
+				Main.projectile[num59].netUpdate = true;
+				Main.projectile[num60].netUpdate = true;
+				Main.projectile[num61].netUpdate = true;
+				Main.projectile[num62].netUpdate = true;
+				Main.projectile[num63].netUpdate = true;
 			}
 			if (Main.expertMode)
 			{
 				if (base.npc.ai[3] == 300f || base.npc.ai[3] == 340f || base.npc.ai[3] == 380f || base.npc.ai[3] == 420f || base.npc.ai[3] == 460f)
 				{
-					Vector2 vector3;
-					vector3..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
-					float num19 = (float)Math.Atan2((double)(vector3.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector3.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
-					base.npc.velocity.X = (float)(Math.Cos((double)num19) * 12.0) * -1f;
-					base.npc.velocity.Y = (float)(Math.Sin((double)num19) * 12.0) * -1f;
+					Vector2 vector10 = new Vector2(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
+					float rotation3 = (float)Math.Atan2((double)(vector10.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector10.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
+					base.npc.velocity.X = (float)(Math.Cos((double)rotation3) * 12.0) * -1f;
+					base.npc.velocity.Y = (float)(Math.Sin((double)rotation3) * 12.0) * -1f;
 					base.npc.ai[0] %= 6.2831855f;
 					new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
 					Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 20, 1f, 0f);
-					base.npc.ai[2] = -300f;
 					Color color = default(Color);
-					Rectangle rectangle;
-					rectangle..ctor((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
-					int num20 = 30;
-					for (int i = 1; i <= num20; i++)
+					Rectangle rectangle = new Rectangle((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
+					int count = 30;
+					for (int i = 1; i <= count; i++)
 					{
-						int num21 = Dust.NewDust(base.npc.position, rectangle.Width, rectangle.Height, 107, 0f, 0f, 100, color, 2.5f);
-						Main.dust[num21].noGravity = false;
+						int dust = Dust.NewDust(base.npc.position, rectangle.Width, rectangle.Height, 107, 0f, 0f, 100, color, 2.5f);
+						Main.dust[dust].noGravity = false;
 					}
 					return;
 				}
 			}
 			else if (base.npc.ai[3] == 300f || base.npc.ai[3] == 360f || base.npc.ai[3] == 440f)
 			{
-				Vector2 vector4;
-				vector4..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
-				float num22 = (float)Math.Atan2((double)(vector4.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector4.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
-				base.npc.velocity.X = (float)(Math.Cos((double)num22) * 12.0) * -1f;
-				base.npc.velocity.Y = (float)(Math.Sin((double)num22) * 12.0) * -1f;
+				Vector2 vector11 = new Vector2(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
+				float rotation4 = (float)Math.Atan2((double)(vector11.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector11.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
+				base.npc.velocity.X = (float)(Math.Cos((double)rotation4) * 12.0) * -1f;
+				base.npc.velocity.Y = (float)(Math.Sin((double)rotation4) * 12.0) * -1f;
 				base.npc.ai[0] %= 6.2831855f;
 				new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
 				Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 20, 1f, 0f);
-				base.npc.ai[2] = -300f;
 				Color color2 = default(Color);
-				Rectangle rectangle2;
-				rectangle2..ctor((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
-				int num23 = 30;
-				for (int j = 1; j <= num23; j++)
+				Rectangle rectangle2 = new Rectangle((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
+				int count2 = 30;
+				for (int j = 1; j <= count2; j++)
 				{
-					int num24 = Dust.NewDust(base.npc.position, rectangle2.Width, rectangle2.Height, 107, 0f, 0f, 100, color2, 2.5f);
-					Main.dust[num24].noGravity = false;
+					int dust2 = Dust.NewDust(base.npc.position, rectangle2.Width, rectangle2.Height, 107, 0f, 0f, 100, color2, 2.5f);
+					Main.dust[dust2].noGravity = false;
 				}
 				return;
 			}
 			if (base.npc.ai[3] == 500f || base.npc.ai[3] == 550f || base.npc.ai[3] == 600f || base.npc.ai[3] == 650f || base.npc.ai[3] == 700f)
 			{
-				float num25 = 15f;
-				Vector2 vector5;
-				vector5..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-				int num26 = 36;
-				int num27 = base.mod.ProjectileType("InfectedSpray");
-				float num28 = (float)Math.Atan2((double)(vector5.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector5.X - (this.player.position.X + (float)this.player.width * 0.5f)));
-				int num29 = Projectile.NewProjectile(vector5.X, vector5.Y, (float)(Math.Cos((double)num28) * (double)num25 * -1.0) + (float)Main.rand.Next(-2, 2), (float)(Math.Sin((double)num28) * (double)num25 * -1.0) + (float)Main.rand.Next(-2, 2), num27, num26, 0f, 0, 0f, 0f);
-				Main.projectile[num29].netUpdate = true;
+				float Speed3 = 15f;
+				Vector2 vector12 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
+				int damage3 = 36;
+				int type3 = base.mod.ProjectileType("InfectedSpray");
+				float rotation5 = (float)Math.Atan2((double)(vector12.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector12.X - (this.player.position.X + (float)this.player.width * 0.5f)));
+				int num64 = Projectile.NewProjectile(vector12.X, vector12.Y, (float)(Math.Cos((double)rotation5) * (double)Speed3 * -1.0) + (float)Main.rand.Next(-2, 2), (float)(Math.Sin((double)rotation5) * (double)Speed3 * -1.0) + (float)Main.rand.Next(-2, 2), type3, damage3, 0f, 0, 0f, 0f);
+				Main.projectile[num64].netUpdate = true;
 			}
 			if (base.npc.life < (int)((float)base.npc.lifeMax * 0.5f))
 			{
@@ -255,8 +246,8 @@ namespace Redemption.NPCs.Bosses.InfectedEye
 				{
 					if (base.npc.ai[3] >= 760f && base.npc.ai[3] < 840f && Main.rand.Next(10) == 0)
 					{
-						int num30 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)Main.rand.Next(-12, 12), (float)Main.rand.Next(-12, 12), base.mod.ProjectileType("XenomiteShot2"), 35, 1f, 255, 0f, 0f);
-						Main.projectile[num30].netUpdate = true;
+						int projID = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)Main.rand.Next(-12, 12), (float)Main.rand.Next(-12, 12), base.mod.ProjectileType("XenomiteShot2"), 35, 1f, 255, 0f, 0f);
+						Main.projectile[projID].netUpdate = true;
 					}
 					if (base.npc.ai[3] >= 900f)
 					{
@@ -264,8 +255,8 @@ namespace Redemption.NPCs.Bosses.InfectedEye
 					}
 					if (Main.rand.Next(30) == 0)
 					{
-						int num31 = Projectile.NewProjectile(base.npc.Center.X + (float)Main.rand.Next(-80, 80), base.npc.Center.Y + (float)Main.rand.Next(-60, 60), 0f, 0f, base.mod.ProjectileType("DribblingOoze"), 30, 1f, 255, 0f, 0f);
-						Main.projectile[num31].netUpdate = true;
+						int projID2 = Projectile.NewProjectile(base.npc.Center.X + (float)Main.rand.Next(-80, 80), base.npc.Center.Y + (float)Main.rand.Next(-60, 60), 0f, 0f, base.mod.ProjectileType("DribblingOoze"), 30, 1f, 255, 0f, 0f);
+						Main.projectile[projID2].netUpdate = true;
 					}
 				}
 				else if (base.npc.ai[3] >= 700f)
@@ -279,8 +270,8 @@ namespace Redemption.NPCs.Bosses.InfectedEye
 			}
 			if (base.npc.ai[0] % 200f == 3f && NPC.CountNPCS(base.mod.NPCType("XenomiteEye")) <= 3)
 			{
-				int num32 = NPC.NewNPC((int)base.npc.position.X + 80, (int)base.npc.position.Y + 80, base.mod.NPCType("XenomiteEye"), 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[num32].netUpdate = true;
+				int Minion = NPC.NewNPC((int)base.npc.position.X + 80, (int)base.npc.position.Y + 80, base.mod.NPCType("XenomiteEye"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.npc[Minion].netUpdate = true;
 			}
 		}
 
@@ -302,26 +293,26 @@ namespace Redemption.NPCs.Bosses.InfectedEye
 					{
 						base.npc.timeLeft = 10;
 					}
+					return;
 				}
 			}
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/Bosses/InfectedEye/InfectedEye_OLD");
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D oldAni = base.mod.GetTexture("NPCs/Bosses/InfectedEye/InfectedEye_OLD");
 			int spriteDirection = base.npc.spriteDirection;
-			if (Config.classicRedeIE)
+			if (RedeConfigClient.Instance.classicRedeIE)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num = texture.Height / 3;
-				int num2 = num * this.oldFrame;
-				Main.spriteBatch.Draw(texture, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num214 = oldAni.Height / 3;
+				int y6 = num214 * this.oldFrame;
+				Main.spriteBatch.Draw(oldAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, oldAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)oldAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			else
 			{
-				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
 		}

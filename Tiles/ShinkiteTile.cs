@@ -19,8 +19,7 @@ namespace Redemption.Tiles
 			this.minPick = 300;
 			this.mineResist = 10f;
 			this.soundType = 21;
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Unrefined Shinkite");
+			base.CreateMapEntryName(null).SetDefault("Unrefined Shinkite");
 			base.AddMapEntry(new Color(41, 24, 32), null);
 		}
 

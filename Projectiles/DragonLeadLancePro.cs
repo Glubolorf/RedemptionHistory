@@ -12,14 +12,14 @@ namespace Redemption.Projectiles
 		{
 			if (Main.netMode != 2)
 			{
-				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
 				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
 				{
-					array[i] = Main.glowMaskTexture[i];
+					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				array[array.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
-				DragonLeadLancePro.customGlowMask = (short)(array.Length - 1);
-				Main.glowMaskTexture = array;
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
+				DragonLeadLancePro.customGlowMask = (short)(glowMasks.Length - 1);
+				Main.glowMaskTexture = glowMasks;
 			}
 			base.DisplayName.SetDefault("Dragon Slayer's Greatlance");
 		}
@@ -56,24 +56,24 @@ namespace Redemption.Projectiles
 		{
 			if (Main.rand.Next(2) == 0)
 			{
-				int num = Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 6, 0f, 0f, 100, default(Color), 1.5f);
-				Main.dust[num].noGravity = true;
+				int dust = Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 6, 0f, 0f, 100, default(Color), 1.5f);
+				Main.dust[dust].noGravity = true;
 			}
-			Player player = Main.player[base.projectile.owner];
-			Vector2 vector = player.RotatedRelativePoint(player.MountedCenter, true);
-			base.projectile.direction = player.direction;
-			player.heldProj = base.projectile.whoAmI;
-			player.itemTime = player.itemAnimation;
-			base.projectile.position.X = vector.X - (float)(base.projectile.width / 2);
-			base.projectile.position.Y = vector.Y - (float)(base.projectile.height / 2);
-			if (!player.frozen)
+			Player projOwner = Main.player[base.projectile.owner];
+			Vector2 ownerMountedCenter = projOwner.RotatedRelativePoint(projOwner.MountedCenter, true);
+			base.projectile.direction = projOwner.direction;
+			projOwner.heldProj = base.projectile.whoAmI;
+			projOwner.itemTime = projOwner.itemAnimation;
+			base.projectile.position.X = ownerMountedCenter.X - (float)(base.projectile.width / 2);
+			base.projectile.position.Y = ownerMountedCenter.Y - (float)(base.projectile.height / 2);
+			if (!projOwner.frozen)
 			{
 				if (this.movementFactor == 0f)
 				{
 					this.movementFactor = 1f;
 					base.projectile.netUpdate = true;
 				}
-				if (player.itemAnimation < player.itemAnimationMax / 3)
+				if (projOwner.itemAnimation < projOwner.itemAnimationMax / 3)
 				{
 					this.movementFactor -= 2.4f;
 				}
@@ -83,7 +83,7 @@ namespace Redemption.Projectiles
 				}
 			}
 			base.projectile.position += base.projectile.velocity * this.movementFactor;
-			if (player.itemAnimation == 0)
+			if (projOwner.itemAnimation == 0)
 			{
 				base.projectile.Kill();
 			}

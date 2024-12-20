@@ -12,14 +12,14 @@ namespace Redemption.Projectiles
 		{
 			if (Main.netMode != 2)
 			{
-				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
 				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
 				{
-					array[i] = Main.glowMaskTexture[i];
+					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				array[array.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
-				RainbowCatPro.customGlowMask = (short)(array.Length - 1);
-				Main.glowMaskTexture = array;
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
+				RainbowCatPro.customGlowMask = (short)(glowMasks.Length - 1);
+				Main.glowMaskTexture = glowMasks;
 			}
 			base.DisplayName.SetDefault("Legendary Rainbow Cat");
 			Main.projFrames[base.projectile.type] = 17;
@@ -41,10 +41,16 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			if (++base.projectile.frameCounter >= 3)
+			Projectile projectile = base.projectile;
+			int num = projectile.frameCounter + 1;
+			projectile.frameCounter = num;
+			if (num >= 3)
 			{
 				base.projectile.frameCounter = 0;
-				if (++base.projectile.frame >= 17)
+				Projectile projectile2 = base.projectile;
+				num = projectile2.frame + 1;
+				projectile2.frame = num;
+				if (num >= 17)
 				{
 					base.projectile.frame = 7;
 				}
@@ -53,18 +59,22 @@ namespace Redemption.Projectiles
 			{
 				if (Main.rand.Next(3) == 0)
 				{
-					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-16 + Main.rand.Next(0, 33)), (float)(-16 + Main.rand.Next(0, 33)), 502, base.projectile.damage, 3f, Main.myPlayer, 0f, 0f);
-					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-16 + Main.rand.Next(0, 33)), (float)(-16 + Main.rand.Next(0, 33)), 502, base.projectile.damage, 3f, Main.myPlayer, 0f, 0f);
+					int Proj = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-16 + Main.rand.Next(0, 33)), (float)(-16 + Main.rand.Next(0, 33)), 502, base.projectile.damage, 3f, Main.myPlayer, 0f, 0f);
+					int Proj2 = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-16 + Main.rand.Next(0, 33)), (float)(-16 + Main.rand.Next(0, 33)), 502, base.projectile.damage, 3f, Main.myPlayer, 0f, 0f);
+					Main.projectile[Proj].melee = false;
+					Main.projectile[Proj].magic = true;
+					Main.projectile[Proj2].melee = false;
+					Main.projectile[Proj2].magic = true;
 				}
 				if (Main.rand.Next(50) == 0)
 				{
 					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-16 + Main.rand.Next(0, 33)), (float)(-16 + Main.rand.Next(0, 33)), 79, base.projectile.damage, 3f, Main.myPlayer, 0f, 0f);
 				}
 			}
-			Projectile projectile = base.projectile;
-			projectile.velocity.X = projectile.velocity.X * 0f;
-			Projectile projectile2 = base.projectile;
-			projectile2.velocity.Y = projectile2.velocity.Y + 0f;
+			Projectile projectile3 = base.projectile;
+			projectile3.velocity.X = projectile3.velocity.X * 0f;
+			Projectile projectile4 = base.projectile;
+			projectile4.velocity.Y = projectile4.velocity.Y + 0f;
 			base.projectile.localAI[0] += 1f;
 			if (base.projectile.localAI[0] > 300f)
 			{

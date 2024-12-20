@@ -89,15 +89,15 @@ namespace Redemption.NPCs
 
 		public override string GetChat()
 		{
-			int num = NPC.FindFirstNPC(20);
-			if (num >= 0 && Main.rand.Next(15) == 0)
+			int DryadID = NPC.FindFirstNPC(20);
+			if (DryadID >= 0 && Main.rand.Next(15) == 0)
 			{
-				return "Is " + Main.npc[num].GivenName + " a Forest Nymph?";
+				return "Is " + Main.npc[DryadID].GivenName + " a Forest Nymph?";
 			}
-			int num2 = NPC.FindFirstNPC(208);
-			if (num2 >= 0 && Main.rand.Next(15) == 0)
+			int PartyGirlID = NPC.FindFirstNPC(208);
+			if (PartyGirlID >= 0 && Main.rand.Next(15) == 0)
 			{
-				return "I swear " + Main.npc[num2].GivenName + " reminds me of a technicoloured pony from another universe...";
+				return "I swear " + Main.npc[PartyGirlID].GivenName + " reminds me of a technicoloured pony from another universe...";
 			}
 			switch (Main.rand.Next(5))
 			{

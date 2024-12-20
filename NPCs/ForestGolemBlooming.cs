@@ -59,7 +59,7 @@ namespace Redemption.NPCs
 
 		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
 		{
-			return !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).forestFriendly;
+			return !Main.LocalPlayer.GetModPlayer<RedePlayer>().forestFriendly;
 		}
 
 		public override void HitEffect(int hitDirection, double damage)

@@ -46,13 +46,13 @@ namespace Redemption.Items.Weapons
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			int num = 60 + Main.rand.Next(20);
-			for (int i = 0; i < num; i++)
+			int numberProjectiles = 60 + Main.rand.Next(20);
+			for (int i = 0; i < numberProjectiles; i++)
 			{
-				Vector2 vector = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(30f));
-				float num2 = 1f - Utils.NextFloat(Main.rand) * 0.3f;
-				vector *= num2;
-				Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
+				Vector2 perturbedSpeed = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(30f));
+				float scale = 1f - Utils.NextFloat(Main.rand) * 0.3f;
+				perturbedSpeed *= scale;
+				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
 			}
 			return false;
 		}

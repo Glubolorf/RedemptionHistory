@@ -33,7 +33,7 @@ namespace Redemption.Items.DruidDamageClass.v08
 			base.item.autoReuse = true;
 			base.item.UseSound = SoundID.Item1;
 			base.item.value = Item.sellPrice(0, 0, 4, 0);
-			base.item.shoot = base.mod.ProjectileType<LuminiteDaggerPro>();
+			base.item.shoot = ModContent.ProjectileType<LuminiteDaggerPro>();
 		}
 
 		public override void AddRecipes()

@@ -36,9 +36,9 @@ namespace Redemption.Tiles
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.newTile.AnchorBottom = new AnchorData(11, TileObjectData.newTile.Width, 0);
 			TileObjectData.addTile((int)base.Type);
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Petrified Wood Chest");
-			base.AddMapEntry(new Color(200, 200, 200), modTranslation, new Func<string, int, int, string>(this.MapChestName));
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Petrified Wood Chest");
+			base.AddMapEntry(new Color(200, 200, 200), name, new Func<string, int, int, string>(this.MapChestName));
 			this.dustType = 214;
 			this.disableSmartCursor = true;
 			this.adjTiles = new int[]
@@ -51,23 +51,23 @@ namespace Redemption.Tiles
 
 		public string MapChestName(string name, int i, int j)
 		{
-			int num = i;
-			int num2 = j;
+			int left = i;
+			int top = j;
 			Tile tile = Main.tile[i, j];
 			if (tile.frameX % 36 != 0)
 			{
-				num--;
+				left--;
 			}
 			if (tile.frameY != 0)
 			{
-				num2--;
+				top--;
 			}
-			int num3 = Chest.FindChest(num, num2);
-			if (Main.chest[num3].name == "")
+			int chest = Chest.FindChest(left, top);
+			if (Main.chest[chest].name == "")
 			{
 				return name;
 			}
-			return name + ": " + Main.chest[num3].name;
+			return name + ": " + Main.chest[chest].name;
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -81,25 +81,25 @@ namespace Redemption.Tiles
 			Chest.DestroyChest(i, j);
 		}
 
-		public override void RightClick(int i, int j)
+		public override bool NewRightClick(int i, int j)
 		{
-			Player localPlayer = Main.LocalPlayer;
+			Player player = Main.LocalPlayer;
 			Tile tile = Main.tile[i, j];
 			Main.mouseRightRelease = false;
-			int num = i;
-			int num2 = j;
+			int left = i;
+			int top = j;
 			if (tile.frameX % 36 != 0)
 			{
-				num--;
+				left--;
 			}
 			if (tile.frameY != 0)
 			{
-				num2--;
+				top--;
 			}
-			if (localPlayer.sign >= 0)
+			if (player.sign >= 0)
 			{
 				Main.PlaySound(11, -1, -1, 1, 1f, 0f);
-				localPlayer.sign = -1;
+				player.sign = -1;
 				Main.editSign = false;
 				Main.npcChatText = "";
 			}
@@ -109,87 +109,92 @@ namespace Redemption.Tiles
 				Main.editChest = false;
 				Main.npcChatText = "";
 			}
-			if (localPlayer.editedChestName)
+			if (player.editedChestName)
 			{
-				NetMessage.SendData(33, -1, -1, NetworkText.FromLiteral(Main.chest[localPlayer.chest].name), localPlayer.chest, 1f, 0f, 0f, 0, 0, 0);
-				localPlayer.editedChestName = false;
+				NetMessage.SendData(33, -1, -1, NetworkText.FromLiteral(Main.chest[player.chest].name), player.chest, 1f, 0f, 0f, 0, 0, 0);
+				player.editedChestName = false;
 			}
-			if (Main.netMode != 1)
+			if (Main.netMode == 1)
 			{
-				int num3 = Chest.FindChest(num, num2);
-				if (num3 >= 0)
+				if (left == player.chestX && top == player.chestY && player.chest >= 0)
+				{
+					player.chest = -1;
+					Recipe.FindRecipes();
+					Main.PlaySound(11, -1, -1, 1, 1f, 0f);
+				}
+				else
+				{
+					NetMessage.SendData(31, -1, -1, null, left, (float)top, 0f, 0f, 0, 0, 0);
+					Main.stackSplit = 600;
+				}
+			}
+			else
+			{
+				int chest = Chest.FindChest(left, top);
+				if (chest >= 0)
 				{
 					Main.stackSplit = 600;
-					if (num3 == localPlayer.chest)
+					if (chest == player.chest)
 					{
-						localPlayer.chest = -1;
+						player.chest = -1;
 						Main.PlaySound(11, -1, -1, 1, 1f, 0f);
 					}
 					else
 					{
-						localPlayer.chest = num3;
+						player.chest = chest;
 						Main.playerInventory = true;
 						Main.recBigList = false;
-						localPlayer.chestX = num;
-						localPlayer.chestY = num2;
-						Main.PlaySound((localPlayer.chest < 0) ? 10 : 12, -1, -1, 1, 1f, 0f);
+						player.chestX = left;
+						player.chestY = top;
+						Main.PlaySound((player.chest < 0) ? 10 : 12, -1, -1, 1, 1f, 0f);
 					}
 					Recipe.FindRecipes();
 				}
-				return;
 			}
-			if (num == localPlayer.chestX && num2 == localPlayer.chestY && localPlayer.chest >= 0)
-			{
-				localPlayer.chest = -1;
-				Recipe.FindRecipes();
-				Main.PlaySound(11, -1, -1, 1, 1f, 0f);
-				return;
-			}
-			NetMessage.SendData(31, -1, -1, null, num, (float)num2, 0f, 0f, 0, 0, 0);
-			Main.stackSplit = 600;
+			return true;
 		}
 
 		public override void MouseOver(int i, int j)
 		{
-			Player localPlayer = Main.LocalPlayer;
+			Player player = Main.LocalPlayer;
 			Tile tile = Main.tile[i, j];
-			int num = i;
-			int num2 = j;
+			int left = i;
+			int top = j;
 			if (tile.frameX % 36 != 0)
 			{
-				num--;
+				left--;
 			}
 			if (tile.frameY != 0)
 			{
-				num2--;
+				top--;
 			}
-			int num3 = Chest.FindChest(num, num2);
-			localPlayer.showItemIcon2 = -1;
-			if (num3 < 0)
+			int chest = Chest.FindChest(left, top);
+			player.showItemIcon2 = -1;
+			if (chest < 0)
 			{
-				localPlayer.showItemIconText = Lang.chestType[0].Value;
+				player.showItemIconText = Lang.chestType[0].Value;
 			}
 			else
 			{
-				localPlayer.showItemIconText = ((Main.chest[num3].name.Length > 0) ? Main.chest[num3].name : "Petrified Wood Chest");
-				if (localPlayer.showItemIconText == "Petrified Wood Chest")
+				player.showItemIconText = ((Main.chest[chest].name.Length > 0) ? Main.chest[chest].name : "Petrified Wood Chest");
+				if (player.showItemIconText == "Petrified Wood Chest")
 				{
-					localPlayer.showItemIcon2 = base.mod.ItemType("DeadWoodChest");
-					localPlayer.showItemIconText = "";
+					player.showItemIcon2 = base.mod.ItemType("DeadWoodChest");
+					player.showItemIconText = "";
 				}
 			}
-			localPlayer.noThrow = 2;
-			localPlayer.showItemIcon = true;
+			player.noThrow = 2;
+			player.showItemIcon = true;
 		}
 
 		public override void MouseOverFar(int i, int j)
 		{
 			this.MouseOver(i, j);
-			Player localPlayer = Main.LocalPlayer;
-			if (localPlayer.showItemIconText == "")
+			Player player = Main.LocalPlayer;
+			if (player.showItemIconText == "")
 			{
-				localPlayer.showItemIcon = false;
-				localPlayer.showItemIcon2 = 0;
+				player.showItemIcon = false;
+				player.showItemIcon2 = 0;
 			}
 		}
 	}

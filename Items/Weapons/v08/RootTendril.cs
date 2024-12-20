@@ -32,5 +32,13 @@ namespace Redemption.Items.Weapons.v08
 			base.item.melee = true;
 			base.item.autoReuse = true;
 		}
+
+		public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
+		{
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().thornCrown)
+			{
+				flat += 600f;
+			}
+		}
 	}
 }

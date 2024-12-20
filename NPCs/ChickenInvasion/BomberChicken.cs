@@ -37,8 +37,8 @@ namespace Redemption.NPCs.ChickenInvasion
 			{
 				for (int i = 0; i < 15; i++)
 				{
-					int num = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 5, 0f, 0f, 100, default(Color), 2.2f);
-					Main.dust[num].velocity *= 1.8f;
+					int dustIndex = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 5, 0f, 0f, 100, default(Color), 2.2f);
+					Main.dust[dustIndex].velocity *= 1.8f;
 				}
 				if (base.npc.FindBuffIndex(24) != -1)
 				{
@@ -93,8 +93,8 @@ namespace Redemption.NPCs.ChickenInvasion
 			base.npc.rotation = base.npc.velocity.X * 0.05f;
 			if (Main.rand.Next(100) == 0)
 			{
-				int num = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.position.Y), new Vector2(0f, 0f), base.mod.ProjectileType("EggBombPro1"), 52, 3f, 255, 0f, 0f);
-				Main.projectile[num].netUpdate = true;
+				int p = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.position.Y), new Vector2(0f, 0f), base.mod.ProjectileType("EggBombPro1"), 52, 3f, 255, 0f, 0f);
+				Main.projectile[p].netUpdate = true;
 			}
 		}
 
@@ -106,21 +106,20 @@ namespace Redemption.NPCs.ChickenInvasion
 		private void Move(Vector2 offset)
 		{
 			this.speed = 16f;
-			Vector2 vector = this.player.Center + offset;
-			Vector2 vector2 = vector - base.npc.Center;
-			float num = this.Magnitude(vector2);
-			if (num > this.speed)
+			Vector2 move = this.player.Center + offset - base.npc.Center;
+			float magnitude = this.Magnitude(move);
+			if (magnitude > this.speed)
 			{
-				vector2 *= this.speed / num;
+				move *= this.speed / magnitude;
 			}
-			float num2 = 30f;
-			vector2 = (base.npc.velocity * num2 + vector2) / (num2 + 1f);
-			num = this.Magnitude(vector2);
-			if (num > this.speed)
+			float turnResistance = 30f;
+			move = (base.npc.velocity * turnResistance + move) / (turnResistance + 1f);
+			magnitude = this.Magnitude(move);
+			if (magnitude > this.speed)
 			{
-				vector2 *= this.speed / num;
+				move *= this.speed / magnitude;
 			}
-			base.npc.velocity = vector2;
+			base.npc.velocity = move;
 		}
 
 		private void DespawnHandler()
@@ -136,6 +135,7 @@ namespace Redemption.NPCs.ChickenInvasion
 					{
 						base.npc.timeLeft = 10;
 					}
+					return;
 				}
 			}
 		}

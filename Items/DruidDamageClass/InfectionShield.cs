@@ -14,7 +14,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Infected Thornshield");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n-2 defense\nDouble tap a direction to dash\n14% increased druidic critical strike chance\nBashing an enemy inflicts Cursed Flames\nLeaves ichor-inflicting sparks behind the player");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n-2 defense\nDouble tap a direction to dash\n14% increased druidic critical strike chance\nInflicts Infection upon dashing into an enemy\nReleases acid-like sparks as you move");
 		}
 
 		public override void SafeSetDefaults()
@@ -41,15 +41,10 @@ namespace Redemption.Items.DruidDamageClass
 			modRecipe.AddRecipe();
 		}
 
-		public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
-		{
-			target.AddBuff(39, 300, false);
-		}
-
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
+			DruidDamagePlayer modPlayer = DruidDamagePlayer.ModPlayer(player);
+			RedePlayer modPlayer2 = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
 			if (Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y) > 1f && !player.rocketFrame)
 			{
 				for (int i = 0; i < 1; i++)
@@ -60,10 +55,10 @@ namespace Redemption.Items.DruidDamageClass
 					}
 				}
 			}
-			redePlayer.infectedThornshield = true;
-			redePlayer.dashMod = 1;
+			modPlayer2.infectedThornshield = true;
+			modPlayer2.dashMod = 1;
 			player.statDefense -= 2;
-			druidDamagePlayer.druidCrit += 14;
+			modPlayer.druidCrit += 14;
 		}
 	}
 }

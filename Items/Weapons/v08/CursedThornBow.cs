@@ -34,6 +34,14 @@ namespace Redemption.Items.Weapons.v08
 			base.item.useAmmo = AmmoID.Arrow;
 		}
 
+		public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
+		{
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().thornCrown)
+			{
+				flat += 600f;
+			}
+		}
+
 		public override Vector2? HoldoutOffset()
 		{
 			return new Vector2?(new Vector2(-2f, 0f));

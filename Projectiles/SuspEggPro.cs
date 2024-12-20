@@ -31,10 +31,16 @@ namespace Redemption.Projectiles
 			base.projectile.rotation += base.projectile.velocity.X / 40f * (float)base.projectile.direction;
 			Projectile projectile = base.projectile;
 			projectile.velocity.Y = projectile.velocity.Y + 0.3f;
-			if (++base.projectile.frameCounter >= 3)
+			Projectile projectile2 = base.projectile;
+			int num = projectile2.frameCounter + 1;
+			projectile2.frameCounter = num;
+			if (num >= 3)
 			{
 				base.projectile.frameCounter = 0;
-				if (++base.projectile.frame >= 7)
+				Projectile projectile3 = base.projectile;
+				num = projectile3.frame + 1;
+				projectile3.frame = num;
+				if (num >= 7)
 				{
 					base.projectile.frame = 0;
 				}
@@ -51,10 +57,10 @@ namespace Redemption.Projectiles
 			Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/BAZINGA").WithVolume(0.9f).WithPitchVariance(0.1f), -1, -1);
 			if (Main.netMode != 1)
 			{
-				int num = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, 398, 0, 0f, 0f, 0f, 0f, 255);
+				int i = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, 398, 0, 0f, 0f, 0f, 0f, 255);
 				if (Main.netMode == 2)
 				{
-					NetMessage.SendData(23, -1, -1, null, num, 0f, 0f, 0f, 0, 0, 0);
+					NetMessage.SendData(23, -1, -1, null, i, 0f, 0f, 0f, 0, 0, 0);
 				}
 			}
 			return true;

@@ -28,8 +28,7 @@ namespace Redemption.Items.Armor.FlowerCrowns
 
 		public override void UpdateEquip(Player player)
 		{
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.extraSeed = true;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).extraSeed = true;
 		}
 
 		public override bool IsArmorSet(Item head, Item body, Item legs)
@@ -40,8 +39,7 @@ namespace Redemption.Items.Armor.FlowerCrowns
 		public override void UpdateArmorSet(Player player)
 		{
 			player.setBonus = "15% increased druidic damage";
-			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
-			druidDamagePlayer.druidDamage += 0.15f;
+			DruidDamagePlayer.ModPlayer(player).druidDamage += 0.15f;
 		}
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)

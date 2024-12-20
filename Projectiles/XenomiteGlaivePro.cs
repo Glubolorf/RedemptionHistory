@@ -12,14 +12,14 @@ namespace Redemption.Projectiles
 		{
 			if (Main.netMode != 2)
 			{
-				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
 				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
 				{
-					array[i] = Main.glowMaskTexture[i];
+					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				array[array.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
-				XenomiteGlaivePro.customGlowMask = (short)(array.Length - 1);
-				Main.glowMaskTexture = array;
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
+				XenomiteGlaivePro.customGlowMask = (short)(glowMasks.Length - 1);
+				Main.glowMaskTexture = glowMasks;
 			}
 			base.DisplayName.SetDefault("Xenomite Glaive");
 		}
@@ -67,14 +67,14 @@ namespace Redemption.Projectiles
 			player.itemTime = 2;
 			player.itemAnimation = 2;
 			player.itemRotation = base.projectile.rotation;
-			int num = Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, base.mod.DustType("PuriumFlame"), 0f, 0f, 0, default(Color), 1f);
-			Main.dust[num].velocity /= 1f;
+			int dust = Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, base.mod.DustType("PuriumFlame"), 0f, 0f, 0, default(Color), 1f);
+			Main.dust[dust].velocity /= 1f;
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture2D = Main.projectileTexture[base.projectile.type];
-			spriteBatch.Draw(texture2D, base.projectile.Center - Main.screenPosition, null, Color.White, base.projectile.rotation, new Vector2((float)(texture2D.Width / 2), (float)(texture2D.Height / 2)), 1f, (base.projectile.spriteDirection == 1) ? 0 : 1, 0f);
+			Texture2D texture = Main.projectileTexture[base.projectile.type];
+			spriteBatch.Draw(texture, base.projectile.Center - Main.screenPosition, null, Color.White, base.projectile.rotation, new Vector2((float)(texture.Width / 2), (float)(texture.Height / 2)), 1f, (base.projectile.spriteDirection == 1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			return false;
 		}
 

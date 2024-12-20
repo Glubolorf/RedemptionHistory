@@ -13,14 +13,14 @@ namespace Redemption.Items.DruidDamageClass
 		{
 			if (Main.netMode != 2)
 			{
-				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
 				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
 				{
-					array[i] = Main.glowMaskTexture[i];
+					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				array[array.Length - 1] = base.mod.GetTexture("Items/DruidDamageClass/" + base.GetType().Name + "_Glow");
-				GloopContainer.customGlowMask = (short)(array.Length - 1);
-				Main.glowMaskTexture = array;
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Items/DruidDamageClass/" + base.GetType().Name + "_Glow");
+				GloopContainer.customGlowMask = (short)(glowMasks.Length - 1);
+				Main.glowMaskTexture = glowMasks;
 			}
 			base.DisplayName.SetDefault("Gloop Container");
 			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nThrow a container filled with gloop");
@@ -50,7 +50,7 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override float UseTimeMultiplier(Player player)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterSeedbags)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().fasterSeedbags)
 			{
 				return 1.15f;
 			}
@@ -59,27 +59,27 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).moreSeeds)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().moreSeeds)
 			{
-				int num = 2 + Main.rand.Next(2);
-				for (int i = 0; i < num; i++)
+				int numberProjectiles = 2 + Main.rand.Next(2);
+				for (int i = 0; i < numberProjectiles; i++)
 				{
-					Vector2 vector = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(25f));
-					float num2 = 1f - Utils.NextFloat(Main.rand) * 0.3f;
-					vector *= num2;
-					Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
+					Vector2 perturbedSpeed = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(25f));
+					float scale = 1f - Utils.NextFloat(Main.rand) * 0.3f;
+					perturbedSpeed *= scale;
+					Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
 				}
 				return false;
 			}
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).extraSeed && Main.rand.Next(3) == 0)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().extraSeed && Main.rand.Next(3) == 0)
 			{
-				int num3 = 2;
-				for (int j = 0; j < num3; j++)
+				int numberProjectiles2 = 2;
+				for (int j = 0; j < numberProjectiles2; j++)
 				{
-					Vector2 vector2 = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(25f));
-					float num4 = 1f - Utils.NextFloat(Main.rand) * 0.3f;
-					vector2 *= num4;
-					Projectile.NewProjectile(position.X, position.Y, vector2.X, vector2.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
+					Vector2 perturbedSpeed2 = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(25f));
+					float scale2 = 1f - Utils.NextFloat(Main.rand) * 0.3f;
+					perturbedSpeed2 *= scale2;
+					Projectile.NewProjectile(position.X, position.Y, perturbedSpeed2.X, perturbedSpeed2.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
 				}
 				return false;
 			}

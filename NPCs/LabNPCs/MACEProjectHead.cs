@@ -42,8 +42,8 @@ namespace Redemption.NPCs.LabNPCs
 			{
 				for (int i = 0; i < 50; i++)
 				{
-					int num = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 226, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 20, default(Color), 4f);
-					Main.dust[num].velocity *= 1.9f;
+					int dustIndex = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 226, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 20, default(Color), 4f);
+					Main.dust[dustIndex].velocity *= 1.9f;
 				}
 			}
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 226, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 20, default(Color), 1f);
@@ -115,16 +115,15 @@ namespace Redemption.NPCs.LabNPCs
 				}
 				if (Main.netMode != 1)
 				{
-					Vector2 vector;
-					vector..ctor(250f, -100f);
-					base.npc.Center = base.npc.position + vector;
+					Vector2 newPos = new Vector2(250f, -100f);
+					base.npc.Center = base.npc.position + newPos;
 					base.npc.netUpdate = true;
 				}
 			}
 			if (base.npc.ai[0] <= 2f && !NPC.AnyNPCs(base.mod.NPCType("MACEProjectJaw")))
 			{
-				int num = NPC.NewNPC((int)base.npc.position.X + 60, (int)base.npc.position.Y + 170, base.mod.NPCType("MACEProjectJaw"), 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[num].netUpdate = true;
+				int minion = NPC.NewNPC((int)base.npc.position.X + 60, (int)base.npc.position.Y + 170, base.mod.NPCType("MACEProjectJaw"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.npc[minion].netUpdate = true;
 			}
 			if (base.npc.ai[0] <= 120f)
 			{
@@ -141,18 +140,16 @@ namespace Redemption.NPCs.LabNPCs
 				if (base.npc.ai[1] == 90f)
 				{
 					Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-					float num2 = 14f;
-					Vector2 vector2;
-					vector2..ctor(base.npc.position.X + 39f, base.npc.position.Y + 91f);
-					Vector2 vector3;
-					vector3..ctor(base.npc.position.X + 81f, base.npc.position.Y + 91f);
-					int num3 = 40;
-					int num4 = base.mod.ProjectileType("MACELaser1");
-					float num5 = (float)Math.Atan2((double)(vector2.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector2.X - (player.position.X + (float)player.width * 0.5f)));
-					int num6 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num5) * (double)num2 * -1.0), (float)(Math.Sin((double)num5) * (double)num2 * -1.0), num4, num3, 0f, 0, 0f, 0f);
-					int num7 = Projectile.NewProjectile(vector3.X, vector3.Y, (float)(Math.Cos((double)num5) * (double)num2 * -1.0), (float)(Math.Sin((double)num5) * (double)num2 * -1.0), num4, num3, 0f, 0, 0f, 0f);
-					Main.projectile[num6].netUpdate = true;
-					Main.projectile[num7].netUpdate = true;
+					float Speed = 14f;
+					Vector2 vector8 = new Vector2(base.npc.position.X + 39f, base.npc.position.Y + 91f);
+					Vector2 vector9 = new Vector2(base.npc.position.X + 81f, base.npc.position.Y + 91f);
+					int damage = 40;
+					int type = base.mod.ProjectileType("MACELaser1");
+					float rotation = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
+					int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
+					int num55 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
+					Main.projectile[num54].netUpdate = true;
+					Main.projectile[num55].netUpdate = true;
 				}
 				if (base.npc.ai[1] >= 95f)
 				{
@@ -175,18 +172,16 @@ namespace Redemption.NPCs.LabNPCs
 					if (base.npc.ai[2] == 60f)
 					{
 						Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-						float num8 = 14f;
-						Vector2 vector4;
-						vector4..ctor(base.npc.position.X + 39f, base.npc.position.Y + 91f);
-						Vector2 vector5;
-						vector5..ctor(base.npc.position.X + 81f, base.npc.position.Y + 91f);
-						int num9 = 30;
-						int num10 = base.mod.ProjectileType("MACELaser1");
-						float num11 = (float)Math.Atan2((double)(vector4.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector4.X - (player.position.X + (float)player.width * 0.5f)));
-						int num12 = Projectile.NewProjectile(vector4.X, vector4.Y, (float)(Math.Cos((double)num11) * (double)num8 * -1.0), (float)(Math.Sin((double)num11) * (double)num8 * -1.0), num10, num9, 0f, 0, 0f, 0f);
-						int num13 = Projectile.NewProjectile(vector5.X, vector5.Y, (float)(Math.Cos((double)num11) * (double)num8 * -1.0), (float)(Math.Sin((double)num11) * (double)num8 * -1.0), num10, num9, 0f, 0, 0f, 0f);
-						Main.projectile[num12].netUpdate = true;
-						Main.projectile[num13].netUpdate = true;
+						float Speed2 = 14f;
+						Vector2 vector10 = new Vector2(base.npc.position.X + 39f, base.npc.position.Y + 91f);
+						Vector2 vector11 = new Vector2(base.npc.position.X + 81f, base.npc.position.Y + 91f);
+						int damage2 = 30;
+						int type2 = base.mod.ProjectileType("MACELaser1");
+						float rotation2 = (float)Math.Atan2((double)(vector10.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector10.X - (player.position.X + (float)player.width * 0.5f)));
+						int num56 = Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0), type2, damage2, 0f, 0, 0f, 0f);
+						int num57 = Projectile.NewProjectile(vector11.X, vector11.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0), type2, damage2, 0f, 0, 0f, 0f);
+						Main.projectile[num56].netUpdate = true;
+						Main.projectile[num57].netUpdate = true;
 					}
 					if (base.npc.ai[2] >= 60f)
 					{
@@ -202,18 +197,16 @@ namespace Redemption.NPCs.LabNPCs
 						if (base.npc.ai[3] == 5f)
 						{
 							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							float num14 = 14f;
-							Vector2 vector6;
-							vector6..ctor(base.npc.position.X + 39f, base.npc.position.Y + 91f);
-							Vector2 vector7;
-							vector7..ctor(base.npc.position.X + 81f, base.npc.position.Y + 91f);
-							int num15 = 30;
-							int num16 = base.mod.ProjectileType("MACELaser1");
-							float num17 = (float)Math.Atan2((double)(vector6.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector6.X - (player.position.X + (float)player.width * 0.5f)));
-							int num18 = Projectile.NewProjectile(vector6.X, vector6.Y, (float)(Math.Cos((double)num17) * (double)num14 * -1.0), (float)(Math.Sin((double)num17) * (double)num14 * -1.0), num16, num15, 0f, 0, 0f, 0f);
-							int num19 = Projectile.NewProjectile(vector7.X, vector7.Y, (float)(Math.Cos((double)num17) * (double)num14 * -1.0), (float)(Math.Sin((double)num17) * (double)num14 * -1.0), num16, num15, 0f, 0, 0f, 0f);
-							Main.projectile[num18].netUpdate = true;
-							Main.projectile[num19].netUpdate = true;
+							float Speed3 = 14f;
+							Vector2 vector12 = new Vector2(base.npc.position.X + 39f, base.npc.position.Y + 91f);
+							Vector2 vector13 = new Vector2(base.npc.position.X + 81f, base.npc.position.Y + 91f);
+							int damage3 = 30;
+							int type3 = base.mod.ProjectileType("MACELaser1");
+							float rotation3 = (float)Math.Atan2((double)(vector12.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector12.X - (player.position.X + (float)player.width * 0.5f)));
+							int num58 = Projectile.NewProjectile(vector12.X, vector12.Y, (float)(Math.Cos((double)rotation3) * (double)Speed3 * -1.0), (float)(Math.Sin((double)rotation3) * (double)Speed3 * -1.0), type3, damage3, 0f, 0, 0f, 0f);
+							int num59 = Projectile.NewProjectile(vector13.X, vector13.Y, (float)(Math.Cos((double)rotation3) * (double)Speed3 * -1.0), (float)(Math.Sin((double)rotation3) * (double)Speed3 * -1.0), type3, damage3, 0f, 0, 0f, 0f);
+							Main.projectile[num58].netUpdate = true;
+							Main.projectile[num59].netUpdate = true;
 						}
 						if (base.npc.ai[3] >= 10f)
 						{
@@ -224,46 +217,45 @@ namespace Redemption.NPCs.LabNPCs
 					if (base.npc.ai[2] == 90f)
 					{
 						Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-						float num20 = 10f;
-						Vector2 vector8;
-						vector8..ctor(base.npc.position.X + 50f, base.npc.position.Y + 54f);
-						int num21 = 30;
-						int num22 = base.mod.ProjectileType("XenoShard3");
-						float num23 = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
-						int num24 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)num23) * (double)num20 * -1.0), (float)(Math.Sin((double)num23) * (double)num20 * -1.0), num22, num21, 0f, 0, 0f, 0f);
-						Main.projectile[num24].netUpdate = true;
+						float Speed4 = 10f;
+						Vector2 vector14 = new Vector2(base.npc.position.X + 50f, base.npc.position.Y + 54f);
+						int damage4 = 30;
+						int type4 = base.mod.ProjectileType("XenoShard3");
+						float rotation4 = (float)Math.Atan2((double)(vector14.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector14.X - (player.position.X + (float)player.width * 0.5f)));
+						int p = Projectile.NewProjectile(vector14.X, vector14.Y, (float)(Math.Cos((double)rotation4) * (double)Speed4 * -1.0), (float)(Math.Sin((double)rotation4) * (double)Speed4 * -1.0), type4, damage4, 0f, 0, 0f, 0f);
+						Main.projectile[p].netUpdate = true;
 					}
 					if (base.npc.ai[2] == 140f)
 					{
 						Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-						int num25 = 8;
-						for (int i = 0; i < num25; i++)
+						int pieCut = 8;
+						for (int i = 0; i < pieCut; i++)
 						{
-							int num26 = Projectile.NewProjectile(base.npc.position.X + 39f, base.npc.position.Y + 91f, 0f, 0f, base.mod.ProjectileType("MACELaser1"), 30, 3f, 255, 0f, 0f);
-							Main.projectile[num26].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(7f, 0f), (float)i / (float)num25 * 6.28f);
-							Main.projectile[num26].netUpdate = true;
+							int projID = Projectile.NewProjectile(base.npc.position.X + 39f, base.npc.position.Y + 91f, 0f, 0f, base.mod.ProjectileType("MACELaser1"), 30, 3f, 255, 0f, 0f);
+							Main.projectile[projID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(7f, 0f), (float)i / (float)pieCut * 6.28f);
+							Main.projectile[projID].netUpdate = true;
 						}
 					}
 					if (base.npc.ai[2] == 170f)
 					{
 						Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-						int num27 = 8;
-						for (int j = 0; j < num27; j++)
+						int pieCut2 = 8;
+						for (int j = 0; j < pieCut2; j++)
 						{
-							int num28 = Projectile.NewProjectile(base.npc.position.X + 81f, base.npc.position.Y + 91f, 0f, 0f, base.mod.ProjectileType("MACELaser1"), 30, 3f, 255, 0f, 0f);
-							Main.projectile[num28].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(7f, 0f), (float)j / (float)num27 * 6.28f);
-							Main.projectile[num28].netUpdate = true;
+							int projID2 = Projectile.NewProjectile(base.npc.position.X + 81f, base.npc.position.Y + 91f, 0f, 0f, base.mod.ProjectileType("MACELaser1"), 30, 3f, 255, 0f, 0f);
+							Main.projectile[projID2].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(7f, 0f), (float)j / (float)pieCut2 * 6.28f);
+							Main.projectile[projID2].netUpdate = true;
 						}
 					}
 					if (base.npc.ai[2] == 200f)
 					{
 						Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-						int num29 = 8;
-						for (int k = 0; k < num29; k++)
+						int pieCut3 = 8;
+						for (int k = 0; k < pieCut3; k++)
 						{
-							int num30 = Projectile.NewProjectile(base.npc.position.X + 39f, base.npc.position.Y + 91f, 0f, 0f, base.mod.ProjectileType("MACELaser1"), 30, 3f, 255, 0f, 0f);
-							Main.projectile[num30].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(7f, 0f), (float)k / (float)num29 * 6.28f);
-							Main.projectile[num30].netUpdate = true;
+							int projID3 = Projectile.NewProjectile(base.npc.position.X + 39f, base.npc.position.Y + 91f, 0f, 0f, base.mod.ProjectileType("MACELaser1"), 30, 3f, 255, 0f, 0f);
+							Main.projectile[projID3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(7f, 0f), (float)k / (float)pieCut3 * 6.28f);
+							Main.projectile[projID3].netUpdate = true;
 						}
 					}
 					if (base.npc.ai[2] >= 320f && base.npc.ai[2] <= 360f)
@@ -272,26 +264,24 @@ namespace Redemption.NPCs.LabNPCs
 						if (base.npc.ai[3] == 4f)
 						{
 							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							float num31 = 14f;
-							Vector2 vector9;
-							vector9..ctor(base.npc.position.X + 39f, base.npc.position.Y + 91f);
-							int num32 = 30;
-							int num33 = base.mod.ProjectileType("MACELaser1");
-							float num34 = (float)Math.Atan2((double)(vector9.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector9.X - (player.position.X + (float)player.width * 0.5f)));
-							int num35 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)num34) * (double)num31 * -1.0), (float)(Math.Sin((double)num34) * (double)num31 * -1.0), num33, num32, 0f, 0, 0f, 0f);
-							Main.projectile[num35].netUpdate = true;
+							float Speed5 = 14f;
+							Vector2 vector15 = new Vector2(base.npc.position.X + 39f, base.npc.position.Y + 91f);
+							int damage5 = 30;
+							int type5 = base.mod.ProjectileType("MACELaser1");
+							float rotation5 = (float)Math.Atan2((double)(vector15.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector15.X - (player.position.X + (float)player.width * 0.5f)));
+							int num60 = Projectile.NewProjectile(vector15.X, vector15.Y, (float)(Math.Cos((double)rotation5) * (double)Speed5 * -1.0), (float)(Math.Sin((double)rotation5) * (double)Speed5 * -1.0), type5, damage5, 0f, 0, 0f, 0f);
+							Main.projectile[num60].netUpdate = true;
 						}
 						if (base.npc.ai[3] == 8f)
 						{
 							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							float num36 = 14f;
-							int num37 = 30;
-							Vector2 vector10;
-							vector10..ctor(base.npc.position.X + 81f, base.npc.position.Y + 91f);
-							int num38 = base.mod.ProjectileType("MACELaser1");
-							float num39 = (float)Math.Atan2((double)(vector10.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector10.X - (player.position.X + (float)player.width * 0.5f)));
-							int num40 = Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)num39) * (double)num36 * -1.0), (float)(Math.Sin((double)num39) * (double)num36 * -1.0), num38, num37, 0f, 0, 0f, 0f);
-							Main.projectile[num40].netUpdate = true;
+							float Speed6 = 14f;
+							int damage6 = 30;
+							Vector2 vector16 = new Vector2(base.npc.position.X + 81f, base.npc.position.Y + 91f);
+							int type6 = base.mod.ProjectileType("MACELaser1");
+							float rotation6 = (float)Math.Atan2((double)(vector16.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector16.X - (player.position.X + (float)player.width * 0.5f)));
+							int num61 = Projectile.NewProjectile(vector16.X, vector16.Y, (float)(Math.Cos((double)rotation6) * (double)Speed6 * -1.0), (float)(Math.Sin((double)rotation6) * (double)Speed6 * -1.0), type6, damage6, 0f, 0, 0f, 0f);
+							Main.projectile[num61].netUpdate = true;
 						}
 						if (base.npc.ai[3] >= 12f)
 						{
@@ -301,38 +291,38 @@ namespace Redemption.NPCs.LabNPCs
 					}
 					if (base.npc.ai[2] == 320f)
 					{
-						int num41 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y - 28f), new Vector2(3f, 0f), base.mod.ProjectileType("MACEOrb1"), 0, 0f, 255, 0f, 0f);
-						int num42 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y - 28f), new Vector2(-3f, 0f), base.mod.ProjectileType("MACEOrb1"), 0, 0f, 255, 0f, 0f);
-						Main.projectile[num41].netUpdate = true;
-						Main.projectile[num42].netUpdate = true;
+						int p2 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y - 28f), new Vector2(3f, 0f), base.mod.ProjectileType("MACEOrb1"), 0, 0f, 255, 0f, 0f);
+						int p3 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y - 28f), new Vector2(-3f, 0f), base.mod.ProjectileType("MACEOrb1"), 0, 0f, 255, 0f, 0f);
+						Main.projectile[p2].netUpdate = true;
+						Main.projectile[p3].netUpdate = true;
 					}
 					if (base.npc.ai[2] == 330f)
 					{
-						int num43 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y - 28f), new Vector2(6f, 0f), base.mod.ProjectileType("MACEOrb1"), 0, 0f, 255, 0f, 0f);
-						int num44 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y - 28f), new Vector2(-6f, 0f), base.mod.ProjectileType("MACEOrb1"), 0, 0f, 255, 0f, 0f);
-						Main.projectile[num43].netUpdate = true;
-						Main.projectile[num44].netUpdate = true;
+						int p4 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y - 28f), new Vector2(6f, 0f), base.mod.ProjectileType("MACEOrb1"), 0, 0f, 255, 0f, 0f);
+						int p5 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y - 28f), new Vector2(-6f, 0f), base.mod.ProjectileType("MACEOrb1"), 0, 0f, 255, 0f, 0f);
+						Main.projectile[p4].netUpdate = true;
+						Main.projectile[p5].netUpdate = true;
 					}
 					if (base.npc.ai[2] == 340f)
 					{
-						int num45 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y - 28f), new Vector2(9f, 0f), base.mod.ProjectileType("MACEOrb1"), 0, 0f, 255, 0f, 0f);
-						int num46 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y - 28f), new Vector2(-9f, 0f), base.mod.ProjectileType("MACEOrb1"), 0, 0f, 255, 0f, 0f);
-						Main.projectile[num45].netUpdate = true;
-						Main.projectile[num46].netUpdate = true;
+						int p6 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y - 28f), new Vector2(9f, 0f), base.mod.ProjectileType("MACEOrb1"), 0, 0f, 255, 0f, 0f);
+						int p7 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y - 28f), new Vector2(-9f, 0f), base.mod.ProjectileType("MACEOrb1"), 0, 0f, 255, 0f, 0f);
+						Main.projectile[p6].netUpdate = true;
+						Main.projectile[p7].netUpdate = true;
 					}
 					if (base.npc.ai[2] == 350f)
 					{
-						int num47 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y - 28f), new Vector2(12f, 0f), base.mod.ProjectileType("MACEOrb1"), 0, 0f, 255, 0f, 0f);
-						int num48 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y - 28f), new Vector2(-12f, 0f), base.mod.ProjectileType("MACEOrb1"), 0, 0f, 255, 0f, 0f);
-						Main.projectile[num47].netUpdate = true;
-						Main.projectile[num48].netUpdate = true;
+						int p8 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y - 28f), new Vector2(12f, 0f), base.mod.ProjectileType("MACEOrb1"), 0, 0f, 255, 0f, 0f);
+						int p9 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y - 28f), new Vector2(-12f, 0f), base.mod.ProjectileType("MACEOrb1"), 0, 0f, 255, 0f, 0f);
+						Main.projectile[p8].netUpdate = true;
+						Main.projectile[p9].netUpdate = true;
 					}
 					if (base.npc.ai[2] == 360f)
 					{
-						int num49 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y - 28f), new Vector2(15f, 0f), base.mod.ProjectileType("MACEOrb1"), 0, 0f, 255, 0f, 0f);
-						int num50 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y - 28f), new Vector2(-15f, 0f), base.mod.ProjectileType("MACEOrb1"), 0, 0f, 255, 0f, 0f);
-						Main.projectile[num49].netUpdate = true;
-						Main.projectile[num50].netUpdate = true;
+						int p10 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y - 28f), new Vector2(15f, 0f), base.mod.ProjectileType("MACEOrb1"), 0, 0f, 255, 0f, 0f);
+						int p11 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y - 28f), new Vector2(-15f, 0f), base.mod.ProjectileType("MACEOrb1"), 0, 0f, 255, 0f, 0f);
+						Main.projectile[p10].netUpdate = true;
+						Main.projectile[p11].netUpdate = true;
 					}
 					if (base.npc.ai[2] >= 460f)
 					{
@@ -348,8 +338,8 @@ namespace Redemption.NPCs.LabNPCs
 					this.customAI[1] += 1f;
 					if (this.customAI[1] >= 20f)
 					{
-						int num51 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("MACEProjectFist1"), 0, 0f, 0f, 0f, 0f, 255);
-						Main.npc[num51].netUpdate = true;
+						int minion2 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("MACEProjectFist1"), 0, 0f, 0f, 0f, 0f, 255);
+						Main.npc[minion2].netUpdate = true;
 						this.customAI[0] = 1f;
 						this.customAI[1] = 0f;
 						base.npc.netUpdate = true;
@@ -360,10 +350,10 @@ namespace Redemption.NPCs.LabNPCs
 					this.customAI[1] += 1f;
 					if (this.customAI[1] >= 20f)
 					{
-						int num52 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("MACEProjectFist3"), 0, 0f, 0f, 0f, 0f, 255);
-						Main.npc[num52].netUpdate = true;
-						int num53 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("MACEProjectFist4"), 0, 0f, 0f, 0f, 0f, 255);
-						Main.npc[num53].netUpdate = true;
+						int minion3 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("MACEProjectFist3"), 0, 0f, 0f, 0f, 0f, 255);
+						Main.npc[minion3].netUpdate = true;
+						int minion4 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("MACEProjectFist4"), 0, 0f, 0f, 0f, 0f, 255);
+						Main.npc[minion4].netUpdate = true;
 						this.customAI[0] = 2f;
 						this.customAI[1] = 0f;
 						base.npc.netUpdate = true;

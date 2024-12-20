@@ -68,8 +68,8 @@ namespace Redemption.NPCs.Bosses
 			}
 			float[] ai = base.npc.ai;
 			int num = 0;
-			float num2;
-			ai[num] = (num2 = ai[num]) + 1f;
+			float num2 = ai[num];
+			ai[num] = num2 + 1f;
 			if (num2 >= 400f && NPC.CountNPCS(base.mod.NPCType("CorruptedProbe")) <= 2)
 			{
 				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("CorruptedProbe"), 0, 0f, 0f, 0f, 0f, 255);
@@ -100,37 +100,34 @@ namespace Redemption.NPCs.Bosses
 			}
 			if ((double)base.npc.ai[1] < (double)Main.npc.Length)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
-				float num3 = Main.npc[(int)base.npc.ai[1]].position.X + (float)(Main.npc[(int)base.npc.ai[1]].width / 2) - vector.X;
-				float num4 = Main.npc[(int)base.npc.ai[1]].position.Y + (float)(Main.npc[(int)base.npc.ai[1]].height / 2) - vector.Y;
-				base.npc.rotation = (float)Math.Atan2((double)num4, (double)num3) + 1.57f;
-				float num5 = (float)Math.Sqrt((double)(num3 * num3 + num4 * num4));
-				float num6 = (num5 - (float)base.npc.width) / num5;
-				float num7 = num3 * num6;
-				float num8 = num4 * num6;
+				Vector2 npcCenter = new Vector2(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
+				float dirX = Main.npc[(int)base.npc.ai[1]].position.X + (float)(Main.npc[(int)base.npc.ai[1]].width / 2) - npcCenter.X;
+				float dirY = Main.npc[(int)base.npc.ai[1]].position.Y + (float)(Main.npc[(int)base.npc.ai[1]].height / 2) - npcCenter.Y;
+				base.npc.rotation = (float)Math.Atan2((double)dirY, (double)dirX) + 1.57f;
+				float length = (float)Math.Sqrt((double)(dirX * dirX + dirY * dirY));
+				float dist = (length - (float)base.npc.width) / length;
+				float posX = dirX * dist;
+				float posY = dirY * dist;
 				base.npc.velocity = Vector2.Zero;
-				base.npc.position.X = base.npc.position.X + num7;
-				base.npc.position.Y = base.npc.position.Y + num8;
+				base.npc.position.X = base.npc.position.X + posX;
+				base.npc.position.Y = base.npc.position.Y + posY;
 			}
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/Bosses/VlitchWormTail_Glow");
-			SpriteEffects spriteEffects = (base.npc.spriteDirection == -1) ? 0 : 1;
-			Vector2 vector;
-			vector..ctor((float)texture2D.Width * 0.5f, (float)texture2D.Height * 0.5f);
-			Main.spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, null, drawColor, base.npc.rotation, vector, base.npc.scale, 0, 0f);
-			spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, spriteEffects, 0f);
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D glowMask = base.mod.GetTexture("NPCs/Bosses/VlitchWormTail_Glow");
+			SpriteEffects effects = (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+			Vector2 origin = new Vector2((float)texture.Width * 0.5f, (float)texture.Height * 0.5f);
+			Main.spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, null, drawColor, base.npc.rotation, origin, base.npc.scale, SpriteEffects.None, 0f);
+			spriteBatch.Draw(glowMask, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, effects, 0f);
 			return false;
 		}
 
 		public override bool CheckActive()
 		{
-			NPC npc = Main.npc[(int)base.npc.ai[1]];
-			return !npc.active;
+			return !Main.npc[(int)base.npc.ai[1]].active;
 		}
 
 		public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)

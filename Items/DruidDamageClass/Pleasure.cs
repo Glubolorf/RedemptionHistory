@@ -32,7 +32,7 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).burnStaves)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().burnStaves)
 			{
 				target.AddBuff(24, 180, false);
 			}
@@ -41,9 +41,9 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override float UseTimeMultiplier(Player player)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterStaves)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().fasterStaves)
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
 				{
 					return 1.45f;
 				}
@@ -51,7 +51,7 @@ namespace Redemption.Items.DruidDamageClass
 			}
 			else
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
 				{
 					return 1.35f;
 				}

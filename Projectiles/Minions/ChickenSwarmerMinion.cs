@@ -36,10 +36,10 @@ namespace Redemption.Projectiles.Minions
 
 		public override void AI()
 		{
-			bool flag = base.projectile.type == base.mod.ProjectileType("ChickenSwarmerMinion");
+			bool flag20 = base.projectile.type == base.mod.ProjectileType("ChickenSwarmerMinion");
 			Player player = Main.player[base.projectile.owner];
-			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>(base.mod);
-			if (flag)
+			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
+			if (flag20)
 			{
 				if (player.dead)
 				{
@@ -50,11 +50,11 @@ namespace Redemption.Projectiles.Minions
 					base.projectile.timeLeft = 2;
 				}
 			}
-			for (int i = 0; i < 1000; i++)
+			for (int num526 = 0; num526 < 1000; num526++)
 			{
-				if (i != base.projectile.whoAmI && Main.projectile[i].active && Main.projectile[i].owner == base.projectile.owner && Main.projectile[i].type == base.projectile.type && Math.Abs(base.projectile.position.X - Main.projectile[i].position.X) + Math.Abs(base.projectile.position.Y - Main.projectile[i].position.Y) < (float)base.projectile.width)
+				if (num526 != base.projectile.whoAmI && Main.projectile[num526].active && Main.projectile[num526].owner == base.projectile.owner && Main.projectile[num526].type == base.projectile.type && Math.Abs(base.projectile.position.X - Main.projectile[num526].position.X) + Math.Abs(base.projectile.position.Y - Main.projectile[num526].position.Y) < (float)base.projectile.width)
 				{
-					if (base.projectile.position.X < Main.projectile[i].position.X)
+					if (base.projectile.position.X < Main.projectile[num526].position.X)
 					{
 						base.projectile.velocity.X = base.projectile.velocity.X - 0.05f;
 					}
@@ -62,7 +62,7 @@ namespace Redemption.Projectiles.Minions
 					{
 						base.projectile.velocity.X = base.projectile.velocity.X + 0.05f;
 					}
-					if (base.projectile.position.Y < Main.projectile[i].position.Y)
+					if (base.projectile.position.Y < Main.projectile[num526].position.Y)
 					{
 						base.projectile.velocity.Y = base.projectile.velocity.Y - 0.05f;
 					}
@@ -72,29 +72,29 @@ namespace Redemption.Projectiles.Minions
 					}
 				}
 			}
-			float num = base.projectile.position.X;
-			float num2 = base.projectile.position.Y;
-			float num3 = 900f;
-			bool flag2 = false;
+			float num527 = base.projectile.position.X;
+			float num528 = base.projectile.position.Y;
+			float num529 = 900f;
+			bool flag19 = false;
 			if (base.projectile.ai[1] == 0f)
 			{
 				bool friendly = base.projectile.friendly;
 			}
 			if (base.projectile.ai[0] == 0f)
 			{
-				for (int j = 0; j < 200; j++)
+				for (int num530 = 0; num530 < 200; num530++)
 				{
-					if (Main.npc[j].CanBeChasedBy(base.projectile, false))
+					if (Main.npc[num530].CanBeChasedBy(base.projectile, false))
 					{
-						float num4 = Main.npc[j].position.X + (float)(Main.npc[j].width / 2);
-						float num5 = Main.npc[j].position.Y + (float)(Main.npc[j].height / 2);
-						float num6 = Math.Abs(base.projectile.position.X + (float)(base.projectile.width / 2) - num4) + Math.Abs(base.projectile.position.Y + (float)(base.projectile.height / 2) - num5);
-						if (num6 < num3 && Collision.CanHit(base.projectile.position, base.projectile.width, base.projectile.height, Main.npc[j].position, Main.npc[j].width, Main.npc[j].height))
+						float num531 = Main.npc[num530].position.X + (float)(Main.npc[num530].width / 2);
+						float num532 = Main.npc[num530].position.Y + (float)(Main.npc[num530].height / 2);
+						float num533 = Math.Abs(base.projectile.position.X + (float)(base.projectile.width / 2) - num531) + Math.Abs(base.projectile.position.Y + (float)(base.projectile.height / 2) - num532);
+						if (num533 < num529 && Collision.CanHit(base.projectile.position, base.projectile.width, base.projectile.height, Main.npc[num530].position, Main.npc[num530].width, Main.npc[num530].height))
 						{
-							num3 = num6;
-							num = num4;
-							num2 = num5;
-							flag2 = true;
+							num529 = num533;
+							num527 = num531;
+							num528 = num532;
+							flag19 = true;
 						}
 					}
 				}
@@ -103,35 +103,34 @@ namespace Redemption.Projectiles.Minions
 			{
 				base.projectile.tileCollide = false;
 			}
-			if (!flag2)
+			if (!flag19)
 			{
 				base.projectile.friendly = true;
-				float num7 = 8f;
+				float num534 = 8f;
 				if (base.projectile.ai[0] == 1f)
 				{
-					num7 = 12f;
+					num534 = 12f;
 				}
-				Vector2 vector;
-				vector..ctor(base.projectile.position.X + (float)base.projectile.width * 0.5f, base.projectile.position.Y + (float)base.projectile.height * 0.5f);
-				float num8 = Main.player[base.projectile.owner].Center.X - vector.X;
-				float num9 = Main.player[base.projectile.owner].Center.Y - vector.Y - 60f;
-				float num10 = (float)Math.Sqrt((double)(num8 * num8 + num9 * num9));
-				if (num10 < 100f && base.projectile.ai[0] == 1f && !Collision.SolidCollision(base.projectile.position, base.projectile.width, base.projectile.height))
+				Vector2 vector38 = new Vector2(base.projectile.position.X + (float)base.projectile.width * 0.5f, base.projectile.position.Y + (float)base.projectile.height * 0.5f);
+				float num535 = Main.player[base.projectile.owner].Center.X - vector38.X;
+				float num536 = Main.player[base.projectile.owner].Center.Y - vector38.Y - 60f;
+				float num537 = (float)Math.Sqrt((double)(num535 * num535 + num536 * num536));
+				if (num537 < 100f && base.projectile.ai[0] == 1f && !Collision.SolidCollision(base.projectile.position, base.projectile.width, base.projectile.height))
 				{
 					base.projectile.ai[0] = 0f;
 				}
-				if (num10 > 2000f)
+				if (num537 > 2000f)
 				{
 					base.projectile.position.X = Main.player[base.projectile.owner].Center.X - (float)(base.projectile.width / 2);
 					base.projectile.position.Y = Main.player[base.projectile.owner].Center.Y - (float)(base.projectile.width / 2);
 				}
-				if (num10 > 70f)
+				if (num537 > 70f)
 				{
-					num10 = num7 / num10;
-					num8 *= num10;
-					num9 *= num10;
-					base.projectile.velocity.X = (base.projectile.velocity.X * 20f + num8) / 21f;
-					base.projectile.velocity.Y = (base.projectile.velocity.Y * 20f + num9) / 21f;
+					num537 = num534 / num537;
+					num535 *= num537;
+					num536 *= num537;
+					base.projectile.velocity.X = (base.projectile.velocity.X * 20f + num535) / 21f;
+					base.projectile.velocity.Y = (base.projectile.velocity.Y * 20f + num536) / 21f;
 				}
 				else
 				{
@@ -173,21 +172,20 @@ namespace Redemption.Projectiles.Minions
 				if (base.projectile.ai[1] == 0f)
 				{
 					base.projectile.friendly = true;
-					float num11 = 8f;
-					Vector2 vector2;
-					vector2..ctor(base.projectile.position.X + (float)base.projectile.width * 0.5f, base.projectile.position.Y + (float)base.projectile.height * 0.5f);
-					float num12 = num - vector2.X;
-					float num13 = num2 - vector2.Y;
-					float num14 = (float)Math.Sqrt((double)(num12 * num12 + num13 * num13));
-					if (num14 < 100f)
+					float num538 = 8f;
+					Vector2 vector39 = new Vector2(base.projectile.position.X + (float)base.projectile.width * 0.5f, base.projectile.position.Y + (float)base.projectile.height * 0.5f);
+					float num539 = num527 - vector39.X;
+					float num540 = num528 - vector39.Y;
+					float num541 = (float)Math.Sqrt((double)(num539 * num539 + num540 * num540));
+					if (num541 < 100f)
 					{
-						num11 = 10f;
+						num538 = 10f;
 					}
-					num14 = num11 / num14;
-					num12 *= num14;
-					num13 *= num14;
-					base.projectile.velocity.X = (base.projectile.velocity.X * 14f + num12) / 15f;
-					base.projectile.velocity.Y = (base.projectile.velocity.Y * 14f + num13) / 15f;
+					num541 = num538 / num541;
+					num539 *= num541;
+					num540 *= num541;
+					base.projectile.velocity.X = (base.projectile.velocity.X * 14f + num539) / 15f;
+					base.projectile.velocity.Y = (base.projectile.velocity.Y * 14f + num540) / 15f;
 				}
 				else
 				{
@@ -201,6 +199,7 @@ namespace Redemption.Projectiles.Minions
 				if ((double)Math.Abs(base.projectile.velocity.X) > 0.2)
 				{
 					base.projectile.spriteDirection = -base.projectile.direction;
+					return;
 				}
 			}
 		}

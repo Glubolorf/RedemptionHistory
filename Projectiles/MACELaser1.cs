@@ -26,10 +26,16 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			if (++base.projectile.frameCounter >= 2)
+			Projectile projectile = base.projectile;
+			int num = projectile.frameCounter + 1;
+			projectile.frameCounter = num;
+			if (num >= 2)
 			{
 				base.projectile.frameCounter = 0;
-				if (++base.projectile.frame >= 8)
+				Projectile projectile2 = base.projectile;
+				num = projectile2.frame + 1;
+				projectile2.frame = num;
+				if (num >= 8)
 				{
 					base.projectile.frame = 7;
 				}
@@ -43,8 +49,8 @@ namespace Redemption.Projectiles
 		{
 			for (int i = 0; i < 5; i++)
 			{
-				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 74, 0f, 0f, 100, default(Color), 1.3f);
-				Main.dust[num].velocity *= 1.9f;
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 74, 0f, 0f, 100, default(Color), 1.3f);
+				Main.dust[dustIndex].velocity *= 1.9f;
 			}
 		}
 	}

@@ -39,11 +39,11 @@ namespace Redemption.Items.Armor.PostML
 
 		public override void ModifyTooltips(List<TooltipLine> list)
 		{
-			foreach (TooltipLine tooltipLine in list)
+			foreach (TooltipLine line2 in list)
 			{
-				if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+				if (line2.mod == "Terraria" && line2.Name == "ItemName")
 				{
-					tooltipLine.overrideColor = new Color?(new Color(0, 255, 200));
+					line2.overrideColor = new Color?(new Color(0, 255, 200));
 				}
 			}
 		}
@@ -53,7 +53,7 @@ namespace Redemption.Items.Armor.PostML
 			ModRecipe modRecipe = new ModRecipe(base.mod);
 			modRecipe.AddIngredient(null, "ShinkiteBlood", 18);
 			modRecipe.AddIngredient(172, 50);
-			modRecipe.AddIngredient(1530, 1);
+			modRecipe.AddIngredient(793, 1);
 			modRecipe.AddTile(412);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();

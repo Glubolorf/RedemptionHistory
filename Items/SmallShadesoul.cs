@@ -21,8 +21,7 @@ namespace Redemption.Items
 
 		public override void SetDefaults()
 		{
-			Item item = new Item();
-			item.SetDefaults(549, false);
+			new Item().SetDefaults(549, false);
 			base.item.width = 18;
 			base.item.height = 18;
 			base.item.maxStack = 999;
@@ -32,11 +31,11 @@ namespace Redemption.Items
 
 		public override void ModifyTooltips(List<TooltipLine> list)
 		{
-			foreach (TooltipLine tooltipLine in list)
+			foreach (TooltipLine line2 in list)
 			{
-				if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+				if (line2.mod == "Terraria" && line2.Name == "ItemName")
 				{
-					tooltipLine.overrideColor = new Color?(RedeColor.SoullessColour);
+					line2.overrideColor = new Color?(RedeColor.SoullessColour);
 				}
 			}
 		}

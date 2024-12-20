@@ -56,10 +56,10 @@ namespace Redemption.Projectiles.v08
 			{
 				Vector2 vector2 = Vector2.UnitX * 24f;
 				vector2 = Utils.RotatedBy(vector2, (double)(base.projectile.rotation - 1.5707964f), default(Vector2));
-				Vector2 vector3 = base.projectile.Center + vector2;
+				Vector2 value = base.projectile.Center + vector2;
 				for (int i = 0; i < 3; i++)
 				{
-					int num5 = Dust.NewDust(vector3 - Vector2.One * 8f, 16, 16, 58, base.projectile.velocity.X / 2f, base.projectile.velocity.Y / 2f, 100, default(Color), 1f);
+					int num5 = Dust.NewDust(value - Vector2.One * 8f, 16, 16, 58, base.projectile.velocity.X / 2f, base.projectile.velocity.Y / 2f, 100, default(Color), 1f);
 					Dust dust = Main.dust[num5];
 					dust.position.Y = dust.position.Y - 0.3f;
 					Main.dust[num5].velocity *= 0.66f;
@@ -69,32 +69,32 @@ namespace Redemption.Projectiles.v08
 			}
 			if (flag && Main.myPlayer == base.projectile.owner && player.channel && !player.noItems && !player.CCed)
 			{
-				float num6 = player.inventory[player.selectedItem].shootSpeed * base.projectile.scale;
-				Vector2 vector4 = vector;
-				Vector2 vector5 = Main.screenPosition + new Vector2((float)Main.mouseX, (float)Main.mouseY) - vector4;
+				float scaleFactor = player.inventory[player.selectedItem].shootSpeed * base.projectile.scale;
+				Vector2 vector3 = vector;
+				Vector2 value2 = Main.screenPosition + new Vector2((float)Main.mouseX, (float)Main.mouseY) - vector3;
 				if (player.gravDir == -1f)
 				{
-					vector5.Y = (float)(Main.screenHeight - Main.mouseY) + Main.screenPosition.Y - vector4.Y;
+					value2.Y = (float)(Main.screenHeight - Main.mouseY) + Main.screenPosition.Y - vector3.Y;
 				}
-				Vector2 vector6 = Vector2.Normalize(vector5);
-				if (float.IsNaN(vector6.X) || float.IsNaN(vector6.Y))
+				Vector2 vector4 = Vector2.Normalize(value2);
+				if (float.IsNaN(vector4.X) || float.IsNaN(vector4.Y))
 				{
-					vector6 = -Vector2.UnitY;
+					vector4 = -Vector2.UnitY;
 				}
-				vector6 *= num6;
-				if (vector6.X != base.projectile.velocity.X || vector6.Y != base.projectile.velocity.Y)
+				vector4 *= scaleFactor;
+				if (vector4.X != base.projectile.velocity.X || vector4.Y != base.projectile.velocity.Y)
 				{
 					base.projectile.netUpdate = true;
 				}
-				base.projectile.velocity = vector6;
-				float num7 = 14f;
-				int num8 = 7;
-				vector4 = base.projectile.Center + new Vector2((float)Main.rand.Next(-num8, num8 + 1), (float)Main.rand.Next(-num8, num8 + 1));
-				Vector2 vector7 = Vector2.Normalize(base.projectile.velocity) * num7;
-				vector7 = Utils.RotatedBy(vector7, Main.rand.NextDouble() * 0.19634954631328583 - 0.09817477315664291, default(Vector2));
-				if (float.IsNaN(vector7.X) || float.IsNaN(vector7.Y))
+				base.projectile.velocity = vector4;
+				float scaleFactor2 = 14f;
+				int num6 = 7;
+				vector3 = base.projectile.Center + new Vector2((float)Main.rand.Next(-num6, num6 + 1), (float)Main.rand.Next(-num6, num6 + 1));
+				Vector2 vector5 = Vector2.Normalize(base.projectile.velocity) * scaleFactor2;
+				vector5 = Utils.RotatedBy(vector5, Main.rand.NextDouble() * 0.19634954631328583 - 0.09817477315664291, default(Vector2));
+				if (float.IsNaN(vector5.X) || float.IsNaN(vector5.Y))
 				{
-					vector7 = -Vector2.UnitY;
+					vector5 = -Vector2.UnitY;
 				}
 			}
 			base.projectile.position = player.RotatedRelativePoint(player.MountedCenter, true) - base.projectile.Size / 2f;
@@ -139,45 +139,44 @@ namespace Redemption.Projectiles.v08
 			if (base.projectile.owner == Main.myPlayer)
 			{
 				float num = 12f;
-				Vector2 vector;
-				vector..ctor(player.position.X + (float)player.width * 0.5f, player.position.Y + (float)player.height * 0.5f);
-				float num2 = (float)Main.mouseX + Main.screenPosition.X - vector.X;
-				float num3 = (float)Main.mouseY + Main.screenPosition.Y - vector.Y;
+				Vector2 vector2 = new Vector2(player.position.X + (float)player.width * 0.5f, player.position.Y + (float)player.height * 0.5f);
+				float f = (float)Main.mouseX + Main.screenPosition.X - vector2.X;
+				float f2 = (float)Main.mouseY + Main.screenPosition.Y - vector2.Y;
 				if ((double)player.gravDir == -1.0)
 				{
-					num3 = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY - vector.Y;
+					f2 = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY - vector2.Y;
 				}
-				float num4 = (float)Math.Sqrt((double)num2 * (double)num2 + (double)num3 * (double)num3);
-				float num5;
-				if ((float.IsNaN(num2) && float.IsNaN(num3)) || ((double)num2 == 0.0 && (double)num3 == 0.0))
+				float num2 = (float)Math.Sqrt((double)f * (double)f + (double)f2 * (double)f2);
+				float num3;
+				if ((float.IsNaN(f) && float.IsNaN(f2)) || ((double)f == 0.0 && (double)f2 == 0.0))
 				{
-					num2 = (float)player.direction;
-					num3 = 0f;
-					num5 = num;
+					f = (float)player.direction;
+					f2 = 0f;
+					num3 = num;
 				}
 				else
 				{
-					num5 = num / num4;
+					num3 = num / num2;
 				}
-				float num6 = num2 * num5;
-				float num7 = num3 * num5;
+				float SpeedX = f * num3;
+				float SpeedY = f2 * num3;
 				switch (this.chargeLevel)
 				{
 				case 0:
 					Main.PlaySound(2, (int)base.projectile.position.X, (int)base.projectile.position.Y, 89, 1f, 0f);
-					Projectile.NewProjectile(vector.X, vector.Y, num6, num7, base.mod.ProjectileType("FreedomShotN"), base.projectile.damage, 1f, player.whoAmI, 0f, 0f);
+					Projectile.NewProjectile(vector2.X, vector2.Y, SpeedX, SpeedY, base.mod.ProjectileType("FreedomShotN"), base.projectile.damage, 1f, player.whoAmI, 0f, 0f);
 					return;
 				case 1:
 					Main.PlaySound(2, (int)base.projectile.position.X, (int)base.projectile.position.Y, 89, 1f, 0f);
-					Projectile.NewProjectile(vector.X, vector.Y, num6, num7, base.mod.ProjectileType("FreedomShotN"), base.projectile.damage * 2, 1f, player.whoAmI, 0f, 0f);
+					Projectile.NewProjectile(vector2.X, vector2.Y, SpeedX, SpeedY, base.mod.ProjectileType("FreedomShotN"), base.projectile.damage * 2, 1f, player.whoAmI, 0f, 0f);
 					return;
 				case 2:
 					Main.PlaySound(2, (int)base.projectile.position.X, (int)base.projectile.position.Y, 88, 1f, 0f);
-					Projectile.NewProjectile(vector.X, vector.Y, num6, num7, base.mod.ProjectileType("FreedomShotN"), base.projectile.damage * 2, 1f, player.whoAmI, 0f, 0f);
+					Projectile.NewProjectile(vector2.X, vector2.Y, SpeedX, SpeedY, base.mod.ProjectileType("FreedomShotN"), base.projectile.damage * 2, 1f, player.whoAmI, 0f, 0f);
 					return;
 				case 3:
 					Main.PlaySound(2, (int)base.projectile.position.X, (int)base.projectile.position.Y, 88, 1f, 0f);
-					Projectile.NewProjectile(vector.X, vector.Y, num6, num7, base.mod.ProjectileType("FreedomShotNCharged"), base.projectile.damage * 6, 1f, player.whoAmI, 0f, 0f);
+					Projectile.NewProjectile(vector2.X, vector2.Y, SpeedX, SpeedY, base.mod.ProjectileType("FreedomShotNCharged"), base.projectile.damage * 6, 1f, player.whoAmI, 0f, 0f);
 					break;
 				default:
 					return;

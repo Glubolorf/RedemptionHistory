@@ -39,16 +39,16 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{
-			TooltipLine tooltipLine = Enumerable.FirstOrDefault<TooltipLine>(tooltips, (TooltipLine x) => x.Name == "Damage" && x.mod == "Terraria");
-			if (tooltipLine != null)
+			TooltipLine tt = Enumerable.FirstOrDefault<TooltipLine>(tooltips, (TooltipLine x) => x.Name == "Damage" && x.mod == "Terraria");
+			if (tt != null)
 			{
-				string[] array = tooltipLine.text.Split(new char[]
+				string[] array = tt.text.Split(new char[]
 				{
 					' '
 				});
-				string str = Enumerable.First<string>(array);
-				string str2 = Enumerable.Last<string>(array);
-				tooltipLine.text = str + " druidic " + str2;
+				string damageValue = Enumerable.First<string>(array);
+				string damageWord = Enumerable.Last<string>(array);
+				tt.text = damageValue + " druidic " + damageWord;
 			}
 		}
 	}

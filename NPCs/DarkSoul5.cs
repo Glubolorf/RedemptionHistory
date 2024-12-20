@@ -41,9 +41,9 @@ namespace Redemption.NPCs
 			{
 				for (int i = 0; i < 10; i++)
 				{
-					int num = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 173, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 20, default(Color), 3f);
-					Main.dust[num].noGravity = true;
-					Main.dust[num].velocity *= 1.9f;
+					int dustIndex = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 173, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 20, default(Color), 3f);
+					Main.dust[dustIndex].noGravity = true;
+					Main.dust[dustIndex].velocity *= 1.9f;
 				}
 			}
 		}
@@ -60,24 +60,24 @@ namespace Redemption.NPCs
 		{
 			if (Main.rand.Next(1) == 0)
 			{
-				int num = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 173, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 20, default(Color), 3f);
-				Main.dust[num].noGravity = true;
+				int dust = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 173, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 20, default(Color), 3f);
+				Main.dust[dust].noGravity = true;
 			}
 			base.npc.TargetClosest(true);
-			int num2 = (int)base.npc.ai[0];
-			if (num2 < 0 || num2 >= 200 || !Main.npc[num2].active || Main.npc[num2].type != base.mod.NPCType("TheKeeper"))
+			int boss = (int)base.npc.ai[0];
+			if (boss < 0 || boss >= 200 || !Main.npc[boss].active || Main.npc[boss].type != base.mod.NPCType("TheKeeper"))
 			{
 				base.npc.active = false;
 				return false;
 			}
 			this.rot += 0.07f;
 			base.npc.netUpdate = true;
-			Vector2 vector = Main.npc[num2].Center - base.npc.Center;
-			vector.Normalize();
-			vector *= 9f;
-			base.npc.rotation = Utils.ToRotation(vector);
-			NPC npc = Main.npc[(int)base.npc.ai[0]];
-			base.npc.Center = npc.Center + RedeHelper.RotateVector(default(Vector2), this.rotVec, this.rot + base.npc.ai[2] * 0.628f);
+			Vector2 v = Main.npc[boss].Center - base.npc.Center;
+			v.Normalize();
+			v *= 9f;
+			base.npc.rotation = Utils.ToRotation(v);
+			NPC npc2 = Main.npc[(int)base.npc.ai[0]];
+			base.npc.Center = npc2.Center + RedeHelper.RotateVector(default(Vector2), this.rotVec, this.rot + base.npc.ai[2] * 0.628f);
 			return false;
 		}
 

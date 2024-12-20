@@ -29,9 +29,9 @@ namespace Redemption.Tiles.LabDeco
 			TileObjectData.addAlternate(1);
 			TileObjectData.addTile((int)base.Type);
 			base.AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Lab Chair");
-			base.AddMapEntry(new Color(210, 220, 210), modTranslation);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Lab Chair");
+			base.AddMapEntry(new Color(210, 220, 210), name);
 			this.dustType = 226;
 			this.disableSmartCursor = true;
 			this.adjTiles = new int[]

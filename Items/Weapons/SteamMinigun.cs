@@ -36,18 +36,18 @@ namespace Redemption.Items.Weapons
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			Vector2 vector = Vector2.Normalize(new Vector2(speedX, speedY)) * 25f;
-			if (Collision.CanHit(position, 0, 0, position + vector, 0, 0))
+			Vector2 muzzleOffset = Vector2.Normalize(new Vector2(speedX, speedY)) * 25f;
+			if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
 			{
-				position += vector;
+				position += muzzleOffset;
 			}
 			if (type == 14)
 			{
 				type = 242;
 			}
-			Vector2 vector2 = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(5f));
-			speedX = vector2.X;
-			speedY = vector2.Y;
+			Vector2 perturbedSpeed = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(5f));
+			speedX = perturbedSpeed.X;
+			speedY = perturbedSpeed.Y;
 			return true;
 		}
 

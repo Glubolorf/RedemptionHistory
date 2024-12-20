@@ -10,20 +10,41 @@ namespace Redemption
 	{
 		public AmmoSlotRender()
 		{
+			this.itemType = -1;
+			this.ammoItemTypes = new int[0];
+			this.ammoTypes = new int[0];
+			base..ctor();
 		}
 
-		public AmmoSlotRender(int itemtype, int ammoitemtype, bool typeisammo = false) : this(itemtype, typeisammo ? null : new int[]
+		public AmmoSlotRender(int itemtype, int ammoitemtype, bool typeisammo = false)
 		{
-			ammoitemtype
-		}, typeisammo ? new int[]
-		{
-			ammoitemtype
-		} : null)
-		{
+			int[] ammoitemtypes;
+			if (!typeisammo)
+			{
+				(ammoitemtypes = new int[1])[0] = ammoitemtype;
+			}
+			else
+			{
+				ammoitemtypes = null;
+			}
+			object ammotypes;
+			if (!typeisammo)
+			{
+				ammotypes = null;
+			}
+			else
+			{
+				(ammotypes = new int[1])[0] = ammoitemtype;
+			}
+			this..ctor(itemtype, ammoitemtypes, ammotypes);
 		}
 
 		public AmmoSlotRender(int itemtype, int[] ammoitemtypes, int[] ammotypes = null)
 		{
+			this.itemType = -1;
+			this.ammoItemTypes = new int[0];
+			this.ammoTypes = new int[0];
+			base..ctor();
 			this.itemType = itemtype;
 			this.ammoItemTypes = ammoitemtypes;
 			this.ammoTypes = ammotypes;
@@ -35,27 +56,27 @@ namespace Redemption
 			{
 				return;
 			}
-			int num = 0;
+			int totalItemCount = 0;
 			if (this.ammoItemTypes != null)
 			{
-				num += BasePlayer.GetItemstackSum(Main.player[Main.myPlayer], this.ammoItemTypes, false, true, true);
+				totalItemCount += BasePlayer.GetItemstackSum(Main.player[Main.myPlayer], this.ammoItemTypes, false, true, true);
 			}
 			if (this.ammoTypes != null)
 			{
-				num += BasePlayer.GetItemstackSum(Main.player[Main.myPlayer], this.ammoTypes, true, true, true);
+				totalItemCount += BasePlayer.GetItemstackSum(Main.player[Main.myPlayer], this.ammoTypes, true, true, true);
 			}
-			string text = string.Concat(num);
-			if (num > 99999)
+			string s = string.Concat(totalItemCount);
+			if (totalItemCount > 99999)
 			{
-				text = "A Lot!";
+				s = "A Lot!";
 			}
-			ChatManager.DrawColorCodedStringWithShadow(sb, Main.fontItemStack, text, pos + new Vector2(10f * sc, 32f * sc), color, 0f, default(Vector2), new Vector2(sc *= 0.8f), -1f, 0.8f);
+			ChatManager.DrawColorCodedStringWithShadow(sb, Main.fontItemStack, s, pos + new Vector2(10f * sc, 32f * sc), color, 0f, default(Vector2), new Vector2(sc *= 0.8f), -1f, 0.8f);
 		}
 
-		public int itemType = -1;
+		public int itemType;
 
-		public int[] ammoItemTypes = new int[0];
+		public int[] ammoItemTypes;
 
-		public int[] ammoTypes = new int[0];
+		public int[] ammoTypes;
 	}
 }

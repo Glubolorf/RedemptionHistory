@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Tiles.Wasteland
@@ -16,6 +17,8 @@ namespace Redemption.Tiles.Wasteland
 			Main.tileMerge[(int)base.Type][base.mod.TileType("RadioactiveSandstoneTile")] = true;
 			Main.tileMerge[(int)base.Type][base.mod.TileType("HardenedRadioactiveSandTile")] = true;
 			Main.tileBlendAll[(int)base.Type] = true;
+			this.soundStyle = 18;
+			TileID.Sets.Conversion.Sand[(int)base.Type] = true;
 			Main.tileBlockLight[(int)base.Type] = true;
 			Main.tileLighted[(int)base.Type] = true;
 			base.AddMapEntry(new Color(40, 60, 40), null);
@@ -24,11 +27,10 @@ namespace Redemption.Tiles.Wasteland
 
 		public override void NearbyEffects(int i, int j, bool closer)
 		{
-			Player localPlayer = Main.LocalPlayer;
-			int num = (int)Vector2.Distance(localPlayer.Center / 16f, new Vector2((float)i, (float)j));
-			if (num <= 15)
+			Player player = Main.LocalPlayer;
+			if ((int)Vector2.Distance(player.Center / 16f, new Vector2((float)i, (float)j)) <= 15)
 			{
-				localPlayer.AddBuff(base.mod.BuffType("RadioactiveFalloutDebuff"), Main.rand.Next(10, 20), true);
+				player.AddBuff(base.mod.BuffType("RadioactiveFalloutDebuff"), Main.rand.Next(10, 20), true);
 			}
 		}
 

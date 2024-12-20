@@ -39,15 +39,15 @@ namespace Redemption.Items.DruidDamageClass.v08
 
 		public override bool CanUseItem(Player player)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).wanderingSoulSet)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().wanderingSoulSet)
 			{
 				base.item.damage = 550;
 			}
-			else if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).shadeSet)
+			else if (Main.LocalPlayer.GetModPlayer<RedePlayer>().shadeSet)
 			{
 				base.item.damage = 600;
 			}
-			else if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).lostSoulSet)
+			else if (Main.LocalPlayer.GetModPlayer<RedePlayer>().lostSoulSet)
 			{
 				base.item.damage = 535;
 			}
@@ -60,13 +60,13 @@ namespace Redemption.Items.DruidDamageClass.v08
 
 		public override float UseTimeMultiplier(Player player)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterSpirits)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().fasterSpirits)
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).wanderingSoulSet)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().wanderingSoulSet)
 				{
 					return 1.45f;
 				}
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).shadeSet)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().shadeSet)
 				{
 					return 1.65f;
 				}
@@ -74,7 +74,7 @@ namespace Redemption.Items.DruidDamageClass.v08
 			}
 			else
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterSpirits)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().fasterSpirits)
 				{
 					return 1.35f;
 				}
@@ -84,23 +84,22 @@ namespace Redemption.Items.DruidDamageClass.v08
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			int num = 3;
-			for (int i = 0; i < num; i++)
+			int numberProjectiles = 3;
+			for (int i = 0; i < numberProjectiles; i++)
 			{
-				int num2 = Main.rand.Next(3);
-				if (num2 != 0)
+				if (Main.rand.Next(3) != 0)
 				{
-					Vector2 vector = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(15f));
-					float num3 = 1f - Utils.NextFloat(Main.rand) * 0.3f;
-					vector *= num3;
-					Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
+					Vector2 perturbedSpeed = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(15f));
+					float scale = 1f - Utils.NextFloat(Main.rand) * 0.3f;
+					perturbedSpeed *= scale;
+					Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
 				}
 				else
 				{
-					Vector2 vector2 = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(15f));
-					float num4 = 1f - Utils.NextFloat(Main.rand) * 0.3f;
-					vector2 *= num4;
-					Projectile.NewProjectile(position.X, position.Y, vector2.X, vector2.Y, base.mod.ProjectileType("CriesOfGriefPro1"), damage * 2, knockBack, player.whoAmI, 0f, 0f);
+					Vector2 perturbedSpeed2 = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(15f));
+					float scale2 = 1f - Utils.NextFloat(Main.rand) * 0.3f;
+					perturbedSpeed2 *= scale2;
+					Projectile.NewProjectile(position.X, position.Y, perturbedSpeed2.X, perturbedSpeed2.Y, base.mod.ProjectileType("CriesOfGriefPro1"), damage * 2, knockBack, player.whoAmI, 0f, 0f);
 				}
 			}
 			return false;
@@ -108,11 +107,11 @@ namespace Redemption.Items.DruidDamageClass.v08
 
 		public override void ModifyTooltips(List<TooltipLine> list)
 		{
-			foreach (TooltipLine tooltipLine in list)
+			foreach (TooltipLine line2 in list)
 			{
-				if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+				if (line2.mod == "Terraria" && line2.Name == "ItemName")
 				{
-					tooltipLine.overrideColor = new Color?(RedeColor.SoullessColour);
+					line2.overrideColor = new Color?(RedeColor.SoullessColour);
 				}
 			}
 		}

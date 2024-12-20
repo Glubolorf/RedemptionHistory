@@ -16,7 +16,7 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override void SafeSetDefaults()
 		{
-			base.item.damage = 17;
+			base.item.damage = 11;
 			base.item.width = 48;
 			base.item.height = 48;
 			base.item.useTime = 28;
@@ -40,11 +40,11 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override bool CanUseItem(Player player)
 		{
-			if (player.altFunctionUse == 2)
+			if (player.altFunctionUse == 2 && player.itemAnimation == 0)
 			{
 				base.item.mana = 1;
 				base.item.buffType = base.mod.BuffType("NatureGuardian11Buff");
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).longerGuardians)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().longerGuardians)
 				{
 					base.item.buffTime = 1800;
 				}
@@ -68,7 +68,7 @@ namespace Redemption.Items.DruidDamageClass
 		{
 			if (player.altFunctionUse == 2)
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
 				{
 					player.AddBuff(base.mod.BuffType("GuardianCooldownDebuff"), 2700, true);
 					return;
@@ -79,9 +79,9 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override float UseTimeMultiplier(Player player)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterStaves)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().fasterStaves)
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
 				{
 					return 1.45f;
 				}
@@ -89,7 +89,7 @@ namespace Redemption.Items.DruidDamageClass
 			}
 			else
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
 				{
 					return 1.35f;
 				}
@@ -99,7 +99,7 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).burnStaves)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().burnStaves)
 			{
 				target.AddBuff(24, 180, false);
 			}
@@ -116,19 +116,19 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			if (player.altFunctionUse == 2)
+			if (player.altFunctionUse == 2 && player.itemAnimation == 0)
 			{
 				return true;
 			}
-			int num = 2;
-			for (int i = 0; i < num; i++)
+			int numberProjectiles = 2;
+			for (int i = 0; i < numberProjectiles; i++)
 			{
-				Vector2 vector = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(3f));
-				float num2 = 1f - Utils.NextFloat(Main.rand) * 0.3f;
-				vector *= num2;
-				Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, type, 14, knockBack, player.whoAmI, 0f, 0f);
+				Vector2 perturbedSpeed = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(3f));
+				float scale = 1f - Utils.NextFloat(Main.rand) * 0.3f;
+				perturbedSpeed *= scale;
+				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, 14, knockBack, player.whoAmI, 0f, 0f);
 			}
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).staveStreamShot && Main.rand.Next(5) == 0)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().staveStreamShot && Main.rand.Next(5) == 0)
 			{
 				Projectile.NewProjectile(position.X, position.Y, speedX * 1.25f, speedY * 1.25f, type, damage, knockBack, player.whoAmI, 0f, 0f);
 				Projectile.NewProjectile(position.X, position.Y, speedX * 0.75f, speedY * 0.75f, type, damage, knockBack, player.whoAmI, 0f, 0f);

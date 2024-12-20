@@ -32,71 +32,69 @@ namespace Redemption.Projectiles
 		{
 			for (int i = 0; i < 25; i++)
 			{
-				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 163, 0f, 0f, 100, default(Color), 1.2f);
-				Main.dust[num].velocity *= 1.4f;
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 163, 0f, 0f, 100, default(Color), 1.2f);
+				Main.dust[dustIndex].velocity *= 1.4f;
 			}
 		}
 
 		public override bool PreAI()
 		{
-			int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y + 2f), base.projectile.width + 2, base.projectile.height + 2, 163, base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 1f);
-			Main.dust[num].noGravity = true;
+			int DustID2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y + 2f), base.projectile.width + 2, base.projectile.height + 2, 163, base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 1f);
+			Main.dust[DustID2].noGravity = true;
 			base.projectile.localAI[0] += 1f;
 			if (base.projectile.localAI[0] == 5f)
 			{
 				for (int i = 0; i < 25; i++)
 				{
-					int num2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 163, 0f, 0f, 100, default(Color), 1.2f);
-					Main.dust[num2].velocity *= 1.4f;
+					int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 163, 0f, 0f, 100, default(Color), 1.2f);
+					Main.dust[dustIndex].velocity *= 1.4f;
 				}
 			}
-			int num3 = 1;
+			int Num3 = 1;
 			if (base.projectile.position.X + (float)(base.projectile.width / 2) < Main.player[base.projectile.owner].position.X + (float)Main.player[base.projectile.owner].width)
 			{
-				num3 = -1;
+				Num3 = -1;
 			}
-			Vector2 vector;
-			vector..ctor(base.projectile.position.X + (float)base.projectile.width * 0.5f, base.projectile.position.Y + (float)base.projectile.height * 0.5f);
-			float num4 = Main.player[base.projectile.owner].position.X + (float)(Main.player[base.projectile.owner].width / 2) + (float)(num3 * 180) - vector.X;
-			float num5 = Main.player[base.projectile.owner].position.Y + (float)(Main.player[base.projectile.owner].height / 2) - vector.Y;
-			Math.Sqrt((double)(num4 * num4 + num5 * num5));
-			float num6 = base.projectile.position.X + (float)(base.projectile.width / 2) - Main.player[base.projectile.owner].position.X - (float)(Main.player[base.projectile.owner].width / 2);
-			float num7 = base.projectile.position.Y + (float)base.projectile.height - 59f - Main.player[base.projectile.owner].position.Y - (float)(Main.player[base.projectile.owner].height / 2);
-			float num8 = (float)Math.Atan2((double)num7, (double)num6) + 1.57f;
-			if (num8 < 0f)
+			Vector2 Vector = new Vector2(base.projectile.position.X + (float)base.projectile.width * 0.5f, base.projectile.position.Y + (float)base.projectile.height * 0.5f);
+			float num = Main.player[base.projectile.owner].position.X + (float)(Main.player[base.projectile.owner].width / 2) + (float)(Num3 * 180) - Vector.X;
+			float Num4 = Main.player[base.projectile.owner].position.Y + (float)(Main.player[base.projectile.owner].height / 2) - Vector.Y;
+			Math.Sqrt((double)(num * num + Num4 * Num4));
+			float Num5 = base.projectile.position.X + (float)(base.projectile.width / 2) - Main.player[base.projectile.owner].position.X - (float)(Main.player[base.projectile.owner].width / 2);
+			float Num6 = (float)Math.Atan2((double)(base.projectile.position.Y + (float)base.projectile.height - 59f - Main.player[base.projectile.owner].position.Y - (float)(Main.player[base.projectile.owner].height / 2)), (double)Num5) + 1.57f;
+			if (Num6 < 0f)
 			{
-				num8 += 6.283f;
+				Num6 += 6.283f;
 			}
-			else if ((double)num8 > 6.283)
+			else if ((double)Num6 > 6.283)
 			{
-				num8 -= 6.283f;
+				Num6 -= 6.283f;
 			}
-			float num9 = 0.15f;
-			if (base.projectile.rotation < num8)
+			float Num7 = 0.15f;
+			if (base.projectile.rotation < Num6)
 			{
-				if ((double)(num8 - base.projectile.rotation) > 3.1415)
+				if ((double)(Num6 - base.projectile.rotation) > 3.1415)
 				{
-					base.projectile.rotation -= num9;
+					base.projectile.rotation -= Num7;
 				}
 				else
 				{
-					base.projectile.rotation += num9;
+					base.projectile.rotation += Num7;
 				}
 			}
-			else if (base.projectile.rotation > num8)
+			else if (base.projectile.rotation > Num6)
 			{
-				if ((double)(base.projectile.rotation - num8) > 3.1415)
+				if ((double)(base.projectile.rotation - Num6) > 3.1415)
 				{
-					base.projectile.rotation += num9;
+					base.projectile.rotation += Num7;
 				}
 				else
 				{
-					base.projectile.rotation -= num9;
+					base.projectile.rotation -= Num7;
 				}
 			}
-			if (base.projectile.rotation > num8 - num9 && base.projectile.rotation < num8 + num9)
+			if (base.projectile.rotation > Num6 - Num7 && base.projectile.rotation < Num6 + Num7)
 			{
-				base.projectile.rotation = num8;
+				base.projectile.rotation = Num6;
 			}
 			if (base.projectile.rotation < 0f)
 			{
@@ -106,9 +104,9 @@ namespace Redemption.Projectiles
 			{
 				base.projectile.rotation -= 6.283f;
 			}
-			if (base.projectile.rotation > num8 - num9 && base.projectile.rotation < num8 + num9)
+			if (base.projectile.rotation > Num6 - Num7 && base.projectile.rotation < Num6 + Num7)
 			{
-				base.projectile.rotation = num8;
+				base.projectile.rotation = Num6;
 			}
 			base.projectile.frameCounter++;
 			if (base.projectile.frameCounter >= 10)
@@ -120,15 +118,14 @@ namespace Redemption.Projectiles
 					base.projectile.frame = 0;
 				}
 			}
-			Vector2 vector2 = Main.player[base.projectile.owner].Center - base.projectile.Center;
-			vector2.Normalize();
-			vector2 *= 9f;
+			Vector2 direction = Main.player[base.projectile.owner].Center - base.projectile.Center;
+			direction.Normalize();
+			direction *= 9f;
 			Player player = Main.player[base.projectile.owner];
-			double num10 = (double)base.projectile.ai[1] / 2.0;
-			double num11 = num10 * 0.017453292519943295;
-			double num12 = 100.0;
-			base.projectile.position.X = player.Center.X - (float)((int)(Math.Cos(num11) * num12)) - (float)(base.projectile.width / 2);
-			base.projectile.position.Y = player.Center.Y - (float)((int)(Math.Sin(num11) * num12)) - (float)(base.projectile.height / 2);
+			double rad = (double)base.projectile.ai[1] / 2.0 * 0.017453292519943295;
+			double dist = 100.0;
+			base.projectile.position.X = player.Center.X - (float)((int)(Math.Cos(rad) * dist)) - (float)(base.projectile.width / 2);
+			base.projectile.position.Y = player.Center.Y - (float)((int)(Math.Sin(rad) * dist)) - (float)(base.projectile.height / 2);
 			base.projectile.ai[1] += 2f;
 			return false;
 		}
@@ -136,10 +133,10 @@ namespace Redemption.Projectiles
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
 			Player player = Main.player[base.projectile.owner];
-			int crit2 = player.HeldItem.crit;
-			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref crit2);
-			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref crit2);
-			if (crit2 >= 100 || Main.rand.Next(1, 101) <= crit2)
+			int critChance = player.HeldItem.crit;
+			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref critChance);
+			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref critChance);
+			if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
 			{
 				crit = true;
 			}

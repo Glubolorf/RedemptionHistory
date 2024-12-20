@@ -37,7 +37,7 @@ namespace Redemption.Projectiles
 			Lighting.AddLight(base.projectile.Center, (float)(255 - base.projectile.alpha) * 0.2f / 255f, (float)(255 - base.projectile.alpha) * 0.2f / 255f, (float)(255 - base.projectile.alpha) * 0.2f / 255f);
 			base.projectile.position.X = player.Center.X - 102f;
 			base.projectile.position.Y = player.Center.Y - 102f;
-			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>(base.mod);
+			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
 			if (player.dead)
 			{
 				modPlayer.natureGuardian16 = false;

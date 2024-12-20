@@ -18,7 +18,7 @@ namespace Redemption.Items.DruidDamageClass.v08
 
 		public override void SafeSetDefaults()
 		{
-			base.item.damage = 200;
+			base.item.damage = 235;
 			base.item.width = 76;
 			base.item.height = 76;
 			base.item.useTime = 30;
@@ -42,22 +42,22 @@ namespace Redemption.Items.DruidDamageClass.v08
 
 		public override void ModifyTooltips(List<TooltipLine> list)
 		{
-			foreach (TooltipLine tooltipLine in list)
+			foreach (TooltipLine line2 in list)
 			{
-				if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+				if (line2.mod == "Terraria" && line2.Name == "ItemName")
 				{
-					tooltipLine.overrideColor = new Color?(new Color(0, 255, 200));
+					line2.overrideColor = new Color?(new Color(0, 255, 200));
 				}
 			}
 		}
 
 		public override bool CanUseItem(Player player)
 		{
-			if (player.altFunctionUse == 2)
+			if (player.altFunctionUse == 2 && player.itemAnimation == 0)
 			{
 				base.item.mana = 1;
 				base.item.buffType = base.mod.BuffType("NatureGuardian27Buff");
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).longerGuardians)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().longerGuardians)
 				{
 					base.item.buffTime = 1200;
 				}
@@ -81,7 +81,7 @@ namespace Redemption.Items.DruidDamageClass.v08
 		{
 			if (player.altFunctionUse == 2)
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
 				{
 					player.AddBuff(base.mod.BuffType("GuardianCooldownDebuff"), 2700, true);
 					return;
@@ -92,9 +92,9 @@ namespace Redemption.Items.DruidDamageClass.v08
 
 		public override float UseTimeMultiplier(Player player)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterStaves)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().fasterStaves)
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
 				{
 					return 1.45f;
 				}
@@ -102,7 +102,7 @@ namespace Redemption.Items.DruidDamageClass.v08
 			}
 			else
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
 				{
 					return 1.35f;
 				}
@@ -112,7 +112,7 @@ namespace Redemption.Items.DruidDamageClass.v08
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			if (player.altFunctionUse == 2)
+			if (player.altFunctionUse == 2 && player.itemAnimation == 0)
 			{
 				return true;
 			}

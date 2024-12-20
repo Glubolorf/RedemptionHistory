@@ -13,14 +13,14 @@ namespace Redemption.Projectiles.v08
 		{
 			if (Main.netMode != 2)
 			{
-				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
 				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
 				{
-					array[i] = Main.glowMaskTexture[i];
+					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				array[array.Length - 1] = base.mod.GetTexture("Projectiles/v08/" + base.GetType().Name + "_Glow");
-				StarfruitPro.customGlowMask = (short)(array.Length - 1);
-				Main.glowMaskTexture = array;
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Projectiles/v08/" + base.GetType().Name + "_Glow");
+				StarfruitPro.customGlowMask = (short)(glowMasks.Length - 1);
+				Main.glowMaskTexture = glowMasks;
 			}
 			base.DisplayName.SetDefault("Starfruit");
 		}
@@ -51,27 +51,27 @@ namespace Redemption.Projectiles.v08
 				this.AdjustMagnitude(ref base.projectile.velocity);
 				base.projectile.localAI[0] = 1f;
 			}
-			Vector2 vector = Vector2.Zero;
-			float num = 100f;
-			bool flag = false;
+			Vector2 move = Vector2.Zero;
+			float distance = 100f;
+			bool target = false;
 			for (int i = 0; i < 200; i++)
 			{
 				if (Main.npc[i].active && !Main.npc[i].dontTakeDamage && !Main.npc[i].friendly && Main.npc[i].lifeMax > 5)
 				{
-					Vector2 vector2 = Main.npc[i].Center - base.projectile.Center;
-					float num2 = (float)Math.Sqrt((double)(vector2.X * vector2.X + vector2.Y * vector2.Y));
-					if (num2 < num)
+					Vector2 newMove = Main.npc[i].Center - base.projectile.Center;
+					float distanceTo = (float)Math.Sqrt((double)(newMove.X * newMove.X + newMove.Y * newMove.Y));
+					if (distanceTo < distance)
 					{
-						vector = vector2;
-						num = num2;
-						flag = true;
+						move = newMove;
+						distance = distanceTo;
+						target = true;
 					}
 				}
 			}
-			if (flag)
+			if (target)
 			{
-				this.AdjustMagnitude(ref vector);
-				base.projectile.velocity = (10f * base.projectile.velocity + vector) / 11f;
+				this.AdjustMagnitude(ref move);
+				base.projectile.velocity = (10f * base.projectile.velocity + move) / 11f;
 				this.AdjustMagnitude(ref base.projectile.velocity);
 			}
 			return true;
@@ -79,22 +79,21 @@ namespace Redemption.Projectiles.v08
 
 		private void AdjustMagnitude(ref Vector2 vector)
 		{
-			float num = (float)Math.Sqrt((double)(vector.X * vector.X + vector.Y * vector.Y));
-			if (num > 28f)
+			float magnitude = (float)Math.Sqrt((double)(vector.X * vector.X + vector.Y * vector.Y));
+			if (magnitude > 28f)
 			{
-				vector *= 27f / num;
+				vector *= 27f / magnitude;
 			}
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Vector2 vector;
-			vector..ctor((float)Main.projectileTexture[base.projectile.type].Width * 0.5f, (float)base.projectile.height * 0.5f);
+			Vector2 drawOrigin = new Vector2((float)Main.projectileTexture[base.projectile.type].Width * 0.5f, (float)base.projectile.height * 0.5f);
 			for (int i = 0; i < base.projectile.oldPos.Length; i++)
 			{
-				Vector2 vector2 = base.projectile.oldPos[i] - Main.screenPosition + vector + new Vector2(0f, base.projectile.gfxOffY);
+				Vector2 drawPos = base.projectile.oldPos[i] - Main.screenPosition + drawOrigin + new Vector2(0f, base.projectile.gfxOffY);
 				Color color = base.projectile.GetAlpha(lightColor) * ((float)(base.projectile.oldPos.Length - i) / (float)base.projectile.oldPos.Length);
-				spriteBatch.Draw(Main.projectileTexture[base.projectile.type], vector2, null, color, base.projectile.rotation, vector, base.projectile.scale, 0, 0f);
+				spriteBatch.Draw(Main.projectileTexture[base.projectile.type], drawPos, null, color, base.projectile.rotation, drawOrigin, base.projectile.scale, SpriteEffects.None, 0f);
 			}
 			return true;
 		}

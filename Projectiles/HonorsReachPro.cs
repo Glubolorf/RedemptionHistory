@@ -45,21 +45,21 @@ namespace Redemption.Projectiles
 			{
 				Projectile.NewProjectile(base.projectile.Center, base.projectile.velocity, base.mod.ProjectileType("HonorsReach2Pro"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			}
-			Player player = Main.player[base.projectile.owner];
-			Vector2 vector = player.RotatedRelativePoint(player.MountedCenter, true);
-			base.projectile.direction = player.direction;
-			player.heldProj = base.projectile.whoAmI;
-			player.itemTime = player.itemAnimation;
-			base.projectile.position.X = vector.X - (float)(base.projectile.width / 2);
-			base.projectile.position.Y = vector.Y - (float)(base.projectile.height / 2);
-			if (!player.frozen)
+			Player projOwner = Main.player[base.projectile.owner];
+			Vector2 ownerMountedCenter = projOwner.RotatedRelativePoint(projOwner.MountedCenter, true);
+			base.projectile.direction = projOwner.direction;
+			projOwner.heldProj = base.projectile.whoAmI;
+			projOwner.itemTime = projOwner.itemAnimation;
+			base.projectile.position.X = ownerMountedCenter.X - (float)(base.projectile.width / 2);
+			base.projectile.position.Y = ownerMountedCenter.Y - (float)(base.projectile.height / 2);
+			if (!projOwner.frozen)
 			{
 				if (this.movementFactor == 0f)
 				{
 					this.movementFactor = 9f;
 					base.projectile.netUpdate = true;
 				}
-				if (player.itemAnimation < player.itemAnimationMax / 3)
+				if (projOwner.itemAnimation < projOwner.itemAnimationMax / 3)
 				{
 					this.movementFactor -= 6.9f;
 				}
@@ -69,7 +69,7 @@ namespace Redemption.Projectiles
 				}
 			}
 			base.projectile.position += base.projectile.velocity * this.movementFactor;
-			if (player.itemAnimation == 0)
+			if (projOwner.itemAnimation == 0)
 			{
 				base.projectile.Kill();
 			}

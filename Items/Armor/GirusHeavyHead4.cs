@@ -53,7 +53,7 @@ namespace Redemption.Items.Armor
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
 		{
-			drawHair = (drawAltHair = false);
+			drawAltHair = true;
 		}
 
 		public override void AddRecipes()

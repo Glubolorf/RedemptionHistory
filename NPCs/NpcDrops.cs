@@ -13,35 +13,39 @@ namespace Redemption.NPCs
 		{
 			if (type == 20 && Main.bloodMoon)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType<CorpseFlowerBag>(), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<CorpseFlowerBag>(), false);
 				nextSlot++;
 			}
 			if (type == 19 && NPC.downedBoss2 && !Main.dayTime)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType<TacticalBow>(), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<TacticalBow>(), false);
 				nextSlot++;
 			}
 			if (type == 178 && NPC.downedGolemBoss)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType<SteamMinigun>(), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<SteamMinigun>(), false);
 				nextSlot++;
 			}
 			if (type == 17)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType<RopeHook>(), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<RopeHook>(), false);
 				nextSlot++;
 			}
 		}
 
 		public override void NPCLoot(NPC npc)
 		{
+			if (Main.player[(int)Player.FindClosest(npc.position, npc.width, npc.height)].GetModPlayer<RedePlayer>().ZoneEvilXeno && Main.rand.Next(4) == 0)
+			{
+				Item.NewItem(npc.getRect(), base.mod.ItemType("Biohazard"), 1, false, 0, false, false);
+			}
 			if (npc.type == base.mod.NPCType("SkeletonWanderer"))
 			{
 				if (Main.rand.Next(20) == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("RustedLongspear"), 1, false, 0, false, false);
 				}
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(400) == 0)
 					{
@@ -60,7 +64,7 @@ namespace Redemption.NPCs
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("AncientGoldCoin"), 1, false, 0, false, false);
 				if (Main.hardMode)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 					{
 						if (Main.rand.Next(900) == 0)
 						{
@@ -95,7 +99,7 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("AncientBrassLeggings"), 1, false, 0, false, false);
 				}
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(400) == 0)
 					{
@@ -114,7 +118,7 @@ namespace Redemption.NPCs
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("AncientGoldCoin"), 1, false, 0, false, false);
 				if (Main.hardMode)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 					{
 						if (Main.rand.Next(900) == 0)
 						{
@@ -137,7 +141,7 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("WornDagger"), 1, false, 0, false, false);
 				}
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(400) == 0)
 					{
@@ -177,7 +181,7 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("IntruderPants"), 1, false, 0, false, false);
 				}
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(400) == 0)
 					{
@@ -217,7 +221,7 @@ namespace Redemption.NPCs
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("AncientBrassChunk"), Main.rand.Next(6, 12), false, 0, false, false);
 				if (Main.hardMode)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 					{
 						if (Main.rand.Next(900) == 0)
 						{
@@ -235,7 +239,7 @@ namespace Redemption.NPCs
 				}
 				if (Main.hardMode)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 					{
 						if (Main.rand.Next(900) == 0)
 						{
@@ -251,7 +255,7 @@ namespace Redemption.NPCs
 			if (npc.type == base.mod.NPCType("Chicken") || npc.type == base.mod.NPCType("RedChicken") || npc.type == base.mod.NPCType("LeghornChicken") || npc.type == base.mod.NPCType("VlitchChicken"))
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("ChickenEgg"), 1, false, 0, false, false);
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(400) == 0)
 					{
@@ -270,7 +274,7 @@ namespace Redemption.NPCs
 			if (npc.type == base.mod.NPCType("ChickenGold"))
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("ChickenEggGold"), 1, false, 0, false, false);
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(400) == 0)
 					{
@@ -314,7 +318,7 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("LivingWoodYoyo"), 1, false, 0, false, false);
 				}
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(400) == 0)
 					{
@@ -327,7 +331,7 @@ namespace Redemption.NPCs
 				}
 				if (Main.hardMode)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 					{
 						if (Main.rand.Next(900) == 0)
 						{
@@ -345,7 +349,7 @@ namespace Redemption.NPCs
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("LivingTwig"), Main.rand.Next(12, 26), false, 0, false, false);
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 27, Main.rand.Next(3, 5), false, 0, false, false);
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 313, 1, false, 0, false, false);
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(400) == 0)
 					{
@@ -358,7 +362,7 @@ namespace Redemption.NPCs
 				}
 				if (Main.hardMode)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 					{
 						if (Main.rand.Next(900) == 0)
 						{
@@ -380,7 +384,7 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 3502, 1, false, 0, false, false);
 				}
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(400) == 0)
 					{
@@ -393,7 +397,7 @@ namespace Redemption.NPCs
 				}
 				if (Main.hardMode)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 					{
 						if (Main.rand.Next(900) == 0)
 						{
@@ -414,7 +418,7 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("ForgottenGreatsword"), 1, false, 0, false, false);
 				}
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(400) == 0)
 					{
@@ -440,7 +444,7 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 1304, 1, false, 0, false, false);
 				}
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(400) == 0)
 					{
@@ -467,7 +471,7 @@ namespace Redemption.NPCs
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("PlasmaShield"), 1, false, 0, false, false);
 					}
 				}
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(400) == 0)
 					{
@@ -480,7 +484,7 @@ namespace Redemption.NPCs
 				}
 				if (Main.hardMode)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 					{
 						if (Main.rand.Next(90) == 0)
 						{
@@ -499,7 +503,7 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("YeOldeHat"), 1, false, 0, false, false);
 				}
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(400) == 0)
 					{
@@ -512,7 +516,7 @@ namespace Redemption.NPCs
 				}
 				if (Main.hardMode)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 					{
 						if (Main.rand.Next(90) == 0)
 						{
@@ -531,7 +535,7 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("RustyNoblesSword"), 1, false, 0, false, false);
 				}
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(400) == 0)
 					{
@@ -565,7 +569,7 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("AncientBrassLeggings"), 1, false, 0, false, false);
 				}
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(400) == 0)
 					{
@@ -595,7 +599,7 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("IthonicTabard"), 1, false, 0, false, false);
 				}
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(400) == 0)
 					{
@@ -629,7 +633,7 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("PureIronLeggings"), 1, false, 0, false, false);
 				}
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(400) == 0)
 					{
@@ -651,7 +655,7 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("WardensBow"), 1, false, 0, false, false);
 				}
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(400) == 0)
 					{
@@ -664,7 +668,7 @@ namespace Redemption.NPCs
 				}
 				if (Main.hardMode)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 					{
 						if (Main.rand.Next(900) == 0)
 						{
@@ -694,7 +698,7 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 3109, 1, false, 0, false, false);
 				}
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(150) == 0)
 					{
@@ -707,7 +711,7 @@ namespace Redemption.NPCs
 				}
 				if (Main.hardMode)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 					{
 						if (Main.rand.Next(150) == 0)
 						{
@@ -729,7 +733,7 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 3109, 1, false, 0, false, false);
 				}
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(150) == 0)
 					{
@@ -742,7 +746,7 @@ namespace Redemption.NPCs
 				}
 				if (Main.hardMode)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 					{
 						if (Main.rand.Next(150) == 0)
 						{
@@ -761,7 +765,7 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("OldRapier"), 1, false, 0, false, false);
 				}
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(400) == 0)
 					{
@@ -784,7 +788,7 @@ namespace Redemption.NPCs
 				}
 				if (Main.hardMode)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 					{
 						if (Main.rand.Next(900) == 0)
 						{
@@ -808,7 +812,7 @@ namespace Redemption.NPCs
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("AncientGoldCoin"), Main.rand.Next(10, 20), false, 0, false, false);
 				if (Main.hardMode)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 					{
 						if (Main.rand.Next(400) == 0)
 						{
@@ -826,7 +830,7 @@ namespace Redemption.NPCs
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("BlackenedHeart"), 1, false, 0, false, false);
 				if (Main.hardMode)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 					{
 						if (Main.rand.Next(80) == 0)
 						{
@@ -865,7 +869,7 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("ForgottenSword"), 1, false, 0, false, false);
 				}
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(400) == 0)
 					{
@@ -878,7 +882,7 @@ namespace Redemption.NPCs
 				}
 				if (Main.hardMode)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 					{
 						if (Main.rand.Next(900) == 0)
 						{
@@ -901,7 +905,7 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("ForgottenSword"), 1, false, 0, false, false);
 				}
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(400) == 0)
 					{
@@ -914,7 +918,7 @@ namespace Redemption.NPCs
 				}
 				if (Main.hardMode)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 					{
 						if (Main.rand.Next(900) == 0)
 						{
@@ -937,7 +941,7 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("ForgottenSword"), 1, false, 0, false, false);
 				}
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(400) == 0)
 					{
@@ -950,7 +954,7 @@ namespace Redemption.NPCs
 				}
 				if (Main.hardMode)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 					{
 						if (Main.rand.Next(900) == 0)
 						{
@@ -1063,7 +1067,7 @@ namespace Redemption.NPCs
 				}
 				if (Main.hardMode)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 					{
 						if (Main.rand.Next(900) == 0)
 						{
@@ -1112,7 +1116,7 @@ namespace Redemption.NPCs
 				}
 				if (Main.hardMode)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 					{
 						if (Main.rand.Next(900) == 0)
 						{
@@ -1133,7 +1137,7 @@ namespace Redemption.NPCs
 				}
 				if (Main.hardMode)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 					{
 						if (Main.rand.Next(900) == 0)
 						{
@@ -1147,7 +1151,7 @@ namespace Redemption.NPCs
 				}
 				if (Main.hardMode)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 					{
 						if (Main.rand.Next(900) == 0)
 						{
@@ -1200,16 +1204,16 @@ namespace Redemption.NPCs
 			}
 			if (npc.type == base.mod.NPCType("Android") || npc.type == base.mod.NPCType("Apidroid"))
 			{
-				if (Main.rand.Next(20) == 0)
+				if (Main.rand.Next(15) == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("AIChip"), 1, false, 0, false, false);
 				}
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("CarbonMyofibre"), Main.rand.Next(1, 2), false, 0, false, false);
-				if (Main.rand.Next(15) == 0)
+				if (Main.rand.Next(3) == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("Mk1Capacitator"), 1, false, 0, false, false);
 				}
-				if (Main.rand.Next(10) == 0)
+				if (Main.rand.Next(3) == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("Mk1Plating"), 1, false, 0, false, false);
 				}
@@ -1240,16 +1244,16 @@ namespace Redemption.NPCs
 			}
 			if (npc.type == base.mod.NPCType("PrototypeSilver"))
 			{
-				if (Main.rand.Next(20) == 0)
+				if (Main.rand.Next(10) == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("AIChip"), 1, false, 0, false, false);
 				}
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("CarbonMyofibre"), Main.rand.Next(1, 4), false, 0, false, false);
-				if (Main.rand.Next(10) == 0)
+				if (Main.rand.Next(2) == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("Mk2Capacitator"), 1, false, 0, false, false);
 				}
-				if (Main.rand.Next(15) == 0)
+				if (Main.rand.Next(2) == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("Mk2Plating"), 1, false, 0, false, false);
 				}
@@ -1277,19 +1281,13 @@ namespace Redemption.NPCs
 			}
 			if (npc.type == base.mod.NPCType("SpacePaladin"))
 			{
-				if (Main.rand.Next(10) == 0)
+				if (Main.rand.Next(3) == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("AIChip"), 1, false, 0, false, false);
 				}
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("ArtificalMuscle"), Main.rand.Next(1, 2), false, 0, false, false);
-				if (Main.rand.Next(10) == 0)
-				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("Mk3Capacitator"), 1, false, 0, false, false);
-				}
-				if (Main.rand.Next(5) == 0)
-				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("Mk3Plating"), 1, false, 0, false, false);
-				}
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("Mk3Capacitator"), 1, false, 0, false, false);
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("Mk3Plating"), 1, false, 0, false, false);
 			}
 			if (npc.type == base.mod.NPCType("OmegaSpacePaladin"))
 			{
@@ -1385,7 +1383,7 @@ namespace Redemption.NPCs
 				}
 				if (Main.hardMode)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 					{
 						if (Main.rand.Next(900) == 0)
 						{
@@ -1481,7 +1479,7 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 62, Main.rand.Next(2, 6), false, 0, false, false);
 				}
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(90) == 0)
 					{
@@ -1494,14 +1492,14 @@ namespace Redemption.NPCs
 				}
 				if (Main.hardMode)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 					{
-						if (Main.rand.Next(200) == 0)
+						if (Main.rand.Next(600) == 0)
 						{
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("UkkosStave"), 1, false, 0, false, false);
 						}
 					}
-					else if (Main.rand.Next(250) == 0)
+					else if (Main.rand.Next(750) == 0)
 					{
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("UkkosStave"), 1, false, 0, false, false);
 					}
@@ -1524,7 +1522,7 @@ namespace Redemption.NPCs
 				}
 				if (Main.hardMode)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 					{
 						if (Main.rand.Next(900) == 0)
 						{
@@ -1550,7 +1548,7 @@ namespace Redemption.NPCs
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("BoneLeviathanFlail"), 1, false, 0, false, false);
 				if (Main.hardMode)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 					{
 						if (Main.rand.Next(80) == 0)
 						{
@@ -1585,7 +1583,7 @@ namespace Redemption.NPCs
 			}
 			if (npc.type == base.mod.NPCType("DarkSoul") && Main.hardMode)
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(900) == 0)
 					{
@@ -1618,7 +1616,7 @@ namespace Redemption.NPCs
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("MoonflareFragment"), Main.rand.Next(1, 3), false, 0, false, false);
 				if (Main.hardMode)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 					{
 						if (Main.rand.Next(900) == 0)
 						{
@@ -1632,7 +1630,7 @@ namespace Redemption.NPCs
 				}
 				if (Main.hardMode)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 					{
 						if (Main.rand.Next(900) == 0)
 						{
@@ -1682,7 +1680,7 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("MagicMetalPolish"), 1, false, 0, false, false);
 				}
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(80) == 0)
 					{
@@ -1791,7 +1789,7 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 1304, 1, false, 0, false, false);
 				}
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().bloomingLuck)
 				{
 					if (Main.rand.Next(400) == 0)
 					{
@@ -2061,6 +2059,10 @@ namespace Redemption.NPCs
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 3457, Main.rand.Next(5, 10), false, 0, false, false);
 				}
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("GildedStar"), Main.rand.Next(4, 8), false, 0, false, false);
+			}
+			if ((npc.type == 77 || npc.type == 197 || npc.type == 110) && Main.rand.Next(250) == 0)
+			{
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("NoidanSauva"), 1, false, 0, false, false);
 			}
 		}
 	}

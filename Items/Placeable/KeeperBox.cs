@@ -8,7 +8,7 @@ namespace Redemption.Items.Placeable
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Music Box (The Keeper)");
-			base.Tooltip.SetDefault("Nick 'Shadowblaze' Nuwe - Moonscythe District");
+			base.Tooltip.SetDefault("SpectralAves - Haunting Loneliness");
 		}
 
 		public override void SetDefaults()

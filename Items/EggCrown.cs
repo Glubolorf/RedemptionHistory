@@ -48,24 +48,24 @@ namespace Redemption.Items
 			modRecipe.AddTile(26);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "ChickenEgg", 10);
-			modRecipe.AddIngredient(715, 1);
-			modRecipe.AddTile(26);
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "ChickenEgg", 20);
-			modRecipe.AddIngredient(null, "BlankGoldCrown", 1);
-			modRecipe.AddTile(26);
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "ChickenEgg", 20);
-			modRecipe.AddIngredient(null, "BlankPlatCrown", 1);
-			modRecipe.AddTile(26);
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.AddIngredient(null, "ChickenEgg", 10);
+			modRecipe2.AddIngredient(715, 1);
+			modRecipe2.AddTile(26);
+			modRecipe2.SetResult(this, 1);
+			modRecipe2.AddRecipe();
+			ModRecipe modRecipe3 = new ModRecipe(base.mod);
+			modRecipe3.AddIngredient(null, "ChickenEgg", 20);
+			modRecipe3.AddIngredient(null, "BlankGoldCrown", 1);
+			modRecipe3.AddTile(26);
+			modRecipe3.SetResult(this, 1);
+			modRecipe3.AddRecipe();
+			ModRecipe modRecipe4 = new ModRecipe(base.mod);
+			modRecipe4.AddIngredient(null, "ChickenEgg", 20);
+			modRecipe4.AddIngredient(null, "BlankPlatCrown", 1);
+			modRecipe4.AddTile(26);
+			modRecipe4.SetResult(this, 1);
+			modRecipe4.AddRecipe();
 		}
 	}
 }

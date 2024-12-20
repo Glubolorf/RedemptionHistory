@@ -24,31 +24,31 @@ namespace Redemption.NPCs.Bosses
 			base.projectile.localAI[1] += 1f;
 			if (base.projectile.localAI[1] == 540f)
 			{
-				Main.NewText("Hm? Something took down that good-for-nothing robotic blade I corrupted a few decades ago?", new Color(238, 77, 58), false);
+				Main.NewText("Hm? Something took down that good-for-nothing robotic blade I corrupted a few decades ago?", new Color(255, 32, 32), false);
 				Redemption.GirusSilence = true;
 			}
 			if (base.projectile.localAI[1] == 700f)
 			{
-				Main.NewText("Haha, knew it was such a weak being!", new Color(238, 77, 58), false);
+				Main.NewText("Haha, knew it was such a weak being!", new Color(255, 32, 32), false);
 			}
 			if (base.projectile.localAI[1] == 1200f)
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).omegaPower)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().omegaPower)
 				{
-					Main.NewText("You, little android! Gongratulations, you defeated the weakest of the 'Overlords'!", new Color(238, 77, 58), false);
+					Main.NewText("You, little android! Gongratulations, you defeated the weakest of the 'Overlords'!", new Color(255, 32, 32), false);
 				}
 				else
 				{
-					Main.NewText("You, little organic thing! Gongratulations, you defeated the weakest of the 'Overlords'!", new Color(238, 77, 58), false);
+					Main.NewText("You, little organic thing! Gongratulations, you defeated the weakest of the 'Overlords'!", new Color(255, 32, 32), false);
 				}
 			}
 			if (base.projectile.localAI[1] == 1600f)
 			{
-				Main.NewText("All of them are a bunch of useless, good for nothing minions of mine who do my bidding!", new Color(238, 77, 58), false);
+				Main.NewText("All of them are a bunch of useless, good for nothing minions of mine who do my bidding!", new Color(255, 32, 32), false);
 			}
 			if (base.projectile.localAI[1] == 1900f)
 			{
-				Main.NewText("Let's see if you have what it takes to take them all down... Hehehehe...", new Color(238, 77, 58), false);
+				Main.NewText("Let's see if you have what it takes to take them all down... Hehehehe...", new Color(255, 32, 32), false);
 			}
 			if (base.projectile.localAI[1] == 2100f)
 			{

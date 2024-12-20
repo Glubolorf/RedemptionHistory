@@ -24,9 +24,9 @@ namespace Redemption.Tiles
 				16
 			};
 			TileObjectData.addTile((int)base.Type);
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Lotus Rune Banner");
-			base.AddMapEntry(new Color(200, 200, 200), modTranslation);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Lotus Rune Banner");
+			base.AddMapEntry(new Color(200, 200, 200), name);
 			this.dustType = 78;
 		}
 
@@ -34,8 +34,7 @@ namespace Redemption.Tiles
 		{
 			if (closer)
 			{
-				Player localPlayer = Main.LocalPlayer;
-				localPlayer.AddBuff(base.mod.BuffType("LotusBuff"), Main.rand.Next(10, 20), true);
+				Main.LocalPlayer.AddBuff(base.mod.BuffType("LotusBuff"), Main.rand.Next(10, 20), true);
 			}
 		}
 

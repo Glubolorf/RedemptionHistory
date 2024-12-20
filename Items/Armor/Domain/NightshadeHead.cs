@@ -22,7 +22,7 @@ namespace Redemption.Items.Armor.Domain
 			base.item.height = 18;
 			base.item.value = Item.sellPrice(0, 0, 18, 0);
 			base.item.rare = 1;
-			base.item.defense = 5;
+			base.item.defense = 6;
 		}
 
 		public override void UpdateEquip(Player player)
@@ -55,12 +55,12 @@ namespace Redemption.Items.Armor.Domain
 			modRecipe.AddTile(16);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(696, 1);
-			modRecipe.AddIngredient(null, "Nightshade", 6);
-			modRecipe.AddTile(16);
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.AddIngredient(696, 1);
+			modRecipe2.AddIngredient(null, "Nightshade", 6);
+			modRecipe2.AddTile(16);
+			modRecipe2.SetResult(this, 1);
+			modRecipe2.AddRecipe();
 		}
 	}
 }

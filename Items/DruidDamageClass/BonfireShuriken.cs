@@ -18,7 +18,7 @@ namespace Redemption.Items.DruidDamageClass
 		{
 			base.item.shootSpeed = 23f;
 			base.item.crit = 4;
-			base.item.damage = 15;
+			base.item.damage = 10;
 			base.item.knockBack = 5f;
 			base.item.useStyle = 1;
 			base.item.useAnimation = 24;
@@ -33,7 +33,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.autoReuse = true;
 			base.item.UseSound = SoundID.Item1;
 			base.item.value = Item.sellPrice(0, 0, 1, 0);
-			base.item.shoot = base.mod.ProjectileType<BonfireShurikenPro>();
+			base.item.shoot = ModContent.ProjectileType<BonfireShurikenPro>();
 		}
 
 		public override void AddRecipes()
@@ -43,12 +43,12 @@ namespace Redemption.Items.DruidDamageClass
 			modRecipe.AddTile(null, "DruidicAltarTile");
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "DruidShuriken", 1);
-			modRecipe.AddIngredient(174, 50);
-			modRecipe.AddTile(null, "DruidicAltarTile");
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.AddIngredient(null, "DruidShuriken", 1);
+			modRecipe2.AddIngredient(174, 50);
+			modRecipe2.AddTile(null, "DruidicAltarTile");
+			modRecipe2.SetResult(this, 1);
+			modRecipe2.AddRecipe();
 		}
 	}
 }

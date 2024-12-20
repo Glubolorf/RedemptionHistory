@@ -43,7 +43,7 @@ namespace Redemption.NPCs.v08
 		public override void AI()
 		{
 			Player player = Main.player[base.npc.target];
-			float num = base.npc.Distance(Main.player[base.npc.target].Center);
+			float distance = base.npc.Distance(Main.player[base.npc.target].Center);
 			if (player.Center.X > base.npc.Center.X)
 			{
 				base.npc.spriteDirection = 1;
@@ -94,7 +94,7 @@ namespace Redemption.NPCs.v08
 						this.shootAirFrame = 0;
 					}
 				}
-				if (num <= 600f && Main.rand.Next(120) == 0 && !this.shoot && !this.shootAir)
+				if (distance <= 600f && Main.rand.Next(120) == 0 && !this.shoot && !this.shootAir)
 				{
 					this.shoot = true;
 				}
@@ -102,21 +102,20 @@ namespace Redemption.NPCs.v08
 				{
 					this.shootTimer++;
 					base.npc.velocity.X = 0f;
-					if (this.shootTimer == 1 && !Config.NoCombatText)
+					if (this.shootTimer == 1 && !RedeConfigClient.Instance.NoCombatText)
 					{
 						CombatText.NewText(base.npc.getRect(), Color.DarkGoldenrod, "Energy Bolts!", true, true);
 					}
 					if (this.shootTimer == 30 || this.shootTimer == 34 || this.shootTimer == 38)
 					{
 						Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-						float num2 = 18f;
-						Vector2 vector;
-						vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-						int num3 = 55;
-						int num4 = base.mod.ProjectileType("AncientShot");
-						float num5 = (float)Math.Atan2((double)(vector.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector.X - (player.position.X + (float)player.width * 0.5f)));
-						int num6 = Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num5) * (double)num2 * -1.0), (float)(Math.Sin((double)num5) * (double)num2 * -1.0), num4, num3, 0f, 0, 0f, 0f);
-						Main.projectile[num6].netUpdate = true;
+						float Speed = 18f;
+						Vector2 vector8 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+						int damage = 55;
+						int type = base.mod.ProjectileType("AncientShot");
+						float rotation = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
+						int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
+						Main.projectile[num54].netUpdate = true;
 					}
 					if (this.shootTimer >= 60)
 					{
@@ -137,21 +136,20 @@ namespace Redemption.NPCs.v08
 				if (this.shootAir)
 				{
 					this.shootTimer++;
-					if (this.shootTimer == 1 && !Config.NoCombatText)
+					if (this.shootTimer == 1 && !RedeConfigClient.Instance.NoCombatText)
 					{
 						CombatText.NewText(base.npc.getRect(), Color.DarkGoldenrod, "Energy Bolt!", true, true);
 					}
 					if (this.shootTimer == 2)
 					{
 						Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-						float num7 = 21f;
-						Vector2 vector2;
-						vector2..ctor(base.npc.Center.X, base.npc.Center.Y);
-						int num8 = 55;
-						int num9 = base.mod.ProjectileType("AncientShot");
-						float num10 = (float)Math.Atan2((double)(vector2.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector2.X - (player.position.X + (float)player.width * 0.5f)));
-						int num11 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num10) * (double)num7 * -1.0), (float)(Math.Sin((double)num10) * (double)num7 * -1.0), num9, num8, 0f, 0, 0f, 0f);
-						Main.projectile[num11].netUpdate = true;
+						float Speed2 = 21f;
+						Vector2 vector9 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+						int damage2 = 55;
+						int type2 = base.mod.ProjectileType("AncientShot");
+						float rotation2 = (float)Math.Atan2((double)(vector9.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector9.X - (player.position.X + (float)player.width * 0.5f)));
+						int num55 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0), type2, damage2, 0f, 0, 0f, 0f);
+						Main.projectile[num55].netUpdate = true;
 					}
 					if (this.shootTimer >= 5)
 					{
@@ -162,7 +160,7 @@ namespace Redemption.NPCs.v08
 			}
 			if (!this.shoot)
 			{
-				if (num <= 700f)
+				if (distance <= 700f)
 				{
 					BaseAI.AIZombie(base.npc, ref base.npc.ai, false, false, -1, 0.3f, 7f, 17, 17, 60, true, 10, 60, false, null, false);
 					return;
@@ -173,38 +171,35 @@ namespace Redemption.NPCs.v08
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/v08/AncientArcherJump");
-			Texture2D texture2 = base.mod.GetTexture("NPCs/v08/AncientArcherAttack");
-			Texture2D texture3 = base.mod.GetTexture("NPCs/v08/AncientArcherJumpAttack");
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D hopAni = base.mod.GetTexture("NPCs/v08/AncientArcherJump");
+			Texture2D shootAni = base.mod.GetTexture("NPCs/v08/AncientArcherAttack");
+			Texture2D shootAirAni = base.mod.GetTexture("NPCs/v08/AncientArcherJumpAttack");
 			int spriteDirection = base.npc.spriteDirection;
 			if (!this.hop && !this.shoot && !this.shootAir)
 			{
-				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.hop && !this.shoot && !this.shootAir)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num = texture.Height / 1;
-				int num2 = num * this.hopFrame;
-				Main.spriteBatch.Draw(texture, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num214 = hopAni.Height / 1;
+				int y6 = num214 * this.hopFrame;
+				Main.spriteBatch.Draw(hopAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, hopAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)hopAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.shoot)
 			{
-				Vector2 vector2;
-				vector2..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num3 = texture2.Height / 2;
-				int num4 = num3 * this.shootFrame;
-				Main.spriteBatch.Draw(texture2, vector2 - Main.screenPosition, new Rectangle?(new Rectangle(0, num4, texture2.Width, num3)), drawColor, base.npc.rotation, new Vector2((float)texture2.Width / 2f, (float)num3 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter2 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num215 = shootAni.Height / 2;
+				int y7 = num215 * this.shootFrame;
+				Main.spriteBatch.Draw(shootAni, drawCenter2 - Main.screenPosition, new Rectangle?(new Rectangle(0, y7, shootAni.Width, num215)), drawColor, base.npc.rotation, new Vector2((float)shootAni.Width / 2f, (float)num215 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.shootAir)
 			{
-				Vector2 vector3;
-				vector3..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num5 = texture3.Height / 2;
-				int num6 = num5 * this.shootAirFrame;
-				Main.spriteBatch.Draw(texture3, vector3 - Main.screenPosition, new Rectangle?(new Rectangle(0, num6, texture3.Width, num5)), drawColor, base.npc.rotation, new Vector2((float)texture3.Width / 2f, (float)num5 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter3 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num216 = shootAirAni.Height / 2;
+				int y8 = num216 * this.shootAirFrame;
+				Main.spriteBatch.Draw(shootAirAni, drawCenter3 - Main.screenPosition, new Rectangle?(new Rectangle(0, y8, shootAirAni.Width, num216)), drawColor, base.npc.rotation, new Vector2((float)shootAirAni.Width / 2f, (float)num216 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
 		}
@@ -224,17 +219,17 @@ namespace Redemption.NPCs.v08
 				}
 				for (int i = 0; i < 20; i++)
 				{
-					int num = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 1, 0f, 0f, 100, default(Color), 2f);
-					Main.dust[num].velocity *= 2.6f;
+					int dustIndex2 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 1, 0f, 0f, 100, default(Color), 2f);
+					Main.dust[dustIndex2].velocity *= 2.6f;
 				}
 				for (int j = 0; j < 10; j++)
 				{
-					int num2 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 6, 0f, 0f, 100, default(Color), 2f);
-					Main.dust[num2].velocity *= 2.6f;
+					int dustIndex3 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 6, 0f, 0f, 100, default(Color), 2f);
+					Main.dust[dustIndex3].velocity *= 2.6f;
 				}
 			}
-			int num3 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 1, 0f, 0f, 100, default(Color), 1f);
-			Main.dust[num3].velocity *= 4.6f;
+			int dustIndex4 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 1, 0f, 0f, 100, default(Color), 1f);
+			Main.dust[dustIndex4].velocity *= 4.6f;
 		}
 
 		private bool hop;

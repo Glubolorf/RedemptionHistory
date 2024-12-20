@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Tiles.Wasteland
@@ -12,7 +13,11 @@ namespace Redemption.Tiles.Wasteland
 			Main.tileSolid[(int)base.Type] = true;
 			base.SetModTree(new DeadTree());
 			Main.tileMerge[(int)base.Type][base.mod.TileType("DeadGrassTile")] = true;
+			Main.tileMerge[(int)base.Type][base.mod.TileType("DeadGrassTileCorruption")] = true;
+			Main.tileMerge[(int)base.Type][base.mod.TileType("DeadGrassTileCrimson")] = true;
+			TileID.Sets.Conversion.Grass[(int)base.Type] = true;
 			Main.tileBlendAll[(int)base.Type] = true;
+			TileID.Sets.NeedsGrassFraming[(int)base.Type] = true;
 			Main.tileMergeDirt[(int)base.Type] = true;
 			Main.tileBlockLight[(int)base.Type] = true;
 			base.AddMapEntry(new Color(140, 140, 140), null);
@@ -21,23 +26,22 @@ namespace Redemption.Tiles.Wasteland
 
 		public override void NearbyEffects(int i, int j, bool closer)
 		{
-			Player localPlayer = Main.LocalPlayer;
-			int num = (int)Vector2.Distance(localPlayer.Center / 16f, new Vector2((float)i, (float)j));
-			if (num <= 15)
+			Player player = Main.LocalPlayer;
+			if ((int)Vector2.Distance(player.Center / 16f, new Vector2((float)i, (float)j)) <= 15)
 			{
-				localPlayer.AddBuff(base.mod.BuffType("RadioactiveFalloutDebuff"), Main.rand.Next(10, 20), true);
+				player.AddBuff(base.mod.BuffType("RadioactiveFalloutDebuff"), Main.rand.Next(10, 20), true);
 			}
 		}
 
 		public static bool PlaceObject(int x, int y, int type, bool mute = false, int style = 0, int alternate = 0, int random = -1, int direction = -1)
 		{
-			TileObject tileObject;
-			if (!TileObject.CanPlace(x, y, type, style, direction, ref tileObject, false, false))
+			TileObject toBePlaced;
+			if (!TileObject.CanPlace(x, y, type, style, direction, ref toBePlaced, false, false))
 			{
 				return false;
 			}
-			tileObject.random = random;
-			if (TileObject.Place(tileObject) && !mute)
+			toBePlaced.random = random;
+			if (TileObject.Place(toBePlaced) && !mute)
 			{
 				WorldGen.SquareTileFrame(x, y, true);
 			}

@@ -44,8 +44,8 @@ namespace Redemption.Projectiles
 		{
 			for (int i = 0; i < 20; i++)
 			{
-				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 78, 0f, 0f, 100, default(Color), 1.2f);
-				Main.dust[num].velocity *= 1.4f;
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 78, 0f, 0f, 100, default(Color), 1.2f);
+				Main.dust[dustIndex].velocity *= 1.4f;
 			}
 			Projectile.NewProjectile(base.projectile.position.X + 12f, base.projectile.position.Y + 12f, (float)(-4 + Main.rand.Next(0, 8)), (float)(4 + Main.rand.Next(0, 8)), 686, 30, 4f, base.projectile.owner, 0f, 1f);
 			Projectile.NewProjectile(base.projectile.position.X + 12f, base.projectile.position.Y + 12f, (float)(-4 + Main.rand.Next(0, 8)), (float)(4 + Main.rand.Next(0, 8)), 686, 30, 4f, base.projectile.owner, 0f, 1f);

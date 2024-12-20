@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Tiles.Wasteland
@@ -13,6 +14,7 @@ namespace Redemption.Tiles.Wasteland
 			Main.tileMergeDirt[(int)base.Type] = true;
 			Main.tileMerge[(int)base.Type][base.mod.TileType("RadioactiveSandTile")] = true;
 			Main.tileMerge[(int)base.Type][base.mod.TileType("HardenedRadioactiveSandTile")] = true;
+			TileID.Sets.Conversion.Sandstone[(int)base.Type] = true;
 			Main.tileBlendAll[(int)base.Type] = true;
 			Main.tileBlockLight[(int)base.Type] = true;
 			Main.tileLighted[(int)base.Type] = true;
@@ -23,11 +25,10 @@ namespace Redemption.Tiles.Wasteland
 
 		public override void NearbyEffects(int i, int j, bool closer)
 		{
-			Player localPlayer = Main.LocalPlayer;
-			int num = (int)Vector2.Distance(localPlayer.Center / 16f, new Vector2((float)i, (float)j));
-			if (num <= 15)
+			Player player = Main.LocalPlayer;
+			if ((int)Vector2.Distance(player.Center / 16f, new Vector2((float)i, (float)j)) <= 15)
 			{
-				localPlayer.AddBuff(base.mod.BuffType("RadioactiveFalloutDebuff"), Main.rand.Next(10, 20), true);
+				player.AddBuff(base.mod.BuffType("RadioactiveFalloutDebuff"), Main.rand.Next(10, 20), true);
 			}
 		}
 
@@ -35,14 +36,14 @@ namespace Redemption.Tiles.Wasteland
 		{
 			if (Main.rand.Next(8) == 0)
 			{
-				bool flag = this.StarliteGemSpawn(i, j);
-				if (!flag)
+				bool spawned = this.StarliteGemSpawn(i, j);
+				if (!spawned)
 				{
-					flag = this.SpawnRocks(i, j);
+					spawned = this.SpawnRocks(i, j);
 				}
-				if (!flag)
+				if (!spawned)
 				{
-					flag = this.SpawnNest(i, j);
+					spawned = this.SpawnNest(i, j);
 				}
 			}
 		}

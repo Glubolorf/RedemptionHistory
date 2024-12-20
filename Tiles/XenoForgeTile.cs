@@ -16,9 +16,9 @@ namespace Redemption.Tiles
 			Main.tileLavaDeath[(int)base.Type] = true;
 			Main.tileLighted[(int)base.Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Xeno Forge");
-			base.AddMapEntry(new Color(200, 200, 200), modTranslation);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Xeno Forge");
+			base.AddMapEntry(new Color(200, 200, 200), name);
 			this.disableSmartCursor = true;
 			TileObjectData.addTile((int)base.Type);
 			this.animationFrameHeight = 38;

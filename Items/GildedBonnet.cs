@@ -24,11 +24,11 @@ namespace Redemption.Items
 
 		public override void ModifyTooltips(List<TooltipLine> list)
 		{
-			foreach (TooltipLine tooltipLine in list)
+			foreach (TooltipLine line2 in list)
 			{
-				if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+				if (line2.mod == "Terraria" && line2.Name == "ItemName")
 				{
-					tooltipLine.overrideColor = new Color?(RedeColor.NebColour);
+					line2.overrideColor = new Color?(RedeColor.NebColour);
 				}
 			}
 		}

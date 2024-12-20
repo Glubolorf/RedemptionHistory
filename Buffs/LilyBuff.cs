@@ -16,8 +16,7 @@ namespace Redemption.Buffs
 
 		public override void Update(Player player, ref int buffIndex)
 		{
-			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
-			druidDamagePlayer.druidDamage += 0.3f;
+			DruidDamagePlayer.ModPlayer(player).druidDamage += 0.3f;
 			player.magicDamage -= 0.4f;
 			player.meleeDamage -= 0.4f;
 			player.minionDamage -= 0.4f;

@@ -45,16 +45,16 @@ namespace Redemption.Projectiles
 			Main.PlaySound(SoundID.Item15, base.projectile.position);
 			for (int i = 0; i < 50; i++)
 			{
-				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 21, 0f, 0f, 100, default(Color), 1f);
-				Main.dust[num].velocity *= 1.4f;
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 21, 0f, 0f, 100, default(Color), 1f);
+				Main.dust[dustIndex].velocity *= 1.4f;
 			}
 			for (int j = 0; j < 80; j++)
 			{
-				int num2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 58, 0f, 0f, 100, default(Color), 1f);
-				Main.dust[num2].noGravity = true;
-				Main.dust[num2].velocity *= 5f;
-				num2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 58, 0f, 0f, 100, default(Color), 1f);
-				Main.dust[num2].velocity *= 3f;
+				int dustIndex2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 58, 0f, 0f, 100, default(Color), 1f);
+				Main.dust[dustIndex2].noGravity = true;
+				Main.dust[dustIndex2].velocity *= 5f;
+				dustIndex2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 58, 0f, 0f, 100, default(Color), 1f);
+				Main.dust[dustIndex2].velocity *= 3f;
 			}
 			base.projectile.position.X = base.projectile.position.X + (float)(base.projectile.width / 2);
 			base.projectile.position.Y = base.projectile.position.Y + (float)(base.projectile.height / 2);

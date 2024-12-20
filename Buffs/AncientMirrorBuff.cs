@@ -15,12 +15,12 @@ namespace Redemption.Buffs
 
 		public override void Update(Player player, ref int buffIndex)
 		{
-			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>(base.mod);
+			RedePlayer modPlayer2 = player.GetModPlayer<RedePlayer>();
 			if (player.ownedProjectileCounts[base.mod.ProjectileType("AncientMirrorShieldPro")] > 0)
 			{
-				modPlayer.ancientMirror = true;
+				modPlayer2.ancientMirror = true;
 			}
-			if (!modPlayer.ancientMirror)
+			if (!modPlayer2.ancientMirror)
 			{
 				player.DelBuff(buffIndex);
 				buffIndex--;

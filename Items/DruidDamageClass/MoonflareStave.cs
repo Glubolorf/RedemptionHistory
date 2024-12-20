@@ -13,14 +13,14 @@ namespace Redemption.Items.DruidDamageClass
 		{
 			if (Main.netMode != 2)
 			{
-				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
 				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
 				{
-					array[i] = Main.glowMaskTexture[i];
+					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				array[array.Length - 1] = base.mod.GetTexture("Items/DruidDamageClass/" + base.GetType().Name + "_Glow");
-				MoonflareStave.customGlowMask = (short)(array.Length - 1);
-				Main.glowMaskTexture = array;
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Items/DruidDamageClass/" + base.GetType().Name + "_Glow");
+				MoonflareStave.customGlowMask = (short)(glowMasks.Length - 1);
+				Main.glowMaskTexture = glowMasks;
 			}
 			base.DisplayName.SetDefault("Moonflare Stave");
 			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nShoots Moonflare Sparkles\nRight-clicking will summon a Moonflare [c/bee7c9:(25 Second Duration)]\n[c/71ee8d:-Guardian Info-]\n[c/a0db98:Type:] Other\n[c/98dbc3:Special Ability:] Triple-Shot/Glow\n[c/98c1db:Effects:] Staves that shoot a single projectile will shoot 2 more in an arc, Improved vision");
@@ -48,7 +48,7 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).burnStaves)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().burnStaves)
 			{
 				target.AddBuff(24, 180, false);
 			}
@@ -61,11 +61,11 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override bool CanUseItem(Player player)
 		{
-			if (player.altFunctionUse == 2)
+			if (player.altFunctionUse == 2 && player.itemAnimation == 0)
 			{
 				base.item.mana = 1;
 				base.item.buffType = base.mod.BuffType("NatureGuardian6Buff");
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).longerGuardians)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().longerGuardians)
 				{
 					base.item.buffTime = 2100;
 				}
@@ -89,7 +89,7 @@ namespace Redemption.Items.DruidDamageClass
 		{
 			if (player.altFunctionUse == 2)
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
 				{
 					player.AddBuff(base.mod.BuffType("GuardianCooldownDebuff"), 2700, true);
 					return;
@@ -100,9 +100,9 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override float UseTimeMultiplier(Player player)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterStaves)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().fasterStaves)
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
 				{
 					return 1.45f;
 				}
@@ -110,7 +110,7 @@ namespace Redemption.Items.DruidDamageClass
 			}
 			else
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
 				{
 					return 1.35f;
 				}
@@ -120,15 +120,19 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			int num = 2 + Main.rand.Next(2);
-			for (int i = 0; i < num; i++)
+			if (player.altFunctionUse == 2 && player.itemAnimation == 0)
 			{
-				Vector2 vector = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(10f));
-				float num2 = 1f - Utils.NextFloat(Main.rand) * 0.3f;
-				vector *= num2;
-				Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
+				return true;
 			}
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).staveStreamShot && Main.rand.Next(5) == 0)
+			int numberProjectiles = 2 + Main.rand.Next(2);
+			for (int i = 0; i < numberProjectiles; i++)
+			{
+				Vector2 perturbedSpeed = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(10f));
+				float scale = 1f - Utils.NextFloat(Main.rand) * 0.3f;
+				perturbedSpeed *= scale;
+				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
+			}
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().staveStreamShot && Main.rand.Next(5) == 0)
 			{
 				Projectile.NewProjectile(position.X, position.Y, speedX * 1.25f, speedY * 1.25f, type, damage, knockBack, player.whoAmI, 0f, 0f);
 				Projectile.NewProjectile(position.X, position.Y, speedX * 0.75f, speedY * 0.75f, type, damage, knockBack, player.whoAmI, 0f, 0f);

@@ -47,7 +47,7 @@ namespace Redemption.Items.Weapons
 			{
 				damage *= 3;
 			}
-			if (target.type == base.mod.NPCType("TheKeeper") || target.type == base.mod.NPCType("AAAA") || target.type == base.mod.NPCType("DarkSoul1") || target.type == base.mod.NPCType("DarkSoul2") || target.type == base.mod.NPCType("DarkSoul3") || target.type == base.mod.NPCType("SkullDigger") || target.type == base.mod.NPCType("WanderingSoul"))
+			if (target.type == base.mod.NPCType("TheKeeper") || target.type == base.mod.NPCType("AAAA") || target.type == base.mod.NPCType("DarkSoul1") || target.type == base.mod.NPCType("DarkSoul2") || target.type == base.mod.NPCType("DarkSoul3") || target.type == base.mod.NPCType("SkullDigger") || target.type == base.mod.NPCType("WanderingSoul") || target.type == base.mod.NPCType("IrradiatedSpear") || target.type == base.mod.NPCType("SoullessAssassin") || target.type == base.mod.NPCType("SoullessDueller") || target.type == base.mod.NPCType("SoullessWanderer"))
 			{
 				damage *= 3;
 			}

@@ -11,7 +11,7 @@ namespace Redemption.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Hikarite Staff");
-			base.Tooltip.SetDefault("'Emirá, the Emerald Dragon'\nCasts Green Blasts");
+			base.Tooltip.SetDefault("'Emir�, the Emerald Dragon'\nCasts Green Blasts");
 			Item.staff[base.item.type] = true;
 		}
 
@@ -47,9 +47,9 @@ namespace Redemption.Items.Weapons
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			Vector2 vector = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(10f));
-			speedX = vector.X;
-			speedY = vector.Y;
+			Vector2 perturbedSpeed = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(10f));
+			speedX = perturbedSpeed.X;
+			speedY = perturbedSpeed.Y;
 			return true;
 		}
 	}

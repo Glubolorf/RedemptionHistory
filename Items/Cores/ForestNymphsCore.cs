@@ -26,8 +26,8 @@ namespace Redemption.Items.Cores
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
-			druidDamagePlayer.druidDamage += 0.05f;
+			DruidDamagePlayer modPlayer = DruidDamagePlayer.ModPlayer(player);
+			modPlayer.druidDamage += 0.05f;
 			if (player.ZoneOverworldHeight || player.ZoneSkyHeight)
 			{
 				if (Main.dayTime)
@@ -37,7 +37,7 @@ namespace Redemption.Items.Cores
 				}
 				else
 				{
-					druidDamagePlayer.druidDamage *= 0.95f;
+					modPlayer.druidDamage *= 0.95f;
 					player.magicDamage *= 0.95f;
 					player.meleeDamage *= 0.95f;
 					player.minionDamage *= 0.95f;
@@ -47,7 +47,7 @@ namespace Redemption.Items.Cores
 				}
 				if (Main.raining)
 				{
-					druidDamagePlayer.druidDamage *= 1.05f;
+					modPlayer.druidDamage *= 1.05f;
 					player.magicDamage *= 1.05f;
 					player.meleeDamage *= 1.05f;
 					player.minionDamage *= 1.05f;
@@ -70,8 +70,7 @@ namespace Redemption.Items.Cores
 			{
 				player.bleed = true;
 			}
-			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
-			modPlayer.forestFriendly = true;
+			player.GetModPlayer<RedePlayer>().forestFriendly = true;
 		}
 
 		public override void AddRecipes()

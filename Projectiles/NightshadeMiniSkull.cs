@@ -26,10 +26,10 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			int num = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, 27, 0f, 0f, 100, Color.White, 1f);
-			Main.dust[num].velocity *= 0f;
-			Main.dust[num].noLight = false;
-			Main.dust[num].noGravity = true;
+			int dustID = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, 27, 0f, 0f, 100, Color.White, 1f);
+			Main.dust[dustID].velocity *= 0f;
+			Main.dust[dustID].noLight = false;
+			Main.dust[dustID].noGravity = true;
 			base.projectile.localAI[0] += 1f;
 			base.projectile.rotation = (float)Math.Atan2((double)base.projectile.velocity.Y, (double)base.projectile.velocity.X) + 1.57f;
 			Projectile projectile = base.projectile;
@@ -39,8 +39,8 @@ namespace Redemption.Projectiles
 				Projectile.NewProjectile(new Vector2(base.projectile.Center.X, base.projectile.Center.Y), new Vector2(0f, 0f), base.mod.ProjectileType("CloudNightshade2"), 11, 3f, base.projectile.owner, 0f, 1f);
 				for (int i = 0; i < 6; i++)
 				{
-					int num2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 27, 0f, 0f, 100, default(Color), 1.2f);
-					Main.dust[num2].velocity *= 1.4f;
+					int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 27, 0f, 0f, 100, default(Color), 1.2f);
+					Main.dust[dustIndex].velocity *= 1.4f;
 				}
 				base.projectile.Kill();
 			}
@@ -50,22 +50,22 @@ namespace Redemption.Projectiles
 		{
 			for (int i = 0; i < 4; i++)
 			{
-				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 27, 0f, 0f, 100, default(Color), 1.2f);
-				Main.dust[num].velocity *= 1.4f;
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 27, 0f, 0f, 100, default(Color), 1.2f);
+				Main.dust[dustIndex].velocity *= 1.4f;
 			}
 		}
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
 			Player player = Main.player[base.projectile.owner];
-			int crit2 = player.HeldItem.crit;
-			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref crit2);
-			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref crit2);
-			if (crit2 >= 100 || Main.rand.Next(1, 101) <= crit2)
+			int critChance = player.HeldItem.crit;
+			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref critChance);
+			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref critChance);
+			if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
 			{
 				crit = true;
 			}
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).frostburnSeedbag)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().frostburnSeedbag)
 			{
 				target.AddBuff(44, 160, false);
 			}

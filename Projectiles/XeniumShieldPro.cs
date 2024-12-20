@@ -28,15 +28,21 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			if (++base.projectile.frameCounter >= 3)
+			Projectile projectile = base.projectile;
+			int num = projectile.frameCounter + 1;
+			projectile.frameCounter = num;
+			if (num >= 3)
 			{
 				base.projectile.frameCounter = 0;
-				if (++base.projectile.frame >= 4)
+				Projectile projectile2 = base.projectile;
+				num = projectile2.frame + 1;
+				projectile2.frame = num;
+				if (num >= 4)
 				{
 					base.projectile.frame = 0;
 				}
 			}
-			if (!Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).xeniumBarrier)
+			if (!Main.LocalPlayer.GetModPlayer<RedePlayer>().xeniumBarrier)
 			{
 				base.projectile.Kill();
 			}
@@ -49,28 +55,28 @@ namespace Redemption.Projectiles
 			base.projectile.position.Y = player.Center.Y - 50f;
 			if (base.projectile.localAI[0] == 1f)
 			{
-				int num = 74;
-				int num2 = 20;
-				for (int i = 0; i < num2; i++)
+				int dustType = 74;
+				int pieCut = 20;
+				for (int i = 0; i < pieCut; i++)
 				{
-					int num3 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num, 0f, 0f, 100, Color.White, 1.6f);
-					Main.dust[num3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)num2 * 6.28f);
-					Main.dust[num3].noLight = false;
-					Main.dust[num3].noGravity = true;
+					int dustID = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 1.6f);
+					Main.dust[dustID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)pieCut * 6.28f);
+					Main.dust[dustID].noLight = false;
+					Main.dust[dustID].noGravity = true;
 				}
-				for (int j = 0; j < num2; j++)
+				for (int j = 0; j < pieCut; j++)
 				{
-					int num4 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num, 0f, 0f, 100, Color.White, 2f);
-					Main.dust[num4].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(9f, 0f), (float)j / (float)num2 * 6.28f);
-					Main.dust[num4].noLight = false;
-					Main.dust[num4].noGravity = true;
+					int dustID2 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 2f);
+					Main.dust[dustID2].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(9f, 0f), (float)j / (float)pieCut * 6.28f);
+					Main.dust[dustID2].noLight = false;
+					Main.dust[dustID2].noGravity = true;
 				}
-				for (int k = 0; k < num2; k++)
+				for (int k = 0; k < pieCut; k++)
 				{
-					int num5 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num, 0f, 0f, 100, Color.White, 2f);
-					Main.dust[num5].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(12f, 0f), (float)k / (float)num2 * 6.28f);
-					Main.dust[num5].noLight = false;
-					Main.dust[num5].noGravity = true;
+					int dustID3 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 2f);
+					Main.dust[dustID3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(12f, 0f), (float)k / (float)pieCut * 6.28f);
+					Main.dust[dustID3].noLight = false;
+					Main.dust[dustID3].noGravity = true;
 				}
 				Main.PlaySound(SoundID.Item62, (int)base.projectile.position.X, (int)base.projectile.position.Y);
 			}
@@ -82,28 +88,28 @@ namespace Redemption.Projectiles
 
 		public override void Kill(int timeLeft)
 		{
-			int num = 74;
-			int num2 = 20;
-			for (int i = 0; i < num2; i++)
+			int dustType = 74;
+			int pieCut = 20;
+			for (int i = 0; i < pieCut; i++)
 			{
-				int num3 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num, 0f, 0f, 100, Color.White, 1.6f);
-				Main.dust[num3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)num2 * 6.28f);
-				Main.dust[num3].noLight = false;
-				Main.dust[num3].noGravity = true;
+				int dustID = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 1.6f);
+				Main.dust[dustID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)pieCut * 6.28f);
+				Main.dust[dustID].noLight = false;
+				Main.dust[dustID].noGravity = true;
 			}
-			for (int j = 0; j < num2; j++)
+			for (int j = 0; j < pieCut; j++)
 			{
-				int num4 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num, 0f, 0f, 100, Color.White, 2f);
-				Main.dust[num4].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(9f, 0f), (float)j / (float)num2 * 6.28f);
-				Main.dust[num4].noLight = false;
-				Main.dust[num4].noGravity = true;
+				int dustID2 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 2f);
+				Main.dust[dustID2].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(9f, 0f), (float)j / (float)pieCut * 6.28f);
+				Main.dust[dustID2].noLight = false;
+				Main.dust[dustID2].noGravity = true;
 			}
-			for (int k = 0; k < num2; k++)
+			for (int k = 0; k < pieCut; k++)
 			{
-				int num5 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num, 0f, 0f, 100, Color.White, 2f);
-				Main.dust[num5].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(12f, 0f), (float)k / (float)num2 * 6.28f);
-				Main.dust[num5].noLight = false;
-				Main.dust[num5].noGravity = true;
+				int dustID3 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 2f);
+				Main.dust[dustID3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(12f, 0f), (float)k / (float)pieCut * 6.28f);
+				Main.dust[dustID3].noLight = false;
+				Main.dust[dustID3].noGravity = true;
 			}
 			Main.PlaySound(SoundID.Item62, (int)base.projectile.position.X, (int)base.projectile.position.Y);
 		}

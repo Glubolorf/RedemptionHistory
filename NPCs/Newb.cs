@@ -97,6 +97,10 @@ namespace Redemption.NPCs
 
 		public override string GetChat()
 		{
+			if (RedeWorld.downedNebuleus)
+			{
+				return "... I saw what you did.";
+			}
 			switch (Main.rand.Next(6))
 			{
 			case 0:
@@ -117,6 +121,11 @@ namespace Redemption.NPCs
 		public override void SetChatButtons(ref string button, ref string button2)
 		{
 			button = Lang.inter[28].Value;
+			if (RedeWorld.downedNebuleus)
+			{
+				button2 = "...";
+				return;
+			}
 			button2 = "Newb's Blessing";
 		}
 
@@ -127,8 +136,18 @@ namespace Redemption.NPCs
 				shop = true;
 				return;
 			}
+			if (RedeWorld.downedNebuleus)
+			{
+				Main.npcChatText = Newb.SeriousChat();
+				return;
+			}
 			Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 37, 1f, 0f);
 			Main.LocalPlayer.AddBuff(base.mod.BuffType("NoobsBlessingBuff"), 36000, true);
+		}
+
+		public static string SeriousChat()
+		{
+			return "No blessings from me.";
 		}
 
 		public override void SetupShop(Chest shop, ref int nextSlot)
@@ -163,6 +182,24 @@ namespace Redemption.NPCs
 			}
 		}
 
+		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+		{
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D seriousAni = base.mod.GetTexture("NPCs/NewbSerious");
+			int spriteDirection = base.npc.spriteDirection;
+			if (!RedeWorld.downedNebuleus)
+			{
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y - 4f);
+				spriteBatch.Draw(texture, drawCenter - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			}
+			else
+			{
+				Vector2 drawCenter2 = new Vector2(base.npc.Center.X, base.npc.Center.Y - 4f);
+				Main.spriteBatch.Draw(seriousAni, drawCenter2 - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			}
+			return false;
+		}
+
 		public override void TownNPCAttackStrength(ref int damage, ref float knockback)
 		{
 			damage = 18;
@@ -184,5 +221,7 @@ namespace Redemption.NPCs
 		{
 			item = Main.itemTexture[base.mod.ItemType("DirtSword")];
 		}
+
+		private int seriousFrame;
 	}
 }

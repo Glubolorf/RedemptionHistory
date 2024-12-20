@@ -43,8 +43,8 @@ namespace Redemption.NPCs
 			{
 				for (int i = 0; i < 20; i++)
 				{
-					int num = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 89, 0f, 0f, 100, default(Color), 1.5f);
-					Main.dust[num].velocity *= 1.9f;
+					int dustIndex = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 89, 0f, 0f, 100, default(Color), 1.5f);
+					Main.dust[dustIndex].velocity *= 1.9f;
 				}
 			}
 		}
@@ -90,25 +90,23 @@ namespace Redemption.NPCs
 				string text = "The full moon's light reflects the ocean waves...";
 				Color rarityGreen = Colors.RarityGreen;
 				byte r = rarityGreen.R;
-				Color rarityGreen2 = Colors.RarityGreen;
-				byte g = rarityGreen2.G;
-				Color rarityGreen3 = Colors.RarityGreen;
-				Main.NewText(text, r, g, rarityGreen3.B, false);
+				rarityGreen = Colors.RarityGreen;
+				byte g = rarityGreen.G;
+				rarityGreen = Colors.RarityGreen;
+				Main.NewText(text, r, g, rarityGreen.B, false);
 				if (Main.netMode != 1)
 				{
 					int num = Main.rand.Next(2);
 					if (num == 0)
 					{
-						Vector2 vector;
-						vector..ctor((float)Main.rand.Next(-400, -250), (float)Main.rand.Next(-300, -200));
-						base.npc.Center = Main.player[base.npc.target].Center + vector;
+						Vector2 newPos = new Vector2((float)Main.rand.Next(-400, -250), (float)Main.rand.Next(-300, -200));
+						base.npc.Center = Main.player[base.npc.target].Center + newPos;
 						base.npc.netUpdate = true;
 					}
 					if (num == 1)
 					{
-						Vector2 vector2;
-						vector2..ctor((float)Main.rand.Next(250, 400), (float)Main.rand.Next(-300, -200));
-						base.npc.Center = Main.player[base.npc.target].Center + vector2;
+						Vector2 newPos2 = new Vector2((float)Main.rand.Next(250, 400), (float)Main.rand.Next(-300, -200));
+						base.npc.Center = Main.player[base.npc.target].Center + newPos2;
 						base.npc.netUpdate = true;
 					}
 				}
@@ -125,13 +123,13 @@ namespace Redemption.NPCs
 			}
 			if (Main.rand.Next(250) == 0 && this.sunkenTimer > 120 && NPC.CountNPCS(base.mod.NPCType("SunkenDeckhand")) <= 4)
 			{
-				int num2 = NPC.NewNPC((int)(base.npc.position.X + Utils.NextFloat(Main.rand, (float)base.npc.width)), (int)(base.npc.position.Y + Utils.NextFloat(Main.rand, (float)base.npc.width)), base.mod.NPCType("SunkenDeckhand"), 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[num2].netUpdate = true;
+				int minion = NPC.NewNPC((int)(base.npc.position.X + Utils.NextFloat(Main.rand, (float)base.npc.width)), (int)(base.npc.position.Y + Utils.NextFloat(Main.rand, (float)base.npc.width)), base.mod.NPCType("SunkenDeckhand"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.npc[minion].netUpdate = true;
 			}
 			if (Main.rand.Next(250) == 0 && this.sunkenTimer > 120 && NPC.CountNPCS(base.mod.NPCType("SunkenParrot")) <= 2)
 			{
-				int num3 = NPC.NewNPC((int)(base.npc.position.X + Utils.NextFloat(Main.rand, (float)base.npc.width)), (int)(base.npc.position.Y + Utils.NextFloat(Main.rand, (float)base.npc.width)), base.mod.NPCType("SunkenParrot"), 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[num3].netUpdate = true;
+				int minion2 = NPC.NewNPC((int)(base.npc.position.X + Utils.NextFloat(Main.rand, (float)base.npc.width)), (int)(base.npc.position.Y + Utils.NextFloat(Main.rand, (float)base.npc.width)), base.mod.NPCType("SunkenParrot"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.npc[minion2].netUpdate = true;
 			}
 			if (Main.rand.Next(80) == 0 && Main.netMode != 1)
 			{

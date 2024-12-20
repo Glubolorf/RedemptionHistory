@@ -45,18 +45,18 @@ namespace Redemption.NPCs
 			{
 				for (int i = 0; i < 40; i++)
 				{
-					int num = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 235, 0f, 0f, 100, default(Color), 1.5f);
-					Main.dust[num].velocity *= 1.9f;
+					int dustIndex = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 235, 0f, 0f, 100, default(Color), 1.5f);
+					Main.dust[dustIndex].velocity *= 1.9f;
 				}
 				for (int j = 0; j < 25; j++)
 				{
-					int num2 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 6, 0f, 0f, 100, default(Color), 1.2f);
-					Main.dust[num2].velocity *= 1.8f;
+					int dustIndex2 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 6, 0f, 0f, 100, default(Color), 1.2f);
+					Main.dust[dustIndex2].velocity *= 1.8f;
 				}
 				for (int k = 0; k < 15; k++)
 				{
-					int num3 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 31, 0f, 0f, 100, default(Color), 1.2f);
-					Main.dust[num3].velocity *= 1.8f;
+					int dustIndex3 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 31, 0f, 0f, 100, default(Color), 1.2f);
+					Main.dust[dustIndex3].velocity *= 1.8f;
 				}
 			}
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 226, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
@@ -82,15 +82,15 @@ namespace Redemption.NPCs
 				if (base.npc.life > 7000 && this.timer >= 50)
 				{
 					Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-					int num = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 30f), new Vector2(10f, -4f), base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
-					Main.projectile[num].netUpdate = true;
+					int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 30f), new Vector2(10f, -4f), base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+					Main.projectile[p].netUpdate = true;
 					this.timer = 0;
 				}
 				if (base.npc.life <= 7000 && this.timer >= 30)
 				{
 					Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-					int num2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 30f), new Vector2(10f, -4f), base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
-					Main.projectile[num2].netUpdate = true;
+					int p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 30f), new Vector2(10f, -4f), base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+					Main.projectile[p2].netUpdate = true;
 					this.timer = 0;
 				}
 			}
@@ -99,15 +99,15 @@ namespace Redemption.NPCs
 				if (base.npc.life > 3500 && this.timer >= 50)
 				{
 					Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-					int num3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 30f), new Vector2(10f, -4f), base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
-					Main.projectile[num3].netUpdate = true;
+					int p3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 30f), new Vector2(10f, -4f), base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+					Main.projectile[p3].netUpdate = true;
 					this.timer = 0;
 				}
 				if (base.npc.life <= 3500 && this.timer >= 30)
 				{
 					Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-					int num4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 30f), new Vector2(10f, -4f), base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
-					Main.projectile[num4].netUpdate = true;
+					int p4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 30f), new Vector2(10f, -4f), base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+					Main.projectile[p4].netUpdate = true;
 					this.timer = 0;
 				}
 			}
@@ -116,8 +116,8 @@ namespace Redemption.NPCs
 			{
 				for (int i = 0; i < 50; i++)
 				{
-					int num5 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 235, 0f, 0f, 100, default(Color), 1.5f);
-					Main.dust[num5].velocity *= 1.9f;
+					int dustIndex = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 235, 0f, 0f, 100, default(Color), 1.5f);
+					Main.dust[dustIndex].velocity *= 1.9f;
 				}
 			}
 		}
@@ -130,21 +130,20 @@ namespace Redemption.NPCs
 		private void Move(Vector2 offset)
 		{
 			this.speed = 20f;
-			Vector2 vector = this.player.Center + offset;
-			Vector2 vector2 = vector - base.npc.Center;
-			float num = this.Magnitude(vector2);
-			if (num > this.speed)
+			Vector2 move = this.player.Center + offset - base.npc.Center;
+			float magnitude = this.Magnitude(move);
+			if (magnitude > this.speed)
 			{
-				vector2 *= this.speed / num;
+				move *= this.speed / magnitude;
 			}
-			float num2 = 10f;
-			vector2 = (base.npc.velocity * num2 + vector2) / (num2 + 1f);
-			num = this.Magnitude(vector2);
-			if (num > this.speed)
+			float turnResistance = 10f;
+			move = (base.npc.velocity * turnResistance + move) / (turnResistance + 1f);
+			magnitude = this.Magnitude(move);
+			if (magnitude > this.speed)
 			{
-				vector2 *= this.speed / num;
+				move *= this.speed / magnitude;
 			}
-			base.npc.velocity = vector2;
+			base.npc.velocity = move;
 		}
 
 		private void DespawnHandler()
@@ -160,6 +159,7 @@ namespace Redemption.NPCs
 					{
 						base.npc.timeLeft = 10;
 					}
+					return;
 				}
 			}
 		}

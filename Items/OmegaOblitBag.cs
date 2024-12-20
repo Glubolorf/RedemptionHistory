@@ -11,14 +11,14 @@ namespace Redemption.Items
 		{
 			if (Main.netMode != 2)
 			{
-				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
 				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
 				{
-					array[i] = Main.glowMaskTexture[i];
+					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				array[array.Length - 1] = base.mod.GetTexture("Items/" + base.GetType().Name + "_Glow");
-				OmegaOblitBag.customGlowMask = (short)(array.Length - 1);
-				Main.glowMaskTexture = array;
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Items/" + base.GetType().Name + "_Glow");
+				OmegaOblitBag.customGlowMask = (short)(glowMasks.Length - 1);
+				Main.glowMaskTexture = glowMasks;
 			}
 			base.DisplayName.SetDefault("Treasure Bag");
 			base.Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
@@ -32,13 +32,20 @@ namespace Redemption.Items
 			base.item.height = 24;
 			base.item.rare = 10;
 			base.item.expert = true;
-			this.bossBagNPC = base.mod.NPCType("OmegaOblitDamaged");
 			base.item.glowMask = OmegaOblitBag.customGlowMask;
 		}
 
 		public override bool CanRightClick()
 		{
 			return true;
+		}
+
+		public override int BossBagNPC
+		{
+			get
+			{
+				return base.mod.NPCType("OmegaOblitDamaged");
+			}
 		}
 
 		public override void OpenBossBag(Player player)
@@ -62,6 +69,7 @@ namespace Redemption.Items
 			player.QuickSpawnItem(base.mod.ItemType("CorruptedXenomite"), Main.rand.Next(30, 40));
 			player.QuickSpawnItem(base.mod.ItemType("VlitchBattery"), Main.rand.Next(4, 6));
 			player.QuickSpawnItem(base.mod.ItemType("OblitBrain"), 1);
+			player.QuickSpawnItem(base.mod.ItemType("ObliterationDrive"), 1);
 		}
 
 		public static short customGlowMask;

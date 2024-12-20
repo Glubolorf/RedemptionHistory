@@ -12,14 +12,14 @@ namespace Redemption.Projectiles
 		{
 			if (Main.netMode != 2)
 			{
-				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
 				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
 				{
-					array[i] = Main.glowMaskTexture[i];
+					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				array[array.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
-				GirusLancePro2.customGlowMask = (short)(array.Length - 1);
-				Main.glowMaskTexture = array;
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
+				GirusLancePro2.customGlowMask = (short)(glowMasks.Length - 1);
+				Main.glowMaskTexture = glowMasks;
 			}
 			base.DisplayName.SetDefault("Girus Lance");
 		}
@@ -60,17 +60,17 @@ namespace Redemption.Projectiles
 		public override void Kill(int timeLeft)
 		{
 			Main.PlaySound(0, (int)base.projectile.position.X, (int)base.projectile.position.Y, 1, 1f, 0f);
-			Vector2 vector = base.projectile.position;
-			Vector2 vector2 = Utils.ToRotationVector2(base.projectile.rotation - MathHelper.ToRadians(90f));
-			vector += vector2 * 16f;
+			Vector2 usePos = base.projectile.position;
+			Vector2 rotVector = Utils.ToRotationVector2(base.projectile.rotation - MathHelper.ToRadians(90f));
+			usePos += rotVector * 16f;
 			for (int i = 0; i < 20; i++)
 			{
-				Dust dust = Dust.NewDustDirect(vector, base.projectile.width, base.projectile.height, 235, 0f, 0f, 0, default(Color), 1f);
+				Dust dust = Dust.NewDustDirect(usePos, base.projectile.width, base.projectile.height, 235, 0f, 0f, 0, default(Color), 1f);
 				dust.position = (dust.position + base.projectile.Center) / 2f;
-				dust.velocity += vector2 * 2f;
+				dust.velocity += rotVector * 2f;
 				dust.velocity *= 0.5f;
 				dust.noGravity = true;
-				vector -= vector2 * 8f;
+				usePos -= rotVector * 8f;
 			}
 		}
 

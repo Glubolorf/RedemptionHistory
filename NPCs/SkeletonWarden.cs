@@ -34,7 +34,7 @@ namespace Redemption.NPCs
 
 		public override void AI()
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).skeletonFriendly)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().skeletonFriendly)
 			{
 				base.npc.aiStyle = 3;
 				this.aiType = 3;
@@ -68,7 +68,7 @@ namespace Redemption.NPCs
 
 		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
 		{
-			return !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).skeletonFriendly;
+			return !Main.LocalPlayer.GetModPlayer<RedePlayer>().skeletonFriendly;
 		}
 	}
 }

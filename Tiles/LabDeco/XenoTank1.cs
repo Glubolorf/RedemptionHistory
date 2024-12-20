@@ -34,9 +34,9 @@ namespace Redemption.Tiles.LabDeco
 			this.minPick = 200;
 			this.mineResist = 3f;
 			this.disableSmartCursor = true;
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Xenium Refinery");
-			base.AddMapEntry(new Color(120, 170, 120), modTranslation);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Xenium Refinery");
+			base.AddMapEntry(new Color(120, 170, 120), name);
 		}
 
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

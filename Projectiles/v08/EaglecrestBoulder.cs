@@ -32,11 +32,11 @@ namespace Redemption.Projectiles.v08
 			base.projectile.localAI[0] += 1f;
 			if (base.projectile.localAI[0] >= 60f)
 			{
-				int num = 8;
-				for (int i = 0; i < num; i++)
+				int pieCut = 8;
+				for (int i = 0; i < pieCut; i++)
 				{
-					int num2 = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, base.mod.ProjectileType("AncientBeam1"), base.projectile.damage, 4f, Main.myPlayer, 0f, 0f);
-					Main.projectile[num2].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(12f, 0f), (float)i / (float)num * 6.28f);
+					int projID = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, base.mod.ProjectileType("AncientBeam1"), base.projectile.damage, 4f, Main.myPlayer, 0f, 0f);
+					Main.projectile[projID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(12f, 0f), (float)i / (float)pieCut * 6.28f);
 				}
 				base.projectile.localAI[0] = 0f;
 			}
@@ -46,8 +46,8 @@ namespace Redemption.Projectiles.v08
 		{
 			for (int i = 0; i < 15; i++)
 			{
-				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 1, 0f, 0f, 100, default(Color), 1.5f);
-				Main.dust[num].velocity *= 1.9f;
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 1, 0f, 0f, 100, default(Color), 1.5f);
+				Main.dust[dustIndex].velocity *= 1.9f;
 			}
 		}
 	}

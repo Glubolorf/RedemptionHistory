@@ -33,18 +33,17 @@ namespace Redemption.Items.Armor.PostML
 			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
 			druidDamagePlayer.druidDamage += 0.1f;
 			druidDamagePlayer.druidCrit += 15;
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.moreSpirits = true;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).moreSpirits = true;
 			player.slowFall = true;
 		}
 
 		public override void ModifyTooltips(List<TooltipLine> list)
 		{
-			foreach (TooltipLine tooltipLine in list)
+			foreach (TooltipLine line2 in list)
 			{
-				if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+				if (line2.mod == "Terraria" && line2.Name == "ItemName")
 				{
-					tooltipLine.overrideColor = new Color?(RedeColor.SoullessColour);
+					line2.overrideColor = new Color?(RedeColor.SoullessColour);
 				}
 			}
 		}

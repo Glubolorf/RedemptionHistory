@@ -12,14 +12,14 @@ namespace Redemption.Items.Weapons
 		{
 			if (Main.netMode != 2)
 			{
-				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
 				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
 				{
-					array[i] = Main.glowMaskTexture[i];
+					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
-				DragonLeadStaff.customGlowMask = (short)(array.Length - 1);
-				Main.glowMaskTexture = array;
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				DragonLeadStaff.customGlowMask = (short)(glowMasks.Length - 1);
+				Main.glowMaskTexture = glowMasks;
 			}
 			base.item.glowMask = DragonLeadStaff.customGlowMask;
 			base.DisplayName.SetDefault("Dragon Slayer's Greatstaff");
@@ -29,7 +29,7 @@ namespace Redemption.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 58;
+			base.item.damage = 40;
 			base.item.magic = true;
 			base.item.mana = 12;
 			base.item.width = 56;
@@ -60,7 +60,7 @@ namespace Redemption.Items.Weapons
 
 		public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
 		{
-			if (target.type == 551)
+			if (target.type == 551 || target.type == 558 || target.type == 559 || target.type == 560 || target.type == 170 || target.type == 180 || target.type == 171 || target.type == 370 || target.type == base.mod.NPCType("GreenPigron"))
 			{
 				damage *= 50;
 			}
@@ -68,35 +68,7 @@ namespace Redemption.Items.Weapons
 			{
 				damage *= 50;
 			}
-			if (target.type == 558)
-			{
-				damage *= 50;
-			}
-			if (target.type == 559)
-			{
-				damage *= 50;
-			}
-			if (target.type == 560)
-			{
-				damage *= 50;
-			}
 			if (target.type >= 454 && target.type <= 459)
-			{
-				damage *= 50;
-			}
-			if (target.type == 170)
-			{
-				damage *= 50;
-			}
-			if (target.type == 180)
-			{
-				damage *= 50;
-			}
-			if (target.type == 171)
-			{
-				damage *= 50;
-			}
-			if (target.type == 370)
 			{
 				damage *= 50;
 			}

@@ -62,11 +62,11 @@ namespace Redemption.NPCs.Bosses.XenomiteCrystal
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/XenomiteGore"), 1f);
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/XenomiteGore"), 1f);
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/XenomiteGore"), 1f);
-				for (int i = 0; i < 35; i++)
+				for (int num67 = 0; num67 < 35; num67++)
 				{
-					int num = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 3.5f);
-					Main.dust[num].velocity *= 3f;
-					Main.dust[num].noGravity = true;
+					int num68 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 3.5f);
+					Main.dust[num68].velocity *= 3f;
+					Main.dust[num68].noGravity = true;
 				}
 			}
 		}
@@ -74,7 +74,10 @@ namespace Redemption.NPCs.Bosses.XenomiteCrystal
 		public override bool CheckDead()
 		{
 			base.npc.SetDefaults(base.mod.NPCType("XenomiteCrystalPhase2"), -1f);
-			Main.NewText("The crystal has shattered...", Color.ForestGreen.R, Color.ForestGreen.G, Color.ForestGreen.B, false);
+			if (!RedeConfigClient.Instance.NoBossText)
+			{
+				Main.NewText("The crystal has shattered...", Color.ForestGreen.R, Color.ForestGreen.G, Color.ForestGreen.B, false);
+			}
 			return false;
 		}
 
@@ -107,7 +110,7 @@ namespace Redemption.NPCs.Bosses.XenomiteCrystal
 			this.Target();
 			this.DespawnHandler();
 			base.npc.ai[0] += 1f;
-			Player player = Main.player[base.npc.target];
+			Player P = Main.player[base.npc.target];
 			if (base.npc.target < 0 || base.npc.target == 255 || Main.player[base.npc.target].dead || !Main.player[base.npc.target].active)
 			{
 				base.npc.TargetClosest(true);
@@ -127,11 +130,11 @@ namespace Redemption.NPCs.Bosses.XenomiteCrystal
 			}
 			if (base.npc.ai[3] == 120f)
 			{
-				for (int i = 0; i < 25; i++)
+				for (int num67 = 0; num67 < 25; num67++)
 				{
-					int num = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 3.5f);
-					Main.dust[num].velocity *= 3f;
-					Main.dust[num].noGravity = true;
+					int num68 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 3.5f);
+					Main.dust[num68].velocity *= 3f;
+					Main.dust[num68].noGravity = true;
 				}
 			}
 			if (this.beginFight)
@@ -140,24 +143,23 @@ namespace Redemption.NPCs.Bosses.XenomiteCrystal
 				base.npc.ai[2] += 1f;
 				if (base.npc.ai[1] == 280f)
 				{
-					float num2 = 8f;
-					Vector2 vector;
-					vector..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num3 = 18;
-					int num4 = base.mod.ProjectileType("ShardShot1");
-					float num5 = (float)Math.Atan2((double)(vector.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector.X - (player.position.X + (float)player.width * 0.5f)));
-					int num6 = Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num5) * (double)num2 * -1.0), (float)(Math.Sin((double)num5) * (double)num2 * -1.0), num4, num3, 0f, 0, 0f, 0f);
-					int num7 = Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num5) * (double)num2 * -1.0) + -1f, (float)(Math.Sin((double)num5) * (double)num2 * -1.0) + -1f, num4, num3, 0f, 0, 0f, 0f);
-					int num8 = Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num5) * (double)num2 * -1.0) + 1f, (float)(Math.Sin((double)num5) * (double)num2 * -1.0) + 1f, num4, num3, 0f, 0, 0f, 0f);
-					Main.projectile[num6].netUpdate = true;
-					Main.projectile[num7].netUpdate = true;
-					Main.projectile[num8].netUpdate = true;
+					float Speed = 8f;
+					Vector2 vector8 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
+					int damage = 18;
+					int type = base.mod.ProjectileType("ShardShot1");
+					float rotation = (float)Math.Atan2((double)(vector8.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector8.X - (P.position.X + (float)P.width * 0.5f)));
+					int num69 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
+					int num70 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0) + -1f, (float)(Math.Sin((double)rotation) * (double)Speed * -1.0) + -1f, type, damage, 0f, 0, 0f, 0f);
+					int num71 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0) + 1f, (float)(Math.Sin((double)rotation) * (double)Speed * -1.0) + 1f, type, damage, 0f, 0, 0f, 0f);
+					Main.projectile[num69].netUpdate = true;
+					Main.projectile[num70].netUpdate = true;
+					Main.projectile[num71].netUpdate = true;
 					if (base.npc.life < (int)((float)base.npc.lifeMax * 0.5f))
 					{
-						int num9 = Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num5) * (double)num2 * -1.0) + -2f, (float)(Math.Sin((double)num5) * (double)num2 * -1.0) + -1f, num4, num3, 0f, 0, 0f, 0f);
-						int num10 = Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num5) * (double)num2 * -1.0) + 2f, (float)(Math.Sin((double)num5) * (double)num2 * -1.0) + 1f, num4, num3, 0f, 0, 0f, 0f);
-						Main.projectile[num9].netUpdate = true;
-						Main.projectile[num10].netUpdate = true;
+						int num72 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0) + -2f, (float)(Math.Sin((double)rotation) * (double)Speed * -1.0) + -1f, type, damage, 0f, 0, 0f, 0f);
+						int num73 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0) + 2f, (float)(Math.Sin((double)rotation) * (double)Speed * -1.0) + 1f, type, damage, 0f, 0, 0f, 0f);
+						Main.projectile[num72].netUpdate = true;
+						Main.projectile[num73].netUpdate = true;
 					}
 				}
 				if (Main.expertMode)
@@ -166,18 +168,18 @@ namespace Redemption.NPCs.Bosses.XenomiteCrystal
 					{
 						if (base.npc.life < (int)((float)base.npc.lifeMax * 0.5f))
 						{
-							for (int j = 0; j < 12; j++)
+							for (int i = 0; i < 12; i++)
 							{
-								int num11 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("ShardShot2"), 40, 3f, 255, 0f, 0f);
-								Main.projectile[num11].netUpdate = true;
+								int p = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("ShardShot2"), 17, 3f, 255, 0f, 0f);
+								Main.projectile[p].netUpdate = true;
 							}
 						}
 						else
 						{
-							for (int k = 0; k < 8; k++)
+							for (int j = 0; j < 8; j++)
 							{
-								int num12 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("ShardShot2"), 40, 3f, 255, 0f, 0f);
-								Main.projectile[num12].netUpdate = true;
+								int p2 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("ShardShot2"), 17, 3f, 255, 0f, 0f);
+								Main.projectile[p2].netUpdate = true;
 							}
 						}
 						base.npc.ai[1] = 0f;
@@ -189,55 +191,54 @@ namespace Redemption.NPCs.Bosses.XenomiteCrystal
 				}
 				if (base.npc.ai[2] >= 300f)
 				{
-					float num13 = 12f;
-					Vector2 vector2;
-					vector2..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num14 = 17;
-					int num15 = base.mod.ProjectileType("XenomiteFragmentPro");
-					float num16 = (float)Math.Atan2((double)(vector2.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector2.X - (player.position.X + (float)player.width * 0.5f)));
-					int num17 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num16) * (double)num13 * -1.0), (float)(Math.Sin((double)num16) * (double)num13 * -1.0), num15, num14, 0f, 0, 0f, 0f);
-					Main.projectile[num17].netUpdate = true;
+					float Speed2 = 12f;
+					Vector2 vector9 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
+					int damage2 = 17;
+					int type2 = base.mod.ProjectileType("XenomiteFragmentPro");
+					float rotation2 = (float)Math.Atan2((double)(vector9.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector9.X - (P.position.X + (float)P.width * 0.5f)));
+					int num74 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0), type2, damage2, 0f, 0, 0f, 0f);
+					Main.projectile[num74].netUpdate = true;
 					base.npc.ai[2] = 0f;
 				}
 				if (base.npc.life < 4000 && base.npc.life >= 2000)
 				{
 					if (Main.rand.Next(150) == 0)
 					{
-						int num18 = NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("XenomitePiece"), 0, 0f, 0f, 0f, 0f, 255);
-						Main.npc[num18].netUpdate = true;
+						int Minion = NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("XenomitePiece"), 0, 0f, 0f, 0f, 0f, 255);
+						Main.npc[Minion].netUpdate = true;
 					}
 				}
 				else if (base.npc.life < 2000 && Main.rand.Next(100) == 0)
 				{
-					int num19 = NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("XenomitePiece"), 0, 0f, 0f, 0f, 0f, 255);
-					Main.npc[num19].netUpdate = true;
+					int Minion2 = NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("XenomitePiece"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[Minion2].netUpdate = true;
 				}
 				if (base.npc.life < 4000)
 				{
 					this.customAI[0] += 1f;
 					if (this.customAI[0] == 600f)
 					{
-						int num20 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(0f, -5f), base.mod.ProjectileType("XenomiteFragmentPro"), 17, 3f, 255, 0f, 0f);
-						int num21 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(0f, 5f), base.mod.ProjectileType("XenomiteFragmentPro"), 17, 3f, 255, 0f, 0f);
-						int num22 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(-5f, 0f), base.mod.ProjectileType("XenomiteFragmentPro"), 17, 3f, 255, 0f, 0f);
-						int num23 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(5f, 0f), base.mod.ProjectileType("XenomiteFragmentPro"), 17, 3f, 255, 0f, 0f);
-						Main.projectile[num20].netUpdate = true;
-						Main.projectile[num21].netUpdate = true;
-						Main.projectile[num22].netUpdate = true;
-						Main.projectile[num23].netUpdate = true;
+						int p3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(0f, -5f), base.mod.ProjectileType("XenomiteFragmentPro"), 17, 3f, 255, 0f, 0f);
+						int p4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(0f, 5f), base.mod.ProjectileType("XenomiteFragmentPro"), 17, 3f, 255, 0f, 0f);
+						int p5 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(-5f, 0f), base.mod.ProjectileType("XenomiteFragmentPro"), 17, 3f, 255, 0f, 0f);
+						int p6 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(5f, 0f), base.mod.ProjectileType("XenomiteFragmentPro"), 17, 3f, 255, 0f, 0f);
+						Main.projectile[p3].netUpdate = true;
+						Main.projectile[p4].netUpdate = true;
+						Main.projectile[p5].netUpdate = true;
+						Main.projectile[p6].netUpdate = true;
 						this.customAI[0] = 0f;
 					}
 				}
 				if (base.npc.life < 3000 && this.customAI[0] == 300f)
 				{
-					int num24 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(5f, 5f), base.mod.ProjectileType("XenomiteFragmentPro"), 17, 3f, 255, 0f, 0f);
-					int num25 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(5f, -5f), base.mod.ProjectileType("XenomiteFragmentPro"), 17, 3f, 255, 0f, 0f);
-					int num26 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(-5f, 5f), base.mod.ProjectileType("XenomiteFragmentPro"), 17, 3f, 255, 0f, 0f);
-					int num27 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(-5f, -5f), base.mod.ProjectileType("XenomiteFragmentPro"), 17, 3f, 255, 0f, 0f);
-					Main.projectile[num24].netUpdate = true;
-					Main.projectile[num25].netUpdate = true;
-					Main.projectile[num26].netUpdate = true;
-					Main.projectile[num27].netUpdate = true;
+					int p7 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(5f, 5f), base.mod.ProjectileType("XenomiteFragmentPro"), 17, 3f, 255, 0f, 0f);
+					int p8 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(5f, -5f), base.mod.ProjectileType("XenomiteFragmentPro"), 17, 3f, 255, 0f, 0f);
+					int p9 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(-5f, 5f), base.mod.ProjectileType("XenomiteFragmentPro"), 17, 3f, 255, 0f, 0f);
+					int p10 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(-5f, -5f), base.mod.ProjectileType("XenomiteFragmentPro"), 17, 3f, 255, 0f, 0f);
+					Main.projectile[p7].netUpdate = true;
+					Main.projectile[p8].netUpdate = true;
+					Main.projectile[p9].netUpdate = true;
+					Main.projectile[p10].netUpdate = true;
 				}
 			}
 			if (Main.rand.Next(2) == 0)
@@ -264,6 +265,7 @@ namespace Redemption.NPCs.Bosses.XenomiteCrystal
 					{
 						base.npc.timeLeft = 10;
 					}
+					return;
 				}
 			}
 		}

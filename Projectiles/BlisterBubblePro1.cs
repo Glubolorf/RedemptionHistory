@@ -32,8 +32,8 @@ namespace Redemption.Projectiles
 			Main.PlaySound(SoundID.Item54, base.projectile.position);
 			for (int i = 0; i < 10; i++)
 			{
-				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 256, 0f, 0f, 100, default(Color), 2f);
-				Main.dust[num].velocity *= 1.9f;
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 256, 0f, 0f, 100, default(Color), 2f);
+				Main.dust[dustIndex].velocity *= 1.9f;
 			}
 		}
 
@@ -41,10 +41,10 @@ namespace Redemption.Projectiles
 		{
 			if (Main.netMode != 1)
 			{
-				int num = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, base.mod.NPCType("Blisterling"), 0, 0f, 0f, 0f, 0f, 255);
+				int i = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, base.mod.NPCType("Blisterling"), 0, 0f, 0f, 0f, 0f, 255);
 				if (Main.netMode == 2)
 				{
-					NetMessage.SendData(23, -1, -1, null, num, 0f, 0f, 0f, 0, 0, 0);
+					NetMessage.SendData(23, -1, -1, null, i, 0f, 0f, 0f, 0, 0, 0);
 				}
 			}
 			base.projectile.Kill();

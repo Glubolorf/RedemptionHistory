@@ -46,9 +46,8 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 		public override void UpdateArmorSet(Player player)
 		{
 			player.setBonus = "Forms crimson thorns behind your feet";
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.scarletBonus = true;
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).scarletBonus && Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y) > 1f && !player.rocketFrame)
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).scarletBonus = true;
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().scarletBonus && Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y) > 1f && !player.rocketFrame)
 			{
 				for (int i = 0; i < 1; i++)
 				{

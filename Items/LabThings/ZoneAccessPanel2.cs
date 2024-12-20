@@ -19,7 +19,7 @@ namespace Redemption.Items.LabThings
 
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Lab Access Panel - Beta");
+			base.DisplayName.SetDefault("(Old) Lab Access Panel - Beta");
 			BaseUtility.AddTooltips(base.item, new string[]
 			{
 				"Opens up the beta sector of the lab"
@@ -46,25 +46,24 @@ namespace Redemption.Items.LabThings
 				return true;
 			}
 			RedeWorld.labAccess2 = true;
-			string text = "Mods.Redemption.Lasers2";
-			Color cyan = Color.Cyan;
+			string key = "Mods.Redemption.Lasers2";
+			Color messageColor = Color.Cyan;
 			if (Main.netMode == 2)
 			{
-				NetMessage.BroadcastChatMessage(NetworkText.FromKey(text, new object[0]), cyan, -1);
+				NetMessage.BroadcastChatMessage(NetworkText.FromKey(key, new object[0]), messageColor, -1);
 			}
 			else if (Main.netMode == 0)
 			{
-				Main.NewText("Beta sector laser security has been deactivated", cyan, false);
+				Main.NewText("Beta sector laser security has been deactivated", messageColor, false);
 			}
-			Mod inst = Redemption.inst;
-			Dictionary<Color, int> dictionary = new Dictionary<Color, int>();
-			dictionary[new Color(220, 255, 255)] = inst.TileType("DeactivatedLaserTile");
-			dictionary[new Color(255, 0, 0)] = inst.TileType("DeactivatedLaserV2Tile");
-			dictionary[Color.Black] = -1;
-			TexGen texGenerator = BaseWorldGenTex.GetTexGenerator(inst.GetTexture("WorldGeneration/LabAccess2"), dictionary, null, null, null, null);
-			Point point;
-			point..ctor((int)((float)Main.maxTilesX * 0.6f), (int)((float)Main.maxTilesY * 0.65f));
-			texGenerator.Generate(point.X, point.Y, true, true);
+			Mod mod = Redemption.inst;
+			Dictionary<Color, int> colorToTile = new Dictionary<Color, int>();
+			colorToTile[new Color(220, 255, 255)] = mod.TileType("DeactivatedLaserTile");
+			colorToTile[new Color(255, 0, 0)] = mod.TileType("DeactivatedLaserV2Tile");
+			colorToTile[Color.Black] = -1;
+			TexGen texGenerator = BaseWorldGenTex.GetTexGenerator(mod.GetTexture("WorldGeneration/LabAccess2"), colorToTile, null, null, null, null);
+			Point origin = new Point((int)((float)Main.maxTilesX * 0.6f), (int)((float)Main.maxTilesY * 0.65f));
+			texGenerator.Generate(origin.X, origin.Y, true, true);
 			if (Main.netMode == 2)
 			{
 				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);

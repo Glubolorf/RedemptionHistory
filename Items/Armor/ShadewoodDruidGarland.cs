@@ -14,7 +14,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Shadedruid's Garland");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n3% increased druidic damage\n4% increased druidic critical strike chance");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n5% increased druidic damage\n4% increased druidic critical strike chance");
 		}
 
 		public override void SetDefaults()
@@ -23,13 +23,13 @@ namespace Redemption.Items.Armor
 			base.item.height = 26;
 			base.item.value = 1050;
 			base.item.rare = 1;
-			base.item.defense = 5;
+			base.item.defense = 4;
 		}
 
 		public override void UpdateEquip(Player player)
 		{
 			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
-			druidDamagePlayer.druidDamage += 0.03f;
+			druidDamagePlayer.druidDamage += 0.05f;
 			druidDamagePlayer.druidCrit += 4;
 		}
 
@@ -41,8 +41,7 @@ namespace Redemption.Items.Armor
 		public override void UpdateArmorSet(Player player)
 		{
 			player.setBonus = "Throws seedbags faster & Thorns effect";
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.fasterSeedbags = true;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).fasterSeedbags = true;
 			player.thorns = 1f;
 		}
 

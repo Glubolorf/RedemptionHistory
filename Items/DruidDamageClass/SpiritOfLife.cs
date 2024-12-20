@@ -27,10 +27,8 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
-			druidDamagePlayer.druidDamage += 0.1f;
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.spiritChicken = true;
+			DruidDamagePlayer.ModPlayer(player).druidDamage += 0.1f;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).spiritChicken = true;
 		}
 	}
 }

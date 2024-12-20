@@ -38,9 +38,9 @@ namespace Redemption.NPCs
 			{
 				for (int i = 0; i < 10; i++)
 				{
-					int num = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 173, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 20, default(Color), 3f);
-					Main.dust[num].noGravity = true;
-					Main.dust[num].velocity *= 1.9f;
+					int dustIndex = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 173, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 20, default(Color), 3f);
+					Main.dust[dustIndex].noGravity = true;
+					Main.dust[dustIndex].velocity *= 1.9f;
 				}
 			}
 		}
@@ -57,8 +57,8 @@ namespace Redemption.NPCs
 		{
 			if (Main.rand.Next(1) == 0)
 			{
-				int num = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 173, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 20, default(Color), 3f);
-				Main.dust[num].noGravity = true;
+				int dust = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 173, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 20, default(Color), 3f);
+				Main.dust[dust].noGravity = true;
 			}
 			this.deathTimer++;
 			if (this.deathTimer >= 600)

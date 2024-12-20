@@ -51,8 +51,7 @@ namespace Redemption.Items.Armor.PostML
 		public override void UpdateArmorSet(Player player)
 		{
 			player.setBonus = "Getting hit has a chance to unleash a burst of Shadesouls that damage enemies and buff allies";
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.shadeSet = true;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).shadeSet = true;
 		}
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
@@ -62,11 +61,11 @@ namespace Redemption.Items.Armor.PostML
 
 		public override void ModifyTooltips(List<TooltipLine> list)
 		{
-			foreach (TooltipLine tooltipLine in list)
+			foreach (TooltipLine line2 in list)
 			{
-				if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+				if (line2.mod == "Terraria" && line2.Name == "ItemName")
 				{
-					tooltipLine.overrideColor = new Color?(RedeColor.SoullessColour);
+					line2.overrideColor = new Color?(RedeColor.SoullessColour);
 				}
 			}
 		}

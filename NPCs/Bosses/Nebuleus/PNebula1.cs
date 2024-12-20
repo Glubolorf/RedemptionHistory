@@ -28,17 +28,17 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 
 		public override void AI()
 		{
-			int num = 58;
-			int num2 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num, 0f, 0f, 100, Color.White, 2.2f);
-			Main.dust[num2].velocity *= 0f;
-			Main.dust[num2].noLight = false;
-			Main.dust[num2].noGravity = true;
+			int dustType = 58;
+			int dustID = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 2.2f);
+			Main.dust[dustID].velocity *= 0f;
+			Main.dust[dustID].noLight = false;
+			Main.dust[dustID].noGravity = true;
 			if (this.proType != 0)
 			{
-				num2 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f) - base.projectile.velocity, 2, 2, num, 0f, 0f, 100, Color.White, 2f);
-				Main.dust[num2].velocity *= 0f;
-				Main.dust[num2].noLight = false;
-				Main.dust[num2].noGravity = true;
+				dustID = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f) - base.projectile.velocity, 2, 2, dustType, 0f, 0f, 100, Color.White, 2f);
+				Main.dust[dustID].velocity *= 0f;
+				Main.dust[dustID].noLight = false;
+				Main.dust[dustID].noGravity = true;
 			}
 			if (this.originalVelocity == Vector2.Zero)
 			{
@@ -64,8 +64,8 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 						this.offsetLeft = true;
 					}
 				}
-				float num3 = BaseUtility.RotationTo(base.projectile.Center, base.projectile.Center + this.originalVelocity);
-				base.projectile.velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(base.projectile.velocity.Length(), 0f), num3 + this.vectorOffset * 0.5f);
+				float velRot = BaseUtility.RotationTo(base.projectile.Center, base.projectile.Center + this.originalVelocity);
+				base.projectile.velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(base.projectile.velocity.Length(), 0f), velRot + this.vectorOffset * 0.5f);
 			}
 			base.projectile.rotation = BaseUtility.RotationTo(base.projectile.Center, base.projectile.Center + base.projectile.velocity) + 1.57f - 0.7853982f;
 			base.projectile.spriteDirection = 1;

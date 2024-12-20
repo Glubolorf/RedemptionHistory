@@ -25,17 +25,23 @@ namespace Redemption.Projectiles.v08
 
 		public override void AI()
 		{
-			if (++base.projectile.frameCounter >= 5)
+			Projectile projectile = base.projectile;
+			int num = projectile.frameCounter + 1;
+			projectile.frameCounter = num;
+			if (num >= 5)
 			{
 				base.projectile.frameCounter = 0;
-				if (++base.projectile.frame >= 3)
+				Projectile projectile2 = base.projectile;
+				num = projectile2.frame + 1;
+				projectile2.frame = num;
+				if (num >= 3)
 				{
 					base.projectile.frame = 0;
 				}
 			}
 			base.projectile.rotation = (float)Math.Atan2((double)base.projectile.velocity.Y, (double)base.projectile.velocity.X) + 1.57f;
-			Projectile projectile = base.projectile;
-			projectile.velocity.Y = projectile.velocity.Y + 0.3f;
+			Projectile projectile3 = base.projectile;
+			projectile3.velocity.Y = projectile3.velocity.Y + 0.3f;
 		}
 
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
@@ -56,17 +62,17 @@ namespace Redemption.Projectiles.v08
 		public override void Kill(int timeLeft)
 		{
 			Main.PlaySound(0, (int)base.projectile.position.X, (int)base.projectile.position.Y, 1, 1f, 0f);
-			Vector2 vector = base.projectile.position;
-			Vector2 vector2 = Utils.ToRotationVector2(base.projectile.rotation - MathHelper.ToRadians(90f));
-			vector += vector2 * 16f;
+			Vector2 usePos = base.projectile.position;
+			Vector2 rotVector = Utils.ToRotationVector2(base.projectile.rotation - MathHelper.ToRadians(90f));
+			usePos += rotVector * 16f;
 			for (int i = 0; i < 20; i++)
 			{
-				Dust dust = Dust.NewDustDirect(vector, base.projectile.width, base.projectile.height, base.mod.DustType("VoidFlame"), 0f, 0f, 0, default(Color), 1f);
+				Dust dust = Dust.NewDustDirect(usePos, base.projectile.width, base.projectile.height, base.mod.DustType("VoidFlame"), 0f, 0f, 0, default(Color), 1f);
 				dust.position = (dust.position + base.projectile.Center) / 2f;
-				dust.velocity += vector2 * 2f;
+				dust.velocity += rotVector * 2f;
 				dust.velocity *= 0.5f;
 				dust.noGravity = true;
-				vector -= vector2 * 8f;
+				usePos -= rotVector * 8f;
 			}
 		}
 	}

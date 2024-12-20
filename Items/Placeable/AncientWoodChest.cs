@@ -33,12 +33,12 @@ namespace Redemption.Items.Placeable
 			modRecipe.AddTile(null, "AncientWoodWorkbenchTile");
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "AncientWood", 8);
-			modRecipe.AddIngredient(704, 2);
-			modRecipe.AddTile(null, "AncientWoodWorkbenchTile");
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.AddIngredient(null, "AncientWood", 8);
+			modRecipe2.AddIngredient(704, 2);
+			modRecipe2.AddTile(null, "AncientWoodWorkbenchTile");
+			modRecipe2.SetResult(this, 1);
+			modRecipe2.AddRecipe();
 		}
 	}
 }

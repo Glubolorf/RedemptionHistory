@@ -59,29 +59,29 @@ namespace Redemption.Projectiles.v08
 				this.endPos = base.projectile.position;
 				for (int i = 0; i < base.projectile.timeLeft; i++)
 				{
-					Vector2 vector = base.projectile.velocity * 0.5f;
-					Vector2 vector2 = Collision.TileCollision(new Vector2(this.endPos.X - 2f + (float)(base.projectile.width / 2), this.endPos.Y - 2f + (float)(base.projectile.height / 2)), vector, 4, 4, true, true, 1);
-					if (vector != vector2)
+					Vector2 halfVelo = base.projectile.velocity * 0.5f;
+					Vector2 alteredVelo = Collision.TileCollision(new Vector2(this.endPos.X - 2f + (float)(base.projectile.width / 2), this.endPos.Y - 2f + (float)(base.projectile.height / 2)), halfVelo, 4, 4, true, true, 1);
+					if (halfVelo != alteredVelo)
 					{
-						this.endPos += vector2;
+						this.endPos += alteredVelo;
 						break;
 					}
-					vector2 = Collision.TileCollision(new Vector2(this.endPos.X - 2f + (float)(base.projectile.width / 2), this.endPos.Y - 2f + (float)(base.projectile.height / 2)) + vector, vector, 4, 4, true, true, 1);
-					if (vector != vector2)
+					alteredVelo = Collision.TileCollision(new Vector2(this.endPos.X - 2f + (float)(base.projectile.width / 2), this.endPos.Y - 2f + (float)(base.projectile.height / 2)) + halfVelo, halfVelo, 4, 4, true, true, 1);
+					if (halfVelo != alteredVelo)
 					{
-						this.endPos += vector + vector2;
+						this.endPos += halfVelo + alteredVelo;
 						break;
 					}
 					this.endPos += base.projectile.velocity;
 				}
 				for (int j = 0; j < 5; j++)
 				{
-					int num = Dust.NewDust(base.projectile.position + new Vector2((float)(base.projectile.width / 2), (float)(base.projectile.height / 2)) + base.projectile.velocity * 1f, 1, 1, 63, 0f, 0f, 100, Color.White, 1.5f);
-					Main.dust[num].noGravity = true;
-					Main.dust[num].velocity *= 0.4f;
-					num = Dust.NewDust(this.endPos + new Vector2((float)(base.projectile.width / 2), (float)(base.projectile.height / 2)), 0, 0, 63, 0f, 0f, 100, Color.White, 1f);
-					Main.dust[num].noGravity = true;
-					Main.dust[num].velocity *= 0.4f;
+					int d = Dust.NewDust(base.projectile.position + new Vector2((float)(base.projectile.width / 2), (float)(base.projectile.height / 2)) + base.projectile.velocity * 1f, 1, 1, 63, 0f, 0f, 100, Color.White, 1.5f);
+					Main.dust[d].noGravity = true;
+					Main.dust[d].velocity *= 0.4f;
+					d = Dust.NewDust(this.endPos + new Vector2((float)(base.projectile.width / 2), (float)(base.projectile.height / 2)), 0, 0, 63, 0f, 0f, 100, Color.White, 1f);
+					Main.dust[d].noGravity = true;
+					Main.dust[d].velocity *= 0.4f;
 				}
 			}
 			base.projectile.scale -= 0.007f;
@@ -108,17 +108,17 @@ namespace Redemption.Projectiles.v08
 			{
 				base.projectile.ai[1] *= 0.98f;
 			}
-			int num = Dust.NewDust(base.projectile.position + new Vector2((float)base.projectile.width / 2f, (float)base.projectile.height / 2f), 1, 1, 63, 0f, 0f, 100, Color.White, 1f);
-			Main.dust[num].noGravity = true;
-			Main.dust[num].velocity *= 0.5f;
-			Vector2 vector = base.projectile.velocity * 0.5f;
-			Vector2 vector2 = Collision.TileCollision(new Vector2(base.projectile.position.X - 2f + (float)(base.projectile.width / 2), base.projectile.position.Y - 2f + (float)(base.projectile.height / 2)), vector, 4, 4, true, true, 1);
-			if (vector != vector2)
+			int d = Dust.NewDust(base.projectile.position + new Vector2((float)base.projectile.width / 2f, (float)base.projectile.height / 2f), 1, 1, 63, 0f, 0f, 100, Color.White, 1f);
+			Main.dust[d].noGravity = true;
+			Main.dust[d].velocity *= 0.5f;
+			Vector2 halfVelo = base.projectile.velocity * 0.5f;
+			Vector2 alteredVelo = Collision.TileCollision(new Vector2(base.projectile.position.X - 2f + (float)(base.projectile.width / 2), base.projectile.position.Y - 2f + (float)(base.projectile.height / 2)), halfVelo, 4, 4, true, true, 1);
+			if (halfVelo != alteredVelo)
 			{
 				base.projectile.Kill();
 			}
-			vector2 = Collision.TileCollision(new Vector2(base.projectile.position.X - 2f + (float)(base.projectile.width / 2), base.projectile.position.Y - 2f + (float)(base.projectile.height / 2)) + vector, vector, 4, 4, true, true, 1);
-			if (vector != vector2)
+			alteredVelo = Collision.TileCollision(new Vector2(base.projectile.position.X - 2f + (float)(base.projectile.width / 2), base.projectile.position.Y - 2f + (float)(base.projectile.height / 2)) + halfVelo, halfVelo, 4, 4, true, true, 1);
+			if (halfVelo != alteredVelo)
 			{
 				base.projectile.Kill();
 			}
@@ -128,40 +128,39 @@ namespace Redemption.Projectiles.v08
 		{
 			for (int i = 0; i < 40; i++)
 			{
-				int num = Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, 63, (float)i / 90f * -base.projectile.velocity.X, (float)i / 90f * -base.projectile.velocity.Y, 100, Color.White, 1.2f);
-				Main.dust[num].noGravity = true;
-				Main.dust[num].velocity *= 0.6f;
+				int d2 = Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, 63, (float)i / 90f * -base.projectile.velocity.X, (float)i / 90f * -base.projectile.velocity.Y, 100, Color.White, 1.2f);
+				Main.dust[d2].noGravity = true;
+				Main.dust[d2].velocity *= 0.6f;
 			}
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture2D = Main.projectileTexture[base.projectile.type];
-			Vector2 vector;
-			vector..ctor((float)texture2D.Width / 2f, (float)texture2D.Height / 2f);
-			this.drawLaser(spriteBatch, vector);
-			spriteBatch.Draw(texture2D, base.projectile.position - Main.screenPosition + vector, new Rectangle?(new Rectangle(0, 0, texture2D.Width, texture2D.Height)), Color.White, base.projectile.rotation, vector, base.projectile.scale, 0, 0f);
+			Texture2D texture = Main.projectileTexture[base.projectile.type];
+			Vector2 centre = new Vector2((float)texture.Width / 2f, (float)texture.Height / 2f);
+			this.drawLaser(spriteBatch, centre);
+			spriteBatch.Draw(texture, base.projectile.position - Main.screenPosition + centre, new Rectangle?(new Rectangle(0, 0, texture.Width, texture.Height)), Color.White, base.projectile.rotation, centre, base.projectile.scale, SpriteEffects.None, 0f);
 			return false;
 		}
 
 		private void drawLaser(SpriteBatch spritebatch, Vector2 centre)
 		{
-			Vector2 vector = base.projectile.position + new Vector2((float)(base.projectile.width / 2), (float)(base.projectile.height / 2));
+			Vector2 projectileCentre = base.projectile.position + new Vector2((float)(base.projectile.width / 2), (float)(base.projectile.height / 2));
 			if (base.projectile.ai[0] > 0f)
 			{
-				Vector2 vector2;
-				Vector2 vector3;
+				Vector2 start;
+				Vector2 end;
 				if (base.projectile.ai[0] < 200f)
 				{
-					vector2 = vector;
-					vector3 = this.endPos + centre;
+					start = projectileCentre;
+					end = this.endPos + centre;
 				}
 				else
 				{
-					vector2 = this.staPos + centre;
-					vector3 = vector;
+					start = this.staPos + centre;
+					end = projectileCentre;
 				}
-				Utils.DrawLaser(spritebatch, base.mod.GetTexture("Projectiles/v08/ConstBlast_Beam"), vector2 - Main.screenPosition, vector3 - Main.screenPosition, new Vector2(base.projectile.ai[1]), new Utils.LaserLineFraming(this.ConstLaser));
+				Utils.DrawLaser(spritebatch, base.mod.GetTexture("Projectiles/v08/ConstBlast_Beam"), start - Main.screenPosition, end - Main.screenPosition, new Vector2(base.projectile.ai[1]), new Utils.LaserLineFraming(this.ConstLaser));
 			}
 		}
 

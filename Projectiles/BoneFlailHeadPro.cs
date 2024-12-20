@@ -12,14 +12,14 @@ namespace Redemption.Projectiles
 		{
 			if (Main.netMode != 2)
 			{
-				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
 				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
 				{
-					array[i] = Main.glowMaskTexture[i];
+					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				array[array.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
-				BoneFlailHeadPro.customGlowMask = (short)(array.Length - 1);
-				Main.glowMaskTexture = array;
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
+				BoneFlailHeadPro.customGlowMask = (short)(glowMasks.Length - 1);
+				Main.glowMaskTexture = glowMasks;
 			}
 			base.DisplayName.SetDefault("Bone Leviathan Flail");
 		}
@@ -56,39 +56,38 @@ namespace Redemption.Projectiles
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Texture2D texture = ModLoader.GetTexture("Redemption/Projectiles/BoneFlailChainPro");
-			Vector2 vector = base.projectile.Center;
+			Texture2D texture = ModContent.GetTexture("Redemption/Projectiles/BoneFlailChainPro");
+			Vector2 position = base.projectile.Center;
 			Vector2 mountedCenter = Main.player[base.projectile.owner].MountedCenter;
-			Rectangle? rectangle = null;
-			Vector2 vector2;
-			vector2..ctor((float)texture.Width * 0.5f, (float)texture.Height * 0.5f);
+			Rectangle? sourceRectangle = null;
+			Vector2 origin = new Vector2((float)texture.Width * 0.5f, (float)texture.Height * 0.5f);
 			float num = (float)texture.Height;
-			Vector2 vector3 = mountedCenter - vector;
-			float num2 = (float)Math.Atan2((double)vector3.Y, (double)vector3.X) - 1.57f;
+			Vector2 vector2_4 = mountedCenter - position;
+			float rotation = (float)Math.Atan2((double)vector2_4.Y, (double)vector2_4.X) - 1.57f;
 			bool flag = true;
-			if (float.IsNaN(vector.X) && float.IsNaN(vector.Y))
+			if (float.IsNaN(position.X) && float.IsNaN(position.Y))
 			{
 				flag = false;
 			}
-			if (float.IsNaN(vector3.X) && float.IsNaN(vector3.Y))
+			if (float.IsNaN(vector2_4.X) && float.IsNaN(vector2_4.Y))
 			{
 				flag = false;
 			}
 			while (flag)
 			{
-				if ((double)vector3.Length() < (double)num + 1.0)
+				if ((double)vector2_4.Length() < (double)num + 1.0)
 				{
 					flag = false;
 				}
 				else
 				{
-					Vector2 vector4 = vector3;
-					vector4.Normalize();
-					vector += vector4 * num;
-					vector3 = mountedCenter - vector;
-					Color color = Lighting.GetColor((int)vector.X / 16, (int)((double)vector.Y / 16.0));
-					color = base.projectile.GetAlpha(color);
-					Main.spriteBatch.Draw(texture, vector - Main.screenPosition, rectangle, color, num2, vector2, 1f, 0, 0f);
+					Vector2 vector2_5 = vector2_4;
+					vector2_5.Normalize();
+					position += vector2_5 * num;
+					vector2_4 = mountedCenter - position;
+					Color color2 = Lighting.GetColor((int)position.X / 16, (int)((double)position.Y / 16.0));
+					color2 = base.projectile.GetAlpha(color2);
+					Main.spriteBatch.Draw(texture, position - Main.screenPosition, sourceRectangle, color2, rotation, origin, 1f, SpriteEffects.None, 0f);
 				}
 			}
 			return true;

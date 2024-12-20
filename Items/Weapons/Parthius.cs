@@ -41,9 +41,9 @@ namespace Redemption.Items.Weapons
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			Vector2 vector = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(2f));
-			speedX = vector.X;
-			speedY = vector.Y;
+			Vector2 perturbedSpeed = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(2f));
+			speedX = perturbedSpeed.X;
+			speedY = perturbedSpeed.Y;
 			Projectile.NewProjectile(position.X, position.Y, speedX * 1.2f, speedY * 1.2f, base.mod.ProjectileType("GoldArrow"), 25, 5f, player.whoAmI, 0f, 0f);
 			return true;
 		}

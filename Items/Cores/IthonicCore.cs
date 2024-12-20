@@ -24,7 +24,7 @@ namespace Redemption.Items.Cores
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
+			DruidDamagePlayer modPlayer = DruidDamagePlayer.ModPlayer(player);
 			player.manaCost *= 0.95f;
 			player.accFlipper = true;
 			player.accDivingHelm = true;
@@ -38,7 +38,7 @@ namespace Redemption.Items.Cores
 			}
 			if (player.wet && !player.lavaWet)
 			{
-				druidDamagePlayer.druidDamage *= 1.05f;
+				modPlayer.druidDamage *= 1.05f;
 				player.magicDamage *= 1.05f;
 				player.meleeDamage *= 1.05f;
 				player.minionDamage *= 1.05f;

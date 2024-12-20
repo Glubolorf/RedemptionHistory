@@ -31,10 +31,16 @@ namespace Redemption.Projectiles
 			projectile.velocity.X = projectile.velocity.X * 0f;
 			Projectile projectile2 = base.projectile;
 			projectile2.velocity.Y = projectile2.velocity.Y + 1f;
-			if (++base.projectile.frameCounter >= 60)
+			Projectile projectile3 = base.projectile;
+			int num = projectile3.frameCounter + 1;
+			projectile3.frameCounter = num;
+			if (num >= 60)
 			{
 				base.projectile.frameCounter = 0;
-				if (++base.projectile.frame >= 2)
+				Projectile projectile4 = base.projectile;
+				num = projectile4.frame + 1;
+				projectile4.frame = num;
+				if (num >= 2)
 				{
 					base.projectile.frame = 0;
 				}
@@ -68,14 +74,14 @@ namespace Redemption.Projectiles
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
 			Player player = Main.player[base.projectile.owner];
-			int crit2 = player.HeldItem.crit;
-			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref crit2);
-			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref crit2);
-			if (crit2 >= 100 || Main.rand.Next(1, 101) <= crit2)
+			int critChance = player.HeldItem.crit;
+			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref critChance);
+			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref critChance);
+			if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
 			{
 				crit = true;
 			}
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).frostburnSeedbag)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().frostburnSeedbag)
 			{
 				target.AddBuff(44, 160, false);
 			}

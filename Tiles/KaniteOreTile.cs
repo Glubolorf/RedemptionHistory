@@ -18,8 +18,7 @@ namespace Redemption.Tiles
 			this.minPick = 30;
 			this.mineResist = 1.2f;
 			this.soundType = 21;
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Kanite Ore");
+			base.CreateMapEntryName(null).SetDefault("Kanite Ore");
 			base.AddMapEntry(new Color(116, 138, 153), null);
 		}
 

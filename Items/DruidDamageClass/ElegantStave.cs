@@ -36,11 +36,11 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override bool CanUseItem(Player player)
 		{
-			if (player.altFunctionUse == 2)
+			if (player.altFunctionUse == 2 && player.itemAnimation == 0)
 			{
 				base.item.mana = 1;
 				base.item.buffType = base.mod.BuffType("NatureGuardian13Buff");
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).longerGuardians)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().longerGuardians)
 				{
 					base.item.buffTime = 2400;
 				}
@@ -64,7 +64,7 @@ namespace Redemption.Items.DruidDamageClass
 		{
 			if (player.altFunctionUse == 2)
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
 				{
 					player.AddBuff(base.mod.BuffType("GuardianCooldownDebuff"), 2700, true);
 					return;
@@ -75,9 +75,9 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override float UseTimeMultiplier(Player player)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterStaves)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().fasterStaves)
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
 				{
 					return 1.45f;
 				}
@@ -85,7 +85,7 @@ namespace Redemption.Items.DruidDamageClass
 			}
 			else
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
 				{
 					return 1.35f;
 				}

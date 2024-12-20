@@ -29,9 +29,9 @@ namespace Redemption.Tiles
 			TileObjectData.newTile.AnchorBottom = new AnchorData(11, TileObjectData.newTile.Width, 0);
 			TileObjectData.addTile((int)base.Type);
 			base.AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Ancient Wood Table");
-			base.AddMapEntry(new Color(200, 200, 200), modTranslation);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Ancient Wood Table");
+			base.AddMapEntry(new Color(200, 200, 200), name);
 			this.dustType = 78;
 			this.disableSmartCursor = true;
 			this.adjTiles = new int[]

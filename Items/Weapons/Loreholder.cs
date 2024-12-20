@@ -11,7 +11,7 @@ namespace Redemption.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Loreholder, Cursed Blade");
-			base.Tooltip.SetDefault("'Your vision is blocked by walls of text'\nTells you the lore of enemies slain by this weapon\n[c/ffea9b:A sentient blade, cursed with infinite knowledge]");
+			base.Tooltip.SetDefault("'Your vision is blocked by walls of text'\nTells you the lore of Redemption enemies slain by this weapon\n[c/ffea9b:A sentient blade, cursed with infinite knowledge]");
 		}
 
 		public override void SetDefaults()
@@ -80,7 +80,7 @@ namespace Redemption.Items.Weapons
 				}
 				if (target.type == base.mod.NPCType("Chicken") || target.type == base.mod.NPCType("LeghornChicken") || target.type == base.mod.NPCType("RedChicken"))
 				{
-					Main.NewText("<Loreholder> Once famous livestock of sentient races, these majestic creatures are now free to roam the world, free from their shackles and their slaughter. Not like they would care though, since they’re chickens.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+					Main.NewText("<Loreholder> Once famous livestock of sentient races, these majestic creatures are now free to roam the world, free from their shackles and their slaughter. Not like they would care though, since they�re chickens.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
 				if (target.type == base.mod.NPCType("VlitchChicken"))
 				{
@@ -88,7 +88,7 @@ namespace Redemption.Items.Weapons
 				}
 				if (target.type == base.mod.NPCType("ChickenCultist"))
 				{
-					Main.NewText("<Loreholder> A follower of the being known as “The Mighty King Chicken.” They are devoted followers of the King who seek vengeance for the unjust killing of him. They will only appear after he is dead. It is believed they were created using Forbidden Necromancy by an insane sorcerer.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+					Main.NewText("<Loreholder> A follower of the being known as �The Mighty King Chicken.� They are devoted followers of the King who seek vengeance for the unjust killing of him. They will only appear after he is dead. It is believed they were created using Forbidden Necromancy by an insane sorcerer.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
 				if (target.type == base.mod.NPCType("ChickenGold"))
 				{
@@ -96,7 +96,7 @@ namespace Redemption.Items.Weapons
 				}
 				if (target.type == base.mod.NPCType("CoastScarab"))
 				{
-					Main.NewText("<Loreholder> A species of scarab commonly found scuttering around the beach. They’re rather cute and harmless creatures, but can be used to create dyes if you’re a greedy monster.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+					Main.NewText("<Loreholder> A species of scarab commonly found scuttering around the beach. They�re rather cute and harmless creatures, but can be used to create dyes if you�re a greedy monster.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
 				if (target.type == base.mod.NPCType("CorpseWalkerPriest"))
 				{
@@ -120,7 +120,7 @@ namespace Redemption.Items.Weapons
 				}
 				if (target.type == base.mod.NPCType("CorruptedTBot"))
 				{
-					Main.NewText("<Loreholder> T-bots that were once normal, but got captured by Girus or his minions and corrupted.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+					Main.NewText("<Loreholder> T-bots that were once normal, but got captured by Girus or her minions and corrupted.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
 				if (target.type == base.mod.NPCType("CorruptedWormHead") || target.type == base.mod.NPCType("CorruptedWormBody") || target.type == base.mod.NPCType("CorruptedWormTail"))
 				{
@@ -308,7 +308,7 @@ namespace Redemption.Items.Weapons
 				}
 				if (target.type == base.mod.NPCType("SkullDigger"))
 				{
-					Main.NewText("<Loreholder> The first and only successful reanimation from the Keeper. Skulldigger was a ancient warrior buried in the tombs of Gatharum. During the Keeper’s time trapped there, she managed to successfully resurrect Skulldigger’s skeleton, bringing back it’s flesh and soul. Through this, Skulldigger and the Keeper became close friends, as they had no one else to talk to trapped underground. His bond with her was the only thing he had left, as all his past friends and family had long passed away, and any relatives he had on the surface had been executed or enslaved. When the Keeper’s body sucame to the forbidden necromancy she had become addicted to, he was the only being that could pity and mourn her. He was the last being that the Keeper could think of before she went insane, and thus she destroyed the walls of the Gathic catacombs so he could be free with her. She has long forgotten about him, now only driven by the hunger for souls and immense pain. He has not forgotten her however, and if anything were to happen to her, he would be the first and only being to avenge her. After the Keeper is killed, Skulldigger may appear to avenge whoever slaid her within the caverns. He carries an abandoned teddy bear.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+					Main.NewText("<Loreholder> The first and only successful reanimation from the Keeper. Skulldigger was a ancient warrior buried in the tombs of Gatharum. During the Keeper�s time trapped there, she managed to successfully resurrect Skulldigger�s skeleton, bringing back it�s flesh and soul. Through this, Skulldigger and the Keeper became close friends, as they had no one else to talk to trapped underground. His bond with her was the only thing he had left, as all his past friends and family had long passed away, and any relatives he had on the surface had been executed or enslaved. When the Keeper�s body sucame to the forbidden necromancy she had become addicted to, he was the only being that could pity and mourn her. He was the last being that the Keeper could think of before she went insane, and thus she destroyed the walls of the Gathic catacombs so he could be free with her. She has long forgotten about him, now only driven by the hunger for souls and immense pain. He has not forgotten her however, and if anything were to happen to her, he would be the first and only being to avenge her. After the Keeper is killed, Skulldigger may appear to avenge whoever slaid her within the caverns. He carries an abandoned teddy bear.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
 				if (target.type == base.mod.NPCType("SludgyBoi") || target.type == base.mod.NPCType("SludgyBoi2"))
 				{
@@ -320,7 +320,7 @@ namespace Redemption.Items.Weapons
 				}
 				if (target.type == base.mod.NPCType("SpacePaladin"))
 				{
-					Main.NewText("<Loreholder> The strongest unit in King Slayer’s army, they are colossal robots. Their hand is a minigun and the other hand usually carry a giant weapon. But I guess they just don't feel like it.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+					Main.NewText("<Loreholder> The strongest unit in King Slayer�s army, they are colossal robots. Their hand is a minigun and the other hand usually carry a giant weapon. But I guess they just don't feel like it.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
 				if (target.type == base.mod.NPCType("SpiderSwarmer") || target.type == base.mod.NPCType("SpiderSwarmerQueen"))
 				{
@@ -352,7 +352,7 @@ namespace Redemption.Items.Weapons
 				}
 				if (target.type == base.mod.NPCType("TreeBug"))
 				{
-					Main.NewText("<Loreholder> A beetle commonly found inhabiting trees. It feeds on their leaves and uses it’s leaf-like shell for camouflage from predators. It’s shell makes a good source of green dye.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+					Main.NewText("<Loreholder> A beetle commonly found inhabiting trees. It feeds on their leaves and uses it�s leaf-like shell for camouflage from predators. It�s shell makes a good source of green dye.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
 				if (target.type == base.mod.NPCType("UndeadExecutioner1") || target.type == base.mod.NPCType("UndeadExecutioner2") || target.type == base.mod.NPCType("UndeadExecutioner3"))
 				{
@@ -398,7 +398,7 @@ namespace Redemption.Items.Weapons
 				{
 					Main.NewText("<Loreholder> Rollin' rollin' rollin'... Oh, I'm suppose to tell you lore... They are sentient chunks of dead rock.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
-				if (target.type == base.mod.NPCType("Blisterface"))
+				if (target.type == base.mod.NPCType("Blisterface") || target.type == base.mod.NPCType("Blisterface2"))
 				{
 					Main.NewText("<Loreholder> That's a bigass fish.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
@@ -410,7 +410,7 @@ namespace Redemption.Items.Weapons
 				{
 					Main.NewText("<Loreholder> Gross. Why must you kill it using me!? I don't wanna touch that!", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
-				if (target.type == base.mod.NPCType("IrradiatedBehemoth"))
+				if (target.type == base.mod.NPCType("IrradiatedBehemoth") || target.type == base.mod.NPCType("IrradiatedBehemoth2"))
 				{
 					Main.NewText("<Loreholder> Gross. Why must you kill it using me!? I don't wanna touch that giant lump of sludge!", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
@@ -422,7 +422,7 @@ namespace Redemption.Items.Weapons
 				{
 					Main.NewText("<Loreholder> A scientist with Stage 2 Infection. Very dangerous fellows.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
-				if (target.type == base.mod.NPCType("Stage3Scientist"))
+				if (target.type == base.mod.NPCType("Stage3Scientist") || target.type == base.mod.NPCType("Stage3Scientist2"))
 				{
 					Main.NewText("<Loreholder> A scientist with Stage 3 Infection. Basically a crystal by now.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
@@ -436,11 +436,11 @@ namespace Redemption.Items.Weapons
 				}
 				if (target.type == base.mod.NPCType("KingChicken") || target.type == base.mod.NPCType("KingChickenT"))
 				{
-					Main.NewText("<Loreholder> One time an insane sorcerer woke up one day and thought: “Y’KNOW WHAT WOULD BE A GOOD IDEA!? INTELLIGENT CHICKENS!” and so he gave pieces of his soul to many chickens. He also thought it would be funny to put a mini crown on one, but that crown held a curse, and it caused that chicken to become extremely cocky. Hehe.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+					Main.NewText("<Loreholder> One time an insane sorcerer woke up one day and thought: �Y�KNOW WHAT WOULD BE A GOOD IDEA!? INTELLIGENT CHICKENS!� and so he gave pieces of his soul to many chickens. He also thought it would be funny to put a mini crown on one, but that crown held a curse, and it caused that chicken to become extremely cocky. Hehe.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
 				if (target.type == base.mod.NPCType("TheKeeper"))
 				{
-					Main.NewText("<Loreholder> Deep within the inner Catacombs of Gathuram, far below the surface, a Lost Soul found a host. As the soul fused with the corpse, it awoken as a Fallen. The Fallen only saw darkness, although there was occasional blue lights. The ground was littered with bones and puddles of water. Calling out, the Fallen hoped to hear another voice, but the catacombs were silent; the only sound she could hear was dripping water falling from the ceiling. Hours passed as the Fallen roamed the hushed corridors and rooms. It was all the same, not a soul in sight. Days had passed, the Fallen was overwhelmed with loneliness and desperation. She found a black cloak which she then wore, she also discovered a wooden rod with an ancient skull on the top. Misery was taking over her, she wished for a second death, but she couldn’t kill herself. A week has passed and she was still alone. Desperate for company, she tried to learn Necromancy to create her own friends. It took months before complete success, and she had finally created a skeleton - she finally created a friend. The first skeleton - the first friend - only responded to commands, it had neither emotions nor senses. Despite this, she tried to talk to it like another person, but to no avail. Over months of constructing, she had created a dozen skeletons, but they were all the same. To her surprise, the first skeleton seemed to be weakened greatly. She attempted to heal it, but nothing happened. The passage of time was incomprehensible to the Fallen, she didn’t expect her first friend to revert so soon. Once again, she became only more desperate - she didn’t want to lose her first friend. The skull baton she found had a small amount of mana still inside it, however, the constant Necromancy had diluted it. When she strived to heal her friend again, she felt a numb pain course through her rotten body. The skeleton’s hollow eye sockets lit up with a tiny dot of white light, and a faded light emerged in its ribcage. The skeleton looked at her, the Fallen felt the skeleton’s presence for the first time. For the first time in years, a smile appeared on her face. She asked what the skeleton’s name is, it replied with a quiet voice: “Sk… ull… Dig… ger...” In only a day, she had become addicted to the Forbidden Necromancy. Red eyes started forming on her black cloak, she became frail, many thin arms grew from her body.But her mind was foggy, she felt nothing, the Forbidden Necromancy had taken control. In this time, her first creation - Skull Digger - had become stronger, he was no longer a skeleton, he had flesh, and a mask of bone had formed on his face. More and more, she become addicted to Forbidden Necromancy. Then one day, a sudden wave of extreme pain and agony flowed through her, she shrieked. Her skin burned, pieces of rusted metal emerged on her hands, her body distorted and grew into a monstrosity.When it ended, all she felt was a mixture of pain and powe- OH GOD, PLEASE, THIS IS A CURSE FOR ME TOO YA KNOW!", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+					Main.NewText("<Loreholder> Deep within the inner Catacombs of Gathuram, far below the surface, a Lost Soul found a host. As the soul fused with the corpse, it awoken as a Fallen. The Fallen only saw darkness, although there was occasional blue lights. The ground was littered with bones and puddles of water. Calling out, the Fallen hoped to hear another voice, but the catacombs were silent; the only sound she could hear was dripping water falling from the ceiling. Hours passed as the Fallen roamed the hushed corridors and rooms. It was all the same, not a soul in sight. Days had passed, the Fallen was overwhelmed with loneliness and desperation. She found a black cloak which she then wore, she also discovered a wooden rod with an ancient skull on the top. Misery was taking over her, she wished for a second death, but she couldn�t kill herself. A week has passed and she was still alone. Desperate for company, she tried to learn Necromancy to create her own friends. It took months before complete success, and she had finally created a skeleton - she finally created a friend. The first skeleton - the first friend - only responded to commands, it had neither emotions nor senses. Despite this, she tried to talk to it like another person, but to no avail. Over months of constructing, she had created a dozen skeletons, but they were all the same. To her surprise, the first skeleton seemed to be weakened greatly. She attempted to heal it, but nothing happened. The passage of time was incomprehensible to the Fallen, she didn�t expect her first friend to revert so soon. Once again, she became only more desperate - she didn�t want to lose her first friend. The skull baton she found had a small amount of mana still inside it, however, the constant Necromancy had diluted it. When she strived to heal her friend again, she felt a numb pain course through her rotten body. The skeleton�s hollow eye sockets lit up with a tiny dot of white light, and a faded light emerged in its ribcage. The skeleton looked at her, the Fallen felt the skeleton�s presence for the first time. For the first time in years, a smile appeared on her face. She asked what the skeleton�s name is, it replied with a quiet voice: �Sk� ull� Dig� ger...� In only a day, she had become addicted to the Forbidden Necromancy. Red eyes started forming on her black cloak, she became frail, many thin arms grew from her body.But her mind was foggy, she felt nothing, the Forbidden Necromancy had taken control. In this time, her first creation - Skull Digger - had become stronger, he was no longer a skeleton, he had flesh, and a mask of bone had formed on his face. More and more, she become addicted to Forbidden Necromancy. Then one day, a sudden wave of extreme pain and agony flowed through her, she shrieked. Her skin burned, pieces of rusted metal emerged on her hands, her body distorted and grew into a monstrosity.When it ended, all she felt was a mixture of pain and powe- OH GOD, PLEASE, THIS IS A CURSE FOR ME TOO YA KNOW!", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
 				if (target.type == base.mod.NPCType("VlitchCleaver"))
 				{
@@ -468,7 +468,7 @@ namespace Redemption.Items.Weapons
 				}
 				if (target.type == base.mod.NPCType("OmegaOblitDamaged"))
 				{
-					Main.NewText("<Loreholder> A prototype designed by Girus. Originally he planned it to be a giant Vlitch Skull, but decided against it for some reason.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+					Main.NewText("<Loreholder> A prototype designed by Girus. Originally she planned it to be a giant Vlitch Skull, but decided against it for some reason.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
 				if (target.type == base.mod.NPCType("OmegaAndroid"))
 				{
@@ -486,11 +486,11 @@ namespace Redemption.Items.Weapons
 				{
 					Main.NewText("<Loreholder> A unit in Slayer's army, inbetween Prototype Silvers and Space Paladins. They'd shoot nanobots to heal damaged robots, but can also charge up their core to unleash a powerful blast.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
-				if (target.type == base.mod.NPCType("MACEProjectJaw"))
+				if (target.type == base.mod.NPCType("MACEProjectJaw") || target.type == base.mod.NPCType("MACEProjectJawA"))
 				{
 					Main.NewText("<Loreholder> Haha! We won! ... OH WAIT NO IT'S STILL ALIVE!", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
-				if (target.type == base.mod.NPCType("MACEProjectHead"))
+				if (target.type == base.mod.NPCType("MACEProjectHead") || target.type == base.mod.NPCType("MACEProjectHeadA"))
 				{
 					Main.NewText("<Loreholder> A work of genius, perfect at wiping out a large group of enemies in an instant.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
@@ -498,7 +498,7 @@ namespace Redemption.Items.Weapons
 				{
 					Main.NewText("<Loreholder> That's just... Ech.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
-				if (target.type == base.mod.NPCType("MACEProjectFist1") || target.type == base.mod.NPCType("MACEProjectFist3") || target.type == base.mod.NPCType("MACEProjectFist4"))
+				if (target.type == base.mod.NPCType("MACEProjectFist1") || target.type == base.mod.NPCType("MACEProjectFist3") || target.type == base.mod.NPCType("MACEProjectFist4") || target.type == base.mod.NPCType("MACEProjectFist1A") || target.type == base.mod.NPCType("MACEProjectFist1B"))
 				{
 					Main.NewText("<Loreholder> A fist of the MACE Project. Smashing.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
@@ -518,7 +518,7 @@ namespace Redemption.Items.Weapons
 				{
 					Main.NewText("<Loreholder> Nyoooooom!", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
-				if (target.type == base.mod.NPCType("DecayedGhoul") || target.type == base.mod.NPCType("GreenPigron") || target.type == base.mod.NPCType("InfectedGrub") || target.type == base.mod.NPCType("InfectedSnowFlinx") || target.type == base.mod.NPCType("InfectedSwarmer") || target.type == base.mod.NPCType("RadioactiveSlime") || target.type == base.mod.NPCType("RadiumDigger2Head") || target.type == base.mod.NPCType("RadiumDigger2Body") || target.type == base.mod.NPCType("RadiumDigger2Tail") || target.type == base.mod.NPCType("RadiumRampager") || target.type == base.mod.NPCType("SneezyInfectedFlinx") || target.type == base.mod.NPCType("SpikyRadioactiveSlime") || target.type == base.mod.NPCType("XenomiteBeast"))
+				if (target.type == base.mod.NPCType("DecayedGhoul") || target.type == base.mod.NPCType("GreenPigron") || target.type == base.mod.NPCType("InfectedGrub") || target.type == base.mod.NPCType("InfectedSnowFlinx") || target.type == base.mod.NPCType("InfectedSwarmer") || target.type == base.mod.NPCType("RadioactiveSlime") || target.type == base.mod.NPCType("RadiumDigger2Head") || target.type == base.mod.NPCType("RadiumDigger2Body") || target.type == base.mod.NPCType("RadiumDigger2Tail") || target.type == base.mod.NPCType("RadiumRampager") || target.type == base.mod.NPCType("SneezyInfectedFlinx") || target.type == base.mod.NPCType("SpikyRadioactiveSlime") || target.type == base.mod.NPCType("XenomiteBeast") || target.type == base.mod.NPCType("BileBoomer") || target.type == base.mod.NPCType("VirusJelly") || target.type == base.mod.NPCType("IrradiatedSpear") || target.type == base.mod.NPCType("Superbug") || target.type == base.mod.NPCType("Superbug2") || target.type == base.mod.NPCType("InfectedClingerHead") || target.type == base.mod.NPCType("RadioactiveSlimer") || target.type == base.mod.NPCType("IrradiatedWorldFeederHead") || target.type == base.mod.NPCType("IrradiatedWorldFeederBody") || target.type == base.mod.NPCType("IrradiatedWorldFeederTail") || target.type == base.mod.NPCType("Injector") || target.type == base.mod.NPCType("VirusSpider") || target.type == base.mod.NPCType("BloatedFaceMonster") || target.type == base.mod.NPCType("BloatedGoldfish") || target.type == base.mod.NPCType("NerveParasite") || target.type == base.mod.NPCType("Xenoling"))
 				{
 					Main.NewText("<Loreholder> An infected varient of an enemy.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
@@ -537,6 +537,22 @@ namespace Redemption.Items.Weapons
 				if (target.type == base.mod.NPCType("Nebuleus") || target.type == base.mod.NPCType("BigNebuleus"))
 				{
 					Main.NewText("<Loreholder> ... I don't know... I just don't know. I can't see her past at all.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+				}
+				if (target.type == base.mod.NPCType("IrradiatedBehemoth") || target.type == base.mod.NPCType("IrradiatedBehemoth2"))
+				{
+					Main.NewText("<Loreholder> Gross. Why must you kill it using me!? I don't wanna touch that giant lump of sludge!", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+				}
+				if (target.type == base.mod.NPCType("JanitorBot"))
+				{
+					Main.NewText("<Loreholder> Beating up a simple janitor are we? Well, he did attack first. He's been around the lab for around 200 years now, sweeping floors of sludge and following Girus' orders.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+				}
+				if (target.type == base.mod.NPCType("TbotMiniboss"))
+				{
+					Main.NewText("<Loreholder> Protector Bolt... Or was it Volt? He is a high ranking bot who works for Girus.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+				}
+				if (target.type == base.mod.NPCType("PZ2BodyCover"))
+				{
+					Main.NewText("<Loreholder> That was Kari Johansson, the father to all T-Bots and patient zero of the xenomite infection. He's been like that for 200 years, still conscious and alive in that grotesque husk. I can't imagine what it's like being alive but unable to move... Oh wait, I'm a gem stuck in a sword.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
 			}
 		}

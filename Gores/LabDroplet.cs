@@ -24,40 +24,40 @@ namespace Redemption.Gores
 			{
 				gore.alpha = 100;
 			}
-			int num = 4;
+			int frameDuration = 4;
 			gore.frameCounter += 1;
 			if (gore.frame <= 4)
 			{
-				int num2 = (int)(gore.position.X / 16f);
-				int num3 = (int)(gore.position.Y / 16f) - 1;
-				if (WorldGen.InWorld(num2, num3, 0) && !Main.tile[num2, num3].active())
+				int tileX = (int)(gore.position.X / 16f);
+				int tileY = (int)(gore.position.Y / 16f) - 1;
+				if (WorldGen.InWorld(tileX, tileY, 0) && !Main.tile[tileX, tileY].active())
 				{
 					gore.active = false;
 				}
 				if (gore.frame == 0 || gore.frame == 1 || gore.frame == 2)
 				{
-					num = 24 + Main.rand.Next(256);
+					frameDuration = 24 + Main.rand.Next(256);
 				}
 				if (gore.frame == 3)
 				{
-					num = 24 + Main.rand.Next(96);
+					frameDuration = 24 + Main.rand.Next(96);
 				}
-				if ((int)gore.frameCounter >= num)
+				if ((int)gore.frameCounter >= frameDuration)
 				{
 					gore.frameCounter = 0;
 					gore.frame += 1;
 					if (gore.frame == 5)
 					{
-						int num4 = Gore.NewGore(gore.position, gore.velocity, gore.type, 1f);
-						Main.gore[num4].frame = 9;
-						Main.gore[num4].velocity *= 0f;
+						int droplet = Gore.NewGore(gore.position, gore.velocity, gore.type, 1f);
+						Main.gore[droplet].frame = 9;
+						Main.gore[droplet].velocity *= 0f;
 					}
 				}
 			}
 			else if (gore.frame <= 6)
 			{
-				num = 8;
-				if ((int)gore.frameCounter >= num)
+				frameDuration = 8;
+				if ((int)gore.frameCounter >= frameDuration)
 				{
 					gore.frameCounter = 0;
 					gore.frame += 1;
@@ -69,7 +69,7 @@ namespace Redemption.Gores
 			}
 			else if (gore.frame <= 9)
 			{
-				num = 6;
+				frameDuration = 6;
 				gore.velocity.Y = gore.velocity.Y + 0.2f;
 				if (gore.velocity.Y < 0.5f)
 				{
@@ -79,7 +79,7 @@ namespace Redemption.Gores
 				{
 					gore.velocity.Y = 12f;
 				}
-				if ((int)gore.frameCounter >= num)
+				if ((int)gore.frameCounter >= frameDuration)
 				{
 					gore.frameCounter = 0;
 					gore.frame += 1;
@@ -92,7 +92,7 @@ namespace Redemption.Gores
 			else
 			{
 				gore.velocity.Y = gore.velocity.Y + 0.1f;
-				if ((int)gore.frameCounter >= num)
+				if ((int)gore.frameCounter >= frameDuration)
 				{
 					gore.frameCounter = 0;
 					gore.frame += 1;
@@ -103,9 +103,9 @@ namespace Redemption.Gores
 					gore.active = false;
 				}
 			}
-			Vector2 velocity = gore.velocity;
+			Vector2 oldVelocity = gore.velocity;
 			gore.velocity = Collision.TileCollision(gore.position, gore.velocity, 16, 14, false, false, 1);
-			if (gore.velocity != velocity)
+			if (gore.velocity != oldVelocity)
 			{
 				if (gore.frame < 10)
 				{
@@ -122,12 +122,12 @@ namespace Redemption.Gores
 					gore.frameCounter = 0;
 					Main.PlaySound(39, (int)gore.position.X + 8, (int)gore.position.Y + 8, 2, 1f, 0f);
 				}
-				int num5 = (int)(gore.position.X + 8f) / 16;
-				int num6 = (int)(gore.position.Y + 14f) / 16;
-				if (Main.tile[num5, num6] != null && Main.tile[num5, num6].liquid > 0)
+				int tileX2 = (int)(gore.position.X + 8f) / 16;
+				int tileY2 = (int)(gore.position.Y + 14f) / 16;
+				if (Main.tile[tileX2, tileY2] != null && Main.tile[tileX2, tileY2].liquid > 0)
 				{
 					gore.velocity *= 0f;
-					gore.position.Y = (float)(num6 * 16 - (int)(Main.tile[num5, num6].liquid / 16));
+					gore.position.Y = (float)(tileY2 * 16 - (int)(Main.tile[tileX2, tileY2].liquid / 16));
 				}
 			}
 			gore.position += gore.velocity;

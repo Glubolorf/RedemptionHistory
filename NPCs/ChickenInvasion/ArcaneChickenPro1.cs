@@ -28,10 +28,16 @@ namespace Redemption.NPCs.ChickenInvasion
 
 		public override void AI()
 		{
-			if (++base.projectile.frameCounter >= 3)
+			Projectile projectile = base.projectile;
+			int num = projectile.frameCounter + 1;
+			projectile.frameCounter = num;
+			if (num >= 3)
 			{
 				base.projectile.frameCounter = 0;
-				if (++base.projectile.frame >= 4)
+				Projectile projectile2 = base.projectile;
+				num = projectile2.frame + 1;
+				projectile2.frame = num;
+				if (num >= 4)
 				{
 					base.projectile.frame = 0;
 				}
@@ -47,37 +53,37 @@ namespace Redemption.NPCs.ChickenInvasion
 				this.AdjustMagnitude(ref base.projectile.velocity);
 				base.projectile.localAI[0] = 1f;
 			}
-			Vector2 vector = Vector2.Zero;
-			float num = 300f;
-			bool flag = false;
+			Vector2 move = Vector2.Zero;
+			float distance = 300f;
+			bool target = false;
 			for (int i = 0; i < 200; i++)
 			{
 				if (Main.player[i].active)
 				{
-					Vector2 vector2 = Main.player[i].Center - base.projectile.Center;
-					float num2 = (float)Math.Sqrt((double)(vector2.X * vector2.X + vector2.Y * vector2.Y));
-					if (num2 < num)
+					Vector2 newMove = Main.player[i].Center - base.projectile.Center;
+					float distanceTo = (float)Math.Sqrt((double)(newMove.X * newMove.X + newMove.Y * newMove.Y));
+					if (distanceTo < distance)
 					{
-						vector = vector2;
-						num = num2;
-						flag = true;
+						move = newMove;
+						distance = distanceTo;
+						target = true;
 					}
 				}
 			}
-			if (flag)
+			if (target)
 			{
-				this.AdjustMagnitude(ref vector);
-				base.projectile.velocity = (10f * base.projectile.velocity + vector) / 11f;
+				this.AdjustMagnitude(ref move);
+				base.projectile.velocity = (10f * base.projectile.velocity + move) / 11f;
 				this.AdjustMagnitude(ref base.projectile.velocity);
 			}
 		}
 
 		private void AdjustMagnitude(ref Vector2 vector)
 		{
-			float num = (float)Math.Sqrt((double)(vector.X * vector.X + vector.Y * vector.Y));
-			if (num > 7f)
+			float magnitude = (float)Math.Sqrt((double)(vector.X * vector.X + vector.Y * vector.Y));
+			if (magnitude > 7f)
 			{
-				vector *= 6f / num;
+				vector *= 6f / magnitude;
 			}
 		}
 
@@ -90,8 +96,8 @@ namespace Redemption.NPCs.ChickenInvasion
 		{
 			for (int i = 0; i < 25; i++)
 			{
-				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 68, 0f, 0f, 100, default(Color), 1.2f);
-				Main.dust[num].velocity *= 1.4f;
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 68, 0f, 0f, 100, default(Color), 1.2f);
+				Main.dust[dustIndex].velocity *= 1.4f;
 			}
 		}
 	}

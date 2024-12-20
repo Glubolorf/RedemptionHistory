@@ -9,7 +9,7 @@ namespace Redemption.Items.Armor.Costumes
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Hazmat Suit");
-			base.Tooltip.SetDefault("Grants immunity to the Abandoned Lab and Wasteland water\nGreatly extends underwater breathing");
+			base.Tooltip.SetDefault("Grants immunity to the Abandoned Lab and Wasteland water\nGreatly extends underwater breathing\nGrants protection against low-level radiation");
 		}
 
 		public override void SetDefaults()
@@ -23,12 +23,12 @@ namespace Redemption.Items.Armor.Costumes
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
+			RedePlayer p = player.GetModPlayer<RedePlayer>();
 			player.buffImmune[base.mod.BuffType("HeavyRadiationDebuff")] = true;
-			modPlayer.hazmatAccessory = true;
+			p.hazmatAccessory = true;
 			if (hideVisual)
 			{
-				modPlayer.hazmatHideVanity = true;
+				p.hazmatHideVanity = true;
 			}
 			player.accDivingHelm = true;
 		}

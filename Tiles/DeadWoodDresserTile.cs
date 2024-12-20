@@ -38,9 +38,9 @@ namespace Redemption.Tiles
 			TileObjectData.newTile.AnchorBottom = new AnchorData(11, TileObjectData.newTile.Width, 0);
 			TileObjectData.addTile((int)base.Type);
 			base.AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Petrified Wood Dresser");
-			base.AddMapEntry(new Color(200, 200, 200), modTranslation);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Petrified Wood Dresser");
+			base.AddMapEntry(new Color(200, 200, 200), name);
 			this.disableSmartCursor = true;
 			this.adjTiles = new int[]
 			{
@@ -55,21 +55,21 @@ namespace Redemption.Tiles
 			return true;
 		}
 
-		public override void RightClick(int i, int j)
+		public override bool NewRightClick(int i, int j)
 		{
-			Player localPlayer = Main.LocalPlayer;
+			Player player = Main.LocalPlayer;
 			if (Main.tile[Player.tileTargetX, Player.tileTargetY].frameY == 0)
 			{
 				Main.CancelClothesWindow(true);
 				Main.mouseRightRelease = false;
-				int num = (int)(Main.tile[Player.tileTargetX, Player.tileTargetY].frameX / 18);
-				num %= 3;
-				num = Player.tileTargetX - num;
-				int num2 = Player.tileTargetY - (int)(Main.tile[Player.tileTargetX, Player.tileTargetY].frameY / 18);
-				if (localPlayer.sign > -1)
+				int left = (int)(Main.tile[Player.tileTargetX, Player.tileTargetY].frameX / 18);
+				left %= 3;
+				left = Player.tileTargetX - left;
+				int top = Player.tileTargetY - (int)(Main.tile[Player.tileTargetX, Player.tileTargetY].frameY / 18);
+				if (player.sign > -1)
 				{
 					Main.PlaySound(11, -1, -1, 1, 1f, 0f);
-					localPlayer.sign = -1;
+					player.sign = -1;
 					Main.editSign = false;
 					Main.npcChatText = string.Empty;
 				}
@@ -79,151 +79,152 @@ namespace Redemption.Tiles
 					Main.editChest = false;
 					Main.npcChatText = string.Empty;
 				}
-				if (localPlayer.editedChestName)
+				if (player.editedChestName)
 				{
-					NetMessage.SendData(33, -1, -1, NetworkText.FromLiteral(Main.chest[localPlayer.chest].name), localPlayer.chest, 1f, 0f, 0f, 0, 0, 0);
-					localPlayer.editedChestName = false;
+					NetMessage.SendData(33, -1, -1, NetworkText.FromLiteral(Main.chest[player.chest].name), player.chest, 1f, 0f, 0f, 0, 0, 0);
+					player.editedChestName = false;
 				}
 				if (Main.netMode == 1)
 				{
-					if (num == localPlayer.chestX && num2 == localPlayer.chestY && localPlayer.chest != -1)
+					if (left == player.chestX && top == player.chestY && player.chest != -1)
 					{
-						localPlayer.chest = -1;
+						player.chest = -1;
 						Recipe.FindRecipes();
 						Main.PlaySound(11, -1, -1, 1, 1f, 0f);
-						return;
 					}
-					NetMessage.SendData(31, -1, -1, null, num, (float)num2, 0f, 0f, 0, 0, 0);
-					Main.stackSplit = 600;
-					return;
+					else
+					{
+						NetMessage.SendData(31, -1, -1, null, left, (float)top, 0f, 0f, 0, 0, 0);
+						Main.stackSplit = 600;
+					}
 				}
 				else
 				{
-					localPlayer.flyingPigChest = -1;
-					int num3 = Chest.FindChest(num, num2);
-					if (num3 != -1)
+					player.flyingPigChest = -1;
+					int num213 = Chest.FindChest(left, top);
+					if (num213 != -1)
 					{
 						Main.stackSplit = 600;
-						if (num3 == localPlayer.chest)
+						if (num213 == player.chest)
 						{
-							localPlayer.chest = -1;
+							player.chest = -1;
 							Recipe.FindRecipes();
 							Main.PlaySound(11, -1, -1, 1, 1f, 0f);
 						}
-						else if (num3 != localPlayer.chest && localPlayer.chest == -1)
+						else if (num213 != player.chest && player.chest == -1)
 						{
-							localPlayer.chest = num3;
+							player.chest = num213;
 							Main.playerInventory = true;
 							Main.recBigList = false;
 							Main.PlaySound(10, -1, -1, 1, 1f, 0f);
-							localPlayer.chestX = num;
-							localPlayer.chestY = num2;
+							player.chestX = left;
+							player.chestY = top;
 						}
 						else
 						{
-							localPlayer.chest = num3;
+							player.chest = num213;
 							Main.playerInventory = true;
 							Main.recBigList = false;
 							Main.PlaySound(12, -1, -1, 1, 1f, 0f);
-							localPlayer.chestX = num;
-							localPlayer.chestY = num2;
+							player.chestX = left;
+							player.chestY = top;
 						}
 						Recipe.FindRecipes();
-						return;
 					}
 				}
 			}
 			else
 			{
 				Main.playerInventory = false;
-				localPlayer.chest = -1;
+				player.chest = -1;
 				Recipe.FindRecipes();
 				Main.dresserX = Player.tileTargetX;
 				Main.dresserY = Player.tileTargetY;
 				Main.OpenClothesWindow();
 			}
+			return true;
 		}
 
 		public override void MouseOverFar(int i, int j)
 		{
-			Player localPlayer = Main.LocalPlayer;
+			Player player = Main.LocalPlayer;
 			Tile tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
-			int num = Player.tileTargetX;
-			int num2 = Player.tileTargetY;
-			num -= (int)(tile.frameX % 54 / 18);
+			int tileTargetX = Player.tileTargetX;
+			int top = Player.tileTargetY;
+			int num = tileTargetX - (int)(tile.frameX % 54 / 18);
 			if (tile.frameY % 36 != 0)
 			{
-				num2--;
+				top--;
 			}
-			int num3 = Chest.FindChest(num, num2);
-			localPlayer.showItemIcon2 = -1;
-			if (num3 < 0)
+			int chestIndex = Chest.FindChest(num, top);
+			player.showItemIcon2 = -1;
+			if (chestIndex < 0)
 			{
-				localPlayer.showItemIconText = Language.GetTextValue("LegacyDresserType.0");
+				player.showItemIconText = Language.GetTextValue("LegacyDresserType.0");
 			}
 			else
 			{
-				if (Main.chest[num3].name != "")
+				if (Main.chest[chestIndex].name != "")
 				{
-					localPlayer.showItemIconText = Main.chest[num3].name;
+					player.showItemIconText = Main.chest[chestIndex].name;
 				}
 				else
 				{
-					localPlayer.showItemIconText = this.chest;
+					player.showItemIconText = this.chest;
 				}
-				if (localPlayer.showItemIconText == this.chest)
+				if (player.showItemIconText == this.chest)
 				{
-					localPlayer.showItemIcon2 = base.mod.ItemType("DeadWoodDresser");
-					localPlayer.showItemIconText = "";
+					player.showItemIcon2 = base.mod.ItemType("DeadWoodDresser");
+					player.showItemIconText = "";
 				}
 			}
-			localPlayer.noThrow = 2;
-			localPlayer.showItemIcon = true;
-			if (localPlayer.showItemIconText == "")
+			player.noThrow = 2;
+			player.showItemIcon = true;
+			if (player.showItemIconText == "")
 			{
-				localPlayer.showItemIcon = false;
-				localPlayer.showItemIcon2 = 0;
+				player.showItemIcon = false;
+				player.showItemIcon2 = 0;
 			}
 		}
 
 		public override void MouseOver(int i, int j)
 		{
-			Player localPlayer = Main.LocalPlayer;
+			Player player = Main.LocalPlayer;
 			Tile tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
-			int num = Player.tileTargetX;
-			int num2 = Player.tileTargetY;
-			num -= (int)(tile.frameX % 54 / 18);
+			int tileTargetX = Player.tileTargetX;
+			int top = Player.tileTargetY;
+			int num139 = tileTargetX - (int)(tile.frameX % 54 / 18);
 			if (tile.frameY % 36 != 0)
 			{
-				num2--;
+				top--;
 			}
-			int num3 = Chest.FindChest(num, num2);
-			localPlayer.showItemIcon2 = -1;
-			if (num3 < 0)
+			int num138 = Chest.FindChest(num139, top);
+			player.showItemIcon2 = -1;
+			if (num138 < 0)
 			{
-				localPlayer.showItemIconText = Language.GetTextValue("LegacyDresserType.0");
+				player.showItemIconText = Language.GetTextValue("LegacyDresserType.0");
 			}
 			else
 			{
-				if (Main.chest[num3].name != "")
+				if (Main.chest[num138].name != "")
 				{
-					localPlayer.showItemIconText = Main.chest[num3].name;
+					player.showItemIconText = Main.chest[num138].name;
 				}
 				else
 				{
-					localPlayer.showItemIconText = this.chest;
+					player.showItemIconText = this.chest;
 				}
-				if (localPlayer.showItemIconText == this.chest)
+				if (player.showItemIconText == this.chest)
 				{
-					localPlayer.showItemIcon2 = base.mod.ItemType("DeadWoodDresser");
-					localPlayer.showItemIconText = "";
+					player.showItemIcon2 = base.mod.ItemType("DeadWoodDresser");
+					player.showItemIconText = "";
 				}
 			}
-			localPlayer.noThrow = 2;
-			localPlayer.showItemIcon = true;
+			player.noThrow = 2;
+			player.showItemIcon = true;
 			if (Main.tile[Player.tileTargetX, Player.tileTargetY].frameY > 0)
 			{
-				localPlayer.showItemIcon2 = 269;
+				player.showItemIcon2 = 269;
 			}
 		}
 

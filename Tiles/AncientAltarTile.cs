@@ -49,26 +49,26 @@ namespace Redemption.Tiles
 			return false;
 		}
 
-		public override void RightClick(int i, int j)
+		public override bool NewRightClick(int i, int j)
 		{
-			int num = i - (int)(Main.tile[i, j].frameX / 18 % 2);
-			int num2 = j - (int)(Main.tile[i, j].frameY / 18 % 3);
-			if (Main.tile[num, num2].frameX == 0)
+			int left = i - (int)(Main.tile[i, j].frameX / 18 % 2);
+			int top = j - (int)(Main.tile[i, j].frameY / 18 % 3);
+			if (Main.tile[left, top].frameX == 0)
 			{
-				Player localPlayer = Main.LocalPlayer;
-				localPlayer.QuickSpawnItem(base.mod.ItemType("CursedGem"), 1);
+				Main.LocalPlayer.QuickSpawnItem(base.mod.ItemType("CursedGem"), 1);
 			}
-			for (int k = num; k < num + 2; k++)
+			for (int x = left; x < left + 2; x++)
 			{
-				for (int l = num2; l < num2 + 3; l++)
+				for (int y = top; y < top + 3; y++)
 				{
-					if (Main.tile[k, l].frameX < 36)
+					if (Main.tile[x, y].frameX < 36)
 					{
-						Tile tile = Main.tile[k, l];
+						Tile tile = Main.tile[x, y];
 						tile.frameX += 36;
 					}
 				}
 			}
+			return true;
 		}
 
 		public override bool CanExplode(int i, int j)

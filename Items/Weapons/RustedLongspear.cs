@@ -27,7 +27,7 @@ namespace Redemption.Items.Weapons
 			base.item.scale = 1f;
 			base.item.rare = -1;
 			base.item.UseSound = SoundID.Item1;
-			base.item.shoot = base.mod.ProjectileType<RustedLongspearPro>();
+			base.item.shoot = ModContent.ProjectileType<RustedLongspearPro>();
 			base.item.value = 350;
 			base.item.noMelee = true;
 			base.item.noUseGraphic = true;

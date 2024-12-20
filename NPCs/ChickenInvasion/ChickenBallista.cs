@@ -97,14 +97,13 @@ namespace Redemption.NPCs.ChickenInvasion
 				base.npc.velocity.X = 0f;
 				if (this.attackTimer == 30)
 				{
-					float num = 14f;
-					Vector2 vector;
-					vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-					int num2 = 55;
-					int num3 = base.mod.ProjectileType("BallistaArrow");
-					float num4 = (float)Math.Atan2((double)(vector.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector.X - (player.position.X + (float)player.width * 0.5f)));
-					int num5 = Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num4) * (double)num * -1.0), (float)(Math.Sin((double)num4) * (double)num * -1.0), num3, num2, 0f, 0, 0f, 0f);
-					Main.projectile[num5].netUpdate = true;
+					float Speed = 14f;
+					Vector2 vector8 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+					int damage = 55;
+					int type = base.mod.ProjectileType("BallistaArrow");
+					float rotation = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
+					int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
+					Main.projectile[num54].netUpdate = true;
 				}
 				if (this.attackTimer >= 50)
 				{
@@ -118,20 +117,19 @@ namespace Redemption.NPCs.ChickenInvasion
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/ChickenInvasion/ChickenBallistaFire");
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D attackAni = base.mod.GetTexture("NPCs/ChickenInvasion/ChickenBallistaFire");
 			int spriteDirection = base.npc.spriteDirection;
 			if (!this.specialAttack)
 			{
-				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.specialAttack)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num = texture.Height / 10;
-				int num2 = num * this.attackFrame;
-				Main.spriteBatch.Draw(texture, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num214 = attackAni.Height / 10;
+				int y6 = num214 * this.attackFrame;
+				Main.spriteBatch.Draw(attackAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, attackAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)attackAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
 		}
@@ -152,24 +150,24 @@ namespace Redemption.NPCs.ChickenInvasion
 				{
 					ChickWorld.ChickPoints2 += 3;
 				}
-				for (int i = 0; i < 2; i++)
+				for (int g = 0; g < 2; g++)
 				{
-					int num = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-					Main.gore[num].scale = 1.5f;
-					Main.gore[num].velocity.X = Main.gore[num].velocity.X + 1.5f;
-					Main.gore[num].velocity.Y = Main.gore[num].velocity.Y + 1.5f;
-					num = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-					Main.gore[num].scale = 1.5f;
-					Main.gore[num].velocity.X = Main.gore[num].velocity.X - 1.5f;
-					Main.gore[num].velocity.Y = Main.gore[num].velocity.Y + 1.5f;
-					num = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-					Main.gore[num].scale = 1.5f;
-					Main.gore[num].velocity.X = Main.gore[num].velocity.X + 1.5f;
-					Main.gore[num].velocity.Y = Main.gore[num].velocity.Y - 1.5f;
-					num = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-					Main.gore[num].scale = 1.5f;
-					Main.gore[num].velocity.X = Main.gore[num].velocity.X - 1.5f;
-					Main.gore[num].velocity.Y = Main.gore[num].velocity.Y - 1.5f;
+					int goreIndex = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+					Main.gore[goreIndex].scale = 1.5f;
+					Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.5f;
+					Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
+					goreIndex = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+					Main.gore[goreIndex].scale = 1.5f;
+					Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X - 1.5f;
+					Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
+					goreIndex = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+					Main.gore[goreIndex].scale = 1.5f;
+					Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.5f;
+					Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y - 1.5f;
+					goreIndex = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+					Main.gore[goreIndex].scale = 1.5f;
+					Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X - 1.5f;
+					Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y - 1.5f;
 				}
 			}
 			if (Main.netMode != 1 && base.npc.life <= 0)

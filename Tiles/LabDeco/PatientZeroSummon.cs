@@ -40,7 +40,7 @@ namespace Redemption.Tiles.LabDeco
 			return false;
 		}
 
-		public override void RightClick(int i, int j)
+		public override bool NewRightClick(int i, int j)
 		{
 			if (Main.netMode == 0)
 			{
@@ -53,11 +53,10 @@ namespace Redemption.Tiles.LabDeco
 						i *= 16;
 						j--;
 						j *= 16;
-						int num = NPC.NewNPC(i, j, base.mod.NPCType("PatientZero"), 0, 0f, 0f, 0f, 0f, 255);
+						int k = NPC.NewNPC(i, j, base.mod.NPCType("PatientZero"), 0, 0f, 0f, 0f, 0f, 255);
 						if (Main.netMode == 2)
 						{
-							NetMessage.SendData(23, -1, -1, null, num, 0f, 0f, 0f, 0, 0, 0);
-							return;
+							NetMessage.SendData(23, -1, -1, null, k, 0f, 0f, 0f, 0, 0, 0);
 						}
 					}
 				}
@@ -69,11 +68,10 @@ namespace Redemption.Tiles.LabDeco
 						Main.tile[i, j];
 						i *= 16;
 						j *= 16;
-						int num2 = NPC.NewNPC(i, j, base.mod.NPCType("PatientZero"), 0, 0f, 0f, 0f, 0f, 255);
+						int l = NPC.NewNPC(i, j, base.mod.NPCType("PatientZero"), 0, 0f, 0f, 0f, 0f, 255);
 						if (Main.netMode == 2)
 						{
-							NetMessage.SendData(23, -1, -1, null, num2, 0f, 0f, 0f, 0, 0, 0);
-							return;
+							NetMessage.SendData(23, -1, -1, null, l, 0f, 0f, 0f, 0, 0, 0);
 						}
 					}
 				}
@@ -84,11 +82,10 @@ namespace Redemption.Tiles.LabDeco
 					i *= 16;
 					j++;
 					j *= 16;
-					int num3 = NPC.NewNPC(i, j, base.mod.NPCType("PatientZero"), 0, 0f, 0f, 0f, 0f, 255);
+					int m = NPC.NewNPC(i, j, base.mod.NPCType("PatientZero"), 0, 0f, 0f, 0f, 0f, 255);
 					if (Main.netMode == 2)
 					{
-						NetMessage.SendData(23, -1, -1, null, num3, 0f, 0f, 0f, 0, 0, 0);
-						return;
+						NetMessage.SendData(23, -1, -1, null, m, 0f, 0f, 0f, 0, 0, 0);
 					}
 				}
 			}
@@ -97,10 +94,9 @@ namespace Redemption.Tiles.LabDeco
 				if (!NPC.AnyNPCs(base.mod.NPCType("PatientZero")) && RedeWorld.downedStage2Scientist && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface && RedeWorld.downedMACE)
 				{
 					ModPacket packet = base.mod.GetPacket(256);
-					packet.Write(6);
+					packet.Write(12);
 					Utils.WriteVector2(packet, new Vector2((float)(i * 16), (float)(j * 16 - 1)));
 					packet.Send(-1, -1);
-					return;
 				}
 			}
 			else if (Main.tile[i, j].frameY >= 18)
@@ -108,19 +104,19 @@ namespace Redemption.Tiles.LabDeco
 				if (!NPC.AnyNPCs(base.mod.NPCType("PatientZero")) && RedeWorld.downedStage2Scientist && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface && RedeWorld.downedMACE)
 				{
 					ModPacket packet2 = base.mod.GetPacket(256);
-					packet2.Write(6);
+					packet2.Write(12);
 					Utils.WriteVector2(packet2, new Vector2((float)(i * 16), (float)(j * 16)));
 					packet2.Send(-1, -1);
-					return;
 				}
 			}
 			else if (!NPC.AnyNPCs(base.mod.NPCType("PatientZero")) && RedeWorld.downedStage2Scientist && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface && RedeWorld.downedMACE)
 			{
 				ModPacket packet3 = base.mod.GetPacket(256);
-				packet3.Write(6);
+				packet3.Write(12);
 				Utils.WriteVector2(packet3, new Vector2((float)(i * 16), (float)(j * 16 + 1)));
 				packet3.Send(-1, -1);
 			}
+			return true;
 		}
 
 		public override void MouseOver(int i, int j)

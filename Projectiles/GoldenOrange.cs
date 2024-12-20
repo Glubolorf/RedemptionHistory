@@ -30,23 +30,22 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			int num = (int)base.projectile.ai[0];
-			Vector2 vector;
-			vector..ctor(base.projectile.position.X + (float)base.projectile.width * 0.5f, base.projectile.position.Y + (float)base.projectile.height * 0.5f);
-			float num2 = Main.player[num].Center.X - vector.X;
-			float num3 = Main.player[num].Center.Y - vector.Y;
-			Math.Sqrt((double)(num2 * num2 + num3 * num3));
-			if (base.projectile.position.X < Main.player[num].position.X + (float)Main.player[num].width && base.projectile.position.X + (float)base.projectile.width > Main.player[num].position.X && base.projectile.position.Y < Main.player[num].position.Y + (float)Main.player[num].height && base.projectile.position.Y + (float)base.projectile.height > Main.player[num].position.Y)
+			int num487 = (int)base.projectile.ai[0];
+			Vector2 vector36 = new Vector2(base.projectile.position.X + (float)base.projectile.width * 0.5f, base.projectile.position.Y + (float)base.projectile.height * 0.5f);
+			float num489 = Main.player[num487].Center.X - vector36.X;
+			float num488 = Main.player[num487].Center.Y - vector36.Y;
+			Math.Sqrt((double)(num489 * num489 + num488 * num488));
+			if (base.projectile.position.X < Main.player[num487].position.X + (float)Main.player[num487].width && base.projectile.position.X + (float)base.projectile.width > Main.player[num487].position.X && base.projectile.position.Y < Main.player[num487].position.Y + (float)Main.player[num487].height && base.projectile.position.Y + (float)base.projectile.height > Main.player[num487].position.Y)
 			{
 				Main.PlaySound(SoundID.Item2.WithVolume(0.3f), base.projectile.position);
 				if (base.projectile.owner == Main.myPlayer)
 				{
-					Main.player[num].AddBuff(26, 300, false);
+					Main.player[num487].AddBuff(26, 300, false);
 				}
 				for (int i = 0; i < 10; i++)
 				{
-					int num4 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 160, 0f, 0f, 100, default(Color), 1.8f);
-					Main.dust[num4].velocity *= 1.3f;
+					int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 160, 0f, 0f, 100, default(Color), 1.8f);
+					Main.dust[dustIndex].velocity *= 1.3f;
 				}
 				base.projectile.Kill();
 			}
@@ -62,22 +61,22 @@ namespace Redemption.Projectiles
 		{
 			for (int i = 0; i < 10; i++)
 			{
-				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 160, 0f, 0f, 100, default(Color), 1.2f);
-				Main.dust[num].velocity *= 1.4f;
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 160, 0f, 0f, 100, default(Color), 1.2f);
+				Main.dust[dustIndex].velocity *= 1.4f;
 			}
 		}
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
 			Player player = Main.player[base.projectile.owner];
-			int crit2 = player.HeldItem.crit;
-			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref crit2);
-			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref crit2);
-			if (crit2 >= 100 || Main.rand.Next(1, 101) <= crit2)
+			int critChance = player.HeldItem.crit;
+			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref critChance);
+			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref critChance);
+			if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
 			{
 				crit = true;
 			}
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).frostburnSeedbag)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().frostburnSeedbag)
 			{
 				target.AddBuff(44, 160, false);
 			}

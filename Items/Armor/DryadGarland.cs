@@ -41,8 +41,7 @@ namespace Redemption.Items.Armor
 		public override void UpdateArmorSet(Player player)
 		{
 			player.setBonus = "Staves swing faster";
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.fasterStaves = true;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).fasterStaves = true;
 		}
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)

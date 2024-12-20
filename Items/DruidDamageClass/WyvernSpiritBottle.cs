@@ -42,13 +42,13 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override float UseTimeMultiplier(Player player)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterSpirits)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().fasterSpirits)
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).wanderingSoulSet)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().wanderingSoulSet)
 				{
 					return 1.45f;
 				}
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).shadeSet)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().shadeSet)
 				{
 					return 1.65f;
 				}
@@ -56,7 +56,7 @@ namespace Redemption.Items.DruidDamageClass
 			}
 			else
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterSpirits)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().fasterSpirits)
 				{
 					return 1.35f;
 				}

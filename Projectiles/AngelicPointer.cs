@@ -24,9 +24,9 @@ namespace Redemption.Projectiles
 		public override void AI()
 		{
 			base.projectile.rotation = (float)Math.Atan2((double)base.projectile.velocity.Y, (double)base.projectile.velocity.X) + 1.57f;
-			int num = Dust.NewDust(new Vector2(base.projectile.Center.X - 4f, base.projectile.Center.Y), 1, 1, 15, 0f, 0f, 0, default(Color), 1f);
-			Main.dust[num].noGravity = true;
-			Dust dust = Main.dust[num];
+			int Dust = Dust.NewDust(new Vector2(base.projectile.Center.X - 4f, base.projectile.Center.Y), 1, 1, 15, 0f, 0f, 0, default(Color), 1f);
+			Main.dust[Dust].noGravity = true;
+			Dust dust = Main.dust[Dust];
 			dust.velocity.X = 0f;
 			dust.velocity.Y = 0f;
 		}
@@ -59,27 +59,27 @@ namespace Redemption.Projectiles
 				Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 14f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-6 + Main.rand.Next(0, 12)), base.mod.ProjectileType("AngelicArrow"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			}
 			Main.PlaySound(0, (int)base.projectile.position.X, (int)base.projectile.position.Y, 1, 1f, 0f);
-			Vector2 vector = base.projectile.position;
-			Vector2 vector2 = Utils.ToRotationVector2(base.projectile.rotation - MathHelper.ToRadians(90f));
-			vector += vector2 * 16f;
+			Vector2 usePos = base.projectile.position;
+			Vector2 rotVector = Utils.ToRotationVector2(base.projectile.rotation - MathHelper.ToRadians(90f));
+			usePos += rotVector * 16f;
 			for (int i = 0; i < 20; i++)
 			{
-				Dust dust = Dust.NewDustDirect(vector, base.projectile.width, base.projectile.height, 81, 0f, 0f, 0, default(Color), 1f);
+				Dust dust = Dust.NewDustDirect(usePos, base.projectile.width, base.projectile.height, 81, 0f, 0f, 0, default(Color), 1f);
 				dust.position = (dust.position + base.projectile.Center) / 2f;
-				dust.velocity += vector2 * 2f;
+				dust.velocity += rotVector * 2f;
 				dust.velocity *= 0.5f;
 				dust.noGravity = true;
-				vector -= vector2 * 8f;
+				usePos -= rotVector * 8f;
 			}
 		}
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
 			Player player = Main.player[base.projectile.owner];
-			int crit2 = player.HeldItem.crit;
-			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref crit2);
-			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref crit2);
-			if (crit2 >= 100 || Main.rand.Next(1, 101) <= crit2)
+			int critChance = player.HeldItem.crit;
+			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref critChance);
+			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref critChance);
+			if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
 			{
 				crit = true;
 			}

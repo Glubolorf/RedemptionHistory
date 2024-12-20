@@ -48,12 +48,12 @@ namespace Redemption.Items.Armor.PostML
 		public override void UpdateArmorSet(Player player)
 		{
 			player.setBonus = "Grants immunity to the Infection, Radioactive Fallout, and infected waters\nWhen nearing death, a barrier will form around you, increasing damage reduction by a further 14%";
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
+			RedePlayer modPlayer2 = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
 			if ((float)player.statLife <= (float)player.statLifeMax2 * 0.35f)
 			{
-				redePlayer.xeniumBarrier = true;
+				modPlayer2.xeniumBarrier = true;
 				player.endurance += 0.14f;
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).xeniumBarrier && player.ownedProjectileCounts[base.mod.ProjectileType("XeniumShieldPro")] == 0)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().xeniumBarrier && player.ownedProjectileCounts[base.mod.ProjectileType("XeniumShieldPro")] == 0)
 				{
 					Projectile.NewProjectile(player.position, Vector2.Zero, base.mod.ProjectileType("XeniumShieldPro"), 0, 0f, player.whoAmI, 0f, 0f);
 				}
@@ -62,7 +62,7 @@ namespace Redemption.Items.Armor.PostML
 			player.buffImmune[base.mod.BuffType("XenomiteDebuff2")] = true;
 			player.buffImmune[base.mod.BuffType("RadioactiveFalloutDebuff")] = true;
 			player.buffImmune[base.mod.BuffType("HeavyRadiationDebuff")] = true;
-			redePlayer.labWaterImmune = true;
+			modPlayer2.labWaterImmune = true;
 		}
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)

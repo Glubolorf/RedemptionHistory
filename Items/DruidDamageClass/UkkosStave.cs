@@ -13,7 +13,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Ukko's Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Finnish him!'\nOnly usable after all Mech Bosses has been defeated\nSummons a giant Lightning Bolt at cursor point\nRight-clicking will shoot out a Lightning Blast\n[c/aa00ff:Epic]");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Finnish him!'\nOnly usable after all Mech Bosses has been defeated\nSummons a giant Lightning Bolt at cursor point\nRight-clicking will shoot out a Lightning Blast\n[c/ffc300:Legendary]");
 		}
 
 		public override void SafeSetDefaults()
@@ -60,14 +60,14 @@ namespace Redemption.Items.DruidDamageClass
 				base.item.shoot = base.mod.ProjectileType("UkkosLightning");
 				base.item.shootSpeed = 0f;
 			}
-			return NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3;
+			return NPC.downedMoonlord;
 		}
 
 		public override float UseTimeMultiplier(Player player)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterStaves)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().fasterStaves)
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
 				{
 					return 1.45f;
 				}
@@ -75,7 +75,7 @@ namespace Redemption.Items.DruidDamageClass
 			}
 			else
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
 				{
 					return 1.35f;
 				}
@@ -98,8 +98,7 @@ namespace Redemption.Items.DruidDamageClass
 			Color transparent = Color.Transparent;
 			if (base.item.modItem != null && base.item.modItem.mod == ModLoader.GetMod("Redemption"))
 			{
-				TooltipLine tooltipLine = Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName"));
-				tooltipLine.overrideColor = new Color?(new Color(170, 0, 255));
+				Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName")).overrideColor = new Color?(new Color(255, 195, 0));
 			}
 		}
 	}

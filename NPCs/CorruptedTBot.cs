@@ -54,6 +54,14 @@ namespace Redemption.NPCs
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 266, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
 		}
 
+		public override void AI()
+		{
+			if (Main.player[base.npc.target].GetModPlayer<RedePlayer>().girusCloaked)
+			{
+				base.npc.active = false;
+			}
+		}
+
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
 			return SpawnCondition.OverworldNightMonster.Chance * ((RedeWorld.downedInfectedEye && NPC.downedPlantBoss && Main.hardMode) ? 0.02f : 0f);

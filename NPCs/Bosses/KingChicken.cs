@@ -116,16 +116,16 @@ namespace Redemption.NPCs.Bosses
 			this.timer++;
 			if (this.timer == 1)
 			{
-				for (int i = 0; i < 2; i++)
+				for (int g = 0; g < 2; g++)
 				{
-					int num = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-					Main.gore[num].scale = 1.5f;
-					Main.gore[num].velocity.X = Main.gore[num].velocity.X + 1.5f;
-					Main.gore[num].velocity.Y = Main.gore[num].velocity.Y + 1.5f;
-					num = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-					Main.gore[num].scale = 1.5f;
-					Main.gore[num].velocity.X = Main.gore[num].velocity.X - 1.5f;
-					Main.gore[num].velocity.Y = Main.gore[num].velocity.Y + 1.5f;
+					int goreIndex = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+					Main.gore[goreIndex].scale = 1.5f;
+					Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.5f;
+					Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
+					goreIndex = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+					Main.gore[goreIndex].scale = 1.5f;
+					Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X - 1.5f;
+					Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
 				}
 			}
 			if (this.timer == 40)
@@ -180,10 +180,10 @@ namespace Redemption.NPCs.Bosses
 			string text = "It's a freakin' chicken, what did you expect...";
 			Color rarityGreen = Colors.RarityGreen;
 			byte r = rarityGreen.R;
-			Color rarityGreen2 = Colors.RarityGreen;
-			byte g = rarityGreen2.G;
-			Color rarityGreen3 = Colors.RarityGreen;
-			Main.NewText(text, r, g, rarityGreen3.B, false);
+			rarityGreen = Colors.RarityGreen;
+			byte g = rarityGreen.G;
+			rarityGreen = Colors.RarityGreen;
+			Main.NewText(text, r, g, rarityGreen.B, false);
 			potionType = 0;
 			if (!RedeWorld.downedKingChicken)
 			{
@@ -240,20 +240,19 @@ namespace Redemption.NPCs.Bosses
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/Bosses/KingChickenPeck");
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D peckAni = base.mod.GetTexture("NPCs/Bosses/KingChickenPeck");
 			int spriteDirection = base.npc.spriteDirection;
 			if (!this.peckPeck)
 			{
-				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.peckPeck)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num = texture.Height / 6;
-				int num2 = num * this.peckFrame;
-				Main.spriteBatch.Draw(texture, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num214 = peckAni.Height / 6;
+				int y6 = num214 * this.peckFrame;
+				Main.spriteBatch.Draw(peckAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, peckAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)peckAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
 		}

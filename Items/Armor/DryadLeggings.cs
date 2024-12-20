@@ -14,7 +14,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Dryad's Leggings");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n4% increased druidic damage\nMana regen slighty increased");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n2% increased druidic damage\nMana regen slighty increased");
 		}
 
 		public override void SetDefaults()
@@ -23,13 +23,12 @@ namespace Redemption.Items.Armor
 			base.item.height = 18;
 			base.item.value = 50;
 			base.item.rare = 1;
-			base.item.defense = 3;
+			base.item.defense = 2;
 		}
 
 		public override void UpdateEquip(Player player)
 		{
-			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
-			druidDamagePlayer.druidDamage += 0.04f;
+			DruidDamagePlayer.ModPlayer(player).druidDamage += 0.02f;
 			player.manaRegen += 2;
 		}
 

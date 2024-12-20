@@ -28,10 +28,8 @@ namespace Redemption.Items.Armor
 
 		public override void UpdateEquip(Player player)
 		{
-			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
-			druidDamagePlayer.druidDamage += 0.11f;
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.fasterSpirits = true;
+			DruidDamagePlayer.ModPlayer(player).druidDamage += 0.11f;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).fasterSpirits = true;
 			player.statLifeMax2 += 40;
 			if (Main.dayTime)
 			{

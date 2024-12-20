@@ -46,13 +46,13 @@ namespace Redemption.NPCs
 		public override void AI()
 		{
 			base.npc.ai[0] += 1f;
-			Player player = Main.player[base.npc.target];
+			Player P = Main.player[base.npc.target];
 			if (base.npc.target < 0 || base.npc.target == 255 || Main.player[base.npc.target].dead || !Main.player[base.npc.target].active)
 			{
 				base.npc.TargetClosest(true);
 			}
 			base.npc.netUpdate = true;
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).omegaPower)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().omegaPower)
 			{
 				base.npc.aiStyle = 10;
 				this.aiType = 34;
@@ -75,54 +75,50 @@ namespace Redemption.NPCs
 				base.npc.ai[1] += 1f;
 				if (base.npc.ai[1] >= 75f)
 				{
-					float num = 5f;
-					Vector2 vector;
-					vector..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num2 = 30;
-					int num3 = base.mod.ProjectileType("VlitchLaserPro");
+					float Speed = 5f;
+					Vector2 vector8 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
+					int damage = 30;
+					int type = base.mod.ProjectileType("VlitchLaserPro");
 					Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 12, 1f, 0f);
-					float num4 = (float)Math.Atan2((double)(vector.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector.X - (player.position.X + (float)player.width * 0.5f)));
-					int num5 = Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num4) * (double)num * -1.0), (float)(Math.Sin((double)num4) * (double)num * -1.0), num3, num2, 0f, 0, 0f, 0f);
-					Main.projectile[num5].netUpdate = true;
+					float rotation = (float)Math.Atan2((double)(vector8.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector8.X - (P.position.X + (float)P.width * 0.5f)));
+					int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
+					Main.projectile[num54].netUpdate = true;
 					base.npc.ai[1] = 0f;
 				}
 				if (base.npc.life <= 500 && base.npc.ai[1] >= 60f)
 				{
-					float num6 = 6f;
-					Vector2 vector2;
-					vector2..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num7 = 30;
-					int num8 = base.mod.ProjectileType("VlitchLaserPro");
+					float Speed2 = 6f;
+					Vector2 vector9 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
+					int damage2 = 30;
+					int type2 = base.mod.ProjectileType("VlitchLaserPro");
 					Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 12, 1f, 0f);
-					float num9 = (float)Math.Atan2((double)(vector2.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector2.X - (player.position.X + (float)player.width * 0.5f)));
-					int num10 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num9) * (double)num6 * -1.0), (float)(Math.Sin((double)num9) * (double)num6 * -1.0), num8, num7, 0f, 0, 0f, 0f);
-					Main.projectile[num10].netUpdate = true;
+					float rotation2 = (float)Math.Atan2((double)(vector9.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector9.X - (P.position.X + (float)P.width * 0.5f)));
+					int num55 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0), type2, damage2, 0f, 0, 0f, 0f);
+					Main.projectile[num55].netUpdate = true;
 					base.npc.ai[1] = 0f;
 				}
 				if (base.npc.life <= 200 && base.npc.ai[1] >= 50f)
 				{
-					float num11 = 7f;
-					Vector2 vector3;
-					vector3..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num12 = 30;
-					int num13 = base.mod.ProjectileType("VlitchLaserPro");
+					float Speed3 = 7f;
+					Vector2 vector10 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
+					int damage3 = 30;
+					int type3 = base.mod.ProjectileType("VlitchLaserPro");
 					Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 12, 1f, 0f);
-					float num14 = (float)Math.Atan2((double)(vector3.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector3.X - (player.position.X + (float)player.width * 0.5f)));
-					int num15 = Projectile.NewProjectile(vector3.X, vector3.Y, (float)(Math.Cos((double)num14) * (double)num11 * -1.0), (float)(Math.Sin((double)num14) * (double)num11 * -1.0), num13, num12, 0f, 0, 0f, 0f);
-					Main.projectile[num15].netUpdate = true;
+					float rotation3 = (float)Math.Atan2((double)(vector10.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector10.X - (P.position.X + (float)P.width * 0.5f)));
+					int num56 = Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)rotation3) * (double)Speed3 * -1.0), (float)(Math.Sin((double)rotation3) * (double)Speed3 * -1.0), type3, damage3, 0f, 0, 0f, 0f);
+					Main.projectile[num56].netUpdate = true;
 					base.npc.ai[1] = 0f;
 				}
 				if (base.npc.life <= 90 && base.npc.ai[1] >= 25f)
 				{
-					float num16 = 8f;
-					Vector2 vector4;
-					vector4..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num17 = 30;
-					int num18 = base.mod.ProjectileType("VlitchLaserPro");
+					float Speed4 = 8f;
+					Vector2 vector11 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
+					int damage4 = 30;
+					int type4 = base.mod.ProjectileType("VlitchLaserPro");
 					Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 12, 1f, 0f);
-					float num19 = (float)Math.Atan2((double)(vector4.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector4.X - (player.position.X + (float)player.width * 0.5f)));
-					int num20 = Projectile.NewProjectile(vector4.X, vector4.Y, (float)(Math.Cos((double)num19) * (double)num16 * -1.0), (float)(Math.Sin((double)num19) * (double)num16 * -1.0), num18, num17, 0f, 0, 0f, 0f);
-					Main.projectile[num20].netUpdate = true;
+					float rotation4 = (float)Math.Atan2((double)(vector11.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector11.X - (P.position.X + (float)P.width * 0.5f)));
+					int num57 = Projectile.NewProjectile(vector11.X, vector11.Y, (float)(Math.Cos((double)rotation4) * (double)Speed4 * -1.0), (float)(Math.Sin((double)rotation4) * (double)Speed4 * -1.0), type4, damage4, 0f, 0, 0f, 0f);
+					Main.projectile[num57].netUpdate = true;
 					base.npc.ai[1] = 0f;
 				}
 			}
@@ -134,15 +130,15 @@ namespace Redemption.NPCs
 
 		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
 		{
-			return !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).omegaPower;
+			return !Main.LocalPlayer.GetModPlayer<RedePlayer>().omegaPower;
 		}
 
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			SpriteEffects spriteEffects = 0;
+			SpriteEffects spriteEffects = SpriteEffects.None;
 			if (base.npc.spriteDirection == 1)
 			{
-				spriteEffects = 1;
+				spriteEffects = SpriteEffects.FlipHorizontally;
 			}
 			spriteBatch.Draw(base.mod.GetTexture("NPCs/CorruptedProbe_Glow"), new Vector2(base.npc.Center.X - Main.screenPosition.X, base.npc.Center.Y - Main.screenPosition.Y), new Rectangle?(base.npc.frame), Color.White, base.npc.rotation, new Vector2((float)base.npc.width * 0.5f, (float)base.npc.height * 0.5f), 1f, spriteEffects, 0f);
 		}

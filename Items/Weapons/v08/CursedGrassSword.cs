@@ -33,18 +33,26 @@ namespace Redemption.Items.Weapons.v08
 			base.item.shoot = 55;
 		}
 
+		public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
+		{
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().thornCrown)
+			{
+				flat += 600f;
+			}
+		}
+
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			int num = 2 + Main.rand.Next(2);
-			for (int i = 0; i < num; i++)
+			int numberProjectiles = 2 + Main.rand.Next(2);
+			for (int i = 0; i < numberProjectiles; i++)
 			{
-				Vector2 vector = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(30f));
-				float num2 = 1f - Utils.NextFloat(Main.rand) * 0.4f;
-				vector *= num2;
-				int num3 = Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
-				Main.projectile[num3].hostile = false;
-				Main.projectile[num3].friendly = true;
-				Main.projectile[num3].timeLeft = 60;
+				Vector2 perturbedSpeed = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(30f));
+				float scale = 1f - Utils.NextFloat(Main.rand) * 0.4f;
+				perturbedSpeed *= scale;
+				int proj = Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
+				Main.projectile[proj].hostile = false;
+				Main.projectile[proj].friendly = true;
+				Main.projectile[proj].timeLeft = 60;
 			}
 			return false;
 		}

@@ -28,18 +28,24 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			if (++base.projectile.frameCounter >= 3)
+			Projectile projectile = base.projectile;
+			int num = projectile.frameCounter + 1;
+			projectile.frameCounter = num;
+			if (num >= 3)
 			{
 				base.projectile.frameCounter = 0;
-				if (++base.projectile.frame >= 4)
+				Projectile projectile2 = base.projectile;
+				num = projectile2.frame + 1;
+				projectile2.frame = num;
+				if (num >= 4)
 				{
 					base.projectile.frame = 0;
 				}
 			}
 			if (Main.rand.Next(2) == 0)
 			{
-				int num = Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 158, 0f, 0f, 100, default(Color), 1.5f);
-				Main.dust[num].noGravity = true;
+				int dust = Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 158, 0f, 0f, 100, default(Color), 1.5f);
+				Main.dust[dust].noGravity = true;
 			}
 			Lighting.AddLight(base.projectile.Center, (float)(255 - base.projectile.alpha) * 0.5f / 255f, (float)(255 - base.projectile.alpha) * 0.3f / 255f, (float)(255 - base.projectile.alpha) * 0f / 255f);
 			base.projectile.rotation = (float)Math.Atan2((double)base.projectile.velocity.Y, (double)base.projectile.velocity.X) + 1.57f;
@@ -48,8 +54,8 @@ namespace Redemption.Projectiles
 			{
 				for (int i = 0; i < 20; i++)
 				{
-					int num2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 158, 0f, 0f, 100, default(Color), 2f);
-					Main.dust[num2].velocity *= 2.6f;
+					int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 158, 0f, 0f, 100, default(Color), 2f);
+					Main.dust[dustIndex].velocity *= 2.6f;
 				}
 			}
 		}
@@ -59,8 +65,8 @@ namespace Redemption.Projectiles
 			Main.PlaySound(SoundID.Item14.WithVolume(0.2f), base.projectile.position);
 			for (int i = 0; i < 10; i++)
 			{
-				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 158, 0f, 0f, 100, default(Color), 2f);
-				Main.dust[num].velocity *= 1.3f;
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 158, 0f, 0f, 100, default(Color), 2f);
+				Main.dust[dustIndex].velocity *= 1.3f;
 			}
 			if (base.projectile.velocity.X != oldVelocity.X)
 			{
@@ -84,14 +90,14 @@ namespace Redemption.Projectiles
 			Main.PlaySound(SoundID.Item14, base.projectile.position);
 			for (int i = 0; i < 40; i++)
 			{
-				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 158, 0f, 0f, 100, default(Color), 2f);
-				Main.dust[num].velocity *= 2.3f;
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 158, 0f, 0f, 100, default(Color), 2f);
+				Main.dust[dustIndex].velocity *= 2.3f;
 			}
-			int num2 = 10;
-			for (int j = 0; j < num2; j++)
+			int pieCut = 10;
+			for (int j = 0; j < pieCut; j++)
 			{
-				int num3 = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, base.mod.ProjectileType("MACEMiniblast"), 40, 3f, 255, 0f, 0f);
-				Main.projectile[num3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)j / (float)num2 * 6.28f);
+				int projID = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, base.mod.ProjectileType("MACEMiniblast"), 40, 3f, 255, 0f, 0f);
+				Main.projectile[projID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)j / (float)pieCut * 6.28f);
 			}
 		}
 	}

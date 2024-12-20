@@ -17,9 +17,9 @@ namespace Redemption.Buffs
 		public override void Update(Player player, ref int buffIndex)
 		{
 			DruidDamagePlayer.ModPlayer(player);
-			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
-			modPlayer.rapidStave = true;
-			modPlayer.staveTripleShot = true;
+			RedePlayer modPlayer3 = player.GetModPlayer<RedePlayer>();
+			modPlayer3.rapidStave = true;
+			modPlayer3.staveTripleShot = true;
 			player.nightVision = true;
 			player.manaCost *= 0.75f;
 			if (!Main.dayTime)
@@ -27,7 +27,7 @@ namespace Redemption.Buffs
 				player.moveSpeed += 10f;
 				player.jumpBoost = true;
 			}
-			RedePlayer modPlayer2 = player.GetModPlayer<RedePlayer>(base.mod);
+			RedePlayer modPlayer2 = player.GetModPlayer<RedePlayer>();
 			if (player.ownedProjectileCounts[base.mod.ProjectileType("NatureGuardian14")] > 0)
 			{
 				modPlayer2.natureGuardian14 = true;

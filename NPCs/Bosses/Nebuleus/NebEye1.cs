@@ -46,28 +46,27 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 			if (this.startTimer == 60)
 			{
 				Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-				float num = 16f;
-				Vector2 vector;
-				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num2 = 50;
-				int num3 = base.mod.ProjectileType("PNebula1");
-				int num4 = base.mod.ProjectileType("PNebula2");
-				int num5 = base.mod.ProjectileType("PNebula3");
-				float num6 = (float)Math.Atan2((double)(vector.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector.X - (player.position.X + (float)player.width * 0.5f)));
-				Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num6) * (double)num * -1.0), (float)(Math.Sin((double)num6) * (double)num * -1.0), num3, num2, 0f, 0, 0f, 0f);
-				Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num6) * (double)num * -1.0), (float)(Math.Sin((double)num6) * (double)num * -1.0), num4, num2, 0f, 0, 0f, 0f);
-				Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num6) * (double)num * -1.0), (float)(Math.Sin((double)num6) * (double)num * -1.0), num5, num2, 0f, 0, 0f, 0f);
+				float Speed = 16f;
+				Vector2 vector8 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int damage = 50;
+				int type = base.mod.ProjectileType("PNebula1");
+				int type2 = base.mod.ProjectileType("PNebula2");
+				int type3 = base.mod.ProjectileType("PNebula3");
+				float rotation = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
+				Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
+				Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type2, damage, 0f, 0, 0f, 0f);
+				Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type3, damage, 0f, 0, 0f, 0f);
 			}
 			if (this.startTimer >= 120)
 			{
-				int num7 = 58;
-				int num8 = 8;
-				for (int i = 0; i < num8; i++)
+				int dustType = 58;
+				int pieCut = 8;
+				for (int i = 0; i < pieCut; i++)
 				{
-					int num9 = Dust.NewDust(new Vector2(base.npc.Center.X - 1f, base.npc.Center.Y - 1f), 2, 2, num7, 0f, 0f, 100, Color.White, 3f);
-					Main.dust[num9].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)num8 * 6.28f);
-					Main.dust[num9].noLight = false;
-					Main.dust[num9].noGravity = true;
+					int dustID = Dust.NewDust(new Vector2(base.npc.Center.X - 1f, base.npc.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 3f);
+					Main.dust[dustID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)pieCut * 6.28f);
+					Main.dust[dustID].noLight = false;
+					Main.dust[dustID].noGravity = true;
 				}
 				base.npc.active = false;
 			}

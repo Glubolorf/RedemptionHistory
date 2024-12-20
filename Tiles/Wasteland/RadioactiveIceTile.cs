@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Tiles.Wasteland
@@ -13,6 +14,9 @@ namespace Redemption.Tiles.Wasteland
 			Main.tileMergeDirt[(int)base.Type] = true;
 			Main.tileBlendAll[(int)base.Type] = true;
 			Main.tileBlockLight[(int)base.Type] = true;
+			TileID.Sets.Conversion.Ice[(int)base.Type] = true;
+			TileID.Sets.Ices[(int)base.Type] = true;
+			Main.tileMerge[147][(int)base.Type] = true;
 			Main.tileLighted[(int)base.Type] = true;
 			base.AddMapEntry(new Color(70, 130, 70), null);
 			this.drop = base.mod.ItemType("RadioactiveIce");
@@ -20,11 +24,10 @@ namespace Redemption.Tiles.Wasteland
 
 		public override void NearbyEffects(int i, int j, bool closer)
 		{
-			Player localPlayer = Main.LocalPlayer;
-			int num = (int)Vector2.Distance(localPlayer.Center / 16f, new Vector2((float)i, (float)j));
-			if (num <= 15)
+			Player player = Main.LocalPlayer;
+			if ((int)Vector2.Distance(player.Center / 16f, new Vector2((float)i, (float)j)) <= 15)
 			{
-				localPlayer.AddBuff(base.mod.BuffType("RadioactiveFalloutDebuff"), Main.rand.Next(10, 20), true);
+				player.AddBuff(base.mod.BuffType("RadioactiveFalloutDebuff"), Main.rand.Next(10, 20), true);
 			}
 		}
 
@@ -39,7 +42,7 @@ namespace Redemption.Tiles.Wasteland
 		{
 			if (Main.rand.Next(8) == 0 && !this.XenomiteSpawn(i, j))
 			{
-				bool flag = this.SpawnRocks(i, j);
+				this.SpawnRocks(i, j);
 			}
 		}
 

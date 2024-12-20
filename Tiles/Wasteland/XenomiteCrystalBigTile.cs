@@ -17,9 +17,9 @@ namespace Redemption.Tiles.Wasteland
 			Main.tileLavaDeath[(int)base.Type] = false;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3);
 			TileObjectData.addTile((int)base.Type);
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Xenomite Crystals");
-			base.AddMapEntry(new Color(50, 220, 50), modTranslation);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Xenomite Crystals");
+			base.AddMapEntry(new Color(50, 220, 50), name);
 			this.disableSmartCursor = true;
 			this.dustType = 74;
 			Main.tileLighted[(int)base.Type] = true;

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles
@@ -8,6 +10,7 @@ namespace Redemption.Projectiles
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Warning");
+			ProjectileID.Sets.DontAttachHideToAlpha[base.projectile.type] = true;
 		}
 
 		public override void SetDefaults()
@@ -19,8 +22,14 @@ namespace Redemption.Projectiles
 			base.projectile.friendly = false;
 			base.projectile.ignoreWater = true;
 			base.projectile.tileCollide = false;
+			base.projectile.hide = true;
 			base.projectile.alpha = 150;
 			base.projectile.timeLeft = 2;
+		}
+
+		public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
+		{
+			drawCacheProjsBehindNPCsAndTiles.Add(index);
 		}
 	}
 }

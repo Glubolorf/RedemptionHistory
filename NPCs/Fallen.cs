@@ -101,15 +101,16 @@ namespace Redemption.NPCs
 
 		public override string TownNPCName()
 		{
-			switch (WorldGen.genRand.Next(3))
+			int num = WorldGen.genRand.Next(3);
+			if (num == 0)
 			{
-			case 0:
 				return "Happins";
-			case 1:
-				return "Tenvon";
-			default:
+			}
+			if (num != 1)
+			{
 				return "Okvot";
 			}
+			return "Tenvon";
 		}
 
 		public override void FindFrame(int frameHeight)
@@ -172,72 +173,72 @@ namespace Redemption.NPCs
 
 		public override void SetupShop(Chest shop, ref int nextSlot)
 		{
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType<OldGathicWaraxe>(), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<OldGathicWaraxe>(), false);
 			shop.item[nextSlot].shopCustomPrice = new int?(30);
 			shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType<BronzeGreatsword>(), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<BronzeGreatsword>(), false);
 			shop.item[nextSlot].shopCustomPrice = new int?(25);
 			shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType<BronzeStaff>(), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<BronzeStaff>(), false);
 			shop.item[nextSlot].shopCustomPrice = new int?(30);
 			shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType<AncientDirt>(), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<AncientDirt>(), false);
 			shop.item[nextSlot].shopCustomPrice = new int?(2);
 			shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType<AncientWood>(), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<AncientWood>(), false);
 			shop.item[nextSlot].shopCustomPrice = new int?(3);
 			shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType<AncientStone>(), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<AncientStone>(), false);
 			shop.item[nextSlot].shopCustomPrice = new int?(4);
 			shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType<MysteriousTabletCorrupt>(), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<MysteriousTabletCorrupt>(), false);
 			shop.item[nextSlot].shopCustomPrice = new int?(20);
 			shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType<MysteriousTabletCrimson>(), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<MysteriousTabletCrimson>(), false);
 			shop.item[nextSlot].shopCustomPrice = new int?(20);
 			shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType<SmallLostSoul>(), false);
+			shop.item[nextSlot].SetDefaults(ModContent.ItemType<SmallLostSoul>(), false);
 			shop.item[nextSlot].shopCustomPrice = new int?(4);
 			shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 			nextSlot++;
 			if (Main.hardMode)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType<LostSoul>(), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<LostSoul>(), false);
 				shop.item[nextSlot].shopCustomPrice = new int?(8);
 				shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 				nextSlot++;
 			}
 			if (Main.hardMode && NPC.downedMoonlord)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType<LargeLostSoul>(), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<LargeLostSoul>(), false);
 				shop.item[nextSlot].shopCustomPrice = new int?(16);
 				shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 				nextSlot++;
 			}
 			if (Main.hardMode && RedeWorld.downedPatientZero)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType<SmallShadesoul>(), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<SmallShadesoul>(), false);
 				shop.item[nextSlot].shopCustomPrice = new int?(12);
 				shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 				nextSlot++;
 			}
 			if (RedeWorld.keeperSaved)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType<DarkShard>(), false);
+				shop.item[nextSlot].SetDefaults(ModContent.ItemType<DarkShard>(), false);
 				shop.item[nextSlot].shopCustomPrice = new int?(4);
 				shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 				nextSlot++;
 				if (Main.expertMode)
 				{
-					shop.item[nextSlot].SetDefaults(base.mod.ItemType<HeartEmblem>(), false);
+					shop.item[nextSlot].SetDefaults(ModContent.ItemType<HeartEmblem>(), false);
 					shop.item[nextSlot].shopCustomPrice = new int?(30);
 					shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 					nextSlot++;
@@ -260,7 +261,7 @@ namespace Redemption.NPCs
 		public override void DrawTownAttackSwing(ref Texture2D item, ref int itemSize, ref float scale, ref Vector2 offset)
 		{
 			scale = 1f;
-			item = Main.itemTexture[base.mod.ItemType<OldGathicWaraxe>()];
+			item = Main.itemTexture[ModContent.ItemType<OldGathicWaraxe>()];
 			itemSize = 60;
 		}
 

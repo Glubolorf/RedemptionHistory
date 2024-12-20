@@ -29,8 +29,7 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			Player player = Main.player[base.projectile.owner];
-			if (player.Center.X > base.projectile.Center.X)
+			if (Main.player[base.projectile.owner].Center.X > base.projectile.Center.X)
 			{
 				base.projectile.spriteDirection = 1;
 			}
@@ -38,18 +37,24 @@ namespace Redemption.Projectiles
 			{
 				base.projectile.spriteDirection = -1;
 			}
-			if (++base.projectile.frameCounter >= 5)
+			Projectile projectile = base.projectile;
+			int num = projectile.frameCounter + 1;
+			projectile.frameCounter = num;
+			if (num >= 5)
 			{
 				base.projectile.frameCounter = 0;
-				if (++base.projectile.frame >= 5)
+				Projectile projectile2 = base.projectile;
+				num = projectile2.frame + 1;
+				projectile2.frame = num;
+				if (num >= 5)
 				{
 					base.projectile.frame = 0;
 				}
 			}
-			Projectile projectile = base.projectile;
-			projectile.velocity.X = projectile.velocity.X * 0f;
-			Projectile projectile2 = base.projectile;
-			projectile2.velocity.Y = projectile2.velocity.Y + 0f;
+			Projectile projectile3 = base.projectile;
+			projectile3.velocity.X = projectile3.velocity.X * 0f;
+			Projectile projectile4 = base.projectile;
+			projectile4.velocity.Y = projectile4.velocity.Y + 0f;
 			base.projectile.localAI[0] += 1f;
 			base.projectile.alpha = (int)base.projectile.localAI[0] * 2;
 			if (base.projectile.localAI[0] == 25f)

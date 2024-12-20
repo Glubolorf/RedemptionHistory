@@ -42,33 +42,33 @@ namespace Redemption.Projectiles
 				this.AdjustMagnitude(ref base.projectile.velocity);
 				base.projectile.localAI[0] = 1f;
 			}
-			Vector2 vector = Vector2.Zero;
-			float num = 100f;
-			bool flag = false;
+			Vector2 move = Vector2.Zero;
+			float distance = 100f;
+			bool target = false;
 			for (int i = 0; i < 200; i++)
 			{
 				if (Main.player[i].active)
 				{
-					Vector2 vector2 = Main.player[i].Center - base.projectile.Center;
-					float num2 = (float)Math.Sqrt((double)(vector2.X * vector2.X + vector2.Y * vector2.Y));
-					if (num2 < num)
+					Vector2 newMove = Main.player[i].Center - base.projectile.Center;
+					float distanceTo = (float)Math.Sqrt((double)(newMove.X * newMove.X + newMove.Y * newMove.Y));
+					if (distanceTo < distance)
 					{
-						vector = vector2;
-						num = num2;
-						flag = true;
+						move = newMove;
+						distance = distanceTo;
+						target = true;
 					}
 				}
 			}
-			if (flag)
+			if (target)
 			{
-				this.AdjustMagnitude(ref vector);
-				base.projectile.velocity = (10f * base.projectile.velocity + vector) / 11f;
+				this.AdjustMagnitude(ref move);
+				base.projectile.velocity = (10f * base.projectile.velocity + move) / 11f;
 				this.AdjustMagnitude(ref base.projectile.velocity);
 			}
 			if (base.projectile.alpha <= 100)
 			{
-				int num3 = Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, base.mod.DustType("VoidFlame"), 0f, 0f, 0, default(Color), 1f);
-				Main.dust[num3].velocity /= 2f;
+				int dust = Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, base.mod.DustType("VoidFlame"), 0f, 0f, 0, default(Color), 1f);
+				Main.dust[dust].velocity /= 2f;
 			}
 		}
 
@@ -79,10 +79,10 @@ namespace Redemption.Projectiles
 
 		private void AdjustMagnitude(ref Vector2 vector)
 		{
-			float num = (float)Math.Sqrt((double)(vector.X * vector.X + vector.Y * vector.Y));
-			if (num > 6f)
+			float magnitude = (float)Math.Sqrt((double)(vector.X * vector.X + vector.Y * vector.Y));
+			if (magnitude > 6f)
 			{
-				vector *= 6f / num;
+				vector *= 6f / magnitude;
 			}
 		}
 	}

@@ -44,8 +44,7 @@ namespace Redemption.NPCs.v08
 
 		public override void AI()
 		{
-			Player player = Main.player[base.npc.target];
-			if (player.Center.X > base.npc.Center.X)
+			if (Main.player[base.npc.target].Center.X > base.npc.Center.X)
 			{
 				base.npc.spriteDirection = 1;
 			}
@@ -65,11 +64,10 @@ namespace Redemption.NPCs.v08
 					base.npc.frame.Y = 0;
 				}
 			}
-			float num = base.npc.Distance(Main.player[base.npc.target].Center);
-			if (num <= 500f && Main.rand.Next(100) == 0)
+			if (base.npc.Distance(Main.player[base.npc.target].Center) <= 500f && Main.rand.Next(100) == 0)
 			{
-				int num2 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("InfectedGrub"), 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[num2].netUpdate = true;
+				int minion = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("InfectedGrub"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.npc[minion].netUpdate = true;
 			}
 		}
 

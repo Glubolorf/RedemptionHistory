@@ -14,14 +14,14 @@ namespace Redemption.Items.Weapons
 		{
 			if (Main.netMode != 2)
 			{
-				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
 				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
 				{
-					array[i] = Main.glowMaskTexture[i];
+					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
-				XeniumSpear.customGlowMask = (short)(array.Length - 1);
-				Main.glowMaskTexture = array;
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				XeniumSpear.customGlowMask = (short)(glowMasks.Length - 1);
+				Main.glowMaskTexture = glowMasks;
 			}
 			base.item.glowMask = XeniumSpear.customGlowMask;
 			base.DisplayName.SetDefault("Xenium Lance");
@@ -41,7 +41,7 @@ namespace Redemption.Items.Weapons
 			base.item.UseSound = SoundID.Item1;
 			base.item.value = Item.sellPrice(0, 40, 0, 0);
 			base.item.rare = 11;
-			base.item.shoot = base.mod.ProjectileType<XeniumSpearPro>();
+			base.item.shoot = ModContent.ProjectileType<XeniumSpearPro>();
 			base.item.shootSpeed = 5.7f;
 			base.item.noMelee = true;
 			base.item.noUseGraphic = true;

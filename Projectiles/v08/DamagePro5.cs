@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
@@ -30,19 +29,18 @@ namespace Redemption.Projectiles.v08
 		{
 			base.projectile.velocity.Y = 0f;
 			base.projectile.velocity.X = 0f;
-			IEnumerable<Projectile> enumerable = Enumerable.Where<Projectile>(Main.projectile, (Projectile x) => x.Hitbox.Intersects(base.projectile.Hitbox));
-			foreach (Projectile projectile in enumerable)
+			foreach (Projectile proj in Enumerable.Where<Projectile>(Main.projectile, (Projectile x) => x.Hitbox.Intersects(base.projectile.Hitbox)))
 			{
-				if (base.projectile != projectile && !projectile.friendly && !projectile.minion && projectile.velocity.X != 0f && projectile.velocity.Y != 0f)
+				if (base.projectile != proj && !proj.friendly && !proj.minion && proj.velocity.X != 0f && proj.velocity.Y != 0f)
 				{
-					if (projectile.penetrate == 1)
+					if (proj.penetrate == 1)
 					{
-						projectile.penetrate = 2;
+						proj.penetrate = 2;
 					}
-					projectile.friendly = true;
-					projectile.hostile = false;
-					projectile.velocity.X = -projectile.velocity.X * 1.5f;
-					projectile.velocity.Y = -projectile.velocity.Y * 1.5f;
+					proj.friendly = true;
+					proj.hostile = false;
+					proj.velocity.X = -proj.velocity.X * 1.5f;
+					proj.velocity.Y = -proj.velocity.Y * 1.5f;
 				}
 			}
 		}

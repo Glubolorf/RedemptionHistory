@@ -33,15 +33,22 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			if (++base.projectile.frameCounter >= 5)
+			Projectile projectile = base.projectile;
+			int num = projectile.frameCounter + 1;
+			projectile.frameCounter = num;
+			if (num >= 5)
 			{
 				base.projectile.frameCounter = 0;
-				if (++base.projectile.frame >= 2)
+				Projectile projectile2 = base.projectile;
+				num = projectile2.frame + 1;
+				projectile2.frame = num;
+				if (num >= 2)
 				{
 					base.projectile.frame = 0;
 				}
 			}
 			Player player = Main.player[base.projectile.owner];
+			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
 			if (!player.HasBuff(base.mod.BuffType("NatureGuardian26Buff")))
 			{
 				base.projectile.Kill();
@@ -54,14 +61,13 @@ namespace Redemption.Projectiles
 			{
 				base.projectile.spriteDirection = -1;
 			}
-			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>(base.mod);
 			base.projectile.localAI[0] += 1f;
 			if (base.projectile.localAI[0] == 1f)
 			{
 				for (int i = 0; i < 25; i++)
 				{
-					int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 80, 0f, 0f, 100, default(Color), 1.2f);
-					Main.dust[num].velocity *= 1.4f;
+					int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 80, 0f, 0f, 100, default(Color), 1.2f);
+					Main.dust[dustIndex].velocity *= 1.4f;
 				}
 				Projectile.NewProjectile(player.position, Vector2.Zero, base.mod.ProjectileType("IceShield2"), 0, 0f, player.whoAmI, 0f, 0f);
 				Main.PlaySound(SoundID.Item74, base.projectile.position);
@@ -77,22 +83,13 @@ namespace Redemption.Projectiles
 			}
 		}
 
-		private float Magnitude(Vector2 mag)
-		{
-			return (float)Math.Sqrt((double)(mag.X * mag.X + mag.Y * mag.Y));
-		}
-
 		public override void Kill(int timeLeft)
 		{
 			for (int i = 0; i < 25; i++)
 			{
-				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 80, 0f, 0f, 100, default(Color), 1.2f);
-				Main.dust[num].velocity *= 1.4f;
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 80, 0f, 0f, 100, default(Color), 1.2f);
+				Main.dust[dustIndex].velocity *= 1.4f;
 			}
 		}
-
-		private int shootTimer;
-
-		private bool shootBarrage;
 	}
 }

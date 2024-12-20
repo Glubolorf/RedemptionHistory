@@ -30,12 +30,18 @@ namespace Redemption.Projectiles
 		public override void AI()
 		{
 			Lighting.AddLight(base.projectile.Center, (float)(255 - base.projectile.alpha) * 1f / 255f, (float)(255 - base.projectile.alpha) * 1f / 255f, (float)(255 - base.projectile.alpha) * 1f / 255f);
-			int num = Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, 235, 0f, 0f, 0, default(Color), 1f);
-			Main.dust[num].noGravity = true;
-			if (++base.projectile.frameCounter >= 3)
+			int DustID2 = Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, 235, 0f, 0f, 0, default(Color), 1f);
+			Main.dust[DustID2].noGravity = true;
+			Projectile projectile = base.projectile;
+			int num = projectile.frameCounter + 1;
+			projectile.frameCounter = num;
+			if (num >= 3)
 			{
 				base.projectile.frameCounter = 0;
-				if (++base.projectile.frame >= 4)
+				Projectile projectile2 = base.projectile;
+				num = projectile2.frame + 1;
+				projectile2.frame = num;
+				if (num >= 4)
 				{
 					base.projectile.frame = 0;
 				}
@@ -59,37 +65,37 @@ namespace Redemption.Projectiles
 				this.AdjustMagnitude(ref base.projectile.velocity);
 				base.projectile.localAI[0] = 1f;
 			}
-			Vector2 vector = Vector2.Zero;
-			float num2 = 50f;
-			bool flag = false;
+			Vector2 move = Vector2.Zero;
+			float distance = 50f;
+			bool target = false;
 			for (int i = 0; i < 200; i++)
 			{
 				if (Main.npc[i].active && !Main.npc[i].dontTakeDamage && !Main.npc[i].friendly && Main.npc[i].lifeMax > 5)
 				{
-					Vector2 vector2 = Main.npc[i].Center - base.projectile.Center;
-					float num3 = (float)Math.Sqrt((double)(vector2.X * vector2.X + vector2.Y * vector2.Y));
-					if (num3 < num2)
+					Vector2 newMove = Main.npc[i].Center - base.projectile.Center;
+					float distanceTo = (float)Math.Sqrt((double)(newMove.X * newMove.X + newMove.Y * newMove.Y));
+					if (distanceTo < distance)
 					{
-						vector = vector2;
-						num2 = num3;
-						flag = true;
+						move = newMove;
+						distance = distanceTo;
+						target = true;
 					}
 				}
 			}
-			if (flag)
+			if (target)
 			{
-				this.AdjustMagnitude(ref vector);
-				base.projectile.velocity = (10f * base.projectile.velocity + vector) / 11f;
+				this.AdjustMagnitude(ref move);
+				base.projectile.velocity = (10f * base.projectile.velocity + move) / 11f;
 				this.AdjustMagnitude(ref base.projectile.velocity);
 			}
 		}
 
 		private void AdjustMagnitude(ref Vector2 vector)
 		{
-			float num = (float)Math.Sqrt((double)(vector.X * vector.X + vector.Y * vector.Y));
-			if (num > 6f)
+			float magnitude = (float)Math.Sqrt((double)(vector.X * vector.X + vector.Y * vector.Y));
+			if (magnitude > 6f)
 			{
-				vector *= 8f / num;
+				vector *= 8f / magnitude;
 			}
 		}
 	}

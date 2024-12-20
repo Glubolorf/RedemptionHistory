@@ -24,8 +24,7 @@ namespace Redemption.Tiles.LabDeco
 		{
 			if (closer)
 			{
-				Player localPlayer = Main.LocalPlayer;
-				localPlayer.AddBuff(base.mod.BuffType("RadioactiveFalloutDebuff"), Main.rand.Next(10, 20), true);
+				Main.LocalPlayer.AddBuff(base.mod.BuffType("RadioactiveFalloutDebuff"), Main.rand.Next(10, 20), true);
 			}
 		}
 

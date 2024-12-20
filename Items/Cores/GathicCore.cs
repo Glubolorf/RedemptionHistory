@@ -24,7 +24,7 @@ namespace Redemption.Items.Cores
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
+			DruidDamagePlayer modPlayer = DruidDamagePlayer.ModPlayer(player);
 			player.meleeDamage *= 1.05f;
 			player.meleeSpeed *= 1.05f;
 			player.buffImmune[33] = true;
@@ -35,7 +35,7 @@ namespace Redemption.Items.Cores
 			player.aggro += 50;
 			if ((float)player.statLife <= (float)player.statLifeMax2 * 0.75f)
 			{
-				druidDamagePlayer.druidDamage *= 1.05f;
+				modPlayer.druidDamage *= 1.05f;
 				player.magicDamage *= 1.05f;
 				player.meleeDamage *= 1.05f;
 				player.minionDamage *= 1.05f;
@@ -44,7 +44,7 @@ namespace Redemption.Items.Cores
 			}
 			if ((float)player.statLife <= (float)player.statLifeMax2 * 0.5f)
 			{
-				druidDamagePlayer.druidDamage *= 1.05f;
+				modPlayer.druidDamage *= 1.05f;
 				player.magicDamage *= 1.05f;
 				player.meleeDamage *= 1.05f;
 				player.minionDamage *= 1.05f;
@@ -53,7 +53,7 @@ namespace Redemption.Items.Cores
 			}
 			if ((float)player.statLife <= (float)player.statLifeMax2 * 0.25f)
 			{
-				druidDamagePlayer.druidDamage *= 1.05f;
+				modPlayer.druidDamage *= 1.05f;
 				player.magicDamage *= 1.05f;
 				player.meleeDamage *= 1.05f;
 				player.minionDamage *= 1.05f;
@@ -62,7 +62,7 @@ namespace Redemption.Items.Cores
 			}
 			if ((float)player.statLife <= (float)player.statLifeMax2 * 0.1f)
 			{
-				druidDamagePlayer.druidDamage *= 1.05f;
+				modPlayer.druidDamage *= 1.05f;
 				player.magicDamage *= 1.05f;
 				player.meleeDamage *= 1.05f;
 				player.minionDamage *= 1.05f;
@@ -71,7 +71,7 @@ namespace Redemption.Items.Cores
 			}
 			if ((float)player.statLife <= (float)player.statLifeMax2 * 0.05f)
 			{
-				druidDamagePlayer.druidDamage *= 1.1f;
+				modPlayer.druidDamage *= 1.1f;
 				player.magicDamage *= 1.1f;
 				player.meleeDamage *= 1.1f;
 				player.minionDamage *= 1.1f;

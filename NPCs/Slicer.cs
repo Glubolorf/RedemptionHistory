@@ -95,10 +95,10 @@ namespace Redemption.NPCs
 			{
 				return "I wonder how the demi-dude is doing... Wait, you don't know who that is.";
 			}
-			int num = NPC.FindFirstNPC(20);
-			if (num >= 0 && Main.rand.Next(8) == 0)
+			int DryadID = NPC.FindFirstNPC(20);
+			if (DryadID >= 0 && Main.rand.Next(8) == 0)
 			{
-				return "Doesn't " + Main.npc[num].GivenName + " know how to put clothes on? Whatever, I like it!";
+				return "Doesn't " + Main.npc[DryadID].GivenName + " know how to put clothes on? Whatever, I like it!";
 			}
 			switch (Main.rand.Next(6))
 			{
@@ -187,7 +187,7 @@ namespace Redemption.NPCs
 		public override void DrawTownAttackSwing(ref Texture2D item, ref int itemSize, ref float scale, ref Vector2 offset)
 		{
 			scale = 1f;
-			item = Main.itemTexture[base.mod.ItemType<MythrilsBane>()];
+			item = Main.itemTexture[ModContent.ItemType<MythrilsBane>()];
 			itemSize = 58;
 		}
 

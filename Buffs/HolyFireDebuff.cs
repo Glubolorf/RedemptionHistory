@@ -18,12 +18,12 @@ namespace Redemption.Buffs
 
 		public override void Update(Player player, ref int buffIndex)
 		{
-			player.GetModPlayer<RedePlayer>(base.mod).holyFire = true;
+			player.GetModPlayer<RedePlayer>().holyFire = true;
 		}
 
 		public override void Update(NPC npc, ref int buffIndex)
 		{
-			npc.GetGlobalNPC<RedeGlobalNPC>(base.mod).holyFire = true;
+			npc.GetGlobalNPC<RedeGlobalNPC>().holyFire = true;
 		}
 	}
 }

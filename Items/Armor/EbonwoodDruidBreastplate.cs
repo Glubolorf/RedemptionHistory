@@ -14,7 +14,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Ebondruid's Chestplate");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n7% increased druidic damage\n2% increased druidic critical strike chance\nStaves swing faster");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n4% increased druidic damage\n2% increased druidic critical strike chance\nStaves swing faster");
 		}
 
 		public override void SetDefaults()
@@ -23,16 +23,15 @@ namespace Redemption.Items.Armor
 			base.item.height = 28;
 			base.item.value = 1075;
 			base.item.rare = 1;
-			base.item.defense = 7;
+			base.item.defense = 5;
 		}
 
 		public override void UpdateEquip(Player player)
 		{
 			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
-			druidDamagePlayer.druidDamage += 0.07f;
+			druidDamagePlayer.druidDamage += 0.04f;
 			druidDamagePlayer.druidCrit += 2;
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.fasterStaves = true;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).fasterStaves = true;
 		}
 
 		public override void AddRecipes()

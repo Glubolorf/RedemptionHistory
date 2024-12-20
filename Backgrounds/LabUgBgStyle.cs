@@ -8,7 +8,7 @@ namespace Redemption.Backgrounds
 	{
 		public override bool ChooseBgStyle()
 		{
-			return Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).ZoneLab;
+			return Main.LocalPlayer.GetModPlayer<RedePlayer>().ZoneLab;
 		}
 
 		public override void FillTextureArray(int[] textureSlots)

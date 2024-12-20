@@ -46,8 +46,8 @@ namespace Redemption.Projectiles.Petridish
 			Main.PlaySound(13, (int)base.projectile.position.X, (int)base.projectile.position.Y, 1, 1f, 0f);
 			for (int i = 0; i < 10; i++)
 			{
-				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 4, 0f, 0f, 100, default(Color), 1.2f);
-				Main.dust[num].velocity *= 1.4f;
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 4, 0f, 0f, 100, default(Color), 1.2f);
+				Main.dust[dustIndex].velocity *= 1.4f;
 			}
 			Projectile.NewProjectile(base.projectile.position.X + 8f, base.projectile.position.Y + 4f, (float)(-3 + Main.rand.Next(0, 7)), (float)(-3 + Main.rand.Next(0, 7)), base.mod.ProjectileType("Bacteria1"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 			Projectile.NewProjectile(base.projectile.position.X + 8f, base.projectile.position.Y + 4f, (float)(-3 + Main.rand.Next(0, 7)), (float)(-3 + Main.rand.Next(0, 7)), base.mod.ProjectileType("Bacteria2"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
@@ -66,10 +66,10 @@ namespace Redemption.Projectiles.Petridish
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
 			Player player = Main.player[base.projectile.owner];
-			int crit2 = player.HeldItem.crit;
-			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref crit2);
-			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref crit2);
-			if (crit2 >= 100 || Main.rand.Next(1, 101) <= crit2)
+			int critChance = player.HeldItem.crit;
+			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref critChance);
+			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref critChance);
+			if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
 			{
 				crit = true;
 			}

@@ -45,19 +45,19 @@ namespace Redemption.Items
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
 		{
-			Vector2 mountedCenter = Main.player[base.projectile.owner].MountedCenter;
-			Vector2 vector = base.projectile.Center;
-			Vector2 vector2 = mountedCenter - base.projectile.Center;
-			float num = Utils.ToRotation(vector2) - 1.57f;
-			float num2 = vector2.Length();
-			while (num2 > 30f && !float.IsNaN(num2))
+			Vector2 playerCenter = Main.player[base.projectile.owner].MountedCenter;
+			Vector2 center = base.projectile.Center;
+			Vector2 distToProj = playerCenter - base.projectile.Center;
+			float projRotation = Utils.ToRotation(distToProj) - 1.57f;
+			float distance = distToProj.Length();
+			while (distance > 30f && !float.IsNaN(distance))
 			{
-				vector2.Normalize();
-				vector2 *= 24f;
-				vector += vector2;
-				vector2 = mountedCenter - vector;
-				num2 = vector2.Length();
-				spriteBatch.Draw(base.mod.GetTexture("Items/KaniteHookChain"), new Vector2(vector.X - Main.screenPosition.X, vector.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain30Texture.Width, Main.chain30Texture.Height)), lightColor, num, new Vector2((float)Main.chain30Texture.Width * 0.5f, (float)Main.chain30Texture.Height * 0.5f), 1f, 0, 0f);
+				distToProj.Normalize();
+				distToProj *= 24f;
+				center += distToProj;
+				distToProj = playerCenter - center;
+				distance = distToProj.Length();
+				spriteBatch.Draw(base.mod.GetTexture("Items/KaniteHookChain"), new Vector2(center.X - Main.screenPosition.X, center.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain30Texture.Width, Main.chain30Texture.Height)), lightColor, projRotation, new Vector2((float)Main.chain30Texture.Width * 0.5f, (float)Main.chain30Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 			}
 			return true;
 		}

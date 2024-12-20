@@ -28,25 +28,23 @@ namespace Redemption.Tiles.LabDeco
 
 		public override void NearbyEffects(int i, int j, bool closer)
 		{
-			Player localPlayer = Main.LocalPlayer;
-			float num = Vector2.Distance(localPlayer.Center / 16f, new Vector2((float)i + 0.5f, (float)j + 0.5f));
-			if (num <= 1f)
+			Player player = Main.LocalPlayer;
+			if (Vector2.Distance(player.Center / 16f, new Vector2((float)i + 0.5f, (float)j + 0.5f)) <= 1f)
 			{
-				localPlayer.AddBuff(base.mod.BuffType("HazardLaserDebuff"), 10, true);
+				player.AddBuff(base.mod.BuffType("HazardLaserDebuff"), 10, true);
 			}
 		}
 
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			Tile tile = Main.tile[i, j];
-			Vector2 zero;
-			zero..ctor((float)Main.offScreenRange, (float)Main.offScreenRange);
+			Vector2 zero = new Vector2((float)Main.offScreenRange, (float)Main.offScreenRange);
 			if (Main.drawToScreen)
 			{
 				zero = Vector2.Zero;
 			}
-			int num = (tile.frameY == 36) ? 18 : 16;
-			Main.spriteBatch.Draw(base.mod.GetTexture("Tiles/LabDeco/RedLaserTile_Glow"), new Vector2((float)(i * 16 - (int)Main.screenPosition.X), (float)(j * 16 - (int)Main.screenPosition.Y)) + zero, new Rectangle?(new Rectangle((int)tile.frameX, (int)tile.frameY, 16, num)), Color.White, 0f, Vector2.Zero, 1f, 0, 0f);
+			int height = (tile.frameY == 36) ? 18 : 16;
+			Main.spriteBatch.Draw(base.mod.GetTexture("Tiles/LabDeco/RedLaserTile_Glow"), new Vector2((float)(i * 16 - (int)Main.screenPosition.X), (float)(j * 16 - (int)Main.screenPosition.Y)) + zero, new Rectangle?(new Rectangle((int)tile.frameX, (int)tile.frameY, 16, height)), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 		}
 
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

@@ -47,7 +47,7 @@ namespace Redemption.NPCs.v08
 		public override void AI()
 		{
 			Player player = Main.player[base.npc.target];
-			float num = base.npc.Distance(Main.player[base.npc.target].Center);
+			float num55 = base.npc.Distance(Main.player[base.npc.target].Center);
 			if (player.Center.X > base.npc.Center.X)
 			{
 				base.npc.spriteDirection = 1;
@@ -81,25 +81,25 @@ namespace Redemption.NPCs.v08
 					this.spellFrame = 0;
 				}
 			}
-			if (num <= 400f && base.npc.frame.Y == 0 && Main.rand.Next(20) == 0 && !this.spell)
+			if (num55 <= 400f && base.npc.frame.Y == 0 && Main.rand.Next(80) == 0 && !this.spell)
 			{
 				this.spell = true;
 			}
 			if (this.spell)
 			{
 				this.spellTimer++;
-				if (this.spellTimer == 1 && !Config.NoCombatText)
+				if (this.spellTimer == 1 && !RedeConfigClient.Instance.NoCombatText)
 				{
-					int num2 = Main.rand.Next(3);
-					if (num2 == 0)
+					int num56 = Main.rand.Next(3);
+					if (num56 == 0)
 					{
 						CombatText.NewText(base.npc.getRect(), Color.DarkGoldenrod, "Your TIME is up!", true, false);
 					}
-					if (num2 == 1)
+					if (num56 == 1)
 					{
 						CombatText.NewText(base.npc.getRect(), Color.DarkGoldenrod, "TIME to die!", true, false);
 					}
-					if (num2 == 2)
+					if (num56 == 2)
 					{
 						CombatText.NewText(base.npc.getRect(), Color.DarkGoldenrod, "Your TIME has come!", true, false);
 					}
@@ -107,14 +107,13 @@ namespace Redemption.NPCs.v08
 				if (this.spellTimer == 9 || this.spellTimer == 18)
 				{
 					Main.PlaySound(SoundID.Item28, (int)base.npc.position.X, (int)base.npc.position.Y);
-					float num3 = 4f;
-					Vector2 vector;
-					vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-					int num4 = 50;
-					int num5 = base.mod.ProjectileType("AncientHourGlassPro");
-					float num6 = (float)Math.Atan2((double)(vector.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector.X - (player.position.X + (float)player.width * 0.5f)));
-					int num7 = Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num6) * (double)num3 * -1.0), (float)(Math.Sin((double)num6) * (double)num3 * -1.0), num5, num4, 0f, 0, 0f, 0f);
-					Main.projectile[num7].netUpdate = true;
+					float Speed = 4f;
+					Vector2 vector8 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+					int damage = 50;
+					int type = base.mod.ProjectileType("AncientHourGlassPro");
+					float rotation = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
+					int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
+					Main.projectile[num54].netUpdate = true;
 				}
 				if (this.spellTimer >= 18)
 				{
@@ -128,20 +127,19 @@ namespace Redemption.NPCs.v08
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/v08/AncientCasterAttack");
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D spellAni = base.mod.GetTexture("NPCs/v08/AncientCasterAttack");
 			int spriteDirection = base.npc.spriteDirection;
 			if (!this.spell)
 			{
-				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.spell)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num = texture.Height / 6;
-				int num2 = num * this.spellFrame;
-				Main.spriteBatch.Draw(texture, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num214 = spellAni.Height / 6;
+				int y6 = num214 * this.spellFrame;
+				Main.spriteBatch.Draw(spellAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, spellAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)spellAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
 		}
@@ -161,12 +159,12 @@ namespace Redemption.NPCs.v08
 				}
 				for (int i = 0; i < 30; i++)
 				{
-					int num = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 269, 0f, 0f, 100, default(Color), 1f);
-					Main.dust[num].velocity *= 4.6f;
+					int dustIndex2 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 269, 0f, 0f, 100, default(Color), 1f);
+					Main.dust[dustIndex2].velocity *= 4.6f;
 				}
 			}
-			int num2 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 269, 0f, 0f, 100, default(Color), 1f);
-			Main.dust[num2].velocity *= 1.6f;
+			int dustIndex3 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 269, 0f, 0f, 100, default(Color), 1f);
+			Main.dust[dustIndex3].velocity *= 1.6f;
 		}
 
 		private bool spell;

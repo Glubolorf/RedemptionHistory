@@ -51,7 +51,7 @@ namespace Redemption.Projectiles.Minions
 		{
 			bool flag = base.projectile.type == base.mod.ProjectileType("LavaCubeMinion");
 			Player player = Main.player[base.projectile.owner];
-			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>(base.mod);
+			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
 			if (flag)
 			{
 				if (player.dead)
@@ -65,8 +65,8 @@ namespace Redemption.Projectiles.Minions
 			}
 			if (Main.rand.Next(2) == 0)
 			{
-				int num = Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 6, 0f, 0f, 100, default(Color), 1.5f);
-				Main.dust[num].noGravity = true;
+				int dust = Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 6, 0f, 0f, 100, default(Color), 1.5f);
+				Main.dust[dust].noGravity = true;
 			}
 		}
 

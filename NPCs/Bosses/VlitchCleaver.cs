@@ -42,18 +42,18 @@ namespace Redemption.NPCs.Bosses
 			{
 				for (int i = 0; i < 80; i++)
 				{
-					int num = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 235, 0f, 0f, 100, default(Color), 1.5f);
-					Main.dust[num].velocity *= 1.9f;
+					int dustIndex = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 235, 0f, 0f, 100, default(Color), 1.5f);
+					Main.dust[dustIndex].velocity *= 1.9f;
 				}
 				for (int j = 0; j < 45; j++)
 				{
-					int num2 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 6, 0f, 0f, 100, default(Color), 1.2f);
-					Main.dust[num2].velocity *= 1.8f;
+					int dustIndex2 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 6, 0f, 0f, 100, default(Color), 1.2f);
+					Main.dust[dustIndex2].velocity *= 1.8f;
 				}
 				for (int k = 0; k < 25; k++)
 				{
-					int num3 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 31, 0f, 0f, 100, default(Color), 1.2f);
-					Main.dust[num3].velocity *= 1.8f;
+					int dustIndex3 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 31, 0f, 0f, 100, default(Color), 1.2f);
+					Main.dust[dustIndex3].velocity *= 1.8f;
 				}
 			}
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 235, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
@@ -96,12 +96,12 @@ namespace Redemption.NPCs.Bosses
 				CombatText.NewText(this.player.getRect(), Color.Gold, "+1", true, false);
 				for (int i = 0; i < 255; i++)
 				{
-					Player player = Main.player[i];
-					if (player.active)
+					Player player2 = Main.player[i];
+					if (player2.active)
 					{
-						for (int j = 0; j < player.inventory.Length; j++)
+						for (int j = 0; j < player2.inventory.Length; j++)
 						{
-							if (player.inventory[j].type == base.mod.ItemType("RedemptionTeller"))
+							if (player2.inventory[j].type == base.mod.ItemType("RedemptionTeller"))
 							{
 								Main.NewText("<Chalice of Alignment> The first Vlitch Overlord is gone, only... 2 more to go? Maybe?", Color.DarkGoldenrod, false);
 							}
@@ -114,7 +114,7 @@ namespace Redemption.NPCs.Bosses
 			{
 				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 			}
-			if (!RedeWorld.girusTalk1 && !NPC.AnyNPCs(base.mod.NPCType("VlitchWormHead")) && !NPC.AnyNPCs(base.mod.NPCType("OmegaOblitDamaged")))
+			if (!RedeWorld.girusTalk1 && !NPC.AnyNPCs(base.mod.NPCType("VlitchWormHead")) && !NPC.AnyNPCs(base.mod.NPCType("OmegaOblitDamaged")) && !RedeWorld.girusCloaked && !RedeConfigClient.Instance.NoBossText)
 			{
 				Projectile.NewProjectile(new Vector2(base.npc.position.X, base.npc.position.Y), new Vector2(0f, 0f), base.mod.ProjectileType("GirusTalking1"), 0, 0f, 255, 0f, 0f);
 			}
@@ -152,7 +152,7 @@ namespace Redemption.NPCs.Bosses
 
 		public override void AI()
 		{
-			if (Config.classicRedeVC)
+			if (RedeConfigClient.Instance.classicRedeVC)
 			{
 				this.oldCounter++;
 				if (this.oldCounter > 10)
@@ -182,7 +182,7 @@ namespace Redemption.NPCs.Bosses
 			this.Target();
 			this.DespawnHandler();
 			base.npc.ai[1] += 1f;
-			Player player = Main.player[base.npc.target];
+			Player P = Main.player[base.npc.target];
 			if (base.npc.target < 0 || base.npc.target == 255 || Main.player[base.npc.target].dead || !Main.player[base.npc.target].active)
 			{
 				base.npc.TargetClosest(true);
@@ -192,14 +192,14 @@ namespace Redemption.NPCs.Bosses
 			{
 				Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, base.mod.DustType("VlitchFlame"), 0f, 0f, 0, default(Color), 1f);
 			}
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).omegaPower)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().omegaPower)
 			{
 				this.customAI[3] += 1f;
-				if (this.customAI[3] == 600f)
+				if (this.customAI[3] == 600f && !RedeConfigClient.Instance.NoBossText)
 				{
 					Main.NewText("Wait... Why aren't my minions targetting you?", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
 				}
-				if (this.customAI[3] == 800f)
+				if (this.customAI[3] == 800f && !RedeConfigClient.Instance.NoBossText)
 				{
 					Main.NewText("Oh, because you got that damn exoskeleton on...", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
 				}
@@ -211,7 +211,7 @@ namespace Redemption.NPCs.Bosses
 			}
 			if (base.npc.life < (int)((float)base.npc.lifeMax * 0.85f) && !this.cloneSummoned1)
 			{
-				if (!Config.NoCombatText)
+				if (!RedeConfigClient.Instance.NoCombatText)
 				{
 					CombatText.NewText(base.npc.getRect(), Color.IndianRed, "Phantom Cleaver!", true, false);
 				}
@@ -221,7 +221,7 @@ namespace Redemption.NPCs.Bosses
 			}
 			if (base.npc.life < (int)((float)base.npc.lifeMax * 0.55f) && !this.cloneSummoned2)
 			{
-				if (!Config.NoCombatText)
+				if (!RedeConfigClient.Instance.NoCombatText)
 				{
 					CombatText.NewText(base.npc.getRect(), Color.IndianRed, "Phantom Cleaver!", true, false);
 				}
@@ -231,7 +231,7 @@ namespace Redemption.NPCs.Bosses
 			}
 			if (base.npc.life < (int)((float)base.npc.lifeMax * 0.35f) && !this.cloneSummoned3)
 			{
-				if (!Config.NoCombatText)
+				if (!RedeConfigClient.Instance.NoCombatText)
 				{
 					CombatText.NewText(base.npc.getRect(), Color.IndianRed, "Phantom Cleaver!", true, false);
 				}
@@ -241,7 +241,7 @@ namespace Redemption.NPCs.Bosses
 			}
 			if (base.npc.life < (int)((float)base.npc.lifeMax * 0.25f) && !this.cloneSummoned4)
 			{
-				if (!Config.NoCombatText)
+				if (!RedeConfigClient.Instance.NoCombatText)
 				{
 					CombatText.NewText(base.npc.getRect(), Color.IndianRed, "Phantom Cleaver!", true, false);
 				}
@@ -254,52 +254,50 @@ namespace Redemption.NPCs.Bosses
 			{
 				if (this.customAI[0] == 100f || this.customAI[0] == 120f || this.customAI[0] == 140f)
 				{
-					float num = 10f;
-					Vector2 vector;
-					vector..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num2 = 40;
-					int num3 = base.mod.ProjectileType("OmegaBlast");
+					float Speed = 10f;
+					Vector2 vector8 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
+					int damage = 40;
+					int type = base.mod.ProjectileType("OmegaBlast");
 					Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 33, 1f, 0f);
-					float num4 = (float)Math.Atan2((double)(vector.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector.X - (player.position.X + (float)player.width * 0.5f)));
-					int num5 = Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num4) * (double)num * -1.0), (float)(Math.Sin((double)num4) * (double)num * -1.0), num3, num2, 0f, 0, 0f, 0f);
-					Main.projectile[num5].netUpdate = true;
+					float rotation = (float)Math.Atan2((double)(vector8.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector8.X - (P.position.X + (float)P.width * 0.5f)));
+					int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
+					Main.projectile[num54].netUpdate = true;
 				}
 				if (this.customAI[0] == 320f)
 				{
 					Main.PlaySound(SoundID.Item73, (int)base.npc.position.X, (int)base.npc.position.Y);
-					int num6 = 8;
-					for (int i = 0; i < num6; i++)
+					int pieCut = 8;
+					for (int i = 0; i < pieCut; i++)
 					{
-						int num7 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
-						Main.projectile[num7].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)num6 * 6.28f);
-						Main.projectile[num7].netUpdate = true;
+						int projID = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+						Main.projectile[projID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)pieCut * 6.28f);
+						Main.projectile[projID].netUpdate = true;
 					}
 				}
 				if (this.customAI[0] == 400f || this.customAI[0] == 460f || this.customAI[0] == 520f)
 				{
-					float num8 = 10f;
-					Vector2 vector2;
-					vector2..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num9 = 40;
-					int num10 = base.mod.ProjectileType("OmegaBlast");
+					float Speed2 = 10f;
+					Vector2 vector9 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
+					int damage2 = 40;
+					int type2 = base.mod.ProjectileType("OmegaBlast");
 					Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 33, 1f, 0f);
-					float num11 = (float)Math.Atan2((double)(vector2.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector2.X - (player.position.X + (float)player.width * 0.5f)));
-					int num12 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num11) * (double)num8 * -1.0), (float)(Math.Sin((double)num11) * (double)num8 * -1.0), num10, num9, 0f, 0, 0f, 0f);
-					int num13 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num11) * (double)num8 * -1.0) + 1f, (float)(Math.Sin((double)num11) * (double)num8 * -1.0) + 1f, num10, num9, 0f, 0, 0f, 0f);
-					int num14 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num11) * (double)num8 * -1.0) + -1f, (float)(Math.Sin((double)num11) * (double)num8 * -1.0) + -1f, num10, num9, 0f, 0, 0f, 0f);
-					Main.projectile[num12].netUpdate = true;
-					Main.projectile[num13].netUpdate = true;
-					Main.projectile[num14].netUpdate = true;
+					float rotation2 = (float)Math.Atan2((double)(vector9.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector9.X - (P.position.X + (float)P.width * 0.5f)));
+					int num55 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0), type2, damage2, 0f, 0, 0f, 0f);
+					int num56 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0) + 1f, (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0) + 1f, type2, damage2, 0f, 0, 0f, 0f);
+					int num57 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0) + -1f, (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0) + -1f, type2, damage2, 0f, 0, 0f, 0f);
+					Main.projectile[num55].netUpdate = true;
+					Main.projectile[num56].netUpdate = true;
+					Main.projectile[num57].netUpdate = true;
 				}
 				if (this.customAI[0] >= 700f)
 				{
 					Main.PlaySound(SoundID.Item73, (int)base.npc.position.X, (int)base.npc.position.Y);
-					int num15 = 16;
-					for (int j = 0; j < num15; j++)
+					int pieCut2 = 16;
+					for (int j = 0; j < pieCut2; j++)
 					{
-						int num16 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
-						Main.projectile[num16].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)j / (float)num15 * 6.28f);
-						Main.projectile[num16].netUpdate = true;
+						int projID2 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+						Main.projectile[projID2].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)j / (float)pieCut2 * 6.28f);
+						Main.projectile[projID2].netUpdate = true;
 					}
 					this.customAI[0] = 0f;
 					base.npc.netUpdate = true;
@@ -309,63 +307,61 @@ namespace Redemption.NPCs.Bosses
 			{
 				if (this.customAI[0] == 100f || this.customAI[0] == 110f || this.customAI[0] == 120f || this.customAI[0] == 130f || this.customAI[0] == 140f)
 				{
-					float num17 = 13f;
-					Vector2 vector3;
-					vector3..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num18 = 40;
-					int num19 = base.mod.ProjectileType("OmegaBlast");
+					float Speed3 = 13f;
+					Vector2 vector10 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
+					int damage3 = 40;
+					int type3 = base.mod.ProjectileType("OmegaBlast");
 					Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 33, 1f, 0f);
-					float num20 = (float)Math.Atan2((double)(vector3.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector3.X - (player.position.X + (float)player.width * 0.5f)));
-					int num21 = Projectile.NewProjectile(vector3.X, vector3.Y, (float)(Math.Cos((double)num20) * (double)num17 * -1.0), (float)(Math.Sin((double)num20) * (double)num17 * -1.0), num19, num18, 0f, 0, 0f, 0f);
-					Main.projectile[num21].netUpdate = true;
+					float rotation3 = (float)Math.Atan2((double)(vector10.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector10.X - (P.position.X + (float)P.width * 0.5f)));
+					int num58 = Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)rotation3) * (double)Speed3 * -1.0), (float)(Math.Sin((double)rotation3) * (double)Speed3 * -1.0), type3, damage3, 0f, 0, 0f, 0f);
+					Main.projectile[num58].netUpdate = true;
 				}
 				if (this.customAI[0] == 320f)
 				{
 					Main.PlaySound(SoundID.Item73, (int)base.npc.position.X, (int)base.npc.position.Y);
-					int num22 = 8;
-					for (int k = 0; k < num22; k++)
+					int pieCut3 = 8;
+					for (int k = 0; k < pieCut3; k++)
 					{
-						int num23 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
-						Main.projectile[num23].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(8f, 0f), (float)k / (float)num22 * 6.28f);
-						Main.projectile[num23].netUpdate = true;
+						int projID3 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+						Main.projectile[projID3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(8f, 0f), (float)k / (float)pieCut3 * 6.28f);
+						Main.projectile[projID3].netUpdate = true;
 					}
 				}
 				if (this.customAI[0] == 380f)
 				{
 					Main.PlaySound(SoundID.Item73, (int)base.npc.position.X, (int)base.npc.position.Y);
-					int num24 = 8;
-					for (int l = 0; l < num24; l++)
+					int pieCut4 = 8;
+					for (int l = 0; l < pieCut4; l++)
 					{
-						int num25 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
-						Main.projectile[num25].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(8f, 0f), (float)l / (float)num24 * 6.28f);
-						Main.projectile[num25].netUpdate = true;
+						int projID4 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+						Main.projectile[projID4].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(8f, 0f), (float)l / (float)pieCut4 * 6.28f);
+						Main.projectile[projID4].netUpdate = true;
 					}
 				}
 				if (this.customAI[0] == 400f || this.customAI[0] == 430f || this.customAI[0] == 460f || this.customAI[0] == 490f || this.customAI[0] == 510f)
 				{
-					float num26 = 13f;
-					Vector2 vector4;
-					vector4..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num27 = 40;
-					int num28 = base.mod.ProjectileType("OmegaBlast");
+					float Speed4 = 13f;
+					Vector2 vector11 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
+					int damage4 = 40;
+					int type4 = base.mod.ProjectileType("OmegaBlast");
 					Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 33, 1f, 0f);
-					float num29 = (float)Math.Atan2((double)(vector4.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector4.X - (player.position.X + (float)player.width * 0.5f)));
-					int num30 = Projectile.NewProjectile(vector4.X, vector4.Y, (float)(Math.Cos((double)num29) * (double)num26 * -1.0), (float)(Math.Sin((double)num29) * (double)num26 * -1.0), num28, num27, 0f, 0, 0f, 0f);
-					int num31 = Projectile.NewProjectile(vector4.X, vector4.Y, (float)(Math.Cos((double)num29) * (double)num26 * -1.0) + 1f, (float)(Math.Sin((double)num29) * (double)num26 * -1.0) + 1f, num28, num27, 0f, 0, 0f, 0f);
-					int num32 = Projectile.NewProjectile(vector4.X, vector4.Y, (float)(Math.Cos((double)num29) * (double)num26 * -1.0) + -1f, (float)(Math.Sin((double)num29) * (double)num26 * -1.0) + -1f, num28, num27, 0f, 0, 0f, 0f);
-					Main.projectile[num30].netUpdate = true;
-					Main.projectile[num31].netUpdate = true;
-					Main.projectile[num32].netUpdate = true;
+					float rotation4 = (float)Math.Atan2((double)(vector11.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector11.X - (P.position.X + (float)P.width * 0.5f)));
+					int num59 = Projectile.NewProjectile(vector11.X, vector11.Y, (float)(Math.Cos((double)rotation4) * (double)Speed4 * -1.0), (float)(Math.Sin((double)rotation4) * (double)Speed4 * -1.0), type4, damage4, 0f, 0, 0f, 0f);
+					int num60 = Projectile.NewProjectile(vector11.X, vector11.Y, (float)(Math.Cos((double)rotation4) * (double)Speed4 * -1.0) + 1f, (float)(Math.Sin((double)rotation4) * (double)Speed4 * -1.0) + 1f, type4, damage4, 0f, 0, 0f, 0f);
+					int num61 = Projectile.NewProjectile(vector11.X, vector11.Y, (float)(Math.Cos((double)rotation4) * (double)Speed4 * -1.0) + -1f, (float)(Math.Sin((double)rotation4) * (double)Speed4 * -1.0) + -1f, type4, damage4, 0f, 0, 0f, 0f);
+					Main.projectile[num59].netUpdate = true;
+					Main.projectile[num60].netUpdate = true;
+					Main.projectile[num61].netUpdate = true;
 				}
 				if (this.customAI[0] >= 700f)
 				{
 					Main.PlaySound(SoundID.Item73, (int)base.npc.position.X, (int)base.npc.position.Y);
-					int num33 = 16;
-					for (int m = 0; m < num33; m++)
+					int pieCut5 = 16;
+					for (int m = 0; m < pieCut5; m++)
 					{
-						int num34 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
-						Main.projectile[num34].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(9f, 0f), (float)m / (float)num33 * 6.28f);
-						Main.projectile[num34].netUpdate = true;
+						int projID5 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+						Main.projectile[projID5].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(9f, 0f), (float)m / (float)pieCut5 * 6.28f);
+						Main.projectile[projID5].netUpdate = true;
 					}
 					this.customAI[0] = 0f;
 				}
@@ -376,8 +372,8 @@ namespace Redemption.NPCs.Bosses
 			}
 			if (base.npc.ai[1] % 200f == 80f && NPC.CountNPCS(base.mod.NPCType("CorruptedProbe")) <= 1)
 			{
-				int num35 = NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 120, base.mod.NPCType("CorruptedProbe"), 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[num35].netUpdate = true;
+				int Minion = NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 120, base.mod.NPCType("CorruptedProbe"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.npc[Minion].netUpdate = true;
 			}
 			if (base.npc.life <= (int)((float)base.npc.lifeMax * 0.55f))
 			{
@@ -385,21 +381,20 @@ namespace Redemption.NPCs.Bosses
 			}
 			if (base.npc.ai[2] >= 250f)
 			{
-				float num36 = 10f;
-				Vector2 vector5;
-				vector5..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-				int num37 = 100;
-				int num38 = base.mod.ProjectileType("VlitchCleaverPro");
+				float Speed5 = 10f;
+				Vector2 vector12 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
+				int damage5 = 100;
+				int type5 = base.mod.ProjectileType("VlitchCleaverPro");
 				Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 33, 1f, 0f);
-				float num39 = (float)Math.Atan2((double)(vector5.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector5.X - (player.position.X + (float)player.width * 0.5f)));
-				int num40 = Projectile.NewProjectile(vector5.X, vector5.Y, (float)(Math.Cos((double)num39) * (double)num36 * -1.0), (float)(Math.Sin((double)num39) * (double)num36 * -1.0), num38, num37, 0f, 0, 0f, 0f);
-				Main.projectile[num40].netUpdate = true;
+				float rotation5 = (float)Math.Atan2((double)(vector12.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector12.X - (P.position.X + (float)P.width * 0.5f)));
+				int num62 = Projectile.NewProjectile(vector12.X, vector12.Y, (float)(Math.Cos((double)rotation5) * (double)Speed5 * -1.0), (float)(Math.Sin((double)rotation5) * (double)Speed5 * -1.0), type5, damage5, 0f, 0, 0f, 0f);
+				Main.projectile[num62].netUpdate = true;
 				base.npc.ai[2] = 0f;
 			}
 			if (base.npc.ai[2] % 200f == 80f && NPC.CountNPCS(base.mod.NPCType("CorruptedBlade")) <= 2)
 			{
-				int num41 = NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 120, base.mod.NPCType("CorruptedBlade"), 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[num41].netUpdate = true;
+				int Minion2 = NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 120, base.mod.NPCType("CorruptedBlade"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.npc[Minion2].netUpdate = true;
 			}
 			if (base.npc.life <= 2000)
 			{
@@ -407,15 +402,14 @@ namespace Redemption.NPCs.Bosses
 			}
 			if (base.npc.ai[3] >= 100f)
 			{
-				float num42 = 10f;
-				Vector2 vector6;
-				vector6..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-				int num43 = 100;
-				int num44 = base.mod.ProjectileType("VlitchCleaverPro");
+				float Speed6 = 10f;
+				Vector2 vector13 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
+				int damage6 = 100;
+				int type6 = base.mod.ProjectileType("VlitchCleaverPro");
 				Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 33, 1f, 0f);
-				float num45 = (float)Math.Atan2((double)(vector6.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector6.X - (player.position.X + (float)player.width * 0.5f)));
-				int num46 = Projectile.NewProjectile(vector6.X, vector6.Y, (float)(Math.Cos((double)num45) * (double)num42 * -1.0), (float)(Math.Sin((double)num45) * (double)num42 * -1.0), num44, num43, 0f, 0, 0f, 0f);
-				Main.projectile[num46].netUpdate = true;
+				float rotation6 = (float)Math.Atan2((double)(vector13.Y - (P.position.Y + (float)P.height * 0.5f)), (double)(vector13.X - (P.position.X + (float)P.width * 0.5f)));
+				int num63 = Projectile.NewProjectile(vector13.X, vector13.Y, (float)(Math.Cos((double)rotation6) * (double)Speed6 * -1.0), (float)(Math.Sin((double)rotation6) * (double)Speed6 * -1.0), type6, damage6, 0f, 0, 0f, 0f);
+				Main.projectile[num63].netUpdate = true;
 				base.npc.ai[3] = 0f;
 			}
 			if (base.npc.life <= (int)((float)base.npc.lifeMax * 0.55f))
@@ -427,23 +421,26 @@ namespace Redemption.NPCs.Bosses
 				this.customAI[1] += 1f;
 				if (this.customAI[1] == 1f)
 				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).omegaPower)
+					if (!RedeConfigClient.Instance.NoBossText)
 					{
-						Main.NewText("No matter, I guess I'll take action...", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
-						base.npc.netUpdate = true;
+						if (Main.LocalPlayer.GetModPlayer<RedePlayer>().omegaPower)
+						{
+							Main.NewText("No matter, I guess I'll take action...", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
+							base.npc.netUpdate = true;
+						}
+						else
+						{
+							Main.NewText("Guess its time to take action...", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
+							base.npc.netUpdate = true;
+						}
 					}
-					else
+					float distance = 150f;
+					float n = 1.26f;
+					for (int count = 0; count < 10; count++)
 					{
-						Main.NewText("Guess its time to take action...", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
-						base.npc.netUpdate = true;
-					}
-					float num47 = 150f;
-					float num48 = 1.26f;
-					for (int n = 0; n < 10; n++)
-					{
-						Vector2 vector7 = base.npc.Center + num47 * Utils.ToRotationVector2((float)n * num48);
-						int num49 = NPC.NewNPC((int)vector7.X, (int)vector7.Y, base.mod.NPCType("CleaverDagger"), 0, (float)base.npc.whoAmI, 0f, (float)n, 0f, 255);
-						Main.npc[num49].netUpdate = true;
+						Vector2 spawn = base.npc.Center + distance * Utils.ToRotationVector2((float)count * n);
+						int Minion3 = NPC.NewNPC((int)spawn.X, (int)spawn.Y, base.mod.NPCType("CleaverDagger"), 0, (float)base.npc.whoAmI, 0f, (float)count, 0f, 255);
+						Main.npc[Minion3].netUpdate = true;
 					}
 				}
 				this.customAI[2] += 1f;
@@ -489,30 +486,30 @@ namespace Redemption.NPCs.Bosses
 					{
 						base.npc.timeLeft = 10;
 					}
+					return;
 				}
 			}
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/Bosses/VlitchCleaver_Glow");
-			Texture2D texture2 = base.mod.GetTexture("NPCs/Bosses/VlitchCleaver_OLD");
-			Texture2D texture3 = base.mod.GetTexture("NPCs/Bosses/VlitchCleaver_Glow_OLD");
-			SpriteEffects spriteEffects = (base.npc.spriteDirection == -1) ? 0 : 1;
-			if (Config.classicRedeVC)
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D glowMask = base.mod.GetTexture("NPCs/Bosses/VlitchCleaver_Glow");
+			Texture2D oldAni = base.mod.GetTexture("NPCs/Bosses/VlitchCleaver_OLD");
+			Texture2D oldGlowmaskAni = base.mod.GetTexture("NPCs/Bosses/VlitchCleaver_Glow_OLD");
+			SpriteEffects effects = (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+			if (RedeConfigClient.Instance.classicRedeVC)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num = texture2.Height / 5;
-				int num2 = num * this.oldFrame;
-				Main.spriteBatch.Draw(texture2, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture2.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture2.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
-				Main.spriteBatch.Draw(texture3, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture2.Width, num)), base.npc.GetAlpha(Color.White), base.npc.rotation, new Vector2((float)texture2.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y - 22f);
+				int num214 = oldAni.Height / 5;
+				int y6 = num214 * this.oldFrame;
+				Main.spriteBatch.Draw(oldAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, oldAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)oldAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				Main.spriteBatch.Draw(oldGlowmaskAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, oldAni.Width, num214)), base.npc.GetAlpha(Color.White), base.npc.rotation, new Vector2((float)oldAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			else
 			{
-				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
-				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, spriteEffects, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				spriteBatch.Draw(glowMask, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, effects, 0f);
 			}
 			return false;
 		}

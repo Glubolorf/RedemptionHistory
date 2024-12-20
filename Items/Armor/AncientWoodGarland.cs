@@ -45,10 +45,10 @@ namespace Redemption.Items.Armor
 			{
 				for (int i = 0; i < 1; i++)
 				{
-					int num = Dust.NewDust(new Vector2(player.position.X - player.velocity.X * 2f, player.position.Y - 2f - player.velocity.Y * 2f), player.width, player.height, 3, 0f, 0f, 100, default(Color), 2f);
-					Main.dust[num].noGravity = true;
-					Main.dust[num].noLight = true;
-					Dust dust = Main.dust[num];
+					int index = Dust.NewDust(new Vector2(player.position.X - player.velocity.X * 2f, player.position.Y - 2f - player.velocity.Y * 2f), player.width, player.height, 3, 0f, 0f, 100, default(Color), 2f);
+					Main.dust[index].noGravity = true;
+					Main.dust[index].noLight = true;
+					Dust dust = Main.dust[index];
 					dust.velocity.X = dust.velocity.X - player.velocity.X * 0.5f;
 					dust.velocity.Y = dust.velocity.Y - player.velocity.Y * 0.5f;
 				}
@@ -58,11 +58,9 @@ namespace Redemption.Items.Armor
 		public override void UpdateArmorSet(Player player)
 		{
 			player.setBonus = "8% increased druidic damage, Staves swing faster, Immune to poison";
-			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
-			druidDamagePlayer.druidDamage += 0.08f;
+			DruidDamagePlayer.ModPlayer(player).druidDamage += 0.08f;
 			player.buffImmune[20] = true;
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.fasterStaves = true;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).fasterStaves = true;
 		}
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)

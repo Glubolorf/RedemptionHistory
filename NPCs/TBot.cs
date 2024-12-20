@@ -79,35 +79,35 @@ namespace Redemption.NPCs
 
 		public override string GetChat()
 		{
-			int num = NPC.FindFirstNPC(22);
-			if (num >= 0 && Main.rand.Next(9) == 0)
+			int GuideID = NPC.FindFirstNPC(22);
+			if (GuideID >= 0 && Main.rand.Next(9) == 0)
 			{
-				return Main.npc[num].GivenName + " is very interested in finding out the material my skeleton is made out of. Too bad taking the plates off could damage me. Even I am not sure what I am made out of.";
+				return Main.npc[GuideID].GivenName + " is very interested in finding out the material my skeleton is made out of. Too bad taking the plates off could damage me. Even I am not sure what I am made out of.";
 			}
-			int num2 = NPC.FindFirstNPC(17);
-			if (num2 >= 0 && Main.rand.Next(9) == 0)
+			int MerchantID = NPC.FindFirstNPC(17);
+			if (MerchantID >= 0 && Main.rand.Next(9) == 0)
 			{
-				return Main.npc[num2].GivenName + " keeps trying to sell his stuff to me. I don't even have any money! I smelted all of it to bars. Not sure why.";
+				return Main.npc[MerchantID].GivenName + " keeps trying to sell his stuff to me. I don't even have any money! I smelted all of it to bars. Not sure why.";
 			}
-			int num3 = NPC.FindFirstNPC(20);
-			if (num3 >= 0 && Main.rand.Next(9) == 0)
+			int DryadID = NPC.FindFirstNPC(20);
+			if (DryadID >= 0 && Main.rand.Next(9) == 0)
 			{
-				return "Apparently " + Main.npc[num3].GivenName + " told me about the Corruption. I have compared the differences between The Corruption and The Girus Corruption. They are quite similar, but your corruption affects living matter, but mine only affects robotics.";
+				return "Apparently " + Main.npc[DryadID].GivenName + " told me about the Corruption. I have compared the differences between The Corruption and The Girus Corruption. They are quite similar, but your corruption affects living matter, but mine only affects robotics.";
 			}
-			int num4 = NPC.FindFirstNPC(18);
-			if (num4 >= 0 && Main.rand.Next(9) == 0)
+			int NurseID = NPC.FindFirstNPC(18);
+			if (NurseID >= 0 && Main.rand.Next(9) == 0)
 			{
-				return "No, " + Main.npc[num4].GivenName + ", I don't need healing, I am a robot. You don't know how I work.";
+				return "No, " + Main.npc[NurseID].GivenName + ", I don't need healing, I am a robot. You don't know how I work.";
 			}
-			int num5 = NPC.FindFirstNPC(19);
-			if (num5 >= 0 && Main.rand.Next(9) == 0)
+			int ArmsDealerID = NPC.FindFirstNPC(19);
+			if (ArmsDealerID >= 0 && Main.rand.Next(9) == 0)
 			{
-				return Main.npc[num5].GivenName + "'s weapons are useless to me. I haven't been programmed to fight against anything, as it would break the Laws of Robotics.";
+				return Main.npc[ArmsDealerID].GivenName + "'s weapons are useless to me. I haven't been programmed to fight against anything, as it would break the Laws of Robotics.";
 			}
-			int num6 = NPC.FindFirstNPC(209);
-			if (num6 >= 0 && Main.rand.Next(9) == 0)
+			int cyborgID = NPC.FindFirstNPC(209);
+			if (cyborgID >= 0 && Main.rand.Next(9) == 0)
 			{
-				return "Everyone else looks at me in a weird way, but " + Main.npc[num6].GivenName + " seems to be fine with me.";
+				return "Everyone else looks at me in a weird way, but " + Main.npc[cyborgID].GivenName + " seems to be fine with me.";
 			}
 			if (Main.hardMode && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && NPC.downedPlantBoss && Main.rand.Next(9) == 0)
 			{
@@ -127,7 +127,7 @@ namespace Redemption.NPCs
 			}
 			if ((RedeWorld.downedVlitch1 || RedeWorld.downedVlitch2) && Main.rand.Next(9) == 0)
 			{
-				return "Why am i concerned about the Overlords? Well, let's say I've had a close encounter with their leader. Not someone you'd like to mess with.";
+				return "Why am I concerned about the Overlords? Well, let's say I've had a close encounter with their leader. Not someone you'd like to mess with.";
 			}
 			if (RedeWorld.downedSlayer && Main.rand.Next(9) == 0)
 			{
@@ -137,7 +137,7 @@ namespace Redemption.NPCs
 			{
 				return "Hey! I noticed you were exploring the lab. I was the one who deactivated the lasers. I found something in the lab that could be useful to you, it's a Tesla Cannon!";
 			}
-			switch (Main.rand.Next(9))
+			switch (Main.rand.Next(10))
 			{
 			case 0:
 				return "I'm not sure how I got here, but for the time being I'll stay in this building you've made.";
@@ -148,13 +148,17 @@ namespace Redemption.NPCs
 			case 3:
 				return "Why do I have a limitless supply of robot parts? I dunno, maybe I craft them using the coins I've smelted?";
 			case 4:
-				return "I once painted a painting. Then some old guy from the corner of the room said 'Oh my god' to himself.";
-			case 5:
 				return "The wasteland? It used to be a good place to live, but someone pressed the nuke button and initiated Mutual Nuclear Destruction. Only us androids survived the nuclear annihilation. That's where I'm from, too.";
-			case 6:
+			case 5:
 				return "Oh this powercell in my chest? It's quite the marvel of technology, uses pure Xenomite. Sadly I can't explain how it works, I wasn't designed to be a factory machine.";
-			case 7:
+			case 6:
 				return "You're interested in what the green crystals do? They technically aren't crystals, but sure. Its called Xenomite, and they're kind of like fungi, they consume flesh and ooze this green gloop that crystallizes overtime. Not sure of its origin, though. They do have high levels of Radium and some other radioactive materials, though.";
+			case 7:
+				return "If you ever explore the wasteland or abandoned lab, it's a good idea to carry a Geiger-M�ller with you - it'll warn you if you're near radioactive materials. However, the wasteland and laboratory seems to set off the M�ller even though the radiation is too minor to affect you.";
+			case 8:
+				return "Here's a good tip, DON'T go near uranium, plutonium, and ESPECIALLY corium. Those are radioactive, and going too close will give you a heavy dose of radiation.";
+			case 9:
+				return "The deadly thing with radiation is, at first, you won't even know you've got it. The first symptoms usually start minutes after, beginning with a headache most likely, then dizziness, fatigue, bleeding, skin burns, a fever, hair loss, and death.";
 			default:
 				return "Hey, why are you giving me a glare? Never seen a T-Bot before?";
 			}
@@ -197,7 +201,9 @@ namespace Redemption.NPCs
 				nextSlot++;
 				shop.item[nextSlot].SetDefaults(base.mod.ItemType("MiniNuke"), false);
 				nextSlot++;
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabGeigerCounter"), false);
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("GeigerMuller"), false);
+				nextSlot++;
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("RadiationPill"), false);
 				nextSlot++;
 			}
 			shop.item[nextSlot].SetDefaults(base.mod.ItemType("XenomiteShard"), false);
@@ -226,11 +232,11 @@ namespace Redemption.NPCs
 			{
 				shop.item[nextSlot].SetDefaults(base.mod.ItemType("XenoEye"), false);
 				nextSlot++;
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("HazmatSuit"), false);
+				nextSlot++;
 			}
 			if (NPC.downedMoonlord)
 			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("HazmatSuit"), false);
-				nextSlot++;
 				shop.item[nextSlot].SetDefaults(base.mod.ItemType("TerraBombaPart1"), false);
 				nextSlot++;
 				shop.item[nextSlot].SetDefaults(base.mod.ItemType("TerraBombaPart2"), false);
@@ -243,7 +249,7 @@ namespace Redemption.NPCs
 				shop.item[nextSlot].SetDefaults(base.mod.ItemType("TeslaCannon"), false);
 				nextSlot++;
 			}
-			if (RedeWorld.downedStage2Scientist && !RedeWorld.labAccess1)
+			if ((RedeWorld.downedStage2Scientist || RedeWorld.downedJanitor) && !RedeWorld.labAccess1)
 			{
 				shop.item[nextSlot].SetDefaults(base.mod.ItemType("ZoneAccessPanel1"), false);
 				nextSlot++;

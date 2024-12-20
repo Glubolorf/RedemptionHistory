@@ -13,7 +13,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Shining Hikarite Headgear");
-			base.Tooltip.SetDefault("4% increased magic and summon damage\n+4 max minions");
+			base.Tooltip.SetDefault("4% increased magic and minion damage\n+4 max minions");
 		}
 
 		public override void SetDefaults()

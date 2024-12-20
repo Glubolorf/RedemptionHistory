@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.NPCs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -19,6 +20,11 @@ namespace Redemption.Buffs
 			player.velocity.X = 0f;
 			player.velocity.Y = 0f;
 			player.maxFallSpeed = 0f;
+		}
+
+		public override void Update(NPC npc, ref int buffIndex)
+		{
+			npc.GetGlobalNPC<RedeGlobalNPC>().chained = true;
 		}
 	}
 }

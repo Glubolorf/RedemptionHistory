@@ -40,11 +40,11 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override bool CanUseItem(Player player)
 		{
-			if (player.altFunctionUse == 2)
+			if (player.altFunctionUse == 2 && player.itemAnimation == 0)
 			{
 				base.item.mana = 1;
 				base.item.buffType = base.mod.BuffType("NatureGuardian25Buff");
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).longerGuardians)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().longerGuardians)
 				{
 					base.item.buffTime = 1200;
 				}
@@ -68,7 +68,7 @@ namespace Redemption.Items.DruidDamageClass
 		{
 			if (player.altFunctionUse == 2)
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
 				{
 					player.AddBuff(base.mod.BuffType("GuardianCooldownDebuff"), 2700, true);
 					return;
@@ -79,47 +79,47 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			if (player.altFunctionUse == 2)
+			if (player.altFunctionUse == 2 && player.itemAnimation == 0)
 			{
 				return true;
 			}
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).staveTripleShot)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().staveTripleShot)
 			{
-				float num = 3f;
-				float num2 = MathHelper.ToRadians(15f);
+				float numberProjectiles = 3f;
+				float rotation = MathHelper.ToRadians(15f);
 				position += Vector2.Normalize(new Vector2(speedX, speedY)) * 45f;
-				int num3 = 0;
-				while ((float)num3 < num)
+				int i = 0;
+				while ((float)i < numberProjectiles)
 				{
-					Vector2 vector = Utils.RotatedBy(new Vector2(speedX, speedY), (double)MathHelper.Lerp(-num2, num2, (float)num3 / (num - 1f)), default(Vector2)) * 0.8f;
-					Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, base.mod.ProjectileType("KingsOakShot" + (Main.rand.Next(5) + 1)), damage, knockBack, player.whoAmI, 0f, 0f);
-					num3++;
+					Vector2 perturbedSpeed2 = Utils.RotatedBy(new Vector2(speedX, speedY), (double)MathHelper.Lerp(-rotation, rotation, (float)i / (numberProjectiles - 1f)), default(Vector2)) * 0.8f;
+					Projectile.NewProjectile(position.X, position.Y, perturbedSpeed2.X, perturbedSpeed2.Y, base.mod.ProjectileType("KingsOakShot" + (Main.rand.Next(5) + 1)), damage, knockBack, player.whoAmI, 0f, 0f);
+					i++;
 				}
 				return false;
 			}
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).staveScatterShot && Main.rand.Next(5) == 0)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().staveScatterShot && Main.rand.Next(5) == 0)
 			{
-				int num4 = 2 + Main.rand.Next(2);
-				for (int i = 0; i < num4; i++)
+				int numberProjectiles2 = 2 + Main.rand.Next(2);
+				for (int j = 0; j < numberProjectiles2; j++)
 				{
-					Vector2 vector2 = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(10f));
-					float num5 = 1f - Utils.NextFloat(Main.rand) * 0.3f;
-					vector2 *= num5;
-					Projectile.NewProjectile(position.X, position.Y, vector2.X, vector2.Y, base.mod.ProjectileType("KingsOakShot" + (Main.rand.Next(5) + 1)), damage, knockBack, player.whoAmI, 0f, 0f);
+					Vector2 perturbedSpeed3 = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(10f));
+					float scale = 1f - Utils.NextFloat(Main.rand) * 0.3f;
+					perturbedSpeed3 *= scale;
+					Projectile.NewProjectile(position.X, position.Y, perturbedSpeed3.X, perturbedSpeed3.Y, base.mod.ProjectileType("KingsOakShot" + (Main.rand.Next(5) + 1)), damage, knockBack, player.whoAmI, 0f, 0f);
 				}
 				return false;
 			}
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).staveQuadShot)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().staveQuadShot)
 			{
-				float num6 = 5f;
-				float num7 = MathHelper.ToRadians(15f);
+				float numberProjectiles3 = 5f;
+				float rotation2 = MathHelper.ToRadians(15f);
 				position += Vector2.Normalize(new Vector2(speedX, speedY)) * 45f;
-				int num8 = 0;
-				while ((float)num8 < num6)
+				int k = 0;
+				while ((float)k < numberProjectiles3)
 				{
-					Vector2 vector3 = Utils.RotatedBy(new Vector2(speedX, speedY), (double)MathHelper.Lerp(-num7, num7, (float)num8 / (num6 - 1f)), default(Vector2)) * 0.8f;
-					Projectile.NewProjectile(position.X, position.Y, vector3.X, vector3.Y, base.mod.ProjectileType("KingsOakShot" + (Main.rand.Next(5) + 1)), damage, knockBack, player.whoAmI, 0f, 0f);
-					num8++;
+					Vector2 perturbedSpeed4 = Utils.RotatedBy(new Vector2(speedX, speedY), (double)MathHelper.Lerp(-rotation2, rotation2, (float)k / (numberProjectiles3 - 1f)), default(Vector2)) * 0.8f;
+					Projectile.NewProjectile(position.X, position.Y, perturbedSpeed4.X, perturbedSpeed4.Y, base.mod.ProjectileType("KingsOakShot" + (Main.rand.Next(5) + 1)), damage, knockBack, player.whoAmI, 0f, 0f);
+					k++;
 				}
 				return false;
 			}
@@ -128,7 +128,7 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).burnStaves)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().burnStaves)
 			{
 				target.AddBuff(24, 180, false);
 			}
@@ -136,9 +136,9 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override float UseTimeMultiplier(Player player)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterStaves)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().fasterStaves)
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
 				{
 					return 1.45f;
 				}
@@ -146,7 +146,7 @@ namespace Redemption.Items.DruidDamageClass
 			}
 			else
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).rapidStave)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().rapidStave)
 				{
 					return 1.35f;
 				}
@@ -168,18 +168,18 @@ namespace Redemption.Items.DruidDamageClass
 			modRecipe.AddTile(null, "DruidicAltarTile");
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "AcornStaff", 1);
-			modRecipe.AddIngredient(null, "AncientWoodStave", 1);
-			modRecipe.AddIngredient(null, "BorealStave", 1);
-			modRecipe.AddIngredient(null, "ShadewoodStave", 1);
-			modRecipe.AddIngredient(null, "LivingWoodStave", 1);
-			modRecipe.AddIngredient(null, "MahoganyStave", 1);
-			modRecipe.AddIngredient(null, "PalmStave", 1);
-			modRecipe.AddIngredient(null, "SmallLostSoul", 5);
-			modRecipe.AddTile(null, "DruidicAltarTile");
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.AddIngredient(null, "AcornStaff", 1);
+			modRecipe2.AddIngredient(null, "AncientWoodStave", 1);
+			modRecipe2.AddIngredient(null, "BorealStave", 1);
+			modRecipe2.AddIngredient(null, "ShadewoodStave", 1);
+			modRecipe2.AddIngredient(null, "LivingWoodStave", 1);
+			modRecipe2.AddIngredient(null, "MahoganyStave", 1);
+			modRecipe2.AddIngredient(null, "PalmStave", 1);
+			modRecipe2.AddIngredient(null, "SmallLostSoul", 5);
+			modRecipe2.AddTile(null, "DruidicAltarTile");
+			modRecipe2.SetResult(this, 1);
+			modRecipe2.AddRecipe();
 		}
 	}
 }

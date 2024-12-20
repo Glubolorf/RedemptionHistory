@@ -37,8 +37,8 @@ namespace Redemption.NPCs.v08
 			{
 				for (int i = 0; i < 25; i++)
 				{
-					int num = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 273, 0f, 0f, 100, default(Color), 3f);
-					Main.dust[num].velocity *= 2.6f;
+					int dustIndex2 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 273, 0f, 0f, 100, default(Color), 3f);
+					Main.dust[dustIndex2].velocity *= 2.6f;
 				}
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/XenomiteGore"), 1f);
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/XenomiteGore"), 1f);
@@ -61,8 +61,7 @@ namespace Redemption.NPCs.v08
 		public override void AI()
 		{
 			base.npc.TargetClosest(true);
-			Player player = Main.player[base.npc.target];
-			if (player.Center.X > base.npc.Center.X)
+			if (Main.player[base.npc.target].Center.X > base.npc.Center.X)
 			{
 				base.npc.spriteDirection = 1;
 			}
@@ -98,8 +97,7 @@ namespace Redemption.NPCs.v08
 						this.buildupFrame = 0;
 					}
 				}
-				float num = base.npc.Distance(Main.player[base.npc.target].Center);
-				if (num <= 200f && Main.rand.Next(120) == 0 && !this.buildup && !this.sneeze)
+				if (base.npc.Distance(Main.player[base.npc.target].Center) <= 200f && Main.rand.Next(120) == 0 && !this.buildup && !this.sneeze)
 				{
 					this.buildup = true;
 				}
@@ -117,13 +115,13 @@ namespace Redemption.NPCs.v08
 						Main.PlaySound(SoundID.Item50, base.npc.position);
 						for (int i = 0; i < 25; i++)
 						{
-							int num2 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 31, 0f, 0f, 100, default(Color), 1f);
-							Main.dust[num2].velocity *= 4.6f;
+							int dustIndex2 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 31, 0f, 0f, 100, default(Color), 1f);
+							Main.dust[dustIndex2].velocity *= 4.6f;
 						}
 						for (int j = 0; j < 10; j++)
 						{
-							int num3 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 1f);
-							Main.dust[num3].velocity *= 4.6f;
+							int dustIndex3 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 1f);
+							Main.dust[dustIndex3].velocity *= 4.6f;
 						}
 						this.sneeze = true;
 						this.buildup = false;
@@ -143,7 +141,7 @@ namespace Redemption.NPCs.v08
 				base.npc.aiStyle = 0;
 				base.npc.velocity.X = 0f;
 				this.sneezeTimer++;
-				if (this.sneezeTimer == 2 && !Config.NoCombatText)
+				if (this.sneezeTimer == 2 && !RedeConfigClient.Instance.NoCombatText)
 				{
 					CombatText.NewText(base.npc.getRect(), Color.LightBlue, "ACHOO!", true, true);
 				}
@@ -152,13 +150,13 @@ namespace Redemption.NPCs.v08
 					Main.PlaySound(SoundID.Item50, base.npc.position);
 					for (int k = 0; k < 25; k++)
 					{
-						int num4 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 31, 0f, 0f, 100, default(Color), 1f);
-						Main.dust[num4].velocity *= 4.6f;
+						int dustIndex4 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 31, 0f, 0f, 100, default(Color), 1f);
+						Main.dust[dustIndex4].velocity *= 4.6f;
 					}
 					for (int l = 0; l < 10; l++)
 					{
-						int num5 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 1f);
-						Main.dust[num5].velocity *= 4.6f;
+						int dustIndex5 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 1f);
+						Main.dust[dustIndex5].velocity *= 4.6f;
 					}
 					this.sneeze = false;
 					this.buildup = false;
@@ -193,38 +191,35 @@ namespace Redemption.NPCs.v08
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/v08/SneezyInfectedFlinxHop");
-			Texture2D texture2 = base.mod.GetTexture("NPCs/v08/SneezyInfectedFlinxBuildup");
-			Texture2D texture3 = base.mod.GetTexture("NPCs/v08/SneezyInfectedFlinxSneeze");
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D hopAni = base.mod.GetTexture("NPCs/v08/SneezyInfectedFlinxHop");
+			Texture2D buildupAni = base.mod.GetTexture("NPCs/v08/SneezyInfectedFlinxBuildup");
+			Texture2D sneezeAni = base.mod.GetTexture("NPCs/v08/SneezyInfectedFlinxSneeze");
 			int spriteDirection = base.npc.spriteDirection;
 			if (!this.hop && !this.buildup && !this.sneeze)
 			{
-				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.hop && !this.sneeze && !this.buildup)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num = texture.Height / 1;
-				int num2 = num * this.hopFrame;
-				Main.spriteBatch.Draw(texture, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num214 = hopAni.Height / 1;
+				int y6 = num214 * this.hopFrame;
+				Main.spriteBatch.Draw(hopAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, hopAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)hopAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.buildup)
 			{
-				Vector2 vector2;
-				vector2..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num3 = texture2.Height / 5;
-				int num4 = num3 * this.buildupFrame;
-				Main.spriteBatch.Draw(texture2, vector2 - Main.screenPosition, new Rectangle?(new Rectangle(0, num4, texture2.Width, num3)), drawColor, base.npc.rotation, new Vector2((float)texture2.Width / 2f, (float)num3 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter2 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num215 = buildupAni.Height / 5;
+				int y7 = num215 * this.buildupFrame;
+				Main.spriteBatch.Draw(buildupAni, drawCenter2 - Main.screenPosition, new Rectangle?(new Rectangle(0, y7, buildupAni.Width, num215)), drawColor, base.npc.rotation, new Vector2((float)buildupAni.Width / 2f, (float)num215 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.sneeze)
 			{
-				Vector2 vector3;
-				vector3..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num5 = texture3.Height / 1;
-				int num6 = num5 * this.sneezeFrame;
-				Main.spriteBatch.Draw(texture3, vector3 - Main.screenPosition, new Rectangle?(new Rectangle(0, num6, texture3.Width, num5)), drawColor, base.npc.rotation, new Vector2((float)texture3.Width / 2f, (float)num5 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter3 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num216 = sneezeAni.Height / 1;
+				int y8 = num216 * this.sneezeFrame;
+				Main.spriteBatch.Draw(sneezeAni, drawCenter3 - Main.screenPosition, new Rectangle?(new Rectangle(0, y8, sneezeAni.Width, num216)), drawColor, base.npc.rotation, new Vector2((float)sneezeAni.Width / 2f, (float)num216 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
 		}

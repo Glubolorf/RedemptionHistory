@@ -40,18 +40,20 @@ namespace Redemption.Projectiles.v08
 				base.projectile.damage = 550;
 				base.projectile.knockBack = 15f;
 				this.Convert((int)base.projectile.Center.X / 16, (int)base.projectile.Center.Y / 16, 200);
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, base.mod.ProjectileType("PlutoniumBoom"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, base.mod.ProjectileType("ShockwaveBoom2"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 0f);
 			}
 			else if (Main.rand.Next(2) == 0)
 			{
-				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 31, 0f, 0f, 100, default(Color), 1f);
-				Main.dust[num].scale = 0.1f + (float)Main.rand.Next(5) * 0.1f;
-				Main.dust[num].fadeIn = 1.5f + (float)Main.rand.Next(5) * 0.1f;
-				Main.dust[num].noGravity = true;
-				Main.dust[num].position = base.projectile.Center + Utils.RotatedBy(new Vector2(0f, -(float)base.projectile.height / 2f), (double)base.projectile.rotation, default(Vector2)) * 1.1f;
-				num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 6, 0f, 0f, 100, default(Color), 1f);
-				Main.dust[num].scale = 1f + (float)Main.rand.Next(5) * 0.1f;
-				Main.dust[num].noGravity = true;
-				Main.dust[num].position = base.projectile.Center + Utils.RotatedBy(new Vector2(0f, -(float)base.projectile.height / 2f - 6f), (double)base.projectile.rotation, default(Vector2)) * 1.1f;
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 31, 0f, 0f, 100, default(Color), 1f);
+				Main.dust[dustIndex].scale = 0.1f + (float)Main.rand.Next(5) * 0.1f;
+				Main.dust[dustIndex].fadeIn = 1.5f + (float)Main.rand.Next(5) * 0.1f;
+				Main.dust[dustIndex].noGravity = true;
+				Main.dust[dustIndex].position = base.projectile.Center + Utils.RotatedBy(new Vector2(0f, -(float)base.projectile.height / 2f), (double)base.projectile.rotation, default(Vector2)) * 1.1f;
+				dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 6, 0f, 0f, 100, default(Color), 1f);
+				Main.dust[dustIndex].scale = 1f + (float)Main.rand.Next(5) * 0.1f;
+				Main.dust[dustIndex].noGravity = true;
+				Main.dust[dustIndex].position = base.projectile.Center + Utils.RotatedBy(new Vector2(0f, -(float)base.projectile.height / 2f - 6f), (double)base.projectile.rotation, default(Vector2)) * 1.1f;
 			}
 			base.projectile.ai[0] += 1f;
 			if (base.projectile.ai[0] > 5f)
@@ -125,13 +127,46 @@ namespace Redemption.Projectiles.v08
 						}
 						if (TileID.Sets.Conversion.Stone[type] || type == 179 || type == 180 || type == 181 || type == 182 || type == 183)
 						{
-							Main.tile[k, l].type = (ushort)base.mod.TileType("DeadRockTile");
+							if (type != 25)
+							{
+								Main.tile[k, l].type = (ushort)base.mod.TileType("DeadRockTile");
+								WorldGen.SquareTileFrame(k, l, true);
+								NetMessage.SendTileSquare(-1, k, l, 1, 0);
+							}
+							else
+							{
+								Main.tile[k, l].type = (ushort)base.mod.TileType("IrradiatedEbonstoneTile");
+								WorldGen.SquareTileFrame(k, l, true);
+								NetMessage.SendTileSquare(-1, k, l, 1, 0);
+							}
+							if (type != 203)
+							{
+								Main.tile[k, l].type = (ushort)base.mod.TileType("DeadRockTile");
+								WorldGen.SquareTileFrame(k, l, true);
+								NetMessage.SendTileSquare(-1, k, l, 1, 0);
+							}
+							else
+							{
+								Main.tile[k, l].type = (ushort)base.mod.TileType("IrradiatedCrimstoneTile");
+								WorldGen.SquareTileFrame(k, l, true);
+								NetMessage.SendTileSquare(-1, k, l, 1, 0);
+							}
+						}
+						else if (type == 2 || type == 109)
+						{
+							Main.tile[k, l].type = (ushort)base.mod.TileType("DeadGrassTile");
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1, 0);
 						}
-						else if (type == 2 || type == 23 || type == 109 || type == 199)
+						else if (type == 23)
 						{
-							Main.tile[k, l].type = (ushort)base.mod.TileType("DeadGrassTile");
+							Main.tile[k, l].type = (ushort)base.mod.TileType("DeadGrassTileCorruption");
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1, 0);
+						}
+						else if (type == 199)
+						{
+							Main.tile[k, l].type = (ushort)base.mod.TileType("DeadGrassTileCrimson");
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1, 0);
 						}
@@ -191,35 +226,35 @@ namespace Redemption.Projectiles.v08
 			}
 			for (int j = 0; j < 50; j++)
 			{
-				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 31, 0f, 0f, 100, default(Color), 5f);
-				Main.dust[num].velocity *= 1.4f;
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 31, 0f, 0f, 100, default(Color), 5f);
+				Main.dust[dustIndex].velocity *= 1.4f;
 			}
 			for (int k = 0; k < 80; k++)
 			{
-				int num2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 6, 0f, 0f, 100, default(Color), 3f);
-				Main.dust[num2].noGravity = true;
-				Main.dust[num2].velocity *= 5f;
-				num2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 6, 0f, 0f, 100, default(Color), 2f);
-				Main.dust[num2].velocity *= 3f;
+				int dustIndex2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 6, 0f, 0f, 100, default(Color), 3f);
+				Main.dust[dustIndex2].noGravity = true;
+				Main.dust[dustIndex2].velocity *= 5f;
+				dustIndex2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 6, 0f, 0f, 100, default(Color), 2f);
+				Main.dust[dustIndex2].velocity *= 3f;
 			}
-			for (int l = 0; l < 2; l++)
+			for (int g = 0; g < 2; g++)
 			{
-				int num3 = Gore.NewGore(new Vector2(base.projectile.position.X + (float)(base.projectile.width / 2) - 24f, base.projectile.position.Y + (float)(base.projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-				Main.gore[num3].scale = 1.5f;
-				Main.gore[num3].velocity.X = Main.gore[num3].velocity.X + 1.5f;
-				Main.gore[num3].velocity.Y = Main.gore[num3].velocity.Y + 1.5f;
-				num3 = Gore.NewGore(new Vector2(base.projectile.position.X + (float)(base.projectile.width / 2) - 24f, base.projectile.position.Y + (float)(base.projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-				Main.gore[num3].scale = 1.5f;
-				Main.gore[num3].velocity.X = Main.gore[num3].velocity.X - 1.5f;
-				Main.gore[num3].velocity.Y = Main.gore[num3].velocity.Y + 1.5f;
-				num3 = Gore.NewGore(new Vector2(base.projectile.position.X + (float)(base.projectile.width / 2) - 24f, base.projectile.position.Y + (float)(base.projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-				Main.gore[num3].scale = 1.5f;
-				Main.gore[num3].velocity.X = Main.gore[num3].velocity.X + 1.5f;
-				Main.gore[num3].velocity.Y = Main.gore[num3].velocity.Y - 1.5f;
-				num3 = Gore.NewGore(new Vector2(base.projectile.position.X + (float)(base.projectile.width / 2) - 24f, base.projectile.position.Y + (float)(base.projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-				Main.gore[num3].scale = 1.5f;
-				Main.gore[num3].velocity.X = Main.gore[num3].velocity.X - 1.5f;
-				Main.gore[num3].velocity.Y = Main.gore[num3].velocity.Y - 1.5f;
+				int goreIndex = Gore.NewGore(new Vector2(base.projectile.position.X + (float)(base.projectile.width / 2) - 24f, base.projectile.position.Y + (float)(base.projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+				Main.gore[goreIndex].scale = 1.5f;
+				Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.5f;
+				Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
+				goreIndex = Gore.NewGore(new Vector2(base.projectile.position.X + (float)(base.projectile.width / 2) - 24f, base.projectile.position.Y + (float)(base.projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+				Main.gore[goreIndex].scale = 1.5f;
+				Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X - 1.5f;
+				Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
+				goreIndex = Gore.NewGore(new Vector2(base.projectile.position.X + (float)(base.projectile.width / 2) - 24f, base.projectile.position.Y + (float)(base.projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+				Main.gore[goreIndex].scale = 1.5f;
+				Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.5f;
+				Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y - 1.5f;
+				goreIndex = Gore.NewGore(new Vector2(base.projectile.position.X + (float)(base.projectile.width / 2) - 24f, base.projectile.position.Y + (float)(base.projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+				Main.gore[goreIndex].scale = 1.5f;
+				Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X - 1.5f;
+				Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y - 1.5f;
 			}
 		}
 	}

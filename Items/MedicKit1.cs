@@ -28,19 +28,18 @@ namespace Redemption.Items
 
 		public override void ModifyTooltips(List<TooltipLine> list)
 		{
-			foreach (TooltipLine tooltipLine in list)
+			foreach (TooltipLine line2 in list)
 			{
-				if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+				if (line2.mod == "Terraria" && line2.Name == "ItemName")
 				{
-					tooltipLine.overrideColor = new Color?(new Color(0, 255, 200));
+					line2.overrideColor = new Color?(new Color(0, 255, 200));
 				}
 			}
 		}
 
 		public override bool CanUseItem(Player player)
 		{
-			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>(base.mod);
-			return !modPlayer.medKit && player.statLifeMax >= 500;
+			return !player.GetModPlayer<RedePlayer>().medKit && player.statLifeMax >= 500;
 		}
 
 		public override bool UseItem(Player player)
@@ -52,8 +51,7 @@ namespace Redemption.Items
 				{
 					player.HealEffect(50, true);
 				}
-				RedePlayer modPlayer = player.GetModPlayer<RedePlayer>(base.mod);
-				modPlayer.medKit = true;
+				player.GetModPlayer<RedePlayer>().medKit = true;
 			}
 			return true;
 		}

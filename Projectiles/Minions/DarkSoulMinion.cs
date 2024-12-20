@@ -68,12 +68,12 @@ namespace Redemption.Projectiles.Minions
 		public override void CheckActive()
 		{
 			Player player = Main.player[base.projectile.owner];
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
+			RedePlayer modPlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
 			if (player.dead)
 			{
-				redePlayer.darkSoulMinion = false;
+				modPlayer.darkSoulMinion = false;
 			}
-			if (redePlayer.darkSoulMinion)
+			if (modPlayer.darkSoulMinion)
 			{
 				base.projectile.timeLeft = 2;
 			}

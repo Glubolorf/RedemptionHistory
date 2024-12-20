@@ -25,8 +25,8 @@ namespace Redemption.Items.DruidDamageClass
 		{
 			if (slot < 10)
 			{
-				int num = 5 + player.extraAccessorySlots;
-				for (int i = 3; i < 3 + num; i++)
+				int maxAccessoryIndex = 5 + player.extraAccessorySlots;
+				for (int i = 3; i < 3 + maxAccessoryIndex; i++)
 				{
 					if (slot != i && player.armor[i].type == base.mod.ItemType("DruidsCharm"))
 					{
@@ -55,8 +55,7 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.extraSeed = true;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).extraSeed = true;
 		}
 	}
 }

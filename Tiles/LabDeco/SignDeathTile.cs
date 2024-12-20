@@ -30,9 +30,9 @@ namespace Redemption.Tiles.LabDeco
 			this.minPick = 500;
 			this.mineResist = 3f;
 			this.disableSmartCursor = true;
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Skull Sign");
-			base.AddMapEntry(new Color(90, 90, 40), modTranslation);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Skull Sign");
+			base.AddMapEntry(new Color(90, 90, 40), name);
 		}
 
 		public override bool CanExplode(int i, int j)

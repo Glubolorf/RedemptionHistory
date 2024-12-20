@@ -46,8 +46,8 @@ namespace Redemption.NPCs.v08
 				}
 			}
 			base.npc.TargetClosest(true);
-			Vector2 vector = Main.player[base.npc.target].Center - base.npc.Center;
-			base.npc.rotation = Utils.ToRotation(vector);
+			Vector2 direction = Main.player[base.npc.target].Center - base.npc.Center;
+			base.npc.rotation = Utils.ToRotation(direction);
 			this.deathTimer++;
 			if (this.deathTimer >= 1200)
 			{

@@ -37,12 +37,12 @@ namespace Redemption.Projectiles.v08
 			dust.position += Utils.RotatedBy(base.projectile.velocity, 1.5707963705062866, default(Vector2));
 			dust.fadeIn = 0.5f;
 			dust.noGravity = true;
-			dust = Main.dust[Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, 75, 0f, 0f, 0, default(Color), 2f)];
-			dust.position = position;
-			dust.velocity = Utils.RotatedBy(base.projectile.velocity, -1.5707963705062866, default(Vector2)) * 0.33f + base.projectile.velocity / 4f;
-			dust.position += Utils.RotatedBy(base.projectile.velocity, -1.5707963705062866, default(Vector2));
-			dust.fadeIn = 0.5f;
-			dust.noGravity = true;
+			Dust dust2 = Main.dust[Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, 75, 0f, 0f, 0, default(Color), 2f)];
+			dust2.position = position;
+			dust2.velocity = Utils.RotatedBy(base.projectile.velocity, -1.5707963705062866, default(Vector2)) * 0.33f + base.projectile.velocity / 4f;
+			dust2.position += Utils.RotatedBy(base.projectile.velocity, -1.5707963705062866, default(Vector2));
+			dust2.fadeIn = 0.5f;
+			dust2.noGravity = true;
 		}
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -55,8 +55,8 @@ namespace Redemption.Projectiles.v08
 			Main.PlaySound(SoundID.Item14, base.projectile.position);
 			for (int i = 0; i < 10; i++)
 			{
-				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 75, 0f, 0f, 100, default(Color), 1.5f);
-				Main.dust[num].velocity *= 1.9f;
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 75, 0f, 0f, 100, default(Color), 1.5f);
+				Main.dust[dustIndex].velocity *= 1.9f;
 			}
 		}
 	}

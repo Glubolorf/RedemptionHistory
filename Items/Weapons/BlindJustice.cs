@@ -12,7 +12,7 @@ namespace Redemption.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Blind Justice, Demon’s Terror");
+			base.DisplayName.SetDefault("Blind Justice, Demon�s Terror");
 			base.Tooltip.SetDefault("'Demons fear this weapon, for a good reason too...'\nDeal 2x more damage to Demons\nOnly usable after all Mech Bosses have been defeated\n[c/aa00ff:Epic]");
 		}
 
@@ -42,15 +42,15 @@ namespace Redemption.Items.Weapons
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			float num = 5f;
-			float num2 = MathHelper.ToRadians(40f);
+			float numberProjectiles = 5f;
+			float rotation = MathHelper.ToRadians(40f);
 			position += Vector2.Normalize(new Vector2(speedX, speedY)) * 45f;
-			int num3 = 0;
-			while ((float)num3 < num)
+			int i = 0;
+			while ((float)i < numberProjectiles)
 			{
-				Vector2 vector = Utils.RotatedBy(new Vector2(speedX, speedY), (double)MathHelper.Lerp(-num2, num2, (float)num3 / (num - 1f)), default(Vector2)) * 0.2f;
-				Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
-				num3++;
+				Vector2 perturbedSpeed = Utils.RotatedBy(new Vector2(speedX, speedY), (double)MathHelper.Lerp(-rotation, rotation, (float)i / (numberProjectiles - 1f)), default(Vector2)) * 0.2f;
+				Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
+				i++;
 			}
 			return false;
 		}
@@ -88,8 +88,7 @@ namespace Redemption.Items.Weapons
 			Color transparent = Color.Transparent;
 			if (base.item.modItem != null && base.item.modItem.mod == ModLoader.GetMod("Redemption"))
 			{
-				TooltipLine tooltipLine = Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName"));
-				tooltipLine.overrideColor = new Color?(new Color(170, 0, 255));
+				Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName")).overrideColor = new Color?(new Color(170, 0, 255));
 			}
 		}
 	}

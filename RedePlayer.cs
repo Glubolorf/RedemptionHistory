@@ -8,10 +8,12 @@ using Redemption.Items;
 using Redemption.Items.Armor.Costumes;
 using Redemption.Items.Cores;
 using Redemption.Items.DruidDamageClass;
+using Redemption.Items.LabThings;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Events;
 using Terraria.Graphics.Shaders;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.Utilities;
@@ -28,38 +30,38 @@ namespace Redemption
 
 		public override TagCompound Save()
 		{
-			List<string> list = new List<string>();
+			List<string> boost = new List<string>();
 			if (this.medKit)
 			{
-				list.Add("medicKit");
+				boost.Add("medicKit");
 			}
 			if (this.galaxyHeart)
 			{
-				list.Add("galaxyHeart");
+				boost.Add("galaxyHeart");
 			}
 			TagCompound tagCompound = new TagCompound();
-			tagCompound.Add("boost", list);
+			tagCompound.Add("boost", boost);
 			return tagCompound;
 		}
 
 		public override void Load(TagCompound tag)
 		{
-			IList<string> list = tag.GetList<string>("boost");
-			this.medKit = list.Contains("medicKit");
-			this.galaxyHeart = list.Contains("galaxyHeart");
+			IList<string> boost = tag.GetList<string>("boost");
+			this.medKit = boost.Contains("medicKit");
+			this.galaxyHeart = boost.Contains("galaxyHeart");
 		}
 
 		public override void LoadLegacy(BinaryReader reader)
 		{
-			int num = reader.ReadInt32();
-			if (num == 0)
+			int loadVersion = reader.ReadInt32();
+			if (loadVersion == 0)
 			{
-				BitsByte bitsByte = reader.ReadByte();
-				this.medKit = bitsByte[0];
-				this.galaxyHeart = bitsByte[1];
+				BitsByte flags = reader.ReadByte();
+				this.medKit = flags[0];
+				this.galaxyHeart = flags[1];
 				return;
 			}
-			ErrorLogger.Log("Redemption: Unknown loadVersion: " + num);
+			base.mod.Logger.Debug("Redemption: Unknown loadVersion: " + loadVersion);
 		}
 
 		public override void PostUpdateMiscEffects()
@@ -67,40 +69,494 @@ namespace Redemption
 			base.player.statLifeMax2 += (this.medKit ? 50 : 0) + (this.galaxyHeart ? 50 : 0);
 			if (Main.netMode != 2 && base.player.whoAmI == Main.myPlayer)
 			{
-				Texture2D texture = base.mod.GetTexture("ExtraTextures/Rain2");
-				Texture2D texture2 = base.mod.GetTexture("ExtraTextures/RainOriginal");
-				Texture2D texture3 = base.mod.GetTexture("ExtraTextures/HeartMed");
-				Texture2D texture4 = base.mod.GetTexture("ExtraTextures/HeartGal");
-				Texture2D texture5 = base.mod.GetTexture("ExtraTextures/HeartOriginal");
-				int num = (this.medKit ? 1 : 0) + (this.galaxyHeart ? 1 : 0);
-				if (num == 2)
+				Texture2D rain2 = base.mod.GetTexture("ExtraTextures/Rain2");
+				Texture2D rainOriginal = base.mod.GetTexture("ExtraTextures/RainOriginal");
+				Texture2D heartMed = base.mod.GetTexture("ExtraTextures/HeartMed");
+				Texture2D heartGalaxy = base.mod.GetTexture("ExtraTextures/HeartGal");
+				Texture2D heartOriginal = base.mod.GetTexture("ExtraTextures/HeartOriginal");
+				int totalHealthBoost = (this.medKit ? 1 : 0) + (this.galaxyHeart ? 1 : 0);
+				if (totalHealthBoost == 2)
 				{
-					Main.heart2Texture = texture4;
+					Main.heart2Texture = heartGalaxy;
 				}
-				else if (num == 1)
+				else if (totalHealthBoost == 1)
 				{
-					Main.heart2Texture = texture3;
+					Main.heart2Texture = heartMed;
 				}
 				else
 				{
-					Main.heart2Texture = texture5;
+					Main.heart2Texture = heartOriginal;
 				}
 				if (Main.bloodMoon)
 				{
-					Main.rainTexture = texture2;
+					Main.rainTexture = rainOriginal;
 				}
-				else if (Main.raining && this.ZoneXeno)
+				else if (Main.raining && (this.ZoneXeno || this.ZoneEvilXeno))
 				{
-					Main.rainTexture = texture;
+					Main.rainTexture = rain2;
 				}
 				else
 				{
-					Main.rainTexture = texture2;
+					Main.rainTexture = rainOriginal;
 				}
 			}
-			if (Main.raining && this.ZoneXeno && (base.player.ZoneOverworldHeight || base.player.ZoneSkyHeight))
+			if (this.ZoneXeno || this.ZoneEvilXeno)
 			{
-				base.player.AddBuff(base.mod.BuffType("HeavyRadiationDebuff"), 2, true);
+				if (base.player.GetModPlayer<MullerEffect>().effect && Main.rand.Next(200) == 0 && !Main.dedServ)
+				{
+					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Muller1").WithVolume(0.9f).WithPitchVariance(0.1f), base.player.position);
+				}
+				if (Main.raining)
+				{
+					if (base.player.ZoneOverworldHeight || base.player.ZoneSkyHeight)
+					{
+						base.player.AddBuff(base.mod.BuffType("HeavyRadiationDebuff"), 2, true);
+					}
+					if (Main.rand.Next(80000) == 0 && base.player.GetModPlayer<RedePlayer>().irradiatedLevel == 0)
+					{
+						base.player.GetModPlayer<RedePlayer>().irradiatedLevel++;
+					}
+				}
+			}
+			if (this.ZoneLab)
+			{
+				if (base.player.GetModPlayer<MullerEffect>().effect && Main.rand.Next(200) == 0 && !Main.dedServ)
+				{
+					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Muller1").WithVolume(0.9f).WithPitchVariance(0.1f), base.player.position);
+				}
+				if (Main.rand.Next(80000) == 0 && base.player.GetModPlayer<RedePlayer>().irradiatedLevel == 0)
+				{
+					base.player.GetModPlayer<RedePlayer>().irradiatedLevel++;
+				}
+				Point point = Utils.ToTileCoordinates(base.player.position);
+				if (!RedeWorld.labSafe && ((int)Main.tile[point.X, point.Y].wall == base.mod.WallType("HardenedlyHardenedSludgeWallTile") || (int)Main.tile[point.X, point.Y].wall == base.mod.WallType("HardenedSludgeWallTile") || (int)Main.tile[point.X, point.Y].wall == base.mod.WallType("LabWallTileUnsafe") || (int)Main.tile[point.X, point.Y].wall == base.mod.WallType("VentWallTile")))
+				{
+					base.player.AddBuff(base.mod.BuffType("IntruderAlertDebuff"), 60, true);
+				}
+			}
+			if (this.irradiatedLevel == 1)
+			{
+				this.irradiatedTimer++;
+				if (this.irradiatedTimer == 39999 || this.irradiatedTimer == 47999)
+				{
+					if (this.hazmatPower || this.HEVPower)
+					{
+						this.irradiatedEffect = 0;
+						this.irradiatedLevel = 0;
+						this.irradiatedTimer = 0;
+					}
+					else if (Main.rand.Next(2) == 0)
+					{
+						this.irradiatedEffect = 0;
+						this.irradiatedLevel = 0;
+						this.irradiatedTimer = 0;
+					}
+				}
+				if (this.irradiatedTimer >= 38000 && this.irradiatedTimer < 40000)
+				{
+					if (Main.rand.Next(800) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("HeadacheDebuff"), 120, true);
+					}
+				}
+				else if (this.irradiatedTimer >= 40000 && this.irradiatedTimer < 48000)
+				{
+					this.irradiatedEffect = 1;
+					if (Main.rand.Next(2000) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("FatigueDebuff"), 800, true);
+					}
+					if (Main.rand.Next(12000) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("NauseaDebuff"), 1200, true);
+					}
+				}
+				else if (this.irradiatedTimer >= 48000 && this.irradiatedTimer < 52000)
+				{
+					this.irradiatedEffect = 2;
+					if (Main.rand.Next(400) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("FatigueDebuff"), 800, true);
+					}
+					if (Main.rand.Next(400) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("NauseaDebuff"), 1200, true);
+					}
+					if (Main.rand.Next(80000) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("HairLossDebuff"), 60000, true);
+					}
+				}
+				else if (this.irradiatedTimer >= 52000 && this.irradiatedTimer < 58000)
+				{
+					this.irradiatedEffect = 3;
+					if (Main.rand.Next(400) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("HairLossDebuff"), 60000, true);
+					}
+					if (Main.rand.Next(400) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("SkinBurnDebuff"), 60000, true);
+					}
+					if (Main.rand.Next(4000) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("FeverDebuff"), 60000, true);
+					}
+				}
+				else if (this.irradiatedTimer >= 58000)
+				{
+					this.irradiatedEffect = 4;
+					base.player.AddBuff(base.mod.BuffType("RadiationDebuff"), 5, true);
+				}
+			}
+			else if (this.irradiatedLevel == 2)
+			{
+				this.irradiatedTimer++;
+				if (this.irradiatedTimer == 37999 || this.irradiatedTimer == 45999)
+				{
+					if (this.hazmatPower || this.HEVPower)
+					{
+						this.irradiatedEffect = 0;
+						this.irradiatedLevel = 0;
+						this.irradiatedTimer = 0;
+					}
+					else if (Main.rand.Next(3) == 0)
+					{
+						this.irradiatedEffect = 0;
+						this.irradiatedLevel = 0;
+						this.irradiatedTimer = 0;
+					}
+				}
+				if (this.irradiatedTimer >= 36000 && this.irradiatedTimer < 38000)
+				{
+					if (Main.rand.Next(800) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("HeadacheDebuff"), 120, true);
+					}
+				}
+				else if (this.irradiatedTimer >= 38000 && this.irradiatedTimer < 46000)
+				{
+					this.irradiatedEffect = 1;
+					if (Main.rand.Next(2000) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("FatigueDebuff"), 800, true);
+					}
+					if (Main.rand.Next(10000) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("NauseaDebuff"), 1200, true);
+					}
+				}
+				else if (this.irradiatedTimer >= 46000 && this.irradiatedTimer < 50000)
+				{
+					this.irradiatedEffect = 2;
+					if (Main.rand.Next(400) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("FatigueDebuff"), 800, true);
+					}
+					if (Main.rand.Next(400) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("NauseaDebuff"), 1200, true);
+					}
+					if (Main.rand.Next(50000) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("HairLossDebuff"), 60000, true);
+					}
+				}
+				else if (this.irradiatedTimer >= 50000 && this.irradiatedTimer < 56000)
+				{
+					this.irradiatedEffect = 3;
+					if (Main.rand.Next(400) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("HairLossDebuff"), 60000, true);
+					}
+					if (Main.rand.Next(400) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("SkinBurnDebuff"), 60000, true);
+					}
+					if (Main.rand.Next(4000) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("FeverDebuff"), 60000, true);
+					}
+				}
+				else if (this.irradiatedTimer >= 56000)
+				{
+					this.irradiatedEffect = 4;
+					base.player.AddBuff(base.mod.BuffType("RadiationDebuff"), 5, true);
+				}
+			}
+			else if (this.irradiatedLevel == 3)
+			{
+				this.irradiatedTimer++;
+				if (this.irradiatedTimer == 33999 || this.irradiatedTimer == 41999)
+				{
+					if (this.HEVPower)
+					{
+						this.irradiatedEffect = 0;
+						this.irradiatedLevel = 0;
+						this.irradiatedTimer = 0;
+					}
+					else if (this.hazmatPower)
+					{
+						if (Main.rand.Next(2) == 0)
+						{
+							this.irradiatedEffect = 0;
+							this.irradiatedLevel = 0;
+							this.irradiatedTimer = 0;
+						}
+					}
+					else if (Main.rand.Next(5) == 0)
+					{
+						this.irradiatedEffect = 0;
+						this.irradiatedLevel = 0;
+						this.irradiatedTimer = 0;
+					}
+				}
+				if (this.irradiatedTimer >= 32000 && this.irradiatedTimer < 34000)
+				{
+					if (Main.rand.Next(800) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("HeadacheDebuff"), 120, true);
+					}
+				}
+				else if (this.irradiatedTimer >= 34000 && this.irradiatedTimer < 42000)
+				{
+					this.irradiatedEffect = 1;
+					if (Main.rand.Next(2000) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("FatigueDebuff"), 800, true);
+					}
+					if (Main.rand.Next(5000) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("NauseaDebuff"), 1200, true);
+					}
+				}
+				else if (this.irradiatedTimer >= 42000 && this.irradiatedTimer < 46000)
+				{
+					this.irradiatedEffect = 2;
+					if (Main.rand.Next(400) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("FatigueDebuff"), 800, true);
+					}
+					if (Main.rand.Next(400) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("NauseaDebuff"), 1200, true);
+					}
+					if (Main.rand.Next(30000) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("HairLossDebuff"), 60000, true);
+					}
+					if (Main.rand.Next(400) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("SkinBurnDebuff"), 60000, true);
+					}
+				}
+				else if (this.irradiatedTimer >= 46000 && this.irradiatedTimer < 49000)
+				{
+					this.irradiatedEffect = 3;
+					if (Main.rand.Next(400) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("HairLossDebuff"), 60000, true);
+					}
+					if (Main.rand.Next(400) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("SkinBurnDebuff"), 60000, true);
+					}
+					if (Main.rand.Next(4000) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("FeverDebuff"), 60000, true);
+					}
+				}
+				else if (this.irradiatedTimer >= 49000)
+				{
+					this.irradiatedEffect = 4;
+					base.player.AddBuff(base.mod.BuffType("RadiationDebuff"), 5, true);
+				}
+			}
+			else if (this.irradiatedLevel == 4)
+			{
+				this.irradiatedTimer++;
+				if (this.irradiatedTimer == 33999 || this.irradiatedTimer == 37999)
+				{
+					if (this.HEVPower)
+					{
+						if (Main.rand.Next(5) == 0)
+						{
+							this.irradiatedEffect = 0;
+							this.irradiatedLevel = 0;
+							this.irradiatedTimer = 0;
+						}
+					}
+					else if (this.hazmatPower)
+					{
+						if (Main.rand.Next(10) == 0)
+						{
+							this.irradiatedEffect = 0;
+							this.irradiatedLevel = 0;
+							this.irradiatedTimer = 0;
+						}
+					}
+					else if (Main.rand.Next(15) == 0)
+					{
+						this.irradiatedEffect = 0;
+						this.irradiatedLevel = 0;
+						this.irradiatedTimer = 0;
+					}
+				}
+				if (this.irradiatedTimer >= 30000 && this.irradiatedTimer < 34000)
+				{
+					if (Main.rand.Next(800) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("HeadacheDebuff"), 120, true);
+					}
+				}
+				else if (this.irradiatedTimer >= 34000 && this.irradiatedTimer < 38000)
+				{
+					this.irradiatedEffect = 1;
+					if (Main.rand.Next(2000) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("FatigueDebuff"), 800, true);
+					}
+					if (Main.rand.Next(2000) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("NauseaDebuff"), 1200, true);
+					}
+				}
+				else if (this.irradiatedTimer >= 38000 && this.irradiatedTimer < 40000)
+				{
+					this.irradiatedEffect = 2;
+					if (Main.rand.Next(400) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("FatigueDebuff"), 800, true);
+					}
+					if (Main.rand.Next(400) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("NauseaDebuff"), 1200, true);
+					}
+					if (Main.rand.Next(2000) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("HairLossDebuff"), 60000, true);
+					}
+					if (Main.rand.Next(400) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("SkinBurnDebuff"), 60000, true);
+					}
+				}
+				else if (this.irradiatedTimer >= 40000 && this.irradiatedTimer < 41000)
+				{
+					this.irradiatedEffect = 3;
+					if (Main.rand.Next(400) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("HairLossDebuff"), 60000, true);
+					}
+					if (Main.rand.Next(400) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("SkinBurnDebuff"), 60000, true);
+					}
+					if (Main.rand.Next(400) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("FeverDebuff"), 60000, true);
+					}
+				}
+				else if (this.irradiatedTimer >= 41000)
+				{
+					this.irradiatedEffect = 4;
+					base.player.AddBuff(base.mod.BuffType("RadiationDebuff"), 5, true);
+				}
+			}
+			else if (this.irradiatedLevel == 5)
+			{
+				this.irradiatedTimer++;
+				if (this.irradiatedTimer == 27999 || this.irradiatedTimer == 29999)
+				{
+					if (this.HEVPower)
+					{
+						if (Main.rand.Next(20) == 0)
+						{
+							this.irradiatedEffect = 0;
+							this.irradiatedLevel = 0;
+							this.irradiatedTimer = 0;
+						}
+					}
+					else if (this.hazmatPower)
+					{
+						if (Main.rand.Next(30) == 0)
+						{
+							this.irradiatedEffect = 0;
+							this.irradiatedLevel = 0;
+							this.irradiatedTimer = 0;
+						}
+					}
+					else if (Main.rand.Next(40) == 0)
+					{
+						this.irradiatedEffect = 0;
+						this.irradiatedLevel = 0;
+						this.irradiatedTimer = 0;
+					}
+				}
+				if (this.irradiatedTimer >= 26000 && this.irradiatedTimer < 28000)
+				{
+					if (Main.rand.Next(400) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("HeadacheDebuff"), 120, true);
+					}
+				}
+				else if (this.irradiatedTimer >= 28000 && this.irradiatedTimer < 30000)
+				{
+					this.irradiatedEffect = 1;
+					if (Main.rand.Next(300) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("FatigueDebuff"), 800, true);
+					}
+					if (Main.rand.Next(300) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("NauseaDebuff"), 1200, true);
+					}
+				}
+				else if (this.irradiatedTimer >= 30000 && this.irradiatedTimer < 31000)
+				{
+					this.irradiatedEffect = 2;
+					if (Main.rand.Next(400) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("FatigueDebuff"), 800, true);
+					}
+					if (Main.rand.Next(400) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("NauseaDebuff"), 1200, true);
+					}
+					if (Main.rand.Next(400) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("HairLossDebuff"), 60000, true);
+					}
+					if (Main.rand.Next(400) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("SkinBurnDebuff"), 60000, true);
+					}
+				}
+				else if (this.irradiatedTimer >= 31000 && this.irradiatedTimer < 32000)
+				{
+					this.irradiatedEffect = 3;
+					if (Main.rand.Next(400) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("HairLossDebuff"), 60000, true);
+					}
+					if (Main.rand.Next(400) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("SkinBurnDebuff"), 60000, true);
+					}
+					if (Main.rand.Next(400) == 0)
+					{
+						base.player.AddBuff(base.mod.BuffType("FeverDebuff"), 60000, true);
+					}
+				}
+				else if (this.irradiatedTimer >= 32000)
+				{
+					this.irradiatedEffect = 4;
+					base.player.AddBuff(base.mod.BuffType("RadiationDebuff"), 5, true);
+				}
+			}
+			else if (this.irradiatedLevel > 5)
+			{
+				this.irradiatedLevel = 5;
 			}
 			if (base.player.pulley)
 			{
@@ -123,28 +579,28 @@ namespace Redemption
 				}
 				for (int j = 0; j < 4; j++)
 				{
-					bool flag = false;
-					bool flag2 = false;
+					bool flag5 = false;
+					bool flag6 = false;
 					switch (j)
 					{
 					case 0:
-						flag = (base.player.controlDown && base.player.releaseDown);
-						flag2 = base.player.controlDown;
+						flag5 = (base.player.controlDown && base.player.releaseDown);
+						flag6 = base.player.controlDown;
 						break;
 					case 1:
-						flag = (base.player.controlUp && base.player.releaseUp);
-						flag2 = base.player.controlUp;
+						flag5 = (base.player.controlUp && base.player.releaseUp);
+						flag6 = base.player.controlUp;
 						break;
 					case 2:
-						flag = (base.player.controlRight && base.player.releaseRight);
-						flag2 = base.player.controlRight;
+						flag5 = (base.player.controlRight && base.player.releaseRight);
+						flag6 = base.player.controlRight;
 						break;
 					case 3:
-						flag = (base.player.controlLeft && base.player.releaseLeft);
-						flag2 = base.player.controlLeft;
+						flag5 = (base.player.controlLeft && base.player.releaseLeft);
+						flag6 = base.player.controlLeft;
 						break;
 					}
-					if (flag)
+					if (flag5)
 					{
 						if (this.modDoubleTapCardinalTimer[j] > 0)
 						{
@@ -155,7 +611,7 @@ namespace Redemption
 							this.modDoubleTapCardinalTimer[j] = 15;
 						}
 					}
-					if (flag2)
+					if (flag6)
 					{
 						this.modHoldDownCardinalTimer[j]++;
 						base.player.KeyHoldDown(j, this.modHoldDownCardinalTimer[j]);
@@ -170,43 +626,53 @@ namespace Redemption
 
 		public override void UpdateBiomeVisuals()
 		{
-			bool flag = NPC.AnyNPCs(base.mod.NPCType("Nebuleus"));
-			base.player.ManageSpecialBiomeVisuals("Redemption:Nebuleus", flag, default(Vector2));
-			bool flag2 = NPC.AnyNPCs(base.mod.NPCType("BigNebuleus"));
-			base.player.ManageSpecialBiomeVisuals("Redemption:BigNebuleus", flag2, default(Vector2));
-			base.player.ManageSpecialBiomeVisuals("Redemption:XenoSky", this.ZoneXeno, base.player.Center);
+			bool useFire = NPC.AnyNPCs(base.mod.NPCType("Nebuleus"));
+			base.player.ManageSpecialBiomeVisuals("Redemption:Nebuleus", useFire, default(Vector2));
+			bool useFire2 = NPC.AnyNPCs(base.mod.NPCType("BigNebuleus"));
+			base.player.ManageSpecialBiomeVisuals("Redemption:BigNebuleus", useFire2, default(Vector2));
+			base.player.ManageSpecialBiomeVisuals("Redemption:XenoSky", this.ZoneXeno || this.ZoneEvilXeno, base.player.Center);
+			if (!this.ZoneXeno && !this.ZoneEvilXeno)
+			{
+				base.player.HasBuff(base.mod.BuffType("RadiationDebuff"));
+			}
 		}
 
 		public override void UpdateBiomes()
 		{
 			this.ZoneXeno = (RedeWorld.xenoBiome > 75);
+			this.ZoneEvilXeno = (RedeWorld.evilXenoBiome > 50);
 			this.ZoneLab = (RedeWorld.labBiome > 200);
+			this.ZoneSlayer = (RedeWorld.slayerBiome > 75);
 		}
 
 		public override bool CustomBiomesMatch(Player other)
 		{
-			RedePlayer modPlayer = other.GetModPlayer<RedePlayer>(base.mod);
-			return this.ZoneXeno == modPlayer.ZoneXeno && this.ZoneLab == modPlayer.ZoneLab;
+			RedePlayer modOther = other.GetModPlayer<RedePlayer>();
+			return this.ZoneXeno == modOther.ZoneXeno && this.ZoneEvilXeno == modOther.ZoneEvilXeno && this.ZoneLab == modOther.ZoneLab && this.ZoneSlayer == modOther.ZoneSlayer;
 		}
 
 		public override void CopyCustomBiomesTo(Player other)
 		{
-			RedePlayer modPlayer = other.GetModPlayer<RedePlayer>(base.mod);
+			RedePlayer modPlayer = other.GetModPlayer<RedePlayer>();
 			modPlayer.ZoneXeno = this.ZoneXeno;
+			modPlayer.ZoneEvilXeno = this.ZoneEvilXeno;
 			modPlayer.ZoneLab = this.ZoneLab;
+			modPlayer.ZoneSlayer = this.ZoneSlayer;
 		}
 
 		public override void SendCustomBiomes(BinaryWriter writer)
 		{
-			BitsByte bitsByte = default(BitsByte);
-			bitsByte[0] = this.ZoneXeno;
-			bitsByte[1] = this.ZoneLab;
-			writer.Write(bitsByte);
+			BitsByte flags = default(BitsByte);
+			flags[0] = this.ZoneXeno;
+			flags[1] = this.ZoneLab;
+			flags[2] = this.ZoneEvilXeno;
+			flags[3] = this.ZoneSlayer;
+			writer.Write(flags);
 		}
 
 		public override Texture2D GetMapBackgroundImage()
 		{
-			if (this.ZoneXeno)
+			if (this.ZoneXeno || this.ZoneEvilXeno)
 			{
 				return base.mod.GetTexture("XenoBiomeMapBackground");
 			}
@@ -219,9 +685,11 @@ namespace Redemption
 
 		public override void ReceiveCustomBiomes(BinaryReader reader)
 		{
-			BitsByte bitsByte = reader.ReadByte();
-			this.ZoneXeno = bitsByte[0];
-			this.ZoneLab = bitsByte[1];
+			BitsByte flags = reader.ReadByte();
+			this.ZoneXeno = flags[0];
+			this.ZoneLab = flags[1];
+			this.ZoneEvilXeno = flags[2];
+			this.ZoneSlayer = flags[3];
 		}
 
 		public override void OnRespawn(Player player)
@@ -343,7 +811,6 @@ namespace Redemption
 			this.eldritchRoot = false;
 			this.sleepPowder = false;
 			this.vendetta = false;
-			this.iceShield = false;
 			this.lavaCubeMinion = false;
 			this.sandDust = false;
 			this.badtime = false;
@@ -363,26 +830,39 @@ namespace Redemption
 			this.forestFriendly = false;
 			this.infectedThornshield = false;
 			this.dashMod = 0;
+			this.girusCloaked = false;
+			this.girusCloakTimer = 0;
+			this.hairLoss = false;
+			this.irradiatedEffect = 0;
+			this.androidMinion = false;
+			this.bileDebuff = false;
+			this.bioweaponDebuff = false;
+			this.thornCirclet = false;
+			this.ksShieldGenerator = false;
+			this.vlitchCoreAcc = false;
+			this.oblitDrive = false;
+			this.thornCrown = false;
+			this.infectedHeart = false;
+			this.StarSerpentMinion = false;
 		}
 
 		public void ModDashMovement()
 		{
 			if (this.dashMod == 1 && this.dashDelayMod < 0 && base.player.whoAmI == Main.myPlayer)
 			{
-				Rectangle rectangle;
-				rectangle..ctor((int)((double)base.player.position.X + (double)base.player.velocity.X * 0.5 - 4.0), (int)((double)base.player.position.Y + (double)base.player.velocity.Y * 0.5 - 4.0), base.player.width + 8, base.player.height + 8);
+				Rectangle rectangle = new Rectangle((int)((double)base.player.position.X + (double)base.player.velocity.X * 0.5 - 4.0), (int)((double)base.player.position.Y + (double)base.player.velocity.Y * 0.5 - 4.0), base.player.width + 8, base.player.height + 8);
 				for (int i = 0; i < 200; i++)
 				{
 					if (Main.npc[i].active && !Main.npc[i].dontTakeDamage && !Main.npc[i].friendly && Main.npc[i].immune[base.player.whoAmI] <= 0)
 					{
-						NPC npc = Main.npc[i];
-						Rectangle rect = npc.getRect();
-						DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(base.player);
-						if (rectangle.Intersects(rect) && (npc.noTileCollide || base.player.CanHit(npc)))
+						NPC nPC = Main.npc[i];
+						Rectangle rect = nPC.getRect();
+						DruidDamagePlayer modPlayer = DruidDamagePlayer.ModPlayer(base.player);
+						if (rectangle.Intersects(rect) && (nPC.noTileCollide || base.player.CanHit(nPC)))
 						{
 							float num = 40f;
 							float num2 = 8f;
-							bool flag = false;
+							bool crit = false;
 							if (base.player.kbGlove)
 							{
 								num2 *= 2f;
@@ -391,28 +871,29 @@ namespace Redemption
 							{
 								num2 *= 1.5f;
 							}
-							if (Main.rand.Next(100) < druidDamagePlayer.druidCrit)
+							if (Main.rand.Next(100) < modPlayer.druidCrit)
 							{
-								flag = true;
+								crit = true;
 							}
-							int num3 = base.player.direction;
+							int direction = base.player.direction;
 							if (base.player.velocity.X < 0f)
 							{
-								num3 = -1;
+								direction = -1;
 							}
 							if (base.player.velocity.X > 0f)
 							{
-								num3 = 1;
+								direction = 1;
 							}
+							base.player.velocity.X = -base.player.velocity.X;
 							if (base.player.whoAmI == Main.myPlayer)
 							{
-								base.player.ApplyDamageToNPC(npc, (int)num, num2, num3, flag);
-								npc.AddBuff(39, 300, false);
+								base.player.ApplyDamageToNPC(nPC, (int)num, num2, direction, crit);
+								nPC.AddBuff(39, 300, false);
 							}
-							npc.immune[base.player.whoAmI] = 6;
+							nPC.immune[base.player.whoAmI] = 6;
 							base.player.immune = true;
 							base.player.immuneNoBlink = true;
-							base.player.immuneTime = 4;
+							base.player.immuneTime = 8;
 						}
 					}
 				}
@@ -432,59 +913,59 @@ namespace Redemption
 			}
 			if (this.dashDelayMod < 0)
 			{
-				float num4 = 12f;
-				float num5 = 0.992f;
-				float num6 = Math.Max(base.player.accRunSpeed, base.player.maxRunSpeed);
-				float num7 = 0.96f;
-				int num8 = 20;
+				float num3 = 12f;
+				float num4 = 0.992f;
+				float num5 = Math.Max(base.player.accRunSpeed, base.player.maxRunSpeed);
+				float num6 = 0.96f;
+				int num7 = 20;
 				if (this.dashMod == 1)
 				{
 					for (int j = 0; j < 2; j++)
 					{
-						int num9;
+						int num8;
 						if (base.player.velocity.Y == 0f)
 						{
-							num9 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y + (float)base.player.height - 4f), base.player.width, 8, 74, 0f, 0f, 100, default(Color), 1.4f);
+							num8 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y + (float)base.player.height - 4f), base.player.width, 8, 74, 0f, 0f, 100, default(Color), 1.4f);
 						}
 						else
 						{
-							num9 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y + (float)(base.player.height / 2) - 8f), base.player.width, 16, 74, 0f, 0f, 100, default(Color), 1.4f);
+							num8 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y + (float)(base.player.height / 2) - 8f), base.player.width, 16, 74, 0f, 0f, 100, default(Color), 1.4f);
 						}
-						Main.dust[num9].velocity *= 0.1f;
-						Main.dust[num9].scale *= 1f + (float)Main.rand.Next(20) * 0.01f;
-						Main.dust[num9].shader = GameShaders.Armor.GetSecondaryShader(base.player.cShoe, base.player);
+						Main.dust[num8].velocity *= 0.1f;
+						Main.dust[num8].scale *= 1f + (float)Main.rand.Next(20) * 0.01f;
+						Main.dust[num8].shader = GameShaders.Armor.GetSecondaryShader(base.player.cShoe, base.player);
 					}
 				}
 				if (this.dashMod > 0)
 				{
 					base.player.vortexStealthActive = false;
-					if (base.player.velocity.X > num4 || base.player.velocity.X < -num4)
+					if (base.player.velocity.X > num3 || base.player.velocity.X < -num3)
 					{
-						base.player.velocity.X = base.player.velocity.X * num5;
+						base.player.velocity.X = base.player.velocity.X * num4;
 						return;
 					}
-					if (base.player.velocity.X > num6 || base.player.velocity.X < -num6)
+					if (base.player.velocity.X > num5 || base.player.velocity.X < -num5)
 					{
-						base.player.velocity.X = base.player.velocity.X * num7;
+						base.player.velocity.X = base.player.velocity.X * num6;
 						return;
 					}
-					this.dashDelayMod = num8;
+					this.dashDelayMod = num7;
 					if (base.player.velocity.X < 0f)
 					{
-						base.player.velocity.X = -num6;
+						base.player.velocity.X = -num5;
 						return;
 					}
 					if (base.player.velocity.X > 0f)
 					{
-						base.player.velocity.X = num6;
+						base.player.velocity.X = num5;
 						return;
 					}
 				}
 			}
 			else if (this.dashMod > 0 && !base.player.mount.Active && this.dashMod == 1)
 			{
-				int num10 = 0;
-				bool flag2 = false;
+				int num9 = 0;
+				bool flag = false;
 				if (this.dashTimeMod > 0)
 				{
 					this.dashTimeMod--;
@@ -497,8 +978,8 @@ namespace Redemption
 				{
 					if (this.dashTimeMod > 0)
 					{
-						num10 = 1;
-						flag2 = true;
+						num9 = 1;
+						flag = true;
 						this.dashTimeMod = 0;
 					}
 					else
@@ -510,8 +991,8 @@ namespace Redemption
 				{
 					if (this.dashTimeMod < 0)
 					{
-						num10 = -1;
-						flag2 = true;
+						num9 = -1;
+						flag = true;
 						this.dashTimeMod = 0;
 					}
 					else
@@ -519,27 +1000,28 @@ namespace Redemption
 						this.dashTimeMod = -15;
 					}
 				}
-				if (flag2)
+				if (flag)
 				{
-					base.player.velocity.X = 16.9f * (float)num10;
-					Point point = Utils.ToTileCoordinates(base.player.Center + new Vector2((float)(num10 * base.player.width / 2 + 2), base.player.gravDir * -(float)base.player.height / 2f + base.player.gravDir * 2f));
-					Point point2 = Utils.ToTileCoordinates(base.player.Center + new Vector2((float)(num10 * base.player.width / 2 + 2), 0f));
+					base.player.velocity.X = 16.9f * (float)num9;
+					Point point = Utils.ToTileCoordinates(base.player.Center + new Vector2((float)(num9 * base.player.width / 2 + 2), base.player.gravDir * -(float)base.player.height / 2f + base.player.gravDir * 2f));
+					Point point2 = Utils.ToTileCoordinates(base.player.Center + new Vector2((float)(num9 * base.player.width / 2 + 2), 0f));
 					if (WorldGen.SolidOrSlopedTile(point.X, point.Y) || WorldGen.SolidOrSlopedTile(point2.X, point2.Y))
 					{
 						base.player.velocity.X = base.player.velocity.X / 2f;
 					}
 					this.dashDelayMod = -1;
-					for (int k = 0; k < 20; k++)
+					for (int num10 = 0; num10 < 20; num10++)
 					{
 						int num11 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y), base.player.width, base.player.height, 74, 0f, 0f, 100, default(Color), 2f);
-						Dust dust = Main.dust[num11];
-						dust.position.X = dust.position.X + (float)Main.rand.Next(-5, 6);
-						Dust dust2 = Main.dust[num11];
-						dust2.position.Y = dust2.position.Y + (float)Main.rand.Next(-5, 6);
+						Dust expr_CDB_cp_0 = Main.dust[num11];
+						expr_CDB_cp_0.position.X = expr_CDB_cp_0.position.X + (float)Main.rand.Next(-5, 6);
+						Dust expr_D02_cp_0 = Main.dust[num11];
+						expr_D02_cp_0.position.Y = expr_D02_cp_0.position.Y + (float)Main.rand.Next(-5, 6);
 						Main.dust[num11].velocity *= 0.2f;
 						Main.dust[num11].scale *= 1f + (float)Main.rand.Next(20) * 0.01f;
 						Main.dust[num11].shader = GameShaders.Armor.GetSecondaryShader(base.player.cShoe, base.player);
 					}
+					return;
 				}
 			}
 		}
@@ -668,6 +1150,14 @@ namespace Redemption
 			this.bInfection = false;
 			this.sleepPowder = false;
 			this.sandDust = false;
+			this.irradiatedLevel = 0;
+			this.irradiatedTimer = 0;
+			this.hairLoss = false;
+			this.irradiatedEffect = 0;
+			this.girusCloakTimer = 0;
+			Redemption.templeOfHeroes = false;
+			this.bileDebuff = false;
+			this.bioweaponDebuff = false;
 		}
 
 		public override void UpdateBadLifeRegen()
@@ -699,14 +1189,14 @@ namespace Redemption
 				base.player.lifeRegenTime = 0;
 				base.player.lifeRegen -= 20;
 			}
-			if ((this.ZoneLab || this.ZoneXeno) && base.player.wet && !this.hazmatPower && !this.labWaterImmune && !base.player.lavaWet && !base.player.honeyWet)
+			if ((this.ZoneLab || this.ZoneXeno || this.ZoneEvilXeno) && base.player.wet && !this.hazmatPower && !this.labWaterImmune && !base.player.lavaWet && !base.player.honeyWet)
 			{
 				if (base.player.lifeRegen > 10)
 				{
 					base.player.lifeRegen = 10;
 				}
 				base.player.lifeRegenTime = 0;
-				base.player.lifeRegen -= 200;
+				base.player.lifeRegen -= 60;
 			}
 			if (this.holyFire)
 			{
@@ -761,22 +1251,43 @@ namespace Redemption
 				base.player.lifeRegenTime = 0;
 				base.player.lifeRegen -= 2000;
 			}
+			if (this.bileDebuff)
+			{
+				if (base.player.lifeRegen > 0)
+				{
+					base.player.lifeRegen = 0;
+				}
+				base.player.lifeRegenTime = 0;
+				base.player.lifeRegen -= 5;
+				base.player.statDefense -= 30;
+			}
+			if (this.bioweaponDebuff)
+			{
+				if (base.player.lifeRegen > 0)
+				{
+					base.player.lifeRegen = 0;
+				}
+				base.player.lifeRegenTime = 0;
+				base.player.lifeRegen -= 12;
+			}
 		}
 
 		public override void SetupStartInventory(IList<Item> items)
 		{
-			Item item = new Item();
-			item.SetDefaults(base.mod.ItemType("EmptyCore"), false);
-			item.stack = 1;
-			items.Add(item);
+			if (!RedeConfigClient.Instance.NoStarterCore)
+			{
+				Item item = new Item();
+				item.SetDefaults(base.mod.ItemType("EmptyCore"), false);
+				item.stack = 1;
+				items.Add(item);
+			}
 		}
 
 		public override void UpdateVanityAccessories()
 		{
 			for (int i = 13; i < 18 + base.player.extraAccessorySlots; i++)
 			{
-				Item item = base.player.armor[i];
-				if (item.type == base.mod.ItemType<OmegaCore>())
+				if (base.player.armor[i].type == ModContent.ItemType<OmegaCore>())
 				{
 					this.omegaHideVanity = false;
 					this.omegaForceVanity = true;
@@ -784,8 +1295,7 @@ namespace Redemption
 			}
 			for (int j = 13; j < 18 + base.player.extraAccessorySlots; j++)
 			{
-				Item item2 = base.player.armor[j];
-				if (item2.type == base.mod.ItemType<CrownOfTheKing>())
+				if (base.player.armor[j].type == ModContent.ItemType<CrownOfTheKing>())
 				{
 					this.chickenHideVanity = false;
 					this.chickenForceVanity = true;
@@ -793,8 +1303,7 @@ namespace Redemption
 			}
 			for (int k = 13; k < 18 + base.player.extraAccessorySlots; k++)
 			{
-				Item item3 = base.player.armor[k];
-				if (item3.type == base.mod.ItemType<HazmatSuit>())
+				if (base.player.armor[k].type == ModContent.ItemType<HazmatSuit>())
 				{
 					this.hazmatHideVanity = false;
 					this.hazmatForceVanity = true;
@@ -802,8 +1311,7 @@ namespace Redemption
 			}
 			for (int l = 13; l < 18 + base.player.extraAccessorySlots; l++)
 			{
-				Item item4 = base.player.armor[l];
-				if (item4.type == base.mod.ItemType<HEVSuit>())
+				if (base.player.armor[l].type == ModContent.ItemType<HEVSuit>())
 				{
 					this.HEVHideVanity = false;
 					this.HEVForceVanity = true;
@@ -815,19 +1323,28 @@ namespace Redemption
 		{
 			if (this.omegaAccessory)
 			{
-				base.player.AddBuff(base.mod.BuffType<Omega>(), 60, true);
+				base.player.AddBuff(ModContent.BuffType<Omega>(), 60, true);
 			}
 			if (this.chickenAccessory)
 			{
-				base.player.AddBuff(base.mod.BuffType<ChickenCrownBuff>(), 60, true);
+				base.player.AddBuff(ModContent.BuffType<ChickenCrownBuff>(), 60, true);
 			}
 			if (this.hazmatAccessory)
 			{
-				base.player.AddBuff(base.mod.BuffType<HazmatSuitBuff>(), 60, true);
+				base.player.AddBuff(ModContent.BuffType<HazmatSuitBuff>(), 60, true);
 			}
 			if (this.HEVAccessory)
 			{
-				base.player.AddBuff(base.mod.BuffType<HEVSuitBuff>(), 60, true);
+				base.player.AddBuff(ModContent.BuffType<HEVSuitBuff>(), 60, true);
+			}
+		}
+
+		public override void ModifyDrawHeadLayers(List<PlayerHeadLayer> layers)
+		{
+			if (this.hairLoss)
+			{
+				layers.Remove(PlayerHeadLayer.Hair);
+				layers.Remove(PlayerHeadLayer.AltHair);
 			}
 		}
 
@@ -863,39 +1380,69 @@ namespace Redemption
 		{
 			if (this.enjoyment && Main.rand.Next(4) == 0 && drawInfo.shadow == 0f)
 			{
-				int num = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 243, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
-				Main.dust[num].noGravity = true;
-				Main.dust[num].velocity *= 1.8f;
-				Dust dust = Main.dust[num];
-				dust.velocity.Y = dust.velocity.Y - 0.5f;
-				Main.playerDrawDust.Add(num);
+				int dust = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 243, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
+				Main.dust[dust].noGravity = true;
+				Main.dust[dust].velocity *= 1.8f;
+				Dust dust8 = Main.dust[dust];
+				dust8.velocity.Y = dust8.velocity.Y - 0.5f;
+				Main.playerDrawDust.Add(dust);
 			}
 			if (this.ultraFlames && Main.rand.Next(2) == 0 && drawInfo.shadow == 0f)
 			{
-				int num2 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 92, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
-				Main.dust[num2].noGravity = true;
-				Main.dust[num2].velocity *= 1.8f;
-				Dust dust2 = Main.dust[num2];
-				dust2.velocity.Y = dust2.velocity.Y - 0.5f;
-				Main.playerDrawDust.Add(num2);
+				int dust2 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 92, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
+				Main.dust[dust2].noGravity = true;
+				Main.dust[dust2].velocity *= 1.8f;
+				Dust dust9 = Main.dust[dust2];
+				dust9.velocity.Y = dust9.velocity.Y - 0.5f;
+				Main.playerDrawDust.Add(dust2);
 			}
 			if (this.druidBane && Main.rand.Next(2) == 0 && drawInfo.shadow == 0f)
 			{
-				int num3 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 163, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
-				Main.dust[num3].noGravity = true;
-				Main.dust[num3].velocity *= 1.8f;
-				Dust dust3 = Main.dust[num3];
-				dust3.velocity.Y = dust3.velocity.Y - 0.5f;
-				Main.playerDrawDust.Add(num3);
+				int dust3 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 163, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
+				Main.dust[dust3].noGravity = true;
+				Main.dust[dust3].velocity *= 1.8f;
+				Dust dust10 = Main.dust[dust3];
+				dust10.velocity.Y = dust10.velocity.Y - 0.5f;
+				Main.playerDrawDust.Add(dust3);
 			}
 			if (this.holyFire && Main.rand.Next(2) == 0 && drawInfo.shadow == 0f)
 			{
-				int num4 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 64, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 2f);
-				Main.dust[num4].noGravity = true;
-				Main.dust[num4].velocity *= 1.8f;
-				Dust dust4 = Main.dust[num4];
-				dust4.velocity.Y = dust4.velocity.Y - 0.5f;
-				Main.playerDrawDust.Add(num4);
+				int dust4 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 64, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 2f);
+				Main.dust[dust4].noGravity = true;
+				Main.dust[dust4].velocity *= 1.8f;
+				Dust dust11 = Main.dust[dust4];
+				dust11.velocity.Y = dust11.velocity.Y - 0.5f;
+				Main.playerDrawDust.Add(dust4);
+			}
+			if (this.bileDebuff && Main.rand.Next(4) == 0 && drawInfo.shadow == 0f)
+			{
+				int dust5 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 74, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
+				Main.dust[dust5].noGravity = true;
+				Main.dust[dust5].velocity *= 1.8f;
+				Dust dust12 = Main.dust[dust5];
+				dust12.velocity.Y = dust12.velocity.Y - 0.5f;
+				Main.playerDrawDust.Add(dust5);
+			}
+			if (this.bioweaponDebuff)
+			{
+				if (Main.rand.Next(15) == 0 && drawInfo.shadow == 0f)
+				{
+					int dust6 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 74, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
+					Main.dust[dust6].noGravity = true;
+					Main.dust[dust6].velocity *= 1.8f;
+					Dust dust13 = Main.dust[dust6];
+					dust13.velocity.Y = dust13.velocity.Y - 0.5f;
+					Main.playerDrawDust.Add(dust6);
+				}
+				if (Main.rand.Next(10) == 0 && drawInfo.shadow == 0f)
+				{
+					int dust7 = Dust.NewDust(drawInfo.position - new Vector2(2f, 2f), base.player.width + 4, base.player.height + 4, 31, base.player.velocity.X * 0.4f, base.player.velocity.Y * 0.4f, 100, default(Color), 1.2f);
+					Main.dust[dust7].noGravity = true;
+					Main.dust[dust7].velocity *= 1.8f;
+					Dust dust14 = Main.dust[dust7];
+					dust14.velocity.Y = dust14.velocity.Y - 0.5f;
+					Main.playerDrawDust.Add(dust7);
+				}
 			}
 		}
 
@@ -907,9 +1454,16 @@ namespace Redemption
 			}
 		}
 
-		public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+		public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
 		{
-			return !this.iceShield;
+			if (base.player.HasBuff(base.mod.BuffType("BioweaponFlaskBuff")))
+			{
+				target.AddBuff(base.mod.BuffType("BioweaponDebuff"), 900, false);
+			}
+			if (base.player.HasBuff(base.mod.BuffType("BileFlaskBuff")))
+			{
+				target.AddBuff(base.mod.BuffType("BileDebuff"), 900, false);
+			}
 		}
 
 		public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
@@ -953,6 +1507,38 @@ namespace Redemption
 			{
 				target.AddBuff(base.mod.BuffType("BlackenedHeartDebuff"), 300, false);
 			}
+			if (this.oblitDrive && Main.rand.Next(10) == 0)
+			{
+				if (!base.player.HasBuff(base.mod.BuffType("OblitBuff1")) && !base.player.HasBuff(base.mod.BuffType("OblitBuff2")) && !base.player.HasBuff(base.mod.BuffType("OblitBuff3")) && !base.player.HasBuff(base.mod.BuffType("OblitBuff4")) && !base.player.HasBuff(base.mod.BuffType("OblitBuff5")))
+				{
+					base.player.AddBuff(base.mod.BuffType("OblitBuff1"), 600, true);
+					return;
+				}
+				if (base.player.HasBuff(base.mod.BuffType("OblitBuff1")))
+				{
+					base.player.AddBuff(base.mod.BuffType("OblitBuff2"), 600, true);
+					return;
+				}
+				if (base.player.HasBuff(base.mod.BuffType("OblitBuff2")))
+				{
+					base.player.AddBuff(base.mod.BuffType("OblitBuff3"), 600, true);
+					return;
+				}
+				if (base.player.HasBuff(base.mod.BuffType("OblitBuff3")))
+				{
+					base.player.AddBuff(base.mod.BuffType("OblitBuff4"), 600, true);
+					return;
+				}
+				if (base.player.HasBuff(base.mod.BuffType("OblitBuff4")))
+				{
+					base.player.AddBuff(base.mod.BuffType("OblitBuff5"), 600, true);
+					return;
+				}
+				if (base.player.HasBuff(base.mod.BuffType("OblitBuff5")))
+				{
+					base.player.AddBuff(base.mod.BuffType("OblitBuff5"), 600, true);
+				}
+			}
 		}
 
 		public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
@@ -995,6 +1581,42 @@ namespace Redemption
 			if (this.smallShadeSet)
 			{
 				target.AddBuff(base.mod.BuffType("BlackenedHeartDebuff"), 300, false);
+			}
+			if (this.oblitDrive && Main.rand.Next(10) == 0)
+			{
+				if (!base.player.HasBuff(base.mod.BuffType("OblitBuff1")) && !base.player.HasBuff(base.mod.BuffType("OblitBuff2")) && !base.player.HasBuff(base.mod.BuffType("OblitBuff3")) && !base.player.HasBuff(base.mod.BuffType("OblitBuff4")) && !base.player.HasBuff(base.mod.BuffType("OblitBuff5")))
+				{
+					base.player.AddBuff(base.mod.BuffType("OblitBuff1"), 600, true);
+					return;
+				}
+				if (base.player.HasBuff(base.mod.BuffType("OblitBuff1")))
+				{
+					base.player.AddBuff(base.mod.BuffType("OblitBuff2"), 600, true);
+					base.player.DelBuff(base.mod.BuffType("OblitBuff1"));
+					return;
+				}
+				if (base.player.HasBuff(base.mod.BuffType("OblitBuff2")))
+				{
+					base.player.AddBuff(base.mod.BuffType("OblitBuff3"), 600, true);
+					base.player.DelBuff(base.mod.BuffType("OblitBuff2"));
+					return;
+				}
+				if (base.player.HasBuff(base.mod.BuffType("OblitBuff3")))
+				{
+					base.player.AddBuff(base.mod.BuffType("OblitBuff4"), 600, true);
+					base.player.DelBuff(base.mod.BuffType("OblitBuff3"));
+					return;
+				}
+				if (base.player.HasBuff(base.mod.BuffType("OblitBuff4")))
+				{
+					base.player.AddBuff(base.mod.BuffType("OblitBuff5"), 600, true);
+					base.player.DelBuff(base.mod.BuffType("OblitBuff4"));
+					return;
+				}
+				if (base.player.HasBuff(base.mod.BuffType("OblitBuff5")))
+				{
+					base.player.AddBuff(base.mod.BuffType("OblitBuff5"), 600, true);
+				}
 			}
 		}
 
@@ -1084,12 +1706,109 @@ namespace Redemption
 			{
 				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got pecked to death");
 			}
+			if (this.bioweaponDebuff)
+			{
+				Main.PlaySound(SoundID.Item14, base.player.position);
+				for (int i = 0; i < 10; i++)
+				{
+					int dustIndex3 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y), base.player.width, base.player.height, 31, 0f, 0f, 100, default(Color), 5f);
+					Main.dust[dustIndex3].velocity *= 1.4f;
+				}
+				for (int j = 0; j < 20; j++)
+				{
+					int dustIndex4 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y), base.player.width, base.player.height, 6, 0f, 0f, 100, default(Color), 3f);
+					Main.dust[dustIndex4].noGravity = true;
+					Main.dust[dustIndex4].velocity *= 5f;
+					dustIndex4 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y), base.player.width, base.player.height, 6, 0f, 0f, 100, default(Color), 2f);
+					Main.dust[dustIndex4].velocity *= 3f;
+				}
+				for (int g = 0; g < 2; g++)
+				{
+					int goreIndex = Gore.NewGore(new Vector2(base.player.position.X + (float)(base.player.width / 2) - 24f, base.player.position.Y + (float)(base.player.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+					Main.gore[goreIndex].scale = 1.5f;
+					Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.5f;
+					Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
+					goreIndex = Gore.NewGore(new Vector2(base.player.position.X + (float)(base.player.width / 2) - 24f, base.player.position.Y + (float)(base.player.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+					Main.gore[goreIndex].scale = 1.5f;
+					Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X - 1.5f;
+					Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
+				}
+			}
+			if (this.omegaPower)
+			{
+				if (base.player.wet && !base.player.lavaWet && !base.player.honeyWet)
+				{
+					Main.PlaySound(SoundID.Item14, base.player.position);
+					for (int k = 0; k < 30; k++)
+					{
+						int dustIndex5 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y), base.player.width, base.player.height, 31, 0f, 0f, 100, default(Color), 5f);
+						Main.dust[dustIndex5].velocity *= 1.4f;
+					}
+					for (int l = 0; l < 40; l++)
+					{
+						int dustIndex6 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y), base.player.width, base.player.height, 6, 0f, 0f, 100, default(Color), 3f);
+						Main.dust[dustIndex6].noGravity = true;
+						Main.dust[dustIndex6].velocity *= 5f;
+						dustIndex6 = Dust.NewDust(new Vector2(base.player.position.X, base.player.position.Y), base.player.width, base.player.height, 6, 0f, 0f, 100, default(Color), 2f);
+						Main.dust[dustIndex6].velocity *= 3f;
+					}
+					for (int g2 = 0; g2 < 2; g2++)
+					{
+						int goreIndex2 = Gore.NewGore(new Vector2(base.player.position.X + (float)(base.player.width / 2) - 24f, base.player.position.Y + (float)(base.player.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+						Main.gore[goreIndex2].scale = 1.5f;
+						Main.gore[goreIndex2].velocity.X = Main.gore[goreIndex2].velocity.X + 1.5f;
+						Main.gore[goreIndex2].velocity.Y = Main.gore[goreIndex2].velocity.Y + 1.5f;
+						goreIndex2 = Gore.NewGore(new Vector2(base.player.position.X + (float)(base.player.width / 2) - 24f, base.player.position.Y + (float)(base.player.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+						Main.gore[goreIndex2].scale = 1.5f;
+						Main.gore[goreIndex2].velocity.X = Main.gore[goreIndex2].velocity.X - 1.5f;
+						Main.gore[goreIndex2].velocity.Y = Main.gore[goreIndex2].velocity.Y + 1.5f;
+						goreIndex2 = Gore.NewGore(new Vector2(base.player.position.X + (float)(base.player.width / 2) - 24f, base.player.position.Y + (float)(base.player.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+						Main.gore[goreIndex2].scale = 1.5f;
+						Main.gore[goreIndex2].velocity.X = Main.gore[goreIndex2].velocity.X + 1.5f;
+						Main.gore[goreIndex2].velocity.Y = Main.gore[goreIndex2].velocity.Y - 1.5f;
+						goreIndex2 = Gore.NewGore(new Vector2(base.player.position.X + (float)(base.player.width / 2) - 24f, base.player.position.Y + (float)(base.player.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+						Main.gore[goreIndex2].scale = 1.5f;
+						Main.gore[goreIndex2].velocity.X = Main.gore[goreIndex2].velocity.X - 1.5f;
+						Main.gore[goreIndex2].velocity.Y = Main.gore[goreIndex2].velocity.Y - 1.5f;
+					}
+				}
+				Gore.NewGore(base.player.position, base.player.velocity, base.mod.GetGoreSlot("Gores/v08/GirusCoreGore1"), 1f);
+				Gore.NewGore(base.player.position, base.player.velocity, base.mod.GetGoreSlot("Gores/v08/GirusCoreGore1"), 1f);
+				Gore.NewGore(base.player.position, base.player.velocity, base.mod.GetGoreSlot("Gores/v08/GirusCoreGore2"), 1f);
+				Gore.NewGore(base.player.position, base.player.velocity, base.mod.GetGoreSlot("Gores/v08/GirusCoreGore3"), 1f);
+			}
+			if (this.ksShieldGenerator && base.player.FindBuffIndex(base.mod.BuffType("KSShieldCooldown")) == -1)
+			{
+				base.player.statLife = 100;
+				base.player.HealEffect(100, true);
+				base.player.immune = true;
+				base.player.AddBuff(base.mod.BuffType("KSShieldBuff"), 3600, true);
+				base.player.AddBuff(base.mod.BuffType("KSShieldCooldown"), 36000, true);
+				if (base.player.ownedProjectileCounts[base.mod.ProjectileType("KSShieldPro")] == 0)
+				{
+					Projectile.NewProjectile(base.player.position, Vector2.Zero, base.mod.ProjectileType("KSShieldPro"), 0, 0f, base.player.whoAmI, 0f, 0f);
+				}
+				Main.PlaySound(SoundID.Item93, base.player.position);
+				return false;
+			}
+			if (this.natureGuardian26)
+			{
+				base.player.statLife++;
+				base.player.HealEffect(1, true);
+				base.player.immune = true;
+				this.natureGuardian26 = false;
+				if (!Main.dedServ)
+				{
+					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Reflect").WithVolume(0.4f).WithPitchVariance(0.1f), -1, -1);
+				}
+				return false;
+			}
 			return true;
 		}
 
 		public override void PostUpdate()
 		{
-			if (base.player.ZoneSandstorm && this.ZoneXeno)
+			if (base.player.ZoneSandstorm && (this.ZoneXeno || this.ZoneEvilXeno))
 			{
 				RedePlayer.EmitDust();
 			}
@@ -1109,111 +1828,110 @@ namespace Redemption
 			{
 				return;
 			}
-			int num = 1;
+			int maxValue = 1;
 			if (!flag)
 			{
 				return;
 			}
-			if (Main.rand.Next(num) != 0)
+			if (Main.rand.Next(maxValue) != 0)
 			{
 				return;
 			}
-			int num2 = Math.Sign(Main.windSpeed);
-			float num3 = Math.Abs(Main.windSpeed);
-			if (num3 < 0.01f)
+			int num = Math.Sign(Main.windSpeed);
+			float num2 = Math.Abs(Main.windSpeed);
+			if (num2 < 0.01f)
 			{
 				return;
 			}
-			float num4 = (float)num2 * MathHelper.Lerp(0.9f, 1f, num3);
-			float num5 = 2000f / (float)sandTiles;
-			float num6 = 3f / num5;
-			num6 = MathHelper.Clamp(num6, 0.77f, 1f);
-			int num7 = (int)num5;
-			float num8 = (float)Main.screenWidth / (float)Main.maxScreenW;
-			int num9 = (int)(1000f * num8);
-			float num10 = 20f * Sandstorm.Severity;
-			float num11 = (float)num9 * (Main.gfxQuality * 0.5f + 0.5f) + (float)num9 * 0.1f - (float)Dust.SandStormCount;
-			if (num11 <= 0f)
+			float num3 = (float)num * MathHelper.Lerp(0.9f, 1f, num2);
+			float num4 = 2000f / (float)sandTiles;
+			float num5 = 3f / num4;
+			num5 = MathHelper.Clamp(num5, 0.77f, 1f);
+			int num6 = (int)num4;
+			float num7 = (float)Main.screenWidth / (float)Main.maxScreenW;
+			int num8 = (int)(1000f * num7);
+			float num9 = 20f * Sandstorm.Severity;
+			float num10 = (float)num8 * (Main.gfxQuality * 0.5f + 0.5f) + (float)num8 * 0.1f - (float)Dust.SandStormCount;
+			if (num10 <= 0f)
 			{
 				return;
 			}
-			float num12 = (float)Main.screenWidth + 1000f;
-			float num13 = (float)Main.screenHeight;
-			Vector2 vector = Main.screenPosition + player.velocity;
+			float num11 = (float)Main.screenWidth + 1000f;
+			float num12 = (float)Main.screenHeight;
+			Vector2 value = Main.screenPosition + player.velocity;
 			WeightedRandom<Color> weightedRandom = new WeightedRandom<Color>();
 			weightedRandom.Add(new Color(200, 160, 20, 180), (double)(Main.screenTileCounts[53] + Main.screenTileCounts[396] + Main.screenTileCounts[397]));
 			weightedRandom.Add(new Color(103, 98, 122, 180), (double)(Main.screenTileCounts[112] + Main.screenTileCounts[400] + Main.screenTileCounts[398]));
 			weightedRandom.Add(new Color(135, 43, 34, 180), (double)(Main.screenTileCounts[234] + Main.screenTileCounts[401] + Main.screenTileCounts[399]));
 			weightedRandom.Add(new Color(213, 196, 197, 180), (double)(Main.screenTileCounts[116] + Main.screenTileCounts[403] + Main.screenTileCounts[402]));
-			float num14 = MathHelper.Lerp(0.2f, 0.35f, Sandstorm.Severity);
-			float num15 = MathHelper.Lerp(0.5f, 0.7f, Sandstorm.Severity);
-			float num16 = (num6 - 0.77f) / 0.23000002f;
-			int num17 = (int)MathHelper.Lerp(1f, 10f, num16);
-			int num18 = 0;
-			while ((float)num18 < num10)
+			float num13 = MathHelper.Lerp(0.2f, 0.35f, Sandstorm.Severity);
+			float num14 = MathHelper.Lerp(0.5f, 0.7f, Sandstorm.Severity);
+			float amount = (num5 - 0.77f) / 0.23000002f;
+			int maxValue2 = (int)MathHelper.Lerp(1f, 10f, amount);
+			int num15 = 0;
+			while ((float)num15 < num9)
 			{
-				if (Main.rand.Next(num7 / 4) == 0)
+				if (Main.rand.Next(num6 / 4) == 0)
 				{
-					Vector2 vector2;
-					vector2..ctor(Utils.NextFloat(Main.rand) * num12 - 500f, Utils.NextFloat(Main.rand) * -50f);
-					if (Main.rand.Next(3) == 0 && num2 == 1)
+					Vector2 vector = new Vector2(Utils.NextFloat(Main.rand) * num11 - 500f, Utils.NextFloat(Main.rand) * -50f);
+					if (Main.rand.Next(3) == 0 && num == 1)
 					{
-						vector2.X = (float)(Main.rand.Next(500) - 500);
+						vector.X = (float)(Main.rand.Next(500) - 500);
 					}
-					else if (Main.rand.Next(3) == 0 && num2 == -1)
+					else if (Main.rand.Next(3) == 0 && num == -1)
 					{
-						vector2.X = (float)(Main.rand.Next(500) + Main.screenWidth);
+						vector.X = (float)(Main.rand.Next(500) + Main.screenWidth);
 					}
-					if (vector2.X < 0f || vector2.X > (float)Main.screenWidth)
+					if (vector.X < 0f || vector.X > (float)Main.screenWidth)
 					{
-						vector2.Y += Utils.NextFloat(Main.rand) * num13 * 0.9f;
+						vector.Y += Utils.NextFloat(Main.rand) * num12 * 0.9f;
 					}
-					vector2 += vector;
-					int num19 = (int)vector2.X / 16;
-					int num20 = (int)vector2.Y / 16;
-					if (Main.tile[num19, num20] != null && Main.tile[num19, num20].wall == 0)
+					vector += value;
+					int num16 = (int)vector.X / 16;
+					int num17 = (int)vector.Y / 16;
+					if (Main.tile[num16, num17] != null && Main.tile[num16, num17].wall == 0)
 					{
 						for (int i = 0; i < 1; i++)
 						{
-							Dust dust = Main.dust[Dust.NewDust(vector2, 10, 10, 256, 0f, 0f, 0, default(Color), 1f)];
+							Dust dust = Main.dust[Dust.NewDust(vector, 10, 10, 256, 0f, 0f, 0, default(Color), 1f)];
 							dust.velocity.Y = 2f + Utils.NextFloat(Main.rand) * 0.2f;
-							Dust dust2 = dust;
-							dust2.velocity.Y = dust2.velocity.Y * dust.scale;
-							Dust dust3 = dust;
-							dust3.velocity.Y = dust3.velocity.Y * 0.35f;
-							dust.velocity.X = num4 * 5f + Utils.NextFloat(Main.rand) * 1f;
-							Dust dust4 = dust;
-							dust4.velocity.X = dust4.velocity.X + num4 * num15 * 20f;
-							dust.fadeIn += num15 * 0.2f;
-							dust.velocity *= 1f + num14 * 0.5f;
+							Dust expr_460_cp_0 = dust;
+							expr_460_cp_0.velocity.Y = expr_460_cp_0.velocity.Y * dust.scale;
+							Dust expr_47A_cp_0 = dust;
+							expr_47A_cp_0.velocity.Y = expr_47A_cp_0.velocity.Y * 0.35f;
+							dust.velocity.X = num3 * 5f + Utils.NextFloat(Main.rand) * 1f;
+							Dust expr_4B7_cp_0 = dust;
+							expr_4B7_cp_0.velocity.X = expr_4B7_cp_0.velocity.X + num3 * num14 * 20f;
+							dust.fadeIn += num14 * 0.2f;
+							dust.velocity *= 1f + num13 * 0.5f;
 							dust.color = weightedRandom;
-							dust.velocity *= 1f + num14;
-							dust.velocity *= num6;
+							dust.velocity *= 1f + num13;
+							dust.velocity *= num5;
 							dust.scale = 0.9f;
-							num11 -= 1f;
-							if (num11 <= 0f)
+							num10 -= 1f;
+							if (num10 <= 0f)
 							{
 								break;
 							}
-							if (Main.rand.Next(num17) != 0)
+							if (Main.rand.Next(maxValue2) != 0)
 							{
 								i--;
-								vector2 += Utils.RandomVector2(Main.rand, -10f, 10f) + dust.velocity * -1.1f;
-								num19 = (int)vector2.X / 16;
-								num20 = (int)vector2.Y / 16;
-								if (WorldGen.InWorld(num19, num20, 10) && Main.tile[num19, num20] != null)
+								vector += Utils.RandomVector2(Main.rand, -10f, 10f) + dust.velocity * -1.1f;
+								num16 = (int)vector.X / 16;
+								num17 = (int)vector.Y / 16;
+								if (WorldGen.InWorld(num16, num17, 10) && Main.tile[num16, num17] != null)
 								{
-									ushort wall = Main.tile[num19, num20].wall;
+									ushort wall = Main.tile[num16, num17].wall;
 								}
 							}
 						}
-						if (num11 <= 0f)
+						if (num10 <= 0f)
 						{
 							return;
 						}
 					}
 				}
-				num18++;
+				num15++;
 			}
 		}
 
@@ -1223,7 +1941,7 @@ namespace Redemption
 			{
 				return;
 			}
-			if (this.ZoneXeno && liquidType == 0 && questFish == base.mod.ItemType("XenChomper") && Main.rand.Next(1) == 0)
+			if ((this.ZoneXeno || this.ZoneEvilXeno) && liquidType == 0 && questFish == base.mod.ItemType("XenChomper") && Main.rand.Next(1) == 0)
 			{
 				caughtType = base.mod.ItemType("XenChomper");
 			}
@@ -1300,11 +2018,31 @@ namespace Redemption
 			}
 			if (this.shadeSet && Main.rand.Next(3) == 0)
 			{
-				int num = 16;
-				for (int i = 0; i < num; i++)
+				int pieCut = 16;
+				for (int i = 0; i < pieCut; i++)
 				{
-					int num2 = Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 0f, 0f, base.mod.ProjectileType("CriesOfGriefPro3"), 400, 0f, Main.myPlayer, 0f, 0f);
-					Main.projectile[num2].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(8f, 0f), (float)i / (float)num * 6.28f);
+					int projID = Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 0f, 0f, base.mod.ProjectileType("CriesOfGriefPro3"), 400, 0f, Main.myPlayer, 0f, 0f);
+					Main.projectile[projID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(8f, 0f), (float)i / (float)pieCut * 6.28f);
+				}
+			}
+			if (this.thornCirclet)
+			{
+				for (int j = 0; j < 6; j++)
+				{
+					int Proj = Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 55, 20, 1f, Main.myPlayer, 0f, 0f);
+					Main.projectile[Proj].hostile = false;
+					Main.projectile[Proj].friendly = true;
+					Main.projectile[Proj].timeLeft = 180;
+				}
+			}
+			if (this.thornCrown)
+			{
+				for (int k = 0; k < 6; k++)
+				{
+					int Proj2 = Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 484, 200, 1f, Main.myPlayer, 0f, 0f);
+					Main.projectile[Proj2].hostile = false;
+					Main.projectile[Proj2].friendly = true;
+					Main.projectile[Proj2].timeLeft = 180;
 				}
 			}
 		}
@@ -1330,6 +2068,8 @@ namespace Redemption
 		public bool xenoHatchlingMinion;
 
 		public bool ZoneXeno;
+
+		public bool ZoneEvilXeno;
 
 		public bool heartEmblem;
 
@@ -1551,8 +2291,6 @@ namespace Redemption
 
 		public bool vendetta;
 
-		public bool iceShield;
-
 		public bool lavaCubeMinion;
 
 		public bool sandDust;
@@ -1606,5 +2344,39 @@ namespace Redemption
 		public int[] modDoubleTapCardinalTimer = new int[4];
 
 		public int[] modHoldDownCardinalTimer = new int[4];
+
+		public int irradiatedLevel;
+
+		public int irradiatedTimer;
+
+		public bool girusCloaked;
+
+		public int girusCloakTimer;
+
+		public bool hairLoss;
+
+		public int irradiatedEffect;
+
+		public bool ZoneSlayer;
+
+		public bool androidMinion;
+
+		public bool bileDebuff;
+
+		public bool bioweaponDebuff;
+
+		public bool thornCirclet;
+
+		public bool ksShieldGenerator;
+
+		public bool vlitchCoreAcc;
+
+		public bool oblitDrive;
+
+		public bool thornCrown;
+
+		public bool infectedHeart;
+
+		public bool StarSerpentMinion;
 	}
 }

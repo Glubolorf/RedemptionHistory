@@ -36,8 +36,8 @@ namespace Redemption.NPCs.v08
 			{
 				for (int i = 0; i < 2; i++)
 				{
-					int num = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 273, 0f, 0f, 100, default(Color), 3f);
-					Main.dust[num].velocity *= 1.6f;
+					int dustIndex2 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 273, 0f, 0f, 100, default(Color), 3f);
+					Main.dust[dustIndex2].velocity *= 1.6f;
 				}
 			}
 		}

@@ -21,8 +21,8 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.damage = 43;
 			base.item.knockBack = 5f;
 			base.item.useStyle = 1;
-			base.item.useAnimation = 22;
-			base.item.useTime = 22;
+			base.item.useAnimation = 30;
+			base.item.useTime = 30;
 			base.item.width = 14;
 			base.item.height = 56;
 			base.item.maxStack = 1;
@@ -33,7 +33,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.autoReuse = true;
 			base.item.UseSound = SoundID.Item9;
 			base.item.value = Item.sellPrice(0, 0, 1, 5);
-			base.item.shoot = base.mod.ProjectileType<CrystalShurikenPro>();
+			base.item.shoot = ModContent.ProjectileType<CrystalShurikenPro>();
 		}
 
 		public override void AddRecipes()
@@ -43,12 +43,12 @@ namespace Redemption.Items.DruidDamageClass
 			modRecipe.AddTile(null, "DruidicAltarTile");
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "DruidShuriken", 1);
-			modRecipe.AddIngredient(502, 10);
-			modRecipe.AddTile(null, "DruidicAltarTile");
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.AddIngredient(null, "DruidShuriken", 1);
+			modRecipe2.AddIngredient(502, 10);
+			modRecipe2.AddTile(null, "DruidicAltarTile");
+			modRecipe2.SetResult(this, 1);
+			modRecipe2.AddRecipe();
 		}
 	}
 }

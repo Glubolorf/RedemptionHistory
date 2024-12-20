@@ -35,13 +35,13 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override bool CanUseItem(Player player)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).wanderingSoulSet)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().wanderingSoulSet)
 			{
 				base.item.damage = 21;
 				base.item.autoReuse = true;
 				base.item.shootSpeed = 16f;
 			}
-			else if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).shadeSet)
+			else if (Main.LocalPlayer.GetModPlayer<RedePlayer>().shadeSet)
 			{
 				base.item.damage = 400;
 				base.item.autoReuse = true;
@@ -64,13 +64,13 @@ namespace Redemption.Items.DruidDamageClass
 			modRecipe.AddTile(null, "DruidicAltarTile");
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(705, 5);
-			modRecipe.AddIngredient(null, "SmallLostSoul", 3);
-			modRecipe.AddIngredient(177, 1);
-			modRecipe.AddTile(null, "DruidicAltarTile");
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.AddIngredient(705, 5);
+			modRecipe2.AddIngredient(null, "SmallLostSoul", 3);
+			modRecipe2.AddIngredient(177, 1);
+			modRecipe2.AddTile(null, "DruidicAltarTile");
+			modRecipe2.SetResult(this, 1);
+			modRecipe2.AddRecipe();
 		}
 	}
 }

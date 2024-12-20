@@ -34,8 +34,8 @@ namespace Redemption.Projectiles.v08
 			Main.PlaySound(SoundID.NPCHit54, base.projectile.position);
 			for (int i = 0; i < 5; i++)
 			{
-				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, base.mod.DustType("VoidFlame"), 0f, 0f, 100, default(Color), 1.2f);
-				Main.dust[num].velocity *= 1.9f;
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, base.mod.DustType("VoidFlame"), 0f, 0f, 100, default(Color), 1.2f);
+				Main.dust[dustIndex].velocity *= 1.9f;
 			}
 		}
 

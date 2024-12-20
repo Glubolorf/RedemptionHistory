@@ -9,36 +9,36 @@ namespace Redemption
 	{
 		public static bool ConsumeAmmo(Player player, Item item, Item ammo)
 		{
-			bool result = true;
+			bool consume = true;
 			if (player.magicQuiver && ammo.ammo == AmmoID.Arrow && Main.rand.Next(5) == 0)
 			{
-				result = false;
+				consume = false;
 			}
 			if (player.ammoBox && Main.rand.Next(5) == 0)
 			{
-				result = false;
+				consume = false;
 			}
 			if (player.ammoPotion && Main.rand.Next(5) == 0)
 			{
-				result = false;
+				consume = false;
 			}
 			if (player.ammoCost80 && Main.rand.Next(5) == 0)
 			{
-				result = false;
+				consume = false;
 			}
 			if (player.ammoCost75 && Main.rand.Next(4) == 0)
 			{
-				result = false;
+				consume = false;
 			}
 			if (!PlayerHooks.ConsumeAmmo(player, item, ammo))
 			{
-				result = false;
+				consume = false;
 			}
 			if (!ItemLoader.ConsumeAmmo(item, ammo, player))
 			{
-				result = false;
+				consume = false;
 			}
-			return result;
+			return consume;
 		}
 
 		public static void ReduceSlot(Player player, int slot, int amount)
@@ -52,14 +52,14 @@ namespace Redemption
 
 		public static bool HasEmptySlots(Player player, int slotCount, bool includeInventory = true, bool includeCoins = false, bool includeAmmo = false)
 		{
-			int num = 0;
+			int count = 0;
 			for (int i = includeInventory ? 0 : (includeCoins ? 50 : 54); i < (includeAmmo ? 58 : (includeCoins ? 54 : 50)); i++)
 			{
 				Item item = player.inventory[i];
 				if (item == null || item.IsBlank())
 				{
-					num++;
-					if (num >= slotCount)
+					count++;
+					if (count >= slotCount)
 					{
 						return true;
 					}
@@ -88,7 +88,7 @@ namespace Redemption
 			{
 				return false;
 			}
-			int num = item.type - 1;
+			int typeToBecome = item.type - 1;
 			splitSlot = BasePlayer.GetEmptySlot(player, false, true, false);
 			if (splitSlot == -1)
 			{
@@ -98,7 +98,7 @@ namespace Redemption
 			{
 				return false;
 			}
-			player.inventory[splitSlot].SetDefaults(num, false);
+			player.inventory[splitSlot].SetDefaults(typeToBecome, false);
 			player.inventory[splitSlot].stack = 100;
 			player.inventory[moneySlot].stack--;
 			if (player.inventory[moneySlot].stack <= 0)
@@ -186,7 +186,7 @@ namespace Redemption
 
 		public static int GetMoneySum(Player player, bool includeInventory = false)
 		{
-			int num = 0;
+			int totalSum = 0;
 			for (int i = includeInventory ? 0 : 50; i < 54; i++)
 			{
 				Item item = player.inventory[i];
@@ -194,23 +194,23 @@ namespace Redemption
 				{
 					if (item.type == 71)
 					{
-						num += item.stack;
+						totalSum += item.stack;
 					}
 					else if (item.type == 72)
 					{
-						num += item.stack * 100;
+						totalSum += item.stack * 100;
 					}
 					else if (item.type == 73)
 					{
-						num += item.stack * 10000;
+						totalSum += item.stack * 10000;
 					}
 					else if (item.type == 74)
 					{
-						num += item.stack * 1000000;
+						totalSum += item.stack * 1000000;
 					}
 				}
 			}
-			return num;
+			return totalSum;
 		}
 
 		public static int GetItemstackSum(Player player, int type, bool typeIsAmmo = false, bool includeAmmo = false, bool includeCoins = false)
@@ -223,7 +223,7 @@ namespace Redemption
 
 		public static int GetItemstackSum(Player player, int[] types, bool typeIsAmmo = false, bool includeAmmo = false, bool includeCoins = false)
 		{
-			int num = 0;
+			int stackCount = 0;
 			if (includeCoins)
 			{
 				for (int i = 50; i < 54; i++)
@@ -231,7 +231,7 @@ namespace Redemption
 					Item item = player.inventory[i];
 					if (item != null && (typeIsAmmo ? BaseUtility.InArray(types, item.ammo) : BaseUtility.InArray(types, item.type)))
 					{
-						num += item.stack;
+						stackCount += item.stack;
 					}
 				}
 			}
@@ -242,7 +242,7 @@ namespace Redemption
 					Item item2 = player.inventory[j];
 					if (item2 != null && (typeIsAmmo ? BaseUtility.InArray(types, item2.ammo) : BaseUtility.InArray(types, item2.type)))
 					{
-						num += item2.stack;
+						stackCount += item2.stack;
 					}
 				}
 			}
@@ -251,16 +251,16 @@ namespace Redemption
 				Item item3 = player.inventory[k];
 				if (item3 != null && (typeIsAmmo ? BaseUtility.InArray(types, item3.ammo) : BaseUtility.InArray(types, item3.type)))
 				{
-					num += item3.stack;
+					stackCount += item3.stack;
 				}
 			}
-			return num;
+			return stackCount;
 		}
 
 		public static bool HasItem(Player player, int[] types, int[] counts = null, bool includeAmmo = false, bool includeCoins = false)
 		{
-			int num = 0;
-			return BasePlayer.HasItem(player, types, ref num, counts, includeAmmo, includeCoins);
+			int dummyIndex = 0;
+			return BasePlayer.HasItem(player, types, ref dummyIndex, counts, includeAmmo, includeCoins);
 		}
 
 		public static bool HasItem(Player player, int[] types, ref int index, int[] counts = null, bool includeAmmo = false, bool includeCoins = false)
@@ -273,13 +273,13 @@ namespace Redemption
 			{
 				counts = BaseUtility.FillArray(new int[types.Length], 1);
 			}
-			int num = -1;
+			int countIndex = -1;
 			if (includeCoins)
 			{
 				for (int i = 50; i < 54; i++)
 				{
 					Item item = player.inventory[i];
-					if (item != null && BaseUtility.InArray(types, item.type, ref num) && item.stack >= counts[num])
+					if (item != null && BaseUtility.InArray(types, item.type, ref countIndex) && item.stack >= counts[countIndex])
 					{
 						index = i;
 						return true;
@@ -291,7 +291,7 @@ namespace Redemption
 				for (int j = 54; j < 58; j++)
 				{
 					Item item2 = player.inventory[j];
-					if (item2 != null && BaseUtility.InArray(types, item2.type, ref num) && item2.stack >= counts[num])
+					if (item2 != null && BaseUtility.InArray(types, item2.type, ref countIndex) && item2.stack >= counts[countIndex])
 					{
 						index = j;
 						return true;
@@ -301,7 +301,7 @@ namespace Redemption
 			for (int k = 0; k < 50; k++)
 			{
 				Item item3 = player.inventory[k];
-				if (item3 != null && BaseUtility.InArray(types, item3.type, ref num) && item3.stack >= counts[num])
+				if (item3 != null && BaseUtility.InArray(types, item3.type, ref countIndex) && item3.stack >= counts[countIndex])
 				{
 					index = k;
 					return true;
@@ -320,21 +320,21 @@ namespace Redemption
 			{
 				counts = BaseUtility.FillArray(new int[types.Length], 1);
 			}
-			int[] array = new int[types.Length];
-			bool[] array2 = new bool[types.Length];
+			int[] indexArray = new int[types.Length];
+			bool[] foundItem = new bool[types.Length];
 			if (includeCoins)
 			{
 				for (int i = 50; i < 54; i++)
 				{
-					for (int j = 0; j < types.Length; j++)
+					for (int m2 = 0; m2 < types.Length; m2++)
 					{
-						if (!array2[j])
+						if (!foundItem[m2])
 						{
 							Item item = player.inventory[i];
-							if (item != null && item.type == types[j] && item.stack >= counts[j])
+							if (item != null && item.type == types[m2] && item.stack >= counts[m2])
 							{
-								array2[j] = true;
-								array[j] = i;
+								foundItem[m2] = true;
+								indexArray[m2] = i;
 							}
 						}
 					}
@@ -342,41 +342,41 @@ namespace Redemption
 			}
 			if (includeAmmo)
 			{
-				for (int k = 54; k < 58; k++)
+				for (int j = 54; j < 58; j++)
 				{
-					for (int l = 0; l < types.Length; l++)
+					for (int m3 = 0; m3 < types.Length; m3++)
 					{
-						if (!array2[l])
+						if (!foundItem[m3])
 						{
-							Item item2 = player.inventory[k];
-							if (item2 != null && item2.type == types[l] && item2.stack >= counts[l])
+							Item item2 = player.inventory[j];
+							if (item2 != null && item2.type == types[m3] && item2.stack >= counts[m3])
 							{
-								array2[l] = true;
-								array[l] = k;
+								foundItem[m3] = true;
+								indexArray[m3] = j;
 							}
 						}
 					}
 				}
 			}
-			for (int m = 0; m < 50; m++)
+			for (int k = 0; k < 50; k++)
 			{
-				for (int n = 0; n < types.Length; n++)
+				for (int m4 = 0; m4 < types.Length; m4++)
 				{
-					if (!array2[n])
+					if (!foundItem[m4])
 					{
-						Item item3 = player.inventory[m];
-						if (item3 != null && item3.type == types[n] && item3.stack >= counts[n])
+						Item item3 = player.inventory[k];
+						if (item3 != null && item3.type == types[m4] && item3.stack >= counts[m4])
 						{
-							array2[n] = true;
-							array[n] = m;
+							foundItem[m4] = true;
+							indexArray[m4] = k;
 						}
 					}
 				}
 			}
-			bool[] array3 = array2;
-			for (int num = 0; num < array3.Length; num++)
+			bool[] array = foundItem;
+			for (int l = 0; l < array.Length; l++)
 			{
-				if (!array3[num])
+				if (!array[l])
 				{
 					return false;
 				}
@@ -386,8 +386,8 @@ namespace Redemption
 
 		public static bool HasItem(Player player, int type, int count = 1, bool includeAmmo = false, bool includeCoins = false)
 		{
-			int num = 0;
-			return BasePlayer.HasItem(player, type, ref num, count, includeAmmo, includeCoins);
+			int dummyIndex = 0;
+			return BasePlayer.HasItem(player, type, ref dummyIndex, count, includeAmmo, includeCoins);
 		}
 
 		public static bool HasItem(Player player, int type, ref int index, int count = 1, bool includeAmmo = false, bool includeCoins = false)
@@ -475,29 +475,20 @@ namespace Redemption
 
 		public static bool IsInSet(Mod mod, string setName, params Item[] items)
 		{
-			int i = 0;
-			while (i < items.Length)
+			foreach (Item item in items)
 			{
-				Item item = items[i];
-				bool result;
 				if (item == null || item.IsBlank())
 				{
-					result = false;
+					return false;
 				}
-				else if (!item.Name.StartsWith(setName))
+				if (!item.Name.StartsWith(setName))
 				{
-					result = false;
+					return false;
 				}
-				else
+				if (mod != null && item.modItem != null && !item.modItem.mod.Name.ToLower().Equals(mod.Name.ToLower()))
 				{
-					if (mod == null || item.modItem == null || item.modItem.mod.Name.ToLower().Equals(mod.Name.ToLower()))
-					{
-						i++;
-						continue;
-					}
-					result = false;
+					return false;
 				}
-				return result;
 			}
 			return true;
 		}
@@ -509,14 +500,14 @@ namespace Redemption
 
 		public static bool HasArmorSet(Mod mod, Player player, string armorName, bool vanity = false)
 		{
-			Item item = player.armor[vanity ? 10 : 0];
-			Item item2 = player.armor[vanity ? 11 : 1];
-			Item item3 = player.armor[vanity ? 12 : 2];
+			Item itemHelm = player.armor[vanity ? 10 : 0];
+			Item itemBody = player.armor[vanity ? 11 : 1];
+			Item itemLegs = player.armor[vanity ? 12 : 2];
 			return BasePlayer.IsInSet(mod, armorName, new Item[]
 			{
-				item,
-				item2,
-				item3
+				itemHelm,
+				itemBody,
+				itemLegs
 			});
 		}
 
@@ -531,14 +522,14 @@ namespace Redemption
 
 		public static bool HasAccessories(Player player, int[] types, bool normal, bool vanity, bool oneOf)
 		{
-			int num = 0;
-			bool flag = false;
-			return BasePlayer.HasAccessories(player, types, normal, vanity, oneOf, ref flag, ref num);
+			int dummy = 0;
+			bool dummeh = false;
+			return BasePlayer.HasAccessories(player, types, normal, vanity, oneOf, ref dummeh, ref dummy);
 		}
 
 		public static bool HasAccessories(Player player, int[] types, bool normal, bool vanity, bool oneOf, ref bool social, ref int index)
 		{
-			int num = 0;
+			int trueCount = 0;
 			if (vanity)
 			{
 				for (int i = 13; i < 18 + player.extraAccessorySlots; i++)
@@ -546,9 +537,9 @@ namespace Redemption
 					Item item = player.armor[i];
 					if (item != null && !item.IsBlank())
 					{
-						foreach (int num2 in types)
+						foreach (int type in types)
 						{
-							if (item.type == num2)
+							if (item.type == type)
 							{
 								index = i;
 								social = true;
@@ -556,7 +547,7 @@ namespace Redemption
 								{
 									return true;
 								}
-								num++;
+								trueCount++;
 							}
 						}
 					}
@@ -564,35 +555,35 @@ namespace Redemption
 			}
 			if (normal)
 			{
-				for (int k = 3; k < 8 + player.extraAccessorySlots; k++)
+				for (int j = 3; j < 8 + player.extraAccessorySlots; j++)
 				{
-					Item item2 = player.armor[k];
+					Item item2 = player.armor[j];
 					if (item2 != null && !item2.IsBlank())
 					{
-						foreach (int num3 in types)
+						foreach (int type2 in types)
 						{
-							if (item2.type == num3)
+							if (item2.type == type2)
 							{
-								index = k;
+								index = j;
 								social = false;
 								if (oneOf)
 								{
 									return true;
 								}
-								num++;
+								trueCount++;
 							}
 						}
 					}
 				}
 			}
-			return num >= types.Length;
+			return trueCount >= types.Length;
 		}
 
 		public static bool HasAccessory(Player player, int type, bool normal, bool vanity)
 		{
-			int num = 0;
-			bool flag = false;
-			return BasePlayer.HasAccessory(player, type, normal, vanity, ref flag, ref num);
+			int dummy = 0;
+			bool dummeh = false;
+			return BasePlayer.HasAccessory(player, type, normal, vanity, ref dummeh, ref dummy);
 		}
 
 		public static bool HasAccessory(Player player, int type, bool normal, bool vanity, ref bool social, ref int index)

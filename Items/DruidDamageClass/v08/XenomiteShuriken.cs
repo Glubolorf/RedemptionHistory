@@ -33,7 +33,7 @@ namespace Redemption.Items.DruidDamageClass.v08
 			base.item.autoReuse = true;
 			base.item.UseSound = SoundID.Item1;
 			base.item.value = Item.sellPrice(0, 2, 0, 0);
-			base.item.shoot = base.mod.ProjectileType<XenomiteShurikenPro>();
+			base.item.shoot = ModContent.ProjectileType<XenomiteShurikenPro>();
 		}
 
 		public override void AddRecipes()
@@ -43,12 +43,12 @@ namespace Redemption.Items.DruidDamageClass.v08
 			modRecipe.AddTile(null, "XenoForgeTile");
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "DruidShuriken", 1);
-			modRecipe.AddIngredient(null, "XenomiteShard", 50);
-			modRecipe.AddTile(null, "XenoForgeTile");
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.AddIngredient(null, "DruidShuriken", 1);
+			modRecipe2.AddIngredient(null, "XenomiteShard", 50);
+			modRecipe2.AddTile(null, "XenoForgeTile");
+			modRecipe2.SetResult(this, 1);
+			modRecipe2.AddRecipe();
 		}
 	}
 }

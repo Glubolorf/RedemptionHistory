@@ -41,14 +41,14 @@ namespace Redemption.Items.Placeable
 			modRecipe.AddTile(134);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(705, 20);
-			modRecipe.AddIngredient(null, "AIChip", 1);
-			modRecipe.AddIngredient(null, "Mk1Capacitator", 2);
-			modRecipe.AddIngredient(null, "Mk1Plating", 6);
-			modRecipe.AddTile(134);
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.AddIngredient(705, 20);
+			modRecipe2.AddIngredient(null, "AIChip", 1);
+			modRecipe2.AddIngredient(null, "Mk1Capacitator", 2);
+			modRecipe2.AddIngredient(null, "Mk1Plating", 6);
+			modRecipe2.AddTile(134);
+			modRecipe2.SetResult(this, 1);
+			modRecipe2.AddRecipe();
 		}
 	}
 }

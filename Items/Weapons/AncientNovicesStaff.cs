@@ -37,12 +37,12 @@ namespace Redemption.Items.Weapons
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			int num = Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, 0f, 0f);
-			Main.projectile[num].magic = true;
-			Main.projectile[num].hostile = false;
-			Main.projectile[num].friendly = true;
-			Main.projectile[num].penetrate = 1;
-			Main.projectile[num].timeLeft = 120;
+			int projectile = Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, 0f, 0f);
+			Main.projectile[projectile].magic = true;
+			Main.projectile[projectile].hostile = false;
+			Main.projectile[projectile].friendly = true;
+			Main.projectile[projectile].penetrate = 1;
+			Main.projectile[projectile].timeLeft = 120;
 			return false;
 		}
 	}

@@ -27,12 +27,12 @@ namespace Redemption.Items.Cores
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
-			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
-			modPlayer.omegaAccessory = true;
+			RedePlayer p = player.GetModPlayer<RedePlayer>();
+			DruidDamagePlayer modPlayer = DruidDamagePlayer.ModPlayer(player);
+			p.omegaAccessory = true;
 			if (hideVisual)
 			{
-				modPlayer.omegaHideVanity = true;
+				p.omegaHideVanity = true;
 			}
 			player.endurance *= 1.05f;
 			player.statDefense += 8;
@@ -44,9 +44,10 @@ namespace Redemption.Items.Cores
 			player.buffImmune[24] = true;
 			player.buffImmune[70] = true;
 			player.buffImmune[144] = true;
+			player.buffImmune[67] = true;
 			player.noKnockback = true;
 			player.bleed = true;
-			druidDamagePlayer.druidDamage *= 1.08f;
+			modPlayer.druidDamage *= 1.08f;
 			player.magicDamage *= 1.08f;
 			player.meleeDamage *= 1.08f;
 			player.minionDamage *= 1.08f;
@@ -62,22 +63,23 @@ namespace Redemption.Items.Cores
 					}
 				}
 			}
-			if (player.wet && !player.lavaWet)
+			if (player.wet && !player.lavaWet && !player.honeyWet && !p.hazmatPower && !p.HEVPower)
 			{
 				player.lifeRegen -= 1000;
 				Dust.NewDust(new Vector2(player.position.X - player.velocity.X * 2f, player.position.Y - 2f - player.velocity.Y * 2f), player.width, player.height, 226, 0f, 0f, 100, default(Color), 2f);
 			}
-			if (Main.raining && player.ZoneOverworldHeight)
+			Point point = Utils.ToTileCoordinates(player.position);
+			if (Main.raining && player.ZoneOverworldHeight && Main.tile[point.X, point.Y].wall == 0 && player.HeldItem.type != 946 && !BasePlayer.HasHelmet(player, 1243, true) && !BasePlayer.HasHelmet(player, 1135, true) && !BasePlayer.HasChestplate(player, 1136, true))
 			{
-				player.lifeRegen += -25;
+				player.lifeRegen += -10;
 				if (Main.rand.Next(10) == 0)
 				{
 					Dust.NewDust(new Vector2(player.position.X - player.velocity.X * 2f, player.position.Y - 2f - player.velocity.Y * 2f), player.width, player.height, 226, 0f, 0f, 100, default(Color), 2f);
 				}
 			}
-			if (Main.raining && player.ZoneSkyHeight)
+			if (Main.raining && player.ZoneSkyHeight && Main.tile[point.X, point.Y].wall == 0 && player.HeldItem.type != 946 && !BasePlayer.HasHelmet(player, 1243, true) && !BasePlayer.HasHelmet(player, 1135, true) && !BasePlayer.HasChestplate(player, 1136, true))
 			{
-				player.lifeRegen += -25;
+				player.lifeRegen += -10;
 				if (Main.rand.Next(10) == 0)
 				{
 					Dust.NewDust(new Vector2(player.position.X - player.velocity.X * 2f, player.position.Y - 2f - player.velocity.Y * 2f), player.width, player.height, 226, 0f, 0f, 100, default(Color), 2f);
@@ -85,7 +87,7 @@ namespace Redemption.Items.Cores
 			}
 			if ((float)player.statLife <= (float)player.statLifeMax2 * 0.75f)
 			{
-				druidDamagePlayer.druidDamage *= 0.96f;
+				modPlayer.druidDamage *= 0.96f;
 				player.magicDamage *= 0.96f;
 				player.meleeDamage *= 0.96f;
 				player.minionDamage *= 0.96f;
@@ -95,7 +97,7 @@ namespace Redemption.Items.Cores
 			}
 			if ((float)player.statLife <= (float)player.statLifeMax2 * 0.5f)
 			{
-				druidDamagePlayer.druidDamage *= 0.96f;
+				modPlayer.druidDamage *= 0.96f;
 				player.magicDamage *= 0.96f;
 				player.meleeDamage *= 0.96f;
 				player.minionDamage *= 0.96f;
@@ -105,7 +107,7 @@ namespace Redemption.Items.Cores
 			}
 			if ((float)player.statLife <= (float)player.statLifeMax2 * 0.25f)
 			{
-				druidDamagePlayer.druidDamage *= 0.96f;
+				modPlayer.druidDamage *= 0.96f;
 				player.magicDamage *= 0.96f;
 				player.meleeDamage *= 0.96f;
 				player.minionDamage *= 0.96f;
@@ -115,7 +117,7 @@ namespace Redemption.Items.Cores
 			}
 			if ((float)player.statLife <= (float)player.statLifeMax2 * 0.1f)
 			{
-				druidDamagePlayer.druidDamage *= 0.96f;
+				modPlayer.druidDamage *= 0.96f;
 				player.magicDamage *= 0.96f;
 				player.meleeDamage *= 0.96f;
 				player.minionDamage *= 0.96f;
@@ -125,7 +127,7 @@ namespace Redemption.Items.Cores
 			}
 			if ((float)player.statLife <= (float)player.statLifeMax2 * 0.05f)
 			{
-				druidDamagePlayer.druidDamage *= 0.8f;
+				modPlayer.druidDamage *= 0.8f;
 				player.magicDamage *= 0.8f;
 				player.meleeDamage *= 0.8f;
 				player.minionDamage *= 0.8f;

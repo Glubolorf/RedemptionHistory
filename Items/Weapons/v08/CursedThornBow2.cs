@@ -17,7 +17,7 @@ namespace Redemption.Items.Weapons.v08
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 600;
+			base.item.damage = 400;
 			base.item.ranged = true;
 			base.item.width = 38;
 			base.item.height = 102;
@@ -34,6 +34,14 @@ namespace Redemption.Items.Weapons.v08
 			base.item.useAmmo = AmmoID.Arrow;
 		}
 
+		public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
+		{
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().thornCrown)
+			{
+				flat += 50f;
+			}
+		}
+
 		public override Vector2? HoldoutOffset()
 		{
 			return new Vector2?(new Vector2(-2f, 0f));
@@ -41,11 +49,11 @@ namespace Redemption.Items.Weapons.v08
 
 		public override void ModifyTooltips(List<TooltipLine> list)
 		{
-			foreach (TooltipLine tooltipLine in list)
+			foreach (TooltipLine line2 in list)
 			{
-				if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+				if (line2.mod == "Terraria" && line2.Name == "ItemName")
 				{
-					tooltipLine.overrideColor = new Color?(new Color(0, 255, 200));
+					line2.overrideColor = new Color?(new Color(0, 255, 200));
 				}
 			}
 		}

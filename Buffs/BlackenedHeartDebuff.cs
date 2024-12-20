@@ -24,7 +24,7 @@ namespace Redemption.Buffs
 
 		public override void Update(NPC npc, ref int buffIndex)
 		{
-			npc.GetGlobalNPC<RedeGlobalNPC>(base.mod).blackHeart = true;
+			npc.GetGlobalNPC<RedeGlobalNPC>().blackHeart = true;
 		}
 	}
 }

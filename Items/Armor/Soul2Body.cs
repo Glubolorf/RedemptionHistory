@@ -31,8 +31,7 @@ namespace Redemption.Items.Armor
 			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
 			druidDamagePlayer.druidDamage += 0.08f;
 			druidDamagePlayer.druidCrit += 4;
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.fasterSpirits = true;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).fasterSpirits = true;
 			player.endurance += 0.03f;
 		}
 

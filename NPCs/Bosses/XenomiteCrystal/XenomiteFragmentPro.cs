@@ -29,8 +29,8 @@ namespace Redemption.NPCs.Bosses.XenomiteCrystal
 
 		public override void AI()
 		{
-			int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y + 2f), base.projectile.width + 2, base.projectile.height + 2, base.mod.DustType("PuriumFlame"), base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 2.9f);
-			Main.dust[num].noGravity = true;
+			int DustID2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y + 2f), base.projectile.width + 2, base.projectile.height + 2, base.mod.DustType("PuriumFlame"), base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 2.9f);
+			Main.dust[DustID2].noGravity = true;
 			base.projectile.rotation = (float)Math.Atan2((double)base.projectile.velocity.Y, (double)base.projectile.velocity.X) + 1.57f;
 			base.projectile.localAI[0] += 1f;
 			base.projectile.alpha = (int)base.projectile.localAI[0] * 2;
@@ -42,11 +42,11 @@ namespace Redemption.NPCs.Bosses.XenomiteCrystal
 
 		public override void Kill(int timeLeft)
 		{
-			for (int i = 0; i < 5; i++)
+			for (int num67 = 0; num67 < 5; num67++)
 			{
-				int num = Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, 74, 0f, 0f, 100, default(Color), 3.5f);
-				Main.dust[num].velocity *= 3f;
-				Main.dust[num].noGravity = true;
+				int num68 = Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, 74, 0f, 0f, 100, default(Color), 3.5f);
+				Main.dust[num68].velocity *= 3f;
+				Main.dust[num68].noGravity = true;
 			}
 		}
 
@@ -56,10 +56,10 @@ namespace Redemption.NPCs.Bosses.XenomiteCrystal
 			Main.PlaySound(0, (int)base.projectile.position.X, (int)base.projectile.position.Y, 1, 1f, 0f);
 			if (NPC.CountNPCS(base.mod.NPCType("XenomiteFragment")) <= 7 && Main.netMode != 1)
 			{
-				int num = NPC.NewNPC((int)base.projectile.Center.X, (int)base.projectile.Center.Y, base.mod.NPCType("XenomiteFragment"), 0, 0f, 0f, 0f, 0f, 255);
+				int i = NPC.NewNPC((int)base.projectile.Center.X, (int)base.projectile.Center.Y, base.mod.NPCType("XenomiteFragment"), 0, 0f, 0f, 0f, 0f, 255);
 				if (Main.netMode == 2)
 				{
-					NetMessage.SendData(23, -1, -1, null, num, 0f, 0f, 0f, 0, 0, 0);
+					NetMessage.SendData(23, -1, -1, null, i, 0f, 0f, 0f, 0, 0, 0);
 				}
 			}
 			return true;

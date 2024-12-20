@@ -13,15 +13,15 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 
 		private void UpdateStarGodIndex2()
 		{
-			int num = ModLoader.GetMod("Redemption").NPCType("BigNebuleus");
-			if (this.StarGodIndex2 >= 0 && Main.npc[this.StarGodIndex2].active && Main.npc[this.StarGodIndex2].type == num)
+			int StarGodType2 = ModLoader.GetMod("Redemption").NPCType("BigNebuleus");
+			if (this.StarGodIndex2 >= 0 && Main.npc[this.StarGodIndex2].active && Main.npc[this.StarGodIndex2].type == StarGodType2)
 			{
 				return;
 			}
 			this.StarGodIndex2 = -1;
 			for (int i = 0; i < Main.npc.Length; i++)
 			{
-				if (Main.npc[i].active && Main.npc[i].type == num)
+				if (Main.npc[i].active && Main.npc[i].type == StarGodType2)
 				{
 					this.StarGodIndex2 = i;
 					return;

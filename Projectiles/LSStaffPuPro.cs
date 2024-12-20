@@ -29,16 +29,22 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			if (++base.projectile.frameCounter >= 5)
+			Projectile projectile = base.projectile;
+			int num = projectile.frameCounter + 1;
+			projectile.frameCounter = num;
+			if (num >= 5)
 			{
 				base.projectile.frameCounter = 0;
-				if (++base.projectile.frame >= 4)
+				Projectile projectile2 = base.projectile;
+				num = projectile2.frame + 1;
+				projectile2.frame = num;
+				if (num >= 4)
 				{
 					base.projectile.frame = 0;
 				}
 			}
-			int num = Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, 58, base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 2.5f);
-			Main.dust[num].noGravity = true;
+			int DustID2 = Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, 58, base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 2.5f);
+			Main.dust[DustID2].noGravity = true;
 			base.projectile.rotation = (float)Math.Atan2((double)base.projectile.velocity.Y, (double)base.projectile.velocity.X) + 1.57f;
 			base.projectile.localAI[0] += 1f;
 			base.projectile.alpha = (int)base.projectile.localAI[0] * 2;

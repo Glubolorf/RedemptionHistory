@@ -13,7 +13,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Corrupted Xenomite Breastplate");
-			base.Tooltip.SetDefault("18% increased magic and summon damage\n6% increased magic crit");
+			base.Tooltip.SetDefault("18% increased magic and minion damage\n6% increased magic crit");
 		}
 
 		public override void SetDefaults()

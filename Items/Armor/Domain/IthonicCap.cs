@@ -29,12 +29,12 @@ namespace Redemption.Items.Armor.Domain
 		public override void UpdateEquip(Player player)
 		{
 			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
-			player.meleeDamage *= 1.06f;
-			player.magicDamage *= 1.06f;
-			player.minionDamage *= 1.06f;
-			player.rangedDamage *= 1.06f;
-			player.thrownDamage *= 1.06f;
-			druidDamagePlayer.druidDamage *= 1.06f;
+			player.meleeDamage *= 1.04f;
+			player.magicDamage *= 1.04f;
+			player.minionDamage *= 1.04f;
+			player.rangedDamage *= 1.04f;
+			player.thrownDamage *= 1.04f;
+			druidDamagePlayer.druidDamage *= 1.04f;
 		}
 
 		public override bool IsArmorSet(Item head, Item body, Item legs)

@@ -13,14 +13,14 @@ namespace Redemption.Items.Weapons
 		{
 			if (Main.netMode != 2)
 			{
-				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
 				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
 				{
-					array[i] = Main.glowMaskTexture[i];
+					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
-				XeniumTechBlaster.customGlowMask = (short)(array.Length - 1);
-				Main.glowMaskTexture = array;
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				XeniumTechBlaster.customGlowMask = (short)(glowMasks.Length - 1);
+				Main.glowMaskTexture = glowMasks;
 			}
 			base.item.glowMask = XeniumTechBlaster.customGlowMask;
 			base.DisplayName.SetDefault("Xenium Railgun");
@@ -29,12 +29,12 @@ namespace Redemption.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 205;
+			base.item.damage = 220;
 			base.item.ranged = true;
 			base.item.width = 86;
 			base.item.height = 42;
-			base.item.useTime = 10;
-			base.item.useAnimation = 10;
+			base.item.useTime = 15;
+			base.item.useAnimation = 15;
 			base.item.useStyle = 5;
 			base.item.knockBack = 5f;
 			base.item.UseSound = base.mod.GetLegacySoundSlot(2, "Sounds/Item/Launch2");

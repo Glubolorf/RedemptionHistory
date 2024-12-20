@@ -23,12 +23,12 @@ namespace Redemption.Buffs
 			player.manaRegen += 10;
 			player.statManaMax2 += 40;
 			player.statLifeMax2 += 40;
-			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>(base.mod);
+			RedePlayer modPlayer2 = player.GetModPlayer<RedePlayer>();
 			if (player.ownedProjectileCounts[base.mod.ProjectileType("NatureGuardian13")] > 0)
 			{
-				modPlayer.natureGuardian13 = true;
+				modPlayer2.natureGuardian13 = true;
 			}
-			if (!modPlayer.natureGuardian13)
+			if (!modPlayer2.natureGuardian13)
 			{
 				player.DelBuff(buffIndex);
 				buffIndex--;

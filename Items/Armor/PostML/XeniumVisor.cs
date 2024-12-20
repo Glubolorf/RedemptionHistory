@@ -45,11 +45,11 @@ namespace Redemption.Items.Armor.PostML
 
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "Grants immunity to the Infection, Radioactive Fallout, and infected waters\n100% increased ranged critical strike chance while at full health";
+			player.setBonus = "Grants immunity to the Infection, Radioactive Fallout, and infected waters\n50% increased ranged critical strike chance while at full health";
 			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
 			if (player.statLife >= player.statLifeMax2)
 			{
-				player.rangedCrit += 100;
+				player.rangedCrit += 50;
 			}
 			player.buffImmune[base.mod.BuffType("XenomiteDebuff")] = true;
 			player.buffImmune[base.mod.BuffType("XenomiteDebuff2")] = true;

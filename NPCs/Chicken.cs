@@ -53,36 +53,36 @@ namespace Redemption.NPCs
 		{
 			if (!this.change)
 			{
-				int num = Main.rand.Next(1000);
-				if (num == 0)
+				int changeChoice = Main.rand.Next(1000);
+				if (changeChoice == 0)
 				{
 					base.npc.SetDefaults(base.mod.NPCType("LongChicken"), -1f);
 					this.change = true;
 				}
-				if (num >= 1 && num < 4)
+				if (changeChoice >= 1 && changeChoice < 4)
 				{
 					base.npc.SetDefaults(base.mod.NPCType("ChickenGold"), -1f);
 					this.change = true;
 				}
-				if (num >= 4 && num < 8)
+				if (changeChoice >= 4 && changeChoice < 8)
 				{
 					base.npc.SetDefaults(base.mod.NPCType("VlitchChicken"), -1f);
 					this.change = true;
 				}
-				if (num >= 8)
+				if (changeChoice >= 8)
 				{
-					int num2 = Main.rand.Next(5);
-					if (num2 == 0)
+					int num = Main.rand.Next(5);
+					if (num == 0)
 					{
 						base.npc.SetDefaults(base.mod.NPCType("LeghornChicken"), -1f);
 						this.change = true;
 					}
-					if (num2 == 1)
+					if (num == 1)
 					{
 						base.npc.SetDefaults(base.mod.NPCType("RedChicken"), -1f);
 						this.change = true;
 					}
-					if (num2 >= 2)
+					if (num >= 2)
 					{
 						this.change = true;
 					}
@@ -109,7 +109,7 @@ namespace Redemption.NPCs
 			{
 				base.npc.velocity.X = 0f;
 				this.peckTimer++;
-				if (this.peckTimer == 1 && !Config.NoCombatText)
+				if (this.peckTimer == 1 && !RedeConfigClient.Instance.NoCombatText)
 				{
 					CombatText.NewText(base.npc.getRect(), Color.LightGoldenrodYellow, "Peck Peck", true, true);
 				}
@@ -130,16 +130,16 @@ namespace Redemption.NPCs
 				this.cluckTimer++;
 				if (this.cluckTimer == 1)
 				{
-					int num3 = Main.rand.Next(3);
-					if (num3 == 0 && !Main.dedServ)
+					int num2 = Main.rand.Next(3);
+					if (num2 == 0 && !Main.dedServ)
 					{
 						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck1").WithVolume(0.5f).WithPitchVariance(0.1f), base.npc.position);
 					}
-					if (num3 == 1 && !Main.dedServ)
+					if (num2 == 1 && !Main.dedServ)
 					{
 						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck2").WithVolume(0.5f).WithPitchVariance(0.1f), base.npc.position);
 					}
-					if (num3 == 2 && !Main.dedServ)
+					if (num2 == 2 && !Main.dedServ)
 					{
 						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck3").WithVolume(0.5f).WithPitchVariance(0.1f), base.npc.position);
 					}
@@ -163,20 +163,19 @@ namespace Redemption.NPCs
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/ChickenPeck");
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D peckAni = base.mod.GetTexture("NPCs/ChickenPeck");
 			int spriteDirection = base.npc.spriteDirection;
 			if (!this.peckPeck)
 			{
-				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.peckPeck)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num = texture.Height / 6;
-				int num2 = num * this.peckFrame;
-				Main.spriteBatch.Draw(texture, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num214 = peckAni.Height / 6;
+				int y6 = num214 * this.peckFrame;
+				Main.spriteBatch.Draw(peckAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, peckAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)peckAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
 		}

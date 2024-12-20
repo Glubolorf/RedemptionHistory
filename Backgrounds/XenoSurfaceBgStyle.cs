@@ -8,7 +8,7 @@ namespace Redemption.Backgrounds
 	{
 		public override bool ChooseBgStyle()
 		{
-			return !Main.gameMenu && Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).ZoneXeno;
+			return !Main.gameMenu && (Main.LocalPlayer.GetModPlayer<RedePlayer>().ZoneXeno || Main.LocalPlayer.GetModPlayer<RedePlayer>().ZoneEvilXeno);
 		}
 
 		public override void ModifyFarFades(float[] fades, float transitionSpeed)

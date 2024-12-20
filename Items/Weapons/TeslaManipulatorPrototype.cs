@@ -12,14 +12,14 @@ namespace Redemption.Items.Weapons
 		{
 			if (Main.netMode != 2)
 			{
-				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
 				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
 				{
-					array[i] = Main.glowMaskTexture[i];
+					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
-				TeslaManipulatorPrototype.customGlowMask = (short)(array.Length - 1);
-				Main.glowMaskTexture = array;
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				TeslaManipulatorPrototype.customGlowMask = (short)(glowMasks.Length - 1);
+				Main.glowMaskTexture = glowMasks;
 			}
 			base.item.glowMask = TeslaManipulatorPrototype.customGlowMask;
 			base.DisplayName.SetDefault("Tesla Manipulator Prototype");
@@ -48,24 +48,23 @@ namespace Redemption.Items.Weapons
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			int num = 10;
-			int num2 = 2;
-			float num3 = 0.3f;
-			Vector2 vector = default(Vector2);
-			for (int i = 0; i < num; i++)
+			int ShotAmt = 10;
+			int spread = 2;
+			float spreadMult = 0.3f;
+			Vector2 vector2 = default(Vector2);
+			for (int i = 0; i < ShotAmt; i++)
 			{
-				float num4 = 8f * speedX + (float)Main.rand.Next(-num2, num2 + 1) * num3;
-				float num5 = 8f * speedY + (float)Main.rand.Next(-num2, num2 + 1) * num3;
-				float num6 = (float)Math.Atan((double)(num5 / num4));
-				vector..ctor(position.X + 75f * (float)Math.Cos((double)num6), position.Y + 75f * (float)Math.Sin((double)num6));
-				float num7 = (float)Main.mouseX + Main.screenPosition.X;
-				if (num7 < player.position.X)
+				float vX = 8f * speedX + (float)Main.rand.Next(-spread, spread + 1) * spreadMult;
+				float vY = 8f * speedY + (float)Main.rand.Next(-spread, spread + 1) * spreadMult;
+				float angle = (float)Math.Atan((double)(vY / vX));
+				vector2 = new Vector2(position.X + 75f * (float)Math.Cos((double)angle), position.Y + 75f * (float)Math.Sin((double)angle));
+				if ((float)Main.mouseX + Main.screenPosition.X < player.position.X)
 				{
-					vector..ctor(position.X - 75f * (float)Math.Cos((double)num6), position.Y - 75f * (float)Math.Sin((double)num6));
+					vector2 = new Vector2(position.X - 75f * (float)Math.Cos((double)angle), position.Y - 75f * (float)Math.Sin((double)angle));
 				}
-				int num8 = Projectile.NewProjectile(vector.X, vector.Y, num4, num5, 440, damage, knockBack, Main.myPlayer, 0f, 0f);
-				Main.projectile[num8].ranged = true;
-				Main.projectile[num8].magic = false;
+				int projectile = Projectile.NewProjectile(vector2.X, vector2.Y, vX, vY, 440, damage, knockBack, Main.myPlayer, 0f, 0f);
+				Main.projectile[projectile].ranged = true;
+				Main.projectile[projectile].magic = false;
 			}
 			return false;
 		}

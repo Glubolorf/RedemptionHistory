@@ -19,9 +19,9 @@ namespace Redemption.Dusts
 		{
 			dust.rotation += dust.velocity.X / 3f;
 			dust.position += dust.velocity;
-			int alpha = dust.alpha;
+			int oldAlpha = dust.alpha;
 			dust.alpha = (int)((double)dust.alpha * 1.2);
-			if (dust.alpha == alpha)
+			if (dust.alpha == oldAlpha)
 			{
 				dust.alpha++;
 			}

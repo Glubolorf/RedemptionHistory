@@ -44,8 +44,8 @@ namespace Redemption.NPCs.Bosses
 			{
 				for (int i = 0; i < 100; i++)
 				{
-					int num = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, 0f, 0f, 100, default(Color), 2.5f);
-					Main.dust[num].velocity *= 2.6f;
+					int dustIndex = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, 0f, 0f, 100, default(Color), 2.5f);
+					Main.dust[dustIndex].velocity *= 2.6f;
 				}
 			}
 		}
@@ -66,12 +66,12 @@ namespace Redemption.NPCs.Bosses
 				CombatText.NewText(this.player.getRect(), Color.Gold, "+1", true, false);
 				for (int i = 0; i < 255; i++)
 				{
-					Player player = Main.player[i];
-					if (player.active)
+					Player player2 = Main.player[i];
+					if (player2.active)
 					{
-						for (int j = 0; j < player.inventory.Length; j++)
+						for (int j = 0; j < player2.inventory.Length; j++)
 						{
-							if (player.inventory[j].type == base.mod.ItemType("RedemptionTeller"))
+							if (player2.inventory[j].type == base.mod.ItemType("RedemptionTeller"))
 							{
 								Main.NewText("<Chalice of Alignment> An undead... disgusting. Good thing you killed it.", Color.DarkGoldenrod, false);
 							}
@@ -233,20 +233,20 @@ namespace Redemption.NPCs.Bosses
 					string text = "The Keeper noticed the abandoned teddy you're holding...";
 					Color rarityPurple = Colors.RarityPurple;
 					byte r = rarityPurple.R;
-					Color rarityPurple2 = Colors.RarityPurple;
-					byte g = rarityPurple2.G;
-					Color rarityPurple3 = Colors.RarityPurple;
-					Main.NewText(text, r, g, rarityPurple3.B, false);
+					rarityPurple = Colors.RarityPurple;
+					byte g = rarityPurple.G;
+					rarityPurple = Colors.RarityPurple;
+					Main.NewText(text, r, g, rarityPurple.B, false);
 				}
 				if (base.npc.ai[2] == 320f)
 				{
 					string text2 = "She starts to remember something...";
-					Color rarityPurple4 = Colors.RarityPurple;
-					byte r2 = rarityPurple4.R;
-					Color rarityPurple5 = Colors.RarityPurple;
-					byte g2 = rarityPurple5.G;
-					Color rarityPurple6 = Colors.RarityPurple;
-					Main.NewText(text2, r2, g2, rarityPurple6.B, false);
+					Color rarityPurple = Colors.RarityPurple;
+					byte r2 = rarityPurple.R;
+					rarityPurple = Colors.RarityPurple;
+					byte g2 = rarityPurple.G;
+					rarityPurple = Colors.RarityPurple;
+					Main.NewText(text2, r2, g2, rarityPurple.B, false);
 				}
 				if (base.npc.ai[2] == 540f)
 				{
@@ -254,22 +254,22 @@ namespace Redemption.NPCs.Bosses
 					this.peaceful = true;
 					base.npc.netUpdate = true;
 					string text3 = "Pain... Anger... Sadness... All those feelings were washed away...";
-					Color rarityPurple7 = Colors.RarityPurple;
-					byte r3 = rarityPurple7.R;
-					Color rarityPurple8 = Colors.RarityPurple;
-					byte g3 = rarityPurple8.G;
-					Color rarityPurple9 = Colors.RarityPurple;
-					Main.NewText(text3, r3, g3, rarityPurple9.B, false);
+					Color rarityPurple = Colors.RarityPurple;
+					byte r3 = rarityPurple.R;
+					rarityPurple = Colors.RarityPurple;
+					byte g3 = rarityPurple.G;
+					rarityPurple = Colors.RarityPurple;
+					Main.NewText(text3, r3, g3, rarityPurple.B, false);
 				}
 				if (base.npc.ai[2] == 750f)
 				{
 					string text4 = "She only feels... at peace...";
-					Color rarityPurple10 = Colors.RarityPurple;
-					byte r4 = rarityPurple10.R;
-					Color rarityPurple11 = Colors.RarityPurple;
-					byte g4 = rarityPurple11.G;
-					Color rarityPurple12 = Colors.RarityPurple;
-					Main.NewText(text4, r4, g4, rarityPurple12.B, false);
+					Color rarityPurple = Colors.RarityPurple;
+					byte r4 = rarityPurple.R;
+					rarityPurple = Colors.RarityPurple;
+					byte g4 = rarityPurple.G;
+					rarityPurple = Colors.RarityPurple;
+					Main.NewText(text4, r4, g4, rarityPurple.B, false);
 				}
 				if (base.npc.ai[2] >= 1000f)
 				{
@@ -283,16 +283,16 @@ namespace Redemption.NPCs.Bosses
 				{
 					for (int k = 0; k < 50; k++)
 					{
-						int num = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 20, 0f, 0f, 100, default(Color), 2.5f);
-						Main.dust[num].velocity *= 2.6f;
+						int dustIndex = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 20, 0f, 0f, 100, default(Color), 2.5f);
+						Main.dust[dustIndex].velocity *= 2.6f;
 					}
 					string text5 = "The Keeper's Spirit fades away...";
-					Color rarityPurple13 = Colors.RarityPurple;
-					byte r5 = rarityPurple13.R;
-					Color rarityPurple14 = Colors.RarityPurple;
-					byte g5 = rarityPurple14.G;
-					Color rarityPurple15 = Colors.RarityPurple;
-					Main.NewText(text5, r5, g5, rarityPurple15.B, false);
+					Color rarityPurple = Colors.RarityPurple;
+					byte r5 = rarityPurple.R;
+					rarityPurple = Colors.RarityPurple;
+					byte g5 = rarityPurple.G;
+					rarityPurple = Colors.RarityPurple;
+					Main.NewText(text5, r5, g5, rarityPurple.B, false);
 					Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("KeeperAcc"), 1, false, 0, false, false);
 					if (!RedeWorld.keeperSaved)
 					{
@@ -332,8 +332,8 @@ namespace Redemption.NPCs.Bosses
 				}
 				if (Main.rand.Next(400) == 0)
 				{
-					int num2 = NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
-					Main.npc[num2].netUpdate = true;
+					int Minion = NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[Minion].netUpdate = true;
 				}
 				if (!Main.expertMode && base.npc.life < (int)((float)base.npc.lifeMax * 0.5f))
 				{
@@ -341,46 +341,39 @@ namespace Redemption.NPCs.Bosses
 					if (base.npc.ai[3] == 20f)
 					{
 						this.shriekStart = true;
-						string text6 = "*Shrieks of pain echo through the night*";
-						Color rarityPurple16 = Colors.RarityPurple;
-						byte r6 = rarityPurple16.R;
-						Color rarityPurple = Colors.RarityPurple;
-						byte g6 = rarityPurple.G;
-						rarityPurple = Colors.RarityPurple;
-						Main.NewText(text6, r6, g6, rarityPurple.B, false);
 						if (!Main.dedServ)
 						{
-							Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Shriek").WithVolume(0.7f).WithPitchVariance(0.1f), -1, -1);
+							Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Shriek").WithVolume(0.5f).WithPitchVariance(0.1f), -1, -1);
 						}
 					}
 					if (base.npc.ai[3] == 40f)
 					{
-						int num3 = NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
-						Main.npc[num3].netUpdate = true;
+						int Minion2 = NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
+						Main.npc[Minion2].netUpdate = true;
 					}
 					if (base.npc.ai[3] == 45f)
 					{
-						int num4 = NPC.NewNPC((int)base.npc.position.X + 60, (int)base.npc.position.Y + 80, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
-						Main.npc[num4].netUpdate = true;
+						int Minion3 = NPC.NewNPC((int)base.npc.position.X + 60, (int)base.npc.position.Y + 80, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
+						Main.npc[Minion3].netUpdate = true;
 					}
 					if (base.npc.ai[3] == 50f)
 					{
-						int num5 = NPC.NewNPC((int)base.npc.position.X + 80, (int)base.npc.position.Y + 75, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
-						Main.npc[num5].netUpdate = true;
+						int Minion4 = NPC.NewNPC((int)base.npc.position.X + 80, (int)base.npc.position.Y + 75, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
+						Main.npc[Minion4].netUpdate = true;
 					}
 					if (base.npc.ai[3] == 55f)
 					{
-						int num6 = NPC.NewNPC((int)base.npc.position.X + 50, (int)base.npc.position.Y + 60, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
-						Main.npc[num6].netUpdate = true;
-						int num7 = NPC.NewNPC((int)base.npc.position.X + 85, (int)base.npc.position.Y + 50, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
-						Main.npc[num7].netUpdate = true;
+						int Minion5 = NPC.NewNPC((int)base.npc.position.X + 50, (int)base.npc.position.Y + 60, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
+						Main.npc[Minion5].netUpdate = true;
+						int Minion6 = NPC.NewNPC((int)base.npc.position.X + 85, (int)base.npc.position.Y + 50, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
+						Main.npc[Minion6].netUpdate = true;
 					}
 					if (base.npc.ai[3] == 60f)
 					{
-						int num8 = NPC.NewNPC((int)base.npc.position.X + 65, (int)base.npc.position.Y + 65, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
-						Main.npc[num8].netUpdate = true;
-						int num9 = NPC.NewNPC((int)base.npc.position.X + 45, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
-						Main.npc[num9].netUpdate = true;
+						int Minion7 = NPC.NewNPC((int)base.npc.position.X + 65, (int)base.npc.position.Y + 65, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
+						Main.npc[Minion7].netUpdate = true;
+						int Minion8 = NPC.NewNPC((int)base.npc.position.X + 45, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
+						Main.npc[Minion8].netUpdate = true;
 					}
 					if (base.npc.ai[3] >= 220f)
 					{
@@ -388,8 +381,8 @@ namespace Redemption.NPCs.Bosses
 					}
 					if (Main.rand.Next(250) == 0)
 					{
-						int num10 = NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 160, base.mod.NPCType("SkeletonMinion"), 0, 0f, 0f, 0f, 0f, 255);
-						Main.npc[num10].netUpdate = true;
+						int Minion9 = NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 160, base.mod.NPCType("SkeletonMinion"), 0, 0f, 0f, 0f, 0f, 255);
+						Main.npc[Minion9].netUpdate = true;
 					}
 				}
 				if (Main.expertMode && base.npc.life < (int)((float)base.npc.lifeMax * 0.5f))
@@ -398,71 +391,64 @@ namespace Redemption.NPCs.Bosses
 					if (base.npc.ai[3] == 20f)
 					{
 						this.shriekStart = true;
-						string text7 = "*Shrieks of pain echo through the night*";
-						Color rarityPurple = Colors.RarityPurple;
-						byte r7 = rarityPurple.R;
-						rarityPurple = Colors.RarityPurple;
-						byte g7 = rarityPurple.G;
-						rarityPurple = Colors.RarityPurple;
-						Main.NewText(text7, r7, g7, rarityPurple.B, false);
 						if (!Main.dedServ)
 						{
-							Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Shriek").WithVolume(0.7f).WithPitchVariance(0.1f), -1, -1);
+							Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Shriek").WithVolume(0.5f).WithPitchVariance(0.1f), -1, -1);
 						}
 					}
 					if (base.npc.ai[3] == 40f)
 					{
-						float num11 = 90f;
-						float num12 = 1.26f;
-						for (int n = 0; n < 1; n++)
+						float distance = 90f;
+						float n = 1.26f;
+						for (int count = 0; count < 1; count++)
 						{
-							Vector2 vector = base.npc.Center + num11 * Utils.ToRotationVector2((float)n * num12);
-							int num13 = NPC.NewNPC((int)vector.X, (int)vector.Y, base.mod.NPCType("DarkSoul5"), 0, (float)base.npc.whoAmI, 0f, (float)n, 0f, 255);
-							Main.npc[num13].netUpdate = true;
+							Vector2 spawn = base.npc.Center + distance * Utils.ToRotationVector2((float)count * n);
+							int Minion10 = NPC.NewNPC((int)spawn.X, (int)spawn.Y, base.mod.NPCType("DarkSoul5"), 0, (float)base.npc.whoAmI, 0f, (float)count, 0f, 255);
+							Main.npc[Minion10].netUpdate = true;
 						}
 					}
 					if (base.npc.ai[3] == 60f)
 					{
-						float num14 = 90f;
-						float num15 = 1.26f;
-						for (int num16 = 0; num16 < 1; num16++)
+						float distance2 = 90f;
+						float k2 = 1.26f;
+						for (int count2 = 0; count2 < 1; count2++)
 						{
-							Vector2 vector2 = base.npc.Center + num14 * Utils.ToRotationVector2((float)num16 * num15);
-							int num17 = NPC.NewNPC((int)vector2.X, (int)vector2.Y, base.mod.NPCType("DarkSoul5"), 0, (float)base.npc.whoAmI, 0f, (float)num16, 0f, 255);
-							Main.npc[num17].netUpdate = true;
+							Vector2 spawn2 = base.npc.Center + distance2 * Utils.ToRotationVector2((float)count2 * k2);
+							int Minion11 = NPC.NewNPC((int)spawn2.X, (int)spawn2.Y, base.mod.NPCType("DarkSoul5"), 0, (float)base.npc.whoAmI, 0f, (float)count2, 0f, 255);
+							Main.npc[Minion11].netUpdate = true;
 						}
 					}
 					if (base.npc.ai[3] == 80f)
 					{
-						float num18 = 90f;
-						float num19 = 1.26f;
-						for (int num20 = 0; num20 < 1; num20++)
+						float distance3 = 90f;
+						float k3 = 1.26f;
+						for (int count3 = 0; count3 < 1; count3++)
 						{
-							Vector2 vector3 = base.npc.Center + num18 * Utils.ToRotationVector2((float)num20 * num19);
-							int num21 = NPC.NewNPC((int)vector3.X, (int)vector3.Y, base.mod.NPCType("DarkSoul5"), 0, (float)base.npc.whoAmI, 0f, (float)num20, 0f, 255);
-							Main.npc[num21].netUpdate = true;
+							Vector2 spawn3 = base.npc.Center + distance3 * Utils.ToRotationVector2((float)count3 * k3);
+							int Minion12 = NPC.NewNPC((int)spawn3.X, (int)spawn3.Y, base.mod.NPCType("DarkSoul5"), 0, (float)base.npc.whoAmI, 0f, (float)count3, 0f, 255);
+							Main.npc[Minion12].netUpdate = true;
 						}
 					}
 					if (base.npc.ai[3] == 100f)
 					{
-						float num22 = 90f;
-						float num23 = 1.26f;
-						for (int num24 = 0; num24 < 1; num24++)
+						float distance4 = 90f;
+						float k4 = 1.26f;
+						for (int count4 = 0; count4 < 1; count4++)
 						{
-							Vector2 vector4 = base.npc.Center + num22 * Utils.ToRotationVector2((float)num24 * num23);
-							int num25 = NPC.NewNPC((int)vector4.X, (int)vector4.Y, base.mod.NPCType("DarkSoul5"), 0, (float)base.npc.whoAmI, 0f, (float)num24, 0f, 255);
-							Main.npc[num25].netUpdate = true;
+							Vector2 spawn4 = base.npc.Center + distance4 * Utils.ToRotationVector2((float)count4 * k4);
+							int Minion13 = NPC.NewNPC((int)spawn4.X, (int)spawn4.Y, base.mod.NPCType("DarkSoul5"), 0, (float)base.npc.whoAmI, 0f, (float)count4, 0f, 255);
+							Main.npc[Minion13].netUpdate = true;
 						}
 					}
 					if (base.npc.ai[3] == 120f)
 					{
-						float num26 = 90f;
-						float num27 = 1.26f;
-						for (int num28 = 0; num28 < 1; num28++)
+						float distance5 = 90f;
+						float k5 = 1.26f;
+						for (int count5 = 0; count5 < 1; count5++)
 						{
-							Vector2 vector5 = base.npc.Center + num26 * Utils.ToRotationVector2((float)num28 * num27);
-							int num29 = NPC.NewNPC((int)vector5.X, (int)vector5.Y, base.mod.NPCType("DarkSoul5"), 0, (float)base.npc.whoAmI, 0f, (float)num28, 0f, 255);
-							Main.npc[num29].netUpdate = true;
+							Vector2 spawn5 = base.npc.Center + distance5 * Utils.ToRotationVector2((float)count5 * k5);
+							int Minion14 = NPC.NewNPC((int)spawn5.X, (int)spawn5.Y, base.mod.NPCType("DarkSoul5"), 0, (float)base.npc.whoAmI, 0f, (float)count5, 0f, 255);
+							Main.npc[Minion14].netUpdate = true;
 						}
 					}
 					if (base.npc.ai[3] >= 220f)
@@ -471,8 +457,8 @@ namespace Redemption.NPCs.Bosses
 					}
 					if (Main.rand.Next(400) == 0 && NPC.CountNPCS(base.mod.NPCType("BoneWorm")) <= 3)
 					{
-						int num30 = NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 160, base.mod.NPCType("BoneWorm"), 0, 0f, 0f, 0f, 0f, 255);
-						Main.npc[num30].netUpdate = true;
+						int Minion15 = NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 160, base.mod.NPCType("BoneWorm"), 0, 0f, 0f, 0f, 0f, 255);
+						Main.npc[Minion15].netUpdate = true;
 					}
 				}
 			}
@@ -497,21 +483,20 @@ namespace Redemption.NPCs.Bosses
 			{
 				this.speed = 12f;
 			}
-			Vector2 vector = this.player.Center + offset;
-			Vector2 vector2 = vector - base.npc.Center;
-			float num = this.Magnitude(vector2);
-			if (num > this.speed)
+			Vector2 move = this.player.Center + offset - base.npc.Center;
+			float magnitude = this.Magnitude(move);
+			if (magnitude > this.speed)
 			{
-				vector2 *= this.speed / num;
+				move *= this.speed / magnitude;
 			}
-			float num2 = 25f;
-			vector2 = (base.npc.velocity * num2 + vector2) / (num2 + 1f);
-			num = this.Magnitude(vector2);
-			if (num > this.speed)
+			float turnResistance = 25f;
+			move = (base.npc.velocity * turnResistance + move) / (turnResistance + 1f);
+			magnitude = this.Magnitude(move);
+			if (magnitude > this.speed)
 			{
-				vector2 *= this.speed / num;
+				move *= this.speed / magnitude;
 			}
-			base.npc.velocity = vector2;
+			base.npc.velocity = move;
 		}
 
 		private void DespawnHandler()
@@ -527,25 +512,26 @@ namespace Redemption.NPCs.Bosses
 					{
 						base.npc.timeLeft = 10;
 					}
+					return;
 				}
 			}
 		}
 
 		private void Shoot()
 		{
-			int num = base.mod.ProjectileType("TheKeeperPro");
-			Vector2 vector = this.player.Center - base.npc.Center;
-			float num2 = this.Magnitude(vector);
-			if (num2 > 0f)
+			int type = base.mod.ProjectileType("TheKeeperPro");
+			Vector2 velocity = this.player.Center - base.npc.Center;
+			float magnitude = this.Magnitude(velocity);
+			if (magnitude > 0f)
 			{
-				vector *= 10f / num2;
+				velocity *= 10f / magnitude;
 			}
 			else
 			{
-				vector..ctor(0f, 5f);
+				velocity = new Vector2(0f, 5f);
 			}
-			int num3 = Projectile.NewProjectile(base.npc.Center, vector, num, base.npc.damage / 2, 2f, 255, 0f, 0f);
-			Main.projectile[num3].netUpdate = true;
+			int ProjID = Projectile.NewProjectile(base.npc.Center, velocity, type, base.npc.damage / 2, 2f, 255, 0f, 0f);
+			Main.projectile[ProjID].netUpdate = true;
 			base.npc.ai[1] = 80f;
 		}
 
@@ -562,46 +548,43 @@ namespace Redemption.NPCs.Bosses
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/Bosses/TheKeeper_Glow");
-			Texture2D texture2 = base.mod.GetTexture("NPCs/Bosses/TheKeeperShriek");
-			Texture2D texture3 = base.mod.GetTexture("NPCs/Bosses/TheKeeperShriek_Glow");
-			Texture2D texture4 = base.mod.GetTexture("NPCs/Bosses/TheKeeperSpecial1");
-			Texture2D texture5 = base.mod.GetTexture("NPCs/Bosses/TheKeeperSpecial1_Glow");
-			Texture2D texture6 = base.mod.GetTexture("NPCs/Bosses/TheKeeperSpecial2");
-			Texture2D texture7 = base.mod.GetTexture("NPCs/Bosses/TheKeeperSpecial2_Glow");
-			SpriteEffects spriteEffects = (base.npc.spriteDirection == -1) ? 0 : 1;
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D glowMask = base.mod.GetTexture("NPCs/Bosses/TheKeeper_Glow");
+			Texture2D shriekAni = base.mod.GetTexture("NPCs/Bosses/TheKeeperShriek");
+			Texture2D shriekGlow = base.mod.GetTexture("NPCs/Bosses/TheKeeperShriek_Glow");
+			Texture2D teddy1Ani = base.mod.GetTexture("NPCs/Bosses/TheKeeperSpecial1");
+			Texture2D teddy1Glow = base.mod.GetTexture("NPCs/Bosses/TheKeeperSpecial1_Glow");
+			Texture2D teddy2Ani = base.mod.GetTexture("NPCs/Bosses/TheKeeperSpecial2");
+			Texture2D teddy2Glow = base.mod.GetTexture("NPCs/Bosses/TheKeeperSpecial2_Glow");
+			SpriteEffects effects = (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 			if (!this.shriekStart && !this.teddy1Event && !this.peaceful)
 			{
-				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
-				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, spriteEffects, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				spriteBatch.Draw(glowMask, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, effects, 0f);
 			}
 			if (this.shriekStart && !this.teddy1Event && !this.peaceful)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num = texture2.Height / 3;
-				int num2 = num * this.shriekFrame;
-				Main.spriteBatch.Draw(texture2, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture2.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture2.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
-				Main.spriteBatch.Draw(texture3, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture2.Width, num)), base.npc.GetAlpha(Color.White), base.npc.rotation, new Vector2((float)texture2.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? 0 : 1, 0f);
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num214 = shriekAni.Height / 3;
+				int y6 = num214 * this.shriekFrame;
+				Main.spriteBatch.Draw(shriekAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, shriekAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)shriekAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				Main.spriteBatch.Draw(shriekGlow, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, shriekAni.Width, num214)), base.npc.GetAlpha(Color.White), base.npc.rotation, new Vector2((float)shriekAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.teddy1Event)
 			{
-				Vector2 vector2;
-				vector2..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num3 = texture4.Height / 3;
-				int num4 = num3 * this.teddyFrame;
-				Main.spriteBatch.Draw(texture4, vector2 - Main.screenPosition, new Rectangle?(new Rectangle(0, num4, texture4.Width, num3)), drawColor, base.npc.rotation, new Vector2((float)texture4.Width / 2f, (float)num3 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
-				Main.spriteBatch.Draw(texture5, vector2 - Main.screenPosition, new Rectangle?(new Rectangle(0, num4, texture5.Width, num3)), base.npc.GetAlpha(Color.White), base.npc.rotation, new Vector2((float)texture5.Width / 2f, (float)num3 / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? 0 : 1, 0f);
+				Vector2 drawCenter2 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num215 = teddy1Ani.Height / 3;
+				int y7 = num215 * this.teddyFrame;
+				Main.spriteBatch.Draw(teddy1Ani, drawCenter2 - Main.screenPosition, new Rectangle?(new Rectangle(0, y7, teddy1Ani.Width, num215)), drawColor, base.npc.rotation, new Vector2((float)teddy1Ani.Width / 2f, (float)num215 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				Main.spriteBatch.Draw(teddy1Glow, drawCenter2 - Main.screenPosition, new Rectangle?(new Rectangle(0, y7, teddy1Glow.Width, num215)), base.npc.GetAlpha(Color.White), base.npc.rotation, new Vector2((float)teddy1Glow.Width / 2f, (float)num215 / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.peaceful)
 			{
-				Vector2 vector3;
-				vector3..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num5 = texture6.Height / 3;
-				int num6 = num5 * this.peaceFrame;
-				Main.spriteBatch.Draw(texture6, vector3 - Main.screenPosition, new Rectangle?(new Rectangle(0, num6, texture6.Width, num5)), drawColor, base.npc.rotation, new Vector2((float)texture6.Width / 2f, (float)num5 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
-				Main.spriteBatch.Draw(texture7, vector3 - Main.screenPosition, new Rectangle?(new Rectangle(0, num6, texture7.Width, num5)), base.npc.GetAlpha(Color.White), base.npc.rotation, new Vector2((float)texture7.Width / 2f, (float)num5 / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? 0 : 1, 0f);
+				Vector2 drawCenter3 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num216 = teddy2Ani.Height / 3;
+				int y8 = num216 * this.peaceFrame;
+				Main.spriteBatch.Draw(teddy2Ani, drawCenter3 - Main.screenPosition, new Rectangle?(new Rectangle(0, y8, teddy2Ani.Width, num216)), drawColor, base.npc.rotation, new Vector2((float)teddy2Ani.Width / 2f, (float)num216 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				Main.spriteBatch.Draw(teddy2Glow, drawCenter3 - Main.screenPosition, new Rectangle?(new Rectangle(0, y8, teddy2Glow.Width, num216)), base.npc.GetAlpha(Color.White), base.npc.rotation, new Vector2((float)teddy2Glow.Width / 2f, (float)num216 / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
 		}

@@ -18,7 +18,7 @@ namespace Redemption.Items.DruidDamageClass
 		{
 			base.item.shootSpeed = 21f;
 			base.item.crit = 4;
-			base.item.damage = 16;
+			base.item.damage = 12;
 			base.item.knockBack = 5f;
 			base.item.useStyle = 1;
 			base.item.useAnimation = 25;
@@ -33,7 +33,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.autoReuse = true;
 			base.item.UseSound = SoundID.Item1;
 			base.item.value = Item.sellPrice(0, 0, 1, 0);
-			base.item.shoot = base.mod.ProjectileType<BonfireDaggerPro>();
+			base.item.shoot = ModContent.ProjectileType<BonfireDaggerPro>();
 		}
 
 		public override void AddRecipes()

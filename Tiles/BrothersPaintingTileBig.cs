@@ -30,9 +30,9 @@ namespace Redemption.Tiles
 			TileObjectData.newTile.CoordinatePadding = 2;
 			TileObjectData.newTile.AnchorWall = true;
 			TileObjectData.addTile((int)base.Type);
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("'Brothers?'");
-			base.AddMapEntry(new Color(56, 36, 59), modTranslation);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("'Brothers?'");
+			base.AddMapEntry(new Color(56, 36, 59), name);
 			this.disableSmartCursor = true;
 		}
 

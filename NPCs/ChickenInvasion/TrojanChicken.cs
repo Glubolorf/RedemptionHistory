@@ -45,7 +45,7 @@ namespace Redemption.NPCs.ChickenInvasion
 
 		public override void AI()
 		{
-			Player player = Main.player[base.npc.target];
+			Entity entity = Main.player[base.npc.target];
 			if (this.specialAttack || this.specialAttack2)
 			{
 				this.attackCounter++;
@@ -71,7 +71,7 @@ namespace Redemption.NPCs.ChickenInvasion
 					base.npc.frame.Y = 0;
 				}
 			}
-			if (player.Center.X > base.npc.Center.X)
+			if (entity.Center.X > base.npc.Center.X)
 			{
 				base.npc.spriteDirection = 1;
 			}
@@ -110,39 +110,39 @@ namespace Redemption.NPCs.ChickenInvasion
 					{
 						if (base.npc.direction == -1)
 						{
-							int num2 = Projectile.NewProjectile(new Vector2(base.npc.Center.X - 33f, base.npc.position.Y + 76f), new Vector2((float)(-3 + Main.rand.Next(-3, 0)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickmanFly1"), 10, 3f, 255, 0f, 0f);
-							Main.projectile[num2].netUpdate = true;
+							int p = Projectile.NewProjectile(new Vector2(base.npc.Center.X - 33f, base.npc.position.Y + 76f), new Vector2((float)(-3 + Main.rand.Next(-3, 0)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickmanFly1"), 10, 3f, 255, 0f, 0f);
+							Main.projectile[p].netUpdate = true;
 						}
 						else
 						{
-							int num3 = Projectile.NewProjectile(new Vector2(base.npc.Center.X + 33f, base.npc.position.Y + 76f), new Vector2((float)(3 + Main.rand.Next(0, 3)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickmanFly1"), 10, 3f, 255, 0f, 0f);
-							Main.projectile[num3].netUpdate = true;
+							int p2 = Projectile.NewProjectile(new Vector2(base.npc.Center.X + 33f, base.npc.position.Y + 76f), new Vector2((float)(3 + Main.rand.Next(0, 3)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickmanFly1"), 10, 3f, 255, 0f, 0f);
+							Main.projectile[p2].netUpdate = true;
 						}
 					}
 					if (Main.rand.Next(30) == 0)
 					{
 						if (base.npc.direction == -1)
 						{
-							int num4 = Projectile.NewProjectile(new Vector2(base.npc.Center.X - 33f, base.npc.position.Y + 76f), new Vector2((float)(-3 + Main.rand.Next(-3, 0)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickmanFly2"), 10, 3f, 255, 0f, 0f);
-							Main.projectile[num4].netUpdate = true;
+							int p3 = Projectile.NewProjectile(new Vector2(base.npc.Center.X - 33f, base.npc.position.Y + 76f), new Vector2((float)(-3 + Main.rand.Next(-3, 0)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickmanFly2"), 10, 3f, 255, 0f, 0f);
+							Main.projectile[p3].netUpdate = true;
 						}
 						else
 						{
-							int num5 = Projectile.NewProjectile(new Vector2(base.npc.Center.X + 33f, base.npc.position.Y + 76f), new Vector2((float)(3 + Main.rand.Next(0, 3)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickmanFly2"), 10, 3f, 255, 0f, 0f);
-							Main.projectile[num5].netUpdate = true;
+							int p4 = Projectile.NewProjectile(new Vector2(base.npc.Center.X + 33f, base.npc.position.Y + 76f), new Vector2((float)(3 + Main.rand.Next(0, 3)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickmanFly2"), 10, 3f, 255, 0f, 0f);
+							Main.projectile[p4].netUpdate = true;
 						}
 					}
 					if (Main.rand.Next(30) == 0)
 					{
 						if (base.npc.direction == -1)
 						{
-							int num6 = Projectile.NewProjectile(new Vector2(base.npc.Center.X - 33f, base.npc.position.Y + 76f), new Vector2((float)(-3 + Main.rand.Next(-3, 0)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickmanFly3"), 10, 3f, 255, 0f, 0f);
-							Main.projectile[num6].netUpdate = true;
+							int p5 = Projectile.NewProjectile(new Vector2(base.npc.Center.X - 33f, base.npc.position.Y + 76f), new Vector2((float)(-3 + Main.rand.Next(-3, 0)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickmanFly3"), 10, 3f, 255, 0f, 0f);
+							Main.projectile[p5].netUpdate = true;
 						}
 						else
 						{
-							int num7 = Projectile.NewProjectile(new Vector2(base.npc.Center.X + 33f, base.npc.position.Y + 76f), new Vector2((float)(3 + Main.rand.Next(0, 3)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickmanFly3"), 10, 3f, 255, 0f, 0f);
-							Main.projectile[num7].netUpdate = true;
+							int p6 = Projectile.NewProjectile(new Vector2(base.npc.Center.X + 33f, base.npc.position.Y + 76f), new Vector2((float)(3 + Main.rand.Next(0, 3)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickmanFly3"), 10, 3f, 255, 0f, 0f);
+							Main.projectile[p6].netUpdate = true;
 						}
 					}
 				}
@@ -167,24 +167,24 @@ namespace Redemption.NPCs.ChickenInvasion
 					{
 						if (base.npc.direction == -1)
 						{
-							int num8 = Projectile.NewProjectile(new Vector2(base.npc.Center.X - 33f, base.npc.position.Y + 76f), new Vector2((float)(-3 + Main.rand.Next(-9, 0)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickenEggProH"), 50, 3f, 255, 0f, 0f);
-							Main.projectile[num8].netUpdate = true;
+							int p7 = Projectile.NewProjectile(new Vector2(base.npc.Center.X - 33f, base.npc.position.Y + 76f), new Vector2((float)(-3 + Main.rand.Next(-9, 0)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickenEggProH"), 50, 3f, 255, 0f, 0f);
+							Main.projectile[p7].netUpdate = true;
 						}
 						else
 						{
-							int num9 = Projectile.NewProjectile(new Vector2(base.npc.Center.X + 33f, base.npc.position.Y + 76f), new Vector2((float)(3 + Main.rand.Next(0, 9)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickenEggProH"), 50, 3f, 255, 0f, 0f);
-							Main.projectile[num9].netUpdate = true;
+							int p8 = Projectile.NewProjectile(new Vector2(base.npc.Center.X + 33f, base.npc.position.Y + 76f), new Vector2((float)(3 + Main.rand.Next(0, 9)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickenEggProH"), 50, 3f, 255, 0f, 0f);
+							Main.projectile[p8].netUpdate = true;
 						}
 					}
 					else if (base.npc.direction == -1)
 					{
-						int num10 = Projectile.NewProjectile(new Vector2(base.npc.Center.X - 33f, base.npc.position.Y + 76f), new Vector2((float)(-3 + Main.rand.Next(-9, 0)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickenEggProH"), 10, 3f, 255, 0f, 0f);
-						Main.projectile[num10].netUpdate = true;
+						int p9 = Projectile.NewProjectile(new Vector2(base.npc.Center.X - 33f, base.npc.position.Y + 76f), new Vector2((float)(-3 + Main.rand.Next(-9, 0)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickenEggProH"), 10, 3f, 255, 0f, 0f);
+						Main.projectile[p9].netUpdate = true;
 					}
 					else
 					{
-						int num11 = Projectile.NewProjectile(new Vector2(base.npc.Center.X + 33f, base.npc.position.Y + 76f), new Vector2((float)(3 + Main.rand.Next(0, 9)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickenEggProH"), 10, 3f, 255, 0f, 0f);
-						Main.projectile[num11].netUpdate = true;
+						int p10 = Projectile.NewProjectile(new Vector2(base.npc.Center.X + 33f, base.npc.position.Y + 76f), new Vector2((float)(3 + Main.rand.Next(0, 9)), (float)(-2 + Main.rand.Next(0, 3))), base.mod.ProjectileType("ChickenEggProH"), 10, 3f, 255, 0f, 0f);
+						Main.projectile[p10].netUpdate = true;
 					}
 				}
 				if (this.attackTimer >= 140)
@@ -200,20 +200,19 @@ namespace Redemption.NPCs.ChickenInvasion
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/ChickenInvasion/TrojanChickenOpenUp");
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D attackAni = base.mod.GetTexture("NPCs/ChickenInvasion/TrojanChickenOpenUp");
 			int spriteDirection = base.npc.spriteDirection;
 			if (!this.specialAttack && !this.specialAttack2)
 			{
-				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.specialAttack || this.specialAttack2)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num = texture.Height / 7;
-				int num2 = num * this.attackFrame;
-				Main.spriteBatch.Draw(texture, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num214 = attackAni.Height / 7;
+				int y6 = num214 * this.attackFrame;
+				Main.spriteBatch.Draw(attackAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, attackAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)attackAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
 		}
@@ -239,24 +238,24 @@ namespace Redemption.NPCs.ChickenInvasion
 				{
 					ChickWorld.ChickPoints2 += 4;
 				}
-				for (int i = 0; i < 2; i++)
+				for (int g = 0; g < 2; g++)
 				{
-					int num = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-					Main.gore[num].scale = 1.5f;
-					Main.gore[num].velocity.X = Main.gore[num].velocity.X + 1.5f;
-					Main.gore[num].velocity.Y = Main.gore[num].velocity.Y + 1.5f;
-					num = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-					Main.gore[num].scale = 1.5f;
-					Main.gore[num].velocity.X = Main.gore[num].velocity.X - 1.5f;
-					Main.gore[num].velocity.Y = Main.gore[num].velocity.Y + 1.5f;
-					num = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-					Main.gore[num].scale = 1.5f;
-					Main.gore[num].velocity.X = Main.gore[num].velocity.X + 1.5f;
-					Main.gore[num].velocity.Y = Main.gore[num].velocity.Y - 1.5f;
-					num = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-					Main.gore[num].scale = 1.5f;
-					Main.gore[num].velocity.X = Main.gore[num].velocity.X - 1.5f;
-					Main.gore[num].velocity.Y = Main.gore[num].velocity.Y - 1.5f;
+					int goreIndex = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+					Main.gore[goreIndex].scale = 1.5f;
+					Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.5f;
+					Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
+					goreIndex = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+					Main.gore[goreIndex].scale = 1.5f;
+					Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X - 1.5f;
+					Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
+					goreIndex = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+					Main.gore[goreIndex].scale = 1.5f;
+					Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.5f;
+					Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y - 1.5f;
+					goreIndex = Gore.NewGore(new Vector2(base.npc.position.X + (float)(base.npc.width / 2) - 24f, base.npc.position.Y + (float)(base.npc.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+					Main.gore[goreIndex].scale = 1.5f;
+					Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X - 1.5f;
+					Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y - 1.5f;
 				}
 			}
 		}

@@ -32,12 +32,12 @@ namespace Redemption.Items.Placeable
 			modRecipe.AddTile(18);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(3, 1);
-			modRecipe.AddIngredient(172, 5);
-			modRecipe.AddTile(220);
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.AddIngredient(3, 1);
+			modRecipe2.AddIngredient(172, 5);
+			modRecipe2.AddTile(220);
+			modRecipe2.SetResult(this, 1);
+			modRecipe2.AddRecipe();
 		}
 	}
 }

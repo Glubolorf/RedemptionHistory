@@ -32,8 +32,7 @@ namespace Redemption.Items.Armor.PostML
 			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
 			druidDamagePlayer.druidDamage += 0.1f;
 			druidDamagePlayer.druidCrit += 15;
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.fasterSeedbags = true;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).fasterSeedbags = true;
 			player.endurance *= 0.04f;
 		}
 
@@ -50,8 +49,7 @@ namespace Redemption.Items.Armor.PostML
 		public override void UpdateArmorSet(Player player)
 		{
 			player.setBonus = "Attacks inflict the 'Soulless' debuff";
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.smallShadeSet = true;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).smallShadeSet = true;
 		}
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
@@ -61,11 +59,11 @@ namespace Redemption.Items.Armor.PostML
 
 		public override void ModifyTooltips(List<TooltipLine> list)
 		{
-			foreach (TooltipLine tooltipLine in list)
+			foreach (TooltipLine line2 in list)
 			{
-				if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+				if (line2.mod == "Terraria" && line2.Name == "ItemName")
 				{
-					tooltipLine.overrideColor = new Color?(RedeColor.SoullessColour);
+					line2.overrideColor = new Color?(RedeColor.SoullessColour);
 				}
 			}
 		}

@@ -68,6 +68,10 @@ namespace Redemption.Items
 			RedeWorld.girusTalk2 = false;
 			RedeWorld.girusTalk3 = false;
 			RedeWorld.downedThornPZ = false;
+			RedeWorld.downedJanitor = false;
+			RedeWorld.downedVolt = false;
+			RedeWorld.KSRajahInteraction = false;
+			RedeWorld.voltBegin = false;
 			return true;
 		}
 	}

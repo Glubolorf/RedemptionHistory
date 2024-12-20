@@ -12,14 +12,14 @@ namespace Redemption.Items.Weapons
 		{
 			if (Main.netMode != 2)
 			{
-				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
 				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
 				{
-					array[i] = Main.glowMaskTexture[i];
+					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
-				DivineBane.customGlowMask = (short)(array.Length - 1);
-				Main.glowMaskTexture = array;
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				DivineBane.customGlowMask = (short)(glowMasks.Length - 1);
+				Main.glowMaskTexture = glowMasks;
 			}
 			base.item.glowMask = DivineBane.customGlowMask;
 			base.DisplayName.SetDefault("Angel's Bane");
@@ -32,8 +32,8 @@ namespace Redemption.Items.Weapons
 			base.item.melee = true;
 			base.item.width = 60;
 			base.item.height = 60;
-			base.item.useTime = 26;
-			base.item.useAnimation = 26;
+			base.item.useTime = 20;
+			base.item.useAnimation = 20;
 			base.item.useStyle = 1;
 			base.item.knockBack = 6f;
 			base.item.value = Item.buyPrice(0, 3, 50, 0);

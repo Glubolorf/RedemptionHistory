@@ -41,8 +41,8 @@ namespace Redemption.NPCs.LabNPCs
 			{
 				for (int i = 0; i < 200; i++)
 				{
-					int num = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, base.mod.DustType("SludgeSpoonDust"), base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 20, default(Color), 4f);
-					Main.dust[num].velocity *= 1.9f;
+					int dustIndex = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, base.mod.DustType("SludgeSpoonDust"), base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 20, default(Color), 4f);
+					Main.dust[dustIndex].velocity *= 1.9f;
 				}
 			}
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, base.mod.DustType("SludgeSpoonDust"), base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 20, default(Color), 3f);
@@ -109,9 +109,8 @@ namespace Redemption.NPCs.LabNPCs
 				}
 				if (Main.netMode != 1)
 				{
-					Vector2 vector;
-					vector..ctor(400f, 50f);
-					base.npc.Center = base.npc.position + vector;
+					Vector2 newPos = new Vector2(400f, 50f);
+					base.npc.Center = base.npc.position + newPos;
 					base.npc.netUpdate = true;
 				}
 			}
@@ -132,19 +131,19 @@ namespace Redemption.NPCs.LabNPCs
 				if (NPC.CountNPCS(base.mod.NPCType("SludgyBoi2")) <= 2 && Main.rand.Next(350) == 0)
 				{
 					Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
-					int num = NPC.NewNPC((int)base.npc.position.X + 58, (int)base.npc.position.Y + 96, base.mod.NPCType("SludgyBoi2"), 0, 0f, 0f, 0f, 0f, 255);
-					Main.npc[num].netUpdate = true;
+					int minion = NPC.NewNPC((int)base.npc.position.X + 58, (int)base.npc.position.Y + 96, base.mod.NPCType("SludgyBoi2"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[minion].netUpdate = true;
 				}
 				if (NPC.CountNPCS(base.mod.NPCType("WalterInfected")) <= 2 && Main.rand.Next(350) == 0)
 				{
 					Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
-					int num2 = NPC.NewNPC((int)base.npc.position.X + 58, (int)base.npc.position.Y + 96, base.mod.NPCType("WalterInfected"), 0, 0f, 0f, 0f, 0f, 255);
-					Main.npc[num2].netUpdate = true;
+					int minion2 = NPC.NewNPC((int)base.npc.position.X + 58, (int)base.npc.position.Y + 96, base.mod.NPCType("WalterInfected"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[minion2].netUpdate = true;
 				}
 				if (NPC.CountNPCS(base.mod.NPCType("SludgyBlob")) <= 3 && Main.rand.Next(155) == 0)
 				{
-					int num3 = NPC.NewNPC((int)base.npc.position.X + 58, (int)base.npc.position.Y + 96, base.mod.NPCType("SludgyBlob"), 0, 0f, 0f, 0f, 0f, 255);
-					Main.npc[num3].netUpdate = true;
+					int minion3 = NPC.NewNPC((int)base.npc.position.X + 58, (int)base.npc.position.Y + 96, base.mod.NPCType("SludgyBlob"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[minion3].netUpdate = true;
 				}
 				base.npc.ai[1] += 1f;
 				if (base.npc.ai[1] == 50f)
@@ -162,43 +161,43 @@ namespace Redemption.NPCs.LabNPCs
 					{
 						for (int i = 0; i < 10; i++)
 						{
-							int num4 = Dust.NewDust(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 88f), 4, 4, base.mod.DustType("SludgeSpoonDust"), base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 20, default(Color), 4f);
-							Main.dust[num4].velocity *= 1.9f;
+							int dustIndex = Dust.NewDust(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 88f), 4, 4, base.mod.DustType("SludgeSpoonDust"), base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 20, default(Color), 4f);
+							Main.dust[dustIndex].velocity *= 1.9f;
 						}
-						int num5 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2((float)(-6 + Main.rand.Next(-18, 0)), (float)(-2 + Main.rand.Next(0, 4))), base.mod.ProjectileType("GloopBallPro1"), 40, 3f, 255, 0f, 0f);
-						Main.projectile[num5].netUpdate = true;
+						int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2((float)(-6 + Main.rand.Next(-18, 0)), (float)(-2 + Main.rand.Next(0, 4))), base.mod.ProjectileType("GloopBallPro1"), 40, 3f, 255, 0f, 0f);
+						Main.projectile[p].netUpdate = true;
 					}
 					if (base.npc.ai[2] >= 4f)
 					{
-						int num6 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2((float)(-6 + Main.rand.Next(-16, 0)), (float)(-2 + Main.rand.Next(0, 8))), base.mod.ProjectileType("GreenGloopPro2"), 40, 3f, 255, 0f, 0f);
-						Main.projectile[num6].netUpdate = true;
+						int p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2((float)(-6 + Main.rand.Next(-16, 0)), (float)(-2 + Main.rand.Next(0, 8))), base.mod.ProjectileType("GreenGloopPro2"), 40, 3f, 255, 0f, 0f);
+						Main.projectile[p2].netUpdate = true;
 						base.npc.ai[2] = 2f;
 					}
 				}
 				if (base.npc.ai[1] == 350f)
 				{
-					int num7 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, 0f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
-					int num8 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, 2f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
-					int num9 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, -2f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
-					Main.projectile[num7].netUpdate = true;
-					Main.projectile[num8].netUpdate = true;
-					Main.projectile[num9].netUpdate = true;
+					int p3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, 0f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
+					int p4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, 2f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
+					int p5 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, -2f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
+					Main.projectile[p3].netUpdate = true;
+					Main.projectile[p4].netUpdate = true;
+					Main.projectile[p5].netUpdate = true;
 				}
 				if (base.npc.ai[1] == 410f)
 				{
-					int num10 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, 1f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
-					int num11 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, -1f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
-					Main.projectile[num10].netUpdate = true;
-					Main.projectile[num11].netUpdate = true;
+					int p6 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, 1f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
+					int p7 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, -1f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
+					Main.projectile[p6].netUpdate = true;
+					Main.projectile[p7].netUpdate = true;
 				}
 				if (base.npc.ai[1] == 470f)
 				{
-					int num12 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, 0f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
-					int num13 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, 2f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
-					int num14 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, -2f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
-					Main.projectile[num12].netUpdate = true;
-					Main.projectile[num13].netUpdate = true;
-					Main.projectile[num14].netUpdate = true;
+					int p8 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, 0f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
+					int p9 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, 2f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
+					int p10 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, -2f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
+					Main.projectile[p8].netUpdate = true;
+					Main.projectile[p9].netUpdate = true;
+					Main.projectile[p10].netUpdate = true;
 				}
 				if (base.npc.ai[1] >= 580f && base.npc.ai[1] <= 600f)
 				{
@@ -211,17 +210,16 @@ namespace Redemption.NPCs.LabNPCs
 					{
 						for (int j = 0; j < 10; j++)
 						{
-							int num15 = Dust.NewDust(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 88f), 4, 4, base.mod.DustType("SludgeSpoonDust"), base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 20, default(Color), 4f);
-							Main.dust[num15].velocity *= 1.9f;
+							int dustIndex2 = Dust.NewDust(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 88f), 4, 4, base.mod.DustType("SludgeSpoonDust"), base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 20, default(Color), 4f);
+							Main.dust[dustIndex2].velocity *= 1.9f;
 						}
-						float num16 = 8f;
-						Vector2 vector2;
-						vector2..ctor(base.npc.position.X + 58f, base.npc.position.Y + 96f);
-						int num17 = 40;
-						int num18 = base.mod.ProjectileType("GreenGloopPro3");
-						float num19 = (float)Math.Atan2((double)(vector2.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector2.X - (player.position.X + (float)player.width * 0.5f)));
-						int num20 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num19) * (double)num16 * -1.0), (float)(Math.Sin((double)num19) * (double)num16 * -1.0), num18, num17, 0f, 0, 0f, 0f);
-						Main.projectile[num20].netUpdate = true;
+						float Speed = 8f;
+						Vector2 vector8 = new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f);
+						int damage = 40;
+						int type = base.mod.ProjectileType("GreenGloopPro3");
+						float rotation = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
+						int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
+						Main.projectile[num54].netUpdate = true;
 						base.npc.ai[2] = 2f;
 					}
 				}

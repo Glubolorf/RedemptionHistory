@@ -38,8 +38,8 @@ namespace Redemption.NPCs.LabNPCs
 			{
 				for (int i = 0; i < 10; i++)
 				{
-					int num = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 273, 0f, 0f, 100, default(Color), 1.5f);
-					Main.dust[num].velocity *= 1.9f;
+					int dustIndex = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 273, 0f, 0f, 100, default(Color), 1.5f);
+					Main.dust[dustIndex].velocity *= 1.9f;
 				}
 			}
 		}
@@ -62,21 +62,19 @@ namespace Redemption.NPCs.LabNPCs
 				base.npc.velocity.X = 0f;
 				if (this.jumpTimer == 1)
 				{
-					Vector2 vector;
-					vector..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
-					Math.Atan2((double)(vector.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
+					Vector2 vector8 = new Vector2(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
+					Math.Atan2((double)(vector8.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector8.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
 					base.npc.velocity.X = 0f;
 					base.npc.velocity.Y = -15f;
 					base.npc.ai[0] %= 6.2831855f;
 					new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
 					Color color = default(Color);
-					Rectangle rectangle;
-					rectangle..ctor((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
-					int num = 30;
-					for (int i = 1; i <= num; i++)
+					Rectangle rectangle = new Rectangle((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
+					int count = 30;
+					for (int i = 1; i <= count; i++)
 					{
-						int num2 = Dust.NewDust(base.npc.position, rectangle.Width, rectangle.Height, 273, 0f, 0f, 100, color, 2.5f);
-						Main.dust[num2].noGravity = false;
+						int dust = Dust.NewDust(base.npc.position, rectangle.Width, rectangle.Height, 273, 0f, 0f, 100, color, 2.5f);
+						Main.dust[dust].noGravity = false;
 					}
 					return;
 				}

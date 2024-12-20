@@ -46,6 +46,10 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 					return 0f;
 				}
 			}
+			if (RedeWorld.golemLure)
+			{
+				return SpawnCondition.OverworldDay.Chance * ((!RedeWorld.downedEaglecrestGolem && !NPC.AnyNPCs(base.mod.NPCType("EaglecrestGolem")) && !NPC.AnyNPCs(base.mod.NPCType("EaglecrestGolemSleep"))) ? 1f : 0f);
+			}
 			return SpawnCondition.OverworldDay.Chance * ((NPC.downedBoss2 && !RedeWorld.downedEaglecrestGolem && !NPC.AnyNPCs(base.mod.NPCType("EaglecrestGolem")) && !NPC.AnyNPCs(base.mod.NPCType("EaglecrestGolemSleep"))) ? 0.01f : 0f);
 		}
 	}

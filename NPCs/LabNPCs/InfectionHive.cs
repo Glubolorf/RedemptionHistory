@@ -35,8 +35,8 @@ namespace Redemption.NPCs.LabNPCs
 			{
 				for (int i = 0; i < 70; i++)
 				{
-					int num = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, base.mod.DustType("SludgeSpoonDust"), base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 20, default(Color), 2.9f);
-					Main.dust[num].velocity *= 1.9f;
+					int dustIndex = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, base.mod.DustType("SludgeSpoonDust"), base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 20, default(Color), 2.9f);
+					Main.dust[dustIndex].velocity *= 1.9f;
 				}
 			}
 			if (Main.netMode != 1 && base.npc.life <= 0)
@@ -84,11 +84,10 @@ namespace Redemption.NPCs.LabNPCs
 					base.npc.frame.Y = 0;
 				}
 			}
-			float num = base.npc.Distance(Main.player[base.npc.target].Center);
-			if (num <= 300f && Main.rand.Next(200) == 0)
+			if (base.npc.Distance(Main.player[base.npc.target].Center) <= 300f && Main.rand.Next(200) == 0)
 			{
-				int num2 = NPC.NewNPC((int)base.npc.position.X + 28, (int)base.npc.position.Y + 8, base.mod.NPCType("SludgyBlob"), 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[num2].netUpdate = true;
+				int minion = NPC.NewNPC((int)base.npc.position.X + 28, (int)base.npc.position.Y + 8, base.mod.NPCType("SludgyBlob"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.npc[minion].netUpdate = true;
 			}
 		}
 	}

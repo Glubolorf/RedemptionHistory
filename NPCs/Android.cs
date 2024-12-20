@@ -73,10 +73,10 @@ namespace Redemption.NPCs
 
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			SpriteEffects spriteEffects = 0;
+			SpriteEffects spriteEffects = SpriteEffects.None;
 			if (base.npc.spriteDirection == 1)
 			{
-				spriteEffects = 1;
+				spriteEffects = SpriteEffects.FlipHorizontally;
 			}
 			spriteBatch.Draw(base.mod.GetTexture("NPCs/Android_Glow"), new Vector2(base.npc.Center.X - Main.screenPosition.X, base.npc.Center.Y - Main.screenPosition.Y), new Rectangle?(base.npc.frame), Color.White, base.npc.rotation, new Vector2((float)base.npc.width * 0.5f, (float)base.npc.height * 0.5f), 1f, spriteEffects, 0f);
 		}

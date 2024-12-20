@@ -31,8 +31,7 @@ namespace Redemption.Items.Armor
 			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
 			druidDamagePlayer.druidDamage += 0.12f;
 			druidDamagePlayer.druidCrit += 12;
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.fasterStaves = true;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).fasterStaves = true;
 		}
 
 		public override void AddRecipes()

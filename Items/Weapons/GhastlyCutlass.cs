@@ -12,14 +12,14 @@ namespace Redemption.Items.Weapons
 		{
 			if (Main.netMode != 2)
 			{
-				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
 				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
 				{
-					array[i] = Main.glowMaskTexture[i];
+					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
-				GhastlyCutlass.customGlowMask = (short)(array.Length - 1);
-				Main.glowMaskTexture = array;
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				GhastlyCutlass.customGlowMask = (short)(glowMasks.Length - 1);
+				Main.glowMaskTexture = glowMasks;
 			}
 			base.item.glowMask = GhastlyCutlass.customGlowMask;
 			base.DisplayName.SetDefault("Ghastly Cutlass");
@@ -32,8 +32,8 @@ namespace Redemption.Items.Weapons
 			base.item.melee = true;
 			base.item.width = 66;
 			base.item.height = 74;
-			base.item.useTime = 27;
-			base.item.useAnimation = 27;
+			base.item.useTime = 20;
+			base.item.useAnimation = 20;
 			base.item.useStyle = 1;
 			base.item.knockBack = 5f;
 			base.item.value = Item.buyPrice(0, 10, 50, 50);

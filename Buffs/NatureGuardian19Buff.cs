@@ -17,15 +17,15 @@ namespace Redemption.Buffs
 		public override void Update(Player player, ref int buffIndex)
 		{
 			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
-			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>();
+			RedePlayer p = player.GetModPlayer<RedePlayer>();
 			druidDamagePlayer.druidDamage += 0.4f;
 			druidDamagePlayer.druidCrit += 40;
-			modPlayer.rapidStave = true;
-			modPlayer.staveScatterShot = true;
-			modPlayer.fasterSeedbags = true;
-			modPlayer.fasterSpirits = true;
-			modPlayer.fasterStaves = true;
-			RedePlayer modPlayer2 = player.GetModPlayer<RedePlayer>(base.mod);
+			p.rapidStave = true;
+			p.staveScatterShot = true;
+			p.fasterSeedbags = true;
+			p.fasterSpirits = true;
+			p.fasterStaves = true;
+			RedePlayer modPlayer2 = player.GetModPlayer<RedePlayer>();
 			if (player.ownedProjectileCounts[base.mod.ProjectileType("NatureGuardian19")] > 0)
 			{
 				modPlayer2.natureGuardian9 = true;

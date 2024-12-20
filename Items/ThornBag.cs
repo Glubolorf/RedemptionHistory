@@ -20,12 +20,19 @@ namespace Redemption.Items
 			base.item.height = 24;
 			base.item.rare = 9;
 			base.item.expert = true;
-			this.bossBagNPC = base.mod.NPCType("Thorn");
 		}
 
 		public override bool CanRightClick()
 		{
 			return true;
+		}
+
+		public override int BossBagNPC
+		{
+			get
+			{
+				return base.mod.NPCType("Thorn");
+			}
 		}
 
 		public override void OpenBossBag(Player player)
@@ -51,6 +58,7 @@ namespace Redemption.Items
 			{
 				player.QuickSpawnItem(base.mod.ItemType("ThornSeedBag"), 1);
 			}
+			player.QuickSpawnItem(base.mod.ItemType("CircletOfBrambles"), 1);
 		}
 	}
 }

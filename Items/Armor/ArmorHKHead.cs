@@ -41,10 +41,10 @@ namespace Redemption.Items.Armor
 			{
 				for (int i = 0; i < 1; i++)
 				{
-					int num = Dust.NewDust(new Vector2(player.position.X - player.velocity.X * 2f, player.position.Y - 2f - player.velocity.Y * 2f), player.width, player.height, 57, 0f, 0f, 100, default(Color), 2f);
-					Main.dust[num].noGravity = true;
-					Main.dust[num].noLight = true;
-					Dust dust = Main.dust[num];
+					int index = Dust.NewDust(new Vector2(player.position.X - player.velocity.X * 2f, player.position.Y - 2f - player.velocity.Y * 2f), player.width, player.height, 57, 0f, 0f, 100, default(Color), 2f);
+					Main.dust[index].noGravity = true;
+					Main.dust[index].noLight = true;
+					Dust dust = Main.dust[index];
 					dust.velocity.X = dust.velocity.X - player.velocity.X * 0.5f;
 					dust.velocity.Y = dust.velocity.Y - player.velocity.Y * 0.5f;
 				}
@@ -66,8 +66,7 @@ namespace Redemption.Items.Armor
 			Color transparent = Color.Transparent;
 			if (base.item.modItem != null && base.item.modItem.mod == ModLoader.GetMod("Redemption"))
 			{
-				TooltipLine tooltipLine = Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName"));
-				tooltipLine.overrideColor = new Color?(new Color(255, 213, 0));
+				Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName")).overrideColor = new Color?(new Color(255, 213, 0));
 			}
 		}
 	}

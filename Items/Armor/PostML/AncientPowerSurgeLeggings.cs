@@ -15,7 +15,7 @@ namespace Redemption.Items.Armor.PostML
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Ancient Power Surge Greaves");
-			base.Tooltip.SetDefault("50% increased movement speed\n15% increased summon and magic damage\n20% increased magic critical strike chance\nIncreased minion capacity");
+			base.Tooltip.SetDefault("50% increased movement speed\n15% increased minion and magic damage\n20% increased magic critical strike chance\nIncreased minion capacity");
 		}
 
 		public override void SetDefaults()
@@ -37,11 +37,11 @@ namespace Redemption.Items.Armor.PostML
 
 		public override void ModifyTooltips(List<TooltipLine> list)
 		{
-			foreach (TooltipLine tooltipLine in list)
+			foreach (TooltipLine line2 in list)
 			{
-				if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+				if (line2.mod == "Terraria" && line2.Name == "ItemName")
 				{
-					tooltipLine.overrideColor = new Color?(new Color(0, 255, 200));
+					line2.overrideColor = new Color?(new Color(0, 255, 200));
 				}
 			}
 		}

@@ -13,14 +13,14 @@ namespace Redemption.Projectiles
 		{
 			if (Main.netMode != 2)
 			{
-				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
 				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
 				{
-					array[i] = Main.glowMaskTexture[i];
+					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				array[array.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
-				BleedingSunPro1.customGlowMask = (short)(array.Length - 1);
-				Main.glowMaskTexture = array;
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
+				BleedingSunPro1.customGlowMask = (short)(glowMasks.Length - 1);
+				Main.glowMaskTexture = glowMasks;
 			}
 			base.DisplayName.SetDefault("Bleeding Sun");
 		}
@@ -50,12 +50,12 @@ namespace Redemption.Projectiles
 			dust.position += Utils.RotatedBy(base.projectile.velocity, 1.5707963705062866, default(Vector2));
 			dust.fadeIn = 0.5f;
 			dust.noGravity = true;
-			dust = Main.dust[Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, 235, 0f, 0f, 0, default(Color), 2f)];
-			dust.position = position;
-			dust.velocity = Utils.RotatedBy(base.projectile.velocity, -1.5707963705062866, default(Vector2)) * 0.33f + base.projectile.velocity / 4f;
-			dust.position += Utils.RotatedBy(base.projectile.velocity, -1.5707963705062866, default(Vector2));
-			dust.fadeIn = 0.5f;
-			dust.noGravity = true;
+			Dust dust2 = Main.dust[Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, 235, 0f, 0f, 0, default(Color), 2f)];
+			dust2.position = position;
+			dust2.velocity = Utils.RotatedBy(base.projectile.velocity, -1.5707963705062866, default(Vector2)) * 0.33f + base.projectile.velocity / 4f;
+			dust2.position += Utils.RotatedBy(base.projectile.velocity, -1.5707963705062866, default(Vector2));
+			dust2.fadeIn = 0.5f;
+			dust2.noGravity = true;
 		}
 
 		public override void Kill(int timeLeft)
@@ -63,8 +63,8 @@ namespace Redemption.Projectiles
 			Main.PlaySound(SoundID.Item14, base.projectile.position);
 			for (int i = 0; i < 10; i++)
 			{
-				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 235, 0f, 0f, 100, default(Color), 1.5f);
-				Main.dust[num].velocity *= 1.9f;
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 235, 0f, 0f, 100, default(Color), 1.5f);
+				Main.dust[dustIndex].velocity *= 1.9f;
 			}
 			Projectile.NewProjectile(base.projectile.position.X + 25f, base.projectile.position.Y + 25f, 0f, 0f, base.mod.ProjectileType("BloodPulse"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 		}

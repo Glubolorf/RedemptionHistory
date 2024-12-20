@@ -43,13 +43,13 @@ namespace Redemption.Items.DruidDamageClass.v08
 			modRecipe.AddTile(null, "DruidicAltarTile");
 			modRecipe.SetResult(this, 10);
 			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(2886, 10);
-			modRecipe.AddIngredient(209, 1);
-			modRecipe.AddIngredient(1329, 1);
-			modRecipe.AddTile(null, "DruidicAltarTile");
-			modRecipe.SetResult(this, 10);
-			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.AddIngredient(2886, 10);
+			modRecipe2.AddIngredient(209, 1);
+			modRecipe2.AddIngredient(1329, 1);
+			modRecipe2.AddTile(null, "DruidicAltarTile");
+			modRecipe2.SetResult(this, 10);
+			modRecipe2.AddRecipe();
 		}
 	}
 }

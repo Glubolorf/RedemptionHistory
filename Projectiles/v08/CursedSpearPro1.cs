@@ -34,8 +34,8 @@ namespace Redemption.Projectiles.v08
 			CursedSpearPro1.AIArcStabSpear(base.projectile, ref base.projectile.ai, false);
 			if (Main.rand.Next(3) != 0)
 			{
-				int num = Dust.NewDust(base.projectile.Center, 0, 0, 75, 0f, 0f, 0, default(Color), 1f);
-				Main.dust[num].noGravity = true;
+				int dustID = Dust.NewDust(base.projectile.Center, 0, 0, 75, 0f, 0f, 0, default(Color), 1f);
+				Main.dust[dustID].noGravity = true;
 			}
 		}
 
@@ -57,18 +57,17 @@ namespace Redemption.Projectiles.v08
 
 		public static void AIArcStabSpear(Projectile p, ref float[] ai, bool overrideKill = false)
 		{
-			Player player = Main.player[p.owner];
-			Item item = player.inventory[player.selectedItem];
-			if (Main.myPlayer == p.owner && item != null && item.autoReuse && player.itemAnimation == 1)
+			Player plr = Main.player[p.owner];
+			Item item = plr.inventory[plr.selectedItem];
+			if (Main.myPlayer == p.owner && item != null && item.autoReuse && plr.itemAnimation == 1)
 			{
 				p.Kill();
 				return;
 			}
 			Main.player[p.owner].heldProj = p.whoAmI;
 			Main.player[p.owner].itemTime = Main.player[p.owner].itemAnimation;
-			Vector2 vector;
-			vector..ctor(0f, player.gfxOffY);
-			CursedSpearPro1.AIArcStabSpear(p, ref ai, player.Center + vector, BaseUtility.RotationTo(p.Center, p.Center + p.velocity), player.direction, player.itemAnimation, player.itemAnimationMax, overrideKill, player.frozen);
+			Vector2 gfxOffset = new Vector2(0f, plr.gfxOffY);
+			CursedSpearPro1.AIArcStabSpear(p, ref ai, plr.Center + gfxOffset, BaseUtility.RotationTo(p.Center, p.Center + p.velocity), plr.direction, plr.itemAnimation, plr.itemAnimationMax, overrideKill, plr.frozen);
 		}
 
 		public static void AIArcStabSpear(Projectile p, ref float[] ai, Vector2 center, float itemRot, int ownerDirection, int itemAnimation, int itemAnimationMax, bool overrideKill = false, bool frozen = false)
@@ -82,7 +81,7 @@ namespace Redemption.Projectiles.v08
 				p.alpha = 0;
 			}
 			p.direction = ownerDirection;
-			Vector2 center2 = p.Center;
+			Vector2 oldCenter = p.Center;
 			p.position.X = center.X - (float)p.width * 0.5f;
 			p.position.Y = center.Y - (float)p.height * 0.5f;
 			p.position += BaseUtility.RotateVector(default(Vector2), BaseUtility.MultiLerpVector(1f - (float)itemAnimation / (float)itemAnimationMax, CursedSpearPro1.spearPos), itemRot);
@@ -90,7 +89,7 @@ namespace Redemption.Projectiles.v08
 			{
 				p.Kill();
 			}
-			p.rotation = BaseUtility.RotationTo(center, center2) + 2.355f;
+			p.rotation = BaseUtility.RotationTo(center, oldCenter) + 2.355f;
 			if (p.direction == -1)
 			{
 				p.rotation -= 0f;

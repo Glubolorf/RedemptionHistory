@@ -30,6 +30,11 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 			base.npc.DeathSound = SoundID.NPCDeath43;
 			base.npc.lavaImmune = true;
 			base.npc.boss = true;
+			if (RedeConfigClient.Instance.AntiAntti)
+			{
+				this.music = 5;
+				return;
+			}
 			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossForest1");
 		}
 
@@ -116,8 +121,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 						this.slashFrame = 0;
 					}
 				}
-				float num = base.npc.Distance(Main.player[base.npc.target].Center);
-				if (num <= 300f && Main.rand.Next(150) == 0 && !this.slash && !this.roll)
+				if (base.npc.Distance(Main.player[base.npc.target].Center) <= 300f && Main.rand.Next(150) == 0 && !this.slash && !this.roll)
 				{
 					this.slash = true;
 					base.npc.netUpdate = true;
@@ -126,7 +130,7 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 				{
 					base.npc.ai[1] += 1f;
 					base.npc.velocity.X = 0f;
-					if (base.npc.ai[1] == 1f && !Config.NoCombatText)
+					if (base.npc.ai[1] == 1f && !RedeConfigClient.Instance.NoCombatText)
 					{
 						CombatText.NewText(base.npc.getRect(), Colors.RarityTrash, "Slash!", true, true);
 						base.npc.netUpdate = true;
@@ -134,14 +138,13 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 					if (base.npc.ai[1] == 35f)
 					{
 						Main.PlaySound(SoundID.Item71, (int)base.npc.position.X, (int)base.npc.position.Y);
-						float num2 = 7f;
-						Vector2 vector;
-						vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-						int num3 = 11;
-						int num4 = base.mod.ProjectileType("GolemSlashPro1");
-						float num5 = (float)Math.Atan2((double)(vector.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector.X - (player.position.X + (float)player.width * 0.5f)));
-						int num6 = Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num5) * (double)num2 * -1.0), (float)(Math.Sin((double)num5) * (double)num2 * -1.0), num4, num3, 0f, 0, 0f, 0f);
-						Main.projectile[num6].netUpdate = true;
+						float Speed = 7f;
+						Vector2 vector8 = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+						int damage = 11;
+						int type = base.mod.ProjectileType("GolemSlashPro1");
+						float rotation = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
+						int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
+						Main.projectile[num54].netUpdate = true;
 					}
 					if (base.npc.ai[1] >= 45f)
 					{
@@ -217,70 +220,68 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 			}
 			if (base.npc.life < (int)((float)base.npc.lifeMax * 0.9f) && !this.summon1)
 			{
-				int num7 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPile"), 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[num7].netUpdate = true;
-				int num8 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPile"), 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[num8].netUpdate = true;
+				int Minion = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPile"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.npc[Minion].netUpdate = true;
+				int Minion2 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPile"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.npc[Minion2].netUpdate = true;
 				this.summon1 = true;
 				return;
 			}
 			if (base.npc.life < (int)((float)base.npc.lifeMax * 0.5f) && !this.summon2)
 			{
-				int num9 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPile"), 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[num9].netUpdate = true;
-				int num10 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPile"), 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[num10].netUpdate = true;
-				int num11 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPile"), 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[num11].netUpdate = true;
+				int Minion3 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPile"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.npc[Minion3].netUpdate = true;
+				int Minion4 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPile"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.npc[Minion4].netUpdate = true;
+				int Minion5 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPile"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.npc[Minion5].netUpdate = true;
 				this.summon2 = true;
 				return;
 			}
 			if (base.npc.life < (int)((float)base.npc.lifeMax * 0.25f) && !this.summon3)
 			{
-				int num12 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPile"), 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[num12].netUpdate = true;
-				int num13 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPile"), 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[num13].netUpdate = true;
-				int num14 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPile"), 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[num14].netUpdate = true;
+				int Minion6 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPile"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.npc[Minion6].netUpdate = true;
+				int Minion7 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPile"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.npc[Minion7].netUpdate = true;
+				int Minion8 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPile"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.npc[Minion8].netUpdate = true;
 				this.summon3 = true;
 				return;
 			}
 			if (base.npc.life < (int)((float)base.npc.lifeMax * 0.1f) && !this.summon4)
 			{
-				int num15 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPile"), 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[num15].netUpdate = true;
-				int num16 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPile"), 0, 0f, 0f, 0f, 0f, 255);
-				Main.npc[num16].netUpdate = true;
+				int Minion9 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPile"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.npc[Minion9].netUpdate = true;
+				int Minion10 = NPC.NewNPC((int)base.npc.position.X + Main.rand.Next(0, 80), (int)base.npc.position.Y + Main.rand.Next(0, 84), base.mod.NPCType("EaglecrestRockPile"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.npc[Minion10].netUpdate = true;
 				this.summon4 = true;
 			}
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/Bosses/EaglecrestGolem/EaglecrestGolemHop");
-			Texture2D texture2 = base.mod.GetTexture("NPCs/Bosses/EaglecrestGolem/EaglecrestGolemSlash");
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D hopAni = base.mod.GetTexture("NPCs/Bosses/EaglecrestGolem/EaglecrestGolemHop");
+			Texture2D slashAni = base.mod.GetTexture("NPCs/Bosses/EaglecrestGolem/EaglecrestGolemSlash");
 			int spriteDirection = base.npc.spriteDirection;
 			if (!this.hop && !this.slash)
 			{
-				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.hop && !this.roll && !this.slash)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num = texture.Height / 1;
-				int num2 = num * this.hopFrame;
-				Main.spriteBatch.Draw(texture, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num214 = hopAni.Height / 1;
+				int y6 = num214 * this.hopFrame;
+				Main.spriteBatch.Draw(hopAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, hopAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)hopAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.slash && !this.roll)
 			{
-				Vector2 vector2;
-				vector2..ctor(base.npc.Center.X, base.npc.Center.Y - 13f);
-				int num3 = texture2.Height / 9;
-				int num4 = num3 * this.slashFrame;
-				Main.spriteBatch.Draw(texture2, vector2 - Main.screenPosition, new Rectangle?(new Rectangle(0, num4, texture2.Width, num3)), drawColor, base.npc.rotation, new Vector2((float)texture2.Width / 2f, (float)num3 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter2 = new Vector2(base.npc.Center.X, base.npc.Center.Y - 13f);
+				int num215 = slashAni.Height / 9;
+				int y7 = num215 * this.slashFrame;
+				Main.spriteBatch.Draw(slashAni, drawCenter2 - Main.screenPosition, new Rectangle?(new Rectangle(0, y7, slashAni.Width, num215)), drawColor, base.npc.rotation, new Vector2((float)slashAni.Width / 2f, (float)num215 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
 		}
@@ -291,12 +292,12 @@ namespace Redemption.NPCs.Bosses.EaglecrestGolem
 			{
 				for (int i = 0; i < 35; i++)
 				{
-					int num = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 1, 0f, 0f, 100, default(Color), 2f);
-					Main.dust[num].velocity *= 4.6f;
+					int dustIndex2 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 1, 0f, 0f, 100, default(Color), 2f);
+					Main.dust[dustIndex2].velocity *= 4.6f;
 				}
 			}
-			int num2 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 1, 0f, 0f, 100, default(Color), 1f);
-			Main.dust[num2].velocity *= 4.6f;
+			int dustIndex3 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 1, 0f, 0f, 100, default(Color), 1f);
+			Main.dust[dustIndex3].velocity *= 4.6f;
 		}
 
 		private bool roll;

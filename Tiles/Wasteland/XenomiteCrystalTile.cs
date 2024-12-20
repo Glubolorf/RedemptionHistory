@@ -16,16 +16,16 @@ namespace Redemption.Tiles.Wasteland
 			Main.tileLighted[(int)base.Type] = true;
 			this.dustType = 61;
 			this.drop = base.mod.ItemType("XenomiteShard");
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Xenomite");
-			base.AddMapEntry(new Color(54, 193, 59), modTranslation);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Xenomite");
+			base.AddMapEntry(new Color(54, 193, 59), name);
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
 			Main.tileFrameImportant[(int)base.Type] = true;
 			Main.tileLavaDeath[(int)base.Type] = false;
 			TileObjectData.newTile.AnchorValidTiles = new int[]
 			{
-				base.mod.TileType<DeadGrassTile>(),
-				base.mod.TileType<RadioactiveIceTile>()
+				ModContent.TileType<DeadGrassTile>(),
+				ModContent.TileType<RadioactiveIceTile>()
 			};
 			TileObjectData.addTile((int)base.Type);
 		}
@@ -34,7 +34,7 @@ namespace Redemption.Tiles.Wasteland
 		{
 			if (i % 10 < 4)
 			{
-				spriteEffects = 1;
+				spriteEffects = SpriteEffects.FlipHorizontally;
 			}
 		}
 

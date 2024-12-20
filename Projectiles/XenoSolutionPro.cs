@@ -27,7 +27,7 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			int num = base.mod.DustType("XenoSolutionDust");
+			int dustType = base.mod.DustType("XenoSolutionDust");
 			if (base.projectile.owner == Main.myPlayer)
 			{
 				this.Convert((int)(base.projectile.position.X + (float)(base.projectile.width / 2)) / 16, (int)(base.projectile.position.Y + (float)(base.projectile.height / 2)) / 16, 2);
@@ -38,33 +38,33 @@ namespace Redemption.Projectiles
 			}
 			if (base.projectile.ai[0] > 7f)
 			{
-				float num2 = 1f;
+				float dustScale = 1f;
 				if (base.projectile.ai[0] == 8f)
 				{
-					num2 = 0.2f;
+					dustScale = 0.2f;
 				}
 				else if (base.projectile.ai[0] == 9f)
 				{
-					num2 = 0.4f;
+					dustScale = 0.4f;
 				}
 				else if (base.projectile.ai[0] == 10f)
 				{
-					num2 = 0.6f;
+					dustScale = 0.6f;
 				}
 				else if (base.projectile.ai[0] == 11f)
 				{
-					num2 = 0.8f;
+					dustScale = 0.8f;
 				}
 				base.projectile.ai[0] += 1f;
 				for (int i = 0; i < 1; i++)
 				{
-					int num3 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, num, base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 100, default(Color), 1f);
-					Dust dust = Main.dust[num3];
+					int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, dustType, base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 100, default(Color), 1f);
+					Dust dust = Main.dust[dustIndex];
 					dust.noGravity = true;
 					dust.scale *= 1.75f;
 					dust.velocity.X = dust.velocity.X * 2f;
 					dust.velocity.Y = dust.velocity.Y * 2f;
-					dust.scale *= num2;
+					dust.scale *= dustScale;
 				}
 			}
 			else
@@ -128,13 +128,46 @@ namespace Redemption.Projectiles
 						}
 						if (TileID.Sets.Conversion.Stone[type] || type == 179 || type == 180 || type == 181 || type == 182 || type == 183)
 						{
-							Main.tile[k, l].type = (ushort)base.mod.TileType("DeadRockTile");
+							if (type != 25)
+							{
+								Main.tile[k, l].type = (ushort)base.mod.TileType("DeadRockTile");
+								WorldGen.SquareTileFrame(k, l, true);
+								NetMessage.SendTileSquare(-1, k, l, 1, 0);
+							}
+							else
+							{
+								Main.tile[k, l].type = (ushort)base.mod.TileType("IrradiatedEbonstoneTile");
+								WorldGen.SquareTileFrame(k, l, true);
+								NetMessage.SendTileSquare(-1, k, l, 1, 0);
+							}
+							if (type != 203)
+							{
+								Main.tile[k, l].type = (ushort)base.mod.TileType("DeadRockTile");
+								WorldGen.SquareTileFrame(k, l, true);
+								NetMessage.SendTileSquare(-1, k, l, 1, 0);
+							}
+							else
+							{
+								Main.tile[k, l].type = (ushort)base.mod.TileType("IrradiatedCrimstoneTile");
+								WorldGen.SquareTileFrame(k, l, true);
+								NetMessage.SendTileSquare(-1, k, l, 1, 0);
+							}
+						}
+						else if (type == 2 || type == 109)
+						{
+							Main.tile[k, l].type = (ushort)base.mod.TileType("DeadGrassTile");
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1, 0);
 						}
-						else if (type == 2 || type == 23 || type == 109 || type == 199)
+						else if (type == 23)
 						{
-							Main.tile[k, l].type = (ushort)base.mod.TileType("DeadGrassTile");
+							Main.tile[k, l].type = (ushort)base.mod.TileType("DeadGrassTileCorruption");
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1, 0);
+						}
+						else if (type == 199)
+						{
+							Main.tile[k, l].type = (ushort)base.mod.TileType("DeadGrassTileCrimson");
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1, 0);
 						}

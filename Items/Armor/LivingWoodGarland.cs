@@ -41,8 +41,7 @@ namespace Redemption.Items.Armor
 		public override void UpdateArmorSet(Player player)
 		{
 			player.setBonus = "7% druidic damage, Immune to poison";
-			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
-			druidDamagePlayer.druidDamage += 0.07f;
+			DruidDamagePlayer.ModPlayer(player).druidDamage += 0.07f;
 			player.buffImmune[20] = true;
 		}
 

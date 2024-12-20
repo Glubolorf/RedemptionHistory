@@ -29,12 +29,12 @@ namespace Redemption.Items
 			modRecipe.AddTile(null, "GathicCryoFurnaceTile");
 			modRecipe.SetResult(this, 2);
 			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(704, 2);
-			modRecipe.AddIngredient(null, "GathicCryoCrystal", 1);
-			modRecipe.AddTile(null, "GathicCryoFurnaceTile");
-			modRecipe.SetResult(this, 2);
-			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.AddIngredient(704, 2);
+			modRecipe2.AddIngredient(null, "GathicCryoCrystal", 1);
+			modRecipe2.AddTile(null, "GathicCryoFurnaceTile");
+			modRecipe2.SetResult(this, 2);
+			modRecipe2.AddRecipe();
 		}
 
 		public override void HoldItem(Player player)

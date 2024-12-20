@@ -16,8 +16,7 @@ namespace Redemption.Tiles
 			this.dustType = base.mod.DustType("SludgeSpoonDust");
 			this.minPick = 200;
 			this.mineResist = 2f;
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Hardened Sludge");
+			base.CreateMapEntryName(null).SetDefault("Hardened Sludge");
 			base.AddMapEntry(new Color(100, 255, 100), null);
 		}
 
@@ -25,8 +24,7 @@ namespace Redemption.Tiles
 		{
 			if (closer)
 			{
-				Player localPlayer = Main.LocalPlayer;
-				localPlayer.AddBuff(base.mod.BuffType("XenomiteDebuff"), Main.rand.Next(10, 20), true);
+				Main.LocalPlayer.AddBuff(base.mod.BuffType("XenomiteDebuff"), Main.rand.Next(10, 20), true);
 			}
 		}
 

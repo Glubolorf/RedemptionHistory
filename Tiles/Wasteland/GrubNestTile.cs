@@ -16,9 +16,9 @@ namespace Redemption.Tiles.Wasteland
 			Main.tileLavaDeath[(int)base.Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.addTile((int)base.Type);
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Grub Nest");
-			base.AddMapEntry(new Color(40, 60, 40), modTranslation);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Grub Nest");
+			base.AddMapEntry(new Color(40, 60, 40), name);
 			this.disableSmartCursor = true;
 		}
 
@@ -26,18 +26,17 @@ namespace Redemption.Tiles.Wasteland
 		{
 			if (Main.netMode != 1)
 			{
-				Player localPlayer = Main.LocalPlayer;
-				float num = Vector2.Distance(localPlayer.Center / 16f, new Vector2((float)i + 0.5f, (float)j + 0.5f));
-				if (num <= 12f && num > 5f && Main.rand.Next(100) == 0)
+				float dist = Vector2.Distance(Main.LocalPlayer.Center / 16f, new Vector2((float)i + 0.5f, (float)j + 0.5f));
+				if (dist <= 12f && dist > 5f && Main.rand.Next(100) == 0)
 				{
 					i++;
 					i *= 16;
 					j++;
 					j *= 16;
-					int num2 = NPC.NewNPC(i, j, base.mod.NPCType("InfectedGrub"), 0, 0f, 0f, 0f, 0f, 255);
+					int k = NPC.NewNPC(i, j, base.mod.NPCType("InfectedGrub"), 0, 0f, 0f, 0f, 0f, 255);
 					if (Main.netMode == 2)
 					{
-						NetMessage.SendData(23, -1, -1, null, num2, 0f, 0f, 0f, 0, 0, 0);
+						NetMessage.SendData(23, -1, -1, null, k, 0f, 0f, 0f, 0, 0, 0);
 					}
 				}
 			}

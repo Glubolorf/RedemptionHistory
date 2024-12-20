@@ -28,8 +28,7 @@ namespace Redemption.Items
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>(base.mod);
-			modPlayer.plasmaShield = true;
+			player.GetModPlayer<RedePlayer>().plasmaShield = true;
 			player.endurance += 0.06f;
 		}
 	}

@@ -14,7 +14,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Lost Soul's Leggings");
-			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n8% increased druidic damage\n2% damage reduction\nDecreased falling speed");
+			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n5% increased druidic damage\n2% damage reduction\nDecreased falling speed");
 		}
 
 		public override void SetDefaults()
@@ -28,8 +28,7 @@ namespace Redemption.Items.Armor
 
 		public override void UpdateEquip(Player player)
 		{
-			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
-			druidDamagePlayer.druidDamage += 0.08f;
+			DruidDamagePlayer.ModPlayer(player).druidDamage += 0.05f;
 			player.endurance += 0.02f;
 			player.slowFall = true;
 		}

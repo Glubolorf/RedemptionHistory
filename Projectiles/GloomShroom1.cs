@@ -37,21 +37,12 @@ namespace Redemption.Projectiles
 			projectile.velocity.X = projectile.velocity.X * 0f;
 			Projectile projectile2 = base.projectile;
 			projectile2.velocity.Y = projectile2.velocity.Y + 1f;
-			if (base.projectile.localAI[0] == 30f)
-			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 18f, base.projectile.position.Y + 8f), base.projectile.velocity, base.mod.ProjectileType("GloomShroomSpore2"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
-			}
-			if (base.projectile.localAI[0] == 60f)
+			if (base.projectile.localAI[0] % 60f == 0f)
 			{
 				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 6f, base.projectile.position.Y + 20f), base.projectile.velocity, base.mod.ProjectileType("GloomShroomSpore2"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			}
-			if (base.projectile.localAI[0] == 90f)
-			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 28f, base.projectile.position.Y + 18f), base.projectile.velocity, base.mod.ProjectileType("GloomShroomSpore2"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
-			}
 			if (base.projectile.localAI[0] > 180f)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 18f, base.projectile.position.Y + 8f), base.projectile.velocity, base.mod.ProjectileType("GloomShroomSpore2"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 				Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 2, base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 0, default(Color), 1f);
 				Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 2, base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 0, default(Color), 1f);
 				Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 2, base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 0, default(Color), 1f);

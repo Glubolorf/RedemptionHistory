@@ -34,8 +34,7 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.taintedNecklace = true;
+			((RedePlayer)player.GetModPlayer(base.mod, "RedePlayer")).taintedNecklace = true;
 		}
 	}
 }

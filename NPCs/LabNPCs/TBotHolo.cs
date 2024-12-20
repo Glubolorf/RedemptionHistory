@@ -53,9 +53,8 @@ namespace Redemption.NPCs.LabNPCs
 			this.timer++;
 			if (this.timer == 1 && Main.netMode != 1)
 			{
-				Vector2 vector;
-				vector..ctor(10f, -60f);
-				base.npc.Center = base.npc.position + vector;
+				Vector2 newPos = new Vector2(10f, -60f);
+				base.npc.Center = base.npc.position + newPos;
 				base.npc.netUpdate = true;
 			}
 			if (this.timer == 60)
@@ -76,10 +75,10 @@ namespace Redemption.NPCs.LabNPCs
 			}
 			if (this.timer == 400)
 			{
-				int num = NPC.FindFirstNPC(base.mod.NPCType("TBot"));
-				if (num >= 0)
+				int TBotID = NPC.FindFirstNPC(base.mod.NPCType("TBot"));
+				if (TBotID >= 0)
 				{
-					Main.NewText("It's me, " + Main.npc[num].GivenName + " the Friendly T-Bot!", new Color(100, 120, 200), false);
+					Main.NewText("It's me, " + Main.npc[TBotID].GivenName + " the Friendly T-Bot!", new Color(100, 120, 200), false);
 				}
 				else
 				{
@@ -92,7 +91,7 @@ namespace Redemption.NPCs.LabNPCs
 			}
 			if (this.timer == 740)
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).omegaPower)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().omegaPower)
 				{
 					Main.NewText("Just watch out, the deep chambers of the lab are quite dangerous, even to androids like you.", new Color(100, 120, 200), false);
 				}

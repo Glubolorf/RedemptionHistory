@@ -15,14 +15,14 @@ namespace Redemption.Items.Weapons
 		{
 			if (Main.netMode != 2)
 			{
-				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
 				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
 				{
-					array[i] = Main.glowMaskTexture[i];
+					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				array[array.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
-				LastRedemption.customGlowMask = (short)(array.Length - 1);
-				Main.glowMaskTexture = array;
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Items/Weapons/" + base.GetType().Name + "_Glow");
+				LastRedemption.customGlowMask = (short)(glowMasks.Length - 1);
+				Main.glowMaskTexture = glowMasks;
 			}
 			base.item.glowMask = LastRedemption.customGlowMask;
 			base.DisplayName.SetDefault("Last Redemption");
@@ -75,61 +75,61 @@ namespace Redemption.Items.Weapons
 		{
 			if (player.altFunctionUse == 2)
 			{
-				int myPlayer = Main.myPlayer;
-				float shootSpeed = base.item.shootSpeed;
-				int num = damage;
-				float num2 = knockBack;
-				num2 = player.GetWeaponKnockback(base.item, num2);
+				int i = Main.myPlayer;
+				float num72 = base.item.shootSpeed;
+				int num73 = damage;
+				float num74 = knockBack;
+				num74 = player.GetWeaponKnockback(base.item, num74);
 				player.itemTime = base.item.useTime;
-				Vector2 vector = player.RotatedRelativePoint(player.MountedCenter, true);
+				Vector2 vector2 = player.RotatedRelativePoint(player.MountedCenter, true);
 				Utils.RotatedBy(Vector2.UnitX, (double)player.fullRotation, default(Vector2));
-				Main.MouseWorld - vector;
-				float num3 = (float)Main.mouseX + Main.screenPosition.X - vector.X;
-				float num4 = (float)Main.mouseY + Main.screenPosition.Y - vector.Y;
+				Main.MouseWorld - vector2;
+				float num75 = (float)Main.mouseX + Main.screenPosition.X - vector2.X;
+				float num76 = (float)Main.mouseY + Main.screenPosition.Y - vector2.Y;
 				if (player.gravDir == -1f)
 				{
-					num4 = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY - vector.Y;
+					num76 = Main.screenPosition.Y + (float)Main.screenHeight - (float)Main.mouseY - vector2.Y;
 				}
-				float num5 = (float)Math.Sqrt((double)(num3 * num3 + num4 * num4));
-				if ((float.IsNaN(num3) && float.IsNaN(num4)) || (num3 == 0f && num4 == 0f))
+				float num77 = (float)Math.Sqrt((double)(num75 * num75 + num76 * num76));
+				if ((float.IsNaN(num75) && float.IsNaN(num76)) || (num75 == 0f && num76 == 0f))
 				{
-					num3 = (float)player.direction;
-					num4 = 0f;
-					num5 = shootSpeed;
+					num75 = (float)player.direction;
+					num76 = 0f;
+					num77 = num72;
 				}
 				else
 				{
-					num5 = shootSpeed / num5;
+					num77 = num72 / num77;
 				}
-				num3 *= num5;
-				num4 *= num5;
-				int num6 = 4;
-				for (int i = 0; i < num6; i++)
+				num75 *= num77;
+				num76 *= num77;
+				int num78 = 4;
+				for (int num79 = 0; num79 < num78; num79++)
 				{
-					vector..ctor(player.position.X + (float)player.width * 0.5f + (float)Main.rand.Next(201) * -(float)player.direction + ((float)Main.mouseX + Main.screenPosition.X - player.position.X), player.MountedCenter.Y - 600f);
-					vector.X = (vector.X + player.Center.X) / 2f + (float)Main.rand.Next(-200, 201);
-					vector.Y -= (float)(100 * i);
-					num3 = (float)Main.mouseX + Main.screenPosition.X - vector.X;
-					num4 = (float)Main.mouseY + Main.screenPosition.Y - vector.Y;
-					if (num4 < 0f)
+					vector2 = new Vector2(player.position.X + (float)player.width * 0.5f + (float)Main.rand.Next(201) * -(float)player.direction + ((float)Main.mouseX + Main.screenPosition.X - player.position.X), player.MountedCenter.Y - 600f);
+					vector2.X = (vector2.X + player.Center.X) / 2f + (float)Main.rand.Next(-200, 201);
+					vector2.Y -= (float)(100 * num79);
+					num75 = (float)Main.mouseX + Main.screenPosition.X - vector2.X;
+					num76 = (float)Main.mouseY + Main.screenPosition.Y - vector2.Y;
+					if (num76 < 0f)
 					{
-						num4 *= -1f;
+						num76 *= -1f;
 					}
-					if (num4 < 20f)
+					if (num76 < 20f)
 					{
-						num4 = 20f;
+						num76 = 20f;
 					}
-					num5 = (float)Math.Sqrt((double)(num3 * num3 + num4 * num4));
-					num5 = shootSpeed / num5;
-					num3 *= num5;
-					num4 *= num5;
-					float num7 = num3 + (float)Main.rand.Next(-50, 51) * 0.02f;
-					float num8 = num4 + (float)Main.rand.Next(-50, 51) * 0.02f;
-					int num9 = Projectile.NewProjectile(vector.X, vector.Y, num7, num8, base.mod.ProjectileType("LastRPro3"), num, num2, myPlayer, 0f, (float)Main.rand.Next(10));
-					Main.projectile[num9].tileCollide = false;
-					Main.projectile[num9].ranged = false;
-					Main.projectile[num9].magic = true;
-					Main.projectile[num9].timeLeft = 200;
+					num77 = (float)Math.Sqrt((double)(num75 * num75 + num76 * num76));
+					num77 = num72 / num77;
+					num75 *= num77;
+					num76 *= num77;
+					float speedX2 = num75 + (float)Main.rand.Next(-50, 51) * 0.02f;
+					float speedY2 = num76 + (float)Main.rand.Next(-50, 51) * 0.02f;
+					int projectile = Projectile.NewProjectile(vector2.X, vector2.Y, speedX2, speedY2, base.mod.ProjectileType("LastRPro3"), num73, num74, i, 0f, (float)Main.rand.Next(10));
+					Main.projectile[projectile].tileCollide = false;
+					Main.projectile[projectile].ranged = false;
+					Main.projectile[projectile].magic = true;
+					Main.projectile[projectile].timeLeft = 200;
 				}
 				return false;
 			}
@@ -150,8 +150,7 @@ namespace Redemption.Items.Weapons
 			Color transparent = Color.Transparent;
 			if (base.item.modItem != null && base.item.modItem.mod == ModLoader.GetMod("Redemption"))
 			{
-				TooltipLine tooltipLine = Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName"));
-				tooltipLine.overrideColor = new Color?(new Color(255, 195, 0));
+				Enumerable.First<TooltipLine>(tooltips, (TooltipLine v) => v.Name.Equals("ItemName")).overrideColor = new Color?(new Color(255, 195, 0));
 			}
 		}
 

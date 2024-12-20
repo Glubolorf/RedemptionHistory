@@ -52,6 +52,8 @@ namespace Redemption.NPCs
 
 		public override void AI()
 		{
+			Player player = Main.player[base.npc.target];
+			player.GetModPlayer<RedePlayer>();
 			if (this.throwStart)
 			{
 				this.throwCounter++;
@@ -65,14 +67,12 @@ namespace Redemption.NPCs
 					this.throwFrame = 0;
 				}
 			}
-			Player player = Main.player[base.npc.target];
 			if (base.npc.target < 0 || base.npc.target == 255 || Main.player[base.npc.target].dead || !Main.player[base.npc.target].active)
 			{
 				base.npc.TargetClosest(true);
 			}
 			base.npc.netUpdate = true;
-			float num = base.npc.Distance(Main.player[base.npc.target].Center);
-			if (num <= 500f && Main.rand.Next(125) == 0 && !this.throwAttack)
+			if (base.npc.Distance(Main.player[base.npc.target].Center) <= 500f && Main.rand.Next(125) == 0 && !this.throwAttack)
 			{
 				this.throwAttack = true;
 			}
@@ -90,14 +90,13 @@ namespace Redemption.NPCs
 				if (this.throwTimer == 15)
 				{
 					Main.PlaySound(SoundID.Item71, (int)base.npc.position.X, (int)base.npc.position.Y);
-					float num2 = 7f;
-					Vector2 vector;
-					vector..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num3 = 50;
-					int num4 = base.mod.ProjectileType("CorruptedPaladinHammerPro2");
-					float num5 = (float)Math.Atan2((double)(vector.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector.X - (player.position.X + (float)player.width * 0.5f)));
-					int num6 = Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num5) * (double)num2 * -1.0), (float)(Math.Sin((double)num5) * (double)num2 * -1.0), num4, num3, 0f, 0, 0f, 0f);
-					Main.projectile[num6].netUpdate = true;
+					float Speed = 7f;
+					Vector2 vector8 = new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
+					int damage = 50;
+					int type = base.mod.ProjectileType("CorruptedPaladinHammerPro2");
+					float rotation = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
+					int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
+					Main.projectile[num54].netUpdate = true;
 				}
 				if (this.throwTimer >= 30)
 				{
@@ -112,29 +111,28 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.OverworldNightMonster.Chance * ((NPC.downedPlantBoss && RedeWorld.downedInfectedEye && Main.hardMode) ? 0.005f : 0f);
+			return SpawnCondition.OverworldNightMonster.Chance * ((!RedeWorld.girusCloaked && NPC.downedPlantBoss && RedeWorld.downedInfectedEye && Main.hardMode) ? 0.005f : 0f);
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/CorruptedPaladin_Glow");
-			Texture2D texture2 = base.mod.GetTexture("NPCs/CorruptedPaladinThrow");
-			Texture2D texture3 = base.mod.GetTexture("NPCs/CorruptedPaladinThrow_Glow");
-			SpriteEffects spriteEffects = (base.npc.spriteDirection == -1) ? 0 : 1;
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D glowMask = base.mod.GetTexture("NPCs/CorruptedPaladin_Glow");
+			Texture2D throwAni = base.mod.GetTexture("NPCs/CorruptedPaladinThrow");
+			Texture2D throwGlow = base.mod.GetTexture("NPCs/CorruptedPaladinThrow_Glow");
+			SpriteEffects effects = (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 			if (!this.throwStart)
 			{
-				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
-				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, spriteEffects, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				spriteBatch.Draw(glowMask, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, effects, 0f);
 			}
 			if (this.throwStart)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num = texture2.Height / 3;
-				int num2 = num * this.throwFrame;
-				Main.spriteBatch.Draw(texture2, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture2.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture2.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
-				Main.spriteBatch.Draw(texture3, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture2.Width, num)), base.npc.GetAlpha(Color.White), base.npc.rotation, new Vector2((float)texture2.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num214 = throwAni.Height / 3;
+				int y6 = num214 * this.throwFrame;
+				Main.spriteBatch.Draw(throwAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, throwAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)throwAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				Main.spriteBatch.Draw(throwGlow, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, throwAni.Width, num214)), base.npc.GetAlpha(Color.White), base.npc.rotation, new Vector2((float)throwAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
 		}

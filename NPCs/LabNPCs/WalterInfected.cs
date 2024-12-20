@@ -33,8 +33,7 @@ namespace Redemption.NPCs.LabNPCs
 
 		public override void AI()
 		{
-			float num = base.npc.Distance(Main.player[base.npc.target].Center);
-			if (num >= 700f)
+			if (base.npc.Distance(Main.player[base.npc.target].Center) >= 700f)
 			{
 				base.npc.active = false;
 			}
@@ -46,8 +45,8 @@ namespace Redemption.NPCs.LabNPCs
 			{
 				for (int i = 0; i < 50; i++)
 				{
-					int num = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 273, 0f, 0f, 100, default(Color), 1.2f);
-					Main.dust[num].velocity *= 1.9f;
+					int dustIndex = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 273, 0f, 0f, 100, default(Color), 1.2f);
+					Main.dust[dustIndex].velocity *= 1.9f;
 				}
 			}
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 273, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);

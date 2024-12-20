@@ -4,20 +4,18 @@ Please remember to update the mod when necessary.
 
 Adds:
 - 1 Mount
-- 124 Buffs
-- 19 Walls
-- 217 Tiles
-- 261 NPCs (Including bosses & minibosses)
+- 153 Buffs
+- 24 Walls
+- 291 Tiles
+- 301 NPCs (Including bosses & minibosses)
 - 11 Bosses
-- 10 Minibosses
-- 976 Items
+- 11 Minibosses
+- 1104 Items
 
 Latest Major Update:
-- Nebuleus boss
-- New bosses & minibosses
-- Abandoned Lab is beatable with multiplayer
-- Chicken Invasion
-- Wasteland Overhaul
+- Complete Lab Overhaul
+- Slayer's Crashed Ship
+- Tons of fixes
 - Stuff
 For more, look at the mod's homepage
 

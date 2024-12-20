@@ -40,28 +40,27 @@ namespace Redemption.Tiles.LabDeco
 		{
 			if (Main.netMode != 1)
 			{
-				Player localPlayer = Main.LocalPlayer;
-				float num = Vector2.Distance(localPlayer.Center / 16f, new Vector2((float)i + 0.5f, (float)j + 0.5f));
-				if (num <= 12f && num > 6f)
+				float dist = Vector2.Distance(Main.LocalPlayer.Center / 16f, new Vector2((float)i + 0.5f, (float)j + 0.5f));
+				if (dist <= 12f && dist > 6f)
 				{
 					if (Main.rand.Next(350) == 0 && NPC.CountNPCS(base.mod.NPCType("WalterInfected")) <= 3)
 					{
 						i *= 16;
 						j *= 16;
-						int num2 = NPC.NewNPC(i + 2, j + 2, base.mod.NPCType("WalterInfected"), 0, 0f, 0f, 0f, 0f, 255);
+						int k = NPC.NewNPC(i + 2, j + 2, base.mod.NPCType("WalterInfected"), 0, 0f, 0f, 0f, 0f, 255);
 						if (Main.netMode == 2)
 						{
-							NetMessage.SendData(23, -1, -1, null, num2, 0f, 0f, 0f, 0, 0, 0);
+							NetMessage.SendData(23, -1, -1, null, k, 0f, 0f, 0f, 0, 0, 0);
 						}
 					}
 					if (NPC.downedMoonlord && Main.rand.Next(600) == 0 && NPC.CountNPCS(base.mod.NPCType("Stage2Scientist")) == 0)
 					{
 						i *= 16;
 						j *= 16;
-						int num3 = NPC.NewNPC(i + 2, j + 2, base.mod.NPCType("Stage2Scientist"), 0, 0f, 0f, 0f, 0f, 255);
+						int l = NPC.NewNPC(i + 2, j + 2, base.mod.NPCType("Stage2Scientist"), 0, 0f, 0f, 0f, 0f, 255);
 						if (Main.netMode == 2)
 						{
-							NetMessage.SendData(23, -1, -1, null, num3, 0f, 0f, 0f, 0, 0, 0);
+							NetMessage.SendData(23, -1, -1, null, l, 0f, 0f, 0f, 0, 0, 0);
 							return;
 						}
 					}
@@ -69,9 +68,8 @@ namespace Redemption.Tiles.LabDeco
 			}
 			else
 			{
-				Player localPlayer2 = Main.LocalPlayer;
-				float num4 = Vector2.Distance(localPlayer2.Center / 16f, new Vector2((float)i + 0.5f, (float)j + 0.5f));
-				if (num4 <= 12f && num4 > 6f)
+				float dist2 = Vector2.Distance(Main.LocalPlayer.Center / 16f, new Vector2((float)i + 0.5f, (float)j + 0.5f));
+				if (dist2 <= 12f && dist2 > 6f)
 				{
 					if (Main.rand.Next(350) == 0 && NPC.CountNPCS(base.mod.NPCType("WalterInfected")) <= 3)
 					{

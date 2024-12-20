@@ -62,15 +62,15 @@ namespace Redemption.Projectiles
 			}
 			else if (Main.rand.Next(2) == 0)
 			{
-				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 31, 0f, 0f, 100, default(Color), 1f);
-				Main.dust[num].scale = 0.1f + (float)Main.rand.Next(5) * 0.1f;
-				Main.dust[num].fadeIn = 1.5f + (float)Main.rand.Next(5) * 0.1f;
-				Main.dust[num].noGravity = true;
-				Main.dust[num].position = base.projectile.Center + Utils.RotatedBy(new Vector2(0f, -(float)base.projectile.height / 2f), (double)base.projectile.rotation, default(Vector2)) * 1.1f;
-				num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 6, 0f, 0f, 100, default(Color), 1f);
-				Main.dust[num].scale = 1f + (float)Main.rand.Next(5) * 0.1f;
-				Main.dust[num].noGravity = true;
-				Main.dust[num].position = base.projectile.Center + Utils.RotatedBy(new Vector2(0f, -(float)base.projectile.height / 2f - 6f), (double)base.projectile.rotation, default(Vector2)) * 1.1f;
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 31, 0f, 0f, 100, default(Color), 1f);
+				Main.dust[dustIndex].scale = 0.1f + (float)Main.rand.Next(5) * 0.1f;
+				Main.dust[dustIndex].fadeIn = 1.5f + (float)Main.rand.Next(5) * 0.1f;
+				Main.dust[dustIndex].noGravity = true;
+				Main.dust[dustIndex].position = base.projectile.Center + Utils.RotatedBy(new Vector2(0f, -(float)base.projectile.height / 2f), (double)base.projectile.rotation, default(Vector2)) * 1.1f;
+				dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 6, 0f, 0f, 100, default(Color), 1f);
+				Main.dust[dustIndex].scale = 1f + (float)Main.rand.Next(5) * 0.1f;
+				Main.dust[dustIndex].noGravity = true;
+				Main.dust[dustIndex].position = base.projectile.Center + Utils.RotatedBy(new Vector2(0f, -(float)base.projectile.height / 2f - 6f), (double)base.projectile.rotation, default(Vector2)) * 1.1f;
 			}
 			base.projectile.ai[0] += 1f;
 			if (base.projectile.ai[0] > 5f)
@@ -96,35 +96,35 @@ namespace Redemption.Projectiles
 			Main.PlaySound(SoundID.Item14, base.projectile.position);
 			for (int i = 0; i < 50; i++)
 			{
-				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 31, 0f, 0f, 100, default(Color), 2f);
-				Main.dust[num].velocity *= 1.4f;
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 31, 0f, 0f, 100, default(Color), 2f);
+				Main.dust[dustIndex].velocity *= 1.4f;
 			}
 			for (int j = 0; j < 80; j++)
 			{
-				int num2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 6, 0f, 0f, 100, default(Color), 3f);
-				Main.dust[num2].noGravity = true;
-				Main.dust[num2].velocity *= 5f;
-				num2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 6, 0f, 0f, 100, default(Color), 2f);
-				Main.dust[num2].velocity *= 3f;
+				int dustIndex2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 6, 0f, 0f, 100, default(Color), 3f);
+				Main.dust[dustIndex2].noGravity = true;
+				Main.dust[dustIndex2].velocity *= 5f;
+				dustIndex2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 6, 0f, 0f, 100, default(Color), 2f);
+				Main.dust[dustIndex2].velocity *= 3f;
 			}
-			for (int k = 0; k < 2; k++)
+			for (int g = 0; g < 2; g++)
 			{
-				int num3 = Gore.NewGore(new Vector2(base.projectile.position.X + (float)(base.projectile.width / 2) - 24f, base.projectile.position.Y + (float)(base.projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-				Main.gore[num3].scale = 1.5f;
-				Main.gore[num3].velocity.X = Main.gore[num3].velocity.X + 1.5f;
-				Main.gore[num3].velocity.Y = Main.gore[num3].velocity.Y + 1.5f;
-				num3 = Gore.NewGore(new Vector2(base.projectile.position.X + (float)(base.projectile.width / 2) - 24f, base.projectile.position.Y + (float)(base.projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-				Main.gore[num3].scale = 1.5f;
-				Main.gore[num3].velocity.X = Main.gore[num3].velocity.X - 1.5f;
-				Main.gore[num3].velocity.Y = Main.gore[num3].velocity.Y + 1.5f;
-				num3 = Gore.NewGore(new Vector2(base.projectile.position.X + (float)(base.projectile.width / 2) - 24f, base.projectile.position.Y + (float)(base.projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-				Main.gore[num3].scale = 1.5f;
-				Main.gore[num3].velocity.X = Main.gore[num3].velocity.X + 1.5f;
-				Main.gore[num3].velocity.Y = Main.gore[num3].velocity.Y - 1.5f;
-				num3 = Gore.NewGore(new Vector2(base.projectile.position.X + (float)(base.projectile.width / 2) - 24f, base.projectile.position.Y + (float)(base.projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-				Main.gore[num3].scale = 1.5f;
-				Main.gore[num3].velocity.X = Main.gore[num3].velocity.X - 1.5f;
-				Main.gore[num3].velocity.Y = Main.gore[num3].velocity.Y - 1.5f;
+				int goreIndex = Gore.NewGore(new Vector2(base.projectile.position.X + (float)(base.projectile.width / 2) - 24f, base.projectile.position.Y + (float)(base.projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+				Main.gore[goreIndex].scale = 1.5f;
+				Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.5f;
+				Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
+				goreIndex = Gore.NewGore(new Vector2(base.projectile.position.X + (float)(base.projectile.width / 2) - 24f, base.projectile.position.Y + (float)(base.projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+				Main.gore[goreIndex].scale = 1.5f;
+				Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X - 1.5f;
+				Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
+				goreIndex = Gore.NewGore(new Vector2(base.projectile.position.X + (float)(base.projectile.width / 2) - 24f, base.projectile.position.Y + (float)(base.projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+				Main.gore[goreIndex].scale = 1.5f;
+				Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.5f;
+				Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y - 1.5f;
+				goreIndex = Gore.NewGore(new Vector2(base.projectile.position.X + (float)(base.projectile.width / 2) - 24f, base.projectile.position.Y + (float)(base.projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+				Main.gore[goreIndex].scale = 1.5f;
+				Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X - 1.5f;
+				Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y - 1.5f;
 			}
 			base.projectile.position.X = base.projectile.position.X + (float)(base.projectile.width / 2);
 			base.projectile.position.Y = base.projectile.position.Y + (float)(base.projectile.height / 2);
@@ -132,89 +132,87 @@ namespace Redemption.Projectiles
 			base.projectile.height = 10;
 			base.projectile.position.X = base.projectile.position.X - (float)(base.projectile.width / 2);
 			base.projectile.position.Y = base.projectile.position.Y - (float)(base.projectile.height / 2);
-			int num4 = 18;
-			int num5 = (int)(base.projectile.position.X / 16f - (float)num4);
-			int num6 = (int)(base.projectile.position.X / 16f + (float)num4);
-			int num7 = (int)(base.projectile.position.Y / 16f - (float)num4);
-			int num8 = (int)(base.projectile.position.Y / 16f + (float)num4);
-			if (num5 < 0)
+			int explosionRadius = 18;
+			int minTileX = (int)(base.projectile.position.X / 16f - (float)explosionRadius);
+			int maxTileX = (int)(base.projectile.position.X / 16f + (float)explosionRadius);
+			int minTileY = (int)(base.projectile.position.Y / 16f - (float)explosionRadius);
+			int maxTileY = (int)(base.projectile.position.Y / 16f + (float)explosionRadius);
+			if (minTileX < 0)
 			{
-				num5 = 0;
+				minTileX = 0;
 			}
-			if (num6 > Main.maxTilesX)
+			if (maxTileX > Main.maxTilesX)
 			{
-				num6 = Main.maxTilesX;
+				maxTileX = Main.maxTilesX;
 			}
-			if (num7 < 0)
+			if (minTileY < 0)
 			{
-				num7 = 0;
+				minTileY = 0;
 			}
-			if (num8 > Main.maxTilesY)
+			if (maxTileY > Main.maxTilesY)
 			{
-				num8 = Main.maxTilesY;
+				maxTileY = Main.maxTilesY;
 			}
-			bool flag = false;
-			for (int l = num5; l <= num6; l++)
+			bool canKillWalls = false;
+			for (int x = minTileX; x <= maxTileX; x++)
 			{
-				for (int m = num7; m <= num8; m++)
+				for (int y = minTileY; y <= maxTileY; y++)
 				{
-					float num9 = Math.Abs((float)l - base.projectile.position.X / 16f);
-					float num10 = Math.Abs((float)m - base.projectile.position.Y / 16f);
-					double num11 = Math.Sqrt((double)(num9 * num9 + num10 * num10));
-					if (num11 < (double)num4 && Main.tile[l, m] != null && Main.tile[l, m].wall == 0)
+					float num = Math.Abs((float)x - base.projectile.position.X / 16f);
+					float diffY = Math.Abs((float)y - base.projectile.position.Y / 16f);
+					if (Math.Sqrt((double)(num * num + diffY * diffY)) < (double)explosionRadius && Main.tile[x, y] != null && Main.tile[x, y].wall == 0)
 					{
-						flag = true;
+						canKillWalls = true;
 						break;
 					}
 				}
 			}
 			AchievementsHelper.CurrentlyMining = true;
-			for (int n = num5; n <= num6; n++)
+			for (int k = minTileX; k <= maxTileX; k++)
 			{
-				for (int num12 = num7; num12 <= num8; num12++)
+				for (int l = minTileY; l <= maxTileY; l++)
 				{
-					float num13 = Math.Abs((float)n - base.projectile.position.X / 16f);
-					float num14 = Math.Abs((float)num12 - base.projectile.position.Y / 16f);
-					double num15 = Math.Sqrt((double)(num13 * num13 + num14 * num14));
-					if (num15 < (double)num4)
+					float num2 = Math.Abs((float)k - base.projectile.position.X / 16f);
+					float diffY2 = Math.Abs((float)l - base.projectile.position.Y / 16f);
+					if (Math.Sqrt((double)(num2 * num2 + diffY2 * diffY2)) < (double)explosionRadius)
 					{
-						bool flag2 = true;
-						if (Main.tile[n, num12] != null && Main.tile[n, num12].active())
+						bool canKillTile = true;
+						if (Main.tile[k, l] != null && Main.tile[k, l].active())
 						{
-							flag2 = true;
-							if (Main.tileDungeon[(int)Main.tile[n, num12].type] || Main.tile[n, num12].type == 88 || Main.tile[n, num12].type == 21 || Main.tile[n, num12].type == 26 || Main.tile[n, num12].type == 107 || Main.tile[n, num12].type == 108 || Main.tile[n, num12].type == 111 || Main.tile[n, num12].type == 226 || Main.tile[n, num12].type == 237 || Main.tile[n, num12].type == 221 || Main.tile[n, num12].type == 222 || Main.tile[n, num12].type == 223 || Main.tile[n, num12].type == 211 || Main.tile[n, num12].type == 404)
+							canKillTile = true;
+							if (Main.tileDungeon[(int)Main.tile[k, l].type] || Main.tile[k, l].type == 88 || Main.tile[k, l].type == 21 || Main.tile[k, l].type == 26 || Main.tile[k, l].type == 107 || Main.tile[k, l].type == 108 || Main.tile[k, l].type == 111 || Main.tile[k, l].type == 226 || Main.tile[k, l].type == 237 || Main.tile[k, l].type == 221 || Main.tile[k, l].type == 222 || Main.tile[k, l].type == 223 || Main.tile[k, l].type == 211 || Main.tile[k, l].type == 404)
 							{
-								flag2 = false;
+								canKillTile = false;
 							}
-							if (!Main.hardMode && Main.tile[n, num12].type == 58)
+							if (!Main.hardMode && Main.tile[k, l].type == 58)
 							{
-								flag2 = false;
+								canKillTile = false;
 							}
-							if (!TileLoader.CanExplode(n, num12))
+							if (!TileLoader.CanExplode(k, l))
 							{
-								flag2 = false;
+								canKillTile = false;
 							}
-							if (flag2)
+							if (canKillTile)
 							{
-								WorldGen.KillTile(n, num12, false, false, false);
-								if (!Main.tile[n, num12].active() && Main.netMode != 0)
+								WorldGen.KillTile(k, l, false, false, false);
+								if (!Main.tile[k, l].active() && Main.netMode != 0)
 								{
-									NetMessage.SendData(17, -1, -1, null, 0, (float)n, (float)num12, 0f, 0, 0, 0);
+									NetMessage.SendData(17, -1, -1, null, 0, (float)k, (float)l, 0f, 0, 0, 0);
 								}
 							}
 						}
-						if (flag2)
+						if (canKillTile)
 						{
-							for (int num16 = n - 1; num16 <= n + 1; num16++)
+							for (int x2 = k - 1; x2 <= k + 1; x2++)
 							{
-								for (int num17 = num12 - 1; num17 <= num12 + 1; num17++)
+								for (int y2 = l - 1; y2 <= l + 1; y2++)
 								{
-									if (Main.tile[num16, num17] != null && Main.tile[num16, num17].wall > 0 && flag && WallLoader.CanExplode(num16, num17, (int)Main.tile[num16, num17].wall))
+									if (Main.tile[x2, y2] != null && Main.tile[x2, y2].wall > 0 && canKillWalls && WallLoader.CanExplode(x2, y2, (int)Main.tile[x2, y2].wall))
 									{
-										WorldGen.KillWall(num16, num17, false);
-										if (Main.tile[num16, num17].wall == 0 && Main.netMode != 0)
+										WorldGen.KillWall(x2, y2, false);
+										if (Main.tile[x2, y2].wall == 0 && Main.netMode != 0)
 										{
-											NetMessage.SendData(17, -1, -1, null, 2, (float)num16, (float)num17, 0f, 0, 0, 0);
+											NetMessage.SendData(17, -1, -1, null, 2, (float)x2, (float)y2, 0f, 0, 0, 0);
 										}
 									}
 								}

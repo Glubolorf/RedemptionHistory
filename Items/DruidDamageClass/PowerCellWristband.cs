@@ -9,7 +9,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Power Cell Wristband");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Fueled with the sun itself'\n15% increased druidic damage\n15% increased druidic critical strike chance");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Fueled with the sun itself'\n10% increased druidic damage\n10% increased druidic critical strike chance");
 		}
 
 		public override void SetDefaults()
@@ -35,8 +35,8 @@ namespace Redemption.Items.DruidDamageClass
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
-			druidDamagePlayer.druidDamage += 0.2f;
-			druidDamagePlayer.druidCrit += 25;
+			druidDamagePlayer.druidDamage += 0.1f;
+			druidDamagePlayer.druidCrit += 10;
 		}
 	}
 }

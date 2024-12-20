@@ -23,49 +23,49 @@ namespace Redemption
 				BaseWorldGenTex.colorToSlope[new Color(255, 255, 255)] = -1;
 				BaseWorldGenTex.colorToSlope[new Color(0, 0, 0)] = -2;
 			}
-			Color[] array = new Color[tileTex.Width * tileTex.Height];
-			tileTex.GetData<Color>(0, new Rectangle?(tileTex.Bounds), array, 0, tileTex.Width * tileTex.Height);
-			Color[] array2 = (wallTex != null) ? new Color[wallTex.Width * wallTex.Height] : null;
-			if (array2 != null)
+			Color[] tileData = new Color[tileTex.Width * tileTex.Height];
+			tileTex.GetData<Color>(0, new Rectangle?(tileTex.Bounds), tileData, 0, tileTex.Width * tileTex.Height);
+			Color[] wallData = (wallTex != null) ? new Color[wallTex.Width * wallTex.Height] : null;
+			if (wallData != null)
 			{
-				wallTex.GetData<Color>(0, new Rectangle?(wallTex.Bounds), array2, 0, wallTex.Width * wallTex.Height);
+				wallTex.GetData<Color>(0, new Rectangle?(wallTex.Bounds), wallData, 0, wallTex.Width * wallTex.Height);
 			}
-			Color[] array3 = (liquidTex != null) ? new Color[liquidTex.Width * liquidTex.Height] : null;
-			if (array3 != null)
+			Color[] liquidData = (liquidTex != null) ? new Color[liquidTex.Width * liquidTex.Height] : null;
+			if (liquidData != null)
 			{
-				liquidTex.GetData<Color>(0, new Rectangle?(liquidTex.Bounds), array3, 0, liquidTex.Width * liquidTex.Height);
+				liquidTex.GetData<Color>(0, new Rectangle?(liquidTex.Bounds), liquidData, 0, liquidTex.Width * liquidTex.Height);
 			}
-			Color[] array4 = (slopeTex != null) ? new Color[slopeTex.Width * slopeTex.Height] : null;
-			if (array4 != null)
+			Color[] slopeData = (slopeTex != null) ? new Color[slopeTex.Width * slopeTex.Height] : null;
+			if (slopeData != null)
 			{
-				slopeTex.GetData<Color>(0, new Rectangle?(slopeTex.Bounds), array4, 0, slopeTex.Width * slopeTex.Height);
+				slopeTex.GetData<Color>(0, new Rectangle?(slopeTex.Bounds), slopeData, 0, slopeTex.Width * slopeTex.Height);
 			}
-			int num = 0;
-			int num2 = 0;
-			TexGen texGen = new TexGen(tileTex.Width, tileTex.Height);
-			for (int i = 0; i < array.Length; i++)
+			int x = 0;
+			int y = 0;
+			TexGen gen = new TexGen(tileTex.Width, tileTex.Height);
+			for (int i = 0; i < tileData.Length; i++)
 			{
-				Color key = array[i];
-				Color key2 = (wallTex == null) ? Color.Black : array2[i];
-				Color key3 = (liquidTex == null) ? Color.Black : array3[i];
-				Color key4 = (slopeTex == null) ? Color.Black : array4[i];
-				int id = colorToTile.ContainsKey(key) ? colorToTile[key] : -1;
-				int wid = (colorToWall != null && colorToWall.ContainsKey(key2)) ? colorToWall[key2] : -1;
-				int num3 = (BaseWorldGenTex.colorToLiquid != null && BaseWorldGenTex.colorToLiquid.ContainsKey(key3)) ? BaseWorldGenTex.colorToLiquid[key3] : -1;
-				int sl = (BaseWorldGenTex.colorToSlope != null && BaseWorldGenTex.colorToSlope.ContainsKey(key4)) ? BaseWorldGenTex.colorToSlope[key4] : -1;
-				texGen.tileGen[num, num2] = new TileInfo(id, 0, wid, num3, (num3 == -1) ? 0 : 255, sl, -1);
-				num++;
-				if (num >= tileTex.Width)
+				Color tileColor = tileData[i];
+				Color wallColor = (wallTex == null) ? Color.Black : wallData[i];
+				Color liquidColor = (liquidTex == null) ? Color.Black : liquidData[i];
+				Color slopeColor = (slopeTex == null) ? Color.Black : slopeData[i];
+				int tileID = colorToTile.ContainsKey(tileColor) ? colorToTile[tileColor] : -1;
+				int wallID = (colorToWall != null && colorToWall.ContainsKey(wallColor)) ? colorToWall[wallColor] : -1;
+				int liquidID = (BaseWorldGenTex.colorToLiquid != null && BaseWorldGenTex.colorToLiquid.ContainsKey(liquidColor)) ? BaseWorldGenTex.colorToLiquid[liquidColor] : -1;
+				int slopeID = (BaseWorldGenTex.colorToSlope != null && BaseWorldGenTex.colorToSlope.ContainsKey(slopeColor)) ? BaseWorldGenTex.colorToSlope[slopeColor] : -1;
+				gen.tileGen[x, y] = new TileInfo(tileID, 0, wallID, liquidID, (liquidID == -1) ? 0 : 255, slopeID, -1);
+				x++;
+				if (x >= tileTex.Width)
 				{
-					num = 0;
-					num2++;
+					x = 0;
+					y++;
 				}
-				if (num2 >= tileTex.Height)
+				if (y >= tileTex.Height)
 				{
 					break;
 				}
 			}
-			return texGen;
+			return gen;
 		}
 
 		public static Dictionary<Color, int> colorToLiquid;

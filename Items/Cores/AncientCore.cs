@@ -24,7 +24,7 @@ namespace Redemption.Items.Cores
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
+			DruidDamagePlayer modPlayer = DruidDamagePlayer.ModPlayer(player);
 			player.pickSpeed *= 1.05f;
 			player.AddBuff(11, 2, true);
 			if (player.ZoneOverworldHeight || player.ZoneSkyHeight)
@@ -34,7 +34,7 @@ namespace Redemption.Items.Cores
 				player.bleed = true;
 				return;
 			}
-			druidDamagePlayer.druidDamage *= 1.05f;
+			modPlayer.druidDamage *= 1.05f;
 			player.magicDamage *= 1.05f;
 			player.meleeDamage *= 1.05f;
 			player.minionDamage *= 1.05f;

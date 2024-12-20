@@ -33,11 +33,11 @@ namespace Redemption.Items.Weapons
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
 		{
 			Main.PlaySound(SoundID.Item89, target.position);
-			int num = 20;
-			for (int i = 0; i < num; i++)
+			int pieCut = 20;
+			for (int i = 0; i < pieCut; i++)
 			{
-				int num2 = Projectile.NewProjectile(target.position.X, target.position.Y, 0f, 0f, base.mod.ProjectileType("ShockwavePro1"), damage, knockBack, Main.myPlayer, 0f, 0f);
-				Main.projectile[num2].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(50f, 0f), (float)i / (float)num * 6.28f);
+				int projID = Projectile.NewProjectile(target.position.X, target.position.Y, 0f, 0f, base.mod.ProjectileType("ShockwavePro1"), damage, knockBack, Main.myPlayer, 0f, 0f);
+				Main.projectile[projID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(50f, 0f), (float)i / (float)pieCut * 6.28f);
 			}
 		}
 	}

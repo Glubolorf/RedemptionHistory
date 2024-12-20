@@ -24,7 +24,7 @@ namespace Redemption.Items.Cores
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
+			DruidDamagePlayer modPlayer = DruidDamagePlayer.ModPlayer(player);
 			player.rangedDamage *= 1.05f;
 			player.buffImmune[46] = true;
 			player.buffImmune[47] = true;
@@ -40,7 +40,7 @@ namespace Redemption.Items.Cores
 			}
 			if (player.ZoneSnow)
 			{
-				druidDamagePlayer.druidDamage *= 1.05f;
+				modPlayer.druidDamage *= 1.05f;
 				player.magicDamage *= 1.05f;
 				player.meleeDamage *= 1.05f;
 				player.minionDamage *= 1.05f;
@@ -52,7 +52,7 @@ namespace Redemption.Items.Cores
 			}
 			if (player.ZoneSnow && Main.raining)
 			{
-				druidDamagePlayer.druidDamage *= 1.15f;
+				modPlayer.druidDamage *= 1.15f;
 				player.magicDamage *= 1.15f;
 				player.meleeDamage *= 1.15f;
 				player.minionDamage *= 1.15f;

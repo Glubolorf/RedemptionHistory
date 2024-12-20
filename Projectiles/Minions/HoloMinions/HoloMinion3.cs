@@ -44,12 +44,12 @@ namespace Redemption.Projectiles.Minions.HoloMinions
 		public override void CheckActive()
 		{
 			Player player = Main.player[base.projectile.owner];
-			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
+			RedePlayer modPlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
 			if (player.dead)
 			{
-				redePlayer.holoMinion = false;
+				modPlayer.holoMinion = false;
 			}
-			if (redePlayer.holoMinion)
+			if (modPlayer.holoMinion)
 			{
 				base.projectile.timeLeft = 2;
 			}

@@ -18,18 +18,16 @@ namespace Redemption.Tiles
 			this.minPick = 100;
 			this.mineResist = 1.4f;
 			this.soundType = 21;
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Dragon-Lead Chuck");
+			base.CreateMapEntryName(null).SetDefault("Dragon-Lead Chuck");
 			base.AddMapEntry(new Color(251, 177, 81), null);
 		}
 
 		public override void NearbyEffects(int i, int j, bool closer)
 		{
-			Player localPlayer = Main.LocalPlayer;
-			int num = (int)Vector2.Distance(localPlayer.Center / 16f, new Vector2((float)i, (float)j));
-			if (num <= 2)
+			Player player = Main.LocalPlayer;
+			if ((int)Vector2.Distance(player.Center / 16f, new Vector2((float)i, (float)j)) <= 2)
 			{
-				localPlayer.AddBuff(24, Main.rand.Next(10, 20), true);
+				player.AddBuff(24, Main.rand.Next(10, 20), true);
 			}
 		}
 

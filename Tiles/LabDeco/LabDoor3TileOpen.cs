@@ -62,16 +62,31 @@ namespace Redemption.Tiles.LabDeco
 			TileObjectData.addTile((int)base.Type);
 			base.AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
 			TileID.Sets.HousingWalls[(int)base.Type] = true;
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Small Laboratory Door");
-			base.AddMapEntry(new Color(200, 200, 200), modTranslation);
-			this.dustType = 78;
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Small Laboratory Door");
+			base.AddMapEntry(new Color(200, 200, 200), name);
+			this.dustType = 226;
 			this.disableSmartCursor = true;
 			this.adjTiles = new int[]
 			{
 				11
 			};
 			this.closeDoorID = base.mod.TileType("LabDoor3TileClosed");
+		}
+
+		public override bool CanKillTile(int i, int j, ref bool blockDamaged)
+		{
+			return false;
+		}
+
+		public override bool CanExplode(int i, int j)
+		{
+			return false;
+		}
+
+		public override bool HasSmartInteract()
+		{
+			return true;
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -82,6 +97,14 @@ namespace Redemption.Tiles.LabDeco
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
 			Item.NewItem(i * 16, j * 16, 32, 48, base.mod.ItemType("LabDoor3"), 1, false, 0, false, false);
+		}
+
+		public override void MouseOver(int i, int j)
+		{
+			Player localPlayer = Main.LocalPlayer;
+			localPlayer.noThrow = 2;
+			localPlayer.showItemIcon = true;
+			localPlayer.showItemIcon2 = base.mod.ItemType("LabDoor3");
 		}
 	}
 }

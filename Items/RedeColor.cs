@@ -19,6 +19,19 @@ namespace Redemption.Items
 			}
 		}
 
+		public static Color GirusTier
+		{
+			get
+			{
+				return BaseUtility.MultiLerpColor((float)(Main.player[Main.myPlayer].miscCounter % 100) / 100f, new Color[]
+				{
+					new Color(255, 0, 0),
+					new Color(196, 70, 30),
+					new Color(255, 0, 0)
+				});
+			}
+		}
+
 		public static Color SoullessColour
 		{
 			get
@@ -36,14 +49,14 @@ namespace Redemption.Items
 		{
 			get
 			{
-				Color result = BaseUtility.MultiLerpColor((float)(Main.player[Main.myPlayer].miscCounter % 100) / 100f, new Color[]
+				Color c = BaseUtility.MultiLerpColor((float)(Main.player[Main.myPlayer].miscCounter % 100) / 100f, new Color[]
 				{
 					Color.White,
 					Color.White * 0.7f,
 					Color.White
 				});
-				result.A = byte.MaxValue;
-				return result;
+				c.A = byte.MaxValue;
+				return c;
 			}
 		}
 	}

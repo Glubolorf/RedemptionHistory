@@ -29,7 +29,7 @@ namespace Redemption.Items.Weapons
 			base.item.scale = 1f;
 			base.item.rare = 5;
 			base.item.UseSound = SoundID.Item1;
-			base.item.shoot = base.mod.ProjectileType<GradivinaPro>();
+			base.item.shoot = ModContent.ProjectileType<GradivinaPro>();
 			base.item.value = Item.sellPrice(0, 7, 0, 0);
 			base.item.noMelee = true;
 			base.item.noUseGraphic = true;
@@ -62,26 +62,26 @@ namespace Redemption.Items.Weapons
 			modRecipe.AddTile(134);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(550, 1);
-			modRecipe.AddIngredient(520, 10);
-			modRecipe.AddIngredient(521, 10);
-			modRecipe.AddIngredient(178, 5);
-			modRecipe.AddIngredient(706, 10);
-			modRecipe.AddTile(134);
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.AddIngredient(550, 1);
+			modRecipe2.AddIngredient(520, 10);
+			modRecipe2.AddIngredient(521, 10);
+			modRecipe2.AddIngredient(178, 5);
+			modRecipe2.AddIngredient(706, 10);
+			modRecipe2.AddTile(134);
+			modRecipe2.SetResult(this, 1);
+			modRecipe2.AddRecipe();
 		}
 
 		public override bool CanUseItem(Player player)
 		{
 			if (player.altFunctionUse == 2)
 			{
-				base.item.shoot = base.mod.ProjectileType<GradivinaPro3>();
+				base.item.shoot = ModContent.ProjectileType<GradivinaPro3>();
 			}
 			else
 			{
-				base.item.shoot = base.mod.ProjectileType<GradivinaPro>();
+				base.item.shoot = ModContent.ProjectileType<GradivinaPro>();
 			}
 			return player.ownedProjectileCounts[base.item.shoot] < 1;
 		}

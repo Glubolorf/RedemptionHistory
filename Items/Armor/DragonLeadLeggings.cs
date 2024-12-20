@@ -14,7 +14,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Dragon-Lead Leggings");
-			base.Tooltip.SetDefault("[c/daf73a:---Druid Class---]\n6% increased ranged damage\n8% increased druidic damage\nImmune to most fire debuffs");
+			base.Tooltip.SetDefault("[c/daf73a:---Druid Class---]\n2% increased ranged damage\n5% increased druidic damage\nImmune to most fire debuffs");
 		}
 
 		public override void SetDefaults()
@@ -23,14 +23,13 @@ namespace Redemption.Items.Armor
 			base.item.height = 18;
 			base.item.value = Item.sellPrice(0, 7, 50, 0);
 			base.item.rare = 4;
-			base.item.defense = 8;
+			base.item.defense = 5;
 		}
 
 		public override void UpdateEquip(Player player)
 		{
-			player.rangedDamage *= 1.08f;
-			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
-			druidDamagePlayer.druidDamage += 0.08f;
+			player.rangedDamage *= 1.02f;
+			DruidDamagePlayer.ModPlayer(player).druidDamage += 0.05f;
 			player.buffImmune[24] = true;
 			player.buffImmune[67] = true;
 		}

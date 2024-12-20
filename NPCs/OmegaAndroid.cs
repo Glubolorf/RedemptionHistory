@@ -35,7 +35,7 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.OverworldNightMonster.Chance * ((Main.hardMode && RedeWorld.downedVlitch3) ? 0.03f : 0f);
+			return SpawnCondition.OverworldNightMonster.Chance * ((!RedeWorld.girusCloaked && Main.hardMode && RedeWorld.downedVlitch3) ? 0.03f : 0f);
 		}
 
 		public override void AI()
@@ -55,8 +55,7 @@ namespace Redemption.NPCs
 					this.fistFrame = 0;
 				}
 			}
-			float num = base.npc.Distance(Main.player[base.npc.target].Center);
-			if (num <= 500f && Main.rand.Next(150) == 0 && !this.fistAttack)
+			if (base.npc.Distance(Main.player[base.npc.target].Center) <= 500f && Main.rand.Next(150) == 0 && !this.fistAttack)
 			{
 				this.fistAttack = true;
 			}
@@ -71,7 +70,7 @@ namespace Redemption.NPCs
 				this.fistStart = true;
 				base.npc.aiStyle = 0;
 				base.npc.velocity.X = 0f;
-				if (this.fistTimer == 1 && !Config.NoCombatText)
+				if (this.fistTimer == 1 && !RedeConfigClient.Instance.NoCombatText)
 				{
 					CombatText.NewText(base.npc.getRect(), Color.Red, "Rocket Fist!", true, true);
 				}
@@ -80,14 +79,14 @@ namespace Redemption.NPCs
 					if (base.npc.direction == -1)
 					{
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-						int num2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 29f, base.npc.position.Y + 21f), new Vector2(-6f, 0f), base.mod.ProjectileType("OmegaARocketFist"), 50, 3f, 255, 0f, 0f);
-						Main.projectile[num2].netUpdate = true;
+						int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 29f, base.npc.position.Y + 21f), new Vector2(-6f, 0f), base.mod.ProjectileType("OmegaARocketFist"), 50, 3f, 255, 0f, 0f);
+						Main.projectile[p].netUpdate = true;
 					}
 					else
 					{
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-						int num3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 11f, base.npc.position.Y + 21f), new Vector2(6f, 0f), base.mod.ProjectileType("OmegaARocketFist"), 50, 3f, 255, 0f, 0f);
-						Main.projectile[num3].netUpdate = true;
+						int p2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 11f, base.npc.position.Y + 21f), new Vector2(6f, 0f), base.mod.ProjectileType("OmegaARocketFist"), 50, 3f, 255, 0f, 0f);
+						Main.projectile[p2].netUpdate = true;
 					}
 				}
 				if (this.fistTimer >= 40)
@@ -102,11 +101,11 @@ namespace Redemption.NPCs
 			if (base.npc.ai[2] != 0f && base.npc.ai[3] != 0f)
 			{
 				Main.PlaySound(SoundID.Item8, base.npc.position);
-				for (int i = 0; i < 25; i++)
+				for (int num67 = 0; num67 < 25; num67++)
 				{
-					int num4 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 235, 0f, 0f, 100, default(Color), 2.5f);
-					Main.dust[num4].velocity *= 3f;
-					Main.dust[num4].noGravity = true;
+					int num68 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 235, 0f, 0f, 100, default(Color), 2.5f);
+					Main.dust[num68].velocity *= 3f;
+					Main.dust[num68].noGravity = true;
 				}
 				base.npc.position.X = base.npc.ai[2] * 16f - (float)(base.npc.width / 2) + 8f;
 				base.npc.position.Y = base.npc.ai[3] * 16f - (float)base.npc.height;
@@ -115,11 +114,11 @@ namespace Redemption.NPCs
 				base.npc.ai[2] = 0f;
 				base.npc.ai[3] = 0f;
 				Main.PlaySound(SoundID.Item8, base.npc.position);
-				for (int j = 0; j < 25; j++)
+				for (int num69 = 0; num69 < 25; num69++)
 				{
-					int num5 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 235, 0f, 0f, 100, default(Color), 2.5f);
-					Main.dust[num5].velocity *= 3f;
-					Main.dust[num5].noGravity = true;
+					int num70 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 235, 0f, 0f, 100, default(Color), 2.5f);
+					Main.dust[num70].velocity *= 3f;
+					Main.dust[num70].noGravity = true;
 				}
 			}
 			if (Math.Abs(base.npc.position.X - Main.player[base.npc.target].position.X) + Math.Abs(base.npc.position.Y - Main.player[base.npc.target].position.Y) > 2000f)
@@ -129,31 +128,30 @@ namespace Redemption.NPCs
 			if (base.npc.ai[0] >= 650f && Main.netMode != 1)
 			{
 				base.npc.ai[0] = 1f;
-				int num6 = (int)Main.player[base.npc.target].position.X / 16;
-				int num7 = (int)Main.player[base.npc.target].position.Y / 16;
-				int num8 = (int)base.npc.position.X / 16;
-				int num9 = (int)base.npc.position.Y / 16;
-				int num10 = 40;
-				int num11 = 0;
-				for (int k = 0; k < 100; k++)
+				int playerTilePositionX = (int)Main.player[base.npc.target].position.X / 16;
+				int playerTilePositionY = (int)Main.player[base.npc.target].position.Y / 16;
+				int npcTilePositionX = (int)base.npc.position.X / 16;
+				int npcTilePositionY = (int)base.npc.position.Y / 16;
+				int playerTargetShift = 40;
+				int num71 = 0;
+				for (int s = 0; s < 100; s++)
 				{
-					num11++;
-					int num12 = Main.rand.Next(num6 - num10, num6 + num10);
-					int num13 = Main.rand.Next(num7 - num10, num7 + num10);
-					for (int l = num13; l < num7 + num10; l++)
+					num71++;
+					int nearPlayerX = Main.rand.Next(playerTilePositionX - playerTargetShift, playerTilePositionX + playerTargetShift);
+					for (int num72 = Main.rand.Next(playerTilePositionY - playerTargetShift, playerTilePositionY + playerTargetShift); num72 < playerTilePositionY + playerTargetShift; num72++)
 					{
-						if ((num12 < num6 - 12 || num12 > num6 + 12) && (l < num9 - 1 || l > num9 + 1 || num12 < num8 - 1 || num12 > num8 + 1) && Main.tile[num12, l].nactive())
+						if ((nearPlayerX < playerTilePositionX - 12 || nearPlayerX > playerTilePositionX + 12) && (num72 < npcTilePositionY - 1 || num72 > npcTilePositionY + 1 || nearPlayerX < npcTilePositionX - 1 || nearPlayerX > npcTilePositionX + 1) && Main.tile[nearPlayerX, num72].nactive())
 						{
-							bool flag = true;
-							if (Main.tile[num12, l - 1].lava())
+							bool flag5 = true;
+							if (Main.tile[nearPlayerX, num72 - 1].lava())
 							{
-								flag = false;
+								flag5 = false;
 							}
-							if (flag && Main.tileSolid[(int)Main.tile[num12, l].type] && !Collision.SolidTiles(num12 - 1, num12 + 1, l - 4, l - 1))
+							if (flag5 && Main.tileSolid[(int)Main.tile[nearPlayerX, num72].type] && !Collision.SolidTiles(nearPlayerX - 1, nearPlayerX + 1, num72 - 4, num72 - 1))
 							{
 								base.npc.ai[1] = 20f;
-								base.npc.ai[2] = (float)num12;
-								base.npc.ai[3] = (float)l - 1f;
+								base.npc.ai[2] = (float)nearPlayerX;
+								base.npc.ai[3] = (float)num72 - 1f;
 								break;
 							}
 						}
@@ -190,24 +188,23 @@ namespace Redemption.NPCs
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/OmegaAndroid_Glow");
-			Texture2D texture2 = base.mod.GetTexture("NPCs/OmegaAndroidFistRocket");
-			Texture2D texture3 = base.mod.GetTexture("NPCs/OmegaAndroidFistRocket_Glow");
-			SpriteEffects spriteEffects = (base.npc.spriteDirection == -1) ? 0 : 1;
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D glowMask = base.mod.GetTexture("NPCs/OmegaAndroid_Glow");
+			Texture2D fistAni = base.mod.GetTexture("NPCs/OmegaAndroidFistRocket");
+			Texture2D fistGlow = base.mod.GetTexture("NPCs/OmegaAndroidFistRocket_Glow");
+			SpriteEffects effects = (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 			if (!this.fistStart)
 			{
-				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
-				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, spriteEffects, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				spriteBatch.Draw(glowMask, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, effects, 0f);
 			}
 			if (this.fistStart)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num = texture2.Height / 8;
-				int num2 = num * this.fistFrame;
-				Main.spriteBatch.Draw(texture2, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture2.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture2.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
-				Main.spriteBatch.Draw(texture3, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture2.Width, num)), base.npc.GetAlpha(Color.White), base.npc.rotation, new Vector2((float)texture2.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num214 = fistAni.Height / 8;
+				int y6 = num214 * this.fistFrame;
+				Main.spriteBatch.Draw(fistAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, fistAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)fistAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				Main.spriteBatch.Draw(fistGlow, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, fistAni.Width, num214)), base.npc.GetAlpha(Color.White), base.npc.rotation, new Vector2((float)fistAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
 		}

@@ -62,9 +62,9 @@ namespace Redemption.Tiles
 			TileObjectData.addTile((int)base.Type);
 			base.AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
 			TileID.Sets.HousingWalls[(int)base.Type] = true;
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Ancient Wood Door");
-			base.AddMapEntry(new Color(200, 200, 200), modTranslation);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Ancient Wood Door");
+			base.AddMapEntry(new Color(200, 200, 200), name);
 			this.dustType = 78;
 			this.disableSmartCursor = true;
 			this.adjTiles = new int[]

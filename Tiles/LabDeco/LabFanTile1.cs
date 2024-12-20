@@ -30,9 +30,9 @@ namespace Redemption.Tiles.LabDeco
 			this.minPick = 500;
 			this.mineResist = 3f;
 			this.disableSmartCursor = true;
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Lab Fan");
-			base.AddMapEntry(new Color(80, 80, 80), modTranslation);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Lab Fan");
+			base.AddMapEntry(new Color(80, 80, 80), name);
 			this.animationFrameHeight = 36;
 		}
 

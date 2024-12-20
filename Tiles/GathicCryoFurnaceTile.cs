@@ -17,9 +17,9 @@ namespace Redemption.Tiles
 			Main.tileLavaDeath[(int)base.Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
 			TileObjectData.addTile((int)base.Type);
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Gathic Cryo-Furnace");
-			base.AddMapEntry(new Color(200, 200, 200), modTranslation);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Gathic Cryo-Furnace");
+			base.AddMapEntry(new Color(200, 200, 200), name);
 			this.dustType = 80;
 			this.disableSmartCursor = true;
 		}

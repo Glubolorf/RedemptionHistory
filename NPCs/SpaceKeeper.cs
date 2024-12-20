@@ -45,18 +45,18 @@ namespace Redemption.NPCs
 			{
 				for (int i = 0; i < 5; i++)
 				{
-					int num = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 226, 0f, 0f, 100, default(Color), 1.5f);
-					Main.dust[num].velocity *= 1.9f;
+					int dustIndex = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 226, 0f, 0f, 100, default(Color), 1.5f);
+					Main.dust[dustIndex].velocity *= 1.9f;
 				}
 				for (int j = 0; j < 25; j++)
 				{
-					int num2 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 6, 0f, 0f, 100, default(Color), 1.2f);
-					Main.dust[num2].velocity *= 1.8f;
+					int dustIndex2 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 6, 0f, 0f, 100, default(Color), 1.2f);
+					Main.dust[dustIndex2].velocity *= 1.8f;
 				}
 				for (int k = 0; k < 15; k++)
 				{
-					int num3 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 31, 0f, 0f, 100, default(Color), 1.2f);
-					Main.dust[num3].velocity *= 1.8f;
+					int dustIndex3 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 31, 0f, 0f, 100, default(Color), 1.2f);
+					Main.dust[dustIndex3].velocity *= 1.8f;
 				}
 			}
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 226, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
@@ -104,8 +104,8 @@ namespace Redemption.NPCs
 			{
 				for (int i = 0; i < 15; i++)
 				{
-					int num = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 226, 0f, 0f, 100, default(Color), 1.5f);
-					Main.dust[num].velocity *= 2.9f;
+					int dustIndex = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 226, 0f, 0f, 100, default(Color), 1.5f);
+					Main.dust[dustIndex].velocity *= 2.9f;
 				}
 			}
 			if (this.timer >= 210)
@@ -117,36 +117,36 @@ namespace Redemption.NPCs
 				base.npc.velocity.X = 0f;
 				base.npc.velocity.Y = 0f;
 				this.attackTimer++;
-				if (this.attackTimer == 1 && !Config.NoCombatText)
+				if (this.attackTimer == 1 && !RedeConfigClient.Instance.NoCombatText)
 				{
 					CombatText.NewText(base.npc.getRect(), Colors.RarityCyan, "Charging...", true, true);
 				}
 				if (this.attackTimer == 30)
 				{
-					if (Config.NoCombatText)
+					if (RedeConfigClient.Instance.NoCombatText)
 					{
 						CombatText.NewText(base.npc.getRect(), Colors.RarityCyan, "Burst!", true, true);
 					}
 					if (base.npc.direction == -1)
 					{
 						Main.PlaySound(SoundID.Item91, (int)base.npc.position.X, (int)base.npc.position.Y);
-						int num2 = 4;
-						for (int j = 0; j < num2; j++)
+						int pieCut = 4;
+						for (int j = 0; j < pieCut; j++)
 						{
-							int num3 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, 462, 30, 0f, 255, 0f, 0f);
-							Main.projectile[num3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(8f, 0f), (float)j / (float)num2 * 6.28f);
-							Main.projectile[num3].netUpdate = true;
+							int projID = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, 462, 30, 0f, 255, 0f, 0f);
+							Main.projectile[projID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(8f, 0f), (float)j / (float)pieCut * 6.28f);
+							Main.projectile[projID].netUpdate = true;
 						}
 					}
 					else
 					{
 						Main.PlaySound(SoundID.Item91, (int)base.npc.position.X, (int)base.npc.position.Y);
-						int num4 = 4;
-						for (int k = 0; k < num4; k++)
+						int pieCut2 = 4;
+						for (int k = 0; k < pieCut2; k++)
 						{
-							int num5 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, 462, 30, 0f, 255, 0f, 0f);
-							Main.projectile[num5].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(8f, 0f), (float)k / (float)num4 * 6.28f);
-							Main.projectile[num5].netUpdate = true;
+							int projID2 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, 462, 30, 0f, 255, 0f, 0f);
+							Main.projectile[projID2].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(8f, 0f), (float)k / (float)pieCut2 * 6.28f);
+							Main.projectile[projID2].netUpdate = true;
 						}
 					}
 				}
@@ -155,23 +155,23 @@ namespace Redemption.NPCs
 					if (base.npc.direction == -1)
 					{
 						Main.PlaySound(SoundID.Item91, (int)base.npc.position.X, (int)base.npc.position.Y);
-						int num6 = 8;
-						for (int l = 0; l < num6; l++)
+						int pieCut3 = 8;
+						for (int l = 0; l < pieCut3; l++)
 						{
-							int num7 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, 462, 30, 0f, 255, 0f, 0f);
-							Main.projectile[num7].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(4f, 0f), (float)l / (float)num6 * 6.28f);
-							Main.projectile[num7].netUpdate = true;
+							int projID3 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, 462, 30, 0f, 255, 0f, 0f);
+							Main.projectile[projID3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(4f, 0f), (float)l / (float)pieCut3 * 6.28f);
+							Main.projectile[projID3].netUpdate = true;
 						}
 					}
 					else
 					{
 						Main.PlaySound(SoundID.Item91, (int)base.npc.position.X, (int)base.npc.position.Y);
-						int num8 = 8;
-						for (int m = 0; m < num8; m++)
+						int pieCut4 = 8;
+						for (int m = 0; m < pieCut4; m++)
 						{
-							int num9 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, 462, 30, 0f, 255, 0f, 0f);
-							Main.projectile[num9].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(4f, 0f), (float)m / (float)num8 * 6.28f);
-							Main.projectile[num9].netUpdate = true;
+							int projID4 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, 462, 30, 0f, 255, 0f, 0f);
+							Main.projectile[projID4].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(4f, 0f), (float)m / (float)pieCut4 * 6.28f);
+							Main.projectile[projID4].netUpdate = true;
 						}
 					}
 				}
@@ -192,21 +192,20 @@ namespace Redemption.NPCs
 		private void Move(Vector2 offset)
 		{
 			this.speed = 12f;
-			Vector2 vector = this.player.Center + offset;
-			Vector2 vector2 = vector - base.npc.Center;
-			float num = this.Magnitude(vector2);
-			if (num > this.speed)
+			Vector2 move = this.player.Center + offset - base.npc.Center;
+			float magnitude = this.Magnitude(move);
+			if (magnitude > this.speed)
 			{
-				vector2 *= this.speed / num;
+				move *= this.speed / magnitude;
 			}
-			float num2 = 9f;
-			vector2 = (base.npc.velocity * num2 + vector2) / (num2 + 1f);
-			num = this.Magnitude(vector2);
-			if (num > this.speed)
+			float turnResistance = 9f;
+			move = (base.npc.velocity * turnResistance + move) / (turnResistance + 1f);
+			magnitude = this.Magnitude(move);
+			if (magnitude > this.speed)
 			{
-				vector2 *= this.speed / num;
+				move *= this.speed / magnitude;
 			}
-			base.npc.velocity = vector2;
+			base.npc.velocity = move;
 		}
 
 		private void DespawnHandler()
@@ -222,26 +221,26 @@ namespace Redemption.NPCs
 					{
 						base.npc.timeLeft = 10;
 					}
+					return;
 				}
 			}
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/SpaceKeeperCharge");
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D slashAni = base.mod.GetTexture("NPCs/SpaceKeeperCharge");
 			int spriteDirection = base.npc.spriteDirection;
 			if (!this.targeted)
 			{
-				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.targeted)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num = texture.Height / 4;
-				int num2 = num * this.chargeFrame;
-				Main.spriteBatch.Draw(texture, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num214 = slashAni.Height / 4;
+				int y6 = num214 * this.chargeFrame;
+				Main.spriteBatch.Draw(slashAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, slashAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)slashAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
 		}

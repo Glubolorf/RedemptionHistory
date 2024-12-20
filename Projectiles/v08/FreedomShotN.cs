@@ -32,10 +32,16 @@ namespace Redemption.Projectiles.v08
 				dust.velocity += base.projectile.velocity * 0.3f;
 				dust.velocity *= 0.2f;
 			}
-			if (++base.projectile.frameCounter >= 5)
+			Projectile projectile = base.projectile;
+			int num = projectile.frameCounter + 1;
+			projectile.frameCounter = num;
+			if (num >= 5)
 			{
 				base.projectile.frameCounter = 0;
-				if (++base.projectile.frame >= 2)
+				Projectile projectile2 = base.projectile;
+				num = projectile2.frame + 1;
+				projectile2.frame = num;
+				if (num >= 2)
 				{
 					base.projectile.frame = 0;
 				}
@@ -46,11 +52,11 @@ namespace Redemption.Projectiles.v08
 		public override void Kill(int timeLeft)
 		{
 			Main.PlaySound(SoundID.DD2_ExplosiveTrapExplode, base.projectile.position);
-			for (int i = 0; i < 20; i++)
+			for (int index = 0; index < 20; index++)
 			{
-				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 58, 0f, 0f, 100, default(Color), 1f);
-				Main.dust[num].velocity *= 1.1f;
-				Main.dust[num].scale *= 0.99f;
+				int index2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 58, 0f, 0f, 100, default(Color), 1f);
+				Main.dust[index2].velocity *= 1.1f;
+				Main.dust[index2].scale *= 0.99f;
 			}
 		}
 	}

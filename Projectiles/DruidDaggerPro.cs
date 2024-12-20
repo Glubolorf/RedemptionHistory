@@ -38,10 +38,10 @@ namespace Redemption.Projectiles
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
 			Player player = Main.player[base.projectile.owner];
-			int crit2 = player.HeldItem.crit;
-			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref crit2);
-			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref crit2);
-			if (crit2 >= 100 || Main.rand.Next(1, 101) <= crit2)
+			int critChance = player.HeldItem.crit;
+			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref critChance);
+			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref critChance);
+			if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
 			{
 				crit = true;
 			}
@@ -60,22 +60,22 @@ namespace Redemption.Projectiles
 		public override void Kill(int timeLeft)
 		{
 			Main.PlaySound(0, (int)base.projectile.position.X, (int)base.projectile.position.Y, 1, 1f, 0f);
-			Vector2 vector = base.projectile.position;
-			Vector2 vector2 = Utils.ToRotationVector2(base.projectile.rotation - MathHelper.ToRadians(90f));
-			vector += vector2 * 16f;
+			Vector2 usePos = base.projectile.position;
+			Vector2 rotVector = Utils.ToRotationVector2(base.projectile.rotation - MathHelper.ToRadians(90f));
+			usePos += rotVector * 16f;
 			for (int i = 0; i < 20; i++)
 			{
-				Dust dust = Dust.NewDustDirect(vector, base.projectile.width, base.projectile.height, 81, 0f, 0f, 0, default(Color), 1f);
+				Dust dust = Dust.NewDustDirect(usePos, base.projectile.width, base.projectile.height, 81, 0f, 0f, 0, default(Color), 1f);
 				dust.position = (dust.position + base.projectile.Center) / 2f;
-				dust.velocity += vector2 * 2f;
+				dust.velocity += rotVector * 2f;
 				dust.velocity *= 0.5f;
 				dust.noGravity = true;
-				vector -= vector2 * 8f;
+				usePos -= rotVector * 8f;
 			}
-			int num = (Main.rand.Next(18) == 0) ? Item.NewItem((int)base.projectile.position.X, (int)base.projectile.position.Y, base.projectile.width, base.projectile.height, base.mod.ItemType<DruidDagger>(), 1, false, 0, false, false) : 0;
-			if (Main.netMode == 1 && num >= 0)
+			int item = (Main.rand.Next(18) == 0) ? Item.NewItem((int)base.projectile.position.X, (int)base.projectile.position.Y, base.projectile.width, base.projectile.height, ModContent.ItemType<DruidDagger>(), 1, false, 0, false, false) : 0;
+			if (Main.netMode == 1 && item >= 0)
 			{
-				NetMessage.SendData(21, -1, -1, null, num, 1f, 0f, 0f, 0, 0, 0);
+				NetMessage.SendData(21, -1, -1, null, item, 1f, 0f, 0f, 0, 0, 0);
 			}
 		}
 	}

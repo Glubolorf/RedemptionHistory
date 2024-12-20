@@ -36,19 +36,25 @@ namespace Redemption.Projectiles.v08
 
 		public override void AI()
 		{
-			if (++base.projectile.frameCounter >= 10)
+			Projectile projectile = base.projectile;
+			int num1068 = projectile.frameCounter + 1;
+			projectile.frameCounter = num1068;
+			if (num1068 >= 10)
 			{
 				base.projectile.frameCounter = 0;
-				if (++base.projectile.frame >= 9)
+				Projectile projectile2 = base.projectile;
+				num1068 = projectile2.frame + 1;
+				projectile2.frame = num1068;
+				if (num1068 >= 9)
 				{
 					base.projectile.frame = 7;
 				}
 			}
 			base.projectile.localAI[0] += 1f;
-			Projectile projectile = base.projectile;
-			projectile.velocity.X = projectile.velocity.X * 0f;
-			Projectile projectile2 = base.projectile;
-			projectile2.velocity.Y = projectile2.velocity.Y + 1f;
+			Projectile projectile3 = base.projectile;
+			projectile3.velocity.X = projectile3.velocity.X * 0f;
+			Projectile projectile4 = base.projectile;
+			projectile4.velocity.Y = projectile4.velocity.Y + 1f;
 			if (base.projectile.localAI[0] >= 160f)
 			{
 				base.projectile.alpha += 10;
@@ -63,7 +69,7 @@ namespace Redemption.Projectiles.v08
 				{
 					base.projectile.direction = Main.player[base.projectile.owner].direction;
 				}
-				float num = 1000f;
+				float num1058 = 1000f;
 				if (base.projectile.ai[0] < 0f)
 				{
 					base.projectile.ai[0] += 1f;
@@ -71,46 +77,46 @@ namespace Redemption.Projectiles.v08
 				}
 				if (base.projectile.ai[0] == 0f)
 				{
-					int num2 = -1;
-					float num3 = num;
-					NPC ownerMinionAttackTargetNPC = base.projectile.OwnerMinionAttackTargetNPC;
-					if (ownerMinionAttackTargetNPC != null && ownerMinionAttackTargetNPC.CanBeChasedBy(this, false))
+					int num1059 = -1;
+					float num1060 = num1058;
+					NPC ownerMinionAttackTargetNPC6 = base.projectile.OwnerMinionAttackTargetNPC;
+					if (ownerMinionAttackTargetNPC6 != null && ownerMinionAttackTargetNPC6.CanBeChasedBy(this, false))
 					{
-						float num4 = base.projectile.Distance(ownerMinionAttackTargetNPC.Center);
-						if (num4 < num3 && Collision.CanHitLine(base.projectile.Center, 0, 0, ownerMinionAttackTargetNPC.Center, 0, 0))
+						float num1061 = base.projectile.Distance(ownerMinionAttackTargetNPC6.Center);
+						if (num1061 < num1060 && Collision.CanHitLine(base.projectile.Center, 0, 0, ownerMinionAttackTargetNPC6.Center, 0, 0))
 						{
-							num3 = num4;
-							num2 = ownerMinionAttackTargetNPC.whoAmI;
+							num1060 = num1061;
+							num1059 = ownerMinionAttackTargetNPC6.whoAmI;
 						}
 					}
-					if (num2 < 0)
+					if (num1059 < 0)
 					{
-						for (int i = 0; i < 200; i++)
+						for (int num1062 = 0; num1062 < 200; num1062++)
 						{
-							NPC npc = Main.npc[i];
-							if (npc.CanBeChasedBy(this, false))
+							NPC nPC15 = Main.npc[num1062];
+							if (nPC15.CanBeChasedBy(this, false))
 							{
-								float num5 = base.projectile.Distance(npc.Center);
-								if (num5 < num3 && Collision.CanHitLine(base.projectile.Center, 0, 0, npc.Center, 0, 0))
+								float num1063 = base.projectile.Distance(nPC15.Center);
+								if (num1063 < num1060 && Collision.CanHitLine(base.projectile.Center, 0, 0, nPC15.Center, 0, 0))
 								{
-									num3 = num5;
-									num2 = i;
+									num1060 = num1063;
+									num1059 = num1062;
 								}
 							}
 						}
 					}
-					if (num2 != -1)
+					if (num1059 != -1)
 					{
 						base.projectile.ai[0] = 1f;
-						base.projectile.ai[1] = (float)num2;
+						base.projectile.ai[1] = (float)num1059;
 						base.projectile.netUpdate = true;
 						return;
 					}
 				}
 				if (base.projectile.ai[0] > 0f)
 				{
-					int num6 = (int)base.projectile.ai[1];
-					if (!Main.npc[num6].CanBeChasedBy(this, false))
+					int num1064 = (int)base.projectile.ai[1];
+					if (!Main.npc[num1064].CanBeChasedBy(this, false))
 					{
 						base.projectile.ai[0] = 0f;
 						base.projectile.ai[1] = 0f;
@@ -118,26 +124,26 @@ namespace Redemption.Projectiles.v08
 						return;
 					}
 					base.projectile.ai[0] += 1f;
-					float num7 = 64f;
-					if (base.projectile.ai[0] >= num7)
+					float num1065 = 64f;
+					if (base.projectile.ai[0] >= num1065)
 					{
-						Vector2 vector = base.projectile.DirectionTo(Main.npc[num6].Center);
-						if (Utils.HasNaNs(vector))
+						Vector2 vector137 = base.projectile.DirectionTo(Main.npc[num1064].Center);
+						if (Utils.HasNaNs(vector137))
 						{
-							vector = Vector2.UnitY;
+							vector137 = Vector2.UnitY;
 						}
-						float num8 = Utils.ToRotation(vector);
-						int num9 = (vector.X > 0f) ? 1 : -1;
-						base.projectile.direction = num9;
+						float num1066 = Utils.ToRotation(vector137);
+						int num1067 = (vector137.X > 0f) ? 1 : -1;
+						base.projectile.direction = num1067;
 						base.projectile.ai[0] = 0f;
-						base.projectile.ai[1] = num8 + (float)num9 * 3.1415927f / 16f;
+						base.projectile.ai[1] = num1066 + (float)num1067 * 3.1415927f / 16f;
 						base.projectile.netUpdate = true;
 						if (base.projectile.owner == Main.myPlayer)
 						{
-							int num10 = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, vector.X * 10f, vector.Y * 10f, 55, base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, (float)base.projectile.whoAmI);
-							Main.projectile[num10].friendly = true;
-							Main.projectile[num10].hostile = false;
-							Main.projectile[num10].timeLeft = 160;
+							int proj = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, vector137.X * 10f, vector137.Y * 10f, 55, base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, (float)base.projectile.whoAmI);
+							Main.projectile[proj].friendly = true;
+							Main.projectile[proj].hostile = false;
+							Main.projectile[proj].timeLeft = 160;
 						}
 					}
 				}

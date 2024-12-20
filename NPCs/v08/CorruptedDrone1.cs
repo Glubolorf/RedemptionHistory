@@ -50,13 +50,13 @@ namespace Redemption.NPCs.v08
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/AttackDroneGore6"), 1f);
 				for (int i = 0; i < 25; i++)
 				{
-					int num = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 6, 0f, 0f, 100, default(Color), 1.8f);
-					Main.dust[num].velocity *= 1.8f;
+					int dustIndex = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 6, 0f, 0f, 100, default(Color), 1.8f);
+					Main.dust[dustIndex].velocity *= 1.8f;
 				}
 				for (int j = 0; j < 15; j++)
 				{
-					int num2 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 31, 0f, 0f, 100, default(Color), 2.2f);
-					Main.dust[num2].velocity *= 1.8f;
+					int dustIndex2 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 31, 0f, 0f, 100, default(Color), 2.2f);
+					Main.dust[dustIndex2].velocity *= 1.8f;
 				}
 			}
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 235, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
@@ -66,13 +66,13 @@ namespace Redemption.NPCs.v08
 		{
 			if (!this.change)
 			{
-				int num = Main.rand.Next(7);
-				if (num == 0)
+				int num56 = Main.rand.Next(7);
+				if (num56 == 0)
 				{
 					base.npc.SetDefaults(base.mod.NPCType("CorruptedCopter1"), -1f);
 					this.change = true;
 				}
-				if (num >= 1)
+				if (num56 >= 1)
 				{
 					this.change = true;
 				}
@@ -101,8 +101,7 @@ namespace Redemption.NPCs.v08
 			}
 			base.npc.spriteDirection = base.npc.direction;
 			base.npc.rotation = base.npc.velocity.X * 0.05f;
-			float num2 = base.npc.Distance(Main.player[base.npc.target].Center);
-			if (num2 <= 400f && Main.rand.Next(150) == 0 && !this.minigunAttack)
+			if (base.npc.Distance(Main.player[base.npc.target].Center) <= 400f && Main.rand.Next(150) == 0 && !this.minigunAttack)
 			{
 				this.minigunAttack = true;
 			}
@@ -120,25 +119,23 @@ namespace Redemption.NPCs.v08
 					{
 						if (base.npc.direction == -1)
 						{
-							float num3 = 9f;
-							Vector2 vector;
-							vector..ctor(base.npc.position.X + 88f, base.npc.position.Y + 56f);
-							int num4 = 55;
-							int num5 = 110;
-							float num6 = (float)Math.Atan2((double)(vector.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector.X - (this.player.position.X + (float)this.player.width * 0.5f)));
-							int num7 = Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num6) * (double)num3 * -1.0), (float)(Math.Sin((double)num6) * (double)num3 * -1.0), num5, num4, 0f, 0, 0f, 0f);
-							Main.projectile[num7].netUpdate = true;
+							float Speed = 9f;
+							Vector2 vector8 = new Vector2(base.npc.position.X + 88f, base.npc.position.Y + 56f);
+							int damage = 55;
+							int type = 110;
+							float rotation = (float)Math.Atan2((double)(vector8.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector8.X - (this.player.position.X + (float)this.player.width * 0.5f)));
+							int num54 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)rotation) * (double)Speed * -1.0), (float)(Math.Sin((double)rotation) * (double)Speed * -1.0), type, damage, 0f, 0, 0f, 0f);
+							Main.projectile[num54].netUpdate = true;
 						}
 						else
 						{
-							float num8 = 9f;
-							Vector2 vector2;
-							vector2..ctor(base.npc.position.X + 16f, base.npc.position.Y + 56f);
-							int num9 = 55;
-							int num10 = 110;
-							float num11 = (float)Math.Atan2((double)(vector2.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector2.X - (this.player.position.X + (float)this.player.width * 0.5f)));
-							int num12 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num11) * (double)num8 * -1.0), (float)(Math.Sin((double)num11) * (double)num8 * -1.0), num10, num9, 0f, 0, 0f, 0f);
-							Main.projectile[num12].netUpdate = true;
+							float Speed2 = 9f;
+							Vector2 vector9 = new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 56f);
+							int damage2 = 55;
+							int type2 = 110;
+							float rotation2 = (float)Math.Atan2((double)(vector9.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector9.X - (this.player.position.X + (float)this.player.width * 0.5f)));
+							int num55 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)rotation2) * (double)Speed2 * -1.0), (float)(Math.Sin((double)rotation2) * (double)Speed2 * -1.0), type2, damage2, 0f, 0, 0f, 0f);
+							Main.projectile[num55].netUpdate = true;
 						}
 					}
 					if (this.spamTimer >= 3)
@@ -162,21 +159,20 @@ namespace Redemption.NPCs.v08
 		private void Move(Vector2 offset)
 		{
 			this.speed = 15f;
-			Vector2 vector = this.player.Center + offset;
-			Vector2 vector2 = vector - base.npc.Center;
-			float num = this.Magnitude(vector2);
-			if (num > this.speed)
+			Vector2 move = this.player.Center + offset - base.npc.Center;
+			float magnitude = this.Magnitude(move);
+			if (magnitude > this.speed)
 			{
-				vector2 *= this.speed / num;
+				move *= this.speed / magnitude;
 			}
-			float num2 = 30f;
-			vector2 = (base.npc.velocity * num2 + vector2) / (num2 + 1f);
-			num = this.Magnitude(vector2);
-			if (num > this.speed)
+			float turnResistance = 30f;
+			move = (base.npc.velocity * turnResistance + move) / (turnResistance + 1f);
+			magnitude = this.Magnitude(move);
+			if (magnitude > this.speed)
 			{
-				vector2 *= this.speed / num;
+				move *= this.speed / magnitude;
 			}
-			base.npc.velocity = vector2;
+			base.npc.velocity = move;
 		}
 
 		private void DespawnHandler()
@@ -192,6 +188,7 @@ namespace Redemption.NPCs.v08
 					{
 						base.npc.timeLeft = 10;
 					}
+					return;
 				}
 			}
 		}
@@ -203,11 +200,11 @@ namespace Redemption.NPCs.v08
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/v08/CorruptedDrone1_Glow");
-			SpriteEffects spriteEffects = (base.npc.spriteDirection == -1) ? 0 : 1;
-			spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
-			spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, spriteEffects, 0f);
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D glowMask = base.mod.GetTexture("NPCs/v08/CorruptedDrone1_Glow");
+			SpriteEffects effects = (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+			spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			spriteBatch.Draw(glowMask, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, effects, 0f);
 			return false;
 		}
 
@@ -220,7 +217,7 @@ namespace Redemption.NPCs.v08
 					return 0f;
 				}
 			}
-			return SpawnCondition.OverworldNightMonster.Chance * ((Main.hardMode && NPC.downedMoonlord && RedeWorld.downedVlitch3 && RedeWorld.downedPatientZero && !NPC.AnyNPCs(base.mod.NPCType("CorruptedDrone1")) && !NPC.AnyNPCs(base.mod.NPCType("CorruptedCopter1"))) ? 0.009f : 0f);
+			return SpawnCondition.OverworldNightMonster.Chance * ((!RedeWorld.girusCloaked && Main.hardMode && NPC.downedMoonlord && RedeWorld.downedVlitch3 && RedeWorld.downedPatientZero && !NPC.AnyNPCs(base.mod.NPCType("CorruptedDrone1")) && !NPC.AnyNPCs(base.mod.NPCType("CorruptedCopter1"))) ? 0.009f : 0f);
 		}
 
 		private bool minigunAttack;

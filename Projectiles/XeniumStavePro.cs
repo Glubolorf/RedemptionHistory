@@ -28,91 +28,91 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			int num = 74;
-			int num2 = 20;
-			int num3 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num, 0f, 0f, 100, Color.White, 1.6f);
-			Main.dust[num3].velocity *= 0f;
-			Main.dust[num3].noLight = false;
-			Main.dust[num3].noGravity = true;
+			int dustType = 74;
+			int pieCut = 20;
+			int dustID = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 1.6f);
+			Main.dust[dustID].velocity *= 0f;
+			Main.dust[dustID].noLight = false;
+			Main.dust[dustID].noGravity = true;
 			base.projectile.localAI[0] += 1f;
 			if (base.projectile.localAI[0] == 15f)
 			{
-				for (int i = 0; i < num2; i++)
+				for (int i = 0; i < pieCut; i++)
 				{
-					int num4 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num, 0f, 0f, 100, Color.White, 1.6f);
-					Main.dust[num4].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)i / (float)num2 * 6.28f);
-					Main.dust[num4].noLight = false;
-					Main.dust[num4].noGravity = true;
+					int dustID2 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 1.6f);
+					Main.dust[dustID2].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)i / (float)pieCut * 6.28f);
+					Main.dust[dustID2].noLight = false;
+					Main.dust[dustID2].noGravity = true;
 				}
 			}
 			if (base.projectile.localAI[0] == 30f)
 			{
-				for (int j = 0; j < num2; j++)
+				for (int j = 0; j < pieCut; j++)
 				{
-					int num5 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num, 0f, 0f, 100, Color.White, 1.6f);
-					Main.dust[num5].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)j / (float)num2 * 6.28f);
-					Main.dust[num5].noLight = false;
-					Main.dust[num5].noGravity = true;
+					int dustID3 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 1.6f);
+					Main.dust[dustID3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)j / (float)pieCut * 6.28f);
+					Main.dust[dustID3].noLight = false;
+					Main.dust[dustID3].noGravity = true;
 				}
 			}
 			if (base.projectile.localAI[0] == 45f)
 			{
-				for (int k = 0; k < num2; k++)
+				for (int k = 0; k < pieCut; k++)
 				{
-					int num6 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num, 0f, 0f, 100, Color.White, 1.6f);
-					Main.dust[num6].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)k / (float)num2 * 6.28f);
-					Main.dust[num6].noLight = false;
-					Main.dust[num6].noGravity = true;
+					int dustID4 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 1.6f);
+					Main.dust[dustID4].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)k / (float)pieCut * 6.28f);
+					Main.dust[dustID4].noLight = false;
+					Main.dust[dustID4].noGravity = true;
 				}
 			}
 			if (base.projectile.localAI[0] == 60f)
 			{
-				for (int l = 0; l < num2; l++)
+				for (int l = 0; l < pieCut; l++)
 				{
-					int num7 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num, 0f, 0f, 100, Color.White, 1.6f);
-					Main.dust[num7].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)l / (float)num2 * 6.28f);
-					Main.dust[num7].noLight = false;
-					Main.dust[num7].noGravity = true;
+					int dustID5 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 1.6f);
+					Main.dust[dustID5].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)l / (float)pieCut * 6.28f);
+					Main.dust[dustID5].noLight = false;
+					Main.dust[dustID5].noGravity = true;
 				}
 			}
 			if (base.projectile.localAI[0] == 75f)
 			{
-				for (int m = 0; m < num2; m++)
+				for (int m = 0; m < pieCut; m++)
 				{
-					int num8 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num, 0f, 0f, 100, Color.White, 1.6f);
-					Main.dust[num8].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)m / (float)num2 * 6.28f);
-					Main.dust[num8].noLight = false;
-					Main.dust[num8].noGravity = true;
+					int dustID6 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 1.6f);
+					Main.dust[dustID6].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)m / (float)pieCut * 6.28f);
+					Main.dust[dustID6].noLight = false;
+					Main.dust[dustID6].noGravity = true;
 				}
 			}
 			if (base.projectile.localAI[0] == 90f)
 			{
-				for (int n = 0; n < num2; n++)
+				for (int n = 0; n < pieCut; n++)
 				{
-					int num9 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num, 0f, 0f, 100, Color.White, 1.6f);
-					Main.dust[num9].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)n / (float)num2 * 6.28f);
-					Main.dust[num9].noLight = false;
-					Main.dust[num9].noGravity = true;
+					int dustID7 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 1.6f);
+					Main.dust[dustID7].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)n / (float)pieCut * 6.28f);
+					Main.dust[dustID7].noLight = false;
+					Main.dust[dustID7].noGravity = true;
 				}
 			}
 			if (base.projectile.localAI[0] == 105f)
 			{
-				for (int num10 = 0; num10 < num2; num10++)
+				for (int m2 = 0; m2 < pieCut; m2++)
 				{
-					int num11 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num, 0f, 0f, 100, Color.White, 1.6f);
-					Main.dust[num11].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)num10 / (float)num2 * 6.28f);
-					Main.dust[num11].noLight = false;
-					Main.dust[num11].noGravity = true;
+					int dustID8 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 1.6f);
+					Main.dust[dustID8].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)m2 / (float)pieCut * 6.28f);
+					Main.dust[dustID8].noLight = false;
+					Main.dust[dustID8].noGravity = true;
 				}
 			}
 			if (base.projectile.localAI[0] == 120f)
 			{
-				for (int num12 = 0; num12 < num2; num12++)
+				for (int m3 = 0; m3 < pieCut; m3++)
 				{
-					int num13 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num, 0f, 0f, 100, Color.White, 1.6f);
-					Main.dust[num13].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)num12 / (float)num2 * 6.28f);
-					Main.dust[num13].noLight = false;
-					Main.dust[num13].noGravity = true;
+					int dustID9 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 1.6f);
+					Main.dust[dustID9].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)m3 / (float)pieCut * 6.28f);
+					Main.dust[dustID9].noLight = false;
+					Main.dust[dustID9].noGravity = true;
 				}
 			}
 			if (base.projectile.localAI[0] == 0f)
@@ -120,50 +120,50 @@ namespace Redemption.Projectiles
 				this.AdjustMagnitude(ref base.projectile.velocity);
 				base.projectile.localAI[0] = 1f;
 			}
-			Vector2 vector = Vector2.Zero;
-			float num14 = 400f;
-			bool flag = false;
-			for (int num15 = 0; num15 < 200; num15++)
+			Vector2 move = Vector2.Zero;
+			float distance = 400f;
+			bool target = false;
+			for (int k2 = 0; k2 < 200; k2++)
 			{
-				if (Main.npc[num15].active && !Main.npc[num15].dontTakeDamage && !Main.npc[num15].friendly && Main.npc[num15].lifeMax > 5)
+				if (Main.npc[k2].active && !Main.npc[k2].dontTakeDamage && !Main.npc[k2].friendly && Main.npc[k2].lifeMax > 5)
 				{
-					Vector2 vector2 = Main.npc[num15].Center - base.projectile.Center;
-					float num16 = (float)Math.Sqrt((double)(vector2.X * vector2.X + vector2.Y * vector2.Y));
-					if (num16 < num14)
+					Vector2 newMove = Main.npc[k2].Center - base.projectile.Center;
+					float distanceTo = (float)Math.Sqrt((double)(newMove.X * newMove.X + newMove.Y * newMove.Y));
+					if (distanceTo < distance)
 					{
-						vector = vector2;
-						num14 = num16;
-						flag = true;
+						move = newMove;
+						distance = distanceTo;
+						target = true;
 					}
 				}
 			}
-			if (flag)
+			if (target)
 			{
-				this.AdjustMagnitude(ref vector);
-				base.projectile.velocity = (10f * base.projectile.velocity + vector) / 11f;
+				this.AdjustMagnitude(ref move);
+				base.projectile.velocity = (10f * base.projectile.velocity + move) / 11f;
 				this.AdjustMagnitude(ref base.projectile.velocity);
 			}
 		}
 
 		private void AdjustMagnitude(ref Vector2 vector)
 		{
-			float num = (float)Math.Sqrt((double)(vector.X * vector.X + vector.Y * vector.Y));
-			if (num > 17f)
+			float magnitude = (float)Math.Sqrt((double)(vector.X * vector.X + vector.Y * vector.Y));
+			if (magnitude > 17f)
 			{
-				vector *= 16f / num;
+				vector *= 16f / magnitude;
 			}
 		}
 
 		public override void Kill(int timeLeft)
 		{
-			int num = 74;
-			int num2 = 20;
-			for (int i = 0; i < num2; i++)
+			int dustType = 74;
+			int pieCut = 20;
+			for (int i = 0; i < pieCut; i++)
 			{
-				int num3 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num, 0f, 0f, 100, Color.White, 1.6f);
-				Main.dust[num3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)i / (float)num2 * 6.28f);
-				Main.dust[num3].noLight = false;
-				Main.dust[num3].noGravity = true;
+				int dustID = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 1.6f);
+				Main.dust[dustID].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)i / (float)pieCut * 6.28f);
+				Main.dust[dustID].noLight = false;
+				Main.dust[dustID].noGravity = true;
 			}
 			Main.PlaySound(SoundID.Item62, (int)base.projectile.position.X, (int)base.projectile.position.Y);
 		}

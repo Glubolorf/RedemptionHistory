@@ -20,12 +20,19 @@ namespace Redemption.Items
 			base.item.height = 24;
 			base.item.rare = 9;
 			base.item.expert = true;
-			this.bossBagNPC = base.mod.NPCType("ThornPZ");
 		}
 
 		public override bool CanRightClick()
 		{
 			return true;
+		}
+
+		public override int BossBagNPC
+		{
+			get
+			{
+				return base.mod.NPCType("ThornPZ");
+			}
 		}
 
 		public override void OpenBossBag(Player player)
@@ -44,6 +51,7 @@ namespace Redemption.Items
 				player.QuickSpawnItem(base.mod.ItemType("CursedThornFlail"), 1);
 			}
 			player.QuickSpawnItem(base.mod.ItemType("CursedThorns"), Main.rand.Next(9, 18));
+			player.QuickSpawnItem(base.mod.ItemType("CrownOfThorns"), 1);
 		}
 	}
 }

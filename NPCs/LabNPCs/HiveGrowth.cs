@@ -39,8 +39,8 @@ namespace Redemption.NPCs.LabNPCs
 			{
 				for (int i = 0; i < 25; i++)
 				{
-					int num = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, base.mod.DustType("SludgeSpoonDust"), 0f, 0f, 100, default(Color), 2f);
-					Main.dust[num].velocity *= 1.6f;
+					int dustIndex = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, base.mod.DustType("SludgeSpoonDust"), 0f, 0f, 100, default(Color), 2f);
+					Main.dust[dustIndex].velocity *= 1.6f;
 				}
 			}
 		}
@@ -95,10 +95,10 @@ namespace Redemption.NPCs.LabNPCs
 					{
 						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Zap1").WithVolume(0.8f).WithPitchVariance(0f), -1, -1);
 					}
-					int num = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("EyeFlashPro"), 40, 3f, 255, 0f, 0f);
-					int num2 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("EyeFlashProH"), 40, 3f, 255, 0f, 0f);
-					Main.projectile[num].netUpdate = true;
-					Main.projectile[num2].netUpdate = true;
+					int p = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("EyeFlashPro"), 40, 3f, 255, 0f, 0f);
+					int p2 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("EyeFlashProH"), 40, 3f, 255, 0f, 0f);
+					Main.projectile[p].netUpdate = true;
+					Main.projectile[p2].netUpdate = true;
 				}
 				if (this.attackTimer > 90)
 				{
@@ -122,21 +122,20 @@ namespace Redemption.NPCs.LabNPCs
 			{
 				this.speed = 7f;
 			}
-			Vector2 vector = this.player.Center + offset;
-			Vector2 vector2 = vector - base.npc.Center;
-			float num = this.Magnitude(vector2);
-			if (num > this.speed)
+			Vector2 move = this.player.Center + offset - base.npc.Center;
+			float magnitude = this.Magnitude(move);
+			if (magnitude > this.speed)
 			{
-				vector2 *= this.speed / num;
+				move *= this.speed / magnitude;
 			}
-			float num2 = 30f;
-			vector2 = (base.npc.velocity * num2 + vector2) / (num2 + 1f);
-			num = this.Magnitude(vector2);
-			if (num > this.speed)
+			float turnResistance = 30f;
+			move = (base.npc.velocity * turnResistance + move) / (turnResistance + 1f);
+			magnitude = this.Magnitude(move);
+			if (magnitude > this.speed)
 			{
-				vector2 *= this.speed / num;
+				move *= this.speed / magnitude;
 			}
-			base.npc.velocity = vector2;
+			base.npc.velocity = move;
 		}
 
 		private void DespawnHandler()
@@ -152,6 +151,7 @@ namespace Redemption.NPCs.LabNPCs
 					{
 						base.npc.timeLeft = 10;
 					}
+					return;
 				}
 			}
 		}

@@ -28,9 +28,9 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y + 2f), base.projectile.width + 2, base.projectile.height + 2, 21, base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 1f);
-			Main.dust[num].noGravity = true;
-			if (Main.rand.Next(100) == 0)
+			int DustID2 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y + 2f), base.projectile.width + 2, base.projectile.height + 2, 21, base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 1f);
+			Main.dust[DustID2].noGravity = true;
+			if (Main.myPlayer == base.projectile.owner && Main.rand.Next(100) == 0)
 			{
 				Projectile.NewProjectile(base.projectile.Center, base.projectile.velocity, base.mod.ProjectileType("MysteriousArtifactProC"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			}

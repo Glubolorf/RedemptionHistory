@@ -36,11 +36,11 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override bool CanUseItem(Player player)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).wanderingSoulSet)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().wanderingSoulSet)
 			{
 				base.item.damage = 22;
 			}
-			else if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).shadeSet)
+			else if (Main.LocalPlayer.GetModPlayer<RedePlayer>().shadeSet)
 			{
 				base.item.damage = 260;
 			}
@@ -53,9 +53,9 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override float UseTimeMultiplier(Player player)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterSpirits)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().fasterSpirits)
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).wanderingSoulSet)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().wanderingSoulSet)
 				{
 					return 1.45f;
 				}
@@ -63,7 +63,7 @@ namespace Redemption.Items.DruidDamageClass
 			}
 			else
 			{
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterSpirits)
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>().fasterSpirits)
 				{
 					return 1.35f;
 				}
@@ -73,15 +73,15 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).moreSpirits)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>().moreSpirits)
 			{
-				int num = 2;
-				for (int i = 0; i < num; i++)
+				int numberProjectiles = 2;
+				for (int i = 0; i < numberProjectiles; i++)
 				{
-					Vector2 vector = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(25f));
-					float num2 = 1f - Utils.NextFloat(Main.rand) * 0.3f;
-					vector *= num2;
-					Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
+					Vector2 perturbedSpeed = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(25f));
+					float scale = 1f - Utils.NextFloat(Main.rand) * 0.3f;
+					perturbedSpeed *= scale;
+					Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
 				}
 				return false;
 			}

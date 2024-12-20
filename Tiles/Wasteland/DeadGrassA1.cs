@@ -18,7 +18,6 @@ namespace Redemption.Tiles.Wasteland
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
 			TileObjectData.newTile.CoordinateHeights = new int[]
 			{
-				16,
 				16
 			};
 			TileObjectData.addTile((int)base.Type);

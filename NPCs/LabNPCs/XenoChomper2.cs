@@ -29,6 +29,8 @@ namespace Redemption.NPCs.LabNPCs
 			base.npc.aiStyle = 16;
 			this.aiType = 58;
 			this.animationType = 58;
+			this.banner = base.npc.type;
+			this.bannerItem = base.mod.ItemType("XenoChomperBanner");
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -45,8 +47,7 @@ namespace Redemption.NPCs.LabNPCs
 
 		public override void AI()
 		{
-			float num = base.npc.Distance(Main.player[base.npc.target].Center);
-			if (num >= 400f)
+			if (base.npc.Distance(Main.player[base.npc.target].Center) >= 400f)
 			{
 				base.npc.active = false;
 			}

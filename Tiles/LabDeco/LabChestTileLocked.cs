@@ -35,9 +35,9 @@ namespace Redemption.Tiles.LabDeco
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.newTile.AnchorBottom = new AnchorData(11, TileObjectData.newTile.Width, 0);
 			TileObjectData.addTile((int)base.Type);
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Lab Chest");
-			base.AddMapEntry(new Color(0, 0, 255), modTranslation);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Lab Chest");
+			base.AddMapEntry(new Color(0, 0, 255), name);
 			this.dustType = 206;
 			this.disableSmartCursor = true;
 			this.adjTiles = new int[]
@@ -49,23 +49,23 @@ namespace Redemption.Tiles.LabDeco
 
 		public string MapChestName(string name, int i, int j)
 		{
-			int num = i;
-			int num2 = j;
+			int left = i;
+			int top = j;
 			Tile tile = Main.tile[i, j];
 			if (tile.frameX % 36 != 0)
 			{
-				num--;
+				left--;
 			}
 			if (tile.frameY != 0)
 			{
-				num2--;
+				top--;
 			}
-			int num3 = Chest.FindChest(num, num2);
-			if (Main.chest[num3].name == "")
+			int chest = Chest.FindChest(left, top);
+			if (Main.chest[chest].name == "")
 			{
 				return name;
 			}
-			return name + ": " + Main.chest[num3].name;
+			return name + ": " + Main.chest[chest].name;
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -76,17 +76,17 @@ namespace Redemption.Tiles.LabDeco
 		public override bool CanKillTile(int i, int j, ref bool blockDamaged)
 		{
 			Tile tile = Main.tile[i, j];
-			int num = i;
-			int num2 = j;
+			int left = i;
+			int top = j;
 			if (tile.frameX % 36 != 0)
 			{
-				num--;
+				left--;
 			}
 			if (tile.frameY != 0)
 			{
-				num2--;
+				top--;
 			}
-			return Chest.CanDestroyChest(num, num2);
+			return Chest.CanDestroyChest(left, top);
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
@@ -95,24 +95,25 @@ namespace Redemption.Tiles.LabDeco
 			Chest.DestroyChest(i, j);
 		}
 
-		public override void RightClick(int i, int j)
+		public override bool NewRightClick(int i, int j)
 		{
 			Player player = Main.player[Main.myPlayer];
-			foreach (Item item in player.inventory)
+			Item[] inventory = player.inventory;
+			for (int k = 0; k < inventory.Length; k++)
 			{
-				if (item.type == base.mod.ItemType("Keycard"))
+				if (inventory[k].type == base.mod.ItemType("Keycard"))
 				{
 					Tile tile = Main.tile[i, j];
 					Main.mouseRightRelease = false;
-					int num = i;
-					int num2 = j;
+					int left = i;
+					int top = j;
 					if (tile.frameX % 36 != 0)
 					{
-						num--;
+						left--;
 					}
 					if (tile.frameY != 0)
 					{
-						num2--;
+						top--;
 					}
 					if (player.sign >= 0)
 					{
@@ -134,7 +135,7 @@ namespace Redemption.Tiles.LabDeco
 					}
 					if (Main.netMode == 1)
 					{
-						if (num == player.chestX && num2 == player.chestY && player.chest >= 0)
+						if (left == player.chestX && top == player.chestY && player.chest >= 0)
 						{
 							player.chest = -1;
 							Recipe.FindRecipes();
@@ -142,28 +143,28 @@ namespace Redemption.Tiles.LabDeco
 						}
 						else
 						{
-							NetMessage.SendData(31, -1, -1, null, num, (float)num2, 0f, 0f, 0, 0, 0);
+							NetMessage.SendData(31, -1, -1, null, left, (float)top, 0f, 0f, 0, 0, 0);
 							Main.stackSplit = 600;
 						}
 					}
 					else
 					{
-						int num3 = Chest.FindChest(num, num2);
-						if (num3 >= 0)
+						int chest = Chest.FindChest(left, top);
+						if (chest >= 0)
 						{
 							Main.stackSplit = 600;
-							if (num3 == player.chest)
+							if (chest == player.chest)
 							{
 								player.chest = -1;
 								Main.PlaySound(11, -1, -1, 1, 1f, 0f);
 							}
 							else
 							{
-								player.chest = num3;
+								player.chest = chest;
 								Main.playerInventory = true;
 								Main.recBigList = false;
-								player.chestX = num;
-								player.chestY = num2;
+								player.chestX = left;
+								player.chestY = top;
 								Main.PlaySound((player.chest < 0) ? 10 : 12, -1, -1, 1, 1f, 0f);
 							}
 							Recipe.FindRecipes();
@@ -171,39 +172,40 @@ namespace Redemption.Tiles.LabDeco
 					}
 				}
 			}
+			return true;
 		}
 
 		public override void MouseOver(int i, int j)
 		{
-			Player localPlayer = Main.LocalPlayer;
+			Player player = Main.LocalPlayer;
 			Tile tile = Main.tile[i, j];
-			int num = i;
-			int num2 = j;
+			int left = i;
+			int top = j;
 			if (tile.frameX % 36 != 0)
 			{
-				num--;
+				left--;
 			}
 			if (tile.frameY != 0)
 			{
-				num2--;
+				top--;
 			}
-			int num3 = Chest.FindChest(num, num2);
-			localPlayer.showItemIcon2 = -1;
-			if (num3 < 0)
+			int chest = Chest.FindChest(left, top);
+			player.showItemIcon2 = -1;
+			if (chest < 0)
 			{
-				localPlayer.showItemIconText = Lang.chestType[0].Value;
+				player.showItemIconText = Lang.chestType[0].Value;
 			}
 			else
 			{
-				localPlayer.showItemIconText = ((Main.chest[num3].name.Length > 0) ? Main.chest[num3].name : "Lab Chest");
-				if (localPlayer.showItemIconText == "Lab Chest")
+				player.showItemIconText = ((Main.chest[chest].name.Length > 0) ? Main.chest[chest].name : "Lab Chest");
+				if (player.showItemIconText == "Lab Chest")
 				{
-					localPlayer.showItemIcon2 = base.mod.ItemType("Keycard");
-					localPlayer.showItemIconText = "";
+					player.showItemIcon2 = base.mod.ItemType("Keycard");
+					player.showItemIconText = "";
 				}
 			}
-			localPlayer.noThrow = 2;
-			localPlayer.showItemIcon = true;
+			player.noThrow = 2;
+			player.showItemIcon = true;
 		}
 
 		public override void MouseOverFar(int i, int j)

@@ -36,13 +36,12 @@ namespace Redemption.NPCs.Bosses.Thorn
 
 		public override bool PreDraw(SpriteBatch sb, Color drawColor)
 		{
-			Color color;
-			color..ctor(Math.Max(0, (int)CursedThornPro6.lightColor.R + Math.Min(0, -base.projectile.alpha + 20)), Math.Max(0, (int)CursedThornPro6.lightColor.G + Math.Min(0, -base.projectile.alpha + 20)), Math.Max(0, (int)CursedThornPro6.lightColor.B + Math.Min(0, -base.projectile.alpha + 20)));
-			BaseDrawing.AddLight(base.projectile.Center, color, 1f);
+			Color newLightColor = new Color(Math.Max(0, (int)CursedThornPro6.lightColor.R + Math.Min(0, -base.projectile.alpha + 20)), Math.Max(0, (int)CursedThornPro6.lightColor.G + Math.Min(0, -base.projectile.alpha + 20)), Math.Max(0, (int)CursedThornPro6.lightColor.B + Math.Min(0, -base.projectile.alpha + 20)));
+			BaseDrawing.AddLight(base.projectile.Center, newLightColor, 1f);
 			if (CursedThornPro6.mainTex == null)
 			{
 				CursedThornPro6.mainTex = Main.projectileTexture[base.projectile.type];
-				CursedThornPro6.endTex = ModLoader.GetTexture("Redemption/NPCs/Bosses/Thorn/CursedThornPro4");
+				CursedThornPro6.endTex = ModContent.GetTexture("Redemption/NPCs/Bosses/Thorn/CursedThornPro4");
 			}
 			BaseDrawing.DrawTexture(sb, this.spineEnd ? CursedThornPro6.endTex : CursedThornPro6.mainTex, 0, base.projectile, null, false, default(Vector2));
 			return false;

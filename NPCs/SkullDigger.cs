@@ -47,8 +47,8 @@ namespace Redemption.NPCs
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/SkullDiggerGore2"), 1f);
 				for (int i = 0; i < 50; i++)
 				{
-					int num = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, 0f, 0f, 100, default(Color), 1.5f);
-					Main.dust[num].velocity *= 1.9f;
+					int dustIndex = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, 0f, 0f, 100, default(Color), 1.5f);
+					Main.dust[dustIndex].velocity *= 1.9f;
 				}
 			}
 			if (Main.netMode != 1 && base.npc.life <= 0)
@@ -127,10 +127,10 @@ namespace Redemption.NPCs
 				string text = "The caverns go silent...";
 				Color rarityBlue = Colors.RarityBlue;
 				byte r = rarityBlue.R;
-				Color rarityBlue2 = Colors.RarityBlue;
-				byte g = rarityBlue2.G;
-				Color rarityBlue3 = Colors.RarityBlue;
-				Main.NewText(text, r, g, rarityBlue3.B, false);
+				rarityBlue = Colors.RarityBlue;
+				byte g = rarityBlue.G;
+				rarityBlue = Colors.RarityBlue;
+				Main.NewText(text, r, g, rarityBlue.B, false);
 			}
 			if (this.skullDiggerTimer == 120)
 			{
@@ -168,17 +168,17 @@ namespace Redemption.NPCs
 					this.specialTimer++;
 					if (this.specialTimer == 30)
 					{
-						int num2 = NPC.NewNPC((int)base.npc.position.X + 48, (int)base.npc.position.Y + 38, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
-						num2 = NPC.NewNPC((int)base.npc.position.X + 30, (int)base.npc.position.Y + 48, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
-						num2 = NPC.NewNPC((int)base.npc.position.X + 54, (int)base.npc.position.Y + 50, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
-						num2 = NPC.NewNPC((int)base.npc.position.X + 36, (int)base.npc.position.Y + 80, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
-						num2 = NPC.NewNPC((int)base.npc.position.X + 45, (int)base.npc.position.Y + 90, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
-						num2 = NPC.NewNPC((int)base.npc.position.X + 42, (int)base.npc.position.Y + 78, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
-						num2 = NPC.NewNPC((int)base.npc.position.X + 37, (int)base.npc.position.Y + 28, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
-						num2 = NPC.NewNPC((int)base.npc.position.X + 51, (int)base.npc.position.Y + 60, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
-						num2 = NPC.NewNPC((int)base.npc.position.X + 37, (int)base.npc.position.Y + 40, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
-						num2 = NPC.NewNPC((int)base.npc.position.X + 44, (int)base.npc.position.Y + 54, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
-						Main.npc[num2].netUpdate = true;
+						int minion = NPC.NewNPC((int)base.npc.position.X + 48, (int)base.npc.position.Y + 38, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
+						minion = NPC.NewNPC((int)base.npc.position.X + 30, (int)base.npc.position.Y + 48, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
+						minion = NPC.NewNPC((int)base.npc.position.X + 54, (int)base.npc.position.Y + 50, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
+						minion = NPC.NewNPC((int)base.npc.position.X + 36, (int)base.npc.position.Y + 80, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
+						minion = NPC.NewNPC((int)base.npc.position.X + 45, (int)base.npc.position.Y + 90, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
+						minion = NPC.NewNPC((int)base.npc.position.X + 42, (int)base.npc.position.Y + 78, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
+						minion = NPC.NewNPC((int)base.npc.position.X + 37, (int)base.npc.position.Y + 28, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
+						minion = NPC.NewNPC((int)base.npc.position.X + 51, (int)base.npc.position.Y + 60, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
+						minion = NPC.NewNPC((int)base.npc.position.X + 37, (int)base.npc.position.Y + 40, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
+						minion = NPC.NewNPC((int)base.npc.position.X + 44, (int)base.npc.position.Y + 54, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
+						Main.npc[minion].netUpdate = true;
 						Main.PlaySound(SoundID.NPCDeath6, (int)base.npc.position.X, (int)base.npc.position.Y);
 					}
 					if (this.specialTimer >= 60)
@@ -194,12 +194,12 @@ namespace Redemption.NPCs
 					this.specialTimer++;
 					if (this.specialTimer == 30)
 					{
-						int num3 = NPC.NewNPC((int)base.npc.position.X + 48, (int)base.npc.position.Y + 38, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
-						num3 = NPC.NewNPC((int)base.npc.position.X + 30, (int)base.npc.position.Y + 48, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
-						num3 = NPC.NewNPC((int)base.npc.position.X + 54, (int)base.npc.position.Y + 50, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
-						num3 = NPC.NewNPC((int)base.npc.position.X + 36, (int)base.npc.position.Y + 80, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
-						num3 = NPC.NewNPC((int)base.npc.position.X + 45, (int)base.npc.position.Y + 90, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
-						Main.npc[num3].netUpdate = true;
+						int minion2 = NPC.NewNPC((int)base.npc.position.X + 48, (int)base.npc.position.Y + 38, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+						minion2 = NPC.NewNPC((int)base.npc.position.X + 30, (int)base.npc.position.Y + 48, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+						minion2 = NPC.NewNPC((int)base.npc.position.X + 54, (int)base.npc.position.Y + 50, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+						minion2 = NPC.NewNPC((int)base.npc.position.X + 36, (int)base.npc.position.Y + 80, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+						minion2 = NPC.NewNPC((int)base.npc.position.X + 45, (int)base.npc.position.Y + 90, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+						Main.npc[minion2].netUpdate = true;
 						Main.PlaySound(SoundID.NPCDeath6, (int)base.npc.position.X, (int)base.npc.position.Y);
 					}
 					if (this.specialTimer >= 60)
@@ -215,15 +215,15 @@ namespace Redemption.NPCs
 					this.specialTimer++;
 					if (this.specialTimer == 30)
 					{
-						int num4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(0f, -6f), base.mod.ProjectileType("DarkSoulPro3"), 15, 3f, 255, 0f, 0f);
-						num4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(0f, 6f), base.mod.ProjectileType("DarkSoulPro3"), 15, 3f, 255, 0f, 0f);
-						num4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(-6f, 0f), base.mod.ProjectileType("DarkSoulPro3"), 15, 3f, 255, 0f, 0f);
-						num4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(6f, 0f), base.mod.ProjectileType("DarkSoulPro3"), 15, 3f, 255, 0f, 0f);
-						num4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(4f, 4f), base.mod.ProjectileType("DarkSoulPro3"), 15, 3f, 255, 0f, 0f);
-						num4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(4f, -4f), base.mod.ProjectileType("DarkSoulPro3"), 15, 3f, 255, 0f, 0f);
-						num4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(-4f, 4f), base.mod.ProjectileType("DarkSoulPro3"), 15, 3f, 255, 0f, 0f);
-						num4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(-4f, -4f), base.mod.ProjectileType("DarkSoulPro3"), 15, 3f, 255, 0f, 0f);
-						Main.projectile[num4].netUpdate = true;
+						int p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(0f, -6f), base.mod.ProjectileType("DarkSoulPro3"), 15, 3f, 255, 0f, 0f);
+						p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(0f, 6f), base.mod.ProjectileType("DarkSoulPro3"), 15, 3f, 255, 0f, 0f);
+						p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(-6f, 0f), base.mod.ProjectileType("DarkSoulPro3"), 15, 3f, 255, 0f, 0f);
+						p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(6f, 0f), base.mod.ProjectileType("DarkSoulPro3"), 15, 3f, 255, 0f, 0f);
+						p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(4f, 4f), base.mod.ProjectileType("DarkSoulPro3"), 15, 3f, 255, 0f, 0f);
+						p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(4f, -4f), base.mod.ProjectileType("DarkSoulPro3"), 15, 3f, 255, 0f, 0f);
+						p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(-4f, 4f), base.mod.ProjectileType("DarkSoulPro3"), 15, 3f, 255, 0f, 0f);
+						p = Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 74f), new Vector2(-4f, -4f), base.mod.ProjectileType("DarkSoulPro3"), 15, 3f, 255, 0f, 0f);
+						Main.projectile[p].netUpdate = true;
 						Main.PlaySound(SoundID.NPCDeath6, (int)base.npc.position.X, (int)base.npc.position.Y);
 					}
 					if (this.specialTimer >= 60)
@@ -245,22 +245,21 @@ namespace Redemption.NPCs
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/SkullDiggerSpecial");
-			Texture2D texture2 = base.mod.GetTexture("NPCs/SkullDiggerSpecial_Glow");
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D specialAni = base.mod.GetTexture("NPCs/SkullDiggerSpecial");
+			Texture2D specialGlow = base.mod.GetTexture("NPCs/SkullDiggerSpecial_Glow");
 			int spriteDirection = base.npc.spriteDirection;
 			if (!this.specialStart)
 			{
-				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.specialStart)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num = texture.Height / 6;
-				int num2 = num * this.specialFrame;
-				Main.spriteBatch.Draw(texture, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
-				Main.spriteBatch.Draw(texture2, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture.Width, num)), base.npc.GetAlpha(Color.White), base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? 0 : 1, 0f);
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num214 = specialAni.Height / 6;
+				int y6 = num214 * this.specialFrame;
+				Main.spriteBatch.Draw(specialAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, specialAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)specialAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+				Main.spriteBatch.Draw(specialGlow, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, specialAni.Width, num214)), base.npc.GetAlpha(Color.White), base.npc.rotation, new Vector2((float)specialAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
 		}

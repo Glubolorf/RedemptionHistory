@@ -40,13 +40,12 @@ namespace Redemption.NPCs.Bosses.Nebuleus
 
 		public override bool PreDraw(SpriteBatch sb, Color drawColor)
 		{
-			Color color;
-			color..ctor(Math.Max(0, (int)CosmosChain1.lightColor.R + Math.Min(0, -base.projectile.alpha + 20)), Math.Max(0, (int)CosmosChain1.lightColor.G + Math.Min(0, -base.projectile.alpha + 20)), Math.Max(0, (int)CosmosChain1.lightColor.B + Math.Min(0, -base.projectile.alpha + 20)));
-			BaseDrawing.AddLight(base.projectile.Center, color, 1f);
+			Color newLightColor = new Color(Math.Max(0, (int)CosmosChain1.lightColor.R + Math.Min(0, -base.projectile.alpha + 20)), Math.Max(0, (int)CosmosChain1.lightColor.G + Math.Min(0, -base.projectile.alpha + 20)), Math.Max(0, (int)CosmosChain1.lightColor.B + Math.Min(0, -base.projectile.alpha + 20)));
+			BaseDrawing.AddLight(base.projectile.Center, newLightColor, 1f);
 			if (CosmosChain1.mainTex == null)
 			{
 				CosmosChain1.mainTex = Main.projectileTexture[base.projectile.type];
-				CosmosChain1.endTex = ModLoader.GetTexture("Redemption/NPCs/Bosses/Nebuleus/CosmosChain2");
+				CosmosChain1.endTex = ModContent.GetTexture("Redemption/NPCs/Bosses/Nebuleus/CosmosChain2");
 			}
 			BaseDrawing.DrawTexture(sb, this.spineEnd ? CosmosChain1.endTex : CosmosChain1.mainTex, 0, base.projectile, null, false, default(Vector2));
 			return false;

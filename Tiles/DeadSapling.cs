@@ -39,9 +39,9 @@ namespace Redemption.Tiles
 			TileObjectData.newTile.RandomStyleRange = 3;
 			TileObjectData.addTile((int)base.Type);
 			this.sapling = true;
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Petrified Sapling");
-			base.AddMapEntry(new Color(200, 200, 200), modTranslation);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Petrified Sapling");
+			base.AddMapEntry(new Color(200, 200, 200), name);
 			this.dustType = 78;
 			this.adjTiles = new int[]
 			{
@@ -58,9 +58,8 @@ namespace Redemption.Tiles
 		{
 			if (WorldGen.genRand.Next(20) == 0)
 			{
-				bool flag = WorldGen.PlayerLOS(i, j);
-				bool flag2 = WorldGen.GrowTree(i, j);
-				if (flag2 && flag)
+				bool isPlayerNear = WorldGen.PlayerLOS(i, j);
+				if (WorldGen.GrowTree(i, j) && isPlayerNear)
 				{
 					WorldGen.TreeGrowFXCheck(i, j);
 				}
@@ -71,7 +70,7 @@ namespace Redemption.Tiles
 		{
 			if (i % 2 == 1)
 			{
-				effects = 1;
+				effects = SpriteEffects.FlipHorizontally;
 			}
 		}
 	}

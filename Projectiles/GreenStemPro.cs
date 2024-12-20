@@ -41,21 +41,21 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
-			Player player = Main.player[base.projectile.owner];
-			Vector2 vector = player.RotatedRelativePoint(player.MountedCenter, true);
-			base.projectile.direction = player.direction;
-			player.heldProj = base.projectile.whoAmI;
-			player.itemTime = player.itemAnimation;
-			base.projectile.position.X = vector.X - (float)(base.projectile.width / 2);
-			base.projectile.position.Y = vector.Y - (float)(base.projectile.height / 2);
-			if (!player.frozen)
+			Player projOwner = Main.player[base.projectile.owner];
+			Vector2 ownerMountedCenter = projOwner.RotatedRelativePoint(projOwner.MountedCenter, true);
+			base.projectile.direction = projOwner.direction;
+			projOwner.heldProj = base.projectile.whoAmI;
+			projOwner.itemTime = projOwner.itemAnimation;
+			base.projectile.position.X = ownerMountedCenter.X - (float)(base.projectile.width / 2);
+			base.projectile.position.Y = ownerMountedCenter.Y - (float)(base.projectile.height / 2);
+			if (!projOwner.frozen)
 			{
 				if (this.movementFactor == 0f)
 				{
 					this.movementFactor = 1f;
 					base.projectile.netUpdate = true;
 				}
-				if (player.itemAnimation < player.itemAnimationMax / 2)
+				if (projOwner.itemAnimation < projOwner.itemAnimationMax / 2)
 				{
 					this.movementFactor -= 1.9f;
 				}
@@ -65,7 +65,7 @@ namespace Redemption.Projectiles
 				}
 			}
 			base.projectile.position += base.projectile.velocity * this.movementFactor;
-			if (player.itemAnimation == 0)
+			if (projOwner.itemAnimation == 0)
 			{
 				base.projectile.Kill();
 			}

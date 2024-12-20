@@ -12,14 +12,14 @@ namespace Redemption.Projectiles
 		{
 			if (Main.netMode != 2)
 			{
-				Texture2D[] array = new Texture2D[Main.glowMaskTexture.Length + 1];
+				Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
 				for (int i = 0; i < Main.glowMaskTexture.Length; i++)
 				{
-					array[i] = Main.glowMaskTexture[i];
+					glowMasks[i] = Main.glowMaskTexture[i];
 				}
-				array[array.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
-				Plant5.customGlowMask = (short)(array.Length - 1);
-				Main.glowMaskTexture = array;
+				glowMasks[glowMasks.Length - 1] = base.mod.GetTexture("Projectiles/" + base.GetType().Name + "_Glow");
+				Plant5.customGlowMask = (short)(glowMasks.Length - 1);
+				Main.glowMaskTexture = glowMasks;
 			}
 			base.DisplayName.SetDefault("Fireblossom");
 		}
@@ -44,21 +44,12 @@ namespace Redemption.Projectiles
 			projectile.velocity.X = projectile.velocity.X * 0f;
 			Projectile projectile2 = base.projectile;
 			projectile2.velocity.Y = projectile2.velocity.Y + 1f;
-			if (base.projectile.localAI[0] == 30f)
+			if (base.projectile.localAI[0] % 60f == 0f)
 			{
 				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 20f, base.projectile.position.Y + 12f), base.projectile.velocity, base.mod.ProjectileType("PollenCloud2"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
-			}
-			if (base.projectile.localAI[0] == 60f)
-			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 6f, base.projectile.position.Y + 8f), base.projectile.velocity, base.mod.ProjectileType("PollenCloud2"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
-			}
-			if (base.projectile.localAI[0] == 90f)
-			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 28f, base.projectile.position.Y + 6f), base.projectile.velocity, base.mod.ProjectileType("PollenCloud2"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			}
 			if (base.projectile.localAI[0] > 160f)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 20f, base.projectile.position.Y + 12f), base.projectile.velocity, base.mod.ProjectileType("PollenCloud2"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 				Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 6, base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 0, default(Color), 1f);
 				Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 6, base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 0, default(Color), 1f);
 				Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 6, base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 0, default(Color), 1f);

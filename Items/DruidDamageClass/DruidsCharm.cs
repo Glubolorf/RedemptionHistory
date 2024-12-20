@@ -25,8 +25,8 @@ namespace Redemption.Items.DruidDamageClass
 		{
 			if (slot < 10)
 			{
-				int num = 5 + player.extraAccessorySlots;
-				for (int i = 3; i < 3 + num; i++)
+				int maxAccessoryIndex = 5 + player.extraAccessorySlots;
+				for (int i = 3; i < 3 + maxAccessoryIndex; i++)
 				{
 					if (slot != i && player.armor[i].type == base.mod.ItemType("DruidsCharmDawn"))
 					{
@@ -66,8 +66,7 @@ namespace Redemption.Items.DruidDamageClass
 			redePlayer.moreSpirits = true;
 			redePlayer.spiritHoming = true;
 			redePlayer.spiritPierce = true;
-			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
-			druidDamagePlayer.druidDamage += 0.25f;
+			DruidDamagePlayer.ModPlayer(player).druidDamage += 0.25f;
 			player.noFallDmg = true;
 			player.buffImmune[67] = true;
 			player.magicDamage *= 0.05f;

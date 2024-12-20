@@ -20,7 +20,6 @@ namespace Redemption.Items
 			base.item.height = 32;
 			base.item.rare = 9;
 			base.item.expert = true;
-			this.bossBagNPC = base.mod.NPCType("BigNebuleus");
 		}
 
 		public override bool CanRightClick()
@@ -28,11 +27,21 @@ namespace Redemption.Items
 			return true;
 		}
 
+		public override int BossBagNPC
+		{
+			get
+			{
+				return base.mod.NPCType("Nebuleus");
+			}
+		}
+
 		public override void OpenBossBag(Player player)
 		{
 			if (Main.rand.Next(7) == 0)
 			{
 				player.QuickSpawnItem(base.mod.ItemType("NebuleusMask"), 1);
+				player.QuickSpawnItem(base.mod.ItemType("NebuleusVanity"), 1);
+				player.QuickSpawnItem(base.mod.ItemType("NebWings"), 1);
 			}
 			if (Main.rand.Next(4) == 0)
 			{
@@ -54,6 +63,19 @@ namespace Redemption.Items
 			{
 				player.QuickSpawnItem(base.mod.ItemType("StarfruitSeedbag"), 1);
 			}
+			if (Main.rand.Next(2) == 0)
+			{
+				player.QuickSpawnItem(base.mod.ItemType("CosmosChainWeapon"), 1);
+			}
+			if (Main.rand.Next(2) == 0)
+			{
+				player.QuickSpawnItem(base.mod.ItemType("PiercingNebulaWeapon"), 1);
+			}
+			if (Main.rand.Next(2) == 0)
+			{
+				player.QuickSpawnItem(base.mod.ItemType("StarSerpentsCollar"), 1);
+			}
+			player.QuickSpawnItem(base.mod.ItemType("GalaxyHeart"), 1);
 		}
 	}
 }

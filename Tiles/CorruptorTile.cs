@@ -23,9 +23,9 @@ namespace Redemption.Tiles
 				16
 			};
 			TileObjectData.addTile((int)base.Type);
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Girus Corruptor");
-			base.AddMapEntry(new Color(200, 70, 70), modTranslation);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Girus Corruptor");
+			base.AddMapEntry(new Color(200, 70, 70), name);
 			this.animationFrameHeight = 36;
 			this.minPick = 200;
 			this.mineResist = 3f;

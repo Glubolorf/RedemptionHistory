@@ -92,10 +92,10 @@ namespace Redemption.NPCs
 				string text = "A Dark Slime slumbers...";
 				Color rarityPurple = Colors.RarityPurple;
 				byte r = rarityPurple.R;
-				Color rarityPurple2 = Colors.RarityPurple;
-				byte g = rarityPurple2.G;
-				Color rarityPurple3 = Colors.RarityPurple;
-				Main.NewText(text, r, g, rarityPurple3.B, false);
+				rarityPurple = Colors.RarityPurple;
+				byte g = rarityPurple.G;
+				rarityPurple = Colors.RarityPurple;
+				Main.NewText(text, r, g, rarityPurple.B, false);
 			}
 			if (Main.expertMode)
 			{
@@ -105,12 +105,12 @@ namespace Redemption.NPCs
 					if (this.timer2 == 1)
 					{
 						string text2 = "The Dark Slime has awoken...";
-						Color rarityPurple4 = Colors.RarityPurple;
-						byte r2 = rarityPurple4.R;
-						Color rarityPurple5 = Colors.RarityPurple;
-						byte g2 = rarityPurple5.G;
-						Color rarityPurple6 = Colors.RarityPurple;
-						Main.NewText(text2, r2, g2, rarityPurple6.B, false);
+						Color rarityPurple = Colors.RarityPurple;
+						byte r2 = rarityPurple.R;
+						rarityPurple = Colors.RarityPurple;
+						byte g2 = rarityPurple.G;
+						rarityPurple = Colors.RarityPurple;
+						Main.NewText(text2, r2, g2, rarityPurple.B, false);
 					}
 					if (Main.rand.Next(200) == 0)
 					{
@@ -125,12 +125,12 @@ namespace Redemption.NPCs
 				if (this.timer2 == 1)
 				{
 					string text3 = "The Dark Slime has awoken...";
-					Color rarityPurple7 = Colors.RarityPurple;
-					byte r3 = rarityPurple7.R;
-					Color rarityPurple8 = Colors.RarityPurple;
-					byte g3 = rarityPurple8.G;
-					Color rarityPurple9 = Colors.RarityPurple;
-					Main.NewText(text3, r3, g3, rarityPurple9.B, false);
+					Color rarityPurple = Colors.RarityPurple;
+					byte r3 = rarityPurple.R;
+					rarityPurple = Colors.RarityPurple;
+					byte g3 = rarityPurple.G;
+					rarityPurple = Colors.RarityPurple;
+					Main.NewText(text3, r3, g3, rarityPurple.B, false);
 				}
 				if (Main.rand.Next(200) == 0)
 				{
@@ -157,6 +157,7 @@ namespace Redemption.NPCs
 					{
 						base.npc.timeLeft = 10;
 					}
+					return;
 				}
 			}
 		}
@@ -170,12 +171,12 @@ namespace Redemption.NPCs
 				CombatText.NewText(this.player.getRect(), Color.Gray, "+0", true, false);
 				for (int i = 0; i < 255; i++)
 				{
-					Player player = Main.player[i];
-					if (player.active)
+					Player player2 = Main.player[i];
+					if (player2.active)
 					{
-						for (int j = 0; j < player.inventory.Length; j++)
+						for (int j = 0; j < player2.inventory.Length; j++)
 						{
-							if (player.inventory[j].type == base.mod.ItemType("RedemptionTeller"))
+							if (player2.inventory[j].type == base.mod.ItemType("RedemptionTeller"))
 							{
 								Main.NewText("<Chalice of Alignment> Someone emerged from the slime!", Color.DarkGoldenrod, false);
 							}
@@ -198,6 +199,10 @@ namespace Redemption.NPCs
 				{
 					return 0f;
 				}
+			}
+			if (RedeWorld.golemLure)
+			{
+				return SpawnCondition.OverworldDay.Chance * ((Main.hardMode && !RedeWorld.downedDarkSlime && !NPC.AnyNPCs(base.mod.NPCType("DarkSlime"))) ? 1f : 0f);
 			}
 			return SpawnCondition.OverworldDay.Chance * ((Main.hardMode && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && !RedeWorld.downedDarkSlime && !NPC.AnyNPCs(base.mod.NPCType("DarkSlime"))) ? 0.003f : 0f);
 		}

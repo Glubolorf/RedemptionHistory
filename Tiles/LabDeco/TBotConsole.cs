@@ -40,42 +40,23 @@ namespace Redemption.Tiles.LabDeco
 			return false;
 		}
 
-		public override void RightClick(int i, int j)
+		public override bool NewRightClick(int i, int j)
 		{
 			if (Main.netMode == 0)
 			{
-				int num = NPC.FindFirstNPC(base.mod.NPCType("TBot"));
-				if (num < 0)
-				{
-					Main.NewText("Looks like only a Friendly T-Bot could hack into this...", new Color(100, 120, 200), false);
-					return;
-				}
-				if (!NPC.AnyNPCs(base.mod.NPCType("TBotHolo")) && RedeWorld.downedStage2Scientist && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface && !RedeWorld.tbotLabAccess)
-				{
-					Player localPlayer = Main.LocalPlayer;
-					Main.tile[i, j];
-					i *= 16;
-					j *= 16;
-					int num2 = NPC.NewNPC(i + 1, j + 1, base.mod.NPCType("TBotHolo"), 0, 0f, 0f, 0f, 0f, 255);
-					if (Main.netMode == 2)
-					{
-						NetMessage.SendData(23, -1, -1, null, num2, 0f, 0f, 0f, 0, 0, 0);
-						return;
-					}
-				}
-			}
-			else
-			{
-				int num3 = NPC.FindFirstNPC(base.mod.NPCType("TBot"));
-				if (num3 >= 0)
+				if (NPC.FindFirstNPC(base.mod.NPCType("TBot")) >= 0)
 				{
 					if (!NPC.AnyNPCs(base.mod.NPCType("TBotHolo")) && RedeWorld.downedStage2Scientist && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface && !RedeWorld.tbotLabAccess)
 					{
-						ModPacket packet = base.mod.GetPacket(256);
-						packet.Write(4);
-						Utils.WriteVector2(packet, new Vector2((float)(i * 16), (float)(j * 16)));
-						packet.Send(-1, -1);
-						return;
+						Player localPlayer = Main.LocalPlayer;
+						Main.tile[i, j];
+						i *= 16;
+						j *= 16;
+						int k = NPC.NewNPC(i + 1, j + 1, base.mod.NPCType("TBotHolo"), 0, 0f, 0f, 0f, 0f, 255);
+						if (Main.netMode == 2)
+						{
+							NetMessage.SendData(23, -1, -1, null, k, 0f, 0f, 0f, 0, 0, 0);
+						}
 					}
 				}
 				else
@@ -83,6 +64,21 @@ namespace Redemption.Tiles.LabDeco
 					Main.NewText("Looks like only a Friendly T-Bot could hack into this...", new Color(100, 120, 200), false);
 				}
 			}
+			else if (NPC.FindFirstNPC(base.mod.NPCType("TBot")) >= 0)
+			{
+				if (!NPC.AnyNPCs(base.mod.NPCType("TBotHolo")) && RedeWorld.downedStage2Scientist && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface && !RedeWorld.tbotLabAccess)
+				{
+					ModPacket packet = base.mod.GetPacket(256);
+					packet.Write(7);
+					Utils.WriteVector2(packet, new Vector2((float)(i * 16), (float)(j * 16)));
+					packet.Send(-1, -1);
+				}
+			}
+			else
+			{
+				Main.NewText("Looks like only a Friendly T-Bot could hack into this...", new Color(100, 120, 200), false);
+			}
+			return true;
 		}
 
 		public override void AnimateTile(ref int frame, ref int frameCounter)

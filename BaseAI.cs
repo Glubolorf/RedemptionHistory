@@ -5,7 +5,6 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Redemption
@@ -17,15 +16,15 @@ namespace Redemption
 			chargeTime = Math.Max(0, chargeTime - 1);
 			if (chargeTime > 0)
 			{
-				Vector2 position = projectile.position - projectile.velocity;
-				float num = (float)chargeTime / (float)chargeTimeMax;
-				float num2 = (float)Math.Sin((double)(3.1415927f * num));
-				float num3 = Math.Abs(targetCenter.X - projectile.Center.X);
-				float num4 = Math.Abs(targetCenter.Y - projectile.Center.Y);
-				float num5 = num3 / (float)chargeTimeMax;
-				float num6 = num4 / (float)chargeTimeMax;
-				projectile.velocity = new Vector2(num5 * (float)chargeTime * (float)projectile.direction, num2 * num6);
-				projectile.position = position;
+				Vector2 positionOld = projectile.position - projectile.velocity;
+				float percent = (float)chargeTime / (float)chargeTimeMax;
+				float place = (float)Math.Sin((double)(3.1415927f * percent));
+				float distX = Math.Abs(targetCenter.X - projectile.Center.X);
+				float num = Math.Abs(targetCenter.Y - projectile.Center.Y);
+				float distPercentX = distX / (float)chargeTimeMax;
+				float distPercentY = num / (float)chargeTimeMax;
+				projectile.velocity = new Vector2(distPercentX * (float)chargeTime * (float)projectile.direction, place * distPercentY);
+				projectile.position = positionOld;
 			}
 		}
 
@@ -35,12 +34,12 @@ namespace Redemption
 			{
 				projectile.timeLeft = 10;
 			}
-			Entity entity = (GetTarget == null) ? null : GetTarget(projectile, owner);
-			if (entity == null)
+			Entity target = (GetTarget == null) ? null : GetTarget(projectile, owner);
+			if (target == null)
 			{
-				entity = owner;
+				target = owner;
 			}
-			bool flag = entity == owner;
+			bool flag = target == owner;
 			ai[0] += 1f;
 			if (ai[0] > (float)vineTimeExtend)
 			{
@@ -50,50 +49,50 @@ namespace Redemption
 					ai[0] = 0f;
 				}
 			}
-			Vector2 vector = entity.Center + targetOffset + ((entity == owner) ? new Vector2(0f, (owner is Player) ? ((Player)owner).gfxOffY : ((owner is NPC) ? ((NPC)owner).gfxOffY : ((Projectile)owner).gfxOffY)) : default(Vector2));
+			Vector2 targetCenter = target.Center + targetOffset + ((target == owner) ? new Vector2(0f, (owner is Player) ? ((Player)owner).gfxOffY : ((owner is NPC) ? ((NPC)owner).gfxOffY : ((Projectile)owner).gfxOffY)) : default(Vector2));
 			if (!flag)
 			{
-				float num = vector.X - endPoint.X;
-				float num2 = vector.Y - endPoint.Y;
-				float num3 = (float)Math.Sqrt((double)(num * num + num2 * num2));
-				if (num3 > vineLength)
+				float distTargetX = targetCenter.X - endPoint.X;
+				float distTargetY = targetCenter.Y - endPoint.Y;
+				float distTarget = (float)Math.Sqrt((double)(distTargetX * distTargetX + distTargetY * distTargetY));
+				if (distTarget > vineLength)
 				{
 					projectile.velocity *= 0.85f;
 					projectile.velocity += owner.velocity;
-					num3 = vineLength / num3;
-					num *= num3;
-					num2 *= num3;
+					distTarget = vineLength / distTarget;
+					distTargetX *= distTarget;
+					distTargetY *= distTarget;
 				}
-				if (ShootTarget == null || !ShootTarget(projectile, owner, entity))
+				if (ShootTarget == null || !ShootTarget(projectile, owner, target))
 				{
-					if (projectile.position.X < endPoint.X + num)
+					if (projectile.position.X < endPoint.X + distTargetX)
 					{
 						projectile.velocity.X = projectile.velocity.X + moveInterval;
-						if (projectile.velocity.X < 0f && num > 0f)
+						if (projectile.velocity.X < 0f && distTargetX > 0f)
 						{
 							projectile.velocity.X = projectile.velocity.X + moveInterval * 1.5f;
 						}
 					}
-					else if (projectile.position.X > endPoint.X + num)
+					else if (projectile.position.X > endPoint.X + distTargetX)
 					{
 						projectile.velocity.X = projectile.velocity.X - moveInterval;
-						if (projectile.velocity.X > 0f && num < 0f)
+						if (projectile.velocity.X > 0f && distTargetX < 0f)
 						{
 							projectile.velocity.X = projectile.velocity.X - moveInterval * 1.5f;
 						}
 					}
-					if (projectile.position.Y < endPoint.Y + num2)
+					if (projectile.position.Y < endPoint.Y + distTargetY)
 					{
 						projectile.velocity.Y = projectile.velocity.Y + moveInterval;
-						if (projectile.velocity.Y < 0f && num2 > 0f)
+						if (projectile.velocity.Y < 0f && distTargetY > 0f)
 						{
 							projectile.velocity.Y = projectile.velocity.Y + moveInterval * 1.5f;
 						}
 					}
-					else if (projectile.position.Y > endPoint.Y + num2)
+					else if (projectile.position.Y > endPoint.Y + distTargetY)
 					{
 						projectile.velocity.Y = projectile.velocity.Y - moveInterval;
-						if (projectile.velocity.Y > 0f && num2 < 0f)
+						if (projectile.velocity.Y > 0f && distTargetY < 0f)
 						{
 							projectile.velocity.Y = projectile.velocity.Y - moveInterval * 1.5f;
 						}
@@ -113,36 +112,36 @@ namespace Redemption
 				}
 				projectile.velocity.X = MathHelper.Clamp(projectile.velocity.X, -speedMax, speedMax);
 				projectile.velocity.Y = MathHelper.Clamp(projectile.velocity.Y, -speedMax, speedMax);
-				if (num > 0f)
+				if (distTargetX > 0f)
 				{
 					projectile.spriteDirection = 1;
-					projectile.rotation = (float)Math.Atan2((double)num2, (double)num);
+					projectile.rotation = (float)Math.Atan2((double)distTargetY, (double)distTargetX);
 				}
-				else if (num < 0f)
+				else if (distTargetX < 0f)
 				{
 					projectile.spriteDirection = -1;
-					projectile.rotation = (float)Math.Atan2((double)num2, (double)num) + 3.14f;
+					projectile.rotation = (float)Math.Atan2((double)distTargetY, (double)distTargetX) + 3.14f;
 				}
 				if (projectile.tileCollide)
 				{
-					Vector4 vector2 = Collision.SlopeCollision(projectile.position, projectile.velocity, projectile.width, projectile.height, 0f, false);
-					projectile.position = new Vector2(vector2.X, vector2.Y);
-					projectile.velocity = new Vector2(vector2.Z, vector2.W);
+					Vector4 slopeVec = Collision.SlopeCollision(projectile.position, projectile.velocity, projectile.width, projectile.height, 0f, false);
+					projectile.position = new Vector2(slopeVec.X, slopeVec.Y);
+					projectile.velocity = new Vector2(slopeVec.Z, slopeVec.W);
 				}
 				projectile.position += owner.position - owner.oldPosition;
 				return;
 			}
 			projectile.position += owner.position - owner.oldPosition;
 			projectile.spriteDirection = ((owner.Center.X > projectile.Center.X) ? -1 : 1);
-			projectile.velocity = BaseAI.AIVelocityLinear(projectile, vector, moveInterval, speedMax, true);
-			if (Vector2.Distance(projectile.Center, vector) < speedMax * 1.1f)
+			projectile.velocity = BaseAI.AIVelocityLinear(projectile, targetCenter, moveInterval, speedMax, true);
+			if (Vector2.Distance(projectile.Center, targetCenter) < speedMax * 1.1f)
 			{
 				projectile.rotation = 0f;
 				projectile.velocity *= 0f;
-				projectile.Center = vector;
+				projectile.Center = targetCenter;
 				return;
 			}
-			projectile.rotation = BaseUtility.RotationTo(vector, projectile.Center) + ((projectile.spriteDirection == -1) ? 3.14f : 0f);
+			projectile.rotation = BaseUtility.RotationTo(targetCenter, projectile.Center) + ((projectile.spriteDirection == -1) ? 3.14f : 0f);
 		}
 
 		public static void TileCollidePlant(Projectile projectile, ref Vector2 velocity, float speedMax)
@@ -199,18 +198,18 @@ namespace Redemption
 
 		public static void AIMinionFlier(Entity codable, ref float[] ai, Entity owner, ref bool tileCollide, ref bool netUpdate, int minionPos, bool movementFixed, bool hover = false, int hoverHeight = 40, int lineDist = 40, int returnDist = 400, int teleportDist = 800, float moveInterval = 0.2f, float maxSpeed = 4.5f, float maxSpeedFlying = 4.5f, Func<Entity, Entity, Entity> GetTarget = null, Func<Entity, Entity, Entity, bool> ShootTarget = null)
 		{
-			float num = Vector2.Distance(codable.Center, owner.Center);
-			if (num > (float)teleportDist)
+			float dist = Vector2.Distance(codable.Center, owner.Center);
+			if (dist > (float)teleportDist)
 			{
 				codable.Center = owner.Center;
 			}
-			int num2 = (int)(codable.Center.X / 16f);
-			int num3 = (int)(codable.Center.Y / 16f);
-			Tile tile = Main.tile[num2, num3];
-			bool flag = tile != null && tile.nactive() && Main.tileSolid[(int)tile.type];
-			float num4 = ai[0];
-			ai[0] = (float)(((ai[0] == 1f && (num > Math.Max((float)lineDist, (float)returnDist / 2f) || !BaseUtility.CanHit(codable.Hitbox, owner.Hitbox))) || num > (float)returnDist || flag) ? 1 : 0);
-			if (ai[0] != num4)
+			int tileX = (int)(codable.Center.X / 16f);
+			int tileY = (int)(codable.Center.Y / 16f);
+			Tile tile = Main.tile[tileX, tileY];
+			bool inTile = tile != null && tile.nactive() && Main.tileSolid[(int)tile.type];
+			float prevAI = ai[0];
+			ai[0] = (float)(((ai[0] == 1f && (dist > Math.Max((float)lineDist, (float)returnDist / 2f) || !BaseUtility.CanHit(codable.Hitbox, owner.Hitbox))) || dist > (float)returnDist || inTile) ? 1 : 0);
+			if (ai[0] != prevAI)
 			{
 				netUpdate = true;
 			}
@@ -222,59 +221,60 @@ namespace Redemption
 					maxSpeedFlying *= 1.5f;
 				}
 				tileCollide = (ai[0] == 0f);
-				Entity entity = (GetTarget == null) ? owner : GetTarget(codable, owner);
-				if (entity == null)
+				Entity target = (GetTarget == null) ? owner : GetTarget(codable, owner);
+				if (target == null)
 				{
-					entity = owner;
+					target = owner;
 				}
-				Vector2 center = entity.Center;
-				bool flag2 = entity == owner;
-				bool flag3 = ai[0] == 0f && ShootTarget != null && ShootTarget(codable, owner, entity);
-				if (flag2)
+				Vector2 targetCenter = target.Center;
+				bool isOwner = target == owner;
+				object obj = ai[0] == 0f && ShootTarget != null && ShootTarget(codable, owner, target);
+				if (isOwner)
 				{
-					center.Y -= (float)hoverHeight;
+					targetCenter.Y -= (float)hoverHeight;
 					if (hover)
 					{
-						center.X += (float)((lineDist + lineDist * minionPos) * -(float)entity.direction);
+						targetCenter.X += (float)((lineDist + lineDist * minionPos) * -(float)target.direction);
 					}
 				}
-				if (!hover || !flag2)
+				if (!hover || !isOwner)
 				{
-					float num5 = hover ? 1.2f : 1.8f;
-					float num6 = (num < (float)(lineDist * minionPos) + (float)lineDist * num5) ? ((codable.velocity.X > 0f) ? 1f : -1f) : ((entity.Center.X > codable.Center.X) ? 1f : -1f);
-					center.X += ((minionPos == 0) ? 0f : ((minionPos % 5 == 0) ? ((float)lineDist / 4f) : ((minionPos % 4 == 0) ? ((float)lineDist / 2f) : ((minionPos % 3 == 0) ? ((float)lineDist / 3f) : 0f)))) * num6;
-					center.X += (float)lineDist * 2f * num6;
-					center.Y -= (float)hoverHeight / 4f * (float)minionPos;
-					center.Y -= ((codable.velocity.X < 0f) ? ((float)lineDist * 0.25f) : ((float)(-(float)lineDist) * 0.25f)) * (float)((minionPos % 2 == 0) ? 1 : -1);
+					float dirDist = hover ? 1.2f : 1.8f;
+					float dir = (dist < (float)(lineDist * minionPos) + (float)lineDist * dirDist) ? ((codable.velocity.X > 0f) ? 1f : -1f) : ((target.Center.X > codable.Center.X) ? 1f : -1f);
+					targetCenter.X += ((minionPos == 0) ? 0f : ((minionPos % 5 == 0) ? ((float)lineDist / 4f) : ((minionPos % 4 == 0) ? ((float)lineDist / 2f) : ((minionPos % 3 == 0) ? ((float)lineDist / 3f) : 0f)))) * dir;
+					targetCenter.X += (float)lineDist * 2f * dir;
+					targetCenter.Y -= (float)hoverHeight / 4f * (float)minionPos;
+					targetCenter.Y -= ((codable.velocity.X < 0f) ? ((float)lineDist * 0.25f) : ((float)(-(float)lineDist) * 0.25f)) * (float)((minionPos % 2 == 0) ? 1 : -1);
 				}
-				float num7 = Math.Abs(codable.Center.X - center.X);
-				float num8 = Math.Abs(codable.Center.Y - center.Y);
-				bool flag4 = hover && owner.velocity.X < 0.025f && num7 < 8f * Math.Max(1f, maxSpeed / 4f);
-				bool flag5 = hover && owner.velocity.Y < 0.025f && num8 < 8f * Math.Max(1f, maxSpeed / 4f);
-				Vector2 vector = BaseAI.AIVelocityLinear(codable, center, moveInterval, (ai[0] == 0f) ? maxSpeed : maxSpeedFlying, true);
-				if (!flag3 && !flag4)
+				float targetDistX = Math.Abs(codable.Center.X - targetCenter.X);
+				float targetDistY = Math.Abs(codable.Center.Y - targetCenter.Y);
+				bool slowdownX = hover && owner.velocity.X < 0.025f && targetDistX < 8f * Math.Max(1f, maxSpeed / 4f);
+				bool slowdownY = hover && owner.velocity.Y < 0.025f && targetDistY < 8f * Math.Max(1f, maxSpeed / 4f);
+				Vector2 vel = BaseAI.AIVelocityLinear(codable, targetCenter, moveInterval, (ai[0] == 0f) ? maxSpeed : maxSpeedFlying, true);
+				object obj2 = obj;
+				if (obj2 == null && !slowdownX)
 				{
-					codable.velocity.X = codable.velocity.X + vector.X * 0.125f;
+					codable.velocity.X = codable.velocity.X + vel.X * 0.125f;
 				}
-				if (!flag3 && !flag5)
+				if (obj2 == null && !slowdownY)
 				{
-					codable.velocity.Y = codable.velocity.Y + vector.Y * 0.125f;
+					codable.velocity.Y = codable.velocity.Y + vel.Y * 0.125f;
 				}
-				if (flag3 || flag4)
+				if ((obj2 | slowdownX) != null)
 				{
 					codable.velocity.X = codable.velocity.X * ((Math.Abs(codable.velocity.X) > 0.01f) ? 0.85f : 0f);
 				}
-				if ((vector.X > 0f && codable.velocity.X > vector.X) || (vector.X < 0f && codable.velocity.X < vector.X))
+				if ((vel.X > 0f && codable.velocity.X > vel.X) || (vel.X < 0f && codable.velocity.X < vel.X))
 				{
-					codable.velocity.X = vector.X;
+					codable.velocity.X = vel.X;
 				}
-				if (flag3 || flag5)
+				if ((obj2 | slowdownY) != null)
 				{
 					codable.velocity.Y = codable.velocity.Y * ((Math.Abs(codable.velocity.Y) > 0.01f) ? 0.85f : 0f);
 				}
-				if ((vector.Y > 0f && codable.velocity.Y > vector.Y) || (vector.Y < 0f && codable.velocity.X < vector.Y))
+				if ((vel.Y > 0f && codable.velocity.Y > vel.Y) || (vel.Y < 0f && codable.velocity.X < vel.Y))
 				{
-					codable.velocity.Y = vector.Y;
+					codable.velocity.Y = vel.Y;
 				}
 			}
 		}
@@ -309,37 +309,37 @@ namespace Redemption
 
 		public static void AIMinionFighter(Entity codable, ref float[] ai, Entity owner, ref bool tileCollide, ref bool netUpdate, ref float gfxOffY, ref float stepSpeed, int minionPos, int jumpDistX = 4, int jumpDistY = 5, int lineDist = 40, int returnDist = 400, int teleportDist = 800, float moveInterval = 0.2f, float maxSpeed = 4.5f, float maxSpeedFlying = 4.5f, Func<Entity, Entity, Entity> GetTarget = null)
 		{
-			float num = Vector2.Distance(codable.Center, owner.Center);
-			if (num > (float)teleportDist)
+			float dist = Vector2.Distance(codable.Center, owner.Center);
+			if (dist > (float)teleportDist)
 			{
 				codable.Center = owner.Center;
 			}
-			int num2 = (int)(codable.Center.X / 16f);
-			int num3 = (int)(codable.Center.Y / 16f);
-			Tile tile = Main.tile[num2, num3];
-			bool flag = tile != null && tile.nactive() && Main.tileSolid[(int)tile.type];
-			float num4 = ai[0];
-			ai[0] = (float)(((ai[0] == 1f && (owner.velocity.Y != 0f || num > Math.Max((float)lineDist, (float)returnDist / 10f))) || num > (float)returnDist || flag) ? 1 : 0);
-			if (ai[0] != num4)
+			int tileX = (int)(codable.Center.X / 16f);
+			int tileY = (int)(codable.Center.Y / 16f);
+			Tile tile = Main.tile[tileX, tileY];
+			bool inTile = tile != null && tile.nactive() && Main.tileSolid[(int)tile.type];
+			float prevAI = ai[0];
+			ai[0] = (float)(((ai[0] == 1f && (owner.velocity.Y != 0f || dist > Math.Max((float)lineDist, (float)returnDist / 10f))) || dist > (float)returnDist || inTile) ? 1 : 0);
+			if (ai[0] != prevAI)
 			{
 				netUpdate = true;
 			}
 			if (ai[0] == 0f)
 			{
 				tileCollide = true;
-				Entity entity = (GetTarget == null) ? null : GetTarget(codable, owner);
-				Vector2 vector = (entity == null) ? default(Vector2) : entity.Center;
-				bool flag2 = entity == null || vector == owner.Center;
-				if (vector == default(Vector2))
+				Entity target = (GetTarget == null) ? null : GetTarget(codable, owner);
+				Vector2 targetCenter = (target == null) ? default(Vector2) : target.Center;
+				bool isOwner = target == null || targetCenter == owner.Center;
+				if (targetCenter == default(Vector2))
 				{
-					vector = owner.Center;
-					vector.X += (float)((owner.width + 10 + lineDist * minionPos) * -(float)owner.direction);
+					targetCenter = owner.Center;
+					targetCenter.X += (float)((owner.width + 10 + lineDist * minionPos) * -(float)owner.direction);
 				}
-				float num5 = Math.Abs(codable.Center.X - vector.X);
-				float num6 = Math.Abs(codable.Center.Y - vector.Y);
-				int num7 = (vector.X > codable.Center.X) ? 1 : -1;
-				int num8 = (vector.Y > codable.Center.Y) ? 1 : -1;
-				if (flag2 && owner.velocity.X < 0.025f && codable.velocity.Y == 0f && num5 < 8f)
+				float targetDistX = Math.Abs(codable.Center.X - targetCenter.X);
+				float targetDistY = Math.Abs(codable.Center.Y - targetCenter.Y);
+				int moveDirection = (targetCenter.X > codable.Center.X) ? 1 : -1;
+				int moveDirectionY = (targetCenter.Y > codable.Center.Y) ? 1 : -1;
+				if (isOwner && owner.velocity.X < 0.025f && codable.velocity.Y == 0f && targetDistX < 8f)
 				{
 					codable.velocity.X = codable.velocity.X * ((Math.Abs(codable.velocity.X) > 0.01f) ? 0.8f : 0f);
 				}
@@ -350,7 +350,7 @@ namespace Redemption
 						codable.velocity *= 0.85f;
 					}
 				}
-				else if (codable.velocity.X < maxSpeed && num7 == 1)
+				else if (codable.velocity.X < maxSpeed && moveDirection == 1)
 				{
 					if (codable.velocity.X < 0f)
 					{
@@ -362,7 +362,7 @@ namespace Redemption
 						codable.velocity.X = maxSpeed;
 					}
 				}
-				else if (codable.velocity.X > -maxSpeed && num7 == -1)
+				else if (codable.velocity.X > -maxSpeed && moveDirection == -1)
 				{
 					if (codable.velocity.X > 0f)
 					{
@@ -380,20 +380,20 @@ namespace Redemption
 					codable.velocity.Y = codable.velocity.Y + 0.35f;
 					return;
 				}
-				if ((codable.velocity.X < 0f && num7 == -1) || (codable.velocity.X > 0f && num7 == 1))
+				if ((codable.velocity.X < 0f && moveDirection == -1) || (codable.velocity.X > 0f && moveDirection == 1))
 				{
-					bool ignoreTiles = entity != null && !flag2 && num5 < 50f && num6 > (float)(codable.height + codable.height / 2) && num6 < 16f * (float)(jumpDistY + 1) && BaseUtility.CanHit(codable.Hitbox, entity.Hitbox);
-					Vector2 vector2 = BaseAI.AttemptJump(codable.position, codable.velocity, codable.width, codable.height, num7, (float)num8, jumpDistX, jumpDistY, maxSpeed, true, entity, ignoreTiles);
+					bool test = target != null && !isOwner && targetDistX < 50f && targetDistY > (float)(codable.height + codable.height / 2) && targetDistY < 16f * (float)(jumpDistY + 1) && BaseUtility.CanHit(codable.Hitbox, target.Hitbox);
+					Vector2 newVec = BaseAI.AttemptJump(codable.position, codable.velocity, codable.width, codable.height, moveDirection, (float)moveDirectionY, jumpDistX, jumpDistY, maxSpeed, true, target, test);
 					if (tileCollide)
 					{
-						vector2 = Collision.TileCollision(codable.position, vector2, codable.width, codable.height, false, false, 1);
-						Vector4 vector3 = Collision.SlopeCollision(codable.position, vector2, codable.width, codable.height, 0f, false);
-						codable.position = new Vector2(vector3.X, vector3.Y);
-						codable.velocity = new Vector2(vector3.Z, vector3.W);
+						newVec = Collision.TileCollision(codable.position, newVec, codable.width, codable.height, false, false, 1);
+						Vector4 slopeVec = Collision.SlopeCollision(codable.position, newVec, codable.width, codable.height, 0f, false);
+						codable.position = new Vector2(slopeVec.X, slopeVec.Y);
+						codable.velocity = new Vector2(slopeVec.Z, slopeVec.W);
 					}
-					if (codable.velocity != vector2)
+					if (codable.velocity != newVec)
 					{
-						codable.velocity = vector2;
+						codable.velocity = newVec;
 						netUpdate = true;
 						return;
 					}
@@ -402,21 +402,21 @@ namespace Redemption
 			else
 			{
 				tileCollide = false;
-				Vector2 endPos = owner.Center;
-				if (owner.velocity.Y != 0f && num < 80f)
+				Vector2 targetCenter2 = owner.Center;
+				if (owner.velocity.Y != 0f && dist < 80f)
 				{
-					endPos = owner.Center + BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), BaseUtility.RotationTo(codable.Center, owner.Center));
+					targetCenter2 = owner.Center + BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), BaseUtility.RotationTo(codable.Center, owner.Center));
 				}
-				Vector2 vector4 = BaseUtility.RotateVector(default(Vector2), new Vector2(maxSpeedFlying, 0f), BaseUtility.RotationTo(codable.Center, endPos));
-				if (owner.velocity.Y != 0f && ((vector4.X > 0f && codable.velocity.X < 0f) || (vector4.X < 0f && codable.velocity.X > 0f)))
+				Vector2 newVel = BaseUtility.RotateVector(default(Vector2), new Vector2(maxSpeedFlying, 0f), BaseUtility.RotationTo(codable.Center, targetCenter2));
+				if (owner.velocity.Y != 0f && ((newVel.X > 0f && codable.velocity.X < 0f) || (newVel.X < 0f && codable.velocity.X > 0f)))
 				{
 					codable.velocity *= 0.98f;
-					vector4 *= 0.02f;
-					codable.velocity += vector4;
+					newVel *= 0.02f;
+					codable.velocity += newVel;
 				}
 				else
 				{
-					codable.velocity = vector4;
+					codable.velocity = newVel;
 				}
 				codable.position += owner.velocity;
 			}
@@ -448,37 +448,38 @@ namespace Redemption
 
 		public static void AIMinionSlime(Entity codable, ref float[] ai, Entity owner, ref bool tileCollide, ref bool netUpdate, int minionPos, int lineDist = 40, int returnDist = 400, int teleportDist = 800, float jumpVelX = 2f, float jumpVelY = 20f, float maxSpeedFlying = 4.5f, Func<Entity, Entity, Entity> GetTarget = null)
 		{
-			float num = Vector2.Distance(codable.Center, owner.Center);
-			if (num > (float)teleportDist)
+			float dist = Vector2.Distance(codable.Center, owner.Center);
+			if (dist > (float)teleportDist)
 			{
 				codable.Center = owner.Center;
 			}
-			int num2 = (int)(codable.Center.X / 16f);
-			int num3 = (int)(codable.Center.Y / 16f);
-			Tile tile = Main.tile[num2, num3];
-			bool flag = tile != null && tile.nactive() && Main.tileSolid[(int)tile.type];
-			float num4 = ai[0];
-			ai[0] = (float)(((ai[0] == 1f && (owner.velocity.Y != 0f || num > Math.Max((float)lineDist, (float)returnDist / 10f))) || num > (float)returnDist || flag) ? 1 : 0);
-			if (ai[0] != num4)
+			int tileX = (int)(codable.Center.X / 16f);
+			int tileY = (int)(codable.Center.Y / 16f);
+			Tile tile = Main.tile[tileX, tileY];
+			bool inTile = tile != null && tile.nactive() && Main.tileSolid[(int)tile.type];
+			float prevAI = ai[0];
+			ai[0] = (float)(((ai[0] == 1f && (owner.velocity.Y != 0f || dist > Math.Max((float)lineDist, (float)returnDist / 10f))) || dist > (float)returnDist || inTile) ? 1 : 0);
+			if (ai[0] != prevAI)
 			{
 				netUpdate = true;
 			}
 			if (ai[0] == 0f)
 			{
 				tileCollide = true;
-				Entity entity = (GetTarget == null) ? null : GetTarget(codable, owner);
-				Vector2 vector = (entity == null) ? default(Vector2) : entity.Center;
-				bool flag2 = entity == null || vector == owner.Center;
-				if (vector == default(Vector2))
+				Entity target = (GetTarget == null) ? null : GetTarget(codable, owner);
+				Vector2 targetCenter = (target == null) ? default(Vector2) : target.Center;
+				bool flag = target == null || targetCenter == owner.Center;
+				if (targetCenter == default(Vector2))
 				{
-					vector = owner.Center;
-					vector.X += (float)((lineDist + lineDist * minionPos) * -(float)owner.direction);
+					targetCenter = owner.Center;
+					targetCenter.X += (float)((lineDist + lineDist * minionPos) * -(float)owner.direction);
 				}
-				float num5 = Math.Abs(codable.Center.X - vector.X);
-				Math.Abs(codable.Center.Y - vector.Y);
-				int num6 = (vector.X > codable.Center.X) ? 1 : -1;
-				float y = codable.Center.Y;
-				if (flag2 && owner.velocity.X < 0.025f && codable.velocity.Y == 0f && num5 < 8f)
+				float targetDistX = Math.Abs(codable.Center.X - targetCenter.X);
+				Math.Abs(codable.Center.Y - targetCenter.Y);
+				int moveDirection = (targetCenter.X > codable.Center.X) ? 1 : -1;
+				float y = targetCenter.Y;
+				float y2 = codable.Center.Y;
+				if (flag && owner.velocity.X < 0.025f && codable.velocity.Y == 0f && targetDistX < 8f)
 				{
 					codable.velocity.X = codable.velocity.X * ((Math.Abs(codable.velocity.X) > 0.01f) ? 0.8f : 0f);
 				}
@@ -490,7 +491,7 @@ namespace Redemption
 						codable.velocity.X = 0f;
 					}
 					codable.velocity.Y = -jumpVelY;
-					codable.velocity.X = codable.velocity.X + jumpVelX * (float)num6;
+					codable.velocity.X = codable.velocity.X + jumpVelX * (float)moveDirection;
 					codable.position += codable.velocity;
 				}
 				if (!BaseAI.HitTileOnSide(codable, 3, true))
@@ -498,19 +499,19 @@ namespace Redemption
 					codable.velocity.Y = codable.velocity.Y + 0.35f;
 					return;
 				}
-				if ((codable.velocity.X < 0f && num6 == -1) || (codable.velocity.X > 0f && num6 == 1))
+				if ((codable.velocity.X < 0f && moveDirection == -1) || (codable.velocity.X > 0f && moveDirection == 1))
 				{
-					Vector2 vector2 = codable.velocity;
+					Vector2 newVec = codable.velocity;
 					if (tileCollide)
 					{
-						vector2 = Collision.TileCollision(codable.position, vector2, codable.width, codable.height, false, false, 1);
-						Vector4 vector3 = Collision.SlopeCollision(codable.position, vector2, codable.width, codable.height, 0f, false);
-						codable.position = new Vector2(vector3.X, vector3.Y);
-						codable.velocity = new Vector2(vector3.Z, vector3.W);
+						newVec = Collision.TileCollision(codable.position, newVec, codable.width, codable.height, false, false, 1);
+						Vector4 slopeVec = Collision.SlopeCollision(codable.position, newVec, codable.width, codable.height, 0f, false);
+						codable.position = new Vector2(slopeVec.X, slopeVec.Y);
+						codable.velocity = new Vector2(slopeVec.Z, slopeVec.W);
 					}
-					if (codable.velocity != vector2)
+					if (codable.velocity != newVec)
 					{
-						codable.velocity = vector2;
+						codable.velocity = newVec;
 						netUpdate = true;
 						return;
 					}
@@ -519,21 +520,21 @@ namespace Redemption
 			else
 			{
 				tileCollide = false;
-				Vector2 endPos = owner.Center;
-				if (owner.velocity.Y != 0f && num < 80f)
+				Vector2 targetCenter2 = owner.Center;
+				if (owner.velocity.Y != 0f && dist < 80f)
 				{
-					endPos = owner.Center + BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), BaseUtility.RotationTo(codable.Center, owner.Center));
+					targetCenter2 = owner.Center + BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), BaseUtility.RotationTo(codable.Center, owner.Center));
 				}
-				Vector2 vector4 = BaseUtility.RotateVector(default(Vector2), new Vector2(maxSpeedFlying, 0f), BaseUtility.RotationTo(codable.Center, endPos));
-				if (owner.velocity.Y != 0f && ((vector4.X > 0f && codable.velocity.X < 0f) || (vector4.X < 0f && codable.velocity.X > 0f)))
+				Vector2 newVel = BaseUtility.RotateVector(default(Vector2), new Vector2(maxSpeedFlying, 0f), BaseUtility.RotationTo(codable.Center, targetCenter2));
+				if (owner.velocity.Y != 0f && ((newVel.X > 0f && codable.velocity.X < 0f) || (newVel.X < 0f && codable.velocity.X > 0f)))
 				{
 					codable.velocity *= 0.98f;
-					vector4 *= 0.02f;
-					codable.velocity += vector4;
+					newVel *= 0.02f;
+					codable.velocity += newVel;
 				}
 				else
 				{
-					codable.velocity = vector4;
+					codable.velocity = newVel;
 				}
 				codable.position += owner.velocity;
 			}
@@ -544,29 +545,29 @@ namespace Redemption
 			if (absolute)
 			{
 				moveRot += rotAmount;
-				Vector2 center = BaseUtility.RotateVector(default(Vector2), new Vector2(rotDistance, 0f), moveRot) + rotateCenter;
-				codable.Center = center;
-				center.Normalize();
+				Vector2 rotVec = BaseUtility.RotateVector(default(Vector2), new Vector2(rotDistance, 0f), moveRot) + rotateCenter;
+				codable.Center = rotVec;
+				rotVec.Normalize();
 				rotation = BaseUtility.RotationTo(codable.Center, rotateCenter) - 1.57f;
 				codable.velocity *= 0f;
 				return;
 			}
-			float num = Vector2.Distance(codable.Center, rotateCenter);
-			if (num < rotDistance)
+			float dist = Vector2.Distance(codable.Center, rotateCenter);
+			if (dist < rotDistance)
 			{
-				if (rotDistance - num > rotThreshold)
+				if (rotDistance - dist > rotThreshold)
 				{
 					moveRot += rotAmount;
-					Vector2 endPos = BaseUtility.RotateVector(default(Vector2), new Vector2(rotDistance, 0f), moveRot) + rotateCenter;
-					float rot = BaseUtility.RotationTo(codable.Center, endPos);
-					codable.velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(5f, 0f), rot);
+					Vector2 rotVec2 = BaseUtility.RotateVector(default(Vector2), new Vector2(rotDistance, 0f), moveRot) + rotateCenter;
+					float rot2 = BaseUtility.RotationTo(codable.Center, rotVec2);
+					codable.velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(5f, 0f), rot2);
 					rotation = BaseUtility.RotationTo(codable.Center, codable.Center + codable.velocity);
 					return;
 				}
 				moveRot += rotAmount;
-				Vector2 endPos2 = BaseUtility.RotateVector(default(Vector2), new Vector2(rotDistance, 0f), moveRot) + rotateCenter;
-				float rot2 = BaseUtility.RotationTo(codable.Center, endPos2);
-				codable.velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(5f, 0f), rot2);
+				Vector2 rotVec3 = BaseUtility.RotateVector(default(Vector2), new Vector2(rotDistance, 0f), moveRot) + rotateCenter;
+				float rot3 = BaseUtility.RotationTo(codable.Center, rotVec3);
+				codable.velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(5f, 0f), rot3);
 				rotation = BaseUtility.RotationTo(codable.Center, codable.Center + codable.velocity);
 				return;
 			}
@@ -594,12 +595,12 @@ namespace Redemption
 
 		public static void AIPounce(Entity codable, Vector2 pounceCenter, float pounceScalar = 3.5f, float maxSpeed = 5f, float yBoost = -5.2f, float minDistance = 50f, float maxDistance = 60f)
 		{
-			int num = (codable is NPC) ? ((NPC)codable).direction : ((codable is Projectile) ? ((Projectile)codable).direction : 0);
-			float num2 = Vector2.Distance(codable.Center, pounceCenter);
-			if (pounceCenter.Y <= codable.Center.Y && num2 > minDistance && num2 < maxDistance)
+			int direction = (codable is NPC) ? ((NPC)codable).direction : ((codable is Projectile) ? ((Projectile)codable).direction : 0);
+			float dist = Vector2.Distance(codable.Center, pounceCenter);
+			if (pounceCenter.Y <= codable.Center.Y && dist > minDistance && dist < maxDistance)
 			{
-				bool flag = pounceCenter.X < codable.Center.X;
-				if (codable.velocity.Y == 0f && ((flag && num == -1) || (!flag && num == 1)))
+				bool onLeft = pounceCenter.X < codable.Center.X;
+				if (codable.velocity.Y == 0f && ((onLeft && direction == -1) || (!onLeft && direction == 1)))
 				{
 					codable.velocity.X = codable.velocity.X * pounceScalar;
 					if (codable.velocity.X > maxSpeed)
@@ -621,24 +622,23 @@ namespace Redemption
 
 		public static void AIPath(NPC npc, ref float[] ai, Vector2[] points, float moveInterval = 0.11f, float maxSpeed = 3f, bool direct = false)
 		{
-			Vector2 vector;
-			vector..ctor(ai[0], ai[1]);
-			if (Main.netMode != 1 && vector != default(Vector2) && Vector2.Distance(npc.Center, vector) <= Math.Max(5f, (float)(npc.width + npc.height) / 2f * 0.45f))
+			Vector2 destVec = new Vector2(ai[0], ai[1]);
+			if (Main.netMode != 1 && destVec != default(Vector2) && Vector2.Distance(npc.Center, destVec) <= Math.Max(5f, (float)(npc.width + npc.height) / 2f * 0.45f))
 			{
 				ai[0] = 0f;
 				ai[1] = 0f;
-				vector = default(Vector2);
+				destVec = default(Vector2);
 			}
 			if (npc.ai[2] < (float)points.Length)
 			{
-				if (vector == default(Vector2))
+				if (destVec == default(Vector2))
 				{
 					npc.velocity *= 0.95f;
 					if (Main.netMode != 1)
 					{
-						vector = points[(int)npc.ai[2]];
-						ai[0] = vector.X;
-						ai[1] = vector.Y;
+						destVec = points[(int)npc.ai[2]];
+						ai[0] = destVec.X;
+						ai[1] = destVec.Y;
 						ai[2] += 1f;
 						npc.netUpdate = true;
 						return;
@@ -646,31 +646,30 @@ namespace Redemption
 				}
 				else
 				{
-					npc.velocity = BaseAI.AIVelocityLinear(npc, vector, moveInterval, maxSpeed, direct);
+					npc.velocity = BaseAI.AIVelocityLinear(npc, destVec, moveInterval, maxSpeed, direct);
 				}
 			}
 		}
 
 		public static void AITackle(NPC npc, ref float[] ai, Vector2 point, float moveInterval = 0.11f, float maxSpeed = 3f, bool direct = false, int tackleDelay = 50, float drift = 0.95f)
 		{
-			Vector2 vector;
-			vector..ctor(ai[0], ai[1]);
-			if (vector != default(Vector2) && Vector2.Distance(npc.Center, vector) <= Math.Max(5f, (float)(npc.width + npc.height) / 2f * 0.45f))
+			Vector2 destVec = new Vector2(ai[0], ai[1]);
+			if (destVec != default(Vector2) && Vector2.Distance(npc.Center, destVec) <= Math.Max(5f, (float)(npc.width + npc.height) / 2f * 0.45f))
 			{
 				ai[0] = 0f;
 				ai[1] = 0f;
-				vector = default(Vector2);
+				destVec = default(Vector2);
 			}
-			if (vector == default(Vector2))
+			if (destVec == default(Vector2))
 			{
 				npc.velocity *= drift;
 				ai[2] -= 1f;
 				if (ai[2] <= 0f)
 				{
 					ai[2] = (float)tackleDelay;
-					vector = point;
-					ai[0] = vector.X;
-					ai[1] = vector.Y;
+					destVec = point;
+					ai[0] = destVec.X;
+					ai[1] = destVec.Y;
 				}
 				if (Main.netMode == 2)
 				{
@@ -680,7 +679,7 @@ namespace Redemption
 			}
 			else
 			{
-				npc.velocity = BaseAI.AIVelocityLinear(npc, vector, moveInterval, maxSpeed, direct);
+				npc.velocity = BaseAI.AIVelocityLinear(npc, destVec, moveInterval, maxSpeed, direct);
 			}
 		}
 
@@ -691,28 +690,27 @@ namespace Redemption
 
 		public static void AIGravitate(NPC npc, ref float[] ai, UnifiedRandom rand, Vector2 point, float moveInterval = 0.06f, float maxSpeed = 2f, bool canCrossCenter = true, bool direct = false, int minDistance = 50, int maxDistance = 200)
 		{
-			Vector2 vector;
-			vector..ctor(ai[0], ai[1]);
-			bool flag = false;
+			Vector2 destVec = new Vector2(ai[0], ai[1]);
+			bool idleTooLong = false;
 			if (Main.netMode != 1)
 			{
-				if (!flag && vector != default(Vector2) && Vector2.Distance(npc.Center, vector) <= Math.Max(12f, (float)(npc.width + npc.height) / 2f * 3f * (moveInterval / 0.06f)))
+				if (!idleTooLong && destVec != default(Vector2) && Vector2.Distance(npc.Center, destVec) <= Math.Max(12f, (float)(npc.width + npc.height) / 2f * 3f * (moveInterval / 0.06f)))
 				{
 					ai[2] += 1f;
 					if (ai[2] > 100f)
 					{
 						ai[2] = 0f;
-						flag = true;
+						idleTooLong = true;
 					}
 				}
-				if (flag || (vector != default(Vector2) && Vector2.Distance(npc.Center, vector) <= Math.Max(5f, (float)(npc.width + npc.height) / 2f * 0.75f)))
+				if (idleTooLong || (destVec != default(Vector2) && Vector2.Distance(npc.Center, destVec) <= Math.Max(5f, (float)(npc.width + npc.height) / 2f * 0.75f)))
 				{
 					ai[0] = 0f;
 					ai[1] = 0f;
-					vector = default(Vector2);
+					destVec = default(Vector2);
 				}
 			}
-			if (vector == default(Vector2))
+			if (destVec == default(Vector2))
 			{
 				if (npc.velocity.X > 0.3f || npc.velocity.Y > 0.3f)
 				{
@@ -720,107 +718,102 @@ namespace Redemption
 				}
 				if (canCrossCenter)
 				{
-					vector = BaseUtility.GetRandomPosNear(point, rand, minDistance, maxDistance, false);
+					destVec = BaseUtility.GetRandomPosNear(point, rand, minDistance, maxDistance, false);
 				}
 				else
 				{
-					int num = maxDistance - minDistance;
-					Vector2 vector2;
-					vector2..ctor(point.X - (float)(minDistance + rand.Next(num)), point.Y - (float)(minDistance + rand.Next(num)));
-					Vector2 vector3;
-					vector3..ctor(point.X + (float)(minDistance + rand.Next(num)), vector2.Y);
-					Vector2 vector4;
-					vector4..ctor(vector2.X, point.Y + (float)(minDistance + rand.Next(num)));
-					Vector2 vector5;
-					vector5..ctor(vector3.X, vector4.Y);
-					float num2 = 9999999f;
-					Vector2 vector6 = default(Vector2);
+					int distance = maxDistance - minDistance;
+					Vector2 topLeft = new Vector2(point.X - (float)(minDistance + rand.Next(distance)), point.Y - (float)(minDistance + rand.Next(distance)));
+					Vector2 topRight = new Vector2(point.X + (float)(minDistance + rand.Next(distance)), topLeft.Y);
+					Vector2 bottomLeft = new Vector2(topLeft.X, point.Y + (float)(minDistance + rand.Next(distance)));
+					Vector2 bottomRight = new Vector2(topRight.X, bottomLeft.Y);
+					float tempDist = 9999999f;
+					Vector2 closestPoint = default(Vector2);
 					for (int i = 0; i < 4; i++)
 					{
-						Vector2 vector7 = (i == 0) ? vector2 : ((i == 1) ? vector3 : ((i == 2) ? vector4 : vector5));
-						if (Vector2.Distance(npc.Center, vector7) < num2)
+						Vector2 corner = (i == 0) ? topLeft : ((i == 1) ? topRight : ((i == 2) ? bottomLeft : bottomRight));
+						if (Vector2.Distance(npc.Center, corner) < tempDist)
 						{
-							num2 = Vector2.Distance(npc.Center, vector7);
-							vector6 = vector7;
+							tempDist = Vector2.Distance(npc.Center, corner);
+							closestPoint = corner;
 						}
 					}
-					if (vector6 == vector2 || vector6 == vector5)
+					if (closestPoint == topLeft || closestPoint == bottomRight)
 					{
-						vector = ((rand.Next(2) == 0) ? vector3 : vector4);
+						destVec = ((rand.Next(2) == 0) ? topRight : bottomLeft);
 					}
-					else if (vector6 == vector3 || vector6 == vector4)
+					else if (closestPoint == topRight || closestPoint == bottomLeft)
 					{
-						vector = ((rand.Next(2) == 0) ? vector2 : vector5);
+						destVec = ((rand.Next(2) == 0) ? topLeft : bottomRight);
 					}
 				}
-				ai[0] = vector.X;
-				ai[1] = vector.Y;
+				ai[0] = destVec.X;
+				ai[1] = destVec.Y;
 				if (Main.netMode == 2)
 				{
 					npc.netUpdate = true;
 					return;
 				}
 			}
-			else if (vector != default(Vector2))
+			else if (destVec != default(Vector2))
 			{
-				npc.velocity = BaseAI.AIVelocityLinear(npc, vector, moveInterval, maxSpeed, direct);
+				npc.velocity = BaseAI.AIVelocityLinear(npc, destVec, moveInterval, maxSpeed, direct);
 			}
 		}
 
 		public static Vector2 AIVelocityLinear(Entity codable, Vector2 destVec, float moveInterval, float maxSpeed, bool direct = false)
 		{
-			Vector2 vector = codable.velocity;
+			Vector2 returnVelocity = codable.velocity;
 			bool flag = (codable is NPC) ? (!((NPC)codable).noTileCollide) : (codable is Projectile && ((Projectile)codable).tileCollide);
 			if (direct)
 			{
-				Vector2 vector2 = BaseUtility.RotateVector(codable.Center, codable.Center + new Vector2(maxSpeed, 0f), BaseUtility.RotationTo(codable.Center, destVec));
-				vector = vector2 - codable.Center;
+				returnVelocity = BaseUtility.RotateVector(codable.Center, codable.Center + new Vector2(maxSpeed, 0f), BaseUtility.RotationTo(codable.Center, destVec)) - codable.Center;
 			}
 			else
 			{
 				if (codable.Center.X > destVec.X)
 				{
-					vector.X = Math.Max(-maxSpeed, vector.X - moveInterval);
+					returnVelocity.X = Math.Max(-maxSpeed, returnVelocity.X - moveInterval);
 				}
 				else if (codable.Center.X < destVec.X)
 				{
-					vector.X = Math.Min(maxSpeed, vector.X + moveInterval);
+					returnVelocity.X = Math.Min(maxSpeed, returnVelocity.X + moveInterval);
 				}
 				if (codable.Center.Y > destVec.Y)
 				{
-					vector.Y = Math.Max(-maxSpeed, vector.Y - moveInterval);
+					returnVelocity.Y = Math.Max(-maxSpeed, returnVelocity.Y - moveInterval);
 				}
 				else if (codable.Center.Y < destVec.Y)
 				{
-					vector.Y = Math.Min(maxSpeed, vector.Y + moveInterval);
+					returnVelocity.Y = Math.Min(maxSpeed, returnVelocity.Y + moveInterval);
 				}
 			}
 			if (flag)
 			{
-				vector = Collision.TileCollision(codable.position, vector, codable.width, codable.height, false, false, 1);
+				returnVelocity = Collision.TileCollision(codable.position, returnVelocity, codable.width, codable.height, false, false, 1);
 			}
-			return vector;
+			return returnVelocity;
 		}
 
 		public static void AILightningBolt(Projectile projectile, ref float[] ai, float changeAngleAt = 40f)
 		{
-			int num = projectile.frameCounter;
-			projectile.frameCounter = num + 1;
+			int projFrameCounter = projectile.frameCounter;
+			projectile.frameCounter = projFrameCounter + 1;
 			if (projectile.velocity == Vector2.Zero)
 			{
 				if (projectile.frameCounter >= projectile.extraUpdates * 2)
 				{
 					projectile.frameCounter = 0;
-					bool flag = true;
-					for (int i = 1; i < projectile.oldPos.Length; i = num + 1)
+					bool shouldKillProjectile = true;
+					for (int i = 1; i < projectile.oldPos.Length; i = projFrameCounter + 1)
 					{
 						if (projectile.oldPos[i] != projectile.oldPos[0])
 						{
-							flag = false;
+							shouldKillProjectile = false;
 						}
-						num = i;
+						projFrameCounter = i;
 					}
-					if (flag)
+					if (shouldKillProjectile)
 					{
 						projectile.Kill();
 						return;
@@ -830,159 +823,150 @@ namespace Redemption
 			else if (projectile.frameCounter >= projectile.extraUpdates * 2)
 			{
 				projectile.frameCounter = 0;
-				float num2 = projectile.velocity.Length();
+				float velSpeed = projectile.velocity.Length();
 				UnifiedRandom unifiedRandom = new UnifiedRandom((int)projectile.ai[1]);
-				int num3 = 0;
-				Vector2 vector = -Vector2.UnitY;
-				Vector2 vector2;
+				int newFrameCounter = 0;
+				Vector2 projVelocity = -Vector2.UnitY;
+				Vector2 angleVector;
 				do
 				{
-					int num4 = unifiedRandom.Next();
-					projectile.ai[1] = (float)num4;
-					num4 %= 100;
-					float num5 = (float)num4 / 100f * 6.2831855f;
-					vector2 = Utils.ToRotationVector2(num5);
-					if (vector2.Y > 0f)
+					int percentile = unifiedRandom.Next();
+					projectile.ai[1] = (float)percentile;
+					percentile %= 100;
+					angleVector = Utils.ToRotationVector2((float)percentile / 100f * 6.2831855f);
+					if (angleVector.Y > 0f)
 					{
-						vector2.Y *= -1f;
+						angleVector.Y *= -1f;
 					}
-					bool flag2 = false;
-					if (vector2.Y > -0.02f)
+					bool moreFrames = false;
+					if (angleVector.Y > -0.02f)
 					{
-						flag2 = true;
+						moreFrames = true;
 					}
-					if (vector2.X * (float)(projectile.extraUpdates + 1) * 2f * num2 + projectile.localAI[0] > changeAngleAt)
+					if (angleVector.X * (float)(projectile.extraUpdates + 1) * 2f * velSpeed + projectile.localAI[0] > changeAngleAt)
 					{
-						flag2 = true;
+						moreFrames = true;
 					}
-					if (vector2.X * (float)(projectile.extraUpdates + 1) * 2f * num2 + projectile.localAI[0] < -changeAngleAt)
+					if (angleVector.X * (float)(projectile.extraUpdates + 1) * 2f * velSpeed + projectile.localAI[0] < -changeAngleAt)
 					{
-						flag2 = true;
+						moreFrames = true;
 					}
-					if (!flag2)
+					if (!moreFrames)
 					{
-						goto IL_1B9;
+						goto IL_1A8;
 					}
-					num = num3;
-					num3 = num + 1;
+					projFrameCounter = newFrameCounter;
+					newFrameCounter = projFrameCounter + 1;
 				}
-				while (num < 100);
+				while (projFrameCounter < 100);
 				projectile.velocity = Vector2.Zero;
 				projectile.localAI[1] = 1f;
-				goto IL_1BD;
-				IL_1B9:
-				vector = vector2;
-				IL_1BD:
+				goto IL_1AC;
+				IL_1A8:
+				projVelocity = angleVector;
+				IL_1AC:
 				if (projectile.velocity != Vector2.Zero)
 				{
-					projectile.localAI[0] += vector.X * (float)(projectile.extraUpdates + 1) * 2f * num2;
-					projectile.velocity = Utils.RotatedBy(vector, (double)(projectile.ai[0] + 1.5707964f), default(Vector2)) * num2;
+					projectile.localAI[0] += projVelocity.X * (float)(projectile.extraUpdates + 1) * 2f * velSpeed;
+					projectile.velocity = Utils.RotatedBy(projVelocity, (double)(projectile.ai[0] + 1.5707964f), default(Vector2)) * velSpeed;
 					projectile.rotation = Utils.ToRotation(projectile.velocity) + 1.5707964f;
+					return;
 				}
 			}
 		}
 
 		public static void AIProjWorm(Projectile p, ref float[] ai, int[] wormTypes, int wormLength, float velScalar = 1f, float velScalarIdle = 1f, float velocityMax = 30f, float velocityMaxIdle = 15f)
 		{
-			int[] array = new int[(wormTypes.Length == 1) ? 1 : wormLength];
-			array[0] = wormTypes[0];
+			int[] wtypes = new int[(wormTypes.Length == 1) ? 1 : wormLength];
+			wtypes[0] = wormTypes[0];
 			if (wormTypes.Length > 1)
 			{
-				array[array.Length - 1] = wormTypes[2];
-				for (int i = 1; i < array.Length - 1; i++)
+				wtypes[wtypes.Length - 1] = wormTypes[2];
+				for (int i = 1; i < wtypes.Length - 1; i++)
 				{
-					array[i] = wormTypes[1];
+					wtypes[i] = wormTypes[1];
 				}
 			}
-			int num = -1;
-			BaseAI.AIProjWorm(p, ref ai, ref num, array, velScalar, velScalarIdle, velocityMax, velocityMaxIdle);
+			int dummyNPC = -1;
+			BaseAI.AIProjWorm(p, ref ai, ref dummyNPC, wtypes, velScalar, velScalarIdle, velocityMax, velocityMaxIdle);
 		}
 
 		public static void AIProjWorm(Projectile p, ref float[] ai, ref int npcTargetToAttack, int[] wormTypes, float velScalar = 1f, float velScalarIdle = 1f, float velocityMax = 30f, float velocityMaxIdle = 15f)
 		{
-			Player player = Main.player[p.owner];
+			Player plrOwner = Main.player[p.owner];
 			if ((int)Main.time % 120 == 0)
 			{
 				p.netUpdate = true;
 			}
-			if (!player.active)
+			if (!plrOwner.active)
 			{
 				p.active = false;
 				return;
 			}
 			bool flag = p.type == wormTypes[0];
-			bool flag2 = BaseUtility.InArray(wormTypes, p.type);
-			bool flag3 = p.type == wormTypes[wormTypes.Length - 1];
-			int num = 10;
-			if (flag2)
+			bool isWorm = BaseUtility.InArray(wormTypes, p.type);
+			bool isTail = p.type == wormTypes[wormTypes.Length - 1];
+			int wormWidthHeight = 10;
+			if (isWorm)
 			{
 				p.timeLeft = 2;
-				num = 30;
+				wormWidthHeight = 30;
 			}
 			if (flag)
 			{
-				Vector2 center = player.Center;
-				float num2 = 700f;
-				float num3 = 1000f;
-				float num4 = 2000f;
-				int num5 = -1;
-				if (p.Distance(center) > num4)
+				Vector2 plrCenter = plrOwner.Center;
+				float minAttackDist = 700f;
+				float returnDist = 1000f;
+				float teleportDist = 2000f;
+				int target = -1;
+				if (p.Distance(plrCenter) > teleportDist)
 				{
-					p.Center = center;
+					p.Center = plrCenter;
 					p.netUpdate = true;
 				}
-				bool flag4 = true;
-				if (flag4)
+				if (true)
 				{
-					NPC ownerMinionAttackTargetNPC = p.OwnerMinionAttackTargetNPC;
-					if (ownerMinionAttackTargetNPC != null && ownerMinionAttackTargetNPC.CanBeChasedBy(p, false))
+					NPC ownerMinionAttackTargetNPC5 = p.OwnerMinionAttackTargetNPC;
+					if (ownerMinionAttackTargetNPC5 != null && ownerMinionAttackTargetNPC5.CanBeChasedBy(p, false) && p.Distance(ownerMinionAttackTargetNPC5.Center) < minAttackDist * 2f)
 					{
-						float num6 = p.Distance(ownerMinionAttackTargetNPC.Center);
-						if (num6 < num2 * 2f)
-						{
-							num5 = ownerMinionAttackTargetNPC.whoAmI;
-						}
+						target = ownerMinionAttackTargetNPC5.whoAmI;
 					}
-					if (num5 < 0)
+					if (target < 0)
 					{
-						int num8;
-						for (int i = 0; i < 200; i = num8 + 1)
+						int dummy;
+						for (int i = 0; i < 200; i = dummy + 1)
 						{
-							NPC npc = Main.npc[i];
-							if (npc.CanBeChasedBy(p, false) && player.Distance(npc.Center) < num3)
+							NPC npcTarget = Main.npc[i];
+							if (npcTarget.CanBeChasedBy(p, false) && plrOwner.Distance(npcTarget.Center) < returnDist && p.Distance(npcTarget.Center) < minAttackDist)
 							{
-								float num7 = p.Distance(npc.Center);
-								if (num7 < num2)
-								{
-									num5 = i;
-									bool boss = npc.boss;
-								}
+								target = i;
+								bool boss = npcTarget.boss;
 							}
-							num8 = i;
+							dummy = i;
 						}
 					}
 				}
-				npcTargetToAttack = num5;
-				if (num5 != -1)
+				npcTargetToAttack = target;
+				if (target != -1)
 				{
-					NPC npc2 = Main.npc[num5];
-					Vector2 vector = npc2.Center - p.Center;
-					Utils.ToDirectionInt(vector.X > 0f);
-					Utils.ToDirectionInt(vector.Y > 0f);
-					float num9 = 0.4f;
-					if (vector.Length() < 600f)
+					NPC npcTarget2 = Main.npc[target];
+					Vector2 npcDist = npcTarget2.Center - p.Center;
+					Utils.ToDirectionInt(npcDist.X > 0f);
+					Utils.ToDirectionInt(npcDist.Y > 0f);
+					float velocityScalar = 0.4f;
+					if (npcDist.Length() < 600f)
 					{
-						num9 = 0.6f;
+						velocityScalar = 0.6f;
 					}
-					if (vector.Length() < 300f)
+					if (npcDist.Length() < 300f)
 					{
-						num9 = 0.8f;
+						velocityScalar = 0.8f;
 					}
-					num9 *= velScalar;
-					if (vector.Length() > npc2.Size.Length() * 0.75f)
+					velocityScalar *= velScalar;
+					if (npcDist.Length() > npcTarget2.Size.Length() * 0.75f)
 					{
-						p.velocity += Vector2.Normalize(vector) * num9 * 1.5f;
-						if (Vector2.Dot(p.velocity, vector) < 0.25f)
+						p.velocity += Vector2.Normalize(npcDist) * velocityScalar * 1.5f;
+						if (Vector2.Dot(p.velocity, npcDist) < 0.25f)
 						{
 							p.velocity *= 0.8f;
 						}
@@ -994,26 +978,26 @@ namespace Redemption
 				}
 				else
 				{
-					float num10 = 0.2f;
-					Vector2 vector2 = center - p.Center;
-					if (vector2.Length() < 200f)
+					float velocityScalarIdle = 0.2f;
+					Vector2 newPointDist = plrCenter - p.Center;
+					if (newPointDist.Length() < 200f)
 					{
-						num10 = 0.12f;
+						velocityScalarIdle = 0.12f;
 					}
-					if (vector2.Length() < 140f)
+					if (newPointDist.Length() < 140f)
 					{
-						num10 = 0.06f;
+						velocityScalarIdle = 0.06f;
 					}
-					num10 *= velScalarIdle;
-					if (vector2.Length() > 100f)
+					velocityScalarIdle *= velScalarIdle;
+					if (newPointDist.Length() > 100f)
 					{
-						if (Math.Abs(center.X - p.Center.X) > 20f)
+						if (Math.Abs(plrCenter.X - p.Center.X) > 20f)
 						{
-							p.velocity.X = p.velocity.X + num10 * (float)Math.Sign(center.X - p.Center.X);
+							p.velocity.X = p.velocity.X + velocityScalarIdle * (float)Math.Sign(plrCenter.X - p.Center.X);
 						}
-						if (Math.Abs(center.Y - p.Center.Y) > 10f)
+						if (Math.Abs(plrCenter.Y - p.Center.Y) > 10f)
 						{
-							p.velocity.Y = p.velocity.Y + num10 * (float)Math.Sign(center.Y - p.Center.Y);
+							p.velocity.Y = p.velocity.Y + velocityScalarIdle * (float)Math.Sign(plrCenter.Y - p.Center.Y);
 						}
 					}
 					else if (p.velocity.Length() > 2f)
@@ -1036,10 +1020,10 @@ namespace Redemption
 				{
 					p.netUpdate = true;
 				}
-				float num11 = MathHelper.Clamp(p.localAI[0], 0f, 50f);
+				float scaleChange = MathHelper.Clamp(p.localAI[0], 0f, 50f);
 				p.position = p.Center;
-				p.scale = 1f + num11 * 0.01f;
-				p.width = (p.height = (int)((float)num * p.scale));
+				p.scale = 1f + scaleChange * 0.01f;
+				p.width = (p.height = (int)((float)wormWidthHeight * p.scale));
 				p.Center = p.position;
 				if (p.alpha > 0)
 				{
@@ -1050,68 +1034,65 @@ namespace Redemption
 						return;
 					}
 				}
+				return;
 			}
-			else
+			bool npcInFront = false;
+			Vector2 projCenter = Vector2.Zero;
+			float projRot = 0f;
+			float tileScalar = 0f;
+			float projectileScale = 1f;
+			if (p.ai[1] == 1f)
 			{
-				bool flag5 = false;
-				Vector2 vector3 = Vector2.Zero;
-				float num12 = 0f;
-				float num13 = 0f;
-				float num14 = 1f;
-				if (p.ai[1] == 1f)
+				p.ai[1] = 0f;
+				p.netUpdate = true;
+			}
+			int byUUID = Projectile.GetByUUID(p.owner, (int)p.ai[0]);
+			if (isWorm && byUUID >= 0 && Main.projectile[byUUID].active && !isTail)
+			{
+				npcInFront = true;
+				projCenter = Main.projectile[byUUID].Center;
+				projRot = Main.projectile[byUUID].rotation;
+				projectileScale = MathHelper.Clamp(Main.projectile[byUUID].scale, 0f, 50f);
+				tileScalar = 16f;
+				int alpha = Main.projectile[byUUID].alpha;
+				Main.projectile[byUUID].localAI[0] = p.localAI[0] + 1f;
+				if (Main.projectile[byUUID].type != wormTypes[0])
 				{
-					p.ai[1] = 0f;
-					p.netUpdate = true;
+					Main.projectile[byUUID].localAI[1] = (float)p.whoAmI;
 				}
-				int byUUID = Projectile.GetByUUID(p.owner, (int)p.ai[0]);
-				if (flag2 && byUUID >= 0 && Main.projectile[byUUID].active && !flag3)
+				if (p.owner == Main.myPlayer && Main.projectile[byUUID].type == wormTypes[0] && p.type == wormTypes[wormTypes.Length - 1])
 				{
-					flag5 = true;
-					vector3 = Main.projectile[byUUID].Center;
-					num12 = Main.projectile[byUUID].rotation;
-					float num15 = MathHelper.Clamp(Main.projectile[byUUID].scale, 0f, 50f);
-					num14 = num15;
-					num13 = 16f;
-					int alpha = Main.projectile[byUUID].alpha;
-					Main.projectile[byUUID].localAI[0] = p.localAI[0] + 1f;
-					if (Main.projectile[byUUID].type != wormTypes[0])
-					{
-						Main.projectile[byUUID].localAI[1] = (float)p.whoAmI;
-					}
-					if (p.owner == Main.myPlayer && Main.projectile[byUUID].type == wormTypes[0] && p.type == wormTypes[wormTypes.Length - 1])
-					{
-						Main.projectile[byUUID].Kill();
-						p.Kill();
-						return;
-					}
-				}
-				if (!flag5)
-				{
+					Main.projectile[byUUID].Kill();
+					p.Kill();
 					return;
 				}
-				p.alpha -= 42;
-				if (p.alpha < 0)
-				{
-					p.alpha = 0;
-				}
-				p.velocity = Vector2.Zero;
-				Vector2 vector4 = vector3 - p.Center;
-				if (num12 != p.rotation)
-				{
-					float num16 = MathHelper.WrapAngle(num12 - p.rotation);
-					vector4 = Utils.RotatedBy(vector4, (double)(num16 * 0.1f), default(Vector2));
-				}
-				p.rotation = Utils.ToRotation(vector4) + 1.5707964f;
-				p.position = p.Center;
-				p.scale = num14;
-				p.width = (p.height = (int)((float)num * p.scale));
-				p.Center = p.position;
-				if (vector4 != Vector2.Zero)
-				{
-					p.Center = vector3 - Vector2.Normalize(vector4) * num13 * num14;
-				}
-				p.spriteDirection = ((vector4.X > 0f) ? 1 : -1);
 			}
+			if (!npcInFront)
+			{
+				return;
+			}
+			p.alpha -= 42;
+			if (p.alpha < 0)
+			{
+				p.alpha = 0;
+			}
+			p.velocity = Vector2.Zero;
+			Vector2 centerDist = projCenter - p.Center;
+			if (projRot != p.rotation)
+			{
+				float rotDist = MathHelper.WrapAngle(projRot - p.rotation);
+				centerDist = Utils.RotatedBy(centerDist, (double)(rotDist * 0.1f), default(Vector2));
+			}
+			p.rotation = Utils.ToRotation(centerDist) + 1.5707964f;
+			p.position = p.Center;
+			p.scale = projectileScale;
+			p.width = (p.height = (int)((float)wormWidthHeight * p.scale));
+			p.Center = p.position;
+			if (centerDist != Vector2.Zero)
+			{
+				p.Center = projCenter - Vector2.Normalize(centerDist) * tileScalar * projectileScale;
+			}
+			p.spriteDirection = ((centerDist.X > 0f) ? 1 : -1);
 		}
 
 		public static void AIProjSpaceOctopus(Projectile p, ref float[] ai, int parentNPCType, int fireProjType = -1, float shootVelocity = 16f, float hoverTime = 210f, float xMult = 0.15f, float yMult = 0.075f, Action<int, Projectile> SpawnDust = null)
@@ -1128,23 +1109,23 @@ namespace Redemption
 			ai[0] += 1f;
 			if (ai[0] < hoverTime)
 			{
-				bool flag = true;
-				int num = (int)ai[1];
-				if (Main.npc[num].active && Main.npc[num].type == parentNPCType)
+				bool parentAlive = true;
+				int parentID = (int)ai[1];
+				if (Main.npc[parentID].active && Main.npc[parentID].type == parentNPCType)
 				{
-					if (!noParentHover && Main.npc[num].oldPos[1] != Vector2.Zero)
+					if (!noParentHover && Main.npc[parentID].oldPos[1] != Vector2.Zero)
 					{
-						projectile.position += Main.npc[num].position - Main.npc[num].oldPos[1];
+						projectile.position += Main.npc[parentID].position - Main.npc[parentID].oldPos[1];
 					}
 				}
 				else
 				{
 					ai[0] = hoverTime;
-					flag = false;
+					parentAlive = false;
 				}
-				if (flag && !noParentHover)
+				if (parentAlive && !noParentHover)
 				{
-					projectile.velocity += new Vector2((float)Math.Sign(Main.npc[num].Center.X - projectile.Center.X), (float)Math.Sign(Main.npc[num].Center.Y - projectile.Center.Y)) * new Vector2(xMult, yMult);
+					projectile.velocity += new Vector2((float)Math.Sign(Main.npc[parentID].Center.X - projectile.Center.X), (float)Math.Sign(Main.npc[parentID].Center.Y - projectile.Center.Y)) * new Vector2(xMult, yMult);
 					if (projectile.velocity.Length() > 6f)
 					{
 						projectile.velocity *= 6f / projectile.velocity.Length();
@@ -1158,48 +1139,48 @@ namespace Redemption
 			}
 			if (ai[0] == hoverTime)
 			{
-				bool flag2 = true;
-				int num2 = -1;
+				bool hasParentTarget = true;
+				int parentTarget = -1;
 				if (!useParentTarget)
 				{
-					int num3 = (int)ai[1];
-					if (Main.npc[num3].active && Main.npc[num3].type == parentNPCType)
+					int parentID2 = (int)ai[1];
+					if (Main.npc[parentID2].active && Main.npc[parentID2].type == parentNPCType)
 					{
-						num2 = Main.npc[num3].target;
+						parentTarget = Main.npc[parentID2].target;
 					}
 					else
 					{
-						flag2 = false;
+						hasParentTarget = false;
 					}
 				}
 				else
 				{
-					flag2 = false;
+					hasParentTarget = false;
 				}
-				if (!flag2)
+				if (!hasParentTarget)
 				{
-					num2 = (int)Player.FindClosest(projectile.position, projectile.width, projectile.height);
+					parentTarget = (int)Player.FindClosest(projectile.position, projectile.width, projectile.height);
 				}
-				Vector2 vector = Main.player[num2].Center - projectile.Center;
-				vector.X += (float)Main.rand.Next(-50, 51);
-				vector.Y += (float)Main.rand.Next(-50, 51);
-				vector.X *= (float)Main.rand.Next(80, 121) * 0.01f;
-				vector.Y *= (float)Main.rand.Next(80, 121) * 0.01f;
-				Vector2 vector2 = Vector2.Normalize(vector);
-				if (Utils.HasNaNs(vector2))
+				Vector2 distanceVec = Main.player[parentTarget].Center - projectile.Center;
+				distanceVec.X += (float)Main.rand.Next(-50, 51);
+				distanceVec.Y += (float)Main.rand.Next(-50, 51);
+				distanceVec.X *= (float)Main.rand.Next(80, 121) * 0.01f;
+				distanceVec.Y *= (float)Main.rand.Next(80, 121) * 0.01f;
+				Vector2 distVecNormal = Vector2.Normalize(distanceVec);
+				if (Utils.HasNaNs(distVecNormal))
 				{
-					vector2 = Vector2.UnitY;
+					distVecNormal = Vector2.UnitY;
 				}
 				if (fireProjType == -1)
 				{
-					projectile.velocity = vector2 * shootVelocity;
+					projectile.velocity = distVecNormal * shootVelocity;
 					projectile.netUpdate = true;
 				}
 				else
 				{
-					if (Main.netMode != 1 && Collision.CanHitLine(projectile.Center, 0, 0, Main.player[num2].Center, 0, 0))
+					if (Main.netMode != 1 && Collision.CanHitLine(projectile.Center, 0, 0, Main.player[parentTarget].Center, 0, 0))
 					{
-						Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, vector2.X * shootVelocity, vector2.Y * shootVelocity, fireProjType, fireDmg, 1f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, distVecNormal.X * shootVelocity, distVecNormal.Y * shootVelocity, fireProjType, fireDmg, 1f, Main.myPlayer, 0f, 0f);
 					}
 					ai[0] = 0f;
 				}
@@ -1233,57 +1214,57 @@ namespace Redemption
 
 		public static void AIYoyo(Projectile p, ref float[] ai, ref float[] localAI, Entity owner, bool isChanneling, Vector2 targetPos = default(Vector2), float yoyoTimeMax = 120f, float maxRange = 150f, float topSpeed = 8f, bool dontChannel = false, float rotAmount = 0.45f)
 		{
-			bool flag = owner is Player;
-			Player player = flag ? ((Player)owner) : null;
-			float num = flag ? player.meleeSpeed : 1f;
-			Vector2 vector = targetPos;
-			if (flag && Main.myPlayer == p.owner && targetPos == default(Vector2))
+			bool playerYoyo = owner is Player;
+			Player powner = playerYoyo ? ((Player)owner) : null;
+			float meleeSpeed = playerYoyo ? powner.meleeSpeed : 1f;
+			Vector2 targetP = targetPos;
+			if (playerYoyo && Main.myPlayer == p.owner && targetPos == default(Vector2))
 			{
-				vector = Main.ReverseGravitySupport(Main.MouseScreen, 0f) + Main.screenPosition;
+				targetP = Main.ReverseGravitySupport(Main.MouseScreen, 0f) + Main.screenPosition;
 			}
-			bool flag2 = false;
+			bool yoyoFound = false;
 			if (owner is Player)
 			{
 				for (int i = 0; i < p.whoAmI; i++)
 				{
 					if (Main.projectile[i].active && Main.projectile[i].owner == p.owner && Main.projectile[i].type == p.type)
 					{
-						flag2 = true;
+						yoyoFound = true;
 					}
 				}
 			}
-			if ((flag && p.owner == Main.myPlayer) || (!flag && Main.netMode != 1))
+			if ((playerYoyo && p.owner == Main.myPlayer) || (!playerYoyo && Main.netMode != 1))
 			{
 				localAI[0] += 1f;
-				if (flag2)
+				if (yoyoFound)
 				{
 					localAI[0] += (float)Main.rand.Next(10, 31) * 0.1f;
 				}
-				float num2 = localAI[0] / 60f;
-				num2 /= (1f + num) / 2f;
-				if (yoyoTimeMax != -1f && num2 > yoyoTimeMax)
+				float yoyoTimeLeft = localAI[0] / 60f;
+				yoyoTimeLeft /= (1f + meleeSpeed) / 2f;
+				if (yoyoTimeMax != -1f && yoyoTimeLeft > yoyoTimeMax)
 				{
 					ai[0] = -1f;
 				}
 			}
-			if ((flag && player.dead) || (!flag && !owner.active))
+			if ((playerYoyo && powner.dead) || (!playerYoyo && !owner.active))
 			{
 				p.Kill();
 				return;
 			}
-			if (flag && !dontChannel && !flag2)
+			if (playerYoyo && !dontChannel && !yoyoFound)
 			{
-				player.heldProj = p.whoAmI;
-				player.itemAnimation = 2;
-				player.itemTime = 2;
-				if (p.position.X + (float)(p.width / 2) > player.position.X + (float)(player.width / 2))
+				powner.heldProj = p.whoAmI;
+				powner.itemAnimation = 2;
+				powner.itemTime = 2;
+				if (p.position.X + (float)(p.width / 2) > powner.position.X + (float)(powner.width / 2))
 				{
-					player.ChangeDir(1);
+					powner.ChangeDir(1);
 					p.direction = 1;
 				}
 				else
 				{
-					player.ChangeDir(-1);
+					powner.ChangeDir(-1);
 					p.direction = -1;
 				}
 			}
@@ -1292,39 +1273,39 @@ namespace Redemption
 				p.Kill();
 			}
 			p.timeLeft = 6;
-			float num3 = maxRange;
-			if (flag && player.yoyoString)
+			float pMaxRange = maxRange;
+			if (playerYoyo && powner.yoyoString)
 			{
-				num3 = num3 * 1.25f + 30f;
+				pMaxRange = pMaxRange * 1.25f + 30f;
 			}
-			num3 /= (1f + num * 3f) / 4f;
-			float num4 = topSpeed / ((1f + num * 3f) / 4f);
-			float num5 = 14f - num4 / 2f;
-			float num6 = 5f + num4 / 2f;
-			if (flag2)
+			pMaxRange /= (1f + meleeSpeed * 3f) / 4f;
+			float pTopSpeed = topSpeed / ((1f + meleeSpeed * 3f) / 4f);
+			float topSpeedX = 14f - pTopSpeed / 2f;
+			float topSpeedY = 5f + pTopSpeed / 2f;
+			if (yoyoFound)
 			{
-				num6 += 20f;
+				topSpeedY += 20f;
 			}
 			if (ai[0] >= 0f)
 			{
-				if (p.velocity.Length() > num4)
+				if (p.velocity.Length() > pTopSpeed)
 				{
 					p.velocity *= 0.98f;
 				}
-				bool flag3 = false;
-				bool flag4 = false;
-				Vector2 vector2 = owner.Center - p.Center;
-				if (vector2.Length() > num3)
+				bool yoyoTooFar = false;
+				bool yoyoWayTooFar = false;
+				Vector2 centerDist = owner.Center - p.Center;
+				if (centerDist.Length() > pMaxRange)
 				{
-					flag3 = true;
-					if ((double)vector2.Length() > (double)num3 * 1.3)
+					yoyoTooFar = true;
+					if ((double)centerDist.Length() > (double)pMaxRange * 1.3)
 					{
-						flag4 = true;
+						yoyoWayTooFar = true;
 					}
 				}
-				if ((flag && p.owner == Main.myPlayer) || (!flag && Main.netMode != 1))
+				if ((playerYoyo && p.owner == Main.myPlayer) || (!playerYoyo && Main.netMode != 1))
 				{
-					if ((flag && (!isChanneling || player.stoned || player.frozen)) || (!flag && !isChanneling))
+					if ((playerYoyo && (!isChanneling || powner.stoned || powner.frozen)) || (!playerYoyo && !isChanneling))
 					{
 						ai[0] = -1f;
 						ai[1] = 0f;
@@ -1332,30 +1313,28 @@ namespace Redemption
 					}
 					else
 					{
-						Vector2 vector3 = vector;
-						float x = vector3.X;
-						float y = vector3.Y;
-						Vector2 vector4 = new Vector2(x, y) - owner.Center;
-						if (vector4.Length() > num3)
+						Vector2 vector = targetP;
+						float x = vector.X;
+						float y = vector.Y;
+						Vector2 mouseDist = new Vector2(x, y) - owner.Center;
+						if (mouseDist.Length() > pMaxRange)
 						{
-							vector4.Normalize();
-							vector4 *= num3;
-							vector4 = owner.Center + vector4;
-							x = vector4.X;
-							y = vector4.Y;
+							mouseDist.Normalize();
+							mouseDist *= pMaxRange;
+							mouseDist = owner.Center + mouseDist;
+							x = mouseDist.X;
+							y = mouseDist.Y;
 						}
 						if (ai[0] != x || ai[1] != y)
 						{
-							Vector2 vector5;
-							vector5..ctor(x, y);
-							Vector2 vector6 = vector5 - owner.Center;
-							if (vector6.Length() > num3 - 1f)
+							Vector2 coordDist = new Vector2(x, y) - owner.Center;
+							if (coordDist.Length() > pMaxRange - 1f)
 							{
-								vector6.Normalize();
-								vector6 *= num3 - 1f;
-								vector5 = owner.Center + vector6;
-								x = vector5.X;
-								y = vector5.Y;
+								coordDist.Normalize();
+								coordDist *= pMaxRange - 1f;
+								Vector2 vector2 = owner.Center + coordDist;
+								x = vector2.X;
+								y = vector2.Y;
 							}
 							ai[0] = x;
 							ai[1] = y;
@@ -1363,17 +1342,17 @@ namespace Redemption
 						}
 					}
 				}
-				if (flag4 && p.owner == Main.myPlayer)
+				if (yoyoWayTooFar && p.owner == Main.myPlayer)
 				{
 					ai[0] = -1f;
 					p.netUpdate = true;
 				}
 				if (ai[0] >= 0f)
 				{
-					if (flag3)
+					if (yoyoTooFar)
 					{
-						num5 /= 2f;
-						num4 *= 2f;
+						topSpeedX /= 2f;
+						pTopSpeed *= 2f;
 						if (p.Center.X > owner.Center.X && p.velocity.X > 0f)
 						{
 							p.velocity.X = p.velocity.X * 0.5f;
@@ -1391,55 +1370,53 @@ namespace Redemption
 							p.velocity.Y = p.velocity.Y * 0.5f;
 						}
 					}
-					Vector2 vector7;
-					vector7..ctor(ai[0], ai[1]);
-					Vector2 vector8 = vector7 - p.Center;
+					Vector2 coordDist2 = new Vector2(ai[0], ai[1]) - p.Center;
 					p.velocity.Length();
-					float num7 = vector8.Length();
-					if (num7 > num6)
+					float coordLength = coordDist2.Length();
+					if (coordLength > topSpeedY)
 					{
-						vector8.Normalize();
-						float num8 = (num7 > num4 * 2f) ? num4 : (num7 / 2f);
-						vector8 *= num8;
-						p.velocity = (p.velocity * (num5 - 1f) + vector8) / num5;
+						coordDist2.Normalize();
+						float scaleFactor = (coordLength > pTopSpeed * 2f) ? pTopSpeed : (coordLength / 2f);
+						coordDist2 *= scaleFactor;
+						p.velocity = (p.velocity * (topSpeedX - 1f) + coordDist2) / topSpeedX;
 					}
-					else if (flag2)
+					else if (yoyoFound)
 					{
-						if ((double)p.velocity.Length() < (double)num4 * 0.6)
+						if ((double)p.velocity.Length() < (double)pTopSpeed * 0.6)
 						{
-							vector8 = p.velocity;
-							vector8.Normalize();
-							vector8 *= num4 * 0.6f;
-							p.velocity = (p.velocity * (num5 - 1f) + vector8) / num5;
+							coordDist2 = p.velocity;
+							coordDist2.Normalize();
+							coordDist2 *= pTopSpeed * 0.6f;
+							p.velocity = (p.velocity * (topSpeedX - 1f) + coordDist2) / topSpeedX;
 						}
 					}
 					else
 					{
 						p.velocity *= 0.8f;
 					}
-					if (flag2 && !flag3 && (double)p.velocity.Length() < (double)num4 * 0.6)
+					if (yoyoFound && !yoyoTooFar && (double)p.velocity.Length() < (double)pTopSpeed * 0.6)
 					{
 						p.velocity.Normalize();
-						p.velocity *= num4 * 0.6f;
+						p.velocity *= pTopSpeed * 0.6f;
 					}
 				}
 			}
 			else
 			{
-				num5 = (float)((int)((double)num5 * 0.8));
-				num4 *= 1.5f;
+				topSpeedX = (float)((int)((double)topSpeedX * 0.8));
+				pTopSpeed *= 1.5f;
 				p.tileCollide = false;
-				Vector2 vector9 = owner.position - p.Center;
-				float num9 = vector9.Length();
-				if (num9 < num4 + 10f || num9 == 0f)
+				Vector2 posDist = owner.position - p.Center;
+				float posLength = posDist.Length();
+				if (posLength < pTopSpeed + 10f || posLength == 0f)
 				{
 					p.Kill();
 				}
 				else
 				{
-					vector9.Normalize();
-					vector9 *= num4;
-					p.velocity = (p.velocity * (num5 - 1f) + vector9) / num5;
+					posDist.Normalize();
+					posDist *= pTopSpeed;
+					p.velocity = (p.velocity * (topSpeedX - 1f) + posDist) / topSpeedX;
 				}
 			}
 			p.rotation += rotAmount;
@@ -1447,25 +1424,25 @@ namespace Redemption
 
 		public static void TileCollideYoyo(Projectile p, ref Vector2 velocity, Vector2 newVelocity)
 		{
-			bool flag = false;
+			bool normalizeVelocity = false;
 			if (velocity.X != newVelocity.X)
 			{
-				flag = true;
+				normalizeVelocity = true;
 				velocity.X = newVelocity.X * -1f;
 			}
 			if (velocity.Y != newVelocity.Y)
 			{
-				flag = true;
+				normalizeVelocity = true;
 				velocity.Y = newVelocity.Y * -1f;
 			}
-			if (flag)
+			if (normalizeVelocity)
 			{
-				Vector2 vector = Main.player[p.owner].Center - p.Center;
-				vector.Normalize();
-				vector *= velocity.Length();
-				vector *= 0.25f;
+				Vector2 centerDist = Main.player[p.owner].Center - p.Center;
+				centerDist.Normalize();
+				centerDist *= velocity.Length();
+				centerDist *= 0.25f;
 				velocity *= 0.75f;
-				velocity += vector;
+				velocity += centerDist;
 				if (velocity.Length() > 6f)
 				{
 					velocity *= 0.5f;
@@ -1489,11 +1466,11 @@ namespace Redemption
 			}
 			if (ai[0] >= 0f)
 			{
-				Vector2 vector = p.Center - target.Center;
-				vector.Normalize();
-				float num = 16f;
+				Vector2 value2 = p.Center - target.Center;
+				value2.Normalize();
+				float scaleFactor = 16f;
 				p.velocity *= -0.5f;
-				p.velocity += vector * num;
+				p.velocity += value2 * scaleFactor;
 				p.velocity *= velMult;
 				p.netUpdate = true;
 				localAI[0] += 20f;
@@ -1642,11 +1619,11 @@ namespace Redemption
 					}
 					if (p.ai[1] < (float)length && Main.myPlayer == p.owner)
 					{
-						Vector2 velocity = p.velocity;
-						int num = Projectile.NewProjectile(p.Center.X + p.velocity.X, p.Center.Y + p.velocity.Y, velocity.X, velocity.Y, p.type, p.damage, p.knockBack, p.owner, 0f, 0f);
-						Main.projectile[num].damage = p.damage;
-						Main.projectile[num].ai[1] = p.ai[1] + 1f;
-						NetMessage.SendData(27, -1, -1, NetworkText.FromLiteral(""), num, 0f, 0f, 0f, 0, 0, 0);
+						Vector2 rotVec = p.velocity;
+						int id = Projectile.NewProjectile(p.Center.X + p.velocity.X, p.Center.Y + p.velocity.Y, rotVec.X, rotVec.Y, p.type, p.damage, p.knockBack, p.owner, 0f, 0f);
+						Main.projectile[id].damage = p.damage;
+						Main.projectile[id].ai[1] = p.ai[1] + 1f;
+						NetMessage.SendData(27, -1, -1, NetworkText.FromLiteral(""), id, 0f, 0f, 0f, 0, 0, 0);
 						p.position -= p.velocity;
 						return;
 					}
@@ -1683,37 +1660,35 @@ namespace Redemption
 				{
 					for (int i = 0; i < 3; i++)
 					{
-						float num = p.velocity.X / 3f * (float)i;
-						float num2 = p.velocity.Y / 3f * (float)i;
-						int num3 = 1;
-						Vector2 arg;
-						arg..ctor(p.position.X - (float)num3, p.position.Y - (float)num3);
-						int arg2 = p.width + num3 * 2;
-						int arg3 = p.height + num3 * 2;
-						int num4 = SpawnDust(p, arg, arg2, arg3);
-						if (num4 != -1)
+						float dustX = p.velocity.X / 3f * (float)i;
+						float dustY = p.velocity.Y / 3f * (float)i;
+						int offset = 1;
+						Vector2 pos = new Vector2(p.position.X - (float)offset, p.position.Y - (float)offset);
+						int width = p.width + offset * 2;
+						int height = p.height + offset * 2;
+						int dustID = SpawnDust(p, pos, width, height);
+						if (dustID != -1)
 						{
-							Main.dust[num4].noGravity = true;
-							Main.dust[num4].velocity *= 0.1f;
-							Main.dust[num4].velocity += p.velocity * 0.5f;
-							Dust dust = Main.dust[num4];
-							dust.position.X = dust.position.X - num;
-							Dust dust2 = Main.dust[num4];
-							dust2.position.Y = dust2.position.Y - num2;
+							Main.dust[dustID].noGravity = true;
+							Main.dust[dustID].velocity *= 0.1f;
+							Main.dust[dustID].velocity += p.velocity * 0.5f;
+							Dust dust = Main.dust[dustID];
+							dust.position.X = dust.position.X - dustX;
+							Dust dust2 = Main.dust[dustID];
+							dust2.position.Y = dust2.position.Y - dustY;
 						}
 					}
 					if (Main.rand.Next(8) == 0)
 					{
-						int num5 = 1;
-						Vector2 arg4;
-						arg4..ctor(p.position.X - (float)num5, p.position.Y - (float)num5);
-						int arg5 = p.width + num5 * 2;
-						int arg6 = p.height + num5 * 2;
-						int num6 = SpawnDust(p, arg4, arg5, arg6);
-						if (num6 != -1)
+						int offset2 = 1;
+						Vector2 pos2 = new Vector2(p.position.X - (float)offset2, p.position.Y - (float)offset2);
+						int width2 = p.width + offset2 * 2;
+						int height2 = p.height + offset2 * 2;
+						int dustID2 = SpawnDust(p, pos2, width2, height2);
+						if (dustID2 != -1)
 						{
-							Main.dust[num6].velocity *= 0.25f;
-							Main.dust[num6].velocity += p.velocity * 0.5f;
+							Main.dust[dustID2].velocity *= 0.25f;
+							Main.dust[dustID2].velocity += p.velocity * 0.5f;
 							return;
 						}
 					}
@@ -1755,18 +1730,17 @@ namespace Redemption
 
 		public static void AISpear(Projectile p, ref float[] ai, float initialSpeed = 3f, float moveOutward = 1.4f, float moveInward = 1.6f, bool overrideKill = false)
 		{
-			Player player = Main.player[p.owner];
-			Item item = player.inventory[player.selectedItem];
-			if (Main.myPlayer == p.owner && item != null && item.autoReuse && player.itemAnimation == 1)
+			Player plr = Main.player[p.owner];
+			Item item = plr.inventory[plr.selectedItem];
+			if (Main.myPlayer == p.owner && item != null && item.autoReuse && plr.itemAnimation == 1)
 			{
 				p.Kill();
 				return;
 			}
 			Main.player[p.owner].heldProj = p.whoAmI;
 			Main.player[p.owner].itemTime = Main.player[p.owner].itemAnimation;
-			Vector2 vector;
-			vector..ctor(0f, player.gfxOffY);
-			BaseAI.AISpear(p, ref ai, player.Center + vector, player.direction, player.itemAnimation, player.itemAnimationMax, initialSpeed, moveOutward, moveInward, overrideKill, player.frozen);
+			Vector2 gfxOffset = new Vector2(0f, plr.gfxOffY);
+			BaseAI.AISpear(p, ref ai, plr.Center + gfxOffset, plr.direction, plr.itemAnimation, plr.itemAnimationMax, initialSpeed, moveOutward, moveInward, overrideKill, plr.frozen);
 		}
 
 		public static void AISpear(Projectile p, ref float[] ai, Vector2 center, int ownerDirection, int itemAnimation, int itemAnimationMax, float initialSpeed = 3f, float moveOutward = 1.4f, float moveInward = 1.6f, bool overrideKill = false, bool frozen = false)
@@ -1821,7 +1795,7 @@ namespace Redemption
 			{
 				height = Main.player[p.owner].height;
 			}
-			Vector2 endPos = position + new Vector2((float)width * 0.5f, (float)height * 0.5f);
+			Vector2 center = position + new Vector2((float)width * 0.5f, (float)height * 0.5f);
 			if (playSound && p.soundDelay == 0)
 			{
 				p.soundDelay = 8;
@@ -1840,50 +1814,50 @@ namespace Redemption
 			else
 			{
 				p.tileCollide = false;
-				float num = endPos.X - p.Center.X;
-				float num2 = endPos.Y - p.Center.Y;
-				float num3 = (float)Math.Sqrt((double)(num * num + num2 * num2));
-				if (num3 > 3000f)
+				float distPlayerX = center.X - p.Center.X;
+				float distPlayerY = center.Y - p.Center.Y;
+				float distPlayer = (float)Math.Sqrt((double)(distPlayerX * distPlayerX + distPlayerY * distPlayerY));
+				if (distPlayer > 3000f)
 				{
 					p.Kill();
 				}
 				if (direct)
 				{
-					p.velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(speedInterval, 0f), BaseUtility.RotationTo(p.Center, endPos));
+					p.velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(speedInterval, 0f), BaseUtility.RotationTo(p.Center, center));
 				}
 				else
 				{
-					num3 = maxDistance / num3;
-					num *= num3;
-					num2 *= num3;
-					if (p.velocity.X < num)
+					distPlayer = maxDistance / distPlayer;
+					distPlayerX *= distPlayer;
+					distPlayerY *= distPlayer;
+					if (p.velocity.X < distPlayerX)
 					{
 						p.velocity.X = p.velocity.X + speedInterval;
-						if (p.velocity.X < 0f && num > 0f)
+						if (p.velocity.X < 0f && distPlayerX > 0f)
 						{
 							p.velocity.X = p.velocity.X + speedInterval;
 						}
 					}
-					else if (p.velocity.X > num)
+					else if (p.velocity.X > distPlayerX)
 					{
 						p.velocity.X = p.velocity.X - speedInterval;
-						if (p.velocity.X > 0f && num < 0f)
+						if (p.velocity.X > 0f && distPlayerX < 0f)
 						{
 							p.velocity.X = p.velocity.X - speedInterval;
 						}
 					}
-					if (p.velocity.Y < num2)
+					if (p.velocity.Y < distPlayerY)
 					{
 						p.velocity.Y = p.velocity.Y + speedInterval;
-						if (p.velocity.Y < 0f && num2 > 0f)
+						if (p.velocity.Y < 0f && distPlayerY > 0f)
 						{
 							p.velocity.Y = p.velocity.Y + speedInterval;
 						}
 					}
-					else if (p.velocity.Y > num2)
+					else if (p.velocity.Y > distPlayerY)
 					{
 						p.velocity.Y = p.velocity.Y - speedInterval;
-						if (p.velocity.Y > 0f && num2 < 0f)
+						if (p.velocity.Y > 0f && distPlayerY < 0f)
 						{
 							p.velocity.Y = p.velocity.Y - speedInterval;
 						}
@@ -1891,10 +1865,9 @@ namespace Redemption
 				}
 				if (Main.myPlayer == p.owner)
 				{
-					Rectangle hitbox = p.Hitbox;
-					Rectangle rectangle;
-					rectangle..ctor((int)position.X, (int)position.Y, width, height);
-					if (hitbox.Intersects(rectangle))
+					Rectangle rectangle = p.Hitbox;
+					Rectangle value = new Rectangle((int)position.X, (int)position.Y, width, height);
+					if (rectangle.Intersects(value))
 					{
 						p.Kill();
 					}
@@ -1944,13 +1917,13 @@ namespace Redemption
 		public static void AIFlail(Projectile p, ref float[] ai, Vector2 connectedPoint, Vector2 connectedPointVelocity, float meleeSpeed, bool channel, bool noKill = false, float chainDistance = 160f)
 		{
 			p.direction = ((p.Center.X > connectedPoint.X) ? 1 : -1);
-			float num = connectedPoint.X - p.Center.X;
-			float num2 = connectedPoint.Y - p.Center.Y;
-			float num3 = (float)Math.Sqrt((double)(num * num + num2 * num2));
+			float pointX = connectedPoint.X - p.Center.X;
+			float pointY = connectedPoint.Y - p.Center.Y;
+			float pointDist = (float)Math.Sqrt((double)(pointX * pointX + pointY * pointY));
 			if (ai[0] == 0f)
 			{
 				p.tileCollide = true;
-				if (num3 > chainDistance)
+				if (pointDist > chainDistance)
 				{
 					ai[0] = 1f;
 					p.netUpdate = true;
@@ -1967,16 +1940,16 @@ namespace Redemption
 			}
 			else if (ai[0] == 1f)
 			{
-				float num4 = 14f / meleeSpeed;
-				float num5 = 0.9f / meleeSpeed;
-				float num6 = chainDistance + 140f;
-				Math.Abs(num);
-				Math.Abs(num2);
+				float meleeSpeed2 = 14f / meleeSpeed;
+				float meleeSpeed3 = 0.9f / meleeSpeed;
+				float maxBallDistance = chainDistance + 140f;
+				Math.Abs(pointX);
+				Math.Abs(pointY);
 				if (ai[1] == 1f)
 				{
 					p.tileCollide = false;
 				}
-				if (!channel || num3 > num6 || !p.tileCollide)
+				if (!channel || pointDist > maxBallDistance || !p.tileCollide)
 				{
 					ai[1] = 1f;
 					if (p.tileCollide)
@@ -1984,31 +1957,31 @@ namespace Redemption
 						p.netUpdate = true;
 					}
 					p.tileCollide = false;
-					if (!noKill && num3 < 20f)
+					if (!noKill && pointDist < 20f)
 					{
 						p.Kill();
 					}
 				}
 				if (!p.tileCollide)
 				{
-					num5 *= 2f;
+					meleeSpeed3 *= 2f;
 				}
-				if (num3 > 60f || !p.tileCollide)
+				if (pointDist > 60f || !p.tileCollide)
 				{
-					num3 = num4 / num3;
-					num *= num3;
-					num2 *= num3;
+					pointDist = meleeSpeed2 / pointDist;
+					pointX *= pointDist;
+					pointY *= pointDist;
 					new Vector2(p.velocity.X, p.velocity.Y);
-					float num7 = num - p.velocity.X;
-					float num8 = num2 - p.velocity.Y;
-					float num9 = (float)Math.Sqrt((double)(num7 * num7 + num8 * num8));
-					num9 = num5 / num9;
-					num7 *= num9;
-					num8 *= num9;
+					float pointX2 = pointX - p.velocity.X;
+					float pointY2 = pointY - p.velocity.Y;
+					float pointDist2 = (float)Math.Sqrt((double)(pointX2 * pointX2 + pointY2 * pointY2));
+					pointDist2 = meleeSpeed3 / pointDist2;
+					pointX2 *= pointDist2;
+					pointY2 *= pointDist2;
 					p.velocity.X = p.velocity.X * 0.98f;
 					p.velocity.Y = p.velocity.Y * 0.98f;
-					p.velocity.X = p.velocity.X + num7;
-					p.velocity.Y = p.velocity.Y + num8;
+					p.velocity.X = p.velocity.X + pointX2;
+					p.velocity.Y = p.velocity.Y + pointY2;
 				}
 				else
 				{
@@ -2023,19 +1996,19 @@ namespace Redemption
 					}
 				}
 			}
-			p.rotation = (float)Math.Atan2((double)num2, (double)num) - p.velocity.X * 0.1f;
+			p.rotation = (float)Math.Atan2((double)pointY, (double)pointX) - p.velocity.X * 0.1f;
 		}
 
 		public static void TileCollideFlail(Projectile p, ref Vector2 velocity, bool playSound = true)
 		{
 			if (velocity != p.velocity)
 			{
-				bool flag = false;
+				bool updateAndCollide = false;
 				if (velocity.X != p.velocity.X)
 				{
 					if (Math.Abs(velocity.X) > 4f)
 					{
-						flag = true;
+						updateAndCollide = true;
 					}
 					p.position.X = p.position.X + p.velocity.X;
 					p.velocity.X = -velocity.X * 0.2f;
@@ -2044,13 +2017,13 @@ namespace Redemption
 				{
 					if (Math.Abs(velocity.Y) > 4f)
 					{
-						flag = true;
+						updateAndCollide = true;
 					}
 					p.position.Y = p.position.Y + p.velocity.Y;
 					p.velocity.Y = -velocity.Y * 0.2f;
 				}
 				p.ai[0] = 1f;
-				if (flag)
+				if (updateAndCollide)
 				{
 					p.netUpdate = true;
 					Collision.HitTiles(p.position, p.velocity, p.width, p.height);
@@ -2064,84 +2037,83 @@ namespace Redemption
 
 		public static bool StickToTiles(Vector2 position, ref Vector2 velocity, int width, int height, Func<int, int, bool> CanStick = null)
 		{
-			int num = (int)(position.X / 16f) - 1;
-			int num2 = (int)((position.X + (float)width) / 16f) + 2;
-			int num3 = (int)(position.Y / 16f) - 1;
-			int num4 = (int)((position.Y + (float)height) / 16f) + 2;
-			if (num < 0)
+			int tileLeftX = (int)(position.X / 16f) - 1;
+			int tileRightX = (int)((position.X + (float)width) / 16f) + 2;
+			int tileLeftY = (int)(position.Y / 16f) - 1;
+			int tileRightY = (int)((position.Y + (float)height) / 16f) + 2;
+			if (tileLeftX < 0)
 			{
-				num = 0;
+				tileLeftX = 0;
 			}
-			if (num2 > Main.maxTilesX)
+			if (tileRightX > Main.maxTilesX)
 			{
-				num2 = Main.maxTilesX;
+				tileRightX = Main.maxTilesX;
 			}
-			if (num3 < 0)
+			if (tileLeftY < 0)
 			{
-				num3 = 0;
+				tileLeftY = 0;
 			}
-			if (num4 > Main.maxTilesY)
+			if (tileRightY > Main.maxTilesY)
 			{
-				num4 = Main.maxTilesY;
+				tileRightY = Main.maxTilesY;
 			}
-			bool flag = false;
-			for (int i = num; i < num2; i++)
+			bool stick = false;
+			for (int x = tileLeftX; x < tileRightX; x++)
 			{
-				for (int j = num3; j < num4; j++)
+				for (int y = tileLeftY; y < tileRightY; y++)
 				{
-					if (Main.tile[i, j] != null && Main.tile[i, j].nactive() && ((CanStick != null) ? CanStick(i, j) : (Main.tileSolid[(int)Main.tile[i, j].type] || (Main.tileSolidTop[(int)Main.tile[i, j].type] && Main.tile[i, j].frameY == 0))))
+					if (Main.tile[x, y] != null && Main.tile[x, y].nactive() && ((CanStick != null) ? CanStick(x, y) : (Main.tileSolid[(int)Main.tile[x, y].type] || (Main.tileSolidTop[(int)Main.tile[x, y].type] && Main.tile[x, y].frameY == 0))))
 					{
-						Vector2 vector;
-						vector..ctor((float)(i * 16), (float)(j * 16));
-						if (position.X + (float)width - 4f > vector.X && position.X + 4f < vector.X + 16f && position.Y + (float)height - 4f > vector.Y && position.Y + 4f < vector.Y + 16f)
+						Vector2 pos = new Vector2((float)(x * 16), (float)(y * 16));
+						if (position.X + (float)width - 4f > pos.X && position.X + 4f < pos.X + 16f && position.Y + (float)height - 4f > pos.Y && position.Y + 4f < pos.Y + 16f)
 						{
-							flag = true;
+							stick = true;
 							velocity *= 0f;
 							break;
 						}
 					}
 				}
-				if (flag)
+				if (stick)
 				{
 					break;
 				}
 			}
-			return flag;
+			return stick;
 		}
 
 		public static void AIShadowflameGhost(NPC npc, ref float[] ai, bool speedupOverTime = false, float distanceBeforeTakeoff = 660f, float velIntervalX = 0.3f, float velMaxX = 7f, float velIntervalY = 0.2f, float velMaxY = 4f, float velScalarY = 4f, float velScalarYMax = 15f, float velIntervalXTurn = 0.4f, float velIntervalYTurn = 0.4f, float velIntervalScalar = 0.95f, float velIntervalMaxTurn = 5f)
 		{
-			int num;
-			for (int i = 0; i < 200; i = num + 1)
+			int npcAvoidCollision;
+			for (int i = 0; i < 200; i = npcAvoidCollision + 1)
 			{
 				if (i != npc.whoAmI && Main.npc[i].active && Main.npc[i].type == npc.type)
 				{
-					Vector2 vector = Main.npc[i].Center - npc.Center;
-					if (vector.Length() < 50f)
+					Vector2 dist = Main.npc[i].Center - npc.Center;
+					if (dist.Length() < 50f)
 					{
-						vector.Normalize();
-						if (vector.X == 0f && vector.Y == 0f)
+						dist.Normalize();
+						if (dist.X == 0f && dist.Y == 0f)
 						{
 							if (i > npc.whoAmI)
 							{
-								vector.X = 1f;
+								dist.X = 1f;
 							}
 							else
 							{
-								vector.X = -1f;
+								dist.X = -1f;
 							}
 						}
-						vector *= 0.4f;
-						npc.velocity -= vector;
-						Main.npc[i].velocity += vector;
+						dist *= 0.4f;
+						npc.velocity -= dist;
+						Main.npc[i].velocity += dist;
 					}
 				}
-				num = i;
+				npcAvoidCollision = i;
 			}
 			if (speedupOverTime)
 			{
-				float num2 = 120f;
-				if (npc.localAI[0] < num2)
+				float timerMax = 120f;
+				if (npc.localAI[0] < timerMax)
 				{
 					if (npc.localAI[0] == 0f)
 					{
@@ -2155,19 +2127,18 @@ namespace Redemption
 						{
 							npc.velocity.X = npc.velocity.X - 2f;
 						}
-						for (int j = 0; j < 20; j = num + 1)
+						for (int j = 0; j < 20; j = npcAvoidCollision + 1)
 						{
-							num = j;
+							npcAvoidCollision = j;
 						}
 					}
 					npc.localAI[0] += 1f;
-					float num3 = 1f - npc.localAI[0] / num2;
-					float num4 = num3 * 20f;
-					int num5 = 0;
-					while ((float)num5 < num4)
+					float timerPartialTimes20 = (1f - npc.localAI[0] / timerMax) * 20f;
+					int nextNPC = 0;
+					while ((float)nextNPC < timerPartialTimes20)
 					{
-						num = num5;
-						num5 = num + 1;
+						npcAvoidCollision = nextNPC;
+						nextNPC = npcAvoidCollision + 1;
 					}
 				}
 			}
@@ -2190,20 +2161,20 @@ namespace Redemption
 				{
 					npc.velocity.X = -velMaxX;
 				}
-				float num6 = Main.player[npc.target].Center.Y - npc.Center.Y;
-				if (Math.Abs(num6) > velMaxY)
+				float playerDistY = Main.player[npc.target].Center.Y - npc.Center.Y;
+				if (Math.Abs(playerDistY) > velMaxY)
 				{
 					velScalarY = velScalarYMax;
 				}
-				if (num6 > velMaxY)
+				if (playerDistY > velMaxY)
 				{
-					num6 = velMaxY;
+					playerDistY = velMaxY;
 				}
-				else if (num6 < -velMaxY)
+				else if (playerDistY < -velMaxY)
 				{
-					num6 = -velMaxY;
+					playerDistY = -velMaxY;
 				}
-				npc.velocity.Y = (npc.velocity.Y * (velScalarY - 1f) + num6) / velScalarY;
+				npc.velocity.Y = (npc.velocity.Y * (velScalarY - 1f) + playerDistY) / velScalarY;
 				if ((npc.ai[1] > 0f && Main.player[npc.target].Center.X - npc.Center.X < -distanceBeforeTakeoff) || (npc.ai[1] < 0f && Main.player[npc.target].Center.X - npc.Center.X > distanceBeforeTakeoff))
 				{
 					npc.ai[0] = 2f;
@@ -2264,54 +2235,54 @@ namespace Redemption
 
 		public static void AISpaceOctopus(NPC npc, ref float[] ai, Vector2 targetCenter = default(Vector2), float moveSpeed = 0.15f, float velMax = 5f, float hoverDistance = 250f, float shootProjInterval = 70f, Action<NPC, Vector2> FireProj = null)
 		{
-			Vector2 vector = targetCenter - npc.Center + new Vector2(0f, -hoverDistance);
-			float num = vector.Length();
-			if (num < 20f)
+			Vector2 wantedVelocity = targetCenter - npc.Center + new Vector2(0f, -hoverDistance);
+			float dist = wantedVelocity.Length();
+			if (dist < 20f)
 			{
-				vector = npc.velocity;
+				wantedVelocity = npc.velocity;
 			}
-			else if (num < 40f)
+			else if (dist < 40f)
 			{
-				vector.Normalize();
-				vector *= velMax * 0.35f;
+				wantedVelocity.Normalize();
+				wantedVelocity *= velMax * 0.35f;
 			}
-			else if (num < 80f)
+			else if (dist < 80f)
 			{
-				vector.Normalize();
-				vector *= velMax * 0.65f;
+				wantedVelocity.Normalize();
+				wantedVelocity *= velMax * 0.65f;
 			}
 			else
 			{
-				vector.Normalize();
-				vector *= velMax;
+				wantedVelocity.Normalize();
+				wantedVelocity *= velMax;
 			}
-			npc.SimpleFlyMovement(vector, moveSpeed);
+			npc.SimpleFlyMovement(wantedVelocity, moveSpeed);
 			npc.rotation = npc.velocity.X * 0.1f;
 			if (FireProj != null && shootProjInterval > -1f && (ai[0] += 1f) >= shootProjInterval)
 			{
 				ai[0] = 0f;
 				if (Main.netMode != 1)
 				{
-					Vector2 arg = Vector2.Zero;
-					while (Math.Abs(arg.X) < 1.5f)
+					Vector2 projVelocity = Vector2.Zero;
+					while (Math.Abs(projVelocity.X) < 1.5f)
 					{
-						arg = Utils.RotatedByRandom(Vector2.UnitY, 1.5707963705062866) * new Vector2(5f, 3f);
+						projVelocity = Utils.RotatedByRandom(Vector2.UnitY, 1.5707963705062866) * new Vector2(5f, 3f);
 					}
-					FireProj(npc, arg);
+					FireProj(npc, projVelocity);
 				}
 			}
 		}
 
 		public static void AIElemental(NPC npc, ref float[] ai, bool? noDamageMode = null, int noDamageTimeMax = 120, bool gravityChange = true, bool tileCollideChange = true, float startPhaseDist = 800f, float stopPhaseDist = 600f, int idleTooLong = 180, float velSpeed = 2f)
 		{
-			int num = (int)npc.localAI[0];
-			BaseAI.AIElemental(npc, ref ai, ref num, noDamageMode, noDamageTimeMax, gravityChange, tileCollideChange, startPhaseDist, stopPhaseDist, idleTooLong, velSpeed);
-			npc.localAI[0] = (float)num;
+			int timerDummy = (int)npc.localAI[0];
+			BaseAI.AIElemental(npc, ref ai, ref timerDummy, noDamageMode, noDamageTimeMax, gravityChange, tileCollideChange, startPhaseDist, stopPhaseDist, idleTooLong, velSpeed);
+			npc.localAI[0] = (float)timerDummy;
 		}
 
 		public static void AIElemental(NPC npc, ref float[] ai, ref int idleTimer, bool? noDamageMode = null, int noDamageTimeMax = 120, bool gravityChange = true, bool tileCollideChange = true, float startPhaseDist = 800f, float stopPhaseDist = 600f, int idleTooLong = 180, float velSpeed = 2f)
 		{
-			bool flag = (noDamageMode == null) ? Main.expertMode : noDamageMode.Value;
+			bool noDmg = (noDamageMode == null) ? Main.expertMode : noDamageMode.Value;
 			if (gravityChange)
 			{
 				npc.noGravity = true;
@@ -2320,14 +2291,14 @@ namespace Redemption
 			{
 				npc.noTileCollide = false;
 			}
-			if (flag)
+			if (noDmg)
 			{
 				npc.dontTakeDamage = false;
 			}
-			Player player = (npc.target < 0) ? null : Main.player[npc.target];
-			Vector2 vector = (player == null) ? (npc.Center + new Vector2(0f, 5f)) : player.Center;
-			vector - npc.Center;
-			if (npc.justHit && Main.netMode != 1 && flag && Main.rand.Next(6) == 0)
+			Player targetPlayer = (npc.target < 0) ? null : Main.player[npc.target];
+			Vector2 playerCenter = (targetPlayer == null) ? (npc.Center + new Vector2(0f, 5f)) : targetPlayer.Center;
+			playerCenter - npc.Center;
+			if (npc.justHit && Main.netMode != 1 && noDmg && Main.rand.Next(6) == 0)
 			{
 				npc.netUpdate = true;
 				ai[0] = -1f;
@@ -2335,7 +2306,7 @@ namespace Redemption
 			}
 			if (ai[0] == -1f)
 			{
-				if (flag)
+				if (noDmg)
 				{
 					npc.dontTakeDamage = true;
 				}
@@ -2354,56 +2325,55 @@ namespace Redemption
 			else if (ai[0] == 0f)
 			{
 				npc.TargetClosest(true);
-				player = Main.player[npc.target];
-				vector = player.Center;
-				vector - npc.Center;
-				if (Collision.CanHit(npc.Center, 1, 1, vector, 1, 1))
+				targetPlayer = Main.player[npc.target];
+				playerCenter = targetPlayer.Center;
+				playerCenter - npc.Center;
+				if (Collision.CanHit(npc.Center, 1, 1, playerCenter, 1, 1))
 				{
 					ai[0] = 1f;
 					return;
 				}
-				Vector2 vector2 = vector - npc.Center;
-				vector2.Y -= (float)(player.height / 4);
-				float num = vector2.Length();
-				if (num > startPhaseDist)
+				Vector2 centerDiff = playerCenter - npc.Center;
+				centerDiff.Y -= (float)(targetPlayer.height / 4);
+				if (centerDiff.Length() > startPhaseDist)
 				{
 					ai[0] = 2f;
 					return;
 				}
-				Vector2 center = npc.Center;
-				center.X = vector.X;
-				Vector2 vector3 = center - npc.Center;
-				if (vector3.Length() > 8f && Collision.CanHit(npc.Center, 1, 1, center, 1, 1))
+				Vector2 npcCenter = npc.Center;
+				npcCenter.X = playerCenter.X;
+				Vector2 npcCentDiff = npcCenter - npc.Center;
+				if (npcCentDiff.Length() > 8f && Collision.CanHit(npc.Center, 1, 1, npcCenter, 1, 1))
 				{
 					ai[0] = 3f;
-					ai[1] = center.X;
-					ai[2] = center.Y;
-					Vector2 center2 = npc.Center;
-					center2.Y = vector.Y;
-					if (vector3.Length() > 8f && Collision.CanHit(npc.Center, 1, 1, center2, 1, 1) && Collision.CanHit(center2, 1, 1, player.position, 1, 1))
+					ai[1] = npcCenter.X;
+					ai[2] = npcCenter.Y;
+					Vector2 npcCenter2 = npc.Center;
+					npcCenter2.Y = playerCenter.Y;
+					if (npcCentDiff.Length() > 8f && Collision.CanHit(npc.Center, 1, 1, npcCenter2, 1, 1) && Collision.CanHit(npcCenter2, 1, 1, targetPlayer.position, 1, 1))
 					{
 						ai[0] = 3f;
-						ai[1] = center2.X;
-						ai[2] = center2.Y;
+						ai[1] = npcCenter2.X;
+						ai[2] = npcCenter2.Y;
 					}
 				}
 				else
 				{
-					center = npc.Center;
-					center.Y = vector.Y;
-					if ((center - npc.Center).Length() > 8f && Collision.CanHit(npc.Center, 1, 1, center, 1, 1))
+					npcCenter = npc.Center;
+					npcCenter.Y = playerCenter.Y;
+					if ((npcCenter - npc.Center).Length() > 8f && Collision.CanHit(npc.Center, 1, 1, npcCenter, 1, 1))
 					{
 						ai[0] = 3f;
-						ai[1] = center.X;
-						ai[2] = center.Y;
+						ai[1] = npcCenter.X;
+						ai[2] = npcCenter.Y;
 					}
 				}
 				if (ai[0] == 0f)
 				{
 					npc.localAI[0] = 0f;
-					vector2.Normalize();
-					vector2 *= 0.5f;
-					npc.velocity += vector2;
+					centerDiff.Normalize();
+					centerDiff *= 0.5f;
+					npc.velocity += centerDiff;
 					ai[0] = 4f;
 					ai[1] = 0f;
 					return;
@@ -2411,14 +2381,14 @@ namespace Redemption
 			}
 			else if (ai[0] == 1f)
 			{
-				Vector2 vector4 = vector - npc.Center;
-				float num2 = vector4.Length();
-				float num3 = velSpeed + num2 / 200f;
-				float num4 = 50f;
-				vector4.Normalize();
-				vector4 *= num3;
-				npc.velocity = (npc.velocity * (num4 - 1f) + vector4) / num4;
-				if (!Collision.CanHit(npc.Center, 1, 1, vector, 1, 1))
+				Vector2 distDiff = playerCenter - npc.Center;
+				float distLength = distDiff.Length();
+				float velSpeed2 = velSpeed + distLength / 200f;
+				float speedAdjuster = 50f;
+				distDiff.Normalize();
+				distDiff *= velSpeed2;
+				npc.velocity = (npc.velocity * (speedAdjuster - 1f) + distDiff) / speedAdjuster;
+				if (!Collision.CanHit(npc.Center, 1, 1, playerCenter, 1, 1))
 				{
 					ai[0] = 0f;
 					ai[1] = 0f;
@@ -2428,13 +2398,13 @@ namespace Redemption
 			else if (ai[0] == 2f)
 			{
 				npc.noTileCollide = true;
-				Vector2 vector5 = vector - npc.Center;
-				float num5 = vector5.Length();
-				float num6 = 4f;
-				vector5.Normalize();
-				vector5 *= velSpeed;
-				npc.velocity = (npc.velocity * (num6 - 1f) + vector5) / num6;
-				if (num5 < stopPhaseDist && !Collision.SolidCollision(npc.position, npc.width, npc.height))
+				Vector2 distDiff2 = playerCenter - npc.Center;
+				float num = distDiff2.Length();
+				float speedAdjusterPhase = 4f;
+				distDiff2.Normalize();
+				distDiff2 *= velSpeed;
+				npc.velocity = (npc.velocity * (speedAdjusterPhase - 1f) + distDiff2) / speedAdjusterPhase;
+				if (num < stopPhaseDist && !Collision.SolidCollision(npc.position, npc.width, npc.height))
 				{
 					ai[0] = 0f;
 					return;
@@ -2442,21 +2412,19 @@ namespace Redemption
 			}
 			else if (ai[0] == 3f)
 			{
-				Vector2 vector6;
-				vector6..ctor(ai[1], ai[2]);
-				Vector2 vector7 = vector6 - npc.Center;
-				float num7 = vector7.Length();
-				float num8 = (velSpeed < 1f) ? (velSpeed * 0.5f) : Math.Max(0.1f, velSpeed - 1f);
-				float num9 = 3f;
-				vector7.Normalize();
-				vector7 *= num8;
-				npc.velocity = (npc.velocity * (num9 - 1f) + vector7) / num9;
+				Vector2 targetDiff = new Vector2(ai[1], ai[2]) - npc.Center;
+				float targetLength = targetDiff.Length();
+				float velSpeedHorizontal = (velSpeed < 1f) ? (velSpeed * 0.5f) : Math.Max(0.1f, velSpeed - 1f);
+				float speedAdjusterHorizontal = 3f;
+				targetDiff.Normalize();
+				targetDiff *= velSpeedHorizontal;
+				npc.velocity = (npc.velocity * (speedAdjusterHorizontal - 1f) + targetDiff) / speedAdjusterHorizontal;
 				if (npc.collideX || npc.collideY)
 				{
 					ai[0] = 4f;
 					ai[1] = 0f;
 				}
-				if (num7 < num8 || num7 > startPhaseDist || Collision.CanHit(npc.Center, 1, 1, vector, 1, 1))
+				if (targetLength < velSpeedHorizontal || targetLength > startPhaseDist || Collision.CanHit(npc.Center, 1, 1, playerCenter, 1, 1))
 				{
 					ai[0] = 0f;
 					return;
@@ -2472,27 +2440,27 @@ namespace Redemption
 				{
 					npc.velocity.Y = npc.velocity.Y * -0.8f;
 				}
-				Vector2 vector8;
+				Vector2 velVec;
 				if (npc.velocity.X == 0f && npc.velocity.Y == 0f)
 				{
-					vector8 = vector - npc.Center;
-					vector8.Y -= (float)(player.height / 4);
-					vector8.Normalize();
-					npc.velocity = vector8 * 0.1f;
+					velVec = playerCenter - npc.Center;
+					velVec.Y -= (float)(targetPlayer.height / 4);
+					velVec.Normalize();
+					npc.velocity = velVec * 0.1f;
 				}
-				float num10 = (velSpeed < 1f) ? (velSpeed * 0.75f) : Math.Max(0.1f, velSpeed - 0.5f);
-				float num11 = 20f;
-				vector8 = npc.velocity;
-				vector8.Normalize();
-				vector8 *= num10;
-				npc.velocity = (npc.velocity * (num11 - 1f) + vector8) / num11;
+				float velSpeedIdle = (velSpeed < 1f) ? (velSpeed * 0.75f) : Math.Max(0.1f, velSpeed - 0.5f);
+				float speedAdjusterIdle = 20f;
+				velVec = npc.velocity;
+				velVec.Normalize();
+				velVec *= velSpeedIdle;
+				npc.velocity = (npc.velocity * (speedAdjusterIdle - 1f) + velVec) / speedAdjusterIdle;
 				ai[1] += 1f;
 				if (ai[1] > (float)idleTooLong)
 				{
 					ai[0] = 0f;
 					ai[1] = 0f;
 				}
-				if (Collision.CanHit(npc.Center, 1, 1, vector, 1, 1))
+				if (Collision.CanHit(npc.Center, 1, 1, playerCenter, 1, 1))
 				{
 					ai[0] = 0f;
 				}
@@ -2500,22 +2468,23 @@ namespace Redemption
 				if (idleTimer >= 5 && !Collision.SolidCollision(npc.position - new Vector2(10f, 10f), npc.width + 20, npc.height + 20))
 				{
 					idleTimer = 0;
-					Vector2 center3 = npc.Center;
-					center3.X = vector.X;
-					if (Collision.CanHit(npc.Center, 1, 1, center3, 1, 1) && Collision.CanHit(npc.Center, 1, 1, center3, 1, 1) && Collision.CanHit(vector, 1, 1, center3, 1, 1))
+					Vector2 npcCenter3 = npc.Center;
+					npcCenter3.X = playerCenter.X;
+					if (Collision.CanHit(npc.Center, 1, 1, npcCenter3, 1, 1) && Collision.CanHit(npc.Center, 1, 1, npcCenter3, 1, 1) && Collision.CanHit(playerCenter, 1, 1, npcCenter3, 1, 1))
 					{
 						ai[0] = 3f;
-						ai[1] = center3.X;
-						ai[2] = center3.Y;
+						ai[1] = npcCenter3.X;
+						ai[2] = npcCenter3.Y;
 						return;
 					}
-					center3 = npc.Center;
-					center3.Y = vector.Y;
-					if (Collision.CanHit(npc.Center, 1, 1, center3, 1, 1) && Collision.CanHit(vector, 1, 1, center3, 1, 1))
+					npcCenter3 = npc.Center;
+					npcCenter3.Y = playerCenter.Y;
+					if (Collision.CanHit(npc.Center, 1, 1, npcCenter3, 1, 1) && Collision.CanHit(playerCenter, 1, 1, npcCenter3, 1, 1))
 					{
 						ai[0] = 3f;
-						ai[1] = center3.X;
-						ai[2] = center3.Y;
+						ai[1] = npcCenter3.X;
+						ai[2] = npcCenter3.Y;
+						return;
 					}
 				}
 			}
@@ -2534,13 +2503,13 @@ namespace Redemption
 		{
 			if (ai[0] == 0f)
 			{
-				Vector2 center = codable.Center;
-				float num = targetPos.X - center.X;
-				float num2 = targetPos.Y - center.Y;
-				float num3 = (float)Math.Sqrt((double)(num * num + num2 * num2));
-				float num4 = 9f / num3;
-				codable.velocity.X = num * num4 * movementScalar;
-				codable.velocity.Y = num2 * num4 * movementScalar;
+				Vector2 vector2 = codable.Center;
+				float distX = targetPos.X - vector2.X;
+				float distY = targetPos.Y - vector2.Y;
+				float dist = (float)Math.Sqrt((double)(distX * distX + distY * distY));
+				float distMult = 9f / dist;
+				codable.velocity.X = distX * distMult * movementScalar;
+				codable.velocity.Y = distY * distMult * movementScalar;
 				if (codable.velocity.X > maxSpeed)
 				{
 					codable.velocity.X = maxSpeed;
@@ -2621,7 +2590,7 @@ namespace Redemption
 					npc.spriteDirection = 1;
 				}
 			}
-			bool flag = false;
+			bool collisonOnX = false;
 			if (Main.netMode != 1)
 			{
 				if (ai[2] == 0f && Main.rand.Next(7200) == 0)
@@ -2662,7 +2631,7 @@ namespace Redemption
 				snailStatus = 0;
 				if (npc.collideX && npc.velocity.Y == 0f)
 				{
-					flag = true;
+					collisonOnX = true;
 					ai[2] = 0f;
 					ai[1] = 1f;
 					npc.directionY = -1;
@@ -2725,9 +2694,9 @@ namespace Redemption
 						ai[1] = 0f;
 					}
 				}
-				if (!flag)
+				if (!collisonOnX)
 				{
-					float rotation = npc.rotation;
+					float prevRot = npc.rotation;
 					if (npc.directionY < 0)
 					{
 						if (npc.direction < 0)
@@ -2777,8 +2746,8 @@ namespace Redemption
 						npc.rotation = 0f;
 						npc.spriteDirection = 1;
 					}
-					float rotation2 = npc.rotation;
-					npc.rotation = rotation;
+					float prevRot2 = npc.rotation;
+					npc.rotation = prevRot;
 					if ((double)npc.rotation > 6.28)
 					{
 						npc.rotation -= 6.28f;
@@ -2787,34 +2756,34 @@ namespace Redemption
 					{
 						npc.rotation += 6.28f;
 					}
-					float num = Math.Abs(npc.rotation - rotation2);
-					if (npc.rotation > rotation2)
+					float rotDiffAbs = Math.Abs(npc.rotation - prevRot2);
+					if (npc.rotation > prevRot2)
 					{
-						if ((double)num > 3.14)
+						if ((double)rotDiffAbs > 3.14)
 						{
 							npc.rotation += rotAmt;
 						}
 						else
 						{
 							npc.rotation -= rotAmt;
-							if (npc.rotation < rotation2)
+							if (npc.rotation < prevRot2)
 							{
-								npc.rotation = rotation2;
+								npc.rotation = prevRot2;
 							}
 						}
 					}
-					if (npc.rotation < rotation2)
+					if (npc.rotation < prevRot2)
 					{
-						if ((double)num > 3.14)
+						if ((double)rotDiffAbs > 3.14)
 						{
 							npc.rotation -= rotAmt;
 						}
 						else
 						{
 							npc.rotation += rotAmt;
-							if (npc.rotation > rotation2)
+							if (npc.rotation > prevRot2)
 							{
-								npc.rotation = rotation2;
+								npc.rotation = prevRot2;
 							}
 						}
 					}
@@ -2843,44 +2812,44 @@ namespace Redemption
 		public static void CollisionTest(NPC npc, ref bool left, ref bool right, ref bool up, ref bool down)
 		{
 			up = (down = (left = (right = false)));
-			int num = npc.width / 16 + ((npc.width % 16 > 0) ? 1 : 0);
-			int num2 = npc.height / 16 + ((npc.height % 16 > 0) ? 1 : 0);
-			int num3 = Math.Max(0, Math.Min(Main.maxTilesX - 1, (int)(npc.position.X / 16f) - 1));
-			int num4 = Math.Max(0, Math.Min(Main.maxTilesX - 1, num3 + num + 1));
-			int num5 = Math.Max(0, Math.Min(Main.maxTilesY - 1, (int)(npc.position.Y / 16f) - 1));
-			int num6 = Math.Max(0, Math.Min(Main.maxTilesY - 1, num5 + num2 + 1));
-			for (int i = num3; i < num4; i++)
+			int lengthX = npc.width / 16 + ((npc.width % 16 > 0) ? 1 : 0);
+			int lengthY = npc.height / 16 + ((npc.height % 16 > 0) ? 1 : 0);
+			int xLeft = Math.Max(0, Math.Min(Main.maxTilesX - 1, (int)(npc.position.X / 16f) - 1));
+			int xRight = Math.Max(0, Math.Min(Main.maxTilesX - 1, xLeft + lengthX + 1));
+			int yUp = Math.Max(0, Math.Min(Main.maxTilesY - 1, (int)(npc.position.Y / 16f) - 1));
+			int yDown = Math.Max(0, Math.Min(Main.maxTilesY - 1, yUp + lengthY + 1));
+			for (int x2 = xLeft; x2 < xRight; x2++)
 			{
-				Tile tile = Main.tile[i, num5];
-				Tile tile2 = Main.tile[i, num6];
-				if (tile != null && tile.nactive() && Main.tileSolid[(int)tile.type] && !Main.tileSolidTop[(int)tile.type])
+				Tile tileUp = Main.tile[x2, yUp];
+				Tile tileDown = Main.tile[x2, yDown];
+				if (tileUp != null && tileUp.nactive() && Main.tileSolid[(int)tileUp.type] && !Main.tileSolidTop[(int)tileUp.type])
 				{
 					up = true;
 				}
-				if (tile2 != null && tile2.nactive() && Main.tileSolid[(int)tile2.type])
+				if (tileDown != null && tileDown.nactive() && Main.tileSolid[(int)tileDown.type])
 				{
 					down = true;
 				}
-				if (up && down)
+				if (up & down)
 				{
 					break;
 				}
 			}
-			for (int j = num5; j < num6; j++)
+			for (int y2 = yUp; y2 < yDown; y2++)
 			{
-				Tile tile3 = Main.tile[num3, j];
-				Tile tile4 = Main.tile[num4, j];
-				if (tile3 != null && tile3.nactive() && Main.tileSolid[(int)tile3.type] && !Main.tileSolidTop[(int)tile3.type])
+				Tile tileLeft = Main.tile[xLeft, y2];
+				Tile tileRight = Main.tile[xRight, y2];
+				if (tileLeft != null && tileLeft.nactive() && Main.tileSolid[(int)tileLeft.type] && !Main.tileSolidTop[(int)tileLeft.type])
 				{
 					left = true;
 				}
-				if (tile4 != null && tile4.nactive() && Main.tileSolid[(int)tile4.type] && !Main.tileSolidTop[(int)tile4.type])
+				if (tileRight != null && tileRight.nactive() && Main.tileSolid[(int)tileRight.type] && !Main.tileSolidTop[(int)tileRight.type])
 				{
 					right = true;
 				}
-				if (left && right)
+				if (left & right)
 				{
-					return;
+					break;
 				}
 			}
 		}
@@ -2902,8 +2871,8 @@ namespace Redemption
 			{
 				codable.velocity.Y = 1f;
 			}
-			int num = targetWidth / 2;
-			if (codable.position.X + (float)codable.width < target.X - (float)num)
+			int widthHalf = targetWidth / 2;
+			if (codable.position.X + (float)codable.width < target.X - (float)widthHalf)
 			{
 				if (codable.velocity.X < 0f)
 				{
@@ -2911,7 +2880,7 @@ namespace Redemption
 				}
 				codable.velocity.X = codable.velocity.X + moveIntervalX;
 			}
-			else if (codable.position.X > target.X + (float)num)
+			else if (codable.position.X > target.X + (float)widthHalf)
 			{
 				if (codable.velocity.X > 0f)
 				{
@@ -2927,13 +2896,13 @@ namespace Redemption
 
 		public static void AICharger(NPC npc, ref float[] ai, float moveInterval = 0.07f, float maxSpeed = 6f, bool allowBoredom = true, int ticksUntilBoredom = 30)
 		{
-			bool flag = false;
+			bool isMoving = false;
 			if (npc.velocity.Y == 0f && ((npc.velocity.X > 0f && npc.direction < 0) || (npc.velocity.X < 0f && npc.direction > 0)))
 			{
-				flag = true;
+				isMoving = true;
 				ai[3] += 1f;
 			}
-			if (npc.position.X == npc.oldPosition.X || ai[3] >= (float)ticksUntilBoredom || flag)
+			if (npc.position.X == npc.oldPosition.X || ai[3] >= (float)ticksUntilBoredom || isMoving)
 			{
 				ai[3] += 1f;
 			}
@@ -2953,11 +2922,10 @@ namespace Redemption
 			{
 				npc.netUpdate = true;
 			}
-			Vector2 center = npc.Center;
-			float num = Main.player[npc.target].Center.X - center.X;
-			float num2 = Main.player[npc.target].Center.Y - center.Y;
-			float num3 = (float)Math.Sqrt((double)(num * num + num2 * num2));
-			if (num3 < 200f)
+			Vector2 npcCenter = npc.Center;
+			float num = Main.player[npc.target].Center.X - npcCenter.X;
+			float distY = Main.player[npc.target].Center.Y - npcCenter.Y;
+			if ((float)Math.Sqrt((double)(num * num + distY * distY)) < 200f)
 			{
 				ai[3] = 0f;
 			}
@@ -3022,17 +2990,17 @@ namespace Redemption
 
 		public static void AIFriendly(NPC npc, ref float[] ai, float moveInterval = 0.07f, float maxSpeed = 1f, bool critter = false, bool? seekHome = null, bool canTeleportHome = true, bool canFindHouse = true, bool canOpenDoors = true)
 		{
-			bool flag = Main.raining;
+			bool seekHouse = Main.raining;
 			if (!Main.dayTime || Main.eclipse)
 			{
-				flag = true;
+				seekHouse = true;
 			}
 			if (seekHome != null)
 			{
-				flag = seekHome.Value;
+				seekHouse = seekHome.Value;
 			}
-			int num = (int)((double)npc.position.X + (double)(npc.width / 2)) / 16;
-			int num2 = (int)((double)npc.position.Y + (double)npc.height + 1.0) / 16;
+			int npcTileX = (int)((double)npc.position.X + (double)(npc.width / 2)) / 16;
+			int npcTileY = (int)((double)npc.position.Y + (double)npc.height + 1.0) / 16;
 			if (critter && npc.target == 255)
 			{
 				npc.TargetClosest(true);
@@ -3043,17 +3011,17 @@ namespace Redemption
 					npc.homeTileX = (int)(npc.Center.X / 16f);
 				}
 			}
-			bool flag2 = false;
+			bool isTalking = false;
 			npc.directionY = -1;
 			if (npc.direction == 0)
 			{
 				npc.direction = 1;
 			}
-			for (int i = 0; i < 255; i++)
+			for (int m = 0; m < 255; m++)
 			{
-				if (Main.player[i].active && Main.player[i].talkNPC == npc.whoAmI)
+				if (Main.player[m].active && Main.player[m].talkNPC == npc.whoAmI)
 				{
-					flag2 = true;
+					isTalking = true;
 					if (ai[0] != 0f)
 					{
 						npc.netUpdate = true;
@@ -3061,7 +3029,7 @@ namespace Redemption
 					ai[0] = 0f;
 					ai[1] = 300f;
 					ai[2] = 100f;
-					npc.direction = ((Main.player[i].Center.X >= npc.Center.X) ? 1 : -1);
+					npc.direction = ((Main.player[m].Center.X >= npc.Center.X) ? 1 : -1);
 				}
 			}
 			if (ai[3] > 0f)
@@ -3079,46 +3047,45 @@ namespace Redemption
 				npc.homeTileX = (int)npc.Center.X / 16;
 				npc.homeTileY = (int)npc.Center.Y / 16;
 			}
-			int num3 = npc.homeTileY;
+			int homeTileY = npc.homeTileY;
 			if (Main.netMode != 1 && npc.homeTileY > 0)
 			{
-				while (!WorldGen.SolidTile(npc.homeTileX, num3) && num3 < Main.maxTilesY - 20)
+				while (!WorldGen.SolidTile(npc.homeTileX, homeTileY) && homeTileY < Main.maxTilesY - 20)
 				{
-					num3++;
+					homeTileY++;
 				}
 			}
-			if (Main.netMode != 1 && canTeleportHome && flag && (num != npc.homeTileX || num2 != num3) && !npc.homeless)
+			if (Main.netMode != 1 && canTeleportHome && seekHouse && (npcTileX != npc.homeTileX || npcTileY != homeTileY) && !npc.homeless)
 			{
-				bool flag3 = true;
-				for (int j = 0; j < 2; j++)
+				bool moveToHome = true;
+				for (int m2 = 0; m2 < 2; m2++)
 				{
-					Rectangle rectangle;
-					rectangle..ctor((int)(npc.Center.X - (float)(NPC.sWidth / 2) - (float)NPC.safeRangeX), (int)(npc.Center.Y - (float)(NPC.sHeight / 2) - (float)NPC.safeRangeY), NPC.sWidth + NPC.safeRangeX * 2, NPC.sHeight + NPC.safeRangeY * 2);
-					if (j == 1)
+					Rectangle checkRect = new Rectangle((int)(npc.Center.X - (float)(NPC.sWidth / 2) - (float)NPC.safeRangeX), (int)(npc.Center.Y - (float)(NPC.sHeight / 2) - (float)NPC.safeRangeY), NPC.sWidth + NPC.safeRangeX * 2, NPC.sHeight + NPC.safeRangeY * 2);
+					if (m2 == 1)
 					{
-						rectangle..ctor(npc.homeTileX * 16 + 8 - NPC.sWidth / 2 - NPC.safeRangeX, num3 * 16 + 8 - NPC.sHeight / 2 - NPC.safeRangeY, NPC.sWidth + NPC.safeRangeX * 2, NPC.sHeight + NPC.safeRangeY * 2);
+						checkRect = new Rectangle(npc.homeTileX * 16 + 8 - NPC.sWidth / 2 - NPC.safeRangeX, homeTileY * 16 + 8 - NPC.sHeight / 2 - NPC.safeRangeY, NPC.sWidth + NPC.safeRangeX * 2, NPC.sHeight + NPC.safeRangeY * 2);
 					}
-					for (int k = 0; k < 255; k++)
+					for (int m3 = 0; m3 < 255; m3++)
 					{
-						if (Main.player[k].active && Main.player[k].Hitbox.Intersects(rectangle))
+						if (Main.player[m3].active && Main.player[m3].Hitbox.Intersects(checkRect))
 						{
-							flag3 = false;
+							moveToHome = false;
 							break;
 						}
-						if (!flag3)
+						if (!moveToHome)
 						{
 							break;
 						}
 					}
 				}
-				if (flag3)
+				if (moveToHome)
 				{
-					if (!Collision.SolidTiles(npc.homeTileX - 1, npc.homeTileX + 1, num3 - 3, num3 - 1))
+					if (!Collision.SolidTiles(npc.homeTileX - 1, npc.homeTileX + 1, homeTileY - 3, homeTileY - 1))
 					{
 						npc.velocity.X = 0f;
 						npc.velocity.Y = 0f;
 						npc.position.X = (float)(npc.homeTileX * 16 + 8 - npc.width / 2);
-						npc.position.Y = (float)(num3 * 16 - npc.height) - 0.1f;
+						npc.position.Y = (float)(homeTileY * 16 - npc.height) - 0.1f;
 						npc.netUpdate = true;
 					}
 					else if (canFindHouse)
@@ -3134,11 +3101,11 @@ namespace Redemption
 				{
 					ai[2] -= 1f;
 				}
-				if (flag && !flag2 && !critter)
+				if (seekHouse && !isTalking && !critter)
 				{
 					if (Main.netMode != 1)
 					{
-						if (num == npc.homeTileX && num2 == num3)
+						if (npcTileX == npc.homeTileX && npcTileY == homeTileY)
 						{
 							if (npc.velocity.X != 0f)
 							{
@@ -3159,7 +3126,7 @@ namespace Redemption
 						}
 						else
 						{
-							npc.direction = ((num <= npc.homeTileX) ? 1 : -1);
+							npc.direction = ((npcTileX <= npc.homeTileX) ? 1 : -1);
 							ai[0] = 1f;
 							ai[1] = (float)(200 + Main.rand.Next(200));
 							ai[2] = 0f;
@@ -3200,23 +3167,23 @@ namespace Redemption
 						}
 					}
 				}
-				if (Main.netMode == 1 || (flag && (num != npc.homeTileX || num2 != num3)))
+				if (Main.netMode == 1 || (seekHouse && (npcTileX != npc.homeTileX || npcTileY != homeTileY)))
 				{
 					return;
 				}
-				if (num < npc.homeTileX - 25 || num > npc.homeTileX + 25)
+				if (npcTileX < npc.homeTileX - 25 || npcTileX > npc.homeTileX + 25)
 				{
 					if (ai[2] != 0f)
 					{
 						return;
 					}
-					if (num < npc.homeTileX - 50 && npc.direction == -1)
+					if (npcTileX < npc.homeTileX - 50 && npc.direction == -1)
 					{
 						npc.direction = 1;
 						npc.netUpdate = true;
 						return;
 					}
-					if (num <= npc.homeTileX + 50 || npc.direction != 1)
+					if (npcTileX <= npc.homeTileX + 50 || npc.direction != 1)
 					{
 						return;
 					}
@@ -3242,7 +3209,7 @@ namespace Redemption
 				{
 					return;
 				}
-				if (Main.netMode != 1 && !critter && flag && num == npc.homeTileX && num2 == npc.homeTileY)
+				if (Main.netMode != 1 && !critter && seekHouse && npcTileX == npc.homeTileX && npcTileY == npc.homeTileY)
 				{
 					ai[0] = 0f;
 					ai[1] = (float)(200 + Main.rand.Next(200));
@@ -3250,7 +3217,7 @@ namespace Redemption
 					npc.netUpdate = true;
 					return;
 				}
-				if (Main.netMode != 1 && !npc.homeless && !Main.tileDungeon[(int)Main.tile[num, num2].type] && (num < npc.homeTileX - 35 || num > npc.homeTileX + 35))
+				if (Main.netMode != 1 && !npc.homeless && !Main.tileDungeon[(int)Main.tile[npcTileX, npcTileY].type] && (npcTileX < npc.homeTileX - 35 || npcTileX > npc.homeTileX + 35))
 				{
 					if (npc.Center.X < (float)(npc.homeTileX * 16) && npc.direction == -1)
 					{
@@ -3318,49 +3285,49 @@ namespace Redemption
 					npc.direction *= -1;
 				}
 				ai[2] = -1f;
-				int num4 = (int)((npc.Center.X + (float)(15 * npc.direction)) / 16f);
-				int num5 = (int)((npc.position.Y + (float)npc.height - 16f) / 16f);
-				if (Main.tile[num4, num5] == null)
+				int tileX2 = (int)((npc.Center.X + (float)(15 * npc.direction)) / 16f);
+				int tileY2 = (int)((npc.position.Y + (float)npc.height - 16f) / 16f);
+				if (Main.tile[tileX2, tileY2] == null)
 				{
-					Main.tile[num4, num5] = new Tile();
+					Main.tile[tileX2, tileY2] = new Tile();
 				}
-				if (Main.tile[num4, num5 - 1] == null)
+				if (Main.tile[tileX2, tileY2 - 1] == null)
 				{
-					Main.tile[num4, num5 - 1] = new Tile();
+					Main.tile[tileX2, tileY2 - 1] = new Tile();
 				}
-				if (Main.tile[num4, num5 - 2] == null)
+				if (Main.tile[tileX2, tileY2 - 2] == null)
 				{
-					Main.tile[num4, num5 - 2] = new Tile();
+					Main.tile[tileX2, tileY2 - 2] = new Tile();
 				}
-				if (Main.tile[num4, num5 - 3] == null)
+				if (Main.tile[tileX2, tileY2 - 3] == null)
 				{
-					Main.tile[num4, num5 - 3] = new Tile();
+					Main.tile[tileX2, tileY2 - 3] = new Tile();
 				}
-				if (Main.tile[num4, num5 + 1] == null)
+				if (Main.tile[tileX2, tileY2 + 1] == null)
 				{
-					Main.tile[num4, num5 + 1] = new Tile();
+					Main.tile[tileX2, tileY2 + 1] = new Tile();
 				}
-				if (Main.tile[num4 - npc.direction, num5 + 1] == null)
+				if (Main.tile[tileX2 - npc.direction, tileY2 + 1] == null)
 				{
-					Main.tile[num4 - npc.direction, num5 + 1] = new Tile();
+					Main.tile[tileX2 - npc.direction, tileY2 + 1] = new Tile();
 				}
-				if (Main.tile[num4 + npc.direction, num5 - 1] == null)
+				if (Main.tile[tileX2 + npc.direction, tileY2 - 1] == null)
 				{
-					Main.tile[num4 + npc.direction, num5 - 1] = new Tile();
+					Main.tile[tileX2 + npc.direction, tileY2 - 1] = new Tile();
 				}
-				if (Main.tile[num4 + npc.direction, num5 + 1] == null)
+				if (Main.tile[tileX2 + npc.direction, tileY2 + 1] == null)
 				{
-					Main.tile[num4 + npc.direction, num5 + 1] = new Tile();
+					Main.tile[tileX2 + npc.direction, tileY2 + 1] = new Tile();
 				}
-				if (!canOpenDoors || !Main.tile[num4, num5 - 2].nactive() || Main.tile[num4, num5 - 2].type != 10 || (Main.rand.Next(10) != 0 && !flag))
+				if (!canOpenDoors || !Main.tile[tileX2, tileY2 - 2].nactive() || Main.tile[tileX2, tileY2 - 2].type != 10 || (Main.rand.Next(10) != 0 && !seekHouse))
 				{
 					if ((npc.velocity.X < 0f && npc.spriteDirection == -1) || (npc.velocity.X > 0f && npc.spriteDirection == 1))
 					{
-						if (Main.tile[num4, num5 - 2].nactive() && Main.tileSolid[(int)Main.tile[num4, num5 - 2].type] && !Main.tileSolidTop[(int)Main.tile[num4, num5 - 2].type])
+						if (Main.tile[tileX2, tileY2 - 2].nactive() && Main.tileSolid[(int)Main.tile[tileX2, tileY2 - 2].type] && !Main.tileSolidTop[(int)Main.tile[tileX2, tileY2 - 2].type])
 						{
-							if ((npc.direction == 1 && !Collision.SolidTiles(num4 - 2, num4 - 1, num5 - 5, num5 - 1)) || (npc.direction == -1 && !Collision.SolidTiles(num4 + 1, num4 + 2, num5 - 5, num5 - 1)))
+							if ((npc.direction == 1 && !Collision.SolidTiles(tileX2 - 2, tileX2 - 1, tileY2 - 5, tileY2 - 1)) || (npc.direction == -1 && !Collision.SolidTiles(tileX2 + 1, tileX2 + 2, tileY2 - 5, tileY2 - 1)))
 							{
-								if (!Collision.SolidTiles(num4, num4, num5 - 5, num5 - 3))
+								if (!Collision.SolidTiles(tileX2, tileX2, tileY2 - 5, tileY2 - 3))
 								{
 									npc.velocity.Y = -6f;
 									npc.netUpdate = true;
@@ -3377,11 +3344,11 @@ namespace Redemption
 								npc.netUpdate = true;
 							}
 						}
-						else if (Main.tile[num4, num5 - 1].nactive() && Main.tileSolid[(int)Main.tile[num4, num5 - 1].type] && !Main.tileSolidTop[(int)Main.tile[num4, num5 - 1].type])
+						else if (Main.tile[tileX2, tileY2 - 1].nactive() && Main.tileSolid[(int)Main.tile[tileX2, tileY2 - 1].type] && !Main.tileSolidTop[(int)Main.tile[tileX2, tileY2 - 1].type])
 						{
-							if ((npc.direction == 1 && !Collision.SolidTiles(num4 - 2, num4 - 1, num5 - 4, num5 - 1)) || (npc.direction == -1 && !Collision.SolidTiles(num4 + 1, num4 + 2, num5 - 4, num5 - 1)))
+							if ((npc.direction == 1 && !Collision.SolidTiles(tileX2 - 2, tileX2 - 1, tileY2 - 4, tileY2 - 1)) || (npc.direction == -1 && !Collision.SolidTiles(tileX2 + 1, tileX2 + 2, tileY2 - 4, tileY2 - 1)))
 							{
-								if (!Collision.SolidTiles(num4, num4, num5 - 4, num5 - 2))
+								if (!Collision.SolidTiles(tileX2, tileX2, tileY2 - 4, tileY2 - 2))
 								{
 									npc.velocity.Y = -5f;
 									npc.netUpdate = true;
@@ -3398,9 +3365,9 @@ namespace Redemption
 								npc.netUpdate = true;
 							}
 						}
-						else if (npc.position.Y + (float)npc.height - (float)num5 * 16f > 20f && Main.tile[num4, num5].nactive() && Main.tileSolid[(int)Main.tile[num4, num5].type] && Main.tile[num4, num5].slope() == 0)
+						else if (npc.position.Y + (float)npc.height - (float)tileY2 * 16f > 20f && Main.tile[tileX2, tileY2].nactive() && Main.tileSolid[(int)Main.tile[tileX2, tileY2].type] && Main.tile[tileX2, tileY2].slope() == 0)
 						{
-							if ((npc.direction == 1 && !Collision.SolidTiles(num4 - 2, num4, num5 - 3, num5 - 1)) || (npc.direction == -1 && !Collision.SolidTiles(num4, num4 + 2, num5 - 3, num5 - 1)))
+							if ((npc.direction == 1 && !Collision.SolidTiles(tileX2 - 2, tileX2, tileY2 - 3, tileY2 - 1)) || (npc.direction == -1 && !Collision.SolidTiles(tileX2, tileX2 + 2, tileY2 - 3, tileY2 - 1)))
 							{
 								npc.velocity.Y = -4.4f;
 								npc.netUpdate = true;
@@ -3413,39 +3380,39 @@ namespace Redemption
 						}
 						try
 						{
-							if (Main.tile[num4, num5 + 1] == null)
+							if (Main.tile[tileX2, tileY2 + 1] == null)
 							{
-								Main.tile[num4, num5 + 1] = new Tile();
+								Main.tile[tileX2, tileY2 + 1] = new Tile();
 							}
-							if (Main.tile[num4 - npc.direction, num5 + 1] == null)
+							if (Main.tile[tileX2 - npc.direction, tileY2 + 1] == null)
 							{
-								Main.tile[num4 - npc.direction, num5 + 1] = new Tile();
+								Main.tile[tileX2 - npc.direction, tileY2 + 1] = new Tile();
 							}
-							if (Main.tile[num4, num5 + 2] == null)
+							if (Main.tile[tileX2, tileY2 + 2] == null)
 							{
-								Main.tile[num4, num5 + 2] = new Tile();
+								Main.tile[tileX2, tileY2 + 2] = new Tile();
 							}
-							if (Main.tile[num4 - npc.direction, num5 + 2] == null)
+							if (Main.tile[tileX2 - npc.direction, tileY2 + 2] == null)
 							{
-								Main.tile[num4 - npc.direction, num5 + 2] = new Tile();
+								Main.tile[tileX2 - npc.direction, tileY2 + 2] = new Tile();
 							}
-							if (Main.tile[num4, num5 + 3] == null)
+							if (Main.tile[tileX2, tileY2 + 3] == null)
 							{
-								Main.tile[num4, num5 + 3] = new Tile();
+								Main.tile[tileX2, tileY2 + 3] = new Tile();
 							}
-							if (Main.tile[num4 - npc.direction, num5 + 3] == null)
+							if (Main.tile[tileX2 - npc.direction, tileY2 + 3] == null)
 							{
-								Main.tile[num4 - npc.direction, num5 + 3] = new Tile();
+								Main.tile[tileX2 - npc.direction, tileY2 + 3] = new Tile();
 							}
-							if (Main.tile[num4, num5 + 4] == null)
+							if (Main.tile[tileX2, tileY2 + 4] == null)
 							{
-								Main.tile[num4, num5 + 4] = new Tile();
+								Main.tile[tileX2, tileY2 + 4] = new Tile();
 							}
-							if (Main.tile[num4 - npc.direction, num5 + 4] == null)
+							if (Main.tile[tileX2 - npc.direction, tileY2 + 4] == null)
 							{
-								Main.tile[num4 - npc.direction, num5 + 4] = new Tile();
+								Main.tile[tileX2 - npc.direction, tileY2 + 4] = new Tile();
 							}
-							if (!critter && num >= npc.homeTileX - 35 && num <= npc.homeTileX + 35 && (!Main.tile[num4, num5 + 1].nactive() || !Main.tileSolid[(int)Main.tile[num4, num5 + 1].type]) && (!Main.tile[num4 - npc.direction, num5 + 1].active() || !Main.tileSolid[(int)Main.tile[num4 - npc.direction, num5 + 1].type]) && (!Main.tile[num4, num5 + 2].nactive() || !Main.tileSolid[(int)Main.tile[num4, num5 + 2].type]) && (!Main.tile[num4 - npc.direction, num5 + 2].active() || !Main.tileSolid[(int)Main.tile[num4 - npc.direction, num5 + 2].type]) && (!Main.tile[num4, num5 + 3].nactive() || !Main.tileSolid[(int)Main.tile[num4, num5 + 3].type]) && (!Main.tile[num4 - npc.direction, num5 + 3].active() || !Main.tileSolid[(int)Main.tile[num4 - npc.direction, num5 + 3].type]) && (!Main.tile[num4, num5 + 4].nactive() || !Main.tileSolid[(int)Main.tile[num4, num5 + 4].type]) && (!Main.tile[num4 - npc.direction, num5 + 4].nactive() || !Main.tileSolid[(int)Main.tile[num4 - npc.direction, num5 + 4].type]))
+							if (!critter && npcTileX >= npc.homeTileX - 35 && npcTileX <= npc.homeTileX + 35 && (!Main.tile[tileX2, tileY2 + 1].nactive() || !Main.tileSolid[(int)Main.tile[tileX2, tileY2 + 1].type]) && (!Main.tile[tileX2 - npc.direction, tileY2 + 1].active() || !Main.tileSolid[(int)Main.tile[tileX2 - npc.direction, tileY2 + 1].type]) && (!Main.tile[tileX2, tileY2 + 2].nactive() || !Main.tileSolid[(int)Main.tile[tileX2, tileY2 + 2].type]) && (!Main.tile[tileX2 - npc.direction, tileY2 + 2].active() || !Main.tileSolid[(int)Main.tile[tileX2 - npc.direction, tileY2 + 2].type]) && (!Main.tile[tileX2, tileY2 + 3].nactive() || !Main.tileSolid[(int)Main.tile[tileX2, tileY2 + 3].type]) && (!Main.tile[tileX2 - npc.direction, tileY2 + 3].active() || !Main.tileSolid[(int)Main.tile[tileX2 - npc.direction, tileY2 + 3].type]) && (!Main.tile[tileX2, tileY2 + 4].nactive() || !Main.tileSolid[(int)Main.tile[tileX2, tileY2 + 4].type]) && (!Main.tile[tileX2 - npc.direction, tileY2 + 4].nactive() || !Main.tileSolid[(int)Main.tile[tileX2 - npc.direction, tileY2 + 4].type]))
 							{
 								npc.direction *= -1;
 								npc.velocity.X = npc.velocity.X * -1f;
@@ -3471,22 +3438,22 @@ namespace Redemption
 				{
 					return;
 				}
-				if (WorldGen.OpenDoor(num4, num5 - 2, npc.direction))
+				if (WorldGen.OpenDoor(tileX2, tileY2 - 2, npc.direction))
 				{
 					npc.closeDoor = true;
-					npc.doorX = num4;
-					npc.doorY = num5 - 2;
-					NetMessage.SendData(19, -1, -1, NetworkText.FromLiteral(""), 0, (float)num4, (float)(num5 - 2), (float)npc.direction, 0, 0, 0);
+					npc.doorX = tileX2;
+					npc.doorY = tileY2 - 2;
+					NetMessage.SendData(19, -1, -1, NetworkText.FromLiteral(""), 0, (float)tileX2, (float)(tileY2 - 2), (float)npc.direction, 0, 0, 0);
 					npc.netUpdate = true;
 					ai[1] += 80f;
 					return;
 				}
-				if (WorldGen.OpenDoor(num4, num5 - 2, -npc.direction))
+				if (WorldGen.OpenDoor(tileX2, tileY2 - 2, -npc.direction))
 				{
 					npc.closeDoor = true;
-					npc.doorX = num4;
-					npc.doorY = num5 - 2;
-					NetMessage.SendData(19, -1, -1, NetworkText.FromLiteral(""), 0, (float)num4, (float)(num5 - 2), (float)(-(float)npc.direction), 0, 0, 0);
+					npc.doorX = tileX2;
+					npc.doorY = tileY2 - 2;
+					NetMessage.SendData(19, -1, -1, NetworkText.FromLiteral(""), 0, (float)tileX2, (float)(tileY2 - 2), (float)(-(float)npc.direction), 0, 0, 0);
 					npc.netUpdate = true;
 					ai[1] += 80f;
 					return;
@@ -3504,27 +3471,27 @@ namespace Redemption
 				npc.TargetClosest(true);
 			}
 			float x = Main.player[npc.target].Center.X;
-			float y = Main.player[npc.target].Center.Y;
-			Vector2 center = npc.Center;
+			float distY = Main.player[npc.target].Center.Y;
+			Vector2 npcCenter = npc.Center;
 			float num = (float)((int)(x / 8f)) * 8f;
-			float num2 = (float)((int)(y / 8f)) * 8f;
-			center.X = (float)((int)(center.X / 8f)) * 8f;
-			center.Y = (float)((int)(center.Y / 8f)) * 8f;
-			float num3 = num - center.X;
-			float num4 = num2 - center.Y;
-			float num5 = (float)Math.Sqrt((double)(num3 * num3 + num4 * num4));
-			float num6;
-			float num7;
-			if (num5 == 0f)
+			float distDY = (float)((int)(distY / 8f)) * 8f;
+			npcCenter.X = (float)((int)(npcCenter.X / 8f)) * 8f;
+			npcCenter.Y = (float)((int)(npcCenter.Y / 8f)) * 8f;
+			float distX2 = num - npcCenter.X;
+			float distY2 = distDY - npcCenter.Y;
+			float dist = (float)Math.Sqrt((double)(distX2 * distX2 + distY2 * distY2));
+			float SpeedX;
+			float SpeedY;
+			if (dist == 0f)
 			{
-				num6 = npc.velocity.X;
-				num7 = npc.velocity.Y;
+				SpeedX = npc.velocity.X;
+				SpeedY = npc.velocity.Y;
 			}
 			else
 			{
-				float num8 = distanceDivider / num5;
-				num6 = num3 * num8;
-				num7 = num4 * num8;
+				float distScalar = distanceDivider / dist;
+				SpeedX = distX2 * distScalar;
+				SpeedY = distY2 * distScalar;
 			}
 			ai[0] += 1f;
 			if (ai[0] > 0f)
@@ -3547,33 +3514,33 @@ namespace Redemption
 			{
 				ai[0] = -200f;
 			}
-			if (num5 < 150f)
+			if (dist < 150f)
 			{
-				npc.velocity.X = npc.velocity.X + num6 * 0.007f;
-				npc.velocity.Y = npc.velocity.Y + num7 * 0.007f;
+				npc.velocity.X = npc.velocity.X + SpeedX * 0.007f;
+				npc.velocity.Y = npc.velocity.Y + SpeedY * 0.007f;
 			}
 			if (Main.player[npc.target].dead)
 			{
-				num6 = (float)npc.direction * distanceDivider / 2f;
-				num7 = -distanceDivider / 2f;
+				SpeedX = (float)npc.direction * distanceDivider / 2f;
+				SpeedY = -distanceDivider / 2f;
 			}
-			if (npc.velocity.X < num6)
+			if (npc.velocity.X < SpeedX)
 			{
 				npc.velocity.X = npc.velocity.X + moveInterval;
 			}
-			else if (npc.velocity.X > num6)
+			else if (npc.velocity.X > SpeedX)
 			{
 				npc.velocity.X = npc.velocity.X - moveInterval;
 			}
-			if (npc.velocity.Y < num7)
+			if (npc.velocity.Y < SpeedY)
 			{
 				npc.velocity.Y = npc.velocity.Y + moveInterval;
 			}
-			else if (npc.velocity.Y > num7)
+			else if (npc.velocity.Y > SpeedY)
 			{
 				npc.velocity.Y = npc.velocity.Y - moveInterval;
 			}
-			npc.rotation = (float)Math.Atan2((double)num7, (double)num6) - 1.57f;
+			npc.rotation = (float)Math.Atan2((double)SpeedY, (double)SpeedX) - 1.57f;
 			if (npc.collideX)
 			{
 				npc.netUpdate = true;
@@ -3689,33 +3656,33 @@ namespace Redemption
 			{
 				npc.TargetClosest(true);
 			}
-			Vector2 center = npc.Center;
-			float x = Main.player[npc.target].Center.X;
-			float y = Main.player[npc.target].Center.Y;
-			float num = (float)((int)(x / 8f)) * 8f;
-			float num2 = (float)((int)(y / 8f)) * 8f;
-			center.X = (float)((int)(center.X / 8f)) * 8f;
-			center.Y = (float)((int)(center.Y / 8f)) * 8f;
-			float num3 = num - center.X;
-			float num4 = num2 - center.Y;
-			float num5 = (float)Math.Sqrt((double)(num3 * num3 + num4 * num4));
-			float num6;
-			float num7;
-			if (num5 == 0f)
+			Vector2 npcCenter = npc.Center;
+			float x2 = Main.player[npc.target].Center.X;
+			float distY = Main.player[npc.target].Center.Y;
+			float num = (float)((int)(x2 / 8f)) * 8f;
+			float distDY = (float)((int)(distY / 8f)) * 8f;
+			npcCenter.X = (float)((int)(npcCenter.X / 8f)) * 8f;
+			npcCenter.Y = (float)((int)(npcCenter.Y / 8f)) * 8f;
+			float distX2 = num - npcCenter.X;
+			float distY2 = distDY - npcCenter.Y;
+			float dist = (float)Math.Sqrt((double)(distX2 * distX2 + distY2 * distY2));
+			float velX;
+			float velY;
+			if (dist == 0f)
 			{
-				num6 = npc.velocity.X;
-				num7 = npc.velocity.Y;
+				velX = npc.velocity.X;
+				velY = npc.velocity.Y;
 			}
 			else
 			{
-				float num8 = distanceDivider / num5;
-				num6 = num3 * num8;
-				num7 = num4 * num8;
+				float speedMult = distanceDivider / dist;
+				velX = distX2 * speedMult;
+				velY = distY2 * speedMult;
 			}
 			if (Main.player[npc.target].dead)
 			{
-				num6 = (float)npc.direction * distanceDivider / 2f;
-				num7 = -distanceDivider / 2f;
+				velX = (float)npc.direction * distanceDivider / 2f;
+				velY = -distanceDivider / 2f;
 			}
 			npc.spriteDirection = -1;
 			if (!ignoreSight && !Collision.CanHit(npc.position, npc.width, npc.height, Main.player[npc.target].position, Main.player[npc.target].width, Main.player[npc.target].height))
@@ -3741,8 +3708,8 @@ namespace Redemption
 				{
 					ai[0] = -200f;
 				}
-				npc.velocity.X = npc.velocity.X + num6 * 0.007f;
-				npc.velocity.Y = npc.velocity.Y + num7 * 0.007f;
+				npc.velocity.X = npc.velocity.X + velX * 0.007f;
+				npc.velocity.Y = npc.velocity.Y + velY * 0.007f;
 				npc.rotation = (float)Math.Atan2((double)npc.velocity.Y, (double)npc.velocity.X);
 				if (npc.velocity.X > slowSpeed || npc.velocity.X < -slowSpeed)
 				{
@@ -3771,39 +3738,39 @@ namespace Redemption
 			}
 			else
 			{
-				if ((double)npc.velocity.X < (double)num6)
+				if ((double)npc.velocity.X < (double)velX)
 				{
 					npc.velocity.X = npc.velocity.X + moveInterval;
-					if ((double)npc.velocity.X < 0.0 && (double)num6 > 0.0)
+					if ((double)npc.velocity.X < 0.0 && (double)velX > 0.0)
 					{
 						npc.velocity.X = npc.velocity.X + moveInterval;
 					}
 				}
-				else if ((double)npc.velocity.X > (double)num6)
+				else if ((double)npc.velocity.X > (double)velX)
 				{
 					npc.velocity.X = npc.velocity.X - moveInterval;
-					if ((double)npc.velocity.X > 0.0 && (double)num6 < 0.0)
+					if ((double)npc.velocity.X > 0.0 && (double)velX < 0.0)
 					{
 						npc.velocity.X = npc.velocity.X - moveInterval;
 					}
 				}
-				if ((double)npc.velocity.Y < (double)num7)
+				if ((double)npc.velocity.Y < (double)velY)
 				{
 					npc.velocity.Y = npc.velocity.Y + moveInterval;
-					if ((double)npc.velocity.Y < 0.0 && (double)num7 > 0.0)
+					if ((double)npc.velocity.Y < 0.0 && (double)velY > 0.0)
 					{
 						npc.velocity.Y = npc.velocity.Y + moveInterval;
 					}
 				}
-				else if ((double)npc.velocity.Y > (double)num7)
+				else if ((double)npc.velocity.Y > (double)velY)
 				{
 					npc.velocity.Y = npc.velocity.Y - moveInterval;
-					if ((double)npc.velocity.Y > 0.0 && (double)num7 < 0.0)
+					if ((double)npc.velocity.Y > 0.0 && (double)velY < 0.0)
 					{
 						npc.velocity.Y = npc.velocity.Y - moveInterval;
 					}
 				}
-				npc.rotation = (float)Math.Atan2((double)num7, (double)num6);
+				npc.rotation = (float)Math.Atan2((double)velY, (double)velX);
 			}
 			if (npc.collideX)
 			{
@@ -3837,21 +3804,21 @@ namespace Redemption
 			}
 			if (Main.netMode != 1 && transformType != -1)
 			{
-				int num9 = (int)npc.Center.X / 16;
-				int num10 = (int)npc.Center.Y / 16;
-				bool flag = false;
-				for (int i = num9 - 1; i <= num9 + 1; i++)
+				int centerTileX = (int)npc.Center.X / 16;
+				int centerTileY = (int)npc.Center.Y / 16;
+				bool wallExists = false;
+				for (int x = centerTileX - 1; x <= centerTileX + 1; x++)
 				{
-					for (int j = num10 - 1; j <= num10 + 1; j++)
+					for (int y = centerTileY - 1; y <= centerTileY + 1; y++)
 					{
-						if (Main.tile[i, j].wall > 0)
+						if (Main.tile[x, y].wall > 0)
 						{
-							flag = true;
+							wallExists = true;
 							break;
 						}
 					}
 				}
-				if (!flag)
+				if (!wallExists)
 				{
 					npc.Transform(transformType);
 				}
@@ -3860,18 +3827,18 @@ namespace Redemption
 
 		public static void AISkull(NPC npc, ref float[] ai, bool tacklePlayer = true, float maxDistanceAmt = 4f, float maxDistance = 350f, float increment = 0.011f, float closeIncrement = 0.019f)
 		{
-			float num = 1f;
+			float distanceAmt = 1f;
 			npc.TargetClosest(true);
-			float num2 = Main.player[npc.target].Center.X - npc.Center.X;
-			float num3 = Main.player[npc.target].Center.Y - npc.Center.Y;
-			float num4 = (float)Math.Sqrt((double)(num2 * num2 + num3 * num3));
+			float distX = Main.player[npc.target].Center.X - npc.Center.X;
+			float distY = Main.player[npc.target].Center.Y - npc.Center.Y;
+			float dist = (float)Math.Sqrt((double)(distX * distX + distY * distY));
 			ai[1] += 1f;
 			if (ai[1] > 600f)
 			{
 				if (tacklePlayer)
 				{
 					increment *= 8f;
-					num = 4f;
+					distanceAmt = 4f;
 					if (ai[1] > 650f)
 					{
 						ai[1] = 0f;
@@ -3882,7 +3849,7 @@ namespace Redemption
 					ai[1] = 0f;
 				}
 			}
-			else if (num4 < 250f)
+			else if (dist < 250f)
 			{
 				ai[0] += 0.9f;
 				if (ai[0] > 0f)
@@ -3906,43 +3873,43 @@ namespace Redemption
 					ai[0] = -200f;
 				}
 			}
-			if (num4 > maxDistance)
+			if (dist > maxDistance)
 			{
-				num = maxDistanceAmt + maxDistanceAmt / 4f;
+				distanceAmt = maxDistanceAmt + maxDistanceAmt / 4f;
 				increment = 0.3f;
 			}
-			else if (num4 > maxDistance - maxDistance / 7f)
+			else if (dist > maxDistance - maxDistance / 7f)
 			{
-				num = maxDistanceAmt - maxDistanceAmt / 4f;
+				distanceAmt = maxDistanceAmt - maxDistanceAmt / 4f;
 				increment = 0.2f;
 			}
-			else if (num4 > maxDistance - 2f * (maxDistance / 7f))
+			else if (dist > maxDistance - 2f * (maxDistance / 7f))
 			{
-				num = maxDistanceAmt / 2.66f;
+				distanceAmt = maxDistanceAmt / 2.66f;
 				increment = 0.1f;
 			}
-			num4 = num / num4;
-			num2 *= num4;
-			num3 *= num4;
+			dist = distanceAmt / dist;
+			distX *= dist;
+			distY *= dist;
 			if (Main.player[npc.target].dead)
 			{
-				num2 = (float)npc.direction * num / 2f;
-				num3 = -num / 2f;
+				distX = (float)npc.direction * distanceAmt / 2f;
+				distY = -distanceAmt / 2f;
 			}
-			if (npc.velocity.X < num2)
+			if (npc.velocity.X < distX)
 			{
 				npc.velocity.X = npc.velocity.X + increment;
 			}
-			else if (npc.velocity.X > num2)
+			else if (npc.velocity.X > distX)
 			{
 				npc.velocity.X = npc.velocity.X - increment;
 			}
-			if (npc.velocity.Y < num3)
+			if (npc.velocity.Y < distY)
 			{
 				npc.velocity.Y = npc.velocity.Y + increment;
 				return;
 			}
-			if (npc.velocity.Y > num3)
+			if (npc.velocity.Y > distY)
 			{
 				npc.velocity.Y = npc.velocity.Y - increment;
 			}
@@ -3950,35 +3917,35 @@ namespace Redemption
 
 		public static void AIFloater(NPC npc, ref float[] ai, bool ignoreWet = false, float moveInterval = 0.2f, float maxSpeedX = 2f, float maxSpeedY = 1.5f, float hoverInterval = 0.04f, float hoverMaxSpeed = 1.5f, int hoverHeight = 3)
 		{
-			bool flag = false;
+			bool flyUpward = false;
 			if (npc.justHit)
 			{
 				ai[2] = 0f;
 			}
 			if (ai[2] >= 0f)
 			{
-				int num = 16;
-				bool flag2 = false;
-				bool flag3 = false;
-				if (npc.position.X > ai[0] - (float)num && npc.position.X < ai[0] + (float)num)
+				int tileDist = 16;
+				bool inRangeX = false;
+				bool inRangeY = false;
+				if (npc.position.X > ai[0] - (float)tileDist && npc.position.X < ai[0] + (float)tileDist)
 				{
-					flag2 = true;
+					inRangeX = true;
 				}
 				else if ((npc.velocity.X < 0f && npc.direction > 0) || (npc.velocity.X > 0f && npc.direction < 0))
 				{
-					flag2 = true;
+					inRangeX = true;
 				}
-				num += 24;
-				if (npc.position.Y > ai[1] - (float)num && npc.position.Y < ai[1] + (float)num)
+				tileDist += 24;
+				if (npc.position.Y > ai[1] - (float)tileDist && npc.position.Y < ai[1] + (float)tileDist)
 				{
-					flag3 = true;
+					inRangeY = true;
 				}
-				if (flag2 && flag3)
+				if (inRangeX && inRangeY)
 				{
 					ai[2] += 1f;
-					if (ai[2] >= 30f && num == 16)
+					if (ai[2] >= 30f && tileDist == 16)
 					{
-						flag = true;
+						flyUpward = true;
 					}
 					if (ai[2] >= 60f)
 					{
@@ -4008,26 +3975,26 @@ namespace Redemption
 					npc.direction = 1;
 				}
 			}
-			int num2 = (int)(npc.Center.X / 16f) + npc.direction * 2;
-			int num3 = (int)((npc.position.Y + (float)npc.height) / 16f);
-			bool flag4 = true;
-			for (int i = num3; i < num3 + hoverHeight; i++)
+			int tileX = (int)(npc.Center.X / 16f) + npc.direction * 2;
+			int tileY = (int)((npc.position.Y + (float)npc.height) / 16f);
+			bool tileBelowEmpty = true;
+			for (int tY = tileY; tY < tileY + hoverHeight; tY++)
 			{
-				if (Main.tile[num2, i] == null)
+				if (Main.tile[tileX, tY] == null)
 				{
-					Main.tile[num2, i] = new Tile();
+					Main.tile[tileX, tY] = new Tile();
 				}
-				if ((Main.tile[num2, i].nactive() && Main.tileSolid[(int)Main.tile[num2, i].type]) || Main.tile[num2, i].liquid > 0)
+				if ((Main.tile[tileX, tY].nactive() && Main.tileSolid[(int)Main.tile[tileX, tY].type]) || Main.tile[tileX, tY].liquid > 0)
 				{
-					flag4 = false;
+					tileBelowEmpty = false;
 					break;
 				}
 			}
-			if (flag)
+			if (flyUpward)
 			{
-				flag4 = true;
+				tileBelowEmpty = true;
 			}
-			if (flag4)
+			if (tileBelowEmpty)
 			{
 				npc.velocity.Y = npc.velocity.Y + moveInterval;
 				if (npc.velocity.Y > maxSpeedY)
@@ -4150,31 +4117,31 @@ namespace Redemption
 			if (npc.collideX)
 			{
 				npc.velocity.X = npc.oldVelocity.X * -0.5f;
-				float num = maxSpeedX * 0.5f;
-				if (npc.direction == -1 && npc.velocity.X > 0f && npc.velocity.X < num)
+				float max = maxSpeedX * 0.5f;
+				if (npc.direction == -1 && npc.velocity.X > 0f && npc.velocity.X < max)
 				{
-					npc.velocity.X = num;
+					npc.velocity.X = max;
 				}
-				if (npc.direction == 1 && npc.velocity.X < 0f && npc.velocity.X > -num)
+				if (npc.direction == 1 && npc.velocity.X < 0f && npc.velocity.X > -max)
 				{
-					npc.velocity.X = -num;
+					npc.velocity.X = -max;
 				}
 			}
 			if (npc.collideY)
 			{
 				npc.velocity.Y = npc.oldVelocity.Y * -0.5f;
-				float num2 = maxSpeedY * 0.66f;
-				if (npc.velocity.Y > 0f && npc.velocity.Y < num2)
+				float max2 = maxSpeedY * 0.66f;
+				if (npc.velocity.Y > 0f && npc.velocity.Y < max2)
 				{
-					npc.velocity.Y = num2;
+					npc.velocity.Y = max2;
 				}
-				if (npc.velocity.Y < 0f && npc.velocity.Y > -num2)
+				if (npc.velocity.Y < 0f && npc.velocity.Y > -max2)
 				{
-					npc.velocity.Y = -num2;
+					npc.velocity.Y = -max2;
 				}
 			}
 			npc.TargetClosest(true);
-			Action action = delegate()
+			Action move = delegate()
 			{
 				if (npc.direction == -1 && npc.velocity.X > -maxSpeedX)
 				{
@@ -4270,10 +4237,10 @@ namespace Redemption
 				}
 				npc.direction = ((Main.player[npc.target].Center.X < npc.Center.X) ? 1 : -1);
 				npc.directionY = ((Main.player[npc.target].Center.Y < npc.Center.Y) ? 1 : -1);
-				action();
+				move();
 				return;
 			}
-			action();
+			move();
 			if (sporadic)
 			{
 				if (npc.wet)
@@ -4289,7 +4256,7 @@ namespace Redemption
 					}
 					npc.TargetClosest(true);
 				}
-				action();
+				move();
 			}
 		}
 
@@ -4303,13 +4270,13 @@ namespace Redemption
 			if (checkTilePoint)
 			{
 				Vector2 vector = isTilePos ? new Vector2(ai[0], ai[1]) : new Vector2(ai[0] / 16f, ai[1] / 16f);
-				int num = (int)vector.X;
-				int num2 = (int)vector.Y;
-				if (Main.tile[num, num2] == null)
+				int tx = (int)vector.X;
+				int ty = (int)vector.Y;
+				if (Main.tile[tx, ty] == null)
 				{
-					Main.tile[num, num2] = new Tile();
+					Main.tile[tx, ty] = new Tile();
 				}
-				if (!Main.tile[num, num2].nactive() || !Main.tileSolid[(int)Main.tile[num, num2].type] || (Main.tileSolid[(int)Main.tile[num, num2].type] && Main.tileSolidTop[(int)Main.tile[num, num2].type]))
+				if (!Main.tile[tx, ty].nactive() || !Main.tileSolid[(int)Main.tile[tx, ty].type] || (Main.tileSolid[(int)Main.tile[tx, ty].type] && Main.tileSolidTop[(int)Main.tile[tx, ty].type]))
 				{
 					if (npc.DeathSound != null)
 					{
@@ -4331,60 +4298,60 @@ namespace Redemption
 					ai[2] = 0f;
 				}
 			}
-			Vector2 vector2 = isTilePos ? new Vector2(ai[0] * 16f + 8f, ai[1] * 16f + 8f) : new Vector2(ai[0], ai[1]);
-			Vector2 vector3 = Main.player[npc.target].Center + targetOffset;
-			float num3 = vector3.X - (float)(npc.width / 2) - vector2.X;
-			float num4 = vector3.Y - (float)(npc.height / 2) - vector2.Y;
-			float num5 = (float)Math.Sqrt((double)(num3 * num3 + num4 * num4));
-			if (num5 > vineLength)
+			Vector2 endPointCenter = isTilePos ? new Vector2(ai[0] * 16f + 8f, ai[1] * 16f + 8f) : new Vector2(ai[0], ai[1]);
+			Vector2 vector2 = Main.player[npc.target].Center + targetOffset;
+			float distPlayerX = vector2.X - (float)(npc.width / 2) - endPointCenter.X;
+			float distPlayerY = vector2.Y - (float)(npc.height / 2) - endPointCenter.Y;
+			float distPlayer = (float)Math.Sqrt((double)(distPlayerX * distPlayerX + distPlayerY * distPlayerY));
+			if (distPlayer > vineLength)
 			{
-				num5 = vineLength / num5;
-				num3 *= num5;
-				num4 *= num5;
+				distPlayer = vineLength / distPlayer;
+				distPlayerX *= distPlayer;
+				distPlayerY *= distPlayer;
 			}
-			if (npc.position.X < vector2.X + num3)
+			if (npc.position.X < endPointCenter.X + distPlayerX)
 			{
 				npc.velocity.X = npc.velocity.X + moveInterval;
-				if (npc.velocity.X < 0f && num3 > 0f)
+				if (npc.velocity.X < 0f && distPlayerX > 0f)
 				{
 					npc.velocity.X = npc.velocity.X + moveInterval * 1.5f;
 				}
 			}
-			else if (npc.position.X > vector2.X + num3)
+			else if (npc.position.X > endPointCenter.X + distPlayerX)
 			{
 				npc.velocity.X = npc.velocity.X - moveInterval;
-				if (npc.velocity.X > 0f && num3 < 0f)
+				if (npc.velocity.X > 0f && distPlayerX < 0f)
 				{
 					npc.velocity.X = npc.velocity.X - moveInterval * 1.5f;
 				}
 			}
-			if (npc.position.Y < vector2.Y + num4)
+			if (npc.position.Y < endPointCenter.Y + distPlayerY)
 			{
 				npc.velocity.Y = npc.velocity.Y + moveInterval;
-				if (npc.velocity.Y < 0f && num4 > 0f)
+				if (npc.velocity.Y < 0f && distPlayerY > 0f)
 				{
 					npc.velocity.Y = npc.velocity.Y + moveInterval * 1.5f;
 				}
 			}
-			else if (npc.position.Y > vector2.Y + num4)
+			else if (npc.position.Y > endPointCenter.Y + distPlayerY)
 			{
 				npc.velocity.Y = npc.velocity.Y - moveInterval;
-				if (npc.velocity.Y > 0f && num4 < 0f)
+				if (npc.velocity.Y > 0f && distPlayerY < 0f)
 				{
 					npc.velocity.Y = npc.velocity.Y - moveInterval * 1.5f;
 				}
 			}
 			npc.velocity.X = MathHelper.Clamp(npc.velocity.X, -speedMax, speedMax);
 			npc.velocity.Y = MathHelper.Clamp(npc.velocity.Y, -speedMax, speedMax);
-			if (num3 > 0f)
+			if (distPlayerX > 0f)
 			{
 				npc.spriteDirection = 1;
-				npc.rotation = (float)Math.Atan2((double)num4, (double)num3);
+				npc.rotation = (float)Math.Atan2((double)distPlayerY, (double)distPlayerX);
 			}
-			else if (num3 < 0f)
+			else if (distPlayerX < 0f)
 			{
 				npc.spriteDirection = -1;
-				npc.rotation = (float)Math.Atan2((double)num4, (double)num3) + 3.14f;
+				npc.rotation = (float)Math.Atan2((double)distPlayerY, (double)distPlayerX) + 3.14f;
 			}
 			if (npc.collideX)
 			{
@@ -4402,38 +4369,38 @@ namespace Redemption
 
 		public static void AIWorm(NPC npc, int[] wormTypes, int wormLength = 3, float partDistanceAddon = 0f, float maxSpeed = 8f, float gravityResist = 0.07f, bool fly = false, bool split = false, bool ignoreTiles = false, bool spawnTileDust = true, bool soundEffects = true, bool rotateAverage = false, Action<NPC, int, bool> onChangeType = null)
 		{
-			bool flag = false;
-			BaseAI.AIWorm(npc, ref flag, wormTypes, wormLength, partDistanceAddon, maxSpeed, gravityResist, fly, split, ignoreTiles, spawnTileDust, soundEffects, rotateAverage, onChangeType);
+			bool diggingDummy = false;
+			BaseAI.AIWorm(npc, ref diggingDummy, wormTypes, wormLength, partDistanceAddon, maxSpeed, gravityResist, fly, split, ignoreTiles, spawnTileDust, soundEffects, rotateAverage, onChangeType);
 		}
 
 		public static void AIWorm(NPC npc, ref bool isDigging, int[] wormTypes, int wormLength = 3, float partDistanceAddon = 0f, float maxSpeed = 8f, float gravityResist = 0.07f, bool fly = false, bool split = false, bool ignoreTiles = false, bool spawnTileDust = true, bool soundEffects = true, bool rotateAverage = false, Action<NPC, int, bool> onChangeType = null)
 		{
-			int[] array = new int[(wormTypes.Length == 1) ? 1 : wormLength];
-			array[0] = wormTypes[0];
+			int[] wtypes = new int[(wormTypes.Length == 1) ? 1 : wormLength];
+			wtypes[0] = wormTypes[0];
 			if (wormTypes.Length > 1)
 			{
-				array[array.Length - 1] = wormTypes[2];
-				for (int i = 1; i < array.Length - 1; i++)
+				wtypes[wtypes.Length - 1] = wormTypes[2];
+				for (int i = 1; i < wtypes.Length - 1; i++)
 				{
-					array[i] = wormTypes[1];
+					wtypes[i] = wormTypes[1];
 				}
 			}
-			BaseAI.AIWorm(npc, ref isDigging, array, partDistanceAddon, maxSpeed, gravityResist, fly, split, ignoreTiles, spawnTileDust, soundEffects, rotateAverage, onChangeType);
+			BaseAI.AIWorm(npc, ref isDigging, wtypes, partDistanceAddon, maxSpeed, gravityResist, fly, split, ignoreTiles, spawnTileDust, soundEffects, rotateAverage, onChangeType);
 		}
 
 		public static void AIWorm(NPC npc, int[] wormTypes, float partDistanceAddon = 0f, float maxSpeed = 8f, float gravityResist = 0.07f, bool fly = false, bool split = false, bool ignoreTiles = false, bool spawnTileDust = true, bool soundEffects = true, bool rotateAverage = false, Action<NPC, int, bool> onChangeType = null)
 		{
-			bool flag = false;
-			BaseAI.AIWorm(npc, ref flag, wormTypes, partDistanceAddon, maxSpeed, gravityResist, fly, split, ignoreTiles, spawnTileDust, soundEffects, rotateAverage, onChangeType);
+			bool diggingDummy = false;
+			BaseAI.AIWorm(npc, ref diggingDummy, wormTypes, partDistanceAddon, maxSpeed, gravityResist, fly, split, ignoreTiles, spawnTileDust, soundEffects, rotateAverage, onChangeType);
 		}
 
 		public static void AIWorm(NPC npc, ref bool isDigging, int[] wormTypes, float partDistanceAddon = 0f, float maxSpeed = 8f, float gravityResist = 0.07f, bool fly = false, bool split = false, bool ignoreTiles = false, bool spawnTileDust = true, bool soundEffects = true, bool rotateAverage = false, Action<NPC, int, bool> onChangeType = null)
 		{
-			bool flag = wormTypes.Length == 1;
-			bool flag2 = npc.type == wormTypes[0];
-			bool flag3 = npc.type == wormTypes[wormTypes.Length - 1];
-			bool flag4 = !flag2 && !flag3;
-			int num = wormTypes.Length;
+			bool singlePiece = wormTypes.Length == 1;
+			bool isHead = npc.type == wormTypes[0];
+			bool isTail = npc.type == wormTypes[wormTypes.Length - 1];
+			bool isBody = !isHead && !isTail;
+			int wormLength = wormTypes.Length;
 			if (split)
 			{
 				npc.realLife = -1;
@@ -4450,7 +4417,7 @@ namespace Redemption
 			{
 				npc.TargetClosest(true);
 			}
-			if (flag2)
+			if (isHead)
 			{
 				if ((npc.target < 0 || npc.target == 255 || Main.player[npc.target].dead) && npc.timeLeft > 300)
 				{
@@ -4463,63 +4430,63 @@ namespace Redemption
 			}
 			if (Main.netMode != 1)
 			{
-				if (!flag)
+				if (!singlePiece)
 				{
-					if (fly && flag2 && npc.ai[0] == 0f)
+					if (fly && isHead && npc.ai[0] == 0f)
 					{
 						npc.ai[3] = (float)npc.whoAmI;
 						npc.realLife = npc.whoAmI;
-						int num2 = npc.whoAmI;
-						for (int i = 1; i < num - 1; i++)
+						int npcID = npc.whoAmI;
+						for (int i = 1; i < wormLength - 1; i++)
 						{
-							int num3 = wormTypes[i];
-							float num4 = 0f;
-							float num5 = (float)num2;
-							float num6 = 0f;
-							float num7 = npc.ai[3];
-							int num8 = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, num3, npc.whoAmI, num4, num5, num6, num7, 255);
-							Main.npc[num2].ai[0] = (float)num8;
-							Main.npc[num2].netUpdate = true;
-							num2 = num8;
+							int npcType = wormTypes[i];
+							float ai0 = 0f;
+							float ai = (float)npcID;
+							float ai2 = 0f;
+							float ai3 = npc.ai[3];
+							int newnpcID = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, npcType, npc.whoAmI, ai0, ai, ai2, ai3, 255);
+							Main.npc[npcID].ai[0] = (float)newnpcID;
+							Main.npc[npcID].netUpdate = true;
+							npcID = newnpcID;
 						}
 						npc.netUpdate = true;
 					}
-					else if ((flag2 || flag4) && npc.ai[0] == 0f)
+					else if ((isHead || isBody) && npc.ai[0] == 0f)
 					{
-						if (flag2)
+						if (isHead)
 						{
 							if (!split)
 							{
 								npc.ai[3] = (float)npc.whoAmI;
 								npc.realLife = npc.whoAmI;
 							}
-							npc.ai[2] = (float)(num - 1);
+							npc.ai[2] = (float)(wormLength - 1);
 						}
-						float num9 = 0f;
-						float num10 = (float)npc.whoAmI;
-						float num11 = npc.ai[2] - 1f;
-						float num12 = npc.ai[3];
+						float ai4 = 0f;
+						float ai5 = (float)npc.whoAmI;
+						float ai6 = npc.ai[2] - 1f;
+						float ai7 = npc.ai[3];
 						if (split)
 						{
 							npc.ai[3] = 0f;
 						}
-						if (flag2)
+						if (isHead)
 						{
-							npc.ai[0] = (float)NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, wormTypes[1], npc.whoAmI, num9, num10, num11, num12, 255);
+							npc.ai[0] = (float)NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, wormTypes[1], npc.whoAmI, ai4, ai5, ai6, ai7, 255);
 						}
-						else if (flag4 && npc.ai[2] > 0f)
+						else if (isBody && npc.ai[2] > 0f)
 						{
-							npc.ai[0] = (float)NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, wormTypes[num - (int)npc.ai[2]], npc.whoAmI, num9, num10, num11, num12, 255);
+							npc.ai[0] = (float)NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, wormTypes[wormLength - (int)npc.ai[2]], npc.whoAmI, ai4, ai5, ai6, ai7, 255);
 						}
 						else
 						{
-							npc.ai[0] = (float)NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, wormTypes[wormTypes.Length - 1], npc.whoAmI, num9, num10, num11, num12, 255);
+							npc.ai[0] = (float)NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, wormTypes[wormTypes.Length - 1], npc.whoAmI, ai4, ai5, ai6, ai7, 255);
 						}
 						Main.npc[(int)npc.ai[0]].netUpdate = true;
 						npc.netUpdate = true;
 					}
 				}
-				if (!flag && split)
+				if (!singlePiece && split)
 				{
 					if (!Main.npc[(int)npc.ai[1]].active && !Main.npc[(int)npc.ai[0]].active)
 					{
@@ -4539,44 +4506,44 @@ namespace Redemption
 						npc.HitEffect(0, 10.0);
 						npc.active = false;
 					}
-					if (flag4 && !Main.npc[(int)npc.ai[1]].active)
+					if (isBody && !Main.npc[(int)npc.ai[1]].active)
 					{
-						int type = npc.type;
+						int oldType = npc.type;
 						npc.type = wormTypes[0];
-						int whoAmI = npc.whoAmI;
-						float num13 = (float)npc.life / (float)npc.lifeMax;
-						float num14 = npc.ai[0];
+						int npcID2 = npc.whoAmI;
+						float lifePercent = (float)npc.life / (float)npc.lifeMax;
+						float lastPiece = npc.ai[0];
 						npc.SetDefaults(npc.type, -1f);
-						npc.life = (int)((float)npc.lifeMax * num13);
-						npc.ai[0] = num14;
+						npc.life = (int)((float)npc.lifeMax * lifePercent);
+						npc.ai[0] = lastPiece;
 						npc.TargetClosest(true);
 						npc.netUpdate = true;
-						npc.whoAmI = whoAmI;
+						npc.whoAmI = npcID2;
 						if (onChangeType != null)
 						{
-							onChangeType(npc, type, true);
+							onChangeType(npc, oldType, true);
 						}
 					}
-					else if (flag4 && !Main.npc[(int)npc.ai[0]].active)
+					else if (isBody && !Main.npc[(int)npc.ai[0]].active)
 					{
-						int type2 = npc.type;
+						int oldType2 = npc.type;
 						npc.type = wormTypes[wormTypes.Length - 1];
-						int whoAmI2 = npc.whoAmI;
-						float num15 = (float)npc.life / (float)npc.lifeMax;
-						float num16 = npc.ai[1];
+						int npcID3 = npc.whoAmI;
+						float lifePercent2 = (float)npc.life / (float)npc.lifeMax;
+						float lastPiece2 = npc.ai[1];
 						npc.SetDefaults(npc.type, -1f);
-						npc.life = (int)((float)npc.lifeMax * num15);
-						npc.ai[1] = num16;
+						npc.life = (int)((float)npc.lifeMax * lifePercent2);
+						npc.ai[1] = lastPiece2;
 						npc.TargetClosest(true);
 						npc.netUpdate = true;
-						npc.whoAmI = whoAmI2;
+						npc.whoAmI = npcID3;
 						if (onChangeType != null)
 						{
-							onChangeType(npc, type2, false);
+							onChangeType(npc, oldType2, false);
 						}
 					}
 				}
-				else if (!flag)
+				else if (!singlePiece)
 				{
 					if (npc.type != wormTypes[0] && (!Main.npc[(int)npc.ai[1]].active || Main.npc[(int)npc.ai[1]].aiStyle != npc.aiStyle))
 					{
@@ -4596,77 +4563,75 @@ namespace Redemption
 					NetMessage.SendData(28, -1, -1, NetworkText.FromLiteral(""), npc.whoAmI, 1f, 0f, 0f, -1, 0, 0);
 				}
 			}
-			int num17 = (int)(npc.position.X / 16f) - 1;
-			int num18 = (int)(npc.Center.X / 16f) + 2;
-			int num19 = (int)(npc.position.Y / 16f) - 1;
-			int num20 = (int)(npc.Center.Y / 16f) + 2;
-			if (num17 < 0)
+			int tileX = (int)(npc.position.X / 16f) - 1;
+			int tileCenterX = (int)(npc.Center.X / 16f) + 2;
+			int tileY = (int)(npc.position.Y / 16f) - 1;
+			int tileCenterY = (int)(npc.Center.Y / 16f) + 2;
+			if (tileX < 0)
 			{
-				num17 = 0;
+				tileX = 0;
 			}
-			if (num18 > Main.maxTilesX)
+			if (tileCenterX > Main.maxTilesX)
 			{
-				num18 = Main.maxTilesX;
+				tileCenterX = Main.maxTilesX;
 			}
-			if (num19 < 0)
+			if (tileY < 0)
 			{
-				num19 = 0;
+				tileY = 0;
 			}
-			if (num20 > Main.maxTilesY)
+			if (tileCenterY > Main.maxTilesY)
 			{
-				num20 = Main.maxTilesY;
+				tileCenterY = Main.maxTilesY;
 			}
-			bool flag5 = false;
+			bool canMove = false;
 			if (fly || ignoreTiles)
 			{
-				flag5 = true;
+				canMove = true;
 			}
-			if (!flag5 || spawnTileDust)
+			if (!canMove || spawnTileDust)
 			{
-				for (int j = num17; j < num18; j++)
+				for (int tX = tileX; tX < tileCenterX; tX++)
 				{
-					for (int k = num19; k < num20; k++)
+					for (int tY = tileY; tY < tileCenterY; tY++)
 					{
-						Tile tileSafely = BaseWorldGen.GetTileSafely(j, k);
-						if (tileSafely != null && ((tileSafely.nactive() && (Main.tileSolid[(int)tileSafely.type] || (Main.tileSolidTop[(int)tileSafely.type] && tileSafely.frameY == 0))) || tileSafely.liquid > 64))
+						Tile checkTile = BaseWorldGen.GetTileSafely(tX, tY);
+						if (checkTile != null && ((checkTile.nactive() && (Main.tileSolid[(int)checkTile.type] || (Main.tileSolidTop[(int)checkTile.type] && checkTile.frameY == 0))) || checkTile.liquid > 64))
 						{
-							Vector2 vector;
-							vector.X = (float)(j * 16);
-							vector.Y = (float)(k * 16);
-							if (npc.position.X + (float)npc.width > vector.X && npc.position.X < vector.X + 16f && npc.position.Y + (float)npc.height > vector.Y && npc.position.Y < vector.Y + 16f)
+							Vector2 tPos;
+							tPos.X = (float)(tX * 16);
+							tPos.Y = (float)(tY * 16);
+							if (npc.position.X + (float)npc.width > tPos.X && npc.position.X < tPos.X + 16f && npc.position.Y + (float)npc.height > tPos.Y && npc.position.Y < tPos.Y + 16f)
 							{
-								flag5 = true;
-								if (spawnTileDust && Main.rand.Next(100) == 0 && tileSafely.nactive())
+								canMove = true;
+								if (spawnTileDust && Main.rand.Next(100) == 0 && checkTile.nactive())
 								{
-									WorldGen.KillTile(j, k, true, true, false);
+									WorldGen.KillTile(tX, tY, true, true, false);
 								}
 							}
 						}
 					}
 				}
 			}
-			if (!flag5 && npc.type == wormTypes[0])
+			if (!canMove && npc.type == wormTypes[0])
 			{
-				Rectangle rectangle;
-				rectangle..ctor((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height);
-				int num21 = 1000;
-				bool flag6 = true;
-				for (int l = 0; l < 255; l++)
+				Rectangle rectangle = new Rectangle((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height);
+				int playerCheckDistance = 1000;
+				bool canMove2 = true;
+				for (int m3 = 0; m3 < 255; m3++)
 				{
-					if (Main.player[l].active)
+					if (Main.player[m3].active)
 					{
-						Rectangle rectangle2;
-						rectangle2..ctor((int)Main.player[l].position.X - num21, (int)Main.player[l].position.Y - num21, num21 * 2, num21 * 2);
+						Rectangle rectangle2 = new Rectangle((int)Main.player[m3].position.X - playerCheckDistance, (int)Main.player[m3].position.Y - playerCheckDistance, playerCheckDistance * 2, playerCheckDistance * 2);
 						if (rectangle.Intersects(rectangle2))
 						{
-							flag6 = false;
+							canMove2 = false;
 							break;
 						}
 					}
 				}
-				if (flag6)
+				if (canMove2)
 				{
-					flag5 = true;
+					canMove = true;
 				}
 			}
 			if (fly)
@@ -4680,53 +4645,53 @@ namespace Redemption
 					npc.spriteDirection = -1;
 				}
 			}
-			Vector2 center = npc.Center;
-			float num22 = Main.player[npc.target].Center.X;
-			float num23 = Main.player[npc.target].Center.Y;
-			num22 = (float)((int)(num22 / 16f) * 16);
-			num23 = (float)((int)(num23 / 16f) * 16);
-			center.X = (float)((int)(center.X / 16f) * 16);
-			center.Y = (float)((int)(center.Y / 16f) * 16);
-			num22 -= center.X;
-			num23 -= center.Y;
-			float num24 = (float)Math.Sqrt((double)(num22 * num22 + num23 * num23));
-			isDigging = flag5;
+			Vector2 npcCenter = npc.Center;
+			float playerCenterX = Main.player[npc.target].Center.X;
+			float playerCenterY = Main.player[npc.target].Center.Y;
+			playerCenterX = (float)((int)(playerCenterX / 16f) * 16);
+			playerCenterY = (float)((int)(playerCenterY / 16f) * 16);
+			npcCenter.X = (float)((int)(npcCenter.X / 16f) * 16);
+			npcCenter.Y = (float)((int)(npcCenter.Y / 16f) * 16);
+			playerCenterX -= npcCenter.X;
+			playerCenterY -= npcCenter.Y;
+			float dist = (float)Math.Sqrt((double)(playerCenterX * playerCenterX + playerCenterY * playerCenterY));
+			isDigging = canMove;
 			if (npc.ai[1] > 0f && npc.ai[1] < (float)Main.npc.Length)
 			{
 				try
 				{
-					center = npc.Center;
-					num22 = Main.npc[(int)npc.ai[1]].Center.X - center.X;
-					num23 = Main.npc[(int)npc.ai[1]].Center.Y - center.Y;
+					npcCenter = npc.Center;
+					playerCenterX = Main.npc[(int)npc.ai[1]].Center.X - npcCenter.X;
+					playerCenterY = Main.npc[(int)npc.ai[1]].Center.Y - npcCenter.Y;
 				}
 				catch
 				{
 				}
 				if (!rotateAverage || npc.type == wormTypes[0])
 				{
-					npc.rotation = (float)Math.Atan2((double)num23, (double)num22) + 1.57f;
+					npc.rotation = (float)Math.Atan2((double)playerCenterY, (double)playerCenterX) + 1.57f;
 				}
 				else
 				{
-					NPC npc2 = Main.npc[(int)npc.ai[1]];
-					Vector2 endPos = BaseUtility.RotateVector(npc2.Center, npc2.Center + new Vector2(0f, 30f), npc2.rotation);
-					npc.rotation = BaseUtility.RotationTo(npc.Center, endPos) + 1.57f;
+					NPC frontNPC = Main.npc[(int)npc.ai[1]];
+					Vector2 rotVec = BaseUtility.RotateVector(frontNPC.Center, frontNPC.Center + new Vector2(0f, 30f), frontNPC.rotation);
+					npc.rotation = BaseUtility.RotationTo(npc.Center, rotVec) + 1.57f;
 				}
-				num24 = (float)Math.Sqrt((double)(num22 * num22 + num23 * num23));
-				num24 = (num24 - (float)npc.width - partDistanceAddon) / num24;
-				num22 *= num24;
-				num23 *= num24;
+				dist = (float)Math.Sqrt((double)(playerCenterX * playerCenterX + playerCenterY * playerCenterY));
+				dist = (dist - (float)npc.width - partDistanceAddon) / dist;
+				playerCenterX *= dist;
+				playerCenterY *= dist;
 				npc.velocity = default(Vector2);
-				npc.position.X = npc.position.X + num22;
-				npc.position.Y = npc.position.Y + num23;
+				npc.position.X = npc.position.X + playerCenterX;
+				npc.position.Y = npc.position.Y + playerCenterY;
 				if (fly)
 				{
-					if (num22 < 0f)
+					if (playerCenterX < 0f)
 					{
 						npc.spriteDirection = 1;
 						return;
 					}
-					if (num22 > 0f)
+					if (playerCenterX > 0f)
 					{
 						npc.spriteDirection = -1;
 						return;
@@ -4735,7 +4700,7 @@ namespace Redemption
 			}
 			else
 			{
-				if (!flag5)
+				if (!canMove)
 				{
 					npc.TargetClosest(true);
 					npc.velocity.Y = npc.velocity.Y + 0.11f;
@@ -4756,11 +4721,11 @@ namespace Redemption
 					}
 					else if (npc.velocity.Y == maxSpeed)
 					{
-						if (npc.velocity.X < num22)
+						if (npc.velocity.X < playerCenterX)
 						{
 							npc.velocity.X = npc.velocity.X + gravityResist;
 						}
-						else if (npc.velocity.X > num22)
+						else if (npc.velocity.X > playerCenterX)
 						{
 							npc.velocity.X = npc.velocity.X - gravityResist;
 						}
@@ -4781,30 +4746,30 @@ namespace Redemption
 				{
 					if (soundEffects && npc.soundDelay == 0)
 					{
-						float num25 = num24 / 40f;
-						if (num25 < 10f)
+						float distSoundDelay = dist / 40f;
+						if (distSoundDelay < 10f)
 						{
-							num25 = 10f;
+							distSoundDelay = 10f;
 						}
-						if (num25 > 20f)
+						if (distSoundDelay > 20f)
 						{
-							num25 = 20f;
+							distSoundDelay = 20f;
 						}
-						npc.soundDelay = (int)num25;
+						npc.soundDelay = (int)distSoundDelay;
 						Main.PlaySound(15, (int)npc.position.X, (int)npc.position.Y, 1, 1f, 0f);
 					}
-					num24 = (float)Math.Sqrt((double)(num22 * num22 + num23 * num23));
-					float num26 = Math.Abs(num22);
-					float num27 = Math.Abs(num23);
-					float num28 = maxSpeed / num24;
-					num22 *= num28;
-					num23 *= num28;
-					bool flag7 = false;
+					dist = (float)Math.Sqrt((double)(playerCenterX * playerCenterX + playerCenterY * playerCenterY));
+					float absPlayerCenterX = Math.Abs(playerCenterX);
+					float absPlayerCenterY = Math.Abs(playerCenterY);
+					float newSpeed = maxSpeed / dist;
+					playerCenterX *= newSpeed;
+					playerCenterY *= newSpeed;
+					bool dontFall = false;
 					if (fly)
 					{
-						if (((npc.velocity.X > 0f && num22 < 0f) || (npc.velocity.X < 0f && num22 > 0f) || (npc.velocity.Y > 0f && num23 < 0f) || (npc.velocity.Y < 0f && num23 > 0f)) && Math.Abs(npc.velocity.X) + Math.Abs(npc.velocity.Y) > gravityResist / 2f && num24 < 300f)
+						if (((npc.velocity.X > 0f && playerCenterX < 0f) || (npc.velocity.X < 0f && playerCenterX > 0f) || (npc.velocity.Y > 0f && playerCenterY < 0f) || (npc.velocity.Y < 0f && playerCenterY > 0f)) && Math.Abs(npc.velocity.X) + Math.Abs(npc.velocity.Y) > gravityResist / 2f && dist < 300f)
 						{
-							flag7 = true;
+							dontFall = true;
 							if (Math.Abs(npc.velocity.X) + Math.Abs(npc.velocity.Y) < maxSpeed)
 							{
 								npc.velocity *= 1.1f;
@@ -4812,7 +4777,7 @@ namespace Redemption
 						}
 						if (npc.position.Y > Main.player[npc.target].position.Y || (double)(Main.player[npc.target].position.Y / 16f) > Main.worldSurface || Main.player[npc.target].dead)
 						{
-							flag7 = true;
+							dontFall = true;
 							if (Math.Abs(npc.velocity.X) < maxSpeed / 2f)
 							{
 								if (npc.velocity.X == 0f)
@@ -4827,27 +4792,27 @@ namespace Redemption
 							}
 						}
 					}
-					if (!flag7)
+					if (!dontFall)
 					{
-						if ((npc.velocity.X > 0f && num22 > 0f) || (npc.velocity.X < 0f && num22 < 0f) || (npc.velocity.Y > 0f && num23 > 0f) || (npc.velocity.Y < 0f && num23 < 0f))
+						if ((npc.velocity.X > 0f && playerCenterX > 0f) || (npc.velocity.X < 0f && playerCenterX < 0f) || (npc.velocity.Y > 0f && playerCenterY > 0f) || (npc.velocity.Y < 0f && playerCenterY < 0f))
 						{
-							if (npc.velocity.X < num22)
+							if (npc.velocity.X < playerCenterX)
 							{
 								npc.velocity.X = npc.velocity.X + gravityResist;
 							}
-							else if (npc.velocity.X > num22)
+							else if (npc.velocity.X > playerCenterX)
 							{
 								npc.velocity.X = npc.velocity.X - gravityResist;
 							}
-							if (npc.velocity.Y < num23)
+							if (npc.velocity.Y < playerCenterY)
 							{
 								npc.velocity.Y = npc.velocity.Y + gravityResist;
 							}
-							else if (npc.velocity.Y > num23)
+							else if (npc.velocity.Y > playerCenterY)
 							{
 								npc.velocity.Y = npc.velocity.Y - gravityResist;
 							}
-							if ((double)Math.Abs(num23) < (double)maxSpeed * 0.2 && ((npc.velocity.X > 0f && num22 < 0f) || (npc.velocity.X < 0f && num22 > 0f)))
+							if ((double)Math.Abs(playerCenterY) < (double)maxSpeed * 0.2 && ((npc.velocity.X > 0f && playerCenterX < 0f) || (npc.velocity.X < 0f && playerCenterX > 0f)))
 							{
 								if (npc.velocity.Y > 0f)
 								{
@@ -4858,7 +4823,7 @@ namespace Redemption
 									npc.velocity.Y = npc.velocity.Y - gravityResist * 2f;
 								}
 							}
-							if ((double)Math.Abs(num22) < (double)maxSpeed * 0.2 && ((npc.velocity.Y > 0f && num23 < 0f) || (npc.velocity.Y < 0f && num23 > 0f)))
+							if ((double)Math.Abs(playerCenterX) < (double)maxSpeed * 0.2 && ((npc.velocity.Y > 0f && playerCenterY < 0f) || (npc.velocity.Y < 0f && playerCenterY > 0f)))
 							{
 								if (npc.velocity.X > 0f)
 								{
@@ -4870,13 +4835,13 @@ namespace Redemption
 								}
 							}
 						}
-						else if (num26 > num27)
+						else if (absPlayerCenterX > absPlayerCenterY)
 						{
-							if (npc.velocity.X < num22)
+							if (npc.velocity.X < playerCenterX)
 							{
 								npc.velocity.X = npc.velocity.X + gravityResist * 1.1f;
 							}
-							else if (npc.velocity.X > num22)
+							else if (npc.velocity.X > playerCenterX)
 							{
 								npc.velocity.X = npc.velocity.X - gravityResist * 1.1f;
 							}
@@ -4894,11 +4859,11 @@ namespace Redemption
 						}
 						else
 						{
-							if (npc.velocity.Y < num23)
+							if (npc.velocity.Y < playerCenterY)
 							{
 								npc.velocity.Y = npc.velocity.Y + gravityResist * 1.1f;
 							}
-							else if (npc.velocity.Y > num23)
+							else if (npc.velocity.Y > playerCenterY)
 							{
 								npc.velocity.Y = npc.velocity.Y - gravityResist * 1.1f;
 							}
@@ -4922,13 +4887,13 @@ namespace Redemption
 				}
 				else
 				{
-					NPC npc3 = Main.npc[(int)npc.ai[1]];
-					Vector2 endPos2 = BaseUtility.RotateVector(npc3.Center, npc3.Center + new Vector2(0f, 30f), npc3.rotation);
-					npc.rotation = BaseUtility.RotationTo(npc.Center, endPos2) + 1.57f;
+					NPC frontNPC2 = Main.npc[(int)npc.ai[1]];
+					Vector2 rotVec2 = BaseUtility.RotateVector(frontNPC2.Center, frontNPC2.Center + new Vector2(0f, 30f), frontNPC2.rotation);
+					npc.rotation = BaseUtility.RotationTo(npc.Center, rotVec2) + 1.57f;
 				}
 				if (npc.type == wormTypes[0])
 				{
-					if (flag5)
+					if (canMove)
 					{
 						if (npc.localAI[0] != 1f)
 						{
@@ -4947,6 +4912,7 @@ namespace Redemption
 					if (((npc.velocity.X > 0f && npc.oldVelocity.X < 0f) || (npc.velocity.X < 0f && npc.oldVelocity.X > 0f) || (npc.velocity.Y > 0f && npc.oldVelocity.Y < 0f) || (npc.velocity.Y < 0f && npc.oldVelocity.Y > 0f)) && !npc.justHit)
 					{
 						npc.netUpdate = true;
+						return;
 					}
 				}
 			}
@@ -4997,33 +4963,32 @@ namespace Redemption
 			else if (ai[0] >= (float)teleportInterval && Main.netMode != 1)
 			{
 				ai[0] = 1f;
-				int num = (int)Main.player[npc.target].position.X / 16;
-				int num2 = (int)Main.player[npc.target].position.Y / 16;
-				int num3 = (int)npc.position.X / 16;
-				int num4 = (int)npc.position.Y / 16;
-				int num5 = 0;
-				bool flag = false;
+				int playerTileX = (int)Main.player[npc.target].position.X / 16;
+				int playerTileY = (int)Main.player[npc.target].position.Y / 16;
+				int tileX = (int)npc.position.X / 16;
+				int tileY = (int)npc.position.Y / 16;
+				int teleportCheckCount = 0;
+				bool hasTeleportPoint = false;
 				if (Vector2.Distance(npc.Center, Main.player[npc.target].Center) > 2000f)
 				{
-					num5 = 100;
-					flag = true;
+					teleportCheckCount = 100;
+					hasTeleportPoint = true;
 				}
-				while (!flag && num5 < 100)
+				while (!hasTeleportPoint && teleportCheckCount < 100)
 				{
-					num5++;
-					int num6 = Main.rand.Next(num - distFromPlayer, num + distFromPlayer);
-					int num7 = Main.rand.Next(num2 - distFromPlayer, num2 + distFromPlayer);
-					for (int i = num7; i < num2 + distFromPlayer; i++)
+					teleportCheckCount++;
+					int tpTileX = Main.rand.Next(playerTileX - distFromPlayer, playerTileX + distFromPlayer);
+					for (int tpY = Main.rand.Next(playerTileY - distFromPlayer, playerTileY + distFromPlayer); tpY < playerTileY + distFromPlayer; tpY++)
 					{
-						if ((i < num2 - 4 || i > num2 + 4 || num6 < num - 4 || num6 > num + 4) && (i < num4 - 1 || i > num4 + 1 || num6 < num3 - 1 || num6 > num3 + 1) && (!checkGround || Main.tile[num6, i].nactive()) && ((CanTeleportTo != null && CanTeleportTo(num6, i)) || (!Main.tile[num6, i - 1].lava() && (!checkGround || Main.tileSolid[(int)Main.tile[num6, i].type]) && !Collision.SolidTiles(num6 - 1, num6 + 1, i - 4, i - 1))))
+						if ((tpY < playerTileY - 4 || tpY > playerTileY + 4 || tpTileX < playerTileX - 4 || tpTileX > playerTileX + 4) && (tpY < tileY - 1 || tpY > tileY + 1 || tpTileX < tileX - 1 || tpTileX > tileX + 1) && (!checkGround || Main.tile[tpTileX, tpY].nactive()) && ((CanTeleportTo != null && CanTeleportTo(tpTileX, tpY)) || (!Main.tile[tpTileX, tpY - 1].lava() && (!checkGround || Main.tileSolid[(int)Main.tile[tpTileX, tpY].type]) && !Collision.SolidTiles(tpTileX - 1, tpTileX + 1, tpY - 4, tpY - 1))))
 						{
 							if (attackInterval != -1)
 							{
 								ai[1] = 20f;
 							}
-							ai[2] = (float)num6;
-							ai[3] = (float)i;
-							flag = true;
+							ai[2] = (float)tpTileX;
+							ai[3] = (float)tpY;
+							hasTeleportPoint = true;
 							break;
 						}
 					}
@@ -5048,16 +5013,16 @@ namespace Redemption
 			}
 			if (ignoreWater || npc.wet)
 			{
-				bool flag = false;
+				bool hasTarget = false;
 				if (hostile)
 				{
 					npc.TargetClosest(false);
 					if ((!ignoreNonWetPlayer || Main.player[npc.target].wet) && !Main.player[npc.target].dead)
 					{
-						flag = true;
+						hasTarget = true;
 					}
 				}
-				if (!flag)
+				if (!hasTarget)
 				{
 					if (npc.collideX)
 					{
@@ -5068,13 +5033,13 @@ namespace Redemption
 					if (npc.collideY)
 					{
 						npc.netUpdate = true;
-						int num = (npc.velocity.Y > 0f) ? -1 : 1;
-						npc.velocity.Y = Math.Abs(npc.velocity.Y) * (float)num;
-						npc.directionY = num;
-						ai[0] = 1f * (float)num;
+						int mult = (npc.velocity.Y > 0f) ? -1 : 1;
+						npc.velocity.Y = Math.Abs(npc.velocity.Y) * (float)mult;
+						npc.directionY = mult;
+						ai[0] = 1f * (float)mult;
 					}
 				}
-				if (flag)
+				if (hasTarget)
 				{
 					npc.TargetClosest(true);
 					npc.velocity.X = npc.velocity.X + (float)npc.direction * 0.1f;
@@ -5119,16 +5084,16 @@ namespace Redemption
 							ai[0] = -1f;
 						}
 					}
-					int num2 = (int)(npc.Center.X / 16f);
-					int num3 = (int)(npc.Center.Y / 16f);
+					int tileX = (int)(npc.Center.X / 16f);
+					int tileY = (int)(npc.Center.Y / 16f);
 					for (int i = -1; i < 3; i++)
 					{
-						if (Main.tile[num2, num3 + i] == null)
+						if (Main.tile[tileX, tileY + i] == null)
 						{
-							Main.tile[num2, num3 + i] = new Tile();
+							Main.tile[tileX, tileY + i] = new Tile();
 						}
 					}
-					if (Main.tile[num2, num3 - 1].liquid > 128 && (Main.tile[num2, num3 + 1].nactive() || Main.tile[num2, num3 + 2].nactive()))
+					if (Main.tile[tileX, tileY - 1].liquid > 128 && (Main.tile[tileX, tileY + 1].nactive() || Main.tile[tileX, tileY + 2].nactive()))
 					{
 						ai[0] = -1f;
 					}
@@ -5166,12 +5131,12 @@ namespace Redemption
 
 		public static void AIZombie(NPC npc, ref float[] ai, bool fleeWhenDay = true, bool allowBoredom = true, int openDoors = 1, float moveInterval = 0.07f, float velMax = 1f, int maxJumpTilesX = 3, int maxJumpTilesY = 4, int ticksUntilBoredom = 60, bool targetPlayers = true, int doorBeatCounterMax = 10, int doorCounterMax = 60, bool jumpUpPlatforms = false, Action<bool, bool, Vector2, Vector2> onTileCollide = null, bool ignoreJumpTiles = false)
 		{
-			bool flag = false;
+			bool xVelocityChanged = false;
 			if (npc.velocity.Y == 0f && ((npc.velocity.X > 0f && npc.direction < 0) || (npc.velocity.X < 0f && npc.direction > 0)))
 			{
-				flag = true;
+				xVelocityChanged = true;
 			}
-			if (npc.position.X == npc.oldPosition.X || ai[3] >= (float)ticksUntilBoredom || flag)
+			if (npc.position.X == npc.oldPosition.X || ai[3] >= (float)ticksUntilBoredom || xVelocityChanged)
 			{
 				ai[3] += 1f;
 			}
@@ -5191,8 +5156,8 @@ namespace Redemption
 			{
 				npc.netUpdate = true;
 			}
-			bool flag2 = ai[3] < (float)ticksUntilBoredom;
-			if (targetPlayers && (!fleeWhenDay || !Main.dayTime || (double)npc.position.Y > Main.worldSurface * 16.0) && ((fleeWhenDay && Main.dayTime) ? flag2 : (!allowBoredom || flag2)))
+			bool notBored = ai[3] < (float)ticksUntilBoredom;
+			if (targetPlayers && (!fleeWhenDay || !Main.dayTime || (double)npc.position.Y > Main.worldSurface * 16.0) && ((fleeWhenDay && Main.dayTime) ? notBored : (!allowBoredom || notBored)))
 			{
 				npc.TargetClosest(true);
 			}
@@ -5259,23 +5224,22 @@ namespace Redemption
 			}
 			if (BaseAI.HitTileOnSide(npc, 3, true) && ((npc.velocity.X < 0f && npc.direction == -1) || (npc.velocity.X > 0f && npc.direction == 1)))
 			{
-				Vector2 vector = BaseAI.AttemptJump(npc.position, npc.velocity, npc.width, npc.height, npc.direction, (float)npc.directionY, maxJumpTilesX, maxJumpTilesY, velMax, jumpUpPlatforms, (jumpUpPlatforms && flag2) ? Main.player[npc.target] : null, ignoreJumpTiles);
+				Vector2 newVec = BaseAI.AttemptJump(npc.position, npc.velocity, npc.width, npc.height, npc.direction, (float)npc.directionY, maxJumpTilesX, maxJumpTilesY, velMax, jumpUpPlatforms, (jumpUpPlatforms && notBored) ? Main.player[npc.target] : null, ignoreJumpTiles);
 				if (!npc.noTileCollide)
 				{
-					vector = Collision.TileCollision(npc.position, vector, npc.width, npc.height, false, false, 1);
-					Vector4 vector2 = Collision.SlopeCollision(npc.position, vector, npc.width, npc.height, 0f, false);
-					Vector2 vector3;
-					vector3..ctor(vector2.Z, vector2.W);
-					if (onTileCollide != null && npc.velocity != vector3)
+					newVec = Collision.TileCollision(npc.position, newVec, npc.width, npc.height, false, false, 1);
+					Vector4 slopeVec = Collision.SlopeCollision(npc.position, newVec, npc.width, npc.height, 0f, false);
+					Vector2 slopeVel = new Vector2(slopeVec.Z, slopeVec.W);
+					if (onTileCollide != null && npc.velocity != slopeVel)
 					{
-						onTileCollide(npc.velocity.X != vector3.X, npc.velocity.Y != vector3.Y, npc.velocity, vector3);
+						onTileCollide(npc.velocity.X != slopeVel.X, npc.velocity.Y != slopeVel.Y, npc.velocity, slopeVel);
 					}
-					npc.position = new Vector2(vector2.X, vector2.Y);
-					npc.velocity = vector3;
+					npc.position = new Vector2(slopeVec.X, slopeVec.Y);
+					npc.velocity = slopeVel;
 				}
-				if (npc.velocity != vector)
+				if (npc.velocity != newVec)
 				{
-					npc.velocity = vector;
+					npc.velocity = newVec;
 					npc.netUpdate = true;
 				}
 			}
@@ -5423,15 +5387,16 @@ namespace Redemption
 					npc.velocity.Y = -velMaxY * 1.5f;
 				}
 				npc.TargetClosest(true);
+				return;
 			}
 		}
 
 		public static void AISlime(NPC npc, ref float[] ai, bool fleeWhenDay = false, int jumpTime = 200, float jumpVelX = 2f, float jumpVelY = -6f, float jumpVelHighX = 3f, float jumpVelHighY = -8f)
 		{
-			bool flag = false;
+			bool getNewTarget = false;
 			if ((fleeWhenDay && !Main.dayTime) || npc.life != npc.lifeMax || (double)npc.position.Y > Main.worldSurface * 16.0)
 			{
-				flag = true;
+				getNewTarget = true;
 			}
 			if (ai[2] > 1f)
 			{
@@ -5461,7 +5426,7 @@ namespace Redemption
 				{
 					npc.velocity.Y = -4f;
 				}
-				if (ai[2] == 1f && flag)
+				if (ai[2] == 1f && getNewTarget)
 				{
 					npc.TargetClosest(true);
 				}
@@ -5486,7 +5451,7 @@ namespace Redemption
 				{
 					npc.velocity.X = 0f;
 				}
-				if (flag)
+				if (getNewTarget)
 				{
 					ai[0] += 1f;
 				}
@@ -5494,7 +5459,7 @@ namespace Redemption
 				if (ai[0] >= 0f)
 				{
 					npc.netUpdate = true;
-					if (ai[2] == 1f && flag)
+					if (ai[2] == 1f && getNewTarget)
 					{
 						npc.TargetClosest(true);
 					}
@@ -5527,6 +5492,7 @@ namespace Redemption
 					return;
 				}
 				npc.velocity.X = npc.velocity.X * 0.93f;
+				return;
 			}
 		}
 
@@ -5543,69 +5509,69 @@ namespace Redemption
 			}
 			if (codable.velocity.Y >= 0f)
 			{
-				int num = 0;
+				int offset = 0;
 				if (codable.velocity.X < 0f)
 				{
-					num = -1;
+					offset = -1;
 				}
 				if (codable.velocity.X > 0f)
 				{
-					num = 1;
+					offset = 1;
 				}
-				Vector2 position = codable.position;
-				position.X += codable.velocity.X;
-				int num2 = (int)(((double)position.X + (double)(codable.width / 2) + (double)((codable.width / 2 + 1) * num)) / 16.0);
-				int num3 = (int)(((double)position.Y + (double)codable.height - 1.0) / 16.0);
-				if (Main.tile[num2, num3] == null)
+				Vector2 pos = codable.position;
+				pos.X += codable.velocity.X;
+				int tileX = (int)(((double)pos.X + (double)(codable.width / 2) + (double)((codable.width / 2 + 1) * offset)) / 16.0);
+				int tileY = (int)(((double)pos.Y + (double)codable.height - 1.0) / 16.0);
+				if (Main.tile[tileX, tileY] == null)
 				{
-					Main.tile[num2, num3] = new Tile();
+					Main.tile[tileX, tileY] = new Tile();
 				}
-				if (Main.tile[num2, num3 - 1] == null)
+				if (Main.tile[tileX, tileY - 1] == null)
 				{
-					Main.tile[num2, num3 - 1] = new Tile();
+					Main.tile[tileX, tileY - 1] = new Tile();
 				}
-				if (Main.tile[num2, num3 - 2] == null)
+				if (Main.tile[tileX, tileY - 2] == null)
 				{
-					Main.tile[num2, num3 - 2] = new Tile();
+					Main.tile[tileX, tileY - 2] = new Tile();
 				}
-				if (Main.tile[num2, num3 - 3] == null)
+				if (Main.tile[tileX, tileY - 3] == null)
 				{
-					Main.tile[num2, num3 - 3] = new Tile();
+					Main.tile[tileX, tileY - 3] = new Tile();
 				}
-				if (Main.tile[num2, num3 + 1] == null)
+				if (Main.tile[tileX, tileY + 1] == null)
 				{
-					Main.tile[num2, num3 + 1] = new Tile();
+					Main.tile[tileX, tileY + 1] = new Tile();
 				}
-				if (Main.tile[num2 - num, num3 - 3] == null)
+				if (Main.tile[tileX - offset, tileY - 3] == null)
 				{
-					Main.tile[num2 - num, num3 - 3] = new Tile();
+					Main.tile[tileX - offset, tileY - 3] = new Tile();
 				}
-				if ((double)(num2 * 16) >= (double)position.X + (double)codable.width || (double)(num2 * 16 + 16) <= (double)position.X || ((!Main.tile[num2, num3].nactive() || Main.tile[num2, num3].slope() != 0 || Main.tile[num2, num3 - 1].slope() != 0 || !Main.tileSolid[(int)Main.tile[num2, num3].type] || Main.tileSolidTop[(int)Main.tile[num2, num3].type]) && (!Main.tile[num2, num3 - 1].halfBrick() || !Main.tile[num2, num3 - 1].nactive())) || (Main.tile[num2, num3 - 1].nactive() && Main.tileSolid[(int)Main.tile[num2, num3 - 1].type] && !Main.tileSolidTop[(int)Main.tile[num2, num3 - 1].type] && (!Main.tile[num2, num3 - 1].halfBrick() || (Main.tile[num2, num3 - 4].nactive() && Main.tileSolid[(int)Main.tile[num2, num3 - 4].type] && !Main.tileSolidTop[(int)Main.tile[num2, num3 - 4].type]))) || (Main.tile[num2, num3 - 2].nactive() && Main.tileSolid[(int)Main.tile[num2, num3 - 2].type] && !Main.tileSolidTop[(int)Main.tile[num2, num3 - 2].type]) || (Main.tile[num2, num3 - 3].nactive() && Main.tileSolid[(int)Main.tile[num2, num3 - 3].type] && !Main.tileSolidTop[(int)Main.tile[num2, num3 - 3].type]) || (Main.tile[num2 - num, num3 - 3].nactive() && Main.tileSolid[(int)Main.tile[num2 - num, num3 - 3].type]))
-				{
-					gfxOffY = Math.Max(0f, gfxOffY - stepSpeed);
-					return;
-				}
-				float num4 = (float)(num3 * 16);
-				if (Main.tile[num2, num3].halfBrick())
-				{
-					num4 += 8f;
-				}
-				if (Main.tile[num2, num3 - 1].halfBrick())
-				{
-					num4 -= 8f;
-				}
-				if ((double)num4 >= (double)position.Y + (double)codable.height)
+				if ((double)(tileX * 16) >= (double)pos.X + (double)codable.width || (double)(tileX * 16 + 16) <= (double)pos.X || ((!Main.tile[tileX, tileY].nactive() || Main.tile[tileX, tileY].slope() != 0 || Main.tile[tileX, tileY - 1].slope() != 0 || !Main.tileSolid[(int)Main.tile[tileX, tileY].type] || Main.tileSolidTop[(int)Main.tile[tileX, tileY].type]) && (!Main.tile[tileX, tileY - 1].halfBrick() || !Main.tile[tileX, tileY - 1].nactive())) || (Main.tile[tileX, tileY - 1].nactive() && Main.tileSolid[(int)Main.tile[tileX, tileY - 1].type] && !Main.tileSolidTop[(int)Main.tile[tileX, tileY - 1].type] && (!Main.tile[tileX, tileY - 1].halfBrick() || (Main.tile[tileX, tileY - 4].nactive() && Main.tileSolid[(int)Main.tile[tileX, tileY - 4].type] && !Main.tileSolidTop[(int)Main.tile[tileX, tileY - 4].type]))) || (Main.tile[tileX, tileY - 2].nactive() && Main.tileSolid[(int)Main.tile[tileX, tileY - 2].type] && !Main.tileSolidTop[(int)Main.tile[tileX, tileY - 2].type]) || (Main.tile[tileX, tileY - 3].nactive() && Main.tileSolid[(int)Main.tile[tileX, tileY - 3].type] && !Main.tileSolidTop[(int)Main.tile[tileX, tileY - 3].type]) || (Main.tile[tileX - offset, tileY - 3].nactive() && Main.tileSolid[(int)Main.tile[tileX - offset, tileY - 3].type]))
 				{
 					gfxOffY = Math.Max(0f, gfxOffY - stepSpeed);
 					return;
 				}
-				float num5 = position.Y + (float)codable.height - num4;
-				float num6 = 16.1f;
-				if ((double)num5 <= (double)num6)
+				float tileWorldY = (float)(tileY * 16);
+				if (Main.tile[tileX, tileY].halfBrick())
 				{
-					gfxOffY += codable.position.Y + (float)codable.height - num4;
-					codable.position.Y = num4 - (float)codable.height;
-					stepSpeed = (((double)num5 >= 9.0) ? 2f : 1f);
+					tileWorldY += 8f;
+				}
+				if (Main.tile[tileX, tileY - 1].halfBrick())
+				{
+					tileWorldY -= 8f;
+				}
+				if ((double)tileWorldY >= (double)pos.Y + (double)codable.height)
+				{
+					gfxOffY = Math.Max(0f, gfxOffY - stepSpeed);
+					return;
+				}
+				float tileWorldYHeight = pos.Y + (float)codable.height - tileWorldY;
+				float heightNeeded = 16.1f;
+				if ((double)tileWorldYHeight <= (double)heightNeeded)
+				{
+					gfxOffY += codable.position.Y + (float)codable.height - tileWorldY;
+					codable.position.Y = tileWorldY - (float)codable.height;
+					stepSpeed = (((double)tileWorldYHeight >= 9.0) ? 2f : 1f);
 					return;
 				}
 			}
@@ -5621,129 +5587,126 @@ namespace Redemption
 			try
 			{
 				tileDistX -= 2;
-				Vector2 vector = velocity;
-				int num = Math.Max(10, Math.Min(Main.maxTilesX - 10, (int)((position.X + (float)width * 0.5f + ((float)width * 0.5f + 8f) * (float)direction) / 16f)));
-				int num2 = Math.Max(10, Math.Min(Main.maxTilesY - 10, (int)((position.Y + (float)height - 15f) / 16f)));
-				int num3 = Math.Max(10, Math.Min(Main.maxTilesX - 10, num + direction * tileDistX));
-				int num4 = Math.Max(10, Math.Min(Main.maxTilesY - 10, num2 - tileDistY));
-				int num5 = num2;
-				int num6 = (int)((float)height / 16f);
-				if (height > num6 * 16)
+				Vector2 newVelocity = velocity;
+				int tileX = Math.Max(10, Math.Min(Main.maxTilesX - 10, (int)((position.X + (float)width * 0.5f + ((float)width * 0.5f + 8f) * (float)direction) / 16f)));
+				int tileY = Math.Max(10, Math.Min(Main.maxTilesY - 10, (int)((position.Y + (float)height - 15f) / 16f)));
+				int tileItX = Math.Max(10, Math.Min(Main.maxTilesX - 10, tileX + direction * tileDistX));
+				int tileItY = Math.Max(10, Math.Min(Main.maxTilesY - 10, tileY - tileDistY));
+				int lastY = tileY;
+				int tileHeight = (int)((float)height / 16f);
+				if (height > tileHeight * 16)
 				{
-					num6++;
+					tileHeight++;
 				}
-				Rectangle rectangle;
-				rectangle..ctor((int)position.X, (int)position.Y, width, height);
+				Rectangle hitbox = new Rectangle((int)position.X, (int)position.Y, width, height);
 				if (ignoreTiles && target != null && Math.Abs(position.X + (float)width * 0.5f - target.Center.X) < (float)(width + 120))
 				{
-					float num7 = (float)((int)Math.Abs(position.Y + (float)height * 0.5f - target.Center.Y) / 16);
-					if (num7 < (float)(tileDistY + 2))
+					float dist = (float)((int)Math.Abs(position.Y + (float)height * 0.5f - target.Center.Y) / 16);
+					if (dist < (float)(tileDistY + 2))
 					{
-						vector.Y = -8f + num7 * -0.5f;
+						newVelocity.Y = -8f + dist * -0.5f;
 					}
 				}
-				if (vector.Y == velocity.Y)
+				if (newVelocity.Y == velocity.Y)
 				{
-					for (int i = num2; i >= num4; i--)
+					for (int y = tileY; y >= tileItY; y--)
 					{
-						Tile tile = Main.tile[num, i];
-						Tile tile2 = Main.tile[Math.Min(Main.maxTilesX, num - direction), i];
+						Tile tile = Main.tile[tileX, y];
+						Tile tileNear = Main.tile[Math.Min(Main.maxTilesX, tileX - direction), y];
 						if (tile == null)
 						{
-							tile = (Main.tile[num, i] = new Tile());
+							tile = (Main.tile[tileX, y] = new Tile());
 						}
-						if (tile2 == null)
+						if (tileNear == null)
 						{
-							tile2 = (Main.tile[Math.Min(Main.maxTilesX, num - direction), i] = new Tile());
+							tileNear = (Main.tile[Math.Min(Main.maxTilesX, tileX - direction), y] = new Tile());
 						}
-						if (tile.nactive() && (i != num2 || (!tile.halfBrick() && tile.slope() == 0)) && Main.tileSolid[(int)tile.type] && (jumpUpPlatforms || !Main.tileSolidTop[(int)tile.type]))
+						if (tile.nactive() && (y != tileY || (!tile.halfBrick() && tile.slope() == 0)) && Main.tileSolid[(int)tile.type] && (jumpUpPlatforms || !Main.tileSolidTop[(int)tile.type]))
 						{
 							if (!Main.tileSolidTop[(int)tile.type])
 							{
-								Rectangle rectangle2;
-								rectangle2..ctor(num * 16, i * 16, 16, 16);
-								rectangle2.Y = rectangle.Y;
-								if (rectangle2.Intersects(rectangle))
+								Rectangle tileHitbox = new Rectangle(tileX * 16, y * 16, 16, 16);
+								tileHitbox.Y = hitbox.Y;
+								if (tileHitbox.Intersects(hitbox))
 								{
-									vector = velocity;
+									newVelocity = velocity;
 									break;
 								}
 							}
-							if (tile2.nactive() && Main.tileSolid[(int)tile2.type] && !Main.tileSolidTop[(int)tile2.type])
+							if (tileNear.nactive() && Main.tileSolid[(int)tileNear.type] && !Main.tileSolidTop[(int)tileNear.type])
 							{
-								vector = velocity;
+								newVelocity = velocity;
 								break;
 							}
-							if (target == null || (float)(i * 16) >= target.Center.Y)
+							if (target == null || (float)(y * 16) >= target.Center.Y)
 							{
-								num5 = i;
-								vector.Y = -(5f + (float)(num2 - i) * ((num2 - i > 3) ? (1f - (float)(num2 - i - 2) * 0.0525f) : 1f));
+								lastY = y;
+								newVelocity.Y = -(5f + (float)(tileY - y) * ((tileY - y > 3) ? (1f - (float)(tileY - y - 2) * 0.0525f) : 1f));
 							}
 						}
-						else if (num5 - i >= num6)
+						else if (lastY - y >= tileHeight)
 						{
 							break;
 						}
 					}
 				}
-				if (vector.Y == velocity.Y)
+				if (newVelocity.Y == velocity.Y)
 				{
-					if (Main.tile[num, num2 + 1] == null)
+					if (Main.tile[tileX, tileY + 1] == null)
 					{
-						Main.tile[num, num2 + 1] = new Tile();
+						Main.tile[tileX, tileY + 1] = new Tile();
 					}
-					if (Main.tile[num + direction, num2 + 1] == null)
+					if (Main.tile[tileX + direction, tileY + 1] == null)
 					{
-						Main.tile[num, num2 + 1] = new Tile();
+						Main.tile[tileX, tileY + 1] = new Tile();
 					}
-					if (Main.tile[num + direction, num2 + 2] == null)
+					if (Main.tile[tileX + direction, tileY + 2] == null)
 					{
-						Main.tile[num, num2 + 2] = new Tile();
+						Main.tile[tileX, tileY + 2] = new Tile();
 					}
-					if (directionY < 0f && (!Main.tile[num, num2 + 1].nactive() || !Main.tileSolid[(int)Main.tile[num, num2 + 1].type]) && (!Main.tile[num + direction, num2 + 1].nactive() || !Main.tileSolid[(int)Main.tile[num + direction, num2 + 1].type]) && (!Main.tile[num + direction, num2 + 2].nactive() || !Main.tileSolid[(int)Main.tile[num, num2 + 2].type] || target == null || target.Center.Y + (float)target.height * 0.25f < (float)num2 * 16f))
+					if (directionY < 0f && (!Main.tile[tileX, tileY + 1].nactive() || !Main.tileSolid[(int)Main.tile[tileX, tileY + 1].type]) && (!Main.tile[tileX + direction, tileY + 1].nactive() || !Main.tileSolid[(int)Main.tile[tileX + direction, tileY + 1].type]) && (!Main.tile[tileX + direction, tileY + 2].nactive() || !Main.tileSolid[(int)Main.tile[tileX, tileY + 2].type] || target == null || target.Center.Y + (float)target.height * 0.25f < (float)tileY * 16f))
 					{
-						vector.Y = -8f;
-						vector.X *= 1.5f * (1f / maxSpeedX);
-						if (num <= num3)
+						newVelocity.Y = -8f;
+						newVelocity.X *= 1.5f * (1f / maxSpeedX);
+						if (tileX <= tileItX)
 						{
-							for (int j = num; j < num3; j++)
+							for (int x = tileX; x < tileItX; x++)
 							{
-								Tile tile3 = Main.tile[j, num2 + 1];
-								if (tile3 == null)
+								Tile tile2 = Main.tile[x, tileY + 1];
+								if (tile2 == null)
 								{
-									tile3 = (Main.tile[j, num2 + 1] = new Tile());
+									tile2 = (Main.tile[x, tileY + 1] = new Tile());
 								}
-								if (j != num && !tile3.nactive())
+								if (x != tileX && !tile2.nactive())
 								{
-									vector.Y -= 0.0325f;
-									vector.X += (float)direction * 0.255f;
+									newVelocity.Y -= 0.0325f;
+									newVelocity.X += (float)direction * 0.255f;
 								}
 							}
 						}
-						else if (num > num3)
+						else if (tileX > tileItX)
 						{
-							for (int k = num3; k < num; k++)
+							for (int x2 = tileItX; x2 < tileX; x2++)
 							{
-								Tile tile4 = Main.tile[k, num2 + 1];
-								if (tile4 == null)
+								Tile tile3 = Main.tile[x2, tileY + 1];
+								if (tile3 == null)
 								{
-									tile4 = (Main.tile[k, num2 + 1] = new Tile());
+									tile3 = (Main.tile[x2, tileY + 1] = new Tile());
 								}
-								if (k != num3 && !tile4.nactive())
+								if (x2 != tileItX && !tile3.nactive())
 								{
-									vector.Y -= 0.0325f;
-									vector.X += (float)direction * 0.255f;
+									newVelocity.Y -= 0.0325f;
+									newVelocity.X += (float)direction * 0.255f;
 								}
 							}
 						}
 					}
 				}
-				result = vector;
+				result = newVelocity;
 			}
-			catch (Exception ex)
+			catch (Exception e)
 			{
-				ErrorLogger.Log(ex.Message);
-				ErrorLogger.Log(ex.StackTrace);
+				BaseUtility.LogFancy("Redemption~ ATTEMPT JUMP ERROR:", e);
 				result = velocity;
 			}
 			return result;
@@ -5751,27 +5714,26 @@ namespace Redemption
 
 		public static bool AttemptOpenDoor(NPC npc, ref float doorBeatCounter, ref float doorCounter, ref float tickUpdater, float ticksUntilBoredom, int doorBeatCounterMax = 10, int doorCounterMax = 60, int interactDoorStyle = 0)
 		{
-			bool flag = BaseAI.HitTileOnSide(npc, 3, true);
-			if (flag)
+			if (BaseAI.HitTileOnSide(npc, 3, true))
 			{
-				int num = (int)((npc.Center.X + ((float)(npc.width / 2) + 8f) * (float)npc.direction) / 16f);
-				int num2 = (int)((npc.position.Y + (float)npc.height - 15f) / 16f);
+				int tileX = (int)((npc.Center.X + ((float)(npc.width / 2) + 8f) * (float)npc.direction) / 16f);
+				int tileY = (int)((npc.position.Y + (float)npc.height - 15f) / 16f);
 				for (int i = 1; i >= -3; i--)
 				{
-					if (i == 1 && Main.tile[num + npc.direction, num2 + i] == null)
+					if (i == 1 && Main.tile[tileX + npc.direction, tileY + i] == null)
 					{
-						Main.tile[num + npc.direction, num2 + i] = new Tile();
+						Main.tile[tileX + npc.direction, tileY + i] = new Tile();
 					}
-					else if (i == -1 && Main.tile[num + npc.direction, num2 + i] == null)
+					else if (i == -1 && Main.tile[tileX + npc.direction, tileY + i] == null)
 					{
-						Main.tile[num + npc.direction, num2 + i] = new Tile();
+						Main.tile[tileX + npc.direction, tileY + i] = new Tile();
 					}
-					if (Main.tile[num, num2 + i] == null)
+					if (Main.tile[tileX, tileY + i] == null)
 					{
-						Main.tile[num, num2 + i] = new Tile();
+						Main.tile[tileX, tileY + i] = new Tile();
 					}
 				}
-				if (Main.tile[num, num2 - 1].nactive() && Main.tile[num, num2 - 1].type == 10)
+				if (Main.tile[tileX, tileY - 1].nactive() && Main.tile[tileX, tileY - 1].type == 10)
 				{
 					doorCounter += 1f;
 					tickUpdater = 0f;
@@ -5780,36 +5742,36 @@ namespace Redemption
 						npc.velocity.X = 0.5f * -(float)npc.direction;
 						doorBeatCounter += 1f;
 						doorCounter = 0f;
-						bool flag2 = false;
+						bool attemptOpenDoor = false;
 						if (doorBeatCounter >= (float)doorBeatCounterMax)
 						{
-							flag2 = true;
+							attemptOpenDoor = true;
 							doorBeatCounter = 10f;
 						}
-						WorldGen.KillTile(num, num2 - 1, true, false, false);
-						if (flag2 && Main.netMode != 1)
+						WorldGen.KillTile(tileX, tileY - 1, true, false, false);
+						if (attemptOpenDoor && Main.netMode != 1)
 						{
-							bool flag3 = false;
+							bool openedDoor = false;
 							if (interactDoorStyle != 0)
 							{
 								if (interactDoorStyle == 1)
 								{
-									WorldGen.KillTile(num, num2, false, false, false);
-									flag3 = !Main.tile[num, num2].nactive();
+									WorldGen.KillTile(tileX, tileY, false, false, false);
+									openedDoor = !Main.tile[tileX, tileY].nactive();
 								}
 								else
 								{
-									flag3 = WorldGen.OpenDoor(num, num2, npc.direction);
+									openedDoor = WorldGen.OpenDoor(tileX, tileY, npc.direction);
 								}
 							}
-							if (!flag3)
+							if (!openedDoor)
 							{
 								tickUpdater = ticksUntilBoredom;
 								npc.netUpdate = true;
 							}
-							if (Main.netMode == 2 && flag3)
+							if (Main.netMode == 2 && openedDoor)
 							{
-								NetMessage.SendData(19, -1, -1, NetworkText.FromLiteral(""), 0, (float)num, (float)num2, (float)npc.direction, 0, 0, 0);
+								NetMessage.SendData(19, -1, -1, NetworkText.FromLiteral(""), 0, (float)tileX, (float)tileY, (float)npc.direction, 0, 0, 0);
 							}
 						}
 					}
@@ -5821,19 +5783,19 @@ namespace Redemption
 
 		public static bool EmptyTiles(Rectangle rect)
 		{
-			int num = rect.X / 16;
-			int num2 = rect.Y / 16;
-			for (int i = num; i < num + rect.Width; i++)
+			int topX = rect.X / 16;
+			int topY = rect.Y / 16;
+			for (int x = topX; x < topX + rect.Width; x++)
 			{
-				int num3 = num2;
-				while (i < num2 + rect.Height)
+				int y = topY;
+				while (x < topY + rect.Height)
 				{
-					Tile tile = Main.tile[i, num3];
+					Tile tile = Main.tile[x, y];
 					if (tile != null && tile.nactive() && Main.tileSolid[(int)tile.type])
 					{
 						return false;
 					}
-					num3++;
+					y++;
 				}
 			}
 			return true;
@@ -5843,57 +5805,57 @@ namespace Redemption
 		{
 			if (!noYMovement || codable.velocity.Y == 0f)
 			{
-				Vector2 vector = default(Vector2);
-				return BaseAI.HitTileOnSide(codable.position, codable.width, codable.height, dir, ref vector);
+				Vector2 dummyVec = default(Vector2);
+				return BaseAI.HitTileOnSide(codable.position, codable.width, codable.height, dir, ref dummyVec);
 			}
 			return false;
 		}
 
 		public static bool HitTileOnSide(Vector2 position, int width, int height, int dir, ref Vector2 hitTilePos)
 		{
-			int num = 0;
-			int num2 = 0;
-			int num3 = 0;
-			int num4 = 0;
+			int tilePosX = 0;
+			int tilePosY = 0;
+			int tilePosWidth = 0;
+			int tilePosHeight = 0;
 			if (dir == 0)
 			{
-				num = (int)(position.X - 8f) / 16;
-				num2 = (int)position.Y / 16;
-				num3 = num + 1;
-				num4 = (int)(position.Y + (float)height) / 16;
+				tilePosX = (int)(position.X - 8f) / 16;
+				tilePosY = (int)position.Y / 16;
+				tilePosWidth = tilePosX + 1;
+				tilePosHeight = (int)(position.Y + (float)height) / 16;
 			}
 			else if (dir == 1)
 			{
-				num = (int)(position.X + (float)width + 8f) / 16;
-				num2 = (int)position.Y / 16;
-				num3 = num + 1;
-				num4 = (int)(position.Y + (float)height) / 16;
+				tilePosX = (int)(position.X + (float)width + 8f) / 16;
+				tilePosY = (int)position.Y / 16;
+				tilePosWidth = tilePosX + 1;
+				tilePosHeight = (int)(position.Y + (float)height) / 16;
 			}
 			else if (dir == 2)
 			{
-				num = (int)position.X / 16;
-				num2 = (int)(position.Y - 8f) / 16;
-				num3 = (int)(position.X + (float)width) / 16;
-				num4 = num2 + 1;
+				tilePosX = (int)position.X / 16;
+				tilePosY = (int)(position.Y - 8f) / 16;
+				tilePosWidth = (int)(position.X + (float)width) / 16;
+				tilePosHeight = tilePosY + 1;
 			}
 			else if (dir == 3)
 			{
-				num = (int)position.X / 16;
-				num2 = (int)(position.Y + (float)height + 8f) / 16;
-				num3 = (int)(position.X + (float)width) / 16;
-				num4 = num2 + 1;
+				tilePosX = (int)position.X / 16;
+				tilePosY = (int)(position.Y + (float)height + 8f) / 16;
+				tilePosWidth = (int)(position.X + (float)width) / 16;
+				tilePosHeight = tilePosY + 1;
 			}
-			for (int i = num; i < num3; i++)
+			for (int x2 = tilePosX; x2 < tilePosWidth; x2++)
 			{
-				for (int j = num2; j < num4; j++)
+				for (int y2 = tilePosY; y2 < tilePosHeight; y2++)
 				{
-					if (Main.tile[i, j] == null)
+					if (Main.tile[x2, y2] == null)
 					{
 						return false;
 					}
-					if (Main.tile[i, j].nactive() && Main.tileSolid[(int)Main.tile[i, j].type])
+					if (Main.tile[x2, y2].nactive() && Main.tileSolid[(int)Main.tile[x2, y2].type])
 					{
-						hitTilePos = new Vector2((float)i, (float)j);
+						hitTilePos = new Vector2((float)x2, (float)y2);
 						return true;
 					}
 				}
@@ -5921,43 +5883,43 @@ namespace Redemption
 
 		public static int DropItem(Entity codable, int type, int amt, int maxStack, float chance, bool clusterItem = false, bool sync = false)
 		{
-			int num = -1;
+			int itemID = -1;
 			if ((sync || Main.netMode != 1) && (float)Main.rand.NextDouble() <= chance)
 			{
 				if (clusterItem)
 				{
-					int num2 = 0;
-					int num3 = 0;
-					while (num2 != amt)
+					int stackCount = 0;
+					int stackCount2 = 0;
+					while (stackCount != amt)
 					{
-						num2++;
-						num3++;
-						if (num2 == amt || num3 == maxStack)
+						stackCount++;
+						stackCount2++;
+						if (stackCount == amt || stackCount2 == maxStack)
 						{
-							num = Item.NewItem((int)codable.position.X, (int)codable.position.Y, codable.width, codable.height, type, num3, false, 0, false, false);
+							itemID = Item.NewItem((int)codable.position.X, (int)codable.position.Y, codable.width, codable.height, type, stackCount2, false, 0, false, false);
 							if (sync)
 							{
-								NetMessage.SendData(21, -1, -1, null, num, 0f, 0f, 0f, 0, 0, 0);
+								NetMessage.SendData(21, -1, -1, null, itemID, 0f, 0f, 0f, 0, 0, 0);
 							}
-							num3 = 0;
+							stackCount2 = 0;
 						}
 					}
 				}
 				else
 				{
-					int i = 0;
-					while (i < amt)
+					int count = 0;
+					while (count < amt)
 					{
-						i++;
-						num = Item.NewItem((int)codable.position.X, (int)codable.position.Y, codable.width, codable.height, type, 1, false, 0, false, false);
+						count++;
+						itemID = Item.NewItem((int)codable.position.X, (int)codable.position.Y, codable.width, codable.height, type, 1, false, 0, false, false);
 						if (sync)
 						{
-							NetMessage.SendData(21, -1, -1, null, num, 0f, 0f, 0f, 0, 0, 0);
+							NetMessage.SendData(21, -1, -1, null, itemID, 0f, 0f, 0f, 0, 0, 0);
 						}
 					}
 				}
 			}
-			return num;
+			return itemID;
 		}
 
 		public static void DamagePlayer(Player player, int dmgAmt, float knockback, Entity damager, bool dmgVariation = true, bool hitThroughDefense = false)
@@ -5974,15 +5936,15 @@ namespace Redemption
 			}
 			if (damager == null)
 			{
-				int num = dmgAmt;
+				int parsedDamage = dmgAmt;
 				if (dmgVariation)
 				{
-					num = Main.DamageVar((float)dmgAmt);
+					parsedDamage = Main.DamageVar((float)dmgAmt);
 				}
-				player.Hurt(PlayerDeathReason.ByOther(-1), num, hitDirection, false, false, false, 0);
+				player.Hurt(PlayerDeathReason.ByOther(-1), parsedDamage, hitDirection, false, false, false, 0);
 				if (Main.netMode != 0)
 				{
-					NetMessage.SendData(26, -1, -1, PlayerDeathReason.LegacyDefault().GetDeathText(player.name), player.whoAmI, (float)hitDirection, 1f, knockback, num, 0, 0);
+					NetMessage.SendData(26, -1, -1, PlayerDeathReason.LegacyDefault().GetDeathText(player.name), player.whoAmI, (float)hitDirection, 1f, knockback, parsedDamage, 0, 0);
 					return;
 				}
 			}
@@ -5990,49 +5952,49 @@ namespace Redemption
 			{
 				if (damager is Player)
 				{
-					Player player2 = (Player)damager;
-					int num2 = dmgAmt;
+					Player subPlayer = (Player)damager;
+					int parsedDamage2 = dmgAmt;
 					if (dmgVariation)
 					{
-						num2 = Main.DamageVar((float)dmgAmt);
+						parsedDamage2 = Main.DamageVar((float)dmgAmt);
 					}
-					player.Hurt(PlayerDeathReason.ByPlayer(player2.whoAmI), num2, hitDirection, true, false, false, 0);
+					player.Hurt(PlayerDeathReason.ByPlayer(subPlayer.whoAmI), parsedDamage2, hitDirection, true, false, false, 0);
 					if (Main.netMode != 0)
 					{
-						NetMessage.SendData(26, -1, -1, PlayerDeathReason.ByPlayer(player2.whoAmI).GetDeathText(player.name), player.whoAmI, (float)hitDirection, 1f, knockback, num2, 0, 0);
+						NetMessage.SendData(26, -1, -1, PlayerDeathReason.ByPlayer(subPlayer.whoAmI).GetDeathText(player.name), player.whoAmI, (float)hitDirection, 1f, knockback, parsedDamage2, 0, 0);
 					}
-					player2.attackCD = (int)((float)player2.itemAnimationMax * 0.33f);
+					subPlayer.attackCD = (int)((float)subPlayer.itemAnimationMax * 0.33f);
 					return;
 				}
 				if (damager is Projectile)
 				{
-					Projectile projectile = (Projectile)damager;
-					if (projectile.friendly)
+					Projectile p = (Projectile)damager;
+					if (p.friendly)
 					{
-						int num3 = dmgAmt;
+						int parsedDamage3 = dmgAmt;
 						if (dmgVariation)
 						{
-							num3 = Main.DamageVar((float)dmgAmt);
+							parsedDamage3 = Main.DamageVar((float)dmgAmt);
 						}
-						player.Hurt(PlayerDeathReason.ByProjectile(projectile.owner, projectile.whoAmI), num3, hitDirection, true, false, false, 0);
+						player.Hurt(PlayerDeathReason.ByProjectile(p.owner, p.whoAmI), parsedDamage3, hitDirection, true, false, false, 0);
 						if (Main.netMode != 0)
 						{
-							NetMessage.SendData(26, -1, -1, PlayerDeathReason.ByProjectile(projectile.owner, projectile.whoAmI).GetDeathText(player.name), player.whoAmI, (float)hitDirection, 1f, knockback, num3, 0, 0);
+							NetMessage.SendData(26, -1, -1, PlayerDeathReason.ByProjectile(p.owner, p.whoAmI).GetDeathText(player.name), player.whoAmI, (float)hitDirection, 1f, knockback, parsedDamage3, 0, 0);
 						}
-						projectile.playerImmune[player.whoAmI] = 40;
+						p.playerImmune[player.whoAmI] = 40;
 						return;
 					}
-					if (projectile.hostile)
+					if (p.hostile)
 					{
-						int num4 = dmgAmt;
+						int parsedDamage4 = dmgAmt;
 						if (dmgVariation)
 						{
-							num4 = Main.DamageVar((float)dmgAmt);
+							parsedDamage4 = Main.DamageVar((float)dmgAmt);
 						}
-						player.Hurt(PlayerDeathReason.ByProjectile(-1, projectile.whoAmI), num4, hitDirection, false, false, false, 0);
+						player.Hurt(PlayerDeathReason.ByProjectile(-1, p.whoAmI), parsedDamage4, hitDirection, false, false, false, 0);
 						if (Main.netMode != 0)
 						{
-							NetMessage.SendData(26, -1, -1, PlayerDeathReason.ByProjectile(projectile.owner, projectile.whoAmI).GetDeathText(player.name), player.whoAmI, (float)hitDirection, 1f, knockback, num4, 0, 0);
+							NetMessage.SendData(26, -1, -1, PlayerDeathReason.ByProjectile(p.owner, p.whoAmI).GetDeathText(player.name), player.whoAmI, (float)hitDirection, 1f, knockback, parsedDamage4, 0, 0);
 							return;
 						}
 					}
@@ -6040,15 +6002,15 @@ namespace Redemption
 				else if (damager is NPC)
 				{
 					NPC npc = (NPC)damager;
-					int num5 = dmgAmt;
+					int parsedDamage5 = dmgAmt;
 					if (dmgVariation)
 					{
-						num5 = Main.DamageVar((float)dmgAmt);
+						parsedDamage5 = Main.DamageVar((float)dmgAmt);
 					}
-					player.Hurt(PlayerDeathReason.ByNPC(npc.whoAmI), num5, hitDirection, false, false, false, 0);
+					player.Hurt(PlayerDeathReason.ByNPC(npc.whoAmI), parsedDamage5, hitDirection, false, false, false, 0);
 					if (Main.netMode != 0)
 					{
-						NetMessage.SendData(26, -1, -1, PlayerDeathReason.ByNPC(npc.whoAmI).GetDeathText(player.name), player.whoAmI, (float)hitDirection, 1f, knockback, num5, 0, 0);
+						NetMessage.SendData(26, -1, -1, PlayerDeathReason.ByNPC(npc.whoAmI).GetDeathText(player.name), player.whoAmI, (float)hitDirection, 1f, knockback, parsedDamage5, 0, 0);
 					}
 				}
 			}
@@ -6068,36 +6030,36 @@ namespace Redemption
 			}
 			if (damager == null)
 			{
-				int num = dmgAmt;
+				int parsedDamage = dmgAmt;
 				if (dmgVariation)
 				{
-					num = Main.DamageVar((float)dmgAmt);
+					parsedDamage = Main.DamageVar((float)dmgAmt);
 				}
-				npc.StrikeNPC(num, knockback, hitDirection, false, false, false);
+				npc.StrikeNPC(parsedDamage, knockback, hitDirection, false, false, false);
 				if (Main.netMode != 0)
 				{
-					NetMessage.SendData(28, -1, -1, NetworkText.FromLiteral(""), npc.whoAmI, 1f, knockback, (float)hitDirection, num, 0, 0);
+					NetMessage.SendData(28, -1, -1, NetworkText.FromLiteral(""), npc.whoAmI, 1f, knockback, (float)hitDirection, parsedDamage, 0, 0);
 					return;
 				}
 			}
 			else if (damager is Projectile)
 			{
-				Projectile projectile = (Projectile)damager;
-				if (projectile.owner == Main.myPlayer)
+				Projectile p = (Projectile)damager;
+				if (p.owner == Main.myPlayer)
 				{
-					int num2 = dmgAmt;
+					int parsedDamage2 = dmgAmt;
 					if (dmgVariation)
 					{
-						num2 = Main.DamageVar((float)dmgAmt);
+						parsedDamage2 = Main.DamageVar((float)dmgAmt);
 					}
-					npc.StrikeNPC(num2, knockback, hitDirection, false, false, false);
+					npc.StrikeNPC(parsedDamage2, knockback, hitDirection, false, false, false);
 					if (Main.netMode != 0)
 					{
-						NetMessage.SendData(28, -1, -1, NetworkText.FromLiteral(""), npc.whoAmI, 1f, knockback, (float)hitDirection, num2, 0, 0);
+						NetMessage.SendData(28, -1, -1, NetworkText.FromLiteral(""), npc.whoAmI, 1f, knockback, (float)hitDirection, parsedDamage2, 0, 0);
 					}
-					if (projectile.penetrate != 1)
+					if (p.penetrate != 1)
 					{
-						npc.immune[projectile.owner] = 10;
+						npc.immune[p.owner] = 10;
 						return;
 					}
 				}
@@ -6107,15 +6069,15 @@ namespace Redemption
 				Player player = (Player)damager;
 				if (player.whoAmI == Main.myPlayer)
 				{
-					int num3 = dmgAmt;
+					int parsedDamage3 = dmgAmt;
 					if (dmgVariation)
 					{
-						num3 = Main.DamageVar((float)dmgAmt);
+						parsedDamage3 = Main.DamageVar((float)dmgAmt);
 					}
-					npc.StrikeNPC(num3, knockback, hitDirection, false, false, false);
+					npc.StrikeNPC(parsedDamage3, knockback, hitDirection, false, false, false);
 					if (Main.netMode != 0)
 					{
-						NetMessage.SendData(28, -1, -1, NetworkText.FromLiteral(""), npc.whoAmI, 1f, knockback, (float)hitDirection, num3, 0, 0);
+						NetMessage.SendData(28, -1, -1, NetworkText.FromLiteral(""), npc.whoAmI, 1f, knockback, (float)hitDirection, parsedDamage3, 0, 0);
 					}
 					npc.immune[player.whoAmI] = player.itemAnimation;
 				}
@@ -6134,11 +6096,11 @@ namespace Redemption
 				return;
 			}
 			npc.active = false;
-			int whoAmI = npc.whoAmI;
-			Main.npc[whoAmI] = new NPC();
+			int npcID = npc.whoAmI;
+			Main.npc[npcID] = new NPC();
 			if (Main.netMode == 2)
 			{
-				NetMessage.SendData(23, -1, -1, null, whoAmI, 0f, 0f, 0f, 0, 0, 0);
+				NetMessage.SendData(23, -1, -1, null, npcID, 0f, 0f, 0f, 0, 0, 0);
 			}
 		}
 
@@ -6153,30 +6115,29 @@ namespace Redemption
 
 		public static void SpawnSmoke(Vector2 start, float width, float height, int loopAmount = 2, float scale = 1f)
 		{
-			Vector2 vector = start + new Vector2(width * 0.5f, height * 0.5f);
+			Vector2 center = start + new Vector2(width * 0.5f, height * 0.5f);
 			UnifiedRandom rand = Main.rand;
 			for (int i = 0; i < loopAmount; i++)
 			{
-				Vector2 vector2;
-				vector2..ctor(vector.X - 24f, vector.Y - 24f);
-				Vector2 vector3 = default(Vector2);
-				int num = Gore.NewGore(vector2, vector3, Main.rand.Next(61, 64), 1f);
-				Gore gore = Main.gore[num];
+				Vector2 vector = new Vector2(center.X - 24f, center.Y - 24f);
+				Vector2 velocityDefault = default(Vector2);
+				int goreID = Gore.NewGore(vector, velocityDefault, Main.rand.Next(61, 64), 1f);
+				Gore gore = Main.gore[goreID];
 				gore.scale = scale * 1.5f;
 				gore.velocity.X = ((rand.Next(2) == 0) ? (-(gore.velocity.X + 1.5f)) : (gore.velocity.X + 1.5f));
 				gore.velocity.Y = gore.velocity.Y + 1.5f;
-				num = Gore.NewGore(vector2, vector3, Main.rand.Next(61, 64), 1f);
-				gore = Main.gore[num];
+				goreID = Gore.NewGore(vector, velocityDefault, Main.rand.Next(61, 64), 1f);
+				gore = Main.gore[goreID];
 				gore.scale = scale * 1.5f;
 				gore.velocity.X = ((rand.Next(2) == 0) ? (-(gore.velocity.X + 1.5f)) : (gore.velocity.X + 1.5f));
 				gore.velocity.Y = gore.velocity.Y + 1.5f;
-				num = Gore.NewGore(vector2, vector3, Main.rand.Next(61, 64), 1f);
-				gore = Main.gore[num];
+				goreID = Gore.NewGore(vector, velocityDefault, Main.rand.Next(61, 64), 1f);
+				gore = Main.gore[goreID];
 				gore.scale = scale * 1.5f;
 				gore.velocity.X = ((rand.Next(2) == 0) ? (-(gore.velocity.X + 1.5f)) : (gore.velocity.X + 1.5f));
 				gore.velocity.Y = gore.velocity.Y + 1.5f;
-				num = Gore.NewGore(vector2, vector3, Main.rand.Next(61, 64), 1f);
-				gore = Main.gore[num];
+				goreID = Gore.NewGore(vector, velocityDefault, Main.rand.Next(61, 64), 1f);
+				gore = Main.gore[goreID];
 				gore.scale = scale * 1.5f;
 				gore.velocity.X = ((rand.Next(2) == 0) ? (-(gore.velocity.X + 1.5f)) : (gore.velocity.X + 1.5f));
 				gore.velocity.Y = gore.velocity.Y + 1.5f;
@@ -6190,32 +6151,32 @@ namespace Redemption
 
 		public static int GetProjectile(Vector2 center, int projType = -1, int owner = -1, int[] projsToExclude = null, float distance = -1f, Func<Projectile, bool> CanAdd = null)
 		{
-			int result = -1;
+			int currentProj = -1;
 			for (int i = 0; i < Main.projectile.Length; i++)
 			{
-				Projectile projectile = Main.projectile[i];
-				if (projectile != null && projectile.active && (projType == -1 || projectile.type == projType) && ((float)owner == -1f || projectile.owner == owner) && (distance == -1f || projectile.Distance(center) < distance))
+				Projectile proj = Main.projectile[i];
+				if (proj != null && proj.active && (projType == -1 || proj.type == projType) && ((float)owner == -1f || proj.owner == owner) && (distance == -1f || proj.Distance(center) < distance))
 				{
-					bool flag = true;
+					bool add = true;
 					if (projsToExclude != null)
 					{
-						foreach (int num in projsToExclude)
+						for (int j = 0; j < projsToExclude.Length; j++)
 						{
-							if (num == projectile.whoAmI)
+							if (projsToExclude[j] == proj.whoAmI)
 							{
-								flag = false;
+								add = false;
 								break;
 							}
 						}
 					}
-					if ((!flag || CanAdd == null || CanAdd(projectile)) && flag)
+					if ((!add || CanAdd == null || CanAdd(proj)) && add)
 					{
-						distance = projectile.Distance(center);
-						result = i;
+						distance = proj.Distance(center);
+						currentProj = i;
 					}
 				}
 			}
-			return result;
+			return currentProj;
 		}
 
 		public static int[] GetProjectiles(Vector2 center, int projType = -1, int owner = -1, float distance = 500f, Func<Projectile, bool> CanAdd = null)
@@ -6225,31 +6186,31 @@ namespace Redemption
 
 		public static int[] GetProjectiles(Vector2 center, int projType = -1, int owner = -1, int[] projsToExclude = null, float distance = 500f, Func<Projectile, bool> CanAdd = null)
 		{
-			List<int> list = new List<int>();
+			List<int> allProjs = new List<int>();
 			for (int i = 0; i < Main.projectile.Length; i++)
 			{
-				Projectile projectile = Main.projectile[i];
-				if (projectile != null && projectile.active && (projType == -1 || projectile.type == projType) && (owner == -1 || projectile.owner == owner) && (distance == -1f || projectile.Distance(center) < distance))
+				Projectile proj = Main.projectile[i];
+				if (proj != null && proj.active && (projType == -1 || proj.type == projType) && (owner == -1 || proj.owner == owner) && (distance == -1f || proj.Distance(center) < distance))
 				{
-					bool flag = true;
+					bool add = true;
 					if (projsToExclude != null)
 					{
-						foreach (int num in projsToExclude)
+						for (int j = 0; j < projsToExclude.Length; j++)
 						{
-							if (num == projectile.whoAmI)
+							if (projsToExclude[j] == proj.whoAmI)
 							{
-								flag = false;
+								add = false;
 								break;
 							}
 						}
 					}
-					if ((!flag || CanAdd == null || CanAdd(projectile)) && flag)
+					if ((!add || CanAdd == null || CanAdd(proj)) && add)
 					{
-						list.Add(i);
+						allProjs.Add(i);
 					}
 				}
 			}
-			return list.ToArray();
+			return allProjs.ToArray();
 		}
 
 		public static int[] GetProjectiles(Vector2 center, int[] projTypes, int owner = -1, float distance = 500f, Func<Projectile, bool> CanAdd = null)
@@ -6259,72 +6220,72 @@ namespace Redemption
 
 		public static int[] GetProjectiles(Vector2 center, int[] projTypes, int owner = -1, int[] projsToExclude = null, float distance = 500f, Func<Projectile, bool> CanAdd = null)
 		{
-			List<int> list = new List<int>();
+			List<int> allProjs = new List<int>();
 			for (int i = 0; i < Main.projectile.Length; i++)
 			{
-				Projectile projectile = Main.projectile[i];
-				if (projectile != null && projectile.active && (owner == -1 || projectile.owner == owner) && (distance == -1f || projectile.Distance(center) < distance))
+				Projectile proj = Main.projectile[i];
+				if (proj != null && proj.active && (owner == -1 || proj.owner == owner) && (distance == -1f || proj.Distance(center) < distance))
 				{
-					bool flag = false;
-					foreach (int num in projTypes)
+					bool isType = false;
+					foreach (int type in projTypes)
 					{
-						if (projectile.type == num)
+						if (proj.type == type)
 						{
-							flag = true;
+							isType = true;
 							break;
 						}
 					}
-					if (flag)
+					if (isType)
 					{
-						bool flag2 = true;
+						bool add = true;
 						if (projsToExclude != null)
 						{
-							foreach (int num2 in projsToExclude)
+							for (int j = 0; j < projsToExclude.Length; j++)
 							{
-								if (num2 == projectile.whoAmI)
+								if (projsToExclude[j] == proj.whoAmI)
 								{
-									flag2 = false;
+									add = false;
 									break;
 								}
 							}
 						}
-						if ((!flag2 || CanAdd == null || CanAdd(projectile)) && flag2)
+						if ((!add || CanAdd == null || CanAdd(proj)) && add)
 						{
-							list.Add(i);
+							allProjs.Add(i);
 						}
 					}
 				}
 			}
-			return list.ToArray();
+			return allProjs.ToArray();
 		}
 
 		public static int[] GetNPCsInBox(Rectangle rect, int npcType = -1, int[] npcsToExclude = null, Func<NPC, bool> CanAdd = null)
 		{
-			List<int> list = new List<int>();
+			List<int> allNPCs = new List<int>();
 			for (int i = 0; i < Main.npc.Length; i++)
 			{
 				NPC npc = Main.npc[i];
 				if (npc != null && npc.active && npc.life > 0 && (npcType == -1 || npc.type == npcType) && npc.type != 488 && rect.Intersects(npc.Hitbox))
 				{
-					bool flag = true;
+					bool add = true;
 					if (npcsToExclude != null)
 					{
-						foreach (int num in npcsToExclude)
+						for (int j = 0; j < npcsToExclude.Length; j++)
 						{
-							if (num == npc.whoAmI)
+							if (npcsToExclude[j] == npc.whoAmI)
 							{
-								flag = false;
+								add = false;
 								break;
 							}
 						}
 					}
-					if ((!flag || CanAdd == null || CanAdd(npc)) && flag)
+					if ((!add || CanAdd == null || CanAdd(npc)) && add)
 					{
-						list.Add(i);
+						allNPCs.Add(i);
 					}
 				}
 			}
-			return list.ToArray();
+			return allNPCs.ToArray();
 		}
 
 		public static int GetNPC(Vector2 center, int npcType = -1, float distance = -1f, Func<NPC, bool> CanAdd = null)
@@ -6334,32 +6295,32 @@ namespace Redemption
 
 		public static int GetNPC(Vector2 center, int npcType = -1, int[] npcsToExclude = null, float distance = -1f, Func<NPC, bool> CanAdd = null)
 		{
-			int result = -1;
+			int currentNPC = -1;
 			for (int i = 0; i < Main.npc.Length; i++)
 			{
 				NPC npc = Main.npc[i];
 				if (npc != null && npc.active && npc.life > 0 && (npcType == -1 || npc.type == npcType) && npc.type != 488 && (distance == -1f || npc.Distance(center) < distance))
 				{
-					bool flag = true;
+					bool add = true;
 					if (npcsToExclude != null)
 					{
-						foreach (int num in npcsToExclude)
+						for (int j = 0; j < npcsToExclude.Length; j++)
 						{
-							if (num == npc.whoAmI)
+							if (npcsToExclude[j] == npc.whoAmI)
 							{
-								flag = false;
+								add = false;
 								break;
 							}
 						}
 					}
-					if ((!flag || CanAdd == null || CanAdd(npc)) && flag)
+					if ((!add || CanAdd == null || CanAdd(npc)) && add)
 					{
 						distance = npc.Distance(center);
-						result = i;
+						currentNPC = i;
 					}
 				}
 			}
-			return result;
+			return currentNPC;
 		}
 
 		public static int[] GetNPCs(Vector2 center, int npcType = -1, float distance = 500f, Func<NPC, bool> CanAdd = null)
@@ -6369,60 +6330,60 @@ namespace Redemption
 
 		public static int[] GetNPCs(Vector2 center, int npcType = -1, int[] npcsToExclude = null, float distance = 500f, Func<NPC, bool> CanAdd = null)
 		{
-			List<int> list = new List<int>();
+			List<int> allNPCs = new List<int>();
 			for (int i = 0; i < Main.npc.Length; i++)
 			{
 				NPC npc = Main.npc[i];
 				if (npc != null && npc.active && npc.life > 0 && (npcType == -1 || npc.type == npcType) && npc.type != 488 && (distance == -1f || npc.Distance(center) < distance))
 				{
-					bool flag = true;
+					bool add = true;
 					if (npcsToExclude != null)
 					{
-						foreach (int num in npcsToExclude)
+						for (int j = 0; j < npcsToExclude.Length; j++)
 						{
-							if (num == npc.whoAmI)
+							if (npcsToExclude[j] == npc.whoAmI)
 							{
-								flag = false;
+								add = false;
 								break;
 							}
 						}
 					}
-					if ((!flag || CanAdd == null || CanAdd(npc)) && flag)
+					if ((!add || CanAdd == null || CanAdd(npc)) && add)
 					{
-						list.Add(i);
+						allNPCs.Add(i);
 					}
 				}
 			}
-			return list.ToArray();
+			return allNPCs.ToArray();
 		}
 
 		public static int[] GetPlayersInBox(Rectangle rect, int[] playersToExclude = null, Func<Player, bool> CanAdd = null)
 		{
-			List<int> list = new List<int>();
+			List<int> allPlayers = new List<int>();
 			for (int i = 0; i < Main.player.Length; i++)
 			{
-				Player player = Main.player[i];
-				if (player != null && player.active && !player.dead && rect.Intersects(player.Hitbox))
+				Player plr = Main.player[i];
+				if (plr != null && plr.active && !plr.dead && rect.Intersects(plr.Hitbox))
 				{
-					bool flag = true;
+					bool add = true;
 					if (playersToExclude != null)
 					{
-						foreach (int num in playersToExclude)
+						for (int j = 0; j < playersToExclude.Length; j++)
 						{
-							if (num == player.whoAmI)
+							if (playersToExclude[j] == plr.whoAmI)
 							{
-								flag = false;
+								add = false;
 								break;
 							}
 						}
 					}
-					if ((!flag || CanAdd == null || CanAdd(player)) && flag)
+					if ((!add || CanAdd == null || CanAdd(plr)) && add)
 					{
-						list.Add(i);
+						allPlayers.Add(i);
 					}
 				}
 			}
-			return list.ToArray();
+			return allPlayers.ToArray();
 		}
 
 		public static int GetPlayerByName(string name, bool aliveOnly = true)
@@ -6445,32 +6406,32 @@ namespace Redemption
 
 		public static int GetPlayer(Vector2 center, int[] playersToExclude = null, bool activeOnly = true, float distance = -1f, Func<Player, bool> CanAdd = null)
 		{
-			int result = -1;
+			int currentPlayer = -1;
 			for (int i = 0; i < Main.player.Length; i++)
 			{
 				Player player = Main.player[i];
 				if (player != null && (!activeOnly || (player.active && !player.dead)) && (distance == -1f || player.Distance(center) < distance))
 				{
-					bool flag = true;
+					bool add = true;
 					if (playersToExclude != null)
 					{
-						foreach (int num in playersToExclude)
+						for (int j = 0; j < playersToExclude.Length; j++)
 						{
-							if (num == player.whoAmI)
+							if (playersToExclude[j] == player.whoAmI)
 							{
-								flag = false;
+								add = false;
 								break;
 							}
 						}
 					}
-					if ((!flag || CanAdd == null || CanAdd(player)) && flag)
+					if ((!add || CanAdd == null || CanAdd(player)) && add)
 					{
 						distance = player.Distance(center);
-						result = i;
+						currentPlayer = i;
 					}
 				}
 			}
-			return result;
+			return currentPlayer;
 		}
 
 		public static int[] GetPlayers(Vector2 center, float distance = 500f, Func<Player, bool> CanAdd = null)
@@ -6480,31 +6441,31 @@ namespace Redemption
 
 		public static int[] GetPlayers(Vector2 center, int[] playersToExclude = null, bool aliveOnly = true, float distance = 500f, Func<Player, bool> CanAdd = null)
 		{
-			List<int> list = new List<int>();
+			List<int> allPlayers = new List<int>();
 			for (int i = 0; i < Main.player.Length; i++)
 			{
 				Player player = Main.player[i];
 				if (player != null && player.active && (!aliveOnly || !player.dead) && player.Distance(center) < distance)
 				{
-					bool flag = true;
+					bool add = true;
 					if (playersToExclude != null)
 					{
-						foreach (int num in playersToExclude)
+						for (int j = 0; j < playersToExclude.Length; j++)
 						{
-							if (num == player.whoAmI)
+							if (playersToExclude[j] == player.whoAmI)
 							{
-								flag = false;
+								add = false;
 								break;
 							}
 						}
 					}
-					if ((!flag || CanAdd == null || CanAdd(player)) && flag)
+					if ((!add || CanAdd == null || CanAdd(player)) && add)
 					{
-						list.Add(i);
+						allPlayers.Add(i);
 					}
 				}
 			}
-			return list.ToArray();
+			return allPlayers.ToArray();
 		}
 
 		public static bool CanTarget(Player player, Entity codable)
@@ -6538,26 +6499,25 @@ namespace Redemption
 
 		public static int ShootPeriodic(Entity codable, Vector2 position, int width, int height, int projType, ref float delayTimer, float delayTimerMax = 100f, int damage = -1, float speed = 10f, bool checkCanHit = true, Vector2 offset = default(Vector2))
 		{
-			int result = -1;
+			int pID = -1;
 			if (damage == -1)
 			{
 				Projectile projectile = new Projectile();
 				projectile.SetDefaults(projType);
 				damage = projectile.damage;
 			}
-			bool flag = (codable is NPC) ? (Main.netMode != 1) : (!(codable is Projectile) || ((Projectile)codable).owner == Main.myPlayer);
-			if (flag)
+			if ((codable is NPC) ? (Main.netMode != 1) : (!(codable is Projectile) || ((Projectile)codable).owner == Main.myPlayer))
 			{
-				Vector2 vector = position + new Vector2((float)width * 0.5f, (float)height * 0.5f);
+				Vector2 targetCenter = position + new Vector2((float)width * 0.5f, (float)height * 0.5f);
 				delayTimer -= 1f;
 				if (delayTimer <= 0f)
 				{
 					if (!checkCanHit || Collision.CanHit(codable.position, codable.width, codable.height, position, width, height))
 					{
-						Vector2 vector2 = codable.Center + offset;
-						float rot = BaseUtility.RotationTo(codable.Center, vector);
-						vector2 = BaseUtility.RotateVector(codable.Center, vector2, rot);
-						result = BaseAI.FireProjectile(vector, vector2, projType, damage, 0f, speed, 0, -1, default(Vector2));
+						Vector2 fireTarget = codable.Center + offset;
+						float rot = BaseUtility.RotationTo(codable.Center, targetCenter);
+						fireTarget = BaseUtility.RotateVector(codable.Center, fireTarget, rot);
+						pID = BaseAI.FireProjectile(targetCenter, fireTarget, projType, damage, 0f, speed, 0, -1, default(Vector2));
 					}
 					delayTimer = delayTimerMax;
 					if (codable is NPC)
@@ -6566,7 +6526,7 @@ namespace Redemption
 					}
 				}
 			}
-			return result;
+			return pID;
 		}
 
 		public static int FireProjectile(Vector2 fireTarget, NPC npc, int projectileType, int damage, float knockback, float speedScalar = 1f, int soundGroup = 0, int sound = -1, int hostility = 0, int owner = -1)
@@ -6599,29 +6559,29 @@ namespace Redemption
 
 		public static int FireProjectile(Vector2 fireTarget, Vector2 position, int projectileType, int damage, float knockback, float speedScalar = 1f, int hostility = 0, int owner = -1, Vector2 targetOffset = default(Vector2))
 		{
-			Vector2 vector = BaseUtility.RotateVector(position, position + new Vector2(speedScalar, 0f), BaseUtility.RotationTo(position, fireTarget));
-			vector -= position;
-			int num = Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, projectileType, damage, knockback, (owner != -1) ? owner : Main.myPlayer, 0f, 0f);
-			Projectile projectile = Main.projectile[num];
-			projectile.velocity = vector;
+			Vector2 rotVec = BaseUtility.RotateVector(position, position + new Vector2(speedScalar, 0f), BaseUtility.RotationTo(position, fireTarget));
+			rotVec -= position;
+			int projectileID = Projectile.NewProjectile(position.X, position.Y, rotVec.X, rotVec.Y, projectileType, damage, knockback, (owner != -1) ? owner : Main.myPlayer, 0f, 0f);
+			Projectile proj = Main.projectile[projectileID];
+			proj.velocity = rotVec;
 			if (hostility != 0)
 			{
-				projectile.friendly = (hostility == 1 || hostility == 2);
-				projectile.hostile = (hostility == -1 || hostility == 2);
+				proj.friendly = (hostility == 1 || hostility == 2);
+				proj.hostile = (hostility == -1 || hostility == 2);
 				if (Main.netMode != 0)
 				{
 					MNet.SendBaseNetMessage(0, new object[]
 					{
-						projectile.owner,
-						projectile.identity,
-						projectile.friendly,
-						projectile.hostile
+						proj.owner,
+						proj.identity,
+						proj.friendly,
+						proj.hostile
 					});
 				}
 			}
-			projectile.netUpdate2 = true;
-			Main.projectile[num] = projectile;
-			return num;
+			proj.netUpdate2 = true;
+			Main.projectile[projectileID] = proj;
+			return projectileID;
 		}
 
 		public static void Look(Projectile p, int lookType = 0, float rotAddon = 0f, float rotAmount = 0.1f, bool flipSpriteDir = false)
@@ -6673,9 +6633,9 @@ namespace Redemption
 				{
 					spriteDirection *= -1;
 				}
-				float num = lookTarget.X - center.X;
-				float num2 = lookTarget.Y - center.Y;
-				rotation = -((float)Math.Atan2((double)num, (double)num2) - 1.57f + rotAddon);
+				float rotX = lookTarget.X - center.X;
+				float rotY = lookTarget.Y - center.Y;
+				rotation = -((float)Math.Atan2((double)rotX, (double)rotY) - 1.57f + rotAddon);
 				if (spriteDirection == 1)
 				{
 					rotation -= 3.1415927f;
@@ -6702,14 +6662,14 @@ namespace Redemption
 			{
 				if (lookType == 2)
 				{
-					float num3 = lookTarget.X - center.X;
-					float num4 = lookTarget.Y - center.Y;
-					rotation = -((float)Math.Atan2((double)num3, (double)num4) - 1.57f + rotAddon);
+					float rotX2 = lookTarget.X - center.X;
+					float rotY2 = lookTarget.Y - center.Y;
+					rotation = -((float)Math.Atan2((double)rotX2, (double)rotY2) - 1.57f + rotAddon);
 					return;
 				}
 				if (lookType == 3 || lookType == 4)
 				{
-					int num5 = spriteDirection;
+					int num = spriteDirection;
 					if (lookType == 3 && lookTarget.X > center.X)
 					{
 						spriteDirection = -1;
@@ -6722,37 +6682,36 @@ namespace Redemption
 					{
 						spriteDirection *= -1;
 					}
-					if (num5 != spriteDirection)
+					if (num != spriteDirection)
 					{
 						rotation += 3.1415927f * (float)spriteDirection;
 					}
-					float num6 = 6.2831855f;
-					float num7 = lookTarget.X - center.X;
-					float num8 = lookTarget.Y - center.Y;
-					float num9 = (float)Math.Atan2((double)num8, (double)num7) + rotAddon;
+					float pi2 = 6.2831855f;
+					float rotX3 = lookTarget.X - center.X;
+					float rot = (float)Math.Atan2((double)(lookTarget.Y - center.Y), (double)rotX3) + rotAddon;
 					if (spriteDirection == 1)
 					{
-						num9 += 3.1415927f;
+						rot += 3.1415927f;
 					}
-					if (num9 > num6)
+					if (rot > pi2)
 					{
-						num9 -= num6;
+						rot -= pi2;
 					}
-					else if (num9 < 0f)
+					else if (rot < 0f)
 					{
-						num9 += num6;
+						rot += pi2;
 					}
-					if (rotation > num6)
+					if (rotation > pi2)
 					{
-						rotation -= num6;
+						rotation -= pi2;
 					}
 					else if (rotation < 0f)
 					{
-						rotation += num6;
+						rotation += pi2;
 					}
-					if (rotation < num9)
+					if (rotation < rot)
 					{
-						if ((double)(num9 - rotation) > 3.1415927410125732)
+						if ((double)(rot - rotation) > 3.1415927410125732)
 						{
 							rotation -= rotAmount;
 						}
@@ -6761,9 +6720,9 @@ namespace Redemption
 							rotation += rotAmount;
 						}
 					}
-					else if (rotation > num9)
+					else if (rotation > rot)
 					{
-						if ((double)(rotation - num9) > 3.1415927410125732)
+						if ((double)(rotation - rot) > 3.1415927410125732)
 						{
 							rotation += rotAmount;
 						}
@@ -6772,9 +6731,9 @@ namespace Redemption
 							rotation -= rotAmount;
 						}
 					}
-					if (rotation > num9 - rotAmount && rotation < num9 + rotAmount)
+					if (rotation > rot - rotAmount && rotation < rot + rotAmount)
 					{
-						rotation = num9;
+						rotation = rot;
 					}
 				}
 			}
@@ -6782,27 +6741,27 @@ namespace Redemption
 
 		public static void RotateTo(ref float rotation, float rotDestination, float rotAmount = 0.075f)
 		{
-			float num = 6.2831855f;
-			float num2 = rotDestination;
-			if (num2 > num)
+			float pi2 = 6.2831855f;
+			float rot = rotDestination;
+			if (rot > pi2)
 			{
-				num2 -= num;
+				rot -= pi2;
 			}
-			else if (num2 < 0f)
+			else if (rot < 0f)
 			{
-				num2 += num;
+				rot += pi2;
 			}
-			if (rotation > num)
+			if (rotation > pi2)
 			{
-				rotation -= num;
+				rotation -= pi2;
 			}
 			else if (rotation < 0f)
 			{
-				rotation += num;
+				rotation += pi2;
 			}
-			if (rotation < num2)
+			if (rotation < rot)
 			{
-				if ((double)(num2 - rotation) > 3.1415927410125732)
+				if ((double)(rot - rotation) > 3.1415927410125732)
 				{
 					rotation -= rotAmount;
 				}
@@ -6811,9 +6770,9 @@ namespace Redemption
 					rotation += rotAmount;
 				}
 			}
-			else if (rotation > num2)
+			else if (rotation > rot)
 			{
-				if ((double)(rotation - num2) > 3.1415927410125732)
+				if ((double)(rotation - rot) > 3.1415927410125732)
 				{
 					rotation += rotAmount;
 				}
@@ -6822,9 +6781,9 @@ namespace Redemption
 					rotation -= rotAmount;
 				}
 			}
-			if (rotation > num2 - rotAmount && rotation < num2 + rotAmount)
+			if (rotation > rot - rotAmount && rotation < rot + rotAmount)
 			{
-				rotation = num2;
+				rotation = rot;
 			}
 		}
 
@@ -6853,10 +6812,16 @@ namespace Redemption
 
 		public static Vector2 Trace(Vector2 start, Vector2 end, object ignore, int ignoreType, object dim, bool npcCheck = true, bool tileCheck = true, bool playerCheck = true, bool returnCenter = false, float Jump = 1f, bool ignorePlatforms = true)
 		{
-			return BaseAI.Trace(start, end, ignore, ignoreType, dim, npcCheck, tileCheck, playerCheck, returnCenter, ignorePlatforms ? new int[]
+			object tileTypesToIgnore;
+			if (!ignorePlatforms)
 			{
-				19
-			} : null, Jump);
+				tileTypesToIgnore = null;
+			}
+			else
+			{
+				(tileTypesToIgnore = new int[1])[0] = 19;
+			}
+			return BaseAI.Trace(start, end, ignore, ignoreType, dim, npcCheck, tileCheck, playerCheck, returnCenter, tileTypesToIgnore, Jump);
 		}
 
 		public static Vector2 Trace(Vector2 start, Vector2 end, object ignore, int ignoreType, object dim, bool npcCheck = true, bool tileCheck = true, bool playerCheck = true, bool returnCenter = false, int[] tileTypesToIgnore = null, float Jump = 1f)
@@ -6903,97 +6868,90 @@ namespace Redemption
 				{
 					end.Y = (float)(Main.maxTilesY * 16);
 				}
-				Vector2 vector;
-				vector..ctor(1f, 1f);
-				Vector2 vector2 = start;
-				Vector2 vector3 = end;
-				Vector2 vector4 = vector3 - vector2;
-				vector4.Normalize();
-				float num = Vector2.Distance(vector2, vector3);
-				for (float num2 = 0f; num2 < num; num2 += Jump)
+				Vector2 TC = new Vector2(1f, 1f);
+				Vector2 Pstart = start;
+				Vector2 Pend = end;
+				Vector2 dir = Pend - Pstart;
+				dir.Normalize();
+				float length = Vector2.Distance(Pstart, Pend);
+				for (float Way = 0f; Way < length; Way += Jump)
 				{
-					Vector2 vector5 = vector2 + vector4 * num2 + vector;
-					Rectangle rectangle = (Rectangle)dim;
-					Rectangle rectangle2;
-					rectangle2..ctor((int)vector5.X - ((rectangle.Width == 1) ? 0 : (rectangle.Width / 2)), (int)vector5.Y - ((rectangle.Height == 1) ? 0 : (rectangle.Height / 2)), rectangle.Width, rectangle.Height);
+					Vector2 v = Pstart + dir * Way + TC;
+					Rectangle dimensions = (Rectangle)dim;
+					Rectangle posRect = new Rectangle((int)v.X - ((dimensions.Width == 1) ? 0 : (dimensions.Width / 2)), (int)v.Y - ((dimensions.Height == 1) ? 0 : (dimensions.Height / 2)), dimensions.Width, dimensions.Height);
 					if (tileCheck)
 					{
-						int num3 = (int)vector5.X / 16;
-						int num4 = (int)vector5.Y / 16;
-						Rectangle rectangle3;
-						rectangle3..ctor((int)vector5.X, (int)vector5.Y, 16, 16);
-						if (rectangle2.Intersects(rectangle3))
+						int vecX = (int)v.X / 16;
+						int vecY = (int)v.Y / 16;
+						Rectangle rect = new Rectangle((int)v.X, (int)v.Y, 16, 16);
+						if (posRect.Intersects(rect))
 						{
-							Vector2 vector6 = (ignoreType == 1) ? ((Vector2)ignore) : new Vector2(-1f, -1f);
-							if ((int)vector6.X != num3 && (int)vector6.Y != num4)
+							Vector2 vec = (ignoreType == 1) ? ((Vector2)ignore) : new Vector2(-1f, -1f);
+							if ((int)vec.X != vecX && (int)vec.Y != vecY)
 							{
-								Tile tile = Main.tile[num3, num4];
-								if (tile != null && tile.nactive() && (tileTypesToIgnore == null || tileTypesToIgnore.Length <= 0 || !BaseUtility.InArray(tileTypesToIgnore, (int)tile.type)) && Main.tileSolid[(int)tile.type])
+								Tile tile = Main.tile[vecX, vecY];
+								if (tile != null && tile.nactive() && (tileTypesToIgnore == null || tileTypesToIgnore.Length == 0 || !BaseUtility.InArray(tileTypesToIgnore, (int)tile.type)) && Main.tileSolid[(int)tile.type])
 								{
-									return returnCenter ? new Vector2((float)(num3 * 16 + 8), (float)(num4 * 16 + 8)) : vector5;
+									return returnCenter ? new Vector2((float)(vecX * 16 + 8), (float)(vecY * 16 + 8)) : v;
 								}
 							}
 						}
 					}
 					if (npcCheck)
 					{
-						int[] npcs = BaseAI.GetNPCs(vector5, -1, 5f, null);
+						int[] npcs = BaseAI.GetNPCs(v, -1, 5f, null);
 						for (int i = 0; i < npcs.Length; i++)
 						{
 							NPC npc = Main.npc[npcs[i]];
 							if (npc.active && npc.life > 0 && (ignoreType != 2 || npc.whoAmI != (int)ignore))
 							{
-								Rectangle rectangle4;
-								rectangle4..ctor((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height);
-								if (rectangle2.Intersects(rectangle4))
+								Rectangle npcRect = new Rectangle((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height);
+								if (posRect.Intersects(npcRect))
 								{
-									return returnCenter ? npc.Center : vector5;
+									return returnCenter ? npc.Center : v;
 								}
 							}
 						}
 					}
 					if (playerCheck)
 					{
-						int[] players = BaseAI.GetPlayers(vector5, 5f, null);
+						int[] players = BaseAI.GetPlayers(v, 5f, null);
 						for (int j = 0; j < players.Length; j++)
 						{
 							Player player = Main.player[players[j]];
 							if (!player.dead && player.active && (ignoreType != 0 || player.whoAmI != (int)ignore))
 							{
-								Rectangle rectangle5;
-								rectangle5..ctor((int)player.position.X, (int)player.position.Y, player.width, player.height);
-								if (rectangle2.Intersects(rectangle5))
+								Rectangle playerRect = new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height);
+								if (posRect.Intersects(playerRect))
 								{
-									return returnCenter ? player.Center : vector5;
+									return returnCenter ? player.Center : v;
 								}
 							}
 						}
 					}
 				}
 			}
-			catch (Exception ex)
+			catch (Exception e)
 			{
-				ErrorLogger.Log("TRACE ERROR: " + ex.Message);
-				ErrorLogger.Log(ex.StackTrace);
-				ErrorLogger.Log("--------");
+				BaseUtility.LogFancy("Redemption~ TRACE ERROR:", e);
 			}
 			return end;
 		}
 
 		public static Vector2[] GetLinePoints(Vector2 start, Vector2 end, float jump = 1f)
 		{
-			Vector2 vector = end - start;
-			vector.Normalize();
-			float num = Vector2.Distance(start, end);
-			float num2 = 0f;
+			Vector2 dir = end - start;
+			dir.Normalize();
+			float length = Vector2.Distance(start, end);
+			float way = 0f;
 			BaseUtility.RotationTo(start, end);
-			List<Vector2> list = new List<Vector2>();
-			while (num2 < num)
+			List<Vector2> vList = new List<Vector2>();
+			while (way < length)
 			{
-				list.Add(start + vector * num2);
-				num2 += jump;
+				vList.Add(start + dir * way);
+				way += jump;
 			}
-			return list.ToArray();
+			return vList.ToArray();
 		}
 	}
 }

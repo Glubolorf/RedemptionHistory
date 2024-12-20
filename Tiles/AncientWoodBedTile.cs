@@ -19,9 +19,9 @@ namespace Redemption.Tiles
 				18
 			};
 			TileObjectData.addTile((int)base.Type);
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Ancient Wood Bed");
-			base.AddMapEntry(new Color(200, 200, 200), modTranslation);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Ancient Wood Bed");
+			base.AddMapEntry(new Color(200, 200, 200), name);
 			this.dustType = 78;
 			this.disableSmartCursor = true;
 			this.adjTiles = new int[]
@@ -41,29 +41,29 @@ namespace Redemption.Tiles
 			Item.NewItem(i * 16, j * 16, 64, 32, base.mod.ItemType("AncientWoodBed"), 1, false, 0, false, false);
 		}
 
-		public override void RightClick(int i, int j)
+		public override bool NewRightClick(int i, int j)
 		{
-			Player localPlayer = Main.LocalPlayer;
+			Player player = Main.LocalPlayer;
 			Tile tile = Main.tile[i, j];
-			int num = i - (int)(tile.frameX / 18);
-			int num2 = j + 2;
-			num += ((tile.frameX >= 72) ? 5 : 2);
+			int spawnX = i - (int)(tile.frameX / 18);
+			int spawnY = j + 2;
+			spawnX += ((tile.frameX >= 72) ? 5 : 2);
 			if (tile.frameY % 38 != 0)
 			{
-				num2--;
+				spawnY--;
 			}
-			localPlayer.FindSpawn();
-			if (localPlayer.SpawnX == num && localPlayer.SpawnY == num2)
+			player.FindSpawn();
+			if (player.SpawnX == spawnX && player.SpawnY == spawnY)
 			{
-				localPlayer.RemoveSpawn();
+				player.RemoveSpawn();
 				Main.NewText("Spawn point removed!", byte.MaxValue, 240, 20, false);
-				return;
 			}
-			if (Player.CheckSpawn(num, num2))
+			else if (Player.CheckSpawn(spawnX, spawnY))
 			{
-				localPlayer.ChangeSpawn(num, num2);
+				player.ChangeSpawn(spawnX, spawnY);
 				Main.NewText("Spawn point set!", byte.MaxValue, 240, 20, false);
 			}
+			return true;
 		}
 
 		public override void MouseOver(int i, int j)

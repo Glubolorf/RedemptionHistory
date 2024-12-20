@@ -42,12 +42,12 @@ namespace Redemption.Items
 			modRecipe.AddTile(13);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "Nightshade", 2);
-			modRecipe.AddIngredient(301, 1);
-			modRecipe.AddTile(355);
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.AddIngredient(null, "Nightshade", 2);
+			modRecipe2.AddIngredient(301, 1);
+			modRecipe2.AddTile(355);
+			modRecipe2.SetResult(this, 1);
+			modRecipe2.AddRecipe();
 		}
 	}
 }

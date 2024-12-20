@@ -13,7 +13,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Corrupted Xenomite Headgear");
-			base.Tooltip.SetDefault("6% increased magic and summon damage\n+5 max minions");
+			base.Tooltip.SetDefault("6% increased magic and minion damage\n+5 max minions");
 		}
 
 		public override void SetDefaults()

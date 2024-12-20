@@ -34,11 +34,11 @@ namespace Redemption.Items.Placeable
 			modRecipe.AddTile(283);
 			modRecipe.SetResult(this, 66);
 			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "VlitchPlatingWall", 4);
-			modRecipe.AddTile(18);
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
+			ModRecipe modRecipe2 = new ModRecipe(base.mod);
+			modRecipe2.AddIngredient(null, "VlitchPlatingWall", 4);
+			modRecipe2.AddTile(18);
+			modRecipe2.SetResult(this, 1);
+			modRecipe2.AddRecipe();
 		}
 	}
 }

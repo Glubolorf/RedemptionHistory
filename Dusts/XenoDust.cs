@@ -28,8 +28,8 @@ namespace Redemption.Dusts
 			}
 			else
 			{
-				float num = dust.scale / 2f;
-				Lighting.AddLight((int)(dust.position.X / 16f), (int)(dust.position.Y / 16f), (float)dust.color.R / 255f * 0f * num, (float)dust.color.G / 255f * 0.5f * num, (float)dust.color.B / 255f * 0f * num);
+				float strength = dust.scale / 2f;
+				Lighting.AddLight((int)(dust.position.X / 16f), (int)(dust.position.Y / 16f), (float)dust.color.R / 255f * 0f * strength, (float)dust.color.G / 255f * 0.5f * strength, (float)dust.color.B / 255f * 0f * strength);
 			}
 			return false;
 		}

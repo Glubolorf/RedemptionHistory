@@ -22,10 +22,9 @@ namespace Redemption
 			{
 				if (obj is byte[])
 				{
-					byte[] array = (byte[])obj;
-					foreach (byte value in array)
+					foreach (byte b in (byte[])obj)
 					{
-						packet.Write(value);
+						packet.Write(b);
 					}
 				}
 				else if (obj is bool)
@@ -54,37 +53,37 @@ namespace Redemption
 
 		public static void SyncAI(Entity codable, float[] ai, int aitype)
 		{
-			int num = (codable is NPC) ? 0 : ((codable is Projectile) ? 1 : -1);
-			if (num == -1)
+			int entType = (codable is NPC) ? 0 : ((codable is Projectile) ? 1 : -1);
+			if (entType == -1)
 			{
 				return;
 			}
 			int id = (codable is NPC) ? ((NPC)codable).whoAmI : ((Projectile)codable).identity;
-			BaseNet.SyncAI(num, id, ai, aitype);
+			BaseNet.SyncAI(entType, id, ai, aitype);
 		}
 
 		public static void SyncAI(int entType, int id, float[] ai, int aitype)
 		{
-			object[] array = new object[ai.Length + 4];
-			array[0] = (byte)entType;
-			array[1] = (short)id;
-			array[2] = (byte)aitype;
-			array[3] = (byte)ai.Length;
-			for (int i = 4; i < array.Length; i++)
+			object[] ai2 = new object[ai.Length + 4];
+			ai2[0] = (byte)entType;
+			ai2[1] = (short)id;
+			ai2[2] = (byte)aitype;
+			ai2[3] = (byte)ai.Length;
+			for (int i = 4; i < ai2.Length; i++)
 			{
-				array[i] = ai[i - 4];
+				ai2[i] = ai[i - 4];
 			}
-			MNet.SendBaseNetMessage(1, array);
+			MNet.SendBaseNetMessage(1, ai2);
 		}
 
 		public static object[] WriteVector2Array(Vector2[] array)
 		{
 			List<object> list = new List<object>();
 			list.Add(array.Length);
-			foreach (Vector2 vector in array)
+			foreach (Vector2 vec in array)
 			{
-				list.Add(vector.X);
-				list.Add(vector.Y);
+				list.Add(vec.X);
+				list.Add(vec.Y);
 			}
 			return list.ToArray();
 		}
@@ -92,18 +91,18 @@ namespace Redemption
 		public static void WriteVector2Array(Vector2[] array, BinaryWriter writer)
 		{
 			writer.Write(array.Length);
-			foreach (Vector2 vector in array)
+			foreach (Vector2 vec in array)
 			{
-				writer.Write(vector.X);
-				writer.Write(vector.Y);
+				writer.Write(vec.X);
+				writer.Write(vec.Y);
 			}
 		}
 
 		public static Vector2[] ReadVector2Array(BinaryReader reader)
 		{
-			int num = reader.ReadInt();
-			Vector2[] array = new Vector2[num];
-			for (int i = 0; i < num; i++)
+			int arrayLength = reader.ReadInt();
+			Vector2[] array = new Vector2[arrayLength];
+			for (int i = 0; i < arrayLength; i++)
 			{
 				array[i] = new Vector2(reader.ReadFloat(), reader.ReadFloat());
 			}

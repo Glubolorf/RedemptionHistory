@@ -27,29 +27,35 @@ namespace Redemption.NPCs.Bosses.XenomiteCrystal
 
 		public override void AI()
 		{
-			if (++base.projectile.frameCounter >= 3)
+			Projectile projectile = base.projectile;
+			int num = projectile.frameCounter + 1;
+			projectile.frameCounter = num;
+			if (num >= 3)
 			{
 				base.projectile.frameCounter = 0;
-				if (++base.projectile.frame >= 3)
+				Projectile projectile2 = base.projectile;
+				num = projectile2.frame + 1;
+				projectile2.frame = num;
+				if (num >= 3)
 				{
 					base.projectile.frame = 0;
 				}
 			}
 			base.projectile.rotation = (float)Math.Atan2((double)base.projectile.velocity.Y, (double)base.projectile.velocity.X) + 1.57f;
 			base.projectile.Center + Vector2.Normalize(base.projectile.velocity) * 10f;
-			Projectile projectile = base.projectile;
-			projectile.velocity.Y = projectile.velocity.Y + 0.2f;
-			int num = 74;
-			int num2 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num, 0f, 0f, 100, Color.White, 1f);
-			Main.dust[num2].velocity *= 0f;
-			Main.dust[num2].noLight = false;
-			Main.dust[num2].noGravity = true;
+			Projectile projectile3 = base.projectile;
+			projectile3.velocity.Y = projectile3.velocity.Y + 0.2f;
+			int dustType = 74;
+			int dustID = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, dustType, 0f, 0f, 100, Color.White, 1f);
+			Main.dust[dustID].velocity *= 0f;
+			Main.dust[dustID].noLight = false;
+			Main.dust[dustID].noGravity = true;
 		}
 
 		public override void Kill(int timeLeft)
 		{
-			int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 74, 0f, 0f, 100, default(Color), 1.5f);
-			Main.dust[num].velocity *= 1.9f;
+			int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 74, 0f, 0f, 100, default(Color), 1.5f);
+			Main.dust[dustIndex].velocity *= 1.9f;
 		}
 	}
 }

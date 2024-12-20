@@ -24,9 +24,9 @@ namespace Redemption.Tiles
 				16
 			};
 			TileObjectData.addTile((int)base.Type);
-			ModTranslation modTranslation = base.CreateMapEntryName(null);
-			modTranslation.SetDefault("Petrified Wood Clock");
-			base.AddMapEntry(new Color(200, 200, 200), modTranslation);
+			ModTranslation name = base.CreateMapEntryName(null);
+			name.SetDefault("Petrified Wood Clock");
+			base.AddMapEntry(new Color(200, 200, 200), name);
 			this.adjTiles = new int[]
 			{
 				104
@@ -36,47 +36,45 @@ namespace Redemption.Tiles
 		public override void RightClick(int x, int y)
 		{
 			string text = "AM";
-			double num = Main.time;
+			double time = Main.time;
 			if (!Main.dayTime)
 			{
-				num += 54000.0;
+				time += 54000.0;
 			}
-			num = num / 86400.0 * 24.0;
-			num = num - 7.5 - 12.0;
-			if (num < 0.0)
+			time = time / 86400.0 * 24.0;
+			time = time - 7.5 - 12.0;
+			if (time < 0.0)
 			{
-				num += 24.0;
+				time += 24.0;
 			}
-			if (num >= 12.0)
+			if (time >= 12.0)
 			{
 				text = "PM";
 			}
-			int num2 = (int)num;
-			double num3 = num - (double)num2;
-			num3 = (double)((int)(num3 * 60.0));
-			string text2 = string.Concat(num3);
-			if (num3 < 10.0)
+			int intTime = (int)time;
+			double num = (double)((int)((time - (double)intTime) * 60.0));
+			string text2 = string.Concat(num);
+			if (num < 10.0)
 			{
 				text2 = "0" + text2;
 			}
-			if (num2 > 12)
+			if (intTime > 12)
 			{
-				num2 -= 12;
+				intTime -= 12;
 			}
-			if (num2 == 0)
+			if (intTime == 0)
 			{
-				num2 = 12;
+				intTime = 12;
 			}
-			string text3 = string.Concat(new object[]
+			Main.NewText(string.Concat(new object[]
 			{
 				"Time: ",
-				num2,
+				intTime,
 				":",
 				text2,
 				" ",
 				text
-			});
-			Main.NewText(text3, byte.MaxValue, 240, 20, false);
+			}), byte.MaxValue, 240, 20, false);
 		}
 
 		public override void NearbyEffects(int i, int j, bool closer)

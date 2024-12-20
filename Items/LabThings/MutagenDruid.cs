@@ -10,7 +10,7 @@ namespace Redemption.Items.LabThings
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Druid's Mutagen");
-			base.Tooltip.SetDefault("15% increased druidic damage\n10% increased druidic critical strike chance");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n15% increased druidic damage\n10% increased druidic critical strike chance");
 		}
 
 		public override void SetDefaults()

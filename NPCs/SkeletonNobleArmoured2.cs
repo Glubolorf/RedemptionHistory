@@ -64,8 +64,7 @@ namespace Redemption.NPCs
 					this.slashFrame = 0;
 				}
 			}
-			float num = base.npc.Distance(Main.player[base.npc.target].Center);
-			if (num <= 80f && !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).skeletonFriendly && Main.rand.Next(20) == 0 && !this.slashAttack)
+			if (base.npc.Distance(Main.player[base.npc.target].Center) <= 80f && !Main.LocalPlayer.GetModPlayer<RedePlayer>().skeletonFriendly && Main.rand.Next(20) == 0 && !this.slashAttack)
 			{
 				this.slashAttack = true;
 			}
@@ -78,7 +77,7 @@ namespace Redemption.NPCs
 				this.slashTimer++;
 				base.npc.aiStyle = 0;
 				base.npc.velocity.X = 0f;
-				if (this.slashTimer == 1 && !Config.NoCombatText)
+				if (this.slashTimer == 1 && !RedeConfigClient.Instance.NoCombatText)
 				{
 					CombatText.NewText(base.npc.getRect(), Color.Gray, "Slash!", true, true);
 				}
@@ -86,14 +85,14 @@ namespace Redemption.NPCs
 				{
 					if (base.npc.direction == -1)
 					{
-						int num2 = Projectile.NewProjectile(base.npc.position.X + -14f, base.npc.position.Y + 4f, 0f, 0f, base.mod.ProjectileType("DamagePro2"), 16, 3f, 255, 0f, 0f);
-						Main.projectile[num2].netUpdate = true;
+						int p = Projectile.NewProjectile(base.npc.position.X + -14f, base.npc.position.Y + 4f, 0f, 0f, base.mod.ProjectileType("DamagePro2"), 16, 3f, 255, 0f, 0f);
+						Main.projectile[p].netUpdate = true;
 						Main.PlaySound(SoundID.Item1, (int)base.npc.position.X, (int)base.npc.position.Y);
 					}
 					else
 					{
-						int num3 = Projectile.NewProjectile(base.npc.position.X + 48f, base.npc.position.Y + 4f, 0f, 0f, base.mod.ProjectileType("DamagePro2"), 16, 3f, 255, 0f, 0f);
-						Main.projectile[num3].netUpdate = true;
+						int p2 = Projectile.NewProjectile(base.npc.position.X + 48f, base.npc.position.Y + 4f, 0f, 0f, base.mod.ProjectileType("DamagePro2"), 16, 3f, 255, 0f, 0f);
+						Main.projectile[p2].netUpdate = true;
 						Main.PlaySound(SoundID.Item1, (int)base.npc.position.X, (int)base.npc.position.Y);
 					}
 				}
@@ -114,27 +113,26 @@ namespace Redemption.NPCs
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			Texture2D texture2D = Main.npcTexture[base.npc.type];
-			Texture2D texture = base.mod.GetTexture("NPCs/SkeletonNobleArmoured2Slash");
+			Texture2D texture = Main.npcTexture[base.npc.type];
+			Texture2D slashAni = base.mod.GetTexture("NPCs/SkeletonNobleArmoured2Slash");
 			int spriteDirection = base.npc.spriteDirection;
 			if (!this.slashAttack)
 			{
-				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			if (this.slashAttack)
 			{
-				Vector2 vector;
-				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num = texture.Height / 6;
-				int num2 = num * this.slashFrame;
-				Main.spriteBatch.Draw(texture, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Vector2 drawCenter = new Vector2(base.npc.Center.X, base.npc.Center.Y);
+				int num214 = slashAni.Height / 6;
+				int y6 = num214 * this.slashFrame;
+				Main.spriteBatch.Draw(slashAni, drawCenter - Main.screenPosition, new Rectangle?(new Rectangle(0, y6, slashAni.Width, num214)), drawColor, base.npc.rotation, new Vector2((float)slashAni.Width / 2f, (float)num214 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			return false;
 		}
 
 		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
 		{
-			return !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).skeletonFriendly;
+			return !Main.LocalPlayer.GetModPlayer<RedePlayer>().skeletonFriendly;
 		}
 
 		private bool slashAttack;

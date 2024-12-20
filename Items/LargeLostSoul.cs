@@ -21,10 +21,10 @@ namespace Redemption.Items
 
 		public override void SetDefaults()
 		{
-			Item item = new Item();
-			item.SetDefaults(549, false);
-			base.item.width = item.width;
-			base.item.height = item.height;
+			Item refItem = new Item();
+			refItem.SetDefaults(549, false);
+			base.item.width = refItem.width;
+			base.item.height = refItem.height;
 			base.item.maxStack = 999;
 			base.item.value = 50;
 			base.item.rare = 1;

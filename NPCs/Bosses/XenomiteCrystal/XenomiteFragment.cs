@@ -60,6 +60,10 @@ namespace Redemption.NPCs.Bosses.XenomiteCrystal
 			{
 				Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, base.mod.DustType("PuriumFlame"), 0f, 0f, 0, default(Color), 1f);
 			}
+			if (!NPC.AnyNPCs(base.mod.NPCType("XenomiteCrystalPhase2")) && !NPC.AnyNPCs(base.mod.NPCType("XenomiteCrystal")))
+			{
+				base.npc.active = false;
+			}
 		}
 	}
 }

@@ -204,6 +204,10 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
+			if (Main.raining)
+			{
+				return SpawnCondition.OverworldNightMonster.Chance * ((Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == 2) ? 0.008f : 0f);
+			}
 			return SpawnCondition.OverworldNightMonster.Chance * ((Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == 2) ? 0.002f : 0f);
 		}
 

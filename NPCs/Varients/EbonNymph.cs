@@ -204,6 +204,10 @@ namespace Redemption.NPCs.Varients
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
+			if (Main.raining)
+			{
+				return SpawnCondition.Corruption.Chance * ((Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == 23) ? 0.008f : 0f);
+			}
 			return SpawnCondition.Corruption.Chance * ((Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == 23) ? 0.002f : 0f);
 		}
 

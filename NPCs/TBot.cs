@@ -197,6 +197,8 @@ namespace Redemption.NPCs
 				nextSlot++;
 				shop.item[nextSlot].SetDefaults(base.mod.ItemType("MiniNuke"), false);
 				nextSlot++;
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("LabGeigerCounter"), false);
+				nextSlot++;
 			}
 			shop.item[nextSlot].SetDefaults(base.mod.ItemType("XenomiteShard"), false);
 			nextSlot++;

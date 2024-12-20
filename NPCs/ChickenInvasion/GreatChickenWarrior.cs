@@ -64,7 +64,7 @@ namespace Redemption.NPCs.ChickenInvasion
 
 		public override void NPCLoot()
 		{
-			if (Main.rand.Next(50) == 0)
+			if (RedeWorld.downedPatientZero && Main.rand.Next(50) == 0)
 			{
 				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("GreatChickenShield"), 1, false, 0, false, false);
 			}

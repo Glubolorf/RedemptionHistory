@@ -33,6 +33,11 @@ namespace Redemption.Items
 			base.item.value = Item.buyPrice(0, 12, 0, 0);
 		}
 
+		public override bool CanUseItem(Player player)
+		{
+			return RedeWorld.downedPatientZero;
+		}
+
 		public override void HoldItem(Player player)
 		{
 			player.AddBuff(base.mod.BuffType("ChickenShieldBuff"), 4, true);

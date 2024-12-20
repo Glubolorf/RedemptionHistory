@@ -10,7 +10,7 @@ Adds:
 - 261 NPCs (Including bosses & minibosses)
 - 11 Bosses
 - 10 Minibosses
-- 974 Items
+- 976 Items
 
 Latest Major Update:
 - Nebuleus boss

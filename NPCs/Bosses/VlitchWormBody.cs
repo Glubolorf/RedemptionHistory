@@ -20,7 +20,7 @@ namespace Redemption.NPCs.Bosses
 			base.npc.width = 122;
 			base.npc.height = 152;
 			base.npc.damage = 100;
-			base.npc.defense = 75;
+			base.npc.defense = 30;
 			base.npc.lifeMax = 1;
 			base.npc.knockBackResist = 0f;
 			base.npc.friendly = false;

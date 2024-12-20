@@ -71,6 +71,14 @@ namespace Redemption.Projectiles.Pets
 				}
 			}
 			Player player = Main.player[base.projectile.owner];
+			if ((player.ZoneDesert || player.ZoneUndergroundDesert || player.ZoneUnderworldHeight) && Main.rand.Next(4) == 0)
+			{
+				int dustIndex = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 33, 0f, 0f, 100, default(Color), 1f);
+				Main.dust[dustIndex].noGravity = false;
+				Dust dust = Main.dust[dustIndex];
+				dust.velocity.X = 0f;
+				dust.velocity.Y = 0f;
+			}
 			if (Main.rand.Next(20000) == 0)
 			{
 				switch (Main.rand.Next(7))

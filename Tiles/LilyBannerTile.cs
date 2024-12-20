@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Redemption.Buffs;
 using Redemption.Items.Placeable;
 using Terraria;
 using Terraria.ModLoader;
@@ -30,14 +29,6 @@ namespace Redemption.Tiles
 			name.SetDefault("Lily Rune Banner");
 			base.AddMapEntry(new Color(200, 200, 200), name);
 			this.dustType = 78;
-		}
-
-		public override void NearbyEffects(int i, int j, bool closer)
-		{
-			if (closer)
-			{
-				Main.LocalPlayer.AddBuff(ModContent.BuffType<LilyBuff>(), Main.rand.Next(10, 20), true);
-			}
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num)

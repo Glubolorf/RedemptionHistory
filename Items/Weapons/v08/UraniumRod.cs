@@ -60,5 +60,15 @@ namespace Redemption.Items.Weapons.v08
 			position = Main.MouseWorld;
 			return true;
 		}
+
+		public override void AddRecipes()
+		{
+			ModRecipe modRecipe = new ModRecipe(base.mod);
+			modRecipe.AddIngredient(null, "Uranium", 18);
+			modRecipe.AddRecipeGroup("Redemption:Plating", 2);
+			modRecipe.AddTile(134);
+			modRecipe.SetResult(this, 1);
+			modRecipe.AddRecipe();
+		}
 	}
 }

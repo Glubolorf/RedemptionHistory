@@ -23,6 +23,10 @@ namespace Redemption.Tiles
 			base.AddMapEntry(new Color(200, 200, 200), name);
 			this.dustType = 80;
 			this.disableSmartCursor = true;
+			this.adjTiles = new int[]
+			{
+				17
+			};
 		}
 
 		public override void AnimateTile(ref int frame, ref int frameCounter)

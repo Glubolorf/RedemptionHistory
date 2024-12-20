@@ -24,7 +24,7 @@ namespace Redemption.NPCs.Bosses
 
 		public override void SetDefaults()
 		{
-			base.npc.lifeMax = 75000;
+			base.npc.lifeMax = 50000;
 			base.npc.damage = 150;
 			base.npc.defense = 300;
 			base.npc.knockBackResist = 0f;
@@ -46,6 +46,12 @@ namespace Redemption.NPCs.Bosses
 			base.npc.npcSlots = 1f;
 			base.npc.netAlways = true;
 			this.bossBag = ModContent.ItemType<VlitchGigipedeBag>();
+		}
+
+		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+		{
+			base.npc.lifeMax = (int)((float)base.npc.lifeMax * 0.6f * bossLifeScale);
+			base.npc.damage = (int)((float)base.npc.damage * 0.6f);
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -136,7 +142,7 @@ namespace Redemption.NPCs.Bosses
 				}
 				damage = (int)((float)damage * 0.44f);
 			}
-			if (projectile.ranged && (projectile.width < 20 || projectile.height < 20) && Main.rand.Next(2) == 0)
+			if (projectile.ranged && (projectile.width < 20 || projectile.height < 20) && Main.rand.Next(4) == 0)
 			{
 				if (!Main.dedServ)
 				{

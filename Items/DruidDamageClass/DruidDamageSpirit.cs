@@ -32,7 +32,7 @@ namespace Redemption.Items.DruidDamageClass
 			int tooltipLocation2 = tooltips.FindIndex((TooltipLine TooltipLine) => TooltipLine.Name.Equals("Tooltip0"));
 			if (tooltipLocation != -1 && !RedeConfigClient.Instance.NoDruidClassTag)
 			{
-				tooltips.Insert(tooltipLocation + 1, new TooltipLine(base.mod, "IsDruid", "[c/bdffff:---Druid Class---]"));
+				tooltips.Insert(tooltipLocation + 1, new TooltipLine(base.mod, "IsDruid", "[c/bdffff:-Druid Class-]"));
 			}
 			if (tooltipLocation2 != -1 && this.spiritWeapon)
 			{

@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Redemption.Items.DruidDamageClass;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,6 +27,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 			base.projectile.ignoreWater = true;
 			base.projectile.alpha = 150;
 			base.projectile.timeLeft = 200;
+			base.projectile.GetGlobalProjectile<DruidProjectile>().druidic = true;
 		}
 
 		public override void AI()
@@ -67,15 +69,11 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
 			Player player = Main.player[base.projectile.owner];
-			int critChance = player.HeldItem.crit;
-			ItemLoader.GetWeaponCrit(player.HeldItem, player, ref critChance);
-			PlayerHooks.GetWeaponCrit(player, player.HeldItem, ref critChance);
-			if (critChance >= 100 || Main.rand.Next(1, 101) <= critChance)
+			if (Main.rand.Next(10) == 0)
 			{
-				crit = true;
+				player.statLife++;
+				player.HealEffect(1, true);
 			}
-			player.statLife++;
-			player.HealEffect(1, true);
 		}
 
 		private void AdjustMagnitude(ref Vector2 vector)

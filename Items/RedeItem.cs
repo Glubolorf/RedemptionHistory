@@ -69,7 +69,7 @@ namespace Redemption.Items
 				int tooltipLocation = tooltips.FindIndex((TooltipLine TooltipLine) => TooltipLine.Name.Equals("ItemName"));
 				if (tooltipLocation != -1 && !RedeConfigClient.Instance.NoDruidClassTag)
 				{
-					tooltips.Insert(tooltipLocation + 1, new TooltipLine(base.mod, "IsDruid", "[c/91dc16:---Druid Class---]"));
+					tooltips.Insert(tooltipLocation + 1, new TooltipLine(base.mod, "IsDruid", "[c/91dc16:-Druid Class-]"));
 				}
 			}
 			foreach (TooltipLine line2 in tooltips)

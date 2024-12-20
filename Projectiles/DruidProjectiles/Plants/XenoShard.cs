@@ -23,7 +23,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 			base.projectile.hostile = false;
 			base.projectile.friendly = true;
 			base.projectile.ignoreWater = true;
-			base.projectile.tileCollide = false;
+			base.projectile.tileCollide = true;
 			base.projectile.alpha = 35;
 			base.projectile.timeLeft = 200;
 			base.projectile.GetGlobalProjectile<DruidProjectile>().druidic = true;
@@ -43,7 +43,7 @@ namespace Redemption.Projectiles.DruidProjectiles.Plants
 			bool target = false;
 			for (int i = 0; i < 200; i++)
 			{
-				if (Main.npc[i].active && !Main.npc[i].dontTakeDamage && !Main.npc[i].friendly && Main.npc[i].lifeMax > 5 && !Main.npc[i].immortal)
+				if (Main.npc[i].active && !Main.npc[i].dontTakeDamage && !Main.npc[i].friendly && Main.npc[i].lifeMax > 5 && !Main.npc[i].immortal && Collision.CanHit(base.projectile.Center, 0, 0, Main.npc[i].Center, 0, 0))
 				{
 					Vector2 newMove = Main.npc[i].Center - base.projectile.Center;
 					float distanceTo = (float)Math.Sqrt((double)(newMove.X * newMove.X + newMove.Y * newMove.Y));

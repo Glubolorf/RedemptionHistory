@@ -27,7 +27,7 @@ namespace Redemption.Items
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			player.wingTimeMax = 150;
+			player.wingTimeMax = 100;
 		}
 
 		public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising, ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend)
@@ -35,13 +35,13 @@ namespace Redemption.Items
 			ascentWhenFalling = 0.85f;
 			ascentWhenRising = 0.15f;
 			maxCanAscendMultiplier = 1f;
-			maxAscentMultiplier = 3f;
+			maxAscentMultiplier = 1.7f;
 			constantAscend = 0.135f;
 		}
 
 		public override void HorizontalWingSpeeds(Player player, ref float speed, ref float acceleration)
 		{
-			speed = 9f;
+			speed = 7f;
 			acceleration *= 2.5f;
 		}
 

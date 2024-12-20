@@ -35,7 +35,7 @@ namespace Redemption.Items.DruidDamageClass
 			int tooltipLocation2 = tooltips.FindIndex((TooltipLine TooltipLine) => TooltipLine.Name.Equals("Tooltip0"));
 			if (tooltipLocation != -1 && !RedeConfigClient.Instance.NoDruidClassTag)
 			{
-				tooltips.Insert(tooltipLocation + 1, new TooltipLine(base.mod, "IsDruid", "[c/91dc16:---Druid Class---]"));
+				tooltips.Insert(tooltipLocation + 1, new TooltipLine(base.mod, "IsDruid", "[c/91dc16:-Druid Class-]"));
 			}
 			if (tooltipLocation2 != -1 && this.guardianBuffID != -1 && this.guardianProjectileID != -1)
 			{
@@ -75,32 +75,33 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override bool AltFunctionUse(Player player)
 		{
-			return this.guardianBuffID != -1 && this.guardianProjectileID != -1;
+			return (this.guardianBuffID != -1 && this.guardianProjectileID != -1) || this.rightClickStave;
 		}
 
 		public override bool CanUseItem(Player player)
 		{
 			if (this.defaultShoot != -1)
 			{
-				if (this.guardianBuffID != -1 && this.guardianProjectileID != -1 && player.altFunctionUse == 2)
+				if (((this.guardianBuffID != -1 && this.guardianProjectileID != -1) || this.rightClickStave) && player.altFunctionUse == 2)
 				{
-					base.item.mana = 1;
-					base.item.buffType = this.guardianBuffID;
-					base.item.buffTime = (int)((float)this.guardianTime * (Main.LocalPlayer.GetModPlayer<RedePlayer>().longerGuardians ? 1.5f : 1f) * base.item.GetGlobalItem<RedeItem>().prefixLifetimeModifier);
-					base.item.shoot = this.guardianProjectileID;
-					if (!player.HasBuff(ModContent.BuffType<GuardianCooldownDebuff>()))
+					if (!this.rightClickStave)
 					{
-						if (Main.LocalPlayer.GetModPlayer<RedePlayer>().guardianCooldownReduce)
+						if (!player.HasBuff(ModContent.BuffType<GuardianCooldownDebuff>()))
 						{
-							player.AddBuff(ModContent.BuffType<GuardianCooldownDebuff>(), 2700, true);
+							player.AddBuff(this.guardianBuffID, (int)((float)this.guardianTime * (player.GetModPlayer<RedePlayer>().longerGuardians ? 1.5f : 1f) * base.item.GetGlobalItem<RedeItem>().prefixLifetimeModifier), true);
+							Projectile.NewProjectile(player.Center, Vector2.Zero, this.guardianProjectileID, (int)((float)base.item.damage * player.GetModPlayer<DruidDamagePlayer>().druidDamage), base.item.knockBack * player.GetModPlayer<DruidDamagePlayer>().druidKnockback, base.item.owner, 0f, 0f);
+							if (player.GetModPlayer<RedePlayer>().guardianCooldownReduce)
+							{
+								player.AddBuff(ModContent.BuffType<GuardianCooldownDebuff>(), 2700, true);
+							}
+							else
+							{
+								player.AddBuff(ModContent.BuffType<GuardianCooldownDebuff>(), 3600, true);
+							}
+							return true;
 						}
-						else
-						{
-							player.AddBuff(ModContent.BuffType<GuardianCooldownDebuff>(), 3600, true);
-						}
-						return true;
+						return false;
 					}
-					return false;
 				}
 				else
 				{
@@ -115,7 +116,7 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override void UseStyle(Player player)
 		{
-			if (player.altFunctionUse == 2)
+			if (player.altFunctionUse == 2 && !this.rightClickStave)
 			{
 				player.itemRotation = 0.7853982f * (float)player.direction;
 				player.bodyFrame.Y = player.bodyFrame.Height * 5;
@@ -136,7 +137,7 @@ namespace Redemption.Items.DruidDamageClass
 			}
 			vector24 -= new Vector2((float)(player.bodyFrame.Width - player.width), (float)(player.bodyFrame.Height - 42)) / 2f;
 			player.itemLocation = player.position + vector24;
-			if (player.altFunctionUse == 2)
+			if (player.altFunctionUse == 2 && !this.rightClickStave)
 			{
 				player.itemLocation += Vector2.UnitY * -4f;
 				return;
@@ -234,6 +235,8 @@ namespace Redemption.Items.DruidDamageClass
 		protected int guardianProjectileID = -1;
 
 		protected bool singleShotStave = true;
+
+		protected bool rightClickStave;
 
 		protected Vector2 staveHoldOffset = Vector2.Zero;
 

@@ -39,6 +39,10 @@ namespace Redemption.Tiles.LabDeco
 			name.SetDefault("Xenium Smelter");
 			base.AddMapEntry(new Color(120, 170, 120), name);
 			this.animationFrameHeight = 72;
+			this.adjTiles = new int[]
+			{
+				133
+			};
 		}
 
 		public override void AnimateTile(ref int frame, ref int frameCounter)

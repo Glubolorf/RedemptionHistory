@@ -14,6 +14,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("True Hallowed Stave");
+			base.Tooltip.SetDefault("");
 		}
 
 		public override void SafeSetDefaults()

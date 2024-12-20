@@ -23,6 +23,10 @@ namespace Redemption.Tiles
 			this.disableSmartCursor = true;
 			TileObjectData.addTile((int)base.Type);
 			this.animationFrameHeight = 38;
+			this.adjTiles = new int[]
+			{
+				77
+			};
 		}
 
 		public override void AnimateTile(ref int frame, ref int frameCounter)

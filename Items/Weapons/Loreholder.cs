@@ -28,7 +28,7 @@ namespace Redemption.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Loreholder, Cursed Blade");
-			base.Tooltip.SetDefault("'Your vision is blocked by walls of text'\nTells you the lore of Redemption enemies slain by this weapon\n[c/ffea9b:A sentient blade, cursed with infinite knowledge]");
+			base.Tooltip.SetDefault("'Your vision is blocked by walls of text'\nRight-clicking tells you the lore of Redemption enemies hit by this weapon\n[c/ffea9b:A sentient blade, cursed with infinite knowledge]");
 		}
 
 		public override void SetDefaults()
@@ -59,9 +59,14 @@ namespace Redemption.Items.Weapons
 			modRecipe.AddRecipe();
 		}
 
+		public override bool AltFunctionUse(Player player)
+		{
+			return true;
+		}
+
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
 		{
-			if (target.life <= 0)
+			if (player.altFunctionUse == 2)
 			{
 				if (target.type == ModContent.NPCType<AAAA>())
 				{

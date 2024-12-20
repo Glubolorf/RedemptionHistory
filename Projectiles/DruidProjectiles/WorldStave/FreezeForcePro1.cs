@@ -43,7 +43,7 @@ namespace Redemption.Projectiles.DruidProjectiles.WorldStave
 			for (int p2 = 0; p2 < 200; p2++)
 			{
 				this.clearCheck2 = Main.npc[p2];
-				if (!this.clearCheck2.immortal && !this.clearCheck2.dontTakeDamage && Collision.CheckAABBvAABBCollision(base.projectile.position, base.projectile.Size, this.clearCheck2.position, this.clearCheck2.Size))
+				if (!this.clearCheck2.immortal && !this.clearCheck2.dontTakeDamage && !this.clearCheck2.friendly && Collision.CheckAABBvAABBCollision(base.projectile.position, base.projectile.Size, this.clearCheck2.position, this.clearCheck2.Size))
 				{
 					this.clearCheck2.AddBuff(44, 10, false);
 				}

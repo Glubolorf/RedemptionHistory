@@ -5,7 +5,6 @@ using Terraria.ModLoader;
 
 namespace Redemption.NPCs.Bosses.OmegaOblit
 {
-	[AutoloadBossHead]
 	public class OOShield : ModNPC
 	{
 		public override string Texture
@@ -29,7 +28,6 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 
 		public override void SetDefaults()
 		{
-			base.npc.scale = 1f;
 			base.npc.width = 48;
 			base.npc.height = 48;
 			base.npc.damage = 120;
@@ -57,6 +55,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 					base.npc.frame.Y = 0;
 				}
 			}
+			Lighting.AddLight(base.npc.Center, (float)(255 - base.npc.alpha) * 1f / 255f, (float)(255 - base.npc.alpha) * 1f / 255f, (float)(255 - base.npc.alpha) * 1f / 255f);
 			double rad = (double)base.npc.ai[1] * 0.017453292519943295;
 			NPC host = Main.npc[(int)base.npc.ai[0]];
 			base.npc.position.X = host.Center.X - (float)((int)(Math.Cos(rad) * this.dist)) - (float)(base.npc.width / 2);

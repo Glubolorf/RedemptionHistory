@@ -28,15 +28,7 @@ namespace Redemption.Items
 				player.QuickSpawnItem(ModContent.ItemType<SoulOfBloom>(), Main.rand.Next(120, 180));
 				if (Main.rand.Next(7) == 0)
 				{
-					int num = Main.rand.Next(2);
-					if (num == 0)
-					{
-						player.QuickSpawnItem(ModContent.ItemType<PlanterasStave1>(), 1);
-					}
-					if (num == 1)
-					{
-						player.QuickSpawnItem(ModContent.ItemType<PlanterasStave2>(), 1);
-					}
+					player.QuickSpawnItem(ModContent.ItemType<PlanterasStave>(), 1);
 				}
 			}
 			if (context == "bossBag" && arg == 3324)

@@ -5,11 +5,11 @@ using Terraria.ModLoader;
 
 namespace Redemption.NPCs
 {
-	public class TreeBugFall : ModProjectile
+	public class CoastScarabFall : ModProjectile
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Tree Bug");
+			base.DisplayName.SetDefault("Coast Scarab");
 		}
 
 		public override void SetDefaults()
@@ -35,7 +35,7 @@ namespace Redemption.NPCs
 			Collision.HitTiles(base.projectile.position, oldVelocity, base.projectile.width, base.projectile.height);
 			if (Main.netMode != 1)
 			{
-				int i = NPC.NewNPC((int)base.projectile.Center.X, (int)base.projectile.Center.Y, ModContent.NPCType<TreeBug>(), 0, 0f, 0f, 0f, 0f, 255);
+				int i = NPC.NewNPC((int)base.projectile.Center.X, (int)base.projectile.Center.Y, ModContent.NPCType<CoastScarab>(), 0, 0f, 0f, 0f, 0f, 255);
 				if (Main.netMode == 2)
 				{
 					NetMessage.SendData(23, -1, -1, null, i, 0f, 0f, 0f, 0, 0, 0);

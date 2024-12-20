@@ -64,21 +64,15 @@ namespace Redemption.Projectiles.DruidProjectiles.Stave
 
 		public override void Kill(int timeLeft)
 		{
-			Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 14f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-6 + Main.rand.Next(0, 12)), ModContent.ProjectileType<AngelicArrow>(), base.projectile.damage / 2, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
-			Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 14f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-6 + Main.rand.Next(0, 12)), ModContent.ProjectileType<AngelicArrow>(), base.projectile.damage / 2, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
-			if (Main.rand.Next(2) == 0)
+			for (int i = 0; i < Main.rand.Next(1, 3); i++)
 			{
-				Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 14f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-6 + Main.rand.Next(0, 12)), ModContent.ProjectileType<AngelicArrow>(), base.projectile.damage / 2, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
-			}
-			if (Main.rand.Next(2) == 0)
-			{
-				Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 14f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-6 + Main.rand.Next(0, 12)), ModContent.ProjectileType<AngelicArrow>(), base.projectile.damage / 2, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 14f, (float)(-6 + Main.rand.Next(0, 12)), (float)(-6 + Main.rand.Next(0, 12)), ModContent.ProjectileType<AngelicArrow>(), base.projectile.damage / 3, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			}
 			Main.PlaySound(0, (int)base.projectile.position.X, (int)base.projectile.position.Y, 1, 1f, 0f);
 			Vector2 usePos = base.projectile.position;
 			Vector2 rotVector = Utils.ToRotationVector2(base.projectile.rotation - MathHelper.ToRadians(90f));
 			usePos += rotVector * 16f;
-			for (int i = 0; i < 20; i++)
+			for (int j = 0; j < 20; j++)
 			{
 				Dust dust = Dust.NewDustDirect(usePos, base.projectile.width, base.projectile.height, 81, 0f, 0f, 0, default(Color), 1f);
 				dust.position = (dust.position + base.projectile.Center) / 2f;

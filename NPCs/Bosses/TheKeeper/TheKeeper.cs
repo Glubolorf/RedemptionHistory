@@ -465,6 +465,7 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 			}
 			else
 			{
+				base.npc.dontTakeDamage = true;
 				base.npc.ai[2] += 1f;
 				if (base.npc.ai[2] % 30f == 0f)
 				{
@@ -476,6 +477,7 @@ namespace Redemption.NPCs.Bosses.TheKeeper
 				}
 				if (base.npc.ai[2] > 220f)
 				{
+					base.npc.dontTakeDamage = false;
 					base.npc.netUpdate = true;
 					this.unveiled = true;
 					base.npc.ai[3] = 0f;

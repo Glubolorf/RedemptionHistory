@@ -1855,15 +1855,7 @@ namespace Redemption.NPCs
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<SoulOfBloom>(), Main.rand.Next(90, 120), false, 0, false, false);
 				if (Main.rand.Next(7) == 0)
 				{
-					int num4 = Main.rand.Next(2);
-					if (num4 == 0)
-					{
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PlanterasStave1>(), 1, false, 0, false, false);
-					}
-					if (num4 == 1)
-					{
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PlanterasStave2>(), 1, false, 0, false, false);
-					}
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<PlanterasStave>(), 1, false, 0, false, false);
 				}
 			}
 			if (npc.type == ModContent.NPCType<LickyLickyCactus>())
@@ -1965,35 +1957,35 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<FriedEgg>(), Main.rand.Next(2, 4), false, 0, false, false);
 				}
-				int num5 = Main.rand.Next(5);
-				if (num5 == 0)
+				int num4 = Main.rand.Next(5);
+				if (num4 == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<BlueSpice>(), Main.rand.Next(1, 7), false, 0, false, false);
 				}
-				if (num5 == 1)
+				if (num4 == 1)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<GreenSpice>(), Main.rand.Next(1, 6), false, 0, false, false);
 				}
-				if (num5 == 2)
+				if (num4 == 2)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<OrangeSpice>(), Main.rand.Next(1, 5), false, 0, false, false);
 				}
-				if (num5 == 3)
+				if (num4 == 3)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<RedSpice>(), Main.rand.Next(1, 4), false, 0, false, false);
 				}
-				if (num5 == 4)
+				if (num4 == 4)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<WhiteSpice>(), Main.rand.Next(1, 3), false, 0, false, false);
 				}
 				if (Main.rand.Next(4) == 0)
 				{
-					int num6 = Main.rand.Next(2);
-					if (num6 == 0)
+					int num5 = Main.rand.Next(2);
+					if (num5 == 0)
 					{
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<BarrelBombarder>(), 1, false, 0, false, false);
 					}
-					if (num6 == 1)
+					if (num5 == 1)
 					{
 						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<ChiliSpray>(), 1, false, 0, false, false);
 					}

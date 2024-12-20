@@ -53,7 +53,7 @@ namespace Redemption.NPCs.Bosses.Thorn
 
 		public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
 		{
-			damage *= 0.5;
+			damage *= 0.75;
 			return true;
 		}
 

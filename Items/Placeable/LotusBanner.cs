@@ -9,7 +9,6 @@ namespace Redemption.Items.Placeable
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Lotus Rune Banner");
-			base.Tooltip.SetDefault("'A powerful banner, proof of a true Druid'\n30% druid crit chance when nearby\n40% reduced crit chance for all other damage types when nearby");
 		}
 
 		public override void SetDefaults()
@@ -24,15 +23,17 @@ namespace Redemption.Items.Placeable
 			base.item.useTime = 10;
 			base.item.useStyle = 1;
 			base.item.consumable = true;
-			base.item.value = 20000;
+			base.item.value = 2000;
 			base.item.createTile = ModContent.TileType<LotusBannerTile>();
 		}
 
 		public override void AddRecipes()
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
+			modRecipe.anyWood = true;
 			modRecipe.AddIngredient(225, 25);
-			modRecipe.AddIngredient(null, "SoulOfBloom", 30);
+			modRecipe.AddIngredient(9, 20);
+			modRecipe.AddIngredient(null, "SoulOfBloom", 2);
 			modRecipe.AddTile(null, "DruidicAltarTile");
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();

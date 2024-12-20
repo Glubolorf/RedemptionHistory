@@ -32,9 +32,16 @@ namespace Redemption.Tiles
 		public override bool Drop(int i, int j, int type)
 		{
 			Player player = Main.player[Main.myPlayer];
-			if (Main.netMode != 1 && !WorldGen.noTileActions && !WorldGen.gen && type == 5 && Main.tile[i, j + 1].type == 2 && Main.rand.Next(6) == 0)
+			if (Main.netMode != 1 && !WorldGen.noTileActions && !WorldGen.gen)
 			{
-				Projectile.NewProjectile((float)(i * 16), (float)((j - 10) * 16), (float)(-4 + Main.rand.Next(0, 7)), (float)(-3 + Main.rand.Next(-3, 0)), ModContent.ProjectileType<TreeBugFall>(), 0, 0f, 255, 0f, 0f);
+				if (type == 5 && Main.tile[i, j + 1].type == 2 && Main.rand.Next(6) == 0)
+				{
+					Projectile.NewProjectile((float)(i * 16), (float)((j - 10) * 16), (float)(-4 + Main.rand.Next(0, 7)), (float)(-3 + Main.rand.Next(-3, 0)), ModContent.ProjectileType<TreeBugFall>(), 0, 0f, 255, 0f, 0f);
+				}
+				if (type == 323 && Main.tile[i, j + 1].type == 53 && Main.rand.Next(6) == 0)
+				{
+					Projectile.NewProjectile((float)(i * 16), (float)((j - 10) * 16), (float)(-4 + Main.rand.Next(0, 7)), (float)(-3 + Main.rand.Next(-3, 0)), ModContent.ProjectileType<CoastScarabFall>(), 0, 0f, 255, 0f, 0f);
+				}
 			}
 			return (type != ModContent.TileType<AncientDirtTile>() || !TileID.Sets.BreakableWhenPlacing[ModContent.TileType<AncientDirtTile>()]) && base.Drop(i, j, type);
 		}

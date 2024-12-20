@@ -105,7 +105,7 @@ namespace Redemption.Items.Placeable
 				resultType = 2357;
 				resultStack = 1;
 			}
-			if (num == 13)
+			if (num == 13 && RedeWorld.downedThorn)
 			{
 				resultType = ModContent.ItemType<NightshadeSeeds>();
 				resultStack = 1;

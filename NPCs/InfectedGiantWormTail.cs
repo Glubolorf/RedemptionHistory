@@ -41,6 +41,10 @@ namespace Redemption.NPCs
 
 		public override bool PreAI()
 		{
+			if (Main.player[base.npc.target].dead)
+			{
+				base.npc.timeLeft = 0;
+			}
 			if (base.npc.ai[3] > 0f)
 			{
 				base.npc.realLife = (int)base.npc.ai[3];
@@ -48,10 +52,6 @@ namespace Redemption.NPCs
 			if (base.npc.target < 0 || base.npc.target == 255 || Main.player[base.npc.target].dead)
 			{
 				base.npc.TargetClosest(true);
-			}
-			if (Main.player[base.npc.target].dead && base.npc.timeLeft > 300)
-			{
-				base.npc.timeLeft = 300;
 			}
 			if (Main.netMode != 1 && !Main.npc[(int)base.npc.ai[1]].active)
 			{

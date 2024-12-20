@@ -5,10 +5,10 @@ Please remember to update the mod when necessary.
 Adds:
 - 16 Buffs
 - 6 Walls
-- 76 Tiles
-- 104 NPCs (Including bosses)
+- 77 Tiles
+- 107 NPCs (Including bosses)
 - 4 Bosses
-- 291 Items
+- 295 Items
 
 Main Features (So far):
 - Living Wood Equipment

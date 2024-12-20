@@ -62,6 +62,10 @@ namespace Redemption.NPCs
 
 		public override bool PreAI()
 		{
+			if (Main.player[base.npc.target].dead)
+			{
+				base.npc.timeLeft = 0;
+			}
 			if (Main.netMode != 1 && base.npc.ai[0] == 0f)
 			{
 				base.npc.realLife = base.npc.whoAmI;

@@ -11,17 +11,17 @@ namespace Redemption.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Tesla Cannon");
-			base.Tooltip.SetDefault("Rapidly fires Telsa Zaps\nGenerates an electrosphere upon hitting an enemy");
+			base.Tooltip.SetDefault("Fires Lightning Bolts");
 		}
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 200;
-			base.item.useTime = 7;
-			base.item.useAnimation = 7;
+			base.item.damage = 250;
+			base.item.useTime = 12;
+			base.item.useAnimation = 12;
 			base.item.autoReuse = true;
-			base.item.shoot = base.mod.ProjectileType("TeslaLightning");
-			base.item.shootSpeed = 18f;
+			base.item.shoot = 580;
+			base.item.shootSpeed = 8f;
 			base.item.UseSound = SoundID.Item92;
 			base.item.ranged = true;
 			base.item.width = 80;
@@ -31,6 +31,15 @@ namespace Redemption.Items.Weapons
 			base.item.knockBack = 0f;
 			base.item.value = Item.buyPrice(8, 50, 0, 0);
 			base.item.rare = 11;
+		}
+
+		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+		{
+			Vector2 vector = -Main.player[Main.myPlayer].Center + Main.MouseWorld;
+			float num = (float)Main.rand.Next(100);
+			Vector2 vector2 = Vector2.Normalize(vector) * base.item.shootSpeed;
+			Projectile.NewProjectile(player.Center.X, player.Center.Y, vector2.X, vector2.Y, type, damage, 0.5f, player.whoAmI, Utils.ToRotation(vector), num);
+			return false;
 		}
 
 		public override Vector2? HoldoutOffset()

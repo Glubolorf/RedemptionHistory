@@ -65,6 +65,11 @@ namespace Redemption.Tiles.LabDeco
 			}
 		}
 
+		public override bool CanKillTile(int i, int j, ref bool blockDamaged)
+		{
+			return false;
+		}
+
 		public override void MouseOver(int i, int j)
 		{
 			Player localPlayer = Main.LocalPlayer;

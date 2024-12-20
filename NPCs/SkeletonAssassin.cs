@@ -105,15 +105,6 @@ namespace Redemption.NPCs
 			}
 		}
 
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
-		{
-			if (Main.hardMode)
-			{
-				return SpawnCondition.Cavern.Chance * 0.05f;
-			}
-			return SpawnCondition.Cavern.Chance * 0.1f;
-		}
-
 		public override void HitEffect(int hitDirection, double damage)
 		{
 			if (base.npc.life <= 0)

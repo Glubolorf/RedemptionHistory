@@ -35,6 +35,11 @@ namespace Redemption.Tiles.LabDeco
 			base.AddMapEntry(new Color(70, 120, 150), null);
 		}
 
+		public override bool CanKillTile(int i, int j, ref bool blockDamaged)
+		{
+			return false;
+		}
+
 		public override void RightClick(int i, int j)
 		{
 			if (Main.netMode != 1)

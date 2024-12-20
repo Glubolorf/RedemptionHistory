@@ -11,7 +11,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Hallowed Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nShoots a golden bolt\nRight-clicking will summon a Holy Statuette [c/94c2ff:(Requires 250 Mana)]\n[c/71ee8d:-Guardian Info-]\n[c/a0db98:Type:] Mystic\n[c/98dbc3:Special Ability:] Swift-Swing/Stream-Shot/Holy Aura\n[c/98c1db:Effects:] Staves swing a lot faster, Staves have a chance to shoot 2 extra projectiles\nDefence Enhancement+/Improved Sight/Mobility Enhancement at day");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nShoots a golden bolt\nRight-clicking will summon a Holy Statuette [c/bee7c9:(15 Second Duration)]\n[c/71ee8d:-Guardian Info-]\n[c/a0db98:Type:] Mystic\n[c/98dbc3:Special Ability:] Swift-Swing/Stream-Shot/Holy Aura\n[c/98c1db:Effects:] Staves swing a lot faster, Staves have a chance to shoot 2 extra projectiles\nDefence Enhancement+/Improved Sight/Mobility Enhancement at day");
 		}
 
 		public override void SafeSetDefaults()
@@ -42,19 +42,19 @@ namespace Redemption.Items.DruidDamageClass
 		{
 			if (player.altFunctionUse == 2)
 			{
-				base.item.mana = 250;
+				base.item.mana = 1;
 				base.item.buffType = base.mod.BuffType("NatureGuardian16Buff");
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).longerGuardians)
 				{
-					base.item.buffTime = 1200;
+					base.item.buffTime = 1500;
 				}
 				else
 				{
-					base.item.buffTime = 600;
+					base.item.buffTime = 900;
 				}
 				base.item.shoot = base.mod.ProjectileType("NatureGuardian16");
 				base.item.shootSpeed = 0f;
-				return !player.HasBuff(base.mod.BuffType("GuardianCooldownDebuff")) && player.statManaMax2 >= 200;
+				return !player.HasBuff(base.mod.BuffType("GuardianCooldownDebuff"));
 			}
 			base.item.mana = 0;
 			base.item.buffType = 0;

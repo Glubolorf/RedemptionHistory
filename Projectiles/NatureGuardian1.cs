@@ -70,7 +70,7 @@ namespace Redemption.Projectiles
 			base.projectile.position.X = player.Center.X - 8f;
 			base.projectile.position.Y = player.Center.Y - 64f;
 			this.shootTimer++;
-			if (this.shootTimer >= 60)
+			if (this.shootTimer >= 30)
 			{
 				if (base.projectile.spriteDirection == -1)
 				{

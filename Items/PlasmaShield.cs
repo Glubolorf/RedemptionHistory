@@ -13,7 +13,7 @@ namespace Redemption.Items
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Holoshield");
-			base.Tooltip.SetDefault("6% damage reduction");
+			base.Tooltip.SetDefault("6% damage reduction\n25% chance to reflect projectiles, but they still deal damage to you");
 		}
 
 		public override void SetDefaults()
@@ -28,6 +28,8 @@ namespace Redemption.Items
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
+			RedePlayer modPlayer = player.GetModPlayer<RedePlayer>(base.mod);
+			modPlayer.plasmaShield = true;
 			player.endurance += 0.06f;
 		}
 	}

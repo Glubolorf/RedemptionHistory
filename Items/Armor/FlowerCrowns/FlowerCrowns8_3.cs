@@ -52,7 +52,7 @@ namespace Redemption.Items.Armor.FlowerCrowns
 		public override void AddRecipes()
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(19, 6);
+			modRecipe.AddIngredient(706, 6);
 			modRecipe.AddIngredient(316, 3);
 			modRecipe.AddTile(null, "DruidicAltarTile");
 			modRecipe.SetResult(this, 1);

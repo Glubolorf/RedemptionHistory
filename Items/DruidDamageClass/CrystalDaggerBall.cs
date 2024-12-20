@@ -2,7 +2,6 @@
 using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
@@ -11,7 +10,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Crystal Dagger Cluster");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nDaggers split in two after a small distance\nNot consumable");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nDaggers split in two after a small distance\nNot consumable\nREPLACED WITH CRYSTAL SHURIKEN");
 		}
 
 		public override void SafeSetDefaults()
@@ -34,21 +33,6 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.UseSound = SoundID.Item9;
 			base.item.value = Item.sellPrice(0, 0, 1, 5);
 			base.item.shoot = base.mod.ProjectileType<CrystalDaggerPro>();
-		}
-
-		public override void AddRecipes()
-		{
-			ModRecipe modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "CrystalDagger", 999);
-			modRecipe.AddTile(null, "DruidicAltarTile");
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "DruidDaggerBall", 1);
-			modRecipe.AddIngredient(502, 10);
-			modRecipe.AddTile(null, "DruidicAltarTile");
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
 		}
 	}
 }

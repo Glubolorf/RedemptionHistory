@@ -46,6 +46,18 @@ namespace Redemption.NPCs
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 226, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
 		}
 
+		public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+		{
+			if (Main.rand.Next(5) == 0)
+			{
+				projectile.damage = damage;
+				projectile.velocity.X = -projectile.velocity.X;
+				projectile.velocity.Y = -projectile.velocity.Y;
+				projectile.friendly = false;
+				projectile.hostile = true;
+			}
+		}
+
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			SpriteEffects spriteEffects = 0;

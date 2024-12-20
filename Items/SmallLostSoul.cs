@@ -12,7 +12,7 @@ namespace Redemption.Items
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Small Lost Soul");
-			base.Tooltip.SetDefault("'The soul of a weak creature'");
+			base.Tooltip.SetDefault("'The soul of a weak creature'\nCan occasionally emerge from a killed Skeleton Wanderer, Assassin, or Dueller");
 			Main.RegisterItemAnimation(base.item.type, new DrawAnimationVertical(5, 4));
 			ItemID.Sets.AnimatesAsSoul[base.item.type] = true;
 			ItemID.Sets.ItemIconPulse[base.item.type] = true;

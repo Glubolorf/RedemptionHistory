@@ -496,9 +496,9 @@ namespace Redemption.NPCs.LabNPCs
 						Main.dust[num74].noGravity = true;
 					}
 				}
-				if (this.fightTimer3 == 200)
+				if (this.fightTimer3 == 250)
 				{
-					float num75 = 11f;
+					float num75 = 9f;
 					Vector2 vector22;
 					vector22..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 					int num76 = 40;

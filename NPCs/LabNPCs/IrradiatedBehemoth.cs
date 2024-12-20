@@ -100,17 +100,17 @@ namespace Redemption.NPCs.LabNPCs
 			}
 			if (this.beginFight)
 			{
-				if (NPC.CountNPCS(base.mod.NPCType("SludgyBoi2")) <= 12 && Main.rand.Next(250) == 0)
+				if (NPC.CountNPCS(base.mod.NPCType("SludgyBoi2")) <= 2 && Main.rand.Next(350) == 0)
 				{
 					Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
 					NPC.NewNPC((int)base.npc.position.X + 58, (int)base.npc.position.Y + 96, base.mod.NPCType("SludgyBoi2"), 0, 0f, 0f, 0f, 0f, 255);
 				}
-				if (NPC.CountNPCS(base.mod.NPCType("WalterInfected")) <= 4 && Main.rand.Next(250) == 0)
+				if (NPC.CountNPCS(base.mod.NPCType("WalterInfected")) <= 2 && Main.rand.Next(350) == 0)
 				{
 					Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
 					NPC.NewNPC((int)base.npc.position.X + 58, (int)base.npc.position.Y + 96, base.mod.NPCType("WalterInfected"), 0, 0f, 0f, 0f, 0f, 255);
 				}
-				if (NPC.CountNPCS(base.mod.NPCType("SludgyBlob")) <= 20 && Main.rand.Next(95) == 0)
+				if (NPC.CountNPCS(base.mod.NPCType("SludgyBlob")) <= 3 && Main.rand.Next(155) == 0)
 				{
 					NPC.NewNPC((int)base.npc.position.X + 58, (int)base.npc.position.Y + 96, base.mod.NPCType("SludgyBlob"), 0, 0f, 0f, 0f, 0f, 255);
 				}

@@ -64,22 +64,31 @@ namespace Redemption.NPCs
 		{
 			if (!this.change)
 			{
-				int num = Main.rand.Next(4);
+				int num = Main.rand.Next(3);
 				if (num == 0)
 				{
-					if (NPC.downedBoss1)
+					base.npc.SetDefaults(base.mod.NPCType("SkeletonAssassin"), -1f);
+					this.change = true;
+				}
+				if (num == 1)
+				{
+					base.npc.SetDefaults(base.mod.NPCType("SkeletonDueller"), -1f);
+					this.change = true;
+				}
+				if (num >= 2)
+				{
+					if (Main.rand.Next(4) == 0)
 					{
-						base.npc.SetDefaults(base.mod.NPCType("SkeletonWanderer2"), -1f);
-						this.change = true;
+						if (NPC.downedBoss1)
+						{
+							base.npc.SetDefaults(base.mod.NPCType("SkeletonWanderer2"), -1f);
+							this.change = true;
+						}
 					}
 					else
 					{
-						this.change = true;
+						this.change = false;
 					}
-				}
-				if (num >= 1)
-				{
-					this.change = true;
 				}
 			}
 			if (this.thrustAttack)

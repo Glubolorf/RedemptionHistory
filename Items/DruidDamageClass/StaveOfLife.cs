@@ -23,7 +23,7 @@ namespace Redemption.Items.DruidDamageClass
 				Main.glowMaskTexture = array;
 			}
 			base.DisplayName.SetDefault("Stave of Life");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nRapidly shoots barrages of ancient herbs\nRight-clicking will summon a Tree of Creation [c/94c2ff:(Requires 400 Mana)]\n[c/71ee8d:-Guardian Info-]\n[c/a0db98:Type:] Mystic\n[c/98dbc3:Special Ability:] Scatter-Shot/Quad-Shot/Swift-Swing/Creation's Embrace\n[c/98c1db:Effects:] Staves that shoot a single projectile will instead shoot a cluster,\nStaves that shoot a single projectile will shoot 4 more in an arc, Staves swing a lot faster,\nDefence Enhancement+/Mobility Enhancement+/Life & Mana Enhancement++");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nRapidly shoots barrages of ancient herbs\nRight-clicking will summon a Tree of Creation [c/bee7c9:(10 Second Duration)]\n[c/71ee8d:-Guardian Info-]\n[c/a0db98:Type:] Mystic\n[c/98dbc3:Special Ability:] Scatter-Shot/Quad-Shot/Swift-Swing/Creation's Embrace\n[c/98c1db:Effects:] Staves that shoot a single projectile will instead shoot a cluster,\nStaves that shoot a single projectile will shoot 4 more in an arc, Staves swing a lot faster,\nDefence Enhancement+/Mobility Enhancement+/Life & Mana Enhancement++");
 			Item.staff[base.item.type] = true;
 		}
 
@@ -70,7 +70,7 @@ namespace Redemption.Items.DruidDamageClass
 		{
 			if (player.altFunctionUse == 2)
 			{
-				base.item.mana = 400;
+				base.item.mana = 1;
 				base.item.buffType = base.mod.BuffType("NatureGuardian18Buff");
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).longerGuardians)
 				{
@@ -82,7 +82,7 @@ namespace Redemption.Items.DruidDamageClass
 				}
 				base.item.shoot = base.mod.ProjectileType("NatureGuardian18");
 				base.item.shootSpeed = 0f;
-				return !player.HasBuff(base.mod.BuffType("GuardianCooldownDebuff")) && player.statManaMax2 >= 200;
+				return !player.HasBuff(base.mod.BuffType("GuardianCooldownDebuff"));
 			}
 			base.item.mana = 0;
 			base.item.buffType = 0;

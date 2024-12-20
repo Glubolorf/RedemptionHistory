@@ -18,9 +18,9 @@ namespace Redemption.NPCs.LabNPCs
 			base.npc.width = 32;
 			base.npc.height = 24;
 			base.npc.friendly = false;
-			base.npc.damage = 90;
+			base.npc.damage = 65;
 			base.npc.defense = 15;
-			base.npc.lifeMax = 1350;
+			base.npc.lifeMax = 900;
 			base.npc.HitSound = SoundID.NPCHit1;
 			base.npc.DeathSound = SoundID.NPCDeath1;
 			base.npc.value = 0f;

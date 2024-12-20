@@ -11,12 +11,12 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Grass Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nShoots 2 leaves\nRight-clicking will summon a Mud Guardian [c/94c2ff:(Requires 200 Mana)]\n[c/71ee8d:-Guardian Info-]\n[c/a0db98:Type:] Guardian\n[c/98dbc3:Special Ability:] Ring of Thorns/Scatter-Shot\n[c/98c1db:Effects:] Defence Enhancement/Mana Enhancement/Thorns, Staves that shoot a single projectile will instead shoot a cluster");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nShoots 2 leaves\nRight-clicking will summon a Mud Guardian [c/bee7c9:(20 Second Duration)]\n[c/71ee8d:-Guardian Info-]\n[c/a0db98:Type:] Guardian\n[c/98dbc3:Special Ability:] Ring of Thorns/Scatter-Shot\n[c/98c1db:Effects:] Defence Enhancement/Mana Enhancement/Thorns, Staves that shoot a single projectile will instead shoot a cluster");
 		}
 
 		public override void SafeSetDefaults()
 		{
-			base.item.damage = 19;
+			base.item.damage = 17;
 			base.item.width = 48;
 			base.item.height = 48;
 			base.item.useTime = 28;
@@ -42,19 +42,19 @@ namespace Redemption.Items.DruidDamageClass
 		{
 			if (player.altFunctionUse == 2)
 			{
-				base.item.mana = 200;
+				base.item.mana = 1;
 				base.item.buffType = base.mod.BuffType("NatureGuardian11Buff");
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).longerGuardians)
 				{
-					base.item.buffTime = 1200;
+					base.item.buffTime = 1800;
 				}
 				else
 				{
-					base.item.buffTime = 600;
+					base.item.buffTime = 1200;
 				}
 				base.item.shoot = base.mod.ProjectileType("NatureGuardian11");
 				base.item.shootSpeed = 0f;
-				return !player.HasBuff(base.mod.BuffType("GuardianCooldownDebuff")) && player.statManaMax2 >= 200;
+				return !player.HasBuff(base.mod.BuffType("GuardianCooldownDebuff"));
 			}
 			base.item.mana = 0;
 			base.item.buffType = 0;
@@ -126,7 +126,7 @@ namespace Redemption.Items.DruidDamageClass
 				Vector2 vector = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(3f));
 				float num2 = 1f - Utils.NextFloat(Main.rand) * 0.3f;
 				vector *= num2;
-				Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, type, 5, knockBack, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, type, 14, knockBack, player.whoAmI, 0f, 0f);
 			}
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).staveStreamShot && Main.rand.Next(5) == 0)
 			{

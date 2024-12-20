@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Redemption.Items;
 using Redemption.Items.Armor.Costumes;
 using Redemption.Items.Cores;
@@ -8,6 +10,7 @@ using Terraria;
 using Terraria.GameContent.UI;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 
 namespace Redemption
 {
@@ -41,6 +44,11 @@ namespace Redemption
 				{
 					music = base.GetSoundSlot(51, "Sounds/Music/silence");
 					priority = 8;
+				}
+				if (Redemption.templeOfHeroes)
+				{
+					music = base.GetSoundSlot(51, "Sounds/Music/HallofHeroes");
+					priority = 3;
 				}
 			}
 		}
@@ -128,6 +136,10 @@ namespace Redemption
 		public override void Load()
 		{
 			Redemption.inst = this;
+			if (Main.rand == null)
+			{
+				Main.rand = new UnifiedRandom();
+			}
 			if (!Main.dedServ)
 			{
 				base.AddEquipTexture(null, 2, "ArchclothRobe_Legs", "Redemption/Items/Armor/ArchclothRobe_Legs", "", "");
@@ -152,6 +164,12 @@ namespace Redemption
 			Redemption.FaceCustomCurrencyID = CustomCurrencyManager.RegisterCurrency(new CustomCurrency(base.ItemType<AncientGoldCoin>(), 999L));
 			ModTranslation modTranslation = base.CreateTranslation("DruidicOre");
 			modTranslation.SetDefault("Druidic energy courses through the world's ore...");
+			base.AddTranslation(modTranslation);
+			modTranslation = base.CreateTranslation("DragonLeadMessage");
+			modTranslation.SetDefault("The caverns are heated with dragon bone...");
+			base.AddTranslation(modTranslation);
+			modTranslation = base.CreateTranslation("InfectionMessage1");
+			modTranslation.SetDefault("The Infection begins...");
 			base.AddTranslation(modTranslation);
 			modTranslation = base.CreateTranslation("LabIsSafe");
 			modTranslation.SetDefault("The lab's defence systems have malfunctioned...");
@@ -180,11 +198,6 @@ namespace Redemption
 			modTranslation = base.CreateTranslation("Lasers7");
 			modTranslation.SetDefault("All Laser Systems have been deactivated...");
 			base.AddTranslation(modTranslation);
-		}
-
-		public override void Unload()
-		{
-			Redemption.inst = null;
 		}
 
 		public override void PostSetupContent()
@@ -443,5 +456,11 @@ namespace Redemption
 		public static bool GirusSilence;
 
 		public static Redemption inst = null;
+
+		public static bool templeOfHeroes;
+
+		public static IDictionary<string, Texture2D> Textures = null;
+
+		public static Dictionary<string, Texture2D> precachedTextures = new Dictionary<string, Texture2D>();
 	}
 }

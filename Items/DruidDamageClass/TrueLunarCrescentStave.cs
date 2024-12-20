@@ -11,7 +11,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("True Lunar Crescent Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nRight-clicking will summon a True Lunar Statuette [c/94c2ff:(Requires 300 Mana)]\n[c/71ee8d:-Guardian Info-]\n[c/a0db98:Type:] Mystic\n[c/98dbc3:Special Ability:] Quad-Shot/Swift-Swing/Nightshade's Embrace+\n[c/98c1db:Effects:] Staves that shoot a single projectile will shoot 4 more in an arc, Staves swing a lot faster,\nMana Enhancement+/Improved Sight+/Mobility Enhancement+ at night");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nRight-clicking will summon a True Lunar Statuette [c/bee7c9:(10 Second Duration)]\n[c/71ee8d:-Guardian Info-]\n[c/a0db98:Type:] Mystic\n[c/98dbc3:Special Ability:] Quad-Shot/Swift-Swing/Nightshade's Embrace+\n[c/98c1db:Effects:] Staves that shoot a single projectile will shoot 4 more in an arc, Staves swing a lot faster,\nMana Enhancement+/Improved Sight+/Mobility Enhancement+ at night");
 		}
 
 		public override void SafeSetDefaults()
@@ -50,7 +50,7 @@ namespace Redemption.Items.DruidDamageClass
 		{
 			if (player.altFunctionUse == 2)
 			{
-				base.item.mana = 300;
+				base.item.mana = 1;
 				base.item.buffType = base.mod.BuffType("NatureGuardian15Buff");
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).longerGuardians)
 				{
@@ -62,7 +62,7 @@ namespace Redemption.Items.DruidDamageClass
 				}
 				base.item.shoot = base.mod.ProjectileType("NatureGuardian15");
 				base.item.shootSpeed = 0f;
-				return !player.HasBuff(base.mod.BuffType("GuardianCooldownDebuff")) && player.statManaMax2 >= 200;
+				return !player.HasBuff(base.mod.BuffType("GuardianCooldownDebuff"));
 			}
 			base.item.mana = 0;
 			base.item.buffType = 0;

@@ -2,7 +2,6 @@
 using Redemption.Projectiles;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Redemption.Items.DruidDamageClass
 {
@@ -11,7 +10,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Druid Dagger Cluster");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nAny enemy that gets hit is inflicted with a pollen cloud\nNot consumable");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nAny enemy that gets hit is inflicted with a pollen cloud\nNot consumable\nREPLACED WITH DRUID SHURIKEN");
 		}
 
 		public override void SafeSetDefaults()
@@ -34,15 +33,6 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.UseSound = SoundID.Item1;
 			base.item.value = Item.sellPrice(0, 0, 0, 75);
 			base.item.shoot = base.mod.ProjectileType<DruidDaggerPro>();
-		}
-
-		public override void AddRecipes()
-		{
-			ModRecipe modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "DruidDagger", 999);
-			modRecipe.AddTile(null, "DruidicAltarTile");
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
 		}
 	}
 }

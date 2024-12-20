@@ -290,7 +290,7 @@ namespace Redemption.NPCs.Bosses
 				{
 					this.Shoot();
 				}
-				if (base.npc.life > 1200 && Main.rand.Next(600) == 0)
+				if (Main.rand.Next(600) == 0)
 				{
 					NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
 				}
@@ -363,25 +363,53 @@ namespace Redemption.NPCs.Bosses
 					}
 					if (this.timer == 40)
 					{
-						NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
-					}
-					if (this.timer == 45)
-					{
-						NPC.NewNPC((int)base.npc.position.X + 60, (int)base.npc.position.Y + 80, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
-					}
-					if (this.timer == 50)
-					{
-						NPC.NewNPC((int)base.npc.position.X + 80, (int)base.npc.position.Y + 75, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
-					}
-					if (this.timer == 55)
-					{
-						NPC.NewNPC((int)base.npc.position.X + 50, (int)base.npc.position.Y + 60, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
-						NPC.NewNPC((int)base.npc.position.X + 85, (int)base.npc.position.Y + 50, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
+						float num2 = 90f;
+						float num3 = 1.26f;
+						for (int l = 0; l < 1; l++)
+						{
+							Vector2 vector = base.npc.Center + num2 * Utils.ToRotationVector2((float)l * num3);
+							NPC.NewNPC((int)vector.X, (int)vector.Y, base.mod.NPCType("DarkSoul5"), 0, (float)base.npc.whoAmI, 0f, (float)l, 0f, 255);
+						}
 					}
 					if (this.timer == 60)
 					{
-						NPC.NewNPC((int)base.npc.position.X + 65, (int)base.npc.position.Y + 65, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
-						NPC.NewNPC((int)base.npc.position.X + 45, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
+						float num4 = 90f;
+						float num5 = 1.26f;
+						for (int m = 0; m < 1; m++)
+						{
+							Vector2 vector2 = base.npc.Center + num4 * Utils.ToRotationVector2((float)m * num5);
+							NPC.NewNPC((int)vector2.X, (int)vector2.Y, base.mod.NPCType("DarkSoul5"), 0, (float)base.npc.whoAmI, 0f, (float)m, 0f, 255);
+						}
+					}
+					if (this.timer == 80)
+					{
+						float num6 = 90f;
+						float num7 = 1.26f;
+						for (int n = 0; n < 1; n++)
+						{
+							Vector2 vector3 = base.npc.Center + num6 * Utils.ToRotationVector2((float)n * num7);
+							NPC.NewNPC((int)vector3.X, (int)vector3.Y, base.mod.NPCType("DarkSoul5"), 0, (float)base.npc.whoAmI, 0f, (float)n, 0f, 255);
+						}
+					}
+					if (this.timer == 100)
+					{
+						float num8 = 90f;
+						float num9 = 1.26f;
+						for (int num10 = 0; num10 < 1; num10++)
+						{
+							Vector2 vector4 = base.npc.Center + num8 * Utils.ToRotationVector2((float)num10 * num9);
+							NPC.NewNPC((int)vector4.X, (int)vector4.Y, base.mod.NPCType("DarkSoul5"), 0, (float)base.npc.whoAmI, 0f, (float)num10, 0f, 255);
+						}
+					}
+					if (this.timer == 120)
+					{
+						float num11 = 90f;
+						float num12 = 1.26f;
+						for (int num13 = 0; num13 < 1; num13++)
+						{
+							Vector2 vector5 = base.npc.Center + num11 * Utils.ToRotationVector2((float)num13 * num12);
+							NPC.NewNPC((int)vector5.X, (int)vector5.Y, base.mod.NPCType("DarkSoul5"), 0, (float)base.npc.whoAmI, 0f, (float)num13, 0f, 255);
+						}
 					}
 					if (this.timer >= 220)
 					{

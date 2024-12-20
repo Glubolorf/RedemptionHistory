@@ -28,6 +28,7 @@ namespace Redemption.Tiles
 			if (num <= 15)
 			{
 				localPlayer.AddBuff(base.mod.BuffType("RadioactiveFalloutDebuff"), Main.rand.Next(10, 20), true);
+				localPlayer.enemySpawns = false;
 			}
 			if (num <= 3 && !RedeWorld.labSafe)
 			{

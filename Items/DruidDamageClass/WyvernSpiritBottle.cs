@@ -11,7 +11,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Spirit Wyvern in a Bottle");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nReleases a stationary spirit wyvern at cursor point");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nReleases a stationary spirit wyvern at cursor point\nGets buffed from soul-related armoury");
 		}
 
 		public override void SafeSetDefaults()
@@ -19,15 +19,15 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.damage = 51;
 			base.item.width = 20;
 			base.item.height = 26;
-			base.item.useTime = 23;
-			base.item.useAnimation = 23;
+			base.item.useTime = 31;
+			base.item.useAnimation = 31;
 			base.item.useStyle = 4;
 			base.item.mana = 7;
 			base.item.crit = 4;
 			base.item.knockBack = 4f;
 			base.item.value = Item.buyPrice(0, 2, 0, 0);
 			base.item.rare = 5;
-			base.item.UseSound = SoundID.NPCDeath6;
+			base.item.UseSound = SoundID.NPCDeath6.WithVolume(0.5f);
 			base.item.noMelee = true;
 			base.item.autoReuse = true;
 			base.item.shoot = base.mod.ProjectileType("SpiritWyvernPro");
@@ -40,19 +40,24 @@ namespace Redemption.Items.DruidDamageClass
 			return true;
 		}
 
-		public override bool CanUseItem(Player player)
+		public override float UseTimeMultiplier(Player player)
 		{
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterSpirits)
 			{
-				base.item.useTime = 19;
-				base.item.useAnimation = 19;
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).wanderingSoulSet)
+				{
+					return 1.45f;
+				}
+				return 1.15f;
 			}
 			else
 			{
-				base.item.useTime = 23;
-				base.item.useAnimation = 23;
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterSpirits)
+				{
+					return 1.35f;
+				}
+				return 1f;
 			}
-			return true;
 		}
 
 		public override void AddRecipes()

@@ -44,7 +44,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.noUseGraphic = true;
 			base.item.autoReuse = true;
 			base.item.shoot = base.mod.ProjectileType("GloopContainerPro");
-			base.item.shootSpeed = 12f;
+			base.item.shootSpeed = 18f;
 			base.item.glowMask = GloopContainer.customGlowMask;
 		}
 

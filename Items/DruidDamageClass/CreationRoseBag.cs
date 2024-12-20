@@ -43,7 +43,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.noMelee = true;
 			base.item.autoReuse = true;
 			base.item.shoot = base.mod.ProjectileType("Seed24");
-			base.item.shootSpeed = 8f;
+			base.item.shootSpeed = 14f;
 			base.item.glowMask = CreationRoseBag.customGlowMask;
 		}
 

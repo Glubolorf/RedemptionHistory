@@ -38,5 +38,10 @@ namespace Redemption.Tiles
 			base.CreateMapEntryName(null);
 			base.AddMapEntry(new Color(0, 120, 150), null);
 		}
+
+		public override void KillMultiTile(int i, int j, int frameX, int frameY)
+		{
+			Item.NewItem(i * 16, j * 16, 16, 48, base.mod.ItemType("ArchclothThrone"), 1, false, 0, false, false);
+		}
 	}
 }

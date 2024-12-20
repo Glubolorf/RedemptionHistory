@@ -3,15 +3,15 @@
 Please remember to update the mod when necessary.
 
 Adds:
-- 97 Buffs
-- 12 Walls
-- 163 Tiles
-- 178 NPCs (Including bosses & minibosses)
+- 103 Buffs
+- 13 Walls
+- 170 Tiles
+- 189 NPCs (Including bosses & minibosses)
 - 9 Bosses
 - 9 Minibosses
-- 805 Items
+- 816 Items
 
-Latest Update:
+Latest Major Update:
 - Balanced literally everything lol
 - Abandoned Lab structure, post-mechs and post-moonlord
 - Redone King Slayer III

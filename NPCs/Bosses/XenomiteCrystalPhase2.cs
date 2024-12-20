@@ -72,7 +72,6 @@ namespace Redemption.NPCs.Bosses
 			{
 				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 			}
-			Main.NewText("The Infection begins...", Color.ForestGreen.R, Color.ForestGreen.G, Color.ForestGreen.B, false);
 		}
 
 		public override void NPCLoot()

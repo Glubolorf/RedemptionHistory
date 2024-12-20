@@ -11,7 +11,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("True Hallowed Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nRight-clicking will summon a True Holy Statuette [c/94c2ff:(Requires 300 Mana)]\n[c/71ee8d:-Guardian Info-]\n[c/a0db98:Type:] Mystic\n[c/98dbc3:Special Ability:] Stream-Shot/Triple-Shot/True Holy Aura\n[c/98c1db:Effects:] Staves have a chance to shoot 2 extra projectiles, Staves that shoot a single projectile will shoot 2 more in an arc,\nDefence Enhancement++/Improved Sight+/Mobility Enhancement+ at day/Life Enhancement+");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nRight-clicking will summon a True Holy Statuette [c/bee7c9:(10 Second Duration)]\n[c/71ee8d:-Guardian Info-]\n[c/a0db98:Type:] Mystic\n[c/98dbc3:Special Ability:] Stream-Shot/Triple-Shot/True Holy Aura\n[c/98c1db:Effects:] Staves have a chance to shoot 2 extra projectiles, Staves that shoot a single projectile will shoot 2 more in an arc,\nDefence Enhancement++/Improved Sight+/Mobility Enhancement+ at day/Life Enhancement+");
 		}
 
 		public override void SafeSetDefaults()
@@ -50,7 +50,7 @@ namespace Redemption.Items.DruidDamageClass
 		{
 			if (player.altFunctionUse == 2)
 			{
-				base.item.mana = 300;
+				base.item.mana = 1;
 				base.item.buffType = base.mod.BuffType("NatureGuardian17Buff");
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).longerGuardians)
 				{
@@ -62,7 +62,7 @@ namespace Redemption.Items.DruidDamageClass
 				}
 				base.item.shoot = base.mod.ProjectileType("NatureGuardian17");
 				base.item.shootSpeed = 0f;
-				return !player.HasBuff(base.mod.BuffType("GuardianCooldownDebuff")) && player.statManaMax2 >= 200;
+				return !player.HasBuff(base.mod.BuffType("GuardianCooldownDebuff"));
 			}
 			base.item.mana = 0;
 			base.item.buffType = 0;

@@ -30,7 +30,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.noUseGraphic = true;
 			base.item.noMelee = true;
 			base.item.shoot = base.mod.ProjectileType("SeedNade");
-			base.item.shootSpeed = 5.5f;
+			base.item.shootSpeed = 7.5f;
 		}
 
 		public override void AddRecipes()

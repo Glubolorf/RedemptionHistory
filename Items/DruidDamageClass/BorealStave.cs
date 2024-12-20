@@ -11,7 +11,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Boreal Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nShoots a Pine Needle\nRight-clicking will summon a Nature Pixie [c/94c2ff:(Requires 200 Mana)]\n[c/71ee8d:-Guardian Info-]\n[c/a0db98:Type:] Pixie\n[c/98dbc3:Special Ability:] Swift-Swing\n[c/98c1db:Effects:] Staves swing a lot faster");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nShoots a Pine Needle\nRight-clicking will summon an Icy Pixie [c/bee7c9:(25 Second Duration)]\n[c/71ee8d:-Guardian Info-]\n[c/a0db98:Type:] Pixie\n[c/98dbc3:Special Ability:] Swift-Swing\n[c/98c1db:Effects:] Staves swing a lot faster");
 		}
 
 		public override void SafeSetDefaults()
@@ -50,19 +50,19 @@ namespace Redemption.Items.DruidDamageClass
 		{
 			if (player.altFunctionUse == 2)
 			{
-				base.item.mana = 200;
-				base.item.buffType = base.mod.BuffType("NatureGuardianBuff");
+				base.item.mana = 1;
+				base.item.buffType = base.mod.BuffType("NatureGuardian23Buff");
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).longerGuardians)
 				{
-					base.item.buffTime = 1200;
+					base.item.buffTime = 2100;
 				}
 				else
 				{
-					base.item.buffTime = 600;
+					base.item.buffTime = 1500;
 				}
-				base.item.shoot = base.mod.ProjectileType("NatureGuardian1");
+				base.item.shoot = base.mod.ProjectileType("NatureGuardian23");
 				base.item.shootSpeed = 0f;
-				return !player.HasBuff(base.mod.BuffType("GuardianCooldownDebuff")) && player.statManaMax2 >= 200;
+				return !player.HasBuff(base.mod.BuffType("GuardianCooldownDebuff"));
 			}
 			base.item.mana = 0;
 			base.item.buffType = 0;

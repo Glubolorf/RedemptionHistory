@@ -29,6 +29,15 @@ namespace Redemption.Projectiles
 
 		public override void AI()
 		{
+			Player player = Main.player[base.projectile.owner];
+			if (player.Center.X > base.projectile.Center.X)
+			{
+				base.projectile.spriteDirection = 1;
+			}
+			else
+			{
+				base.projectile.spriteDirection = -1;
+			}
 			if (++base.projectile.frameCounter >= 5)
 			{
 				base.projectile.frameCounter = 0;
@@ -46,17 +55,38 @@ namespace Redemption.Projectiles
 			if (base.projectile.localAI[0] == 25f)
 			{
 				Main.PlaySound(SoundID.NPCDeath8.WithVolume(0.2f), base.projectile.position);
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 14f, base.projectile.position.Y + 36f), new Vector2(-6f, 0f), base.mod.ProjectileType("SpiritFlame"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				if (base.projectile.spriteDirection == 1)
+				{
+					Projectile.NewProjectile(new Vector2(base.projectile.position.X + 14f, base.projectile.position.Y + 36f), new Vector2(-6f, 0f), base.mod.ProjectileType("SpiritFlame"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				}
+				else
+				{
+					Projectile.NewProjectile(new Vector2(base.projectile.position.X + 60f, base.projectile.position.Y + 36f), new Vector2(6f, 0f), base.mod.ProjectileType("SpiritFlame"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				}
 			}
 			if (base.projectile.localAI[0] == 50f)
 			{
 				Main.PlaySound(SoundID.NPCDeath8.WithVolume(0.2f), base.projectile.position);
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 14f, base.projectile.position.Y + 36f), new Vector2(-6f, 0f), base.mod.ProjectileType("SpiritFlame"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				if (base.projectile.spriteDirection == 1)
+				{
+					Projectile.NewProjectile(new Vector2(base.projectile.position.X + 14f, base.projectile.position.Y + 36f), new Vector2(-6f, 0f), base.mod.ProjectileType("SpiritFlame"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				}
+				else
+				{
+					Projectile.NewProjectile(new Vector2(base.projectile.position.X + 60f, base.projectile.position.Y + 36f), new Vector2(6f, 0f), base.mod.ProjectileType("SpiritFlame"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				}
 			}
 			if (base.projectile.localAI[0] == 75f)
 			{
 				Main.PlaySound(SoundID.NPCDeath8.WithVolume(0.2f), base.projectile.position);
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 14f, base.projectile.position.Y + 36f), new Vector2(-6f, 0f), base.mod.ProjectileType("SpiritFlame"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				if (base.projectile.spriteDirection == 1)
+				{
+					Projectile.NewProjectile(new Vector2(base.projectile.position.X + 14f, base.projectile.position.Y + 36f), new Vector2(-6f, 0f), base.mod.ProjectileType("SpiritFlame"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				}
+				else
+				{
+					Projectile.NewProjectile(new Vector2(base.projectile.position.X + 60f, base.projectile.position.Y + 36f), new Vector2(6f, 0f), base.mod.ProjectileType("SpiritFlame"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				}
 			}
 			if (base.projectile.localAI[0] > 80f)
 			{

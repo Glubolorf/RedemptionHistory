@@ -9,7 +9,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Golem Watering Can");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'The Can itself is the sun, it still needs the water to make the seeds grow.'\nTaking damage unleashes a cluster of exploding seeds around you\nHaving a Large Seed Pouch will unleash more seeds");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nTaking damage unleashes a cluster of exploding seeds around you\nHaving a Large Seed Pouch will unleash more seeds");
 		}
 
 		public override void SetDefaults()

@@ -44,7 +44,7 @@ namespace Redemption.Projectiles
 		public override void Kill(int timeLeft)
 		{
 			Main.PlaySound(SoundID.Item93.WithVolume(0.3f), base.projectile.position);
-			int num = 8;
+			int num = 4;
 			for (int i = 0; i < num; i++)
 			{
 				int num2 = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, 440, base.projectile.damage, 3f, Main.myPlayer, 0f, 0f);

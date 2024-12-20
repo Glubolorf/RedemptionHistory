@@ -29,7 +29,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.noMelee = true;
 			base.item.autoReuse = false;
 			base.item.shoot = base.mod.ProjectileType("GlowingMCapsule1");
-			base.item.shootSpeed = 12f;
+			base.item.shootSpeed = 18f;
 		}
 
 		public override bool CanUseItem(Player player)

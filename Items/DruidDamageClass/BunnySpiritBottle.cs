@@ -11,7 +11,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Spirit Bunny in a Bottle");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nReleases a spirit bunny");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nReleases a spirit bunny\nGets buffed from soul-related armoury");
 		}
 
 		public override void SafeSetDefaults()
@@ -27,7 +27,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.knockBack = 4f;
 			base.item.value = Item.buyPrice(0, 0, 1, 75);
 			base.item.rare = 1;
-			base.item.UseSound = SoundID.NPCDeath6;
+			base.item.UseSound = SoundID.NPCDeath6.WithVolume(0.5f);
 			base.item.noMelee = true;
 			base.item.autoReuse = true;
 			base.item.shoot = base.mod.ProjectileType("SpiritBunnyPro");
@@ -36,17 +36,39 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override bool CanUseItem(Player player)
 		{
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterSpirits)
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).wanderingSoulSet)
 			{
-				base.item.useTime = 12;
-				base.item.useAnimation = 12;
+				base.item.damage = 37;
+			}
+			else if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).lostSoulSet)
+			{
+				base.item.damage = 14;
 			}
 			else
 			{
-				base.item.useTime = 16;
-				base.item.useAnimation = 16;
+				base.item.damage = 7;
 			}
 			return true;
+		}
+
+		public override float UseTimeMultiplier(Player player)
+		{
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterSpirits)
+			{
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).wanderingSoulSet)
+				{
+					return 1.45f;
+				}
+				return 1.15f;
+			}
+			else
+			{
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterSpirits)
+				{
+					return 1.35f;
+				}
+				return 1f;
+			}
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

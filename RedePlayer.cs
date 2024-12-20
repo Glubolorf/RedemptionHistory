@@ -190,6 +190,10 @@ namespace Redemption
 			this.natureGuardian19 = false;
 			this.natureGuardian20 = false;
 			this.natureGuardian21 = false;
+			this.natureGuardian22 = false;
+			this.natureGuardian23 = false;
+			this.natureGuardian24 = false;
+			this.natureGuardian25 = false;
 			this.hazmatAccessoryPrevious = this.hazmatAccessory;
 			this.hazmatAccessory = (this.hazmatHideVanity = (this.hazmatForceVanity = (this.hazmatPower = false)));
 			this.skeletonFriendly = false;
@@ -223,6 +227,7 @@ namespace Redemption
 			this.moltenEruption = false;
 			this.staveQuadShot = false;
 			this.lifeSteal1 = false;
+			this.plasmaShield = false;
 		}
 
 		public override void UpdateDead()
@@ -448,6 +453,18 @@ namespace Redemption
 			{
 				base.player.statLife++;
 				base.player.HealEffect(1, true);
+			}
+		}
+
+		public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref bool crit)
+		{
+			if (this.plasmaShield && Main.rand.Next(4) == 0)
+			{
+				projectile.damage = damage * 2;
+				projectile.velocity.X = -projectile.velocity.X;
+				projectile.velocity.Y = -projectile.velocity.Y;
+				projectile.friendly = true;
+				projectile.hostile = false;
 			}
 		}
 
@@ -732,6 +749,14 @@ namespace Redemption
 
 		public bool natureGuardian21;
 
+		public bool natureGuardian22;
+
+		public bool natureGuardian23;
+
+		public bool natureGuardian24;
+
+		public bool natureGuardian25;
+
 		public bool ZoneLab;
 
 		public bool hazmatAccessoryPrevious;
@@ -807,5 +832,7 @@ namespace Redemption
 		public bool staveQuadShot;
 
 		public bool lifeSteal1;
+
+		public bool plasmaShield;
 	}
 }

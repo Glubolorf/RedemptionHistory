@@ -18,9 +18,9 @@ namespace Redemption.NPCs.LabNPCs
 		{
 			base.npc.width = 40;
 			base.npc.height = 44;
-			base.npc.damage = 80;
+			base.npc.damage = 50;
 			base.npc.defense = 0;
-			base.npc.lifeMax = 1350;
+			base.npc.lifeMax = 650;
 			base.npc.HitSound = SoundID.NPCHit13;
 			base.npc.DeathSound = SoundID.NPCDeath19;
 			base.npc.value = (float)Item.buyPrice(0, 0, 0, 0);

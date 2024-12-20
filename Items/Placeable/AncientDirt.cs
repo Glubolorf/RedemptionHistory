@@ -39,5 +39,15 @@ namespace Redemption.Items.Placeable
 				}
 			}
 		}
+
+		public override void AddRecipes()
+		{
+			ModRecipe modRecipe = new ModRecipe(base.mod);
+			modRecipe.AddIngredient(2, 1);
+			modRecipe.AddIngredient(172, 5);
+			modRecipe.AddTile(220);
+			modRecipe.SetResult(this, 1);
+			modRecipe.AddRecipe();
+		}
 	}
 }

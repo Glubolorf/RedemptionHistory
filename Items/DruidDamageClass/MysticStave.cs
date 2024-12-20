@@ -11,7 +11,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Mystic Thorn Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nShoots a cluster of Mystic Thorn Bushes");
 		}
 
 		public override void SafeSetDefaults()

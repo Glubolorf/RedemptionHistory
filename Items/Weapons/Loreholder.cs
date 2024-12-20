@@ -126,7 +126,7 @@ namespace Redemption.Items.Weapons
 				{
 					Main.NewText("<Loreholder> A sentient part of the Dark Slime.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
-				if (target.type == base.mod.NPCType("DarkSoul") || target.type == base.mod.NPCType("DarkSoul2") || target.type == base.mod.NPCType("DarkSoul3"))
+				if (target.type == base.mod.NPCType("DarkSoul") || target.type == base.mod.NPCType("DarkSoul2") || target.type == base.mod.NPCType("DarkSoul3") || target.type == base.mod.NPCType("DarkSoul4"))
 				{
 					Main.NewText("<Loreholder> A void black soul, devoid of life. It will disperse after a short time.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}

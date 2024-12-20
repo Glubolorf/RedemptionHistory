@@ -9,7 +9,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Elegant Marble Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Medusa won't like this...'\nWhile holding this, you are immune to Petrification\nRight-clicking will summon a Marble King Piece [c/94c2ff:(Requires 200 Mana)]\n[c/71ee8d:-Guardian Info-]\n[c/a0db98:Type:] Other\n[c/98dbc3:Special Ability:] Marble Aura\n[c/98c1db:Effects:] Defence Enhancement+, Life & Mana Enhancement, Petrification Immunity");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Medusa won't like this...'\nWhile holding this, you are immune to Petrification\nRight-clicking will summon a Marble King Piece  [c/bee7c9:(30 Second Duration)]\n[c/71ee8d:-Guardian Info-]\n[c/a0db98:Type:] Other\n[c/98dbc3:Special Ability:] Marble Aura\n[c/98c1db:Effects:] Defence Enhancement+, Life & Mana Enhancement, Petrification Immunity");
 		}
 
 		public override void SafeSetDefaults()
@@ -38,19 +38,19 @@ namespace Redemption.Items.DruidDamageClass
 		{
 			if (player.altFunctionUse == 2)
 			{
-				base.item.mana = 200;
+				base.item.mana = 1;
 				base.item.buffType = base.mod.BuffType("NatureGuardian13Buff");
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).longerGuardians)
 				{
-					base.item.buffTime = 1200;
+					base.item.buffTime = 2400;
 				}
 				else
 				{
-					base.item.buffTime = 600;
+					base.item.buffTime = 1800;
 				}
 				base.item.shoot = base.mod.ProjectileType("NatureGuardian13");
 				base.item.shootSpeed = 0f;
-				return !player.HasBuff(base.mod.BuffType("GuardianCooldownDebuff")) && player.statManaMax2 >= 200;
+				return !player.HasBuff(base.mod.BuffType("GuardianCooldownDebuff"));
 			}
 			base.item.mana = 0;
 			base.item.buffType = 0;

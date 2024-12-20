@@ -35,6 +35,11 @@ namespace Redemption.Tiles.LabDeco
 			this.animationFrameHeight = 36;
 		}
 
+		public override bool CanKillTile(int i, int j, ref bool blockDamaged)
+		{
+			return false;
+		}
+
 		public override void RightClick(int i, int j)
 		{
 			if (Main.netMode != 1 && !NPC.AnyNPCs(base.mod.NPCType("Stage3Scientist")) && RedeWorld.downedStage2Scientist && !RedeWorld.labAccess2)

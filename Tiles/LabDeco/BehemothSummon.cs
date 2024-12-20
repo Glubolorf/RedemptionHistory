@@ -51,6 +51,11 @@ namespace Redemption.Tiles.LabDeco
 			}
 		}
 
+		public override bool CanKillTile(int i, int j, ref bool blockDamaged)
+		{
+			return false;
+		}
+
 		public override void AnimateTile(ref int frame, ref int frameCounter)
 		{
 			frameCounter++;

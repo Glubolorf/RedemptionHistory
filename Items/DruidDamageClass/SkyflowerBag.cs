@@ -31,7 +31,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.noMelee = true;
 			base.item.autoReuse = false;
 			base.item.shoot = base.mod.ProjectileType("Seed2");
-			base.item.shootSpeed = 3f;
+			base.item.shootSpeed = 5f;
 		}
 
 		public override bool CanUseItem(Player player)

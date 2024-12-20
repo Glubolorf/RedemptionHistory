@@ -7,11 +7,11 @@ using Terraria.ModLoader;
 
 namespace Redemption.NPCs
 {
-	public class ShadowWormHead : ModNPC
+	public class BloodWormHead : ModNPC
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Shadow Worm");
+			base.DisplayName.SetDefault("Blood Worm");
 			Main.npcFrameCount[base.npc.type] = 1;
 		}
 
@@ -34,14 +34,14 @@ namespace Redemption.NPCs
 			base.npc.npcSlots = 1f;
 			base.npc.netAlways = true;
 			this.banner = base.npc.type;
-			this.bannerItem = base.mod.ItemType("ShadowWormBanner");
+			this.bannerItem = base.mod.ItemType("BloodWormBanner");
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
 		{
 			if (base.npc.life <= 0)
 			{
-				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/ShadowWormHeadGore"), 1f);
+				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/BloodWormGore1"), 1f);
 			}
 		}
 
@@ -54,11 +54,11 @@ namespace Redemption.NPCs
 				int num2 = Main.rand.Next(6, 12);
 				for (int i = 0; i < num2; i++)
 				{
-					num = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("ShadowWormBody"), base.npc.whoAmI, 0f, (float)num, 0f, 0f, 255);
+					num = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("BloodWormBody"), base.npc.whoAmI, 0f, (float)num, 0f, 0f, 255);
 					Main.npc[num].realLife = base.npc.whoAmI;
 					Main.npc[num].ai[3] = (float)base.npc.whoAmI;
 				}
-				num = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("ShadowWormTail"), base.npc.whoAmI, 0f, (float)num, 0f, 0f, 255);
+				num = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("BloodWormTail"), base.npc.whoAmI, 0f, (float)num, 0f, 0f, 255);
 				Main.npc[num].realLife = base.npc.whoAmI;
 				Main.npc[num].ai[3] = (float)base.npc.whoAmI;
 				base.npc.ai[0] = 1f;
@@ -322,6 +322,11 @@ namespace Redemption.NPCs
 			vector..ctor((float)texture2D.Width * 0.5f, (float)texture2D.Height * 0.5f);
 			Main.spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, null, drawColor, base.npc.rotation, vector, base.npc.scale, 0, 0f);
 			return false;
+		}
+
+		public override float SpawnChance(NPCSpawnInfo spawnInfo)
+		{
+			return SpawnCondition.Crimson.Chance * 0.02f;
 		}
 	}
 }

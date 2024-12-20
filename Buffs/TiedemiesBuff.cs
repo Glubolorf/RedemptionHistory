@@ -11,7 +11,7 @@ namespace Redemption.Buffs
 			base.DisplayName.SetDefault("Tiedemies");
 			base.Description.SetDefault("\"He will light your way\"");
 			Main.buffNoTimeDisplay[base.Type] = true;
-			Main.vanityPet[base.Type] = true;
+			Main.lightPet[base.Type] = true;
 		}
 
 		public override void Update(Player player, ref int buffIndex)

@@ -87,6 +87,22 @@ namespace Redemption.NPCs
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("AkisClaws"), 1, false, 0, false, false);
 				}
 			}
+			if (npc.type == base.mod.NPCType("RainbowChicken") && Main.rand.Next(100) == 0)
+			{
+				int num2 = Main.rand.Next(3);
+				if (num2 == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("HallamHoodie"), 1, false, 0, false, false);
+				}
+				if (num2 == 1)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("HallamLeggings"), 1, false, 0, false, false);
+				}
+				if (num2 == 2)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("HallamRobes"), 1, false, 0, false, false);
+				}
+			}
 			if (npc.type == base.mod.NPCType("ForestGolem"))
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("LivingWood"), Main.rand.Next(6, 14), false, 0, false, false);
@@ -388,15 +404,15 @@ namespace Redemption.NPCs
 					Main.NewText("The infection grows...", Color.ForestGreen.R, Color.ForestGreen.G, Color.ForestGreen.B, false);
 					for (int i = 0; i < (int)(WorldGen.rockLayerLow * (double)Main.maxTilesY * 0.00024); i++)
 					{
-						int num2 = WorldGen.genRand.Next(0, Main.maxTilesX);
-						int num3 = WorldGen.genRand.Next((int)WorldGen.rockLayer, Main.maxTilesY - 200);
-						WorldGen.OreRunner(num2, num3, (double)WorldGen.genRand.Next(2, 5), WorldGen.genRand.Next(2, 6), (ushort)base.mod.TileType("XenomiteOreBlock"));
+						int num3 = WorldGen.genRand.Next(0, Main.maxTilesX);
+						int num4 = WorldGen.genRand.Next((int)WorldGen.rockLayer, Main.maxTilesY - 200);
+						WorldGen.OreRunner(num3, num4, (double)WorldGen.genRand.Next(2, 5), WorldGen.genRand.Next(2, 6), (ushort)base.mod.TileType("XenomiteOreBlock"));
 					}
 					for (int j = 0; j < (int)(WorldGen.rockLayerLow * (double)Main.maxTilesY * 1E-05); j++)
 					{
-						int num4 = WorldGen.genRand.Next(0, Main.maxTilesX);
-						int num5 = WorldGen.genRand.Next((int)WorldGen.rockLayerLow, Main.maxTilesY - 200);
-						WorldGen.OreRunner(num4, num5, (double)WorldGen.genRand.Next(90, 130), WorldGen.genRand.Next(90, 170), (ushort)base.mod.TileType("DeadRockTile"));
+						int num5 = WorldGen.genRand.Next(0, Main.maxTilesX);
+						int num6 = WorldGen.genRand.Next((int)WorldGen.rockLayerLow, Main.maxTilesY - 200);
+						WorldGen.OreRunner(num5, num6, (double)WorldGen.genRand.Next(90, 130), WorldGen.genRand.Next(90, 170), (ushort)base.mod.TileType("DeadRockTile"));
 					}
 				}
 				RedeWorld.spawnOre = true;
@@ -408,12 +424,12 @@ namespace Redemption.NPCs
 			}
 			if (npc.type == base.mod.NPCType("UndeadViolinist"))
 			{
-				int num6 = Main.rand.Next(2);
-				if (num6 == 0)
+				int num7 = Main.rand.Next(2);
+				if (num7 == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("TheViolin"), 1, false, 0, false, false);
 				}
-				if (num6 == 1)
+				if (num7 == 1)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("ViolinString"), 1, false, 0, false, false);
 				}
@@ -425,6 +441,10 @@ namespace Redemption.NPCs
 			if (npc.type == base.mod.NPCType("Blobble"))
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 23, Main.rand.Next(1, 2), false, 0, false, false);
+				if (Main.rand.Next(100) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 1309, 1, false, 0, false, false);
+				}
 			}
 			if (npc.type == base.mod.NPCType("LivingBloom"))
 			{
@@ -621,6 +641,18 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 62, Main.rand.Next(2, 6), false, 0, false, false);
 				}
+			}
+			if (npc.type == base.mod.NPCType("BloodWormHead"))
+			{
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 69, Main.rand.Next(1, 4), false, 0, false, false);
+			}
+			if (npc.type == base.mod.NPCType("ForestSpider") && Main.hardMode)
+			{
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 2607, Main.rand.Next(1, 2), false, 0, false, false);
+			}
+			if (npc.type == base.mod.NPCType("SpiderSwarmerQueen") && Main.hardMode)
+			{
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 2607, Main.rand.Next(1, 2), false, 0, false, false);
 			}
 		}
 	}

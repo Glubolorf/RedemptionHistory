@@ -60,7 +60,7 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.Overworld.Chance * (Main.hardMode ? 0.02f : 0f);
+			return SpawnCondition.Overworld.Chance * ((Main.hardMode && RedeWorld.downedXenomiteCrystal) ? 0.02f : 0f);
 		}
 
 		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)

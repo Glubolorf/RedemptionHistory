@@ -51,7 +51,7 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.OverworldNightMonster.Chance * ((NPC.downedPlantBoss && Main.hardMode) ? 0.005f : 0f);
+			return SpawnCondition.OverworldNightMonster.Chance * ((NPC.downedPlantBoss && RedeWorld.downedInfectedEye && Main.hardMode) ? 0.005f : 0f);
 		}
 	}
 }

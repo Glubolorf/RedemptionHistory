@@ -15,7 +15,7 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override void SafeSetDefaults()
 		{
-			base.item.damage = 40;
+			base.item.damage = 45;
 			base.item.width = 22;
 			base.item.height = 22;
 			base.item.useTime = 20;

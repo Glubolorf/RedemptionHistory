@@ -43,10 +43,6 @@ namespace Redemption.Items.DruidDamageClass
 			modRecipe.AddTile(null, "DruidicAltarTile");
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "DruidDaggerBall", 1);
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
 		}
 	}
 }

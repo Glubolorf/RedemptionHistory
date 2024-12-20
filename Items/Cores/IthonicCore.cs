@@ -28,11 +28,11 @@ namespace Redemption.Items.Cores
 			player.manaCost *= 0.95f;
 			player.accFlipper = true;
 			player.accDivingHelm = true;
-			if (player.ZoneUnderworldHeight)
+			if (player.ZoneUnderworldHeight && !player.lavaImmune)
 			{
 				player.bleed = true;
 			}
-			if (player.lavaWet)
+			if (player.lavaWet && !player.lavaImmune)
 			{
 				player.lifeRegen -= 100;
 			}

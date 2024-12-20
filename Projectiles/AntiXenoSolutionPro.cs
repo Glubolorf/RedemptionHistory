@@ -91,6 +91,12 @@ namespace Redemption.Projectiles
 						}
 						else if (type == base.mod.TileType("DeadRockTile"))
 						{
+							Main.tile[k, l].type = 1;
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1, 0);
+						}
+						else if (type == base.mod.TileType("DeadGrassTile"))
+						{
 							Main.tile[k, l].type = 2;
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1, 0);

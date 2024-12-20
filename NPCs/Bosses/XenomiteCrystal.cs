@@ -20,7 +20,7 @@ namespace Redemption.NPCs.Bosses
 			base.npc.width = 164;
 			base.npc.height = 82;
 			base.npc.friendly = false;
-			base.npc.damage = 30;
+			base.npc.damage = 34;
 			base.npc.defense = 10;
 			base.npc.lifeMax = 4500;
 			base.npc.HitSound = SoundID.NPCHit4;
@@ -125,7 +125,7 @@ namespace Redemption.NPCs.Bosses
 					float num2 = 12f;
 					Vector2 vector;
 					vector..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num3 = 10;
+					int num3 = 17;
 					int num4 = base.mod.ProjectileType("XenomiteFragmentPro");
 					float num5 = (float)Math.Atan2((double)(vector.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector.X - (player.position.X + (float)player.width * 0.5f)));
 					Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num5) * (double)num2 * -1.0), (float)(Math.Sin((double)num5) * (double)num2 * -1.0), num4, num3, 0f, 0, 0f, 0f);
@@ -139,24 +139,24 @@ namespace Redemption.NPCs.Bosses
 				{
 					NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("XenomitePiece"), 0, 0f, 0f, 0f, 0f, 255);
 				}
-				if (base.npc.life < 3000)
+				if (base.npc.life < 4000)
 				{
 					this.specialAttack1++;
 					if (this.specialAttack1 == 600)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(0f, -5f), base.mod.ProjectileType("XenomiteFragmentPro"), 15, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(0f, 5f), base.mod.ProjectileType("XenomiteFragmentPro"), 15, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(-5f, 0f), base.mod.ProjectileType("XenomiteFragmentPro"), 15, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(5f, 0f), base.mod.ProjectileType("XenomiteFragmentPro"), 15, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(0f, -5f), base.mod.ProjectileType("XenomiteFragmentPro"), 17, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(0f, 5f), base.mod.ProjectileType("XenomiteFragmentPro"), 17, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(-5f, 0f), base.mod.ProjectileType("XenomiteFragmentPro"), 17, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(5f, 0f), base.mod.ProjectileType("XenomiteFragmentPro"), 17, 3f, 255, 0f, 0f);
 						this.specialAttack1 = 0;
 					}
 				}
-				if (base.npc.life < 1500 && this.specialAttack1 == 300)
+				if (base.npc.life < 3000 && this.specialAttack1 == 300)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(5f, 5f), base.mod.ProjectileType("XenomiteFragmentPro"), 15, 3f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(5f, -5f), base.mod.ProjectileType("XenomiteFragmentPro"), 15, 3f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(-5f, 5f), base.mod.ProjectileType("XenomiteFragmentPro"), 15, 3f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(-5f, -5f), base.mod.ProjectileType("XenomiteFragmentPro"), 15, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(5f, 5f), base.mod.ProjectileType("XenomiteFragmentPro"), 17, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(5f, -5f), base.mod.ProjectileType("XenomiteFragmentPro"), 17, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(-5f, 5f), base.mod.ProjectileType("XenomiteFragmentPro"), 17, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 86f, base.npc.position.Y + 44f), new Vector2(-5f, -5f), base.mod.ProjectileType("XenomiteFragmentPro"), 17, 3f, 255, 0f, 0f);
 				}
 			}
 			if (Main.rand.Next(2) == 0)

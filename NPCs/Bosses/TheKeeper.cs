@@ -18,7 +18,7 @@ namespace Redemption.NPCs.Bosses
 
 		public override void SetDefaults()
 		{
-			base.npc.aiStyle = -1;
+			base.npc.aiStyle = 0;
 			base.npc.lifeMax = 2250;
 			base.npc.damage = 30;
 			base.npc.defense = 0;
@@ -53,7 +53,7 @@ namespace Redemption.NPCs.Bosses
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
 			base.npc.lifeMax = (int)((float)base.npc.lifeMax * 0.6f * bossLifeScale);
-			base.npc.damage = (int)((float)base.npc.damage * 0.2f);
+			base.npc.damage = (int)((float)base.npc.damage * 0.6f);
 			base.npc.defense = base.npc.defense + numPlayers;
 		}
 
@@ -290,7 +290,7 @@ namespace Redemption.NPCs.Bosses
 				{
 					this.Shoot();
 				}
-				if (Main.rand.Next(600) == 0)
+				if (Main.rand.Next(400) == 0)
 				{
 					NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
 				}

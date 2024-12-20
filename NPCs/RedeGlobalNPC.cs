@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Redemption.Projectiles;
 using Terraria;
@@ -26,6 +27,8 @@ namespace Redemption.NPCs
 			this.needleStab = false;
 			this.sleepPowder = false;
 			this.vendetta = false;
+			this.sandDust = false;
+			this.badtime = false;
 		}
 
 		public override void UpdateLifeRegen(NPC npc, ref int damage)
@@ -121,6 +124,28 @@ namespace Redemption.NPCs
 				}
 				npc.defense -= 25;
 			}
+			if (this.sandDust)
+			{
+				npc.defense -= 8;
+			}
+			if (this.badtime)
+			{
+				if (npc.lifeRegen > 0)
+				{
+					npc.lifeRegen = 0;
+				}
+				npc.lifeRegen -= 2000;
+				if (damage < 1)
+				{
+					damage = 1;
+				}
+				if (!npc.boss)
+				{
+					npc.velocity.X = npc.velocity.X * 0.4f;
+					npc.velocity.Y = npc.velocity.Y * 0.4f;
+				}
+				npc.defense -= 99;
+			}
 		}
 
 		public override void ModifyHitPlayer(NPC npc, Player target, ref int damage, ref bool crit)
@@ -192,6 +217,51 @@ namespace Redemption.NPCs
 			}
 		}
 
+		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
+		{
+			Player player = Main.player[Main.myPlayer];
+			if (spawnInfo.player.GetModPlayer<RedePlayer>(base.mod).ZoneXeno)
+			{
+				pool.Clear();
+				if (Main.hardMode)
+				{
+					if (player.ZoneRockLayerHeight)
+					{
+						pool.Add(base.mod.NPCType("HazmatSkeleton"), 0.1f);
+						pool.Add(base.mod.NPCType("XenomiteGolem"), 0.1f);
+						pool.Add(base.mod.NPCType("XenomiteGargantuan"), 0.03f);
+						pool.Add(base.mod.NPCType("RadiumDiggerHead"), 0.01f);
+						pool.Add(base.mod.NPCType("XenonRoller"), 0.1f);
+						pool.Add(base.mod.NPCType("SludgyBoi"), 0.1f);
+						pool.Add(base.mod.NPCType("BobTheBlob"), 0.002f);
+					}
+					else if (player.ZoneOverworldHeight && !Main.dayTime)
+					{
+						pool.Add(base.mod.NPCType("HazmatZombie"), 0.1f);
+						pool.Add(base.mod.NPCType("XenomiteGolem"), 0.1f);
+						pool.Add(base.mod.NPCType("XenomiteGargantuan"), 0.03f);
+						pool.Add(base.mod.NPCType("XenonRoller"), 0.1f);
+						pool.Add(base.mod.NPCType("SludgyBoi"), 0.1f);
+						pool.Add(base.mod.NPCType("BobTheBlob"), 0.002f);
+					}
+				}
+			}
+			if (spawnInfo.player.GetModPlayer<RedePlayer>(base.mod).ZoneLab)
+			{
+				pool.Clear();
+				if (Main.hardMode && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
+				{
+					if (NPC.downedMoonlord)
+					{
+						pool.Add(base.mod.NPCType("Stage2Scientist"), 0.01f);
+					}
+					pool.Add(base.mod.NPCType("InfectionHive"), 0.05f);
+					pool.Add(base.mod.NPCType("SludgyBoi2"), 0.1f);
+					pool.Add(base.mod.NPCType("WalterInfected"), 0.1f);
+				}
+			}
+		}
+
 		public bool enjoyment;
 
 		public bool ultraFlames;
@@ -207,5 +277,9 @@ namespace Redemption.NPCs
 		public bool sleepPowder;
 
 		public bool vendetta;
+
+		public bool sandDust;
+
+		public bool badtime;
 	}
 }

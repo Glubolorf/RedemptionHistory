@@ -19,5 +19,15 @@ namespace Redemption.Items
 			base.item.value = 0;
 			base.item.rare = 10;
 		}
+
+		public override void AddRecipes()
+		{
+			ModRecipe modRecipe = new ModRecipe(base.mod);
+			modRecipe.AddIngredient(23, 80);
+			modRecipe.AddIngredient(1508, 2);
+			modRecipe.AddTile(null, "CorruptorTile");
+			modRecipe.SetResult(this, 1);
+			modRecipe.AddRecipe();
+		}
 	}
 }

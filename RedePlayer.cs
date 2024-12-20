@@ -69,7 +69,7 @@ namespace Redemption
 
 		public override void UpdateBiomes()
 		{
-			this.ZoneXeno = (RedeWorld.xenoBiome > 75);
+			this.ZoneXeno = (RedeWorld.xenoBiome > 75 || RedeWorld.xenoBiome2 > 75);
 			this.ZoneLab = (RedeWorld.labBiome > 200);
 		}
 
@@ -233,6 +233,9 @@ namespace Redemption
 			this.sleepPowder = false;
 			this.vendetta = false;
 			this.iceShield = false;
+			this.lavaCubeMinion = false;
+			this.sandDust = false;
+			this.badtime = false;
 		}
 
 		public override void UpdateDead()
@@ -243,6 +246,7 @@ namespace Redemption
 			this.holyFire = false;
 			this.bInfection = false;
 			this.sleepPowder = false;
+			this.sandDust = false;
 		}
 
 		public override void UpdateBadLifeRegen()
@@ -308,6 +312,33 @@ namespace Redemption
 				Player player2 = base.player;
 				player2.velocity.Y = player2.velocity.Y * 0.4f;
 				base.player.statDefense -= 25;
+			}
+			if (this.sandDust)
+			{
+				base.player.statDefense -= 8;
+			}
+			if (this.badtime)
+			{
+				if (base.player.lifeRegen > 0)
+				{
+					base.player.lifeRegen = 0;
+				}
+				base.player.lifeRegenTime = 0;
+				base.player.lifeRegen -= 2000;
+				Player player3 = base.player;
+				player3.velocity.X = player3.velocity.X * 0.4f;
+				Player player4 = base.player;
+				player4.velocity.Y = player4.velocity.Y * 0.4f;
+				base.player.statDefense -= 99;
+			}
+			if (this.ZoneLab && base.player.chaosState)
+			{
+				if (base.player.lifeRegen > 0)
+				{
+					base.player.lifeRegen = 0;
+				}
+				base.player.lifeRegenTime = 0;
+				base.player.lifeRegen -= 2000;
 			}
 		}
 
@@ -879,5 +910,11 @@ namespace Redemption
 		public bool vendetta;
 
 		public bool iceShield;
+
+		public bool lavaCubeMinion;
+
+		public bool sandDust;
+
+		public bool badtime;
 	}
 }

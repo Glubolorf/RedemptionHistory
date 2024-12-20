@@ -33,9 +33,18 @@ namespace Redemption.NPCs
 
 		public override void AI()
 		{
+			base.npc.TargetClosest(true);
+			Vector2 vector = Main.player[base.npc.target].Center - base.npc.Center;
+			base.npc.rotation = Utils.ToRotation(vector);
 			if (Main.rand.Next(1) == 0)
 			{
 				Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 20, base.npc.velocity.X * 0.2f, base.npc.velocity.Y * 0.2f, 20, default(Color), 2f);
+			}
+			this.deathTimer++;
+			if (this.deathTimer >= 300)
+			{
+				Main.PlaySound(SoundID.NPCDeath39.WithVolume(0.3f), (int)base.npc.position.X, (int)base.npc.position.Y);
+				base.npc.active = false;
 			}
 		}
 
@@ -48,5 +57,7 @@ namespace Redemption.NPCs
 		{
 			return false;
 		}
+
+		private int deathTimer;
 	}
 }

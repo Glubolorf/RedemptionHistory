@@ -91,7 +91,15 @@ namespace Redemption
 				base.ItemType("TitaniumBloomBag"),
 				base.ItemType("AdamantiteLilyBag"),
 				base.ItemType("CreationRoseBag"),
-				base.ItemType("DeathsGraspBag")
+				base.ItemType("DeathsGraspBag"),
+				base.ItemType("GloomShroomBag"),
+				base.ItemType("GlowingMBag"),
+				base.ItemType("GoldenOrangeBag"),
+				base.ItemType("HealShroomBag"),
+				base.ItemType("NightshadeSeedbag"),
+				base.ItemType("BloodRootSeedbag"),
+				base.ItemType("ViciousShroomBag"),
+				base.ItemType("VileShroomBag")
 			});
 			RecipeGroup.RegisterGroup("Redemption:Seedbag", recipeGroup2);
 			RecipeGroup recipeGroup3 = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + " Phasesaber", new int[]
@@ -197,6 +205,9 @@ namespace Redemption
 			base.AddTranslation(modTranslation);
 			modTranslation = base.CreateTranslation("Lasers7");
 			modTranslation.SetDefault("All Laser Systems have been deactivated...");
+			base.AddTranslation(modTranslation);
+			modTranslation = base.CreateTranslation("PatientZeroMessage1");
+			modTranslation.SetDefault("As the Infection halts, strong creatures of Epidotra return...");
 			base.AddTranslation(modTranslation);
 		}
 

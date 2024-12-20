@@ -11,12 +11,12 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Scarlet Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nShoots a sharp Scarlet Shard\nRight-clicking will summon a Scarlion Spirit [c/bee7c9:(20 Second Duration)]\n[c/71ee8d:-Guardian Info-]\n[c/a0db98:Type:] Guardian\n[c/98dbc3:Special Ability:] Quad-Shot/Blood Pulse Aura\n[c/98c1db:Effects:] Staves that shoot a single projectile will shoot 4 more in an arc, Druidic Enhancement+/Life Enhancement+/Life-Steal");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nShoots a sharp Scarlet Shard\nRight-clicking will summon a Scarlion Spirit [c/bee7c9:(10 Second Duration)]\n[c/71ee8d:-Guardian Info-]\n[c/a0db98:Type:] Guardian\n[c/98dbc3:Special Ability:] Quad-Shot/Blood Pulse Aura\n[c/98c1db:Effects:] Staves that shoot a single projectile will shoot 4 more in an arc, Druidic Enhancement+/Life Enhancement+/Life-Steal");
 		}
 
 		public override void SafeSetDefaults()
 		{
-			base.item.damage = 68;
+			base.item.damage = 88;
 			base.item.width = 56;
 			base.item.height = 56;
 			base.item.useTime = 28;
@@ -46,11 +46,11 @@ namespace Redemption.Items.DruidDamageClass.DruidS
 				base.item.buffType = base.mod.BuffType("NatureGuardian21Buff");
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).longerGuardians)
 				{
-					base.item.buffTime = 1800;
+					base.item.buffTime = 1200;
 				}
 				else
 				{
-					base.item.buffTime = 1200;
+					base.item.buffTime = 600;
 				}
 				base.item.shoot = base.mod.ProjectileType("NatureGuardian21");
 				base.item.shootSpeed = 0f;

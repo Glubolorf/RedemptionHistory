@@ -76,6 +76,7 @@ namespace Redemption.NPCs.Bosses
 				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("TheInfectedEye"), 1, false, 0, false, false);
 			}
 			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("Xenomite"), Main.rand.Next(4, 6), false, 0, false, false);
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("AntiXenomiteApplier"), Main.rand.Next(2, 6), false, 0, false, false);
 		}
 
 		public override void BossLoot(ref string name, ref int potionType)

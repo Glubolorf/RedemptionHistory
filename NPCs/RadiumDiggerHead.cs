@@ -340,10 +340,5 @@ namespace Redemption.NPCs
 			Main.spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, null, drawColor, base.npc.rotation, vector, base.npc.scale, 0, 0f);
 			return false;
 		}
-
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
-		{
-			return SpawnCondition.Cavern.Chance * (((int)Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == base.mod.TileType("DeadRockTile") && Main.hardMode) ? 1.5f : 0f);
-		}
 	}
 }

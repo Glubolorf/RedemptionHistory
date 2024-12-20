@@ -28,6 +28,7 @@ namespace Redemption.NPCs
 			base.npc.knockBackResist = 0.05f;
 			base.npc.aiStyle = 3;
 			base.npc.lavaImmune = true;
+			base.npc.buffImmune[24] = true;
 			this.aiType = 482;
 			this.animationType = 482;
 			this.banner = base.npc.type;

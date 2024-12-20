@@ -40,15 +40,6 @@ namespace Redemption.NPCs
 			}
 		}
 
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
-		{
-			if ((int)Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type != base.mod.TileType("DeadRockTile") || !Main.hardMode)
-			{
-				return 0f;
-			}
-			return 2.2f;
-		}
-
 		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
 		{
 			if (Main.rand.Next(2) == 0 || (Main.expertMode && Main.rand.Next(0) == 0))

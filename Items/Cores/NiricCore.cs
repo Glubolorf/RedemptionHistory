@@ -29,7 +29,7 @@ namespace Redemption.Items.Cores
 			player.buffImmune[46] = true;
 			player.buffImmune[47] = true;
 			player.buffImmune[44] = true;
-			if (player.ZoneUnderworldHeight)
+			if (player.ZoneUnderworldHeight && !player.lavaImmune)
 			{
 				player.bleed = true;
 				player.lifeRegen += -5;

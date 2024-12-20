@@ -71,6 +71,13 @@ namespace Redemption.Items.DruidDamageClass
 			modRecipe.AddTile(18);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
+			modRecipe = new ModRecipe(base.mod);
+			modRecipe.AddIngredient(null, "LeatherPouch", 1);
+			modRecipe.AddIngredient(null, "AncientWood", 5);
+			modRecipe.AddIngredient(null, "PlantMatter", 5);
+			modRecipe.AddTile(18);
+			modRecipe.SetResult(this, 1);
+			modRecipe.AddRecipe();
 		}
 	}
 }

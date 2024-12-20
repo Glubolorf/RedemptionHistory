@@ -875,6 +875,19 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 			return false;
 		}
 
+		public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+		{
+			if (NPC.AnyNPCs(base.mod.NPCType("OmegaMK2Droid1")) || NPC.AnyNPCs(base.mod.NPCType("OmegaMK2Droid2")))
+			{
+				damage *= 0.1;
+			}
+			else
+			{
+				damage *= 0.75;
+			}
+			return true;
+		}
+
 		private void Target()
 		{
 			this.player = Main.player[base.npc.target];

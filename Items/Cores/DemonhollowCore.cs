@@ -52,7 +52,7 @@ namespace Redemption.Items.Cores
 			{
 				player.lifeRegen += 25;
 			}
-			if (player.wet && !player.lavaWet)
+			if (player.wet && !player.lavaWet && !player.gills)
 			{
 				player.lifeRegen -= 100;
 			}

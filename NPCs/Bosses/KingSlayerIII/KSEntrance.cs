@@ -489,6 +489,7 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 			}
 			if (this.fightBegin)
 			{
+				this.fightTimer++;
 				base.npc.noTileCollide = true;
 				base.npc.noGravity = true;
 			}
@@ -1257,13 +1258,49 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 				this.chargeAttack = false;
 				if (this.customAI[2] == 5f)
 				{
-					string text11 = "What a nuisance. Minions, take him down.";
-					Color rarityCyan = Colors.RarityCyan;
-					byte r11 = rarityCyan.R;
-					rarityCyan = Colors.RarityCyan;
-					byte g11 = rarityCyan.G;
-					rarityCyan = Colors.RarityCyan;
-					Main.NewText(text11, r11, g11, rarityCyan.B, false);
+					if (this.fightTimer <= 600 && this.fightTimer > 300)
+					{
+						this.shield10Seconds = true;
+						string text11 = "Hmm? You are taking me down quite quickly... Well whatever. Shield Boost!";
+						Color rarityCyan = Colors.RarityCyan;
+						byte r11 = rarityCyan.R;
+						rarityCyan = Colors.RarityCyan;
+						byte g11 = rarityCyan.G;
+						rarityCyan = Colors.RarityCyan;
+						Main.NewText(text11, r11, g11, rarityCyan.B, false);
+					}
+					else if (this.fightTimer <= 300 && this.fightTimer > 180)
+					{
+						this.shield5Seconds = true;
+						string text12 = "In less than 5 seconds, I am already forced to use a shield!? Alright! Now I'll show you what I'm truely capable of!";
+						Color rarityCyan = Colors.RarityCyan;
+						byte r12 = rarityCyan.R;
+						rarityCyan = Colors.RarityCyan;
+						byte g12 = rarityCyan.G;
+						rarityCyan = Colors.RarityCyan;
+						Main.NewText(text12, r12, g12, rarityCyan.B, false);
+					}
+					else if (this.fightTimer <= 120)
+					{
+						this.shield2Seconds = true;
+						string text13 = "In mere SECONDS, I am already forced to use a shield!? Alright! MAX SHIELD BOOST!";
+						Color rarityCyan = Colors.RarityCyan;
+						byte r13 = rarityCyan.R;
+						rarityCyan = Colors.RarityCyan;
+						byte g13 = rarityCyan.G;
+						rarityCyan = Colors.RarityCyan;
+						Main.NewText(text13, r13, g13, rarityCyan.B, false);
+					}
+					else
+					{
+						string text14 = "What a nuisance. Minions, take them down.";
+						Color rarityCyan = Colors.RarityCyan;
+						byte r14 = rarityCyan.R;
+						rarityCyan = Colors.RarityCyan;
+						byte g14 = rarityCyan.G;
+						rarityCyan = Colors.RarityCyan;
+						Main.NewText(text14, r14, g14, rarityCyan.B, false);
+					}
 				}
 				if (this.customAI[2] < 500f)
 				{
@@ -1283,13 +1320,13 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 				}
 				if (this.customAI[2] >= 500f && !NPC.AnyNPCs(base.mod.NPCType("SpaceKeeper")))
 				{
-					string text12 = "I never needed them anyway.";
+					string text15 = "I never needed them anyway.";
 					Color rarityCyan = Colors.RarityCyan;
-					byte r12 = rarityCyan.R;
+					byte r15 = rarityCyan.R;
 					rarityCyan = Colors.RarityCyan;
-					byte g12 = rarityCyan.G;
+					byte g15 = rarityCyan.G;
 					rarityCyan = Colors.RarityCyan;
-					Main.NewText(text12, r12, g12, rarityCyan.B, false);
+					Main.NewText(text15, r15, g15, rarityCyan.B, false);
 					this.customAI[2] = 0f;
 					this.shieldEvent1 = true;
 					this.customAI[1] = 0f;
@@ -1305,13 +1342,13 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 				this.chargeAttack = false;
 				if (this.customAI[2] == 5f)
 				{
-					string text13 = "Alright, you are really starting to piss me off!";
+					string text16 = "Alright, you are really starting to piss me off!";
 					Color rarityCyan = Colors.RarityCyan;
-					byte r13 = rarityCyan.R;
+					byte r16 = rarityCyan.R;
 					rarityCyan = Colors.RarityCyan;
-					byte g13 = rarityCyan.G;
+					byte g16 = rarityCyan.G;
 					rarityCyan = Colors.RarityCyan;
-					Main.NewText(text13, r13, g13, rarityCyan.B, false);
+					Main.NewText(text16, r16, g16, rarityCyan.B, false);
 				}
 				if (this.customAI[2] < 570f)
 				{
@@ -1419,33 +1456,33 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 				{
 					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).omegaPower)
 					{
-						string text14 = "How am I losing to a WEAK LITTLE ANDROID!?";
+						string text17 = "How am I losing to a WEAK LITTLE ANDROID!?";
 						Color rarityCyan = Colors.RarityCyan;
-						byte r14 = rarityCyan.R;
+						byte r17 = rarityCyan.R;
 						rarityCyan = Colors.RarityCyan;
-						byte g14 = rarityCyan.G;
+						byte g17 = rarityCyan.G;
 						rarityCyan = Colors.RarityCyan;
-						Main.NewText(text14, r14, g14, rarityCyan.B, false);
+						Main.NewText(text17, r17, g17, rarityCyan.B, false);
 					}
 					else if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).chickenPower)
 					{
-						string text15 = "The frick!? HOW AM I LOSING TO A CHICKEN!?";
+						string text18 = "The frick!? HOW AM I LOSING TO A CHICKEN!?";
 						Color rarityCyan = Colors.RarityCyan;
-						byte r15 = rarityCyan.R;
+						byte r18 = rarityCyan.R;
 						rarityCyan = Colors.RarityCyan;
-						byte g15 = rarityCyan.G;
+						byte g18 = rarityCyan.G;
 						rarityCyan = Colors.RarityCyan;
-						Main.NewText(text15, r15, g15, rarityCyan.B, false);
+						Main.NewText(text18, r18, g18, rarityCyan.B, false);
 					}
 					else
 					{
-						string text16 = "How am I losing to a WEAK TERRARIAN!?";
+						string text19 = "How am I losing to a WEAK TERRARIAN!?";
 						Color rarityCyan = Colors.RarityCyan;
-						byte r16 = rarityCyan.R;
+						byte r19 = rarityCyan.R;
 						rarityCyan = Colors.RarityCyan;
-						byte g16 = rarityCyan.G;
+						byte g19 = rarityCyan.G;
 						rarityCyan = Colors.RarityCyan;
-						Main.NewText(text16, r16, g16, rarityCyan.B, false);
+						Main.NewText(text19, r19, g19, rarityCyan.B, false);
 					}
 				}
 				if (this.customAI[2] == 180f)
@@ -1525,56 +1562,56 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 					this.customAI[3] += 1f;
 					if (this.customAI[3] == 5f)
 					{
-						string text17 = "No...";
+						string text20 = "No...";
 						Color rarityCyan = Colors.RarityCyan;
-						byte r17 = rarityCyan.R;
+						byte r20 = rarityCyan.R;
 						rarityCyan = Colors.RarityCyan;
-						byte g17 = rarityCyan.G;
+						byte g20 = rarityCyan.G;
 						rarityCyan = Colors.RarityCyan;
-						Main.NewText(text17, r17, g17, rarityCyan.B, false);
+						Main.NewText(text20, r20, g20, rarityCyan.B, false);
 					}
 					if (this.customAI[3] == 50f)
 					{
-						string text18 = "NO! HOW IS THIS HAPPENING!?";
-						Color rarityCyan = Colors.RarityCyan;
-						byte r18 = rarityCyan.R;
-						rarityCyan = Colors.RarityCyan;
-						byte g18 = rarityCyan.G;
-						rarityCyan = Colors.RarityCyan;
-						Main.NewText(text18, r18, g18, rarityCyan.B, false);
-					}
-					if (this.customAI[3] == 150f)
-					{
-						if (NPC.downedPlantBoss)
-						{
-							string text19 = "HOW ARE YOU WINNING!? THIS IS UNACCEPTABLE!";
-							Color rarityCyan = Colors.RarityCyan;
-							byte r19 = rarityCyan.R;
-							rarityCyan = Colors.RarityCyan;
-							byte g19 = rarityCyan.G;
-							rarityCyan = Colors.RarityCyan;
-							Main.NewText(text19, r19, g19, rarityCyan.B, false);
-						}
-						else
-						{
-							string text20 = "YOU HAVEN'T EVEN DEFEATED THAT DAMN PLANT YET, HOW ARE YOU DEFEATING ME!?";
-							Color rarityCyan = Colors.RarityCyan;
-							byte r20 = rarityCyan.R;
-							rarityCyan = Colors.RarityCyan;
-							byte g20 = rarityCyan.G;
-							rarityCyan = Colors.RarityCyan;
-							Main.NewText(text20, r20, g20, rarityCyan.B, false);
-						}
-					}
-					if (this.customAI[3] == 320f)
-					{
-						string text21 = "I'VE HAD ENOUGH OF YOU! LET'S FINISH THIS!";
+						string text21 = "NO! HOW IS THIS HAPPENING!?";
 						Color rarityCyan = Colors.RarityCyan;
 						byte r21 = rarityCyan.R;
 						rarityCyan = Colors.RarityCyan;
 						byte g21 = rarityCyan.G;
 						rarityCyan = Colors.RarityCyan;
 						Main.NewText(text21, r21, g21, rarityCyan.B, false);
+					}
+					if (this.customAI[3] == 150f)
+					{
+						if (NPC.downedPlantBoss)
+						{
+							string text22 = "HOW ARE YOU WINNING!? THIS IS UNACCEPTABLE!";
+							Color rarityCyan = Colors.RarityCyan;
+							byte r22 = rarityCyan.R;
+							rarityCyan = Colors.RarityCyan;
+							byte g22 = rarityCyan.G;
+							rarityCyan = Colors.RarityCyan;
+							Main.NewText(text22, r22, g22, rarityCyan.B, false);
+						}
+						else
+						{
+							string text23 = "YOU HAVEN'T EVEN DEFEATED THAT DAMN PLANT YET, HOW ARE YOU DEFEATING ME!?";
+							Color rarityCyan = Colors.RarityCyan;
+							byte r23 = rarityCyan.R;
+							rarityCyan = Colors.RarityCyan;
+							byte g23 = rarityCyan.G;
+							rarityCyan = Colors.RarityCyan;
+							Main.NewText(text23, r23, g23, rarityCyan.B, false);
+						}
+					}
+					if (this.customAI[3] == 320f)
+					{
+						string text24 = "I'VE HAD ENOUGH OF YOU! LET'S FINISH THIS!";
+						Color rarityCyan = Colors.RarityCyan;
+						byte r24 = rarityCyan.R;
+						rarityCyan = Colors.RarityCyan;
+						byte g24 = rarityCyan.G;
+						rarityCyan = Colors.RarityCyan;
+						Main.NewText(text24, r24, g24, rarityCyan.B, false);
 					}
 					if (this.customAI[3] >= 500f)
 					{
@@ -1900,7 +1937,40 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 
 		public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
 		{
-			damage *= 0.75;
+			if (this.shield10Seconds)
+			{
+				if (this.shieldEvent4)
+				{
+					damage *= 0.3;
+				}
+				else
+				{
+					damage *= 0.5;
+				}
+			}
+			else if (this.shield5Seconds)
+			{
+				if (this.shieldEvent4)
+				{
+					damage *= 0.2;
+				}
+				else
+				{
+					damage *= 0.25;
+				}
+			}
+			else if (this.shield2Seconds)
+			{
+				damage *= 0.15;
+			}
+			else if (this.shieldEvent4)
+			{
+				damage *= 0.5;
+			}
+			else
+			{
+				damage *= 0.75;
+			}
 			return true;
 		}
 
@@ -2165,5 +2235,13 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 		private int rocketRCounter;
 
 		private bool musicChange;
+
+		private int fightTimer;
+
+		private bool shield10Seconds;
+
+		private bool shield5Seconds;
+
+		private bool shield2Seconds;
 	}
 }

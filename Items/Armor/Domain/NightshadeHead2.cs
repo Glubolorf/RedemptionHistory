@@ -60,6 +60,7 @@ namespace Redemption.Items.Armor.Domain
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
 			modRecipe = new ModRecipe(base.mod);
+			modRecipe.anyIronBar = true;
 			modRecipe.AddIngredient(696, 1);
 			modRecipe.AddIngredient(22, 10);
 			modRecipe.AddIngredient(null, "Nightshade", 6);

@@ -22,7 +22,7 @@ namespace Redemption.NPCs
 			base.npc.friendly = false;
 			base.npc.damage = 30;
 			base.npc.defense = 25;
-			base.npc.lifeMax = 90;
+			base.npc.lifeMax = 120;
 			base.npc.HitSound = SoundID.NPCHit41;
 			base.npc.DeathSound = SoundID.NPCDeath43;
 			base.npc.value = 200f;

@@ -18,7 +18,6 @@ namespace Redemption.Projectiles.v08
 			base.projectile.height = 30;
 			base.projectile.aiStyle = -1;
 			base.projectile.friendly = true;
-			base.projectile.melee = true;
 			base.projectile.penetrate = 1;
 		}
 

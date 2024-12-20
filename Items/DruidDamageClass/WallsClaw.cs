@@ -10,7 +10,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Wall's Claw");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nShoots a Night Spirit\nThe Night Spirit is stronger in the Corruption/Crimson");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nShoots Night Spirits\nThe Night Spirit is stronger in the Corruption/Crimson");
 		}
 
 		public override void SafeSetDefaults()
@@ -128,7 +128,7 @@ namespace Redemption.Items.DruidDamageClass
 				float num7 = num3 + (float)Main.rand.Next(-50, 51) * 0.02f;
 				float num8 = num4 + (float)Main.rand.Next(-50, 51) * 0.02f;
 				int num9 = Projectile.NewProjectile(vector.X, vector.Y, num7, num8, base.mod.ProjectileType("NightSpirit"), num, num2, myPlayer, 0f, (float)Main.rand.Next(10));
-				Main.projectile[num9].tileCollide = false;
+				Main.projectile[num9].tileCollide = true;
 				Main.projectile[num9].ranged = false;
 				Main.projectile[num9].magic = false;
 				Main.projectile[num9].timeLeft = 200;

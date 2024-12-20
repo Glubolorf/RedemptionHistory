@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Redemption.Items.DruidDamageClass;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace Redemption.Items.Cores
@@ -12,6 +13,7 @@ namespace Redemption.Items.Cores
 		{
 			base.DisplayName.SetDefault("Girus Core");
 			base.Tooltip.SetDefault("'The corrupted machine controls you'\n[c/64ff64:-Strengths-]\n5% damage reduction\nYou transform into an Omega Android\nYou will drip red sludge that hardens on a tile and deals contact damage\nYou are immune to Bleeding, Confusion, Poisoned, On Fire!, Venom, Burning and Electrified\n+8 defence\n8% increase to all damage\nYour exoskeleton allows increased jump height and movement speed\nYou are immune to knockback\n[c/ff6464:-Weaknesses-]\nYou regen less life\nYou will explode in water\nYou will slowly malfunction in rain while on the surface\nYour attack and defense will decrease the lower your life is");
+			Main.RegisterItemAnimation(base.item.type, new DrawAnimationVertical(5, 8));
 		}
 
 		public override void SetDefaults()

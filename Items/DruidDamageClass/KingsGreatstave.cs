@@ -19,8 +19,8 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.damage = 18;
 			base.item.height = 78;
 			base.item.width = 78;
-			base.item.useTime = 22;
-			base.item.useAnimation = 22;
+			base.item.useTime = 28;
+			base.item.useAnimation = 28;
 			base.item.useStyle = 1;
 			base.item.crit = 18;
 			base.item.knockBack = 7f;
@@ -30,7 +30,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
 			base.item.shoot = base.mod.ProjectileType("KingsOakShot" + (Main.rand.Next(5) + 1));
-			base.item.shootSpeed = 20f;
+			base.item.shootSpeed = 12f;
 		}
 
 		public override bool AltFunctionUse(Player player)
@@ -60,7 +60,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.buffType = 0;
 			base.item.buffTime = 0;
 			base.item.shoot = base.mod.ProjectileType("KingsOakShot" + (Main.rand.Next(5) + 1));
-			base.item.shootSpeed = 20f;
+			base.item.shootSpeed = 12f;
 			return true;
 		}
 

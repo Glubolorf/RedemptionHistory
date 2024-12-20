@@ -92,6 +92,12 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 			}
 		}
 
+		public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+		{
+			damage *= 0.9;
+			return true;
+		}
+
 		public override void NPCLoot()
 		{
 			if (Main.rand.Next(10) == 0)

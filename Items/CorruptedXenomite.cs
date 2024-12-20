@@ -22,5 +22,15 @@ namespace Redemption.Items
 			base.item.value = Item.sellPrice(0, 1, 0, 0);
 			base.item.rare = 10;
 		}
+
+		public override void AddRecipes()
+		{
+			ModRecipe modRecipe = new ModRecipe(base.mod);
+			modRecipe.AddIngredient(null, "Xenomite", 5);
+			modRecipe.AddIngredient(null, "VlitchBattery", 1);
+			modRecipe.AddTile(null, "CorruptorTile");
+			modRecipe.SetResult(this, 1);
+			modRecipe.AddRecipe();
+		}
 	}
 }

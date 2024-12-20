@@ -37,14 +37,6 @@ namespace Redemption.Projectiles
 				}
 			}
 			Player player = Main.player[base.projectile.owner];
-			if (player.ZoneCorrupt || player.ZoneCrimson)
-			{
-				base.projectile.penetrate = 3;
-			}
-			else
-			{
-				base.projectile.penetrate = 1;
-			}
 			int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y + 2f), base.projectile.width + 2, base.projectile.height + 2, 62, base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 1f);
 			Main.dust[num].noGravity = true;
 			base.projectile.localAI[0] += 1f;

@@ -16,12 +16,14 @@ namespace Redemption
 		public override void TileCountsAvailable(int[] tileCounts)
 		{
 			RedeWorld.xenoBiome = tileCounts[base.mod.TileType("DeadRockTile")];
+			RedeWorld.xenoBiome2 = tileCounts[base.mod.TileType("DeadGrassTile")];
 			RedeWorld.labBiome = tileCounts[base.mod.TileType("LabTileUnsafe")];
 		}
 
 		public override void ResetNearbyTileEffects()
 		{
 			RedeWorld.xenoBiome = 0;
+			RedeWorld.xenoBiome2 = 0;
 			RedeWorld.labBiome = 0;
 		}
 
@@ -360,6 +362,25 @@ namespace Redemption
 					NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 				}
 			}
+			if (RedeWorld.downedPatientZero && !RedeWorld.patientZeroMessages)
+			{
+				RedeWorld.patientZeroMessages = true;
+				if (Main.netMode == 2)
+				{
+					NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
+				}
+				string text14 = "Mods.Redemption.PatientZeroMessage1";
+				Color gold = Color.Gold;
+				if (Main.netMode == 2)
+				{
+					NetMessage.BroadcastChatMessage(NetworkText.FromKey(text14, new object[0]), gold, -1);
+					return;
+				}
+				if (Main.netMode == 0)
+				{
+					Main.NewText(Language.GetTextValue(text14), gold, false);
+				}
+			}
 		}
 
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
@@ -376,6 +397,21 @@ namespace Redemption
 						WorldGen.TileRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next((int)WorldGen.worldSurfaceLow, Main.maxTilesY), (double)WorldGen.genRand.Next(6, 10), WorldGen.genRand.Next(2, 4), base.mod.TileType("KaniteOreTile"), false, 0f, 0f, false, true);
 					}
 				}));
+				tasks.Insert(num + 2, new PassLegacy("Generating P L A N T", delegate(GenerationProgress progress)
+				{
+					progress.Message = "Generating P L A N T";
+					for (int i = 0; i < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 6E-05); i++)
+					{
+						int maxTilesX = Main.maxTilesX;
+						int maxTilesY = Main.maxTilesY;
+						int num3 = WorldGen.genRand.Next(0, maxTilesX);
+						int num4 = WorldGen.genRand.Next((int)((float)maxTilesY * 0.05f), (int)((double)maxTilesY * 0.3));
+						if (Main.tile[num3, num4].type == 0)
+						{
+							WorldGen.OreRunner(num3, num4, (double)WorldGen.genRand.Next(3, 5), WorldGen.genRand.Next(4, 6), (ushort)base.mod.TileType("PlantMatterTile"));
+						}
+					}
+				}));
 			}
 			tasks.Insert(num + 4, new PassLegacy("Ancient House", delegate(GenerationProgress progress)
 			{
@@ -385,31 +421,31 @@ namespace Redemption
 			{
 				this.AncientHouseFurn();
 			}));
-			tasks.Insert(num2 + 3, new PassLegacy("Clearing Space for ???", delegate(GenerationProgress progress)
+			tasks.Insert(num2 + 4, new PassLegacy("Clearing Space for ???", delegate(GenerationProgress progress)
 			{
 				this.HeroHallClear();
 			}));
-			tasks.Insert(num2 + 4, new PassLegacy("???", delegate(GenerationProgress progress)
+			tasks.Insert(num2 + 5, new PassLegacy("???", delegate(GenerationProgress progress)
 			{
 				this.HeroHall();
 			}));
-			tasks.Insert(num2 + 5, new PassLegacy("??? Furniture", delegate(GenerationProgress progress)
+			tasks.Insert(num2 + 6, new PassLegacy("??? Furniture", delegate(GenerationProgress progress)
 			{
 				this.HeroHallStuff();
 			}));
-			tasks.Insert(num2 + 6, new PassLegacy("Clearing Space for Lab", delegate(GenerationProgress progress)
+			tasks.Insert(num2 + 7, new PassLegacy("Clearing Space for Lab", delegate(GenerationProgress progress)
 			{
 				this.LabClear();
 			}));
-			tasks.Insert(num2 + 7, new PassLegacy("Clearing Liquids for Lab", delegate(GenerationProgress progress)
+			tasks.Insert(num2 + 8, new PassLegacy("Clearing Liquids for Lab", delegate(GenerationProgress progress)
 			{
 				this.PreLab();
 			}));
-			tasks.Insert(num2 + 8, new PassLegacy("Abandoned Lab", delegate(GenerationProgress progress)
+			tasks.Insert(num2 + 9, new PassLegacy("Abandoned Lab", delegate(GenerationProgress progress)
 			{
 				this.Lab();
 			}));
-			tasks.Insert(num2 + 9, new PassLegacy("Furnishing Lab", delegate(GenerationProgress progress)
+			tasks.Insert(num2 + 10, new PassLegacy("Furnishing Lab", delegate(GenerationProgress progress)
 			{
 				this.LabChests();
 			}));
@@ -640,6 +676,7 @@ namespace Redemption
 			WorldGen.PlaceObject((int)((float)Main.maxTilesX * 0.6f) + 99, (int)((float)Main.maxTilesY * 0.65f) + 174, (int)((ushort)base.mod.TileType("LabFanTile1")), false, 0, 0, -1, -1);
 			WorldGen.PlaceObject((int)((float)Main.maxTilesX * 0.6f) + 107, (int)((float)Main.maxTilesY * 0.65f) + 166, (int)((ushort)base.mod.TileType("SignBoiTile")), false, 0, 0, -1, -1);
 			WorldGen.PlaceObject((int)((float)Main.maxTilesX * 0.6f) + 110, (int)((float)Main.maxTilesY * 0.65f) + 166, (int)((ushort)base.mod.TileType("SignDeathTile")), false, 0, 0, -1, -1);
+			WorldGen.PlaceObject((int)((float)Main.maxTilesX * 0.6f) + 257, (int)((float)Main.maxTilesY * 0.65f) + 45, (int)((ushort)base.mod.TileType("CorruptorTile")), false, 0, 0, -1, -1);
 			BaseWorldGen.GenerateChest((int)((float)Main.maxTilesX * 0.6f) + 181, (int)((float)Main.maxTilesY * 0.65f) + 79, (int)((ushort)base.mod.TileType("LabChestTileLocked")), 0, null, null, null, false);
 			BaseWorldGen.GenerateChest((int)((float)Main.maxTilesX * 0.6f) + 128, (int)((float)Main.maxTilesY * 0.65f) + 74, (int)((ushort)base.mod.TileType("LabChestTileLocked")), 0, null, null, null, false);
 			BaseWorldGen.GenerateChest((int)((float)Main.maxTilesX * 0.6f) + 270, (int)((float)Main.maxTilesY * 0.65f) + 57, (int)((ushort)base.mod.TileType("LabChestTileLocked")), 0, null, null, null, false);
@@ -746,6 +783,7 @@ namespace Redemption
 			NetMessage.SendObjectPlacment(-1, (int)((float)Main.maxTilesX * 0.6f) + 99, (int)((float)Main.maxTilesY * 0.65f) + 174, (int)((ushort)base.mod.TileType("LabFanTile1")), 0, 0, -1, -1);
 			NetMessage.SendObjectPlacment(-1, (int)((float)Main.maxTilesX * 0.6f) + 107, (int)((float)Main.maxTilesY * 0.65f) + 166, (int)((ushort)base.mod.TileType("SignBoiTile")), 0, 0, -1, -1);
 			NetMessage.SendObjectPlacment(-1, (int)((float)Main.maxTilesX * 0.6f) + 110, (int)((float)Main.maxTilesY * 0.65f) + 166, (int)((ushort)base.mod.TileType("SignDeathTile")), 0, 0, -1, -1);
+			NetMessage.SendObjectPlacment(-1, (int)((float)Main.maxTilesX * 0.6f) + 257, (int)((float)Main.maxTilesY * 0.65f) + 45, (int)((ushort)base.mod.TileType("CorruptorTile")), 0, 0, -1, -1);
 		}
 
 		public override void PostWorldGen()
@@ -1033,6 +1071,7 @@ namespace Redemption
 			RedeWorld.downedSkullDigger = false;
 			RedeWorld.downedSunkenCaptain = false;
 			RedeWorld.spawnXenoBiome = false;
+			RedeWorld.starliteGenned = false;
 			RedeWorld.girusTalk1 = false;
 			RedeWorld.girusTalk2 = false;
 			RedeWorld.girusTalk3 = false;
@@ -1078,6 +1117,7 @@ namespace Redemption
 			bool flag18 = false;
 			bool flag19 = false;
 			bool flag20 = false;
+			bool flag21 = false;
 			if (RedeWorld.downedKingChicken)
 			{
 				list.Add("KingChicken");
@@ -1150,25 +1190,29 @@ namespace Redemption
 			{
 				flag6 = true;
 			}
-			if (RedeWorld.girusTalk1)
+			if (RedeWorld.starliteGenned)
 			{
 				flag7 = true;
 			}
-			if (RedeWorld.girusTalk2)
+			if (RedeWorld.girusTalk1)
 			{
 				flag8 = true;
 			}
-			if (RedeWorld.girusTalk3)
+			if (RedeWorld.girusTalk2)
 			{
 				flag9 = true;
 			}
-			if (RedeWorld.labSafe)
+			if (RedeWorld.girusTalk3)
 			{
 				flag10 = true;
 			}
-			if (RedeWorld.infectionBegin)
+			if (RedeWorld.labSafe)
 			{
 				flag11 = true;
+			}
+			if (RedeWorld.infectionBegin)
+			{
+				flag12 = true;
 			}
 			if (RedeWorld.downedBlisterface)
 			{
@@ -1184,39 +1228,39 @@ namespace Redemption
 			}
 			if (RedeWorld.labAccess1)
 			{
-				flag12 = true;
+				flag13 = true;
 			}
 			if (RedeWorld.labAccess2)
 			{
-				flag13 = true;
+				flag14 = true;
 			}
 			if (RedeWorld.labAccess3)
 			{
-				flag14 = true;
+				flag15 = true;
 			}
 			if (RedeWorld.labAccess4)
 			{
-				flag15 = true;
+				flag16 = true;
 			}
 			if (RedeWorld.labAccess5)
 			{
-				flag16 = true;
+				flag17 = true;
 			}
 			if (RedeWorld.labAccess6)
 			{
-				flag17 = true;
+				flag18 = true;
 			}
 			if (RedeWorld.labAccess7)
 			{
-				flag18 = true;
+				flag19 = true;
 			}
 			if (RedeWorld.keeperSaved)
 			{
-				flag19 = true;
+				flag20 = true;
 			}
 			if (RedeWorld.tbotLabAccess)
 			{
-				flag20 = true;
+				flag21 = true;
 			}
 			if (RedeWorld.downedIBehemoth)
 			{
@@ -1238,20 +1282,21 @@ namespace Redemption
 			tagCompound.Add("deathSlayer", flag4);
 			tagCompound.Add("newbFound", flag5);
 			tagCompound.Add("wasteland", flag6);
-			tagCompound.Add("girTalk1", flag7);
-			tagCompound.Add("girTalk2", flag8);
-			tagCompound.Add("girTalk3", flag9);
-			tagCompound.Add("labSafe1", flag10);
-			tagCompound.Add("infection1", flag11);
-			tagCompound.Add("labA1", flag12);
-			tagCompound.Add("labA2", flag13);
-			tagCompound.Add("labA3", flag14);
-			tagCompound.Add("labA4", flag15);
-			tagCompound.Add("labA5", flag16);
-			tagCompound.Add("labA6", flag17);
-			tagCompound.Add("labA7", flag18);
-			tagCompound.Add("tbotLabLasers", flag20);
-			tagCompound.Add("keeperS", flag19);
+			tagCompound.Add("starliteGen", flag7);
+			tagCompound.Add("girTalk1", flag8);
+			tagCompound.Add("girTalk2", flag9);
+			tagCompound.Add("girTalk3", flag10);
+			tagCompound.Add("labSafe1", flag11);
+			tagCompound.Add("infection1", flag12);
+			tagCompound.Add("labA1", flag13);
+			tagCompound.Add("labA2", flag14);
+			tagCompound.Add("labA3", flag15);
+			tagCompound.Add("labA4", flag16);
+			tagCompound.Add("labA5", flag17);
+			tagCompound.Add("labA6", flag18);
+			tagCompound.Add("labA7", flag19);
+			tagCompound.Add("tbotLabLasers", flag21);
+			tagCompound.Add("keeperS", flag20);
 			return tagCompound;
 		}
 
@@ -1276,6 +1321,7 @@ namespace Redemption
 			RedeWorld.downedSkullDigger = list.Contains("SkullDigger");
 			RedeWorld.downedSunkenCaptain = list.Contains("SunkenCaptain");
 			RedeWorld.spawnXenoBiome = tag.GetBool("wasteland");
+			RedeWorld.starliteGenned = tag.GetBool("starliteGen");
 			RedeWorld.girusTalk1 = tag.GetBool("girTalk1");
 			RedeWorld.girusTalk2 = tag.GetBool("girTalk2");
 			RedeWorld.girusTalk3 = tag.GetBool("girTalk3");
@@ -1456,15 +1502,21 @@ namespace Redemption
 
 		public static bool spawnXenoBiome;
 
+		public static bool starliteGenned;
+
 		public static bool labSafe;
 
 		public static bool infectionBegin;
 
 		public static int xenoBiome;
 
+		public static int xenoBiome2;
+
 		public static int labBiome;
 
 		private int labSafeMessageTimer;
+
+		private int starliteGenTimer;
 
 		public static bool labAccess1;
 
@@ -1479,6 +1531,8 @@ namespace Redemption
 		public static bool labAccess6;
 
 		public static bool labAccess7;
+
+		public static bool patientZeroMessages;
 
 		public static bool downedKingChicken;
 

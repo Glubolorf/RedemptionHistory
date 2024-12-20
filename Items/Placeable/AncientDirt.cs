@@ -30,14 +30,14 @@ namespace Redemption.Items.Placeable
 
 		public override void ExtractinatorUse(ref int resultType, ref int resultStack)
 		{
-			if (Main.rand.Next(30) == 0)
+			if (Main.rand.Next(5) == 0)
 			{
 				resultType = base.mod.ItemType("AncientWood");
-				if (Main.rand.Next(5) == 0)
-				{
-					resultStack += Main.rand.Next(2);
-				}
+				resultStack = 14;
+				return;
 			}
+			resultType = 172;
+			resultStack = 1;
 		}
 
 		public override void AddRecipes()

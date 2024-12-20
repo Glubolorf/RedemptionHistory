@@ -18,7 +18,7 @@ namespace Redemption.Items.DruidDamageClass
 		{
 			base.item.shootSpeed = 21f;
 			base.item.crit = 4;
-			base.item.damage = 37;
+			base.item.damage = 43;
 			base.item.knockBack = 5f;
 			base.item.useStyle = 1;
 			base.item.useAnimation = 22;
@@ -47,10 +47,6 @@ namespace Redemption.Items.DruidDamageClass
 			modRecipe.AddIngredient(null, "DruidShuriken", 1);
 			modRecipe.AddIngredient(502, 10);
 			modRecipe.AddTile(null, "DruidicAltarTile");
-			modRecipe.SetResult(this, 1);
-			modRecipe.AddRecipe();
-			modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "CrystalDaggerBall", 1);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
 		}

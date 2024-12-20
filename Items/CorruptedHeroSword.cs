@@ -65,6 +65,12 @@ namespace Redemption.Items
 			modRecipe.AddTile(null, "XenoForgeTile");
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
+			modRecipe = new ModRecipe(base.mod);
+			modRecipe.AddIngredient(1570, 1);
+			modRecipe.AddIngredient(1508, 10);
+			modRecipe.AddTile(null, "CorruptorTile");
+			modRecipe.SetResult(this, 1);
+			modRecipe.AddRecipe();
 		}
 	}
 }

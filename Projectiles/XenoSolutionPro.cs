@@ -98,7 +98,7 @@ namespace Redemption.Projectiles
 						}
 						if (TileID.Sets.Conversion.Grass[type])
 						{
-							Main.tile[k, l].type = (ushort)base.mod.TileType("DeadRockTile");
+							Main.tile[k, l].type = (ushort)base.mod.TileType("DeadGrassTile");
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1, 0);
 						}

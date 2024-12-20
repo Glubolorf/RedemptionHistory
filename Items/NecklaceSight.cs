@@ -9,7 +9,7 @@ namespace Redemption.Items
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Necklace of Sight");
-			base.Tooltip.SetDefault("Increases sight\nIncreases crit by 4%");
+			base.Tooltip.SetDefault("Improves vison\nIncreases crit by 4%");
 		}
 
 		public override void SetDefaults()

@@ -30,6 +30,7 @@ namespace Redemption.Items.Weapons
 			base.item.rare = 11;
 			base.item.UseSound = SoundID.Item73;
 			base.item.autoReuse = true;
+			base.item.noMelee = true;
 			base.item.shoot = base.mod.ProjectileType("HolyFirePro2");
 			base.item.shootSpeed = 20f;
 		}

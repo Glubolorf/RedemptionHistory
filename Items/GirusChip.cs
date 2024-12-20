@@ -22,5 +22,15 @@ namespace Redemption.Items
 			base.item.value = 10000;
 			base.item.rare = 10;
 		}
+
+		public override void AddRecipes()
+		{
+			ModRecipe modRecipe = new ModRecipe(base.mod);
+			modRecipe.AddIngredient(null, "AIChip", 1);
+			modRecipe.AddIngredient(1508, 5);
+			modRecipe.AddTile(null, "CorruptorTile");
+			modRecipe.SetResult(this, 1);
+			modRecipe.AddRecipe();
+		}
 	}
 }

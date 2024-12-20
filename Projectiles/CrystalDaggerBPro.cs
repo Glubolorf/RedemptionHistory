@@ -49,9 +49,9 @@ namespace Redemption.Projectiles
 			{
 				crit = true;
 			}
-			Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 26f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 90, 4, 1f, base.projectile.owner, 0f, 1f);
-			Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 26f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 90, 4, 1f, base.projectile.owner, 0f, 1f);
-			Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 26f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 90, 4, 1f, base.projectile.owner, 0f, 1f);
+			Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 26f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 90, 6, 1f, base.projectile.owner, 0f, 1f);
+			Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 26f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 90, 6, 1f, base.projectile.owner, 0f, 1f);
+			Projectile.NewProjectile(base.projectile.position.X + 14f, base.projectile.position.Y + 26f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 90, 6, 1f, base.projectile.owner, 0f, 1f);
 		}
 
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)

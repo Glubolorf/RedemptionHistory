@@ -75,6 +75,18 @@ namespace Redemption.Projectiles
 			{
 				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("Seed10"), 26, 1f, Main.myPlayer, 0f, 0f);
 			}
+			if (num3 == 8)
+			{
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("Seed13"), 26, 1f, Main.myPlayer, 0f, 0f);
+			}
+			if (num3 == 9)
+			{
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("Seed14"), 26, 1f, Main.myPlayer, 0f, 0f);
+			}
+			if (num3 == 10)
+			{
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("Seed29"), 26, 1f, Main.myPlayer, 0f, 0f);
+			}
 			int num4 = Main.rand.Next(8);
 			if (num4 == 0)
 			{
@@ -104,17 +116,21 @@ namespace Redemption.Projectiles
 			{
 				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("Seed9"), 24, 1f, Main.myPlayer, 0f, 0f);
 			}
-			if (num4 == 7)
+			if (num3 == 7)
 			{
 				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("Seed10"), 26, 1f, Main.myPlayer, 0f, 0f);
 			}
-			if (num4 == 8)
+			if (num3 == 8)
 			{
 				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("Seed13"), 26, 1f, Main.myPlayer, 0f, 0f);
 			}
-			if (num4 == 9)
+			if (num3 == 9)
 			{
 				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("Seed14"), 26, 1f, Main.myPlayer, 0f, 0f);
+			}
+			if (num3 == 10)
+			{
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("Seed29"), 26, 1f, Main.myPlayer, 0f, 0f);
 			}
 			int num5 = Main.rand.Next(10);
 			if (num5 == 0)
@@ -145,17 +161,21 @@ namespace Redemption.Projectiles
 			{
 				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("Seed9"), 24, 1f, Main.myPlayer, 0f, 0f);
 			}
-			if (num5 == 7)
+			if (num3 == 7)
 			{
 				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("Seed10"), 26, 1f, Main.myPlayer, 0f, 0f);
 			}
-			if (num5 == 8)
+			if (num3 == 8)
 			{
 				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("Seed13"), 26, 1f, Main.myPlayer, 0f, 0f);
 			}
-			if (num5 == 9)
+			if (num3 == 9)
 			{
 				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("Seed14"), 26, 1f, Main.myPlayer, 0f, 0f);
+			}
+			if (num3 == 10)
+			{
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("Seed29"), 26, 1f, Main.myPlayer, 0f, 0f);
 			}
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).moreSeeds)
 			{
@@ -188,17 +208,21 @@ namespace Redemption.Projectiles
 				{
 					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("Seed9"), 24, 1f, Main.myPlayer, 0f, 0f);
 				}
-				if (num6 == 7)
+				if (num3 == 7)
 				{
 					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("Seed10"), 26, 1f, Main.myPlayer, 0f, 0f);
 				}
-				if (num6 == 8)
+				if (num3 == 8)
 				{
 					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("Seed13"), 26, 1f, Main.myPlayer, 0f, 0f);
 				}
-				if (num6 == 9)
+				if (num3 == 9)
 				{
 					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("Seed14"), 26, 1f, Main.myPlayer, 0f, 0f);
+				}
+				if (num3 == 10)
+				{
+					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("Seed29"), 26, 1f, Main.myPlayer, 0f, 0f);
 				}
 				int num7 = Main.rand.Next(10);
 				if (num7 == 0)
@@ -229,17 +253,21 @@ namespace Redemption.Projectiles
 				{
 					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("Seed9"), 24, 1f, Main.myPlayer, 0f, 0f);
 				}
-				if (num7 == 7)
+				if (num3 == 7)
 				{
 					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("Seed10"), 26, 1f, Main.myPlayer, 0f, 0f);
 				}
-				if (num7 == 8)
+				if (num3 == 8)
 				{
 					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("Seed13"), 26, 1f, Main.myPlayer, 0f, 0f);
 				}
-				if (num7 == 9)
+				if (num3 == 9)
 				{
 					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("Seed14"), 26, 1f, Main.myPlayer, 0f, 0f);
+				}
+				if (num3 == 10)
+				{
+					Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("Seed29"), 26, 1f, Main.myPlayer, 0f, 0f);
 				}
 			}
 		}

@@ -32,11 +32,6 @@ namespace Redemption.NPCs
 			this.bannerItem = base.mod.ItemType("SludgyBoiBanner");
 		}
 
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
-		{
-			return SpawnCondition.Cavern.Chance * (((int)Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == base.mod.TileType("DeadRockTile") && Main.hardMode) ? 5.2f : 0f);
-		}
-
 		public override void HitEffect(int hitDirection, double damage)
 		{
 			if (base.npc.life <= 0)

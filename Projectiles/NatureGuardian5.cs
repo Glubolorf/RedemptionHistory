@@ -70,28 +70,28 @@ namespace Redemption.Projectiles
 			base.projectile.position.X = player.Center.X - 12f;
 			base.projectile.position.Y = player.Center.Y - 64f;
 			this.shootTimer++;
-			if (this.shootTimer >= 80)
+			if (this.shootTimer >= 30)
 			{
 				if (Main.rand.Next(5) == 0)
 				{
 					if (base.projectile.spriteDirection == -1)
 					{
-						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 12f, base.projectile.position.Y + 10f), new Vector2(-8f, 4f), base.mod.ProjectileType("PixieAncientSpark"), 5, 3f, Main.myPlayer, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 12f, base.projectile.position.Y + 10f), new Vector2(-8f, -4f), base.mod.ProjectileType("PixieAncientSpark"), 5, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 12f, base.projectile.position.Y + 10f), new Vector2(-8f, 4f), base.mod.ProjectileType("PixieAncientSpark"), 8, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 12f, base.projectile.position.Y + 10f), new Vector2(-8f, -4f), base.mod.ProjectileType("PixieAncientSpark"), 8, 3f, Main.myPlayer, 0f, 0f);
 					}
 					else
 					{
-						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 12f, base.projectile.position.Y + 10f), new Vector2(8f, 4f), base.mod.ProjectileType("PixieAncientSpark"), 5, 3f, Main.myPlayer, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 12f, base.projectile.position.Y + 10f), new Vector2(8f, -4f), base.mod.ProjectileType("PixieAncientSpark"), 5, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 12f, base.projectile.position.Y + 10f), new Vector2(8f, 4f), base.mod.ProjectileType("PixieAncientSpark"), 8, 3f, Main.myPlayer, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.projectile.position.X + 12f, base.projectile.position.Y + 10f), new Vector2(8f, -4f), base.mod.ProjectileType("PixieAncientSpark"), 8, 3f, Main.myPlayer, 0f, 0f);
 					}
 				}
 				if (base.projectile.spriteDirection == -1)
 				{
-					Projectile.NewProjectile(new Vector2(base.projectile.position.X + 12f, base.projectile.position.Y + 10f), new Vector2(-10f, 0f), base.mod.ProjectileType("PixieAncientSpark"), 5, 3f, Main.myPlayer, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.projectile.position.X + 12f, base.projectile.position.Y + 10f), new Vector2(-10f, 0f), base.mod.ProjectileType("PixieAncientSpark"), 8, 3f, Main.myPlayer, 0f, 0f);
 				}
 				else
 				{
-					Projectile.NewProjectile(new Vector2(base.projectile.position.X + 12f, base.projectile.position.Y + 10f), new Vector2(10f, 0f), base.mod.ProjectileType("PixieAncientSpark"), 5, 3f, Main.myPlayer, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.projectile.position.X + 12f, base.projectile.position.Y + 10f), new Vector2(10f, 0f), base.mod.ProjectileType("PixieAncientSpark"), 8, 3f, Main.myPlayer, 0f, 0f);
 				}
 				this.shootTimer = 0;
 			}

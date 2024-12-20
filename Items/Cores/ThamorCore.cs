@@ -32,7 +32,7 @@ namespace Redemption.Items.Cores
 			player.meleeDamage *= 0.5f;
 			player.minionDamage *= 0.5f;
 			player.rangedDamage *= 0.5f;
-			if (player.ZoneSnow)
+			if (player.ZoneSnow && !player.resistCold)
 			{
 				player.bleed = true;
 			}

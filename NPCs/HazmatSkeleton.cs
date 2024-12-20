@@ -52,11 +52,6 @@ namespace Redemption.NPCs
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 1, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
 		}
 
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
-		{
-			return SpawnCondition.Cavern.Chance * (((int)Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == base.mod.TileType("DeadRockTile") && Main.hardMode) ? 5.5f : 0f);
-		}
-
 		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
 		{
 			if (Main.rand.Next(2) == 0 || (Main.expertMode && Main.rand.Next(0) == 0))

@@ -28,7 +28,7 @@ namespace Redemption.Items.DruidDamageClass
 
 		public override void SafeSetDefaults()
 		{
-			base.item.damage = 37;
+			base.item.damage = 53;
 			base.item.width = 58;
 			base.item.height = 58;
 			base.item.useTime = 32;
@@ -42,7 +42,7 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
 			base.item.shoot = base.mod.ProjectileType("XenoBolt");
-			base.item.shootSpeed = 38f;
+			base.item.shootSpeed = 48f;
 			base.item.glowMask = XenomiteStave.customGlowMask;
 		}
 

@@ -28,7 +28,7 @@ namespace Redemption.NPCs.LabNPCs
 			base.npc.aiStyle = -1;
 			base.npc.alpha = 255;
 			base.npc.noGravity = true;
-			base.npc.noTileCollide = true;
+			base.npc.noTileCollide = false;
 			base.npc.boss = true;
 			base.npc.netAlways = true;
 			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/LabBossMusic");

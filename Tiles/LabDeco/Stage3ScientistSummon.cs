@@ -42,17 +42,28 @@ namespace Redemption.Tiles.LabDeco
 
 		public override void RightClick(int i, int j)
 		{
-			if (Main.netMode != 1 && !NPC.AnyNPCs(base.mod.NPCType("Stage3Scientist")) && RedeWorld.downedStage2Scientist && !RedeWorld.labAccess2)
+			if (Main.netMode == 0)
 			{
-				Player localPlayer = Main.LocalPlayer;
-				Main.tile[i, j];
-				i *= 16;
-				j *= 16;
-				int num = NPC.NewNPC(i + 1, j + 1, base.mod.NPCType("Stage3Scientist"), 0, 0f, 0f, 0f, 0f, 255);
-				if (Main.netMode == 2)
+				if (!NPC.AnyNPCs(base.mod.NPCType("Stage3Scientist")) && RedeWorld.downedStage2Scientist && (!RedeWorld.labAccess2 || RedeWorld.downedPatientZero))
 				{
-					NetMessage.SendData(23, -1, -1, null, num, 0f, 0f, 0f, 0, 0, 0);
+					Player localPlayer = Main.LocalPlayer;
+					Main.tile[i, j];
+					i *= 16;
+					j *= 16;
+					int num = NPC.NewNPC(i + 1, j + 1, base.mod.NPCType("Stage3Scientist"), 0, 0f, 0f, 0f, 0f, 255);
+					if (Main.netMode == 2)
+					{
+						NetMessage.SendData(23, -1, -1, null, num, 0f, 0f, 0f, 0, 0, 0);
+						return;
+					}
 				}
+			}
+			else if (!NPC.AnyNPCs(base.mod.NPCType("Stage3Scientist")) && RedeWorld.downedStage2Scientist && (!RedeWorld.labAccess2 || RedeWorld.downedPatientZero))
+			{
+				ModPacket packet = base.mod.GetPacket(256);
+				packet.Write(1);
+				Utils.WriteVector2(packet, new Vector2((float)(i * 16), (float)(j * 16)));
+				packet.Send(-1, -1);
 			}
 		}
 

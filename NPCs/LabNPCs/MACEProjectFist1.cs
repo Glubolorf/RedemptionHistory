@@ -64,41 +64,45 @@ namespace Redemption.NPCs.LabNPCs
 			this.Target();
 			this.DespawnHandler();
 			this.Move(new Vector2(0f, -150f));
-			this.startTimer++;
-			if (this.startTimer <= 120)
+			base.npc.ai[3] += 1f;
+			if (base.npc.ai[3] <= 120f)
 			{
 				base.npc.alpha -= 8;
 			}
-			if (this.startTimer >= 300)
+			if (base.npc.ai[3] >= 300f)
 			{
-				this.targeted = true;
+				base.npc.ai[0] = 1f;
+				base.npc.netUpdate = true;
 			}
-			if (this.targeted && !this.fistSmash)
+			if (base.npc.ai[0] == 1f)
 			{
 				base.npc.velocity.X = 0f;
-				this.attackTimer++;
-				if (this.attackTimer <= 50)
+				base.npc.ai[1] += 1f;
+				if (base.npc.ai[1] <= 50f)
 				{
 					base.npc.velocity.Y = 0f;
+					base.npc.netUpdate = true;
 				}
-				if (this.attackTimer > 50)
+				if (base.npc.ai[1] > 50f)
 				{
 					NPC npc = base.npc;
 					npc.velocity.Y = npc.velocity.Y + 20f;
+					base.npc.netUpdate = true;
 				}
-				if (this.attackTimer > 54)
+				if (base.npc.ai[1] > 54f)
 				{
 					base.npc.noTileCollide = false;
-					this.fistSmash = true;
+					base.npc.ai[0] = 2f;
 					base.npc.velocity.Y = 0f;
+					base.npc.netUpdate = true;
 				}
 			}
-			if (this.fistSmash)
+			if (base.npc.ai[0] == 2f)
 			{
 				base.npc.velocity.X = 0f;
 				base.npc.velocity.Y = 0f;
-				this.smashTimer++;
-				if (this.smashTimer == 1)
+				base.npc.ai[2] += 1f;
+				if (base.npc.ai[2] == 1f)
 				{
 					Main.PlaySound(SoundID.Item14, (int)base.npc.position.X, (int)base.npc.position.Y);
 					for (int i = 0; i < 15; i++)
@@ -111,21 +115,22 @@ namespace Redemption.NPCs.LabNPCs
 						int num2 = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 31, 0f, 0f, 100, default(Color), 2f);
 						Main.dust[num2].velocity *= 2.6f;
 					}
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y + 31f), new Vector2(10f, 0f), base.mod.ProjectileType("MACEShock1"), 50, 3f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y + 31f), new Vector2(10f, 0f), base.mod.ProjectileType("MACEShock2"), 50, 3f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y + 31f), new Vector2(10f, 0f), base.mod.ProjectileType("MACEShock3"), 50, 3f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y + 31f), new Vector2(-10f, 0f), base.mod.ProjectileType("MACEShock1"), 50, 3f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y + 31f), new Vector2(-10f, 0f), base.mod.ProjectileType("MACEShock2"), 50, 3f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y + 31f), new Vector2(-10f, 0f), base.mod.ProjectileType("MACEShock3"), 50, 3f, 255, 0f, 0f);
+					int num3 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y + 31f), new Vector2(10f, 0f), base.mod.ProjectileType("MACEShock1"), 50, 3f, 255, 0f, 0f);
+					num3 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y + 31f), new Vector2(10f, 0f), base.mod.ProjectileType("MACEShock2"), 50, 3f, 255, 0f, 0f);
+					num3 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y + 31f), new Vector2(10f, 0f), base.mod.ProjectileType("MACEShock3"), 50, 3f, 255, 0f, 0f);
+					num3 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y + 31f), new Vector2(-10f, 0f), base.mod.ProjectileType("MACEShock1"), 50, 3f, 255, 0f, 0f);
+					num3 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y + 31f), new Vector2(-10f, 0f), base.mod.ProjectileType("MACEShock2"), 50, 3f, 255, 0f, 0f);
+					num3 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y + 31f), new Vector2(-10f, 0f), base.mod.ProjectileType("MACEShock3"), 50, 3f, 255, 0f, 0f);
+					Main.projectile[num3].netUpdate = true;
 				}
-				if (this.smashTimer >= 120)
+				if (base.npc.ai[2] >= 120f)
 				{
-					this.targeted = false;
-					this.fistSmash = false;
-					this.attackTimer = 0;
-					this.smashTimer = 0;
-					this.startTimer = 150;
+					base.npc.ai[0] = 0f;
+					base.npc.ai[1] = 0f;
+					base.npc.ai[2] = 0f;
+					base.npc.ai[3] = 150f;
 					base.npc.noTileCollide = true;
+					base.npc.netUpdate = true;
 				}
 			}
 		}
@@ -137,7 +142,7 @@ namespace Redemption.NPCs.LabNPCs
 
 		private void Move(Vector2 offset)
 		{
-			if (!this.targeted)
+			if (base.npc.ai[0] == 0f)
 			{
 				this.speed = 20f;
 			}
@@ -183,15 +188,5 @@ namespace Redemption.NPCs.LabNPCs
 		private Player player;
 
 		private float speed;
-
-		private bool targeted;
-
-		private int startTimer;
-
-		private int attackTimer;
-
-		private bool fistSmash;
-
-		private int smashTimer;
 	}
 }

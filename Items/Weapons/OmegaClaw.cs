@@ -31,7 +31,7 @@ namespace Redemption.Items.Weapons
 		{
 			base.item.magic = true;
 			base.item.mana = 0;
-			base.item.damage = 300;
+			base.item.damage = 350;
 			base.item.width = 46;
 			base.item.height = 42;
 			base.item.useTime = 30;
@@ -53,7 +53,7 @@ namespace Redemption.Items.Weapons
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, base.mod.ProjectileType("OmegaWave2"), 1000, knockBack, player.whoAmI, 0f, 0f);
+			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, base.mod.ProjectileType("OmegaWave2"), damage * 2, knockBack, player.whoAmI, 0f, 0f);
 			return true;
 		}
 

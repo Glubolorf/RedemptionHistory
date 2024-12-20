@@ -79,12 +79,14 @@ namespace Redemption.NPCs.LabNPCs
 					if (base.npc.direction == -1)
 					{
 						Main.PlaySound(SoundID.Item7, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 42f, base.npc.position.Y + 24f), new Vector2((float)(-6 + Main.rand.Next(-6, 0)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("GloopBallPro1"), 50, 3f, 255, 0f, 0f);
+						int num2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 42f, base.npc.position.Y + 24f), new Vector2((float)(-6 + Main.rand.Next(-6, 0)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("GloopBallPro1"), 50, 3f, 255, 0f, 0f);
+						Main.projectile[num2].netUpdate = true;
 					}
 					else
 					{
 						Main.PlaySound(SoundID.Item7, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 12f, base.npc.position.Y + 24f), new Vector2((float)(6 + Main.rand.Next(0, 6)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("GloopBallPro1"), 50, 3f, 255, 0f, 0f);
+						int num3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 12f, base.npc.position.Y + 24f), new Vector2((float)(6 + Main.rand.Next(0, 6)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("GloopBallPro1"), 50, 3f, 255, 0f, 0f);
+						Main.projectile[num3].netUpdate = true;
 					}
 				}
 				if (this.throwTimer >= 30)

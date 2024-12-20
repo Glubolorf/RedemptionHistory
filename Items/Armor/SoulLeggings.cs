@@ -14,7 +14,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Lost Soul's Leggings");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n8% increased druidic damage\n2% damage reduction\nDecreased falling speed");
+			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n8% increased druidic damage\n2% damage reduction\nDecreased falling speed");
 		}
 
 		public override void SetDefaults()

@@ -100,7 +100,8 @@ namespace Redemption.NPCs
 
 		public override bool CheckActive()
 		{
-			return !Main.npc[(int)base.npc.ai[3]].active;
+			NPC npc = Main.npc[(int)base.npc.ai[1]];
+			return !npc.active;
 		}
 	}
 }

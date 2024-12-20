@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -60,7 +61,41 @@ namespace Redemption.NPCs.LabNPCs
 
 		public override void NPCLoot()
 		{
+			if (!RedeWorld.labAccess2)
+			{
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ZoneAccessPanel2"), 1, false, 0, false, false);
+			}
 			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("FloppyDisk2"), 1, false, 0, false, false);
+		}
+
+		public override void SendExtraAI(BinaryWriter writer)
+		{
+			base.SendExtraAI(writer);
+			if (Main.netMode == 2 || Main.dedServ)
+			{
+				writer.Write(this.customAI[0]);
+				writer.Write(this.beginFight);
+				writer.Write(this.phase2Done);
+				writer.Write(this.specialAttack1);
+				writer.Write(this.phase2);
+				writer.Write(this.phase3);
+				writer.Write(this.phase3Done);
+			}
+		}
+
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			base.ReceiveExtraAI(reader);
+			if (Main.netMode == 1)
+			{
+				this.customAI[0] = reader.ReadFloat();
+				this.beginFight = reader.ReadBool();
+				this.phase2Done = reader.ReadBool();
+				this.specialAttack1 = reader.ReadBool();
+				this.phase2 = reader.ReadBool();
+				this.phase3 = reader.ReadBool();
+				this.phase3Done = reader.ReadBool();
+			}
 		}
 
 		public override void AI()
@@ -84,8 +119,8 @@ namespace Redemption.NPCs.LabNPCs
 			{
 				base.npc.TargetClosest(true);
 			}
-			this.spawnTimer++;
-			if (this.spawnTimer == 1)
+			base.npc.ai[0] += 1f;
+			if (base.npc.ai[0] == 1f)
 			{
 				if (!Main.dedServ)
 				{
@@ -99,23 +134,25 @@ namespace Redemption.NPCs.LabNPCs
 					base.npc.netUpdate = true;
 				}
 			}
-			if (this.spawnTimer <= 120)
+			if (base.npc.ai[0] <= 120f)
 			{
 				base.npc.aiStyle = -1;
 				base.npc.velocity.X = 0f;
 				base.npc.velocity.Y = 0f;
 				base.npc.alpha -= 4;
 				base.npc.dontTakeDamage = true;
+				base.npc.netUpdate = true;
 			}
-			if (this.spawnTimer > 120)
+			if (base.npc.ai[0] > 120f)
 			{
 				this.beginFight = true;
 				base.npc.dontTakeDamage = false;
+				base.npc.netUpdate = true;
 			}
 			if (this.beginFight)
 			{
-				this.fightTimer++;
-				if (this.fightTimer == 50)
+				base.npc.ai[1] += 1f;
+				if (base.npc.ai[1] == 50f)
 				{
 					float num = 6f;
 					Vector2 vector2;
@@ -123,414 +160,390 @@ namespace Redemption.NPCs.LabNPCs
 					int num2 = 40;
 					int num3 = base.mod.ProjectileType("XenoShard2");
 					float num4 = (float)Math.Atan2((double)(vector2.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector2.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num4) * (double)num * -1.0), (float)(Math.Sin((double)num4) * (double)num * -1.0), num3, num2, 0f, 0, 0f, 0f);
+					int num5 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num4) * (double)num * -1.0), (float)(Math.Sin((double)num4) * (double)num * -1.0), num3, num2, 0f, 0, 0f, 0f);
+					Main.projectile[num5].netUpdate = true;
 				}
-				if (this.fightTimer == 55)
+				if (base.npc.ai[1] == 55f)
 				{
-					float num5 = 6f;
+					float num6 = 6f;
 					Vector2 vector3;
 					vector3..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num6 = 40;
-					int num7 = base.mod.ProjectileType("XenoShard2");
-					float num8 = (float)Math.Atan2((double)(vector3.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector3.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector3.X, vector3.Y, (float)(Math.Cos((double)num8) * (double)num5 * -1.0), (float)(Math.Sin((double)num8) * (double)num5 * -1.0), num7, num6, 0f, 0, 0f, 0f);
+					int num7 = 40;
+					int num8 = base.mod.ProjectileType("XenoShard2");
+					float num9 = (float)Math.Atan2((double)(vector3.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector3.X - (player.position.X + (float)player.width * 0.5f)));
+					int num10 = Projectile.NewProjectile(vector3.X, vector3.Y, (float)(Math.Cos((double)num9) * (double)num6 * -1.0), (float)(Math.Sin((double)num9) * (double)num6 * -1.0), num8, num7, 0f, 0, 0f, 0f);
+					Main.projectile[num10].netUpdate = true;
 				}
-				if (this.fightTimer == 60)
+				if (base.npc.ai[1] == 60f)
 				{
-					float num9 = 6f;
+					float num11 = 6f;
 					Vector2 vector4;
 					vector4..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num10 = 40;
-					int num11 = base.mod.ProjectileType("XenoShard2");
-					float num12 = (float)Math.Atan2((double)(vector4.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector4.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector4.X, vector4.Y, (float)(Math.Cos((double)num12) * (double)num9 * -1.0), (float)(Math.Sin((double)num12) * (double)num9 * -1.0), num11, num10, 0f, 0, 0f, 0f);
+					int num12 = 40;
+					int num13 = base.mod.ProjectileType("XenoShard2");
+					float num14 = (float)Math.Atan2((double)(vector4.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector4.X - (player.position.X + (float)player.width * 0.5f)));
+					int num15 = Projectile.NewProjectile(vector4.X, vector4.Y, (float)(Math.Cos((double)num14) * (double)num11 * -1.0), (float)(Math.Sin((double)num14) * (double)num11 * -1.0), num13, num12, 0f, 0, 0f, 0f);
+					Main.projectile[num15].netUpdate = true;
 				}
-				if (this.fightTimer == 90)
+				if (base.npc.ai[1] == 90f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(0f, -8f), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
+					int num16 = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(0f, -8f), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
+					Main.projectile[num16].netUpdate = true;
 				}
-				if (this.fightTimer == 93)
+				if (base.npc.ai[1] == 93f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(6f, -6f), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
+					int num17 = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(6f, -6f), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
+					Main.projectile[num17].netUpdate = true;
 				}
-				if (this.fightTimer == 96)
+				if (base.npc.ai[1] == 96f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(8f, 0f), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
+					int num18 = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(8f, 0f), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
+					Main.projectile[num18].netUpdate = true;
 				}
-				if (this.fightTimer == 99)
+				if (base.npc.ai[1] == 99f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(6f, 6f), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
+					int num19 = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(6f, 6f), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
+					Main.projectile[num19].netUpdate = true;
 				}
-				if (this.fightTimer == 102)
+				if (base.npc.ai[1] == 102f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(0f, 8f), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
+					int num20 = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(0f, 8f), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
+					Main.projectile[num20].netUpdate = true;
 				}
-				if (this.fightTimer == 105)
+				if (base.npc.ai[1] == 105f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(-6f, 6f), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
+					int num21 = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(-6f, 6f), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
+					Main.projectile[num21].netUpdate = true;
 				}
-				if (this.fightTimer == 108)
+				if (base.npc.ai[1] == 108f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(-8f, 0f), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
+					int num22 = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(-8f, 0f), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
+					Main.projectile[num22].netUpdate = true;
 				}
-				if (this.fightTimer == 111)
+				if (base.npc.ai[1] == 111f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(-6f, -6f), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
+					int num23 = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2(-6f, -6f), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
+					Main.projectile[num23].netUpdate = true;
 				}
-				if (this.fightTimer == 199)
+				if (base.npc.ai[1] == 199f)
 				{
 					for (int i = 0; i < 25; i++)
 					{
-						int num13 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 2.5f);
-						Main.dust[num13].velocity *= 3f;
-						Main.dust[num13].noGravity = true;
+						int num24 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 2.5f);
+						Main.dust[num24].velocity *= 3f;
+						Main.dust[num24].noGravity = true;
 					}
 				}
-				if (this.fightTimer == 200 && Main.netMode != 1)
+				if (base.npc.ai[1] == 200f && Main.netMode != 1)
 				{
 					Vector2 vector5;
 					vector5..ctor((float)Main.rand.Next(-10, 10), (float)Main.rand.Next(-270, -170));
 					base.npc.Center = Main.player[base.npc.target].Center + vector5;
 					base.npc.netUpdate = true;
 				}
-				if (this.fightTimer == 201)
+				if (base.npc.ai[1] >= 201f)
 				{
 					for (int j = 0; j < 25; j++)
 					{
-						int num14 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 2.5f);
-						Main.dust[num14].velocity *= 3f;
-						Main.dust[num14].noGravity = true;
+						int num25 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 2.5f);
+						Main.dust[num25].velocity *= 3f;
+						Main.dust[num25].noGravity = true;
 					}
-					this.fightTimer = 0;
+					base.npc.ai[1] = 0f;
+					base.npc.netUpdate = true;
 				}
 			}
 			if (base.npc.life <= 17000 && !this.phase2Done)
 			{
 				this.phase2 = true;
+				base.npc.netUpdate = true;
 			}
 			if (this.phase2)
 			{
-				this.fightTimer = 0;
+				base.npc.ai[1] = 0f;
 				this.beginFight = false;
-				this.fightTimer2++;
-				if (this.fightTimer2 == 50)
+				base.npc.ai[2] += 1f;
+				if (base.npc.ai[2] == 50f)
 				{
-					float num15 = 9f;
+					float num26 = 9f;
 					Vector2 vector6;
 					vector6..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num16 = 40;
-					int num17 = base.mod.ProjectileType("XenoShard2");
-					float num18 = (float)Math.Atan2((double)(vector6.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector6.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector6.X, vector6.Y, (float)(Math.Cos((double)num18) * (double)num15 * -1.0), (float)(Math.Sin((double)num18) * (double)num15 * -1.0), num17, num16, 0f, 0, 0f, 0f);
+					int num27 = 40;
+					int num28 = base.mod.ProjectileType("XenoShard2");
+					float num29 = (float)Math.Atan2((double)(vector6.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector6.X - (player.position.X + (float)player.width * 0.5f)));
+					int num30 = Projectile.NewProjectile(vector6.X, vector6.Y, (float)(Math.Cos((double)num29) * (double)num26 * -1.0), (float)(Math.Sin((double)num29) * (double)num26 * -1.0), num28, num27, 0f, 0, 0f, 0f);
+					Main.projectile[num30].netUpdate = true;
 				}
-				if (this.fightTimer2 == 55)
-				{
-					float num19 = 9f;
-					Vector2 vector7;
-					vector7..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num20 = 40;
-					int num21 = base.mod.ProjectileType("XenoShard2");
-					float num22 = (float)Math.Atan2((double)(vector7.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector7.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector7.X, vector7.Y, (float)(Math.Cos((double)num22) * (double)num19 * -1.0), (float)(Math.Sin((double)num22) * (double)num19 * -1.0), num21, num20, 0f, 0, 0f, 0f);
-				}
-				if (this.fightTimer2 == 60)
-				{
-					float num23 = 9f;
-					Vector2 vector8;
-					vector8..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num24 = 40;
-					int num25 = base.mod.ProjectileType("XenoShard2");
-					float num26 = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)num26) * (double)num23 * -1.0), (float)(Math.Sin((double)num26) * (double)num23 * -1.0), num25, num24, 0f, 0, 0f, 0f);
-				}
-				if (this.fightTimer2 == 65)
-				{
-					float num27 = 9f;
-					Vector2 vector9;
-					vector9..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num28 = 40;
-					int num29 = base.mod.ProjectileType("XenoShard2");
-					float num30 = (float)Math.Atan2((double)(vector9.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector9.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)num30) * (double)num27 * -1.0), (float)(Math.Sin((double)num30) * (double)num27 * -1.0), num29, num28, 0f, 0, 0f, 0f);
-				}
-				if (this.fightTimer2 == 70)
+				if (base.npc.ai[2] == 55f)
 				{
 					float num31 = 9f;
-					Vector2 vector10;
-					vector10..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
+					Vector2 vector7;
+					vector7..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
 					int num32 = 40;
 					int num33 = base.mod.ProjectileType("XenoShard2");
-					float num34 = (float)Math.Atan2((double)(vector10.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector10.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)num34) * (double)num31 * -1.0), (float)(Math.Sin((double)num34) * (double)num31 * -1.0), num33, num32, 0f, 0, 0f, 0f);
+					float num34 = (float)Math.Atan2((double)(vector7.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector7.X - (player.position.X + (float)player.width * 0.5f)));
+					int num35 = Projectile.NewProjectile(vector7.X, vector7.Y, (float)(Math.Cos((double)num34) * (double)num31 * -1.0), (float)(Math.Sin((double)num34) * (double)num31 * -1.0), num33, num32, 0f, 0, 0f, 0f);
+					Main.projectile[num35].netUpdate = true;
 				}
-				if (this.fightTimer2 == 90)
+				if (base.npc.ai[2] == 60f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2((float)Main.rand.Next(-1, 2), (float)(8 + Main.rand.Next(-2, 0))), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
+					float num36 = 9f;
+					Vector2 vector8;
+					vector8..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
+					int num37 = 40;
+					int num38 = base.mod.ProjectileType("XenoShard2");
+					float num39 = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
+					int num40 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)num39) * (double)num36 * -1.0), (float)(Math.Sin((double)num39) * (double)num36 * -1.0), num38, num37, 0f, 0, 0f, 0f);
+					Main.projectile[num40].netUpdate = true;
 				}
-				if (this.fightTimer2 == 93)
+				if (base.npc.ai[2] == 65f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2((float)Main.rand.Next(-1, 2), (float)(8 + Main.rand.Next(-2, 0))), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
+					float num41 = 9f;
+					Vector2 vector9;
+					vector9..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
+					int num42 = 40;
+					int num43 = base.mod.ProjectileType("XenoShard2");
+					float num44 = (float)Math.Atan2((double)(vector9.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector9.X - (player.position.X + (float)player.width * 0.5f)));
+					int num45 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)num44) * (double)num41 * -1.0), (float)(Math.Sin((double)num44) * (double)num41 * -1.0), num43, num42, 0f, 0, 0f, 0f);
+					Main.projectile[num45].netUpdate = true;
 				}
-				if (this.fightTimer2 == 96)
+				if (base.npc.ai[2] == 70f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2((float)Main.rand.Next(-1, 2), (float)(8 + Main.rand.Next(-2, 0))), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
+					float num46 = 9f;
+					Vector2 vector10;
+					vector10..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
+					int num47 = 40;
+					int num48 = base.mod.ProjectileType("XenoShard2");
+					float num49 = (float)Math.Atan2((double)(vector10.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector10.X - (player.position.X + (float)player.width * 0.5f)));
+					int num50 = Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)num49) * (double)num46 * -1.0), (float)(Math.Sin((double)num49) * (double)num46 * -1.0), num48, num47, 0f, 0, 0f, 0f);
+					Main.projectile[num50].netUpdate = true;
 				}
-				if (this.fightTimer2 == 99)
+				if (base.npc.ai[2] == 90f || base.npc.ai[2] == 93f || base.npc.ai[2] == 96f || base.npc.ai[2] == 99f || base.npc.ai[2] == 102f || base.npc.ai[2] == 105f || base.npc.ai[2] == 108f || base.npc.ai[2] == 111f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2((float)Main.rand.Next(-1, 2), (float)(8 + Main.rand.Next(-2, 0))), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
+					int num51 = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2((float)Main.rand.Next(-1, 2), (float)(8 + Main.rand.Next(-2, 0))), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
+					Main.projectile[num51].netUpdate = true;
 				}
-				if (this.fightTimer2 == 102)
-				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2((float)Main.rand.Next(-1, 2), (float)(8 + Main.rand.Next(-2, 0))), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
-				}
-				if (this.fightTimer2 == 105)
-				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2((float)Main.rand.Next(-1, 2), (float)(8 + Main.rand.Next(-2, 0))), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
-				}
-				if (this.fightTimer2 == 108)
-				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2((float)Main.rand.Next(-1, 2), (float)(8 + Main.rand.Next(-2, 0))), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
-				}
-				if (this.fightTimer2 == 111)
-				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2((float)Main.rand.Next(-1, 2), (float)(8 + Main.rand.Next(-2, 0))), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
-				}
-				if (this.fightTimer2 == 149)
+				if (base.npc.ai[2] == 149f)
 				{
 					for (int k = 0; k < 25; k++)
 					{
-						int num35 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 2.5f);
-						Main.dust[num35].velocity *= 3f;
-						Main.dust[num35].noGravity = true;
+						int num52 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 2.5f);
+						Main.dust[num52].velocity *= 3f;
+						Main.dust[num52].noGravity = true;
 					}
 				}
-				if (this.fightTimer2 == 150 && Main.netMode != 1)
+				if (base.npc.ai[2] == 150f && Main.netMode != 1)
 				{
 					Vector2 vector11;
 					vector11..ctor((float)Main.rand.Next(-10, 10), (float)Main.rand.Next(-270, -170));
 					base.npc.Center = Main.player[base.npc.target].Center + vector11;
 					base.npc.netUpdate = true;
 				}
-				if (this.fightTimer2 == 151)
+				if (base.npc.ai[2] >= 151f)
 				{
 					for (int l = 0; l < 25; l++)
 					{
-						int num36 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 2.5f);
-						Main.dust[num36].velocity *= 3f;
-						Main.dust[num36].noGravity = true;
+						int num53 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 2.5f);
+						Main.dust[num53].velocity *= 3f;
+						Main.dust[num53].noGravity = true;
 					}
-					this.fightTimer2 = 0;
+					base.npc.ai[2] = 0f;
+					base.npc.netUpdate = true;
 				}
 			}
 			if (base.npc.life <= 10000 && !this.phase3Done)
 			{
 				this.phase3 = true;
 				this.phase2Done = true;
+				base.npc.netUpdate = true;
 			}
 			if (this.phase3)
 			{
-				this.fightTimer = 0;
-				this.fightTimer2 = 0;
+				base.npc.ai[1] = 0f;
+				base.npc.ai[2] = 0f;
 				this.phase2Done = true;
 				this.phase2 = false;
-				this.fightTimer3++;
-				if (this.fightTimer3 == 50)
+				base.npc.ai[3] += 1f;
+				if (base.npc.ai[3] == 50f)
 				{
-					float num37 = 11f;
+					float num54 = 11f;
 					Vector2 vector12;
 					vector12..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num38 = 40;
-					int num39 = base.mod.ProjectileType("XenoShard2");
-					float num40 = (float)Math.Atan2((double)(vector12.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector12.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector12.X, vector12.Y, (float)(Math.Cos((double)num40) * (double)num37 * -1.0), (float)(Math.Sin((double)num40) * (double)num37 * -1.0), num39, num38, 0f, 0, 0f, 0f);
+					int num55 = 40;
+					int num56 = base.mod.ProjectileType("XenoShard2");
+					float num57 = (float)Math.Atan2((double)(vector12.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector12.X - (player.position.X + (float)player.width * 0.5f)));
+					int num58 = Projectile.NewProjectile(vector12.X, vector12.Y, (float)(Math.Cos((double)num57) * (double)num54 * -1.0), (float)(Math.Sin((double)num57) * (double)num54 * -1.0), num56, num55, 0f, 0, 0f, 0f);
+					Main.projectile[num58].netUpdate = true;
 				}
-				if (this.fightTimer3 == 55)
+				if (base.npc.ai[3] == 55f)
 				{
-					float num41 = 11f;
+					float num59 = 11f;
 					Vector2 vector13;
 					vector13..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num42 = 40;
-					int num43 = base.mod.ProjectileType("XenoShard2");
-					float num44 = (float)Math.Atan2((double)(vector13.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector13.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector13.X, vector13.Y, (float)(Math.Cos((double)num44) * (double)num41 * -1.0), (float)(Math.Sin((double)num44) * (double)num41 * -1.0), num43, num42, 0f, 0, 0f, 0f);
+					int num60 = 40;
+					int num61 = base.mod.ProjectileType("XenoShard2");
+					float num62 = (float)Math.Atan2((double)(vector13.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector13.X - (player.position.X + (float)player.width * 0.5f)));
+					int num63 = Projectile.NewProjectile(vector13.X, vector13.Y, (float)(Math.Cos((double)num62) * (double)num59 * -1.0), (float)(Math.Sin((double)num62) * (double)num59 * -1.0), num61, num60, 0f, 0, 0f, 0f);
+					Main.projectile[num63].netUpdate = true;
 				}
-				if (this.fightTimer3 == 60)
+				if (base.npc.ai[3] == 60f)
 				{
-					float num45 = 11f;
+					float num64 = 11f;
 					Vector2 vector14;
 					vector14..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num46 = 40;
-					int num47 = base.mod.ProjectileType("XenoShard2");
-					float num48 = (float)Math.Atan2((double)(vector14.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector14.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector14.X, vector14.Y, (float)(Math.Cos((double)num48) * (double)num45 * -1.0), (float)(Math.Sin((double)num48) * (double)num45 * -1.0), num47, num46, 0f, 0, 0f, 0f);
+					int num65 = 40;
+					int num66 = base.mod.ProjectileType("XenoShard2");
+					float num67 = (float)Math.Atan2((double)(vector14.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector14.X - (player.position.X + (float)player.width * 0.5f)));
+					int num68 = Projectile.NewProjectile(vector14.X, vector14.Y, (float)(Math.Cos((double)num67) * (double)num64 * -1.0), (float)(Math.Sin((double)num67) * (double)num64 * -1.0), num66, num65, 0f, 0, 0f, 0f);
+					Main.projectile[num68].netUpdate = true;
 				}
-				if (this.fightTimer3 == 65)
+				if (base.npc.ai[3] == 65f)
 				{
-					float num49 = 11f;
+					float num69 = 11f;
 					Vector2 vector15;
 					vector15..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num50 = 40;
-					int num51 = base.mod.ProjectileType("XenoShard2");
-					float num52 = (float)Math.Atan2((double)(vector15.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector15.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector15.X, vector15.Y, (float)(Math.Cos((double)num52) * (double)num49 * -1.0), (float)(Math.Sin((double)num52) * (double)num49 * -1.0), num51, num50, 0f, 0, 0f, 0f);
+					int num70 = 40;
+					int num71 = base.mod.ProjectileType("XenoShard2");
+					float num72 = (float)Math.Atan2((double)(vector15.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector15.X - (player.position.X + (float)player.width * 0.5f)));
+					int num73 = Projectile.NewProjectile(vector15.X, vector15.Y, (float)(Math.Cos((double)num72) * (double)num69 * -1.0), (float)(Math.Sin((double)num72) * (double)num69 * -1.0), num71, num70, 0f, 0, 0f, 0f);
+					Main.projectile[num73].netUpdate = true;
 				}
-				if (this.fightTimer3 == 70)
+				if (base.npc.ai[3] == 70f)
 				{
-					float num53 = 11f;
+					float num74 = 11f;
 					Vector2 vector16;
 					vector16..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num54 = 40;
-					int num55 = base.mod.ProjectileType("XenoShard2");
-					float num56 = (float)Math.Atan2((double)(vector16.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector16.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector16.X, vector16.Y, (float)(Math.Cos((double)num56) * (double)num53 * -1.0), (float)(Math.Sin((double)num56) * (double)num53 * -1.0), num55, num54, 0f, 0, 0f, 0f);
+					int num75 = 40;
+					int num76 = base.mod.ProjectileType("XenoShard2");
+					float num77 = (float)Math.Atan2((double)(vector16.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector16.X - (player.position.X + (float)player.width * 0.5f)));
+					int num78 = Projectile.NewProjectile(vector16.X, vector16.Y, (float)(Math.Cos((double)num77) * (double)num74 * -1.0), (float)(Math.Sin((double)num77) * (double)num74 * -1.0), num76, num75, 0f, 0, 0f, 0f);
+					Main.projectile[num78].netUpdate = true;
 				}
-				if (this.fightTimer3 == 75)
+				if (base.npc.ai[3] == 75f)
 				{
-					float num57 = 11f;
+					float num79 = 11f;
 					Vector2 vector17;
 					vector17..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num58 = 40;
-					int num59 = base.mod.ProjectileType("XenoShard2");
-					float num60 = (float)Math.Atan2((double)(vector17.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector17.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector17.X, vector17.Y, (float)(Math.Cos((double)num60) * (double)num57 * -1.0), (float)(Math.Sin((double)num60) * (double)num57 * -1.0), num59, num58, 0f, 0, 0f, 0f);
+					int num80 = 40;
+					int num81 = base.mod.ProjectileType("XenoShard2");
+					float num82 = (float)Math.Atan2((double)(vector17.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector17.X - (player.position.X + (float)player.width * 0.5f)));
+					int num83 = Projectile.NewProjectile(vector17.X, vector17.Y, (float)(Math.Cos((double)num82) * (double)num79 * -1.0), (float)(Math.Sin((double)num82) * (double)num79 * -1.0), num81, num80, 0f, 0, 0f, 0f);
+					Main.projectile[num83].netUpdate = true;
 				}
-				if (this.fightTimer3 == 80)
+				if (base.npc.ai[3] == 80f)
 				{
-					float num61 = 11f;
+					float num84 = 11f;
 					Vector2 vector18;
 					vector18..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num62 = 40;
-					int num63 = base.mod.ProjectileType("XenoShard2");
-					float num64 = (float)Math.Atan2((double)(vector18.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector18.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector18.X, vector18.Y, (float)(Math.Cos((double)num64) * (double)num61 * -1.0), (float)(Math.Sin((double)num64) * (double)num61 * -1.0), num63, num62, 0f, 0, 0f, 0f);
+					int num85 = 40;
+					int num86 = base.mod.ProjectileType("XenoShard2");
+					float num87 = (float)Math.Atan2((double)(vector18.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector18.X - (player.position.X + (float)player.width * 0.5f)));
+					int num88 = Projectile.NewProjectile(vector18.X, vector18.Y, (float)(Math.Cos((double)num87) * (double)num84 * -1.0), (float)(Math.Sin((double)num87) * (double)num84 * -1.0), num86, num85, 0f, 0, 0f, 0f);
+					Main.projectile[num88].netUpdate = true;
 				}
-				if (this.fightTimer3 == 85)
+				if (base.npc.ai[3] == 85f)
 				{
-					float num65 = 11f;
+					float num89 = 11f;
 					Vector2 vector19;
 					vector19..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num66 = 40;
-					int num67 = base.mod.ProjectileType("XenoShard2");
-					float num68 = (float)Math.Atan2((double)(vector19.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector19.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector19.X, vector19.Y, (float)(Math.Cos((double)num68) * (double)num65 * -1.0), (float)(Math.Sin((double)num68) * (double)num65 * -1.0), num67, num66, 0f, 0, 0f, 0f);
+					int num90 = 40;
+					int num91 = base.mod.ProjectileType("XenoShard2");
+					float num92 = (float)Math.Atan2((double)(vector19.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector19.X - (player.position.X + (float)player.width * 0.5f)));
+					int num93 = Projectile.NewProjectile(vector19.X, vector19.Y, (float)(Math.Cos((double)num92) * (double)num89 * -1.0), (float)(Math.Sin((double)num92) * (double)num89 * -1.0), num91, num90, 0f, 0, 0f, 0f);
+					Main.projectile[num93].netUpdate = true;
 				}
-				if (this.fightTimer3 == 79)
+				if (base.npc.ai[3] == 79f)
 				{
 					for (int m = 0; m < 25; m++)
 					{
-						int num69 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 2.5f);
-						Main.dust[num69].velocity *= 3f;
-						Main.dust[num69].noGravity = true;
+						int num94 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 2.5f);
+						Main.dust[num94].velocity *= 3f;
+						Main.dust[num94].noGravity = true;
 					}
 				}
-				if (this.fightTimer3 == 80 && Main.netMode != 1)
+				if (base.npc.ai[3] == 80f && Main.netMode != 1)
 				{
 					Vector2 vector20;
 					vector20..ctor((float)Main.rand.Next(-10, 10), (float)Main.rand.Next(-270, -170));
 					base.npc.Center = Main.player[base.npc.target].Center + vector20;
 					base.npc.netUpdate = true;
 				}
-				if (this.fightTimer3 == 81)
+				if (base.npc.ai[3] == 81f)
 				{
 					for (int n = 0; n < 25; n++)
 					{
-						int num70 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 2.5f);
-						Main.dust[num70].velocity *= 3f;
-						Main.dust[num70].noGravity = true;
+						int num95 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 2.5f);
+						Main.dust[num95].velocity *= 3f;
+						Main.dust[num95].noGravity = true;
 					}
 				}
-				if (this.fightTimer3 == 90)
+				if (base.npc.ai[3] == 90f || base.npc.ai[3] == 93f || base.npc.ai[3] == 96f || base.npc.ai[3] == 99f || base.npc.ai[3] == 102f || base.npc.ai[3] == 105f || base.npc.ai[3] == 108f || base.npc.ai[3] == 111f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2((float)Main.rand.Next(-2, 3), (float)(10 + Main.rand.Next(-2, 0))), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
+					int num96 = Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2((float)Main.rand.Next(-2, 3), (float)(10 + Main.rand.Next(-2, 0))), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
+					Main.projectile[num96].netUpdate = true;
 				}
-				if (this.fightTimer3 == 93)
+				if (base.npc.ai[3] == 149f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2((float)Main.rand.Next(-2, 3), (float)(10 + Main.rand.Next(-2, 0))), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
-				}
-				if (this.fightTimer3 == 96)
-				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2((float)Main.rand.Next(-2, 3), (float)(10 + Main.rand.Next(-2, 0))), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
-				}
-				if (this.fightTimer3 == 99)
-				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2((float)Main.rand.Next(-2, 3), (float)(10 + Main.rand.Next(-2, 0))), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
-				}
-				if (this.fightTimer3 == 102)
-				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2((float)Main.rand.Next(-2, 3), (float)(10 + Main.rand.Next(-2, 0))), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
-				}
-				if (this.fightTimer3 == 105)
-				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2((float)Main.rand.Next(-2, 3), (float)(10 + Main.rand.Next(-2, 0))), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
-				}
-				if (this.fightTimer3 == 108)
-				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2((float)Main.rand.Next(-2, 3), (float)(10 + Main.rand.Next(-2, 0))), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
-				}
-				if (this.fightTimer3 == 111)
-				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2)), new Vector2((float)Main.rand.Next(-2, 3), (float)(10 + Main.rand.Next(-2, 0))), base.mod.ProjectileType("XenoShard2"), 40, 3f, 255, 0f, 0f);
-				}
-				if (this.fightTimer3 == 149)
-				{
-					for (int num71 = 0; num71 < 25; num71++)
+					for (int num97 = 0; num97 < 25; num97++)
 					{
-						int num72 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 2.5f);
-						Main.dust[num72].velocity *= 3f;
-						Main.dust[num72].noGravity = true;
+						int num98 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 2.5f);
+						Main.dust[num98].velocity *= 3f;
+						Main.dust[num98].noGravity = true;
 					}
 				}
-				if (this.fightTimer3 == 150 && Main.netMode != 1)
+				if (base.npc.ai[3] == 150f && Main.netMode != 1)
 				{
 					Vector2 vector21;
 					vector21..ctor((float)Main.rand.Next(-10, 10), (float)Main.rand.Next(-270, -170));
 					base.npc.Center = Main.player[base.npc.target].Center + vector21;
 					base.npc.netUpdate = true;
 				}
-				if (this.fightTimer3 == 151)
+				if (base.npc.ai[3] == 151f)
 				{
-					for (int num73 = 0; num73 < 25; num73++)
+					for (int num99 = 0; num99 < 25; num99++)
 					{
-						int num74 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 2.5f);
-						Main.dust[num74].velocity *= 3f;
-						Main.dust[num74].noGravity = true;
+						int num100 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 2.5f);
+						Main.dust[num100].velocity *= 3f;
+						Main.dust[num100].noGravity = true;
 					}
 				}
-				if (this.fightTimer3 == 250)
+				if (base.npc.ai[3] == 250f)
 				{
-					float num75 = 9f;
+					float num101 = 9f;
 					Vector2 vector22;
 					vector22..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num76 = 40;
-					int num77 = base.mod.ProjectileType("XenoShard3");
-					float num78 = (float)Math.Atan2((double)(vector22.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector22.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector22.X, vector22.Y, (float)(Math.Cos((double)num78) * (double)num75 * -1.0), (float)(Math.Sin((double)num78) * (double)num75 * -1.0), num77, num76, 0f, 0, 0f, 0f);
+					int num102 = 40;
+					int num103 = base.mod.ProjectileType("XenoShard3");
+					float num104 = (float)Math.Atan2((double)(vector22.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector22.X - (player.position.X + (float)player.width * 0.5f)));
+					int num105 = Projectile.NewProjectile(vector22.X, vector22.Y, (float)(Math.Cos((double)num104) * (double)num101 * -1.0), (float)(Math.Sin((double)num104) * (double)num101 * -1.0), num103, num102, 0f, 0, 0f, 0f);
+					Main.projectile[num105].netUpdate = true;
 				}
-				if (this.fightTimer3 == 299)
+				if (base.npc.ai[3] == 299f)
 				{
-					for (int num79 = 0; num79 < 25; num79++)
+					for (int num106 = 0; num106 < 25; num106++)
 					{
-						int num80 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 2.5f);
-						Main.dust[num80].velocity *= 3f;
-						Main.dust[num80].noGravity = true;
+						int num107 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 2.5f);
+						Main.dust[num107].velocity *= 3f;
+						Main.dust[num107].noGravity = true;
 					}
 				}
-				if (this.fightTimer3 == 300 && Main.netMode != 1)
+				if (base.npc.ai[3] == 300f && Main.netMode != 1)
 				{
 					Vector2 vector23;
 					vector23..ctor((float)Main.rand.Next(-10, 10), (float)Main.rand.Next(-270, -170));
 					base.npc.Center = Main.player[base.npc.target].Center + vector23;
 					base.npc.netUpdate = true;
 				}
-				if (this.fightTimer3 == 301)
+				if (base.npc.ai[3] >= 301f)
 				{
-					for (int num81 = 0; num81 < 25; num81++)
+					for (int num108 = 0; num108 < 25; num108++)
 					{
-						int num82 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 2.5f);
-						Main.dust[num82].velocity *= 3f;
-						Main.dust[num82].noGravity = true;
+						int num109 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 2.5f);
+						Main.dust[num109].velocity *= 3f;
+						Main.dust[num109].noGravity = true;
 					}
-					this.fightTimer3 = 0;
+					base.npc.ai[3] = 0f;
+					base.npc.netUpdate = true;
 				}
 			}
 		}
@@ -582,13 +595,7 @@ namespace Redemption.NPCs.LabNPCs
 
 		private Player player;
 
-		private int spawnTimer;
-
 		private bool beginFight;
-
-		private int fightTimer;
-
-		private int floatTimer;
 
 		private bool phase2Done;
 
@@ -596,12 +603,10 @@ namespace Redemption.NPCs.LabNPCs
 
 		private bool phase2;
 
-		private int fightTimer2;
-
 		private bool phase3;
 
 		private bool phase3Done;
 
-		private int fightTimer3;
+		public float[] customAI = new float[1];
 	}
 }

@@ -33,8 +33,8 @@ namespace Redemption.Items.Weapons
 			base.item.ranged = true;
 			base.item.width = 70;
 			base.item.height = 42;
-			base.item.useAnimation = 5;
-			base.item.useTime = 5;
+			base.item.useAnimation = 8;
+			base.item.useTime = 8;
 			base.item.useStyle = 5;
 			base.item.noMelee = true;
 			base.item.knockBack = 3f;

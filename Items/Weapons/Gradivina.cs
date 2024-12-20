@@ -46,7 +46,7 @@ namespace Redemption.Items.Weapons
 		{
 			if (player.altFunctionUse == 2)
 			{
-				Projectile.NewProjectile(position.X, position.Y, speedX * 2f, speedY * 2f, base.mod.ProjectileType("GradivinaPro2"), damage, knockBack, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(position.X, position.Y, speedX * 2f, speedY * 2f, base.mod.ProjectileType("GradivinaPro2"), damage / 3, knockBack, player.whoAmI, 0f, 0f);
 			}
 			return true;
 		}

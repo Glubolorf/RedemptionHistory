@@ -78,16 +78,22 @@ namespace Redemption.NPCs
 				this.slashTimer++;
 				base.npc.aiStyle = 0;
 				base.npc.velocity.X = 0f;
+				if (this.slashTimer == 1 && !Config.NoCombatText)
+				{
+					CombatText.NewText(base.npc.getRect(), Color.Gray, "Slash!", true, true);
+				}
 				if (this.slashTimer == 6)
 				{
 					if (base.npc.direction == -1)
 					{
-						Projectile.NewProjectile(base.npc.position.X + -14f, base.npc.position.Y + 4f, 0f, 0f, base.mod.ProjectileType("DamagePro2"), 9, 3f, 255, 0f, 0f);
+						int num2 = Projectile.NewProjectile(base.npc.position.X + -14f, base.npc.position.Y + 4f, 0f, 0f, base.mod.ProjectileType("DamagePro2"), 9, 3f, 255, 0f, 0f);
+						Main.projectile[num2].netUpdate = true;
 						Main.PlaySound(SoundID.Item1, (int)base.npc.position.X, (int)base.npc.position.Y);
 					}
 					else
 					{
-						Projectile.NewProjectile(base.npc.position.X + 48f, base.npc.position.Y + 4f, 0f, 0f, base.mod.ProjectileType("DamagePro2"), 9, 3f, 255, 0f, 0f);
+						int num3 = Projectile.NewProjectile(base.npc.position.X + 48f, base.npc.position.Y + 4f, 0f, 0f, base.mod.ProjectileType("DamagePro2"), 9, 3f, 255, 0f, 0f);
+						Main.projectile[num3].netUpdate = true;
 						Main.PlaySound(SoundID.Item1, (int)base.npc.position.X, (int)base.npc.position.Y);
 					}
 				}

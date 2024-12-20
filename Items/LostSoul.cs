@@ -32,7 +32,7 @@ namespace Redemption.Items
 
 		public override void PostUpdate()
 		{
-			Lighting.AddLight(base.item.Center, Color.WhiteSmoke.ToVector3() * 0.55f * Main.essScale);
+			Lighting.AddLight(base.item.Center, Color.LightBlue.ToVector3() * 0.85f * Main.essScale);
 		}
 	}
 }

@@ -10,7 +10,7 @@ namespace Redemption.Items.DruidDamageClass.v08
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Cursed Shroom Seed Bag");
+			base.DisplayName.SetDefault("Cursed Shroom Seedbag");
 			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nThrows a capsule that grows a fume-spitting Cursed Shroom\nThe fumes inflict Cursed Inferno for a long duration");
 		}
 
@@ -34,19 +34,13 @@ namespace Redemption.Items.DruidDamageClass.v08
 			base.item.shootSpeed = 18f;
 		}
 
-		public override bool CanUseItem(Player player)
+		public override float UseTimeMultiplier(Player player)
 		{
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterSeedbags)
 			{
-				base.item.useTime = 26;
-				base.item.useAnimation = 26;
+				return 1.15f;
 			}
-			else
-			{
-				base.item.useTime = 31;
-				base.item.useAnimation = 31;
-			}
-			return true;
+			return 1f;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

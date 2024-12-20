@@ -11,7 +11,7 @@ namespace Redemption.Tiles
 	{
 		public override void SetDefaults()
 		{
-			Main.tileLighted[(int)base.Type] = false;
+			Main.tileLighted[(int)base.Type] = true;
 			Main.tileFrameImportant[(int)base.Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.Height = 2;
@@ -27,7 +27,7 @@ namespace Redemption.Tiles
 			modTranslation.SetDefault("Girus Corruptor");
 			base.AddMapEntry(new Color(200, 70, 70), modTranslation);
 			this.animationFrameHeight = 36;
-			this.minPick = 300;
+			this.minPick = 200;
 			this.mineResist = 3f;
 		}
 

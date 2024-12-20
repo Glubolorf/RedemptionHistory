@@ -14,9 +14,11 @@ namespace Redemption
 			this._doNeighborFraming = setNeighborFrames;
 		}
 
-		public SetModTile ExtraParams(Func<int, int, Tile, bool> canReplace)
+		public SetModTile ExtraParams(Func<int, int, Tile, bool> canReplace, int frameX = -1, int frameY = -1)
 		{
 			this._canReplace = canReplace;
+			this._frameX = (short)frameX;
+			this._frameY = (short)frameY;
 			return this;
 		}
 
@@ -33,6 +35,14 @@ namespace Redemption
 			if (this._canReplace == null || (this._canReplace != null && this._canReplace(x, y, GenBase._tiles[x, y])))
 			{
 				GenBase._tiles[x, y].ResetToType(this._type);
+				if (this._frameX > -1)
+				{
+					GenBase._tiles[x, y].frameX = this._frameX;
+				}
+				if (this._frameY > -1)
+				{
+					GenBase._tiles[x, y].frameY = this._frameY;
+				}
 				if (this._doFraming)
 				{
 					WorldUtils.TileFrame(x, y, this._doNeighborFraming);
@@ -42,6 +52,10 @@ namespace Redemption
 		}
 
 		public ushort _type;
+
+		public short _frameX = -1;
+
+		public short _frameY = -1;
 
 		public bool _doFraming;
 

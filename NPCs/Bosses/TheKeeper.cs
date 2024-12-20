@@ -19,7 +19,7 @@ namespace Redemption.NPCs.Bosses
 		public override void SetDefaults()
 		{
 			base.npc.aiStyle = 0;
-			base.npc.lifeMax = 2250;
+			base.npc.lifeMax = 2450;
 			base.npc.damage = 30;
 			base.npc.defense = 0;
 			base.npc.knockBackResist = 0f;
@@ -60,6 +60,25 @@ namespace Redemption.NPCs.Bosses
 		public override void BossLoot(ref string name, ref int potionType)
 		{
 			potionType = 188;
+			if (!RedeWorld.downedTheKeeper)
+			{
+				RedeWorld.redemptionPoints++;
+				CombatText.NewText(this.player.getRect(), Color.Gold, "+1", true, false);
+				for (int i = 0; i < 255; i++)
+				{
+					Player player = Main.player[i];
+					if (player.active)
+					{
+						for (int j = 0; j < player.inventory.Length; j++)
+						{
+							if (player.inventory[j].type == base.mod.ItemType("RedemptionTeller"))
+							{
+								Main.NewText("<Chalice of Alignment> An undead... disgusting. Good thing you killed it.", Color.DarkGoldenrod, false);
+							}
+						}
+					}
+				}
+			}
 			RedeWorld.downedTheKeeper = true;
 			if (Main.netMode == 2)
 			{
@@ -170,8 +189,8 @@ namespace Redemption.NPCs.Bosses
 			}
 			this.Target();
 			this.DespawnHandler();
-			this.fightTimer++;
-			if (this.fightTimer >= 160)
+			base.npc.ai[0] += 1f;
+			if (base.npc.ai[0] >= 160f)
 			{
 				for (int i = 0; i < 255; i++)
 				{
@@ -190,7 +209,7 @@ namespace Redemption.NPCs.Bosses
 			}
 			if (this.teddyEvent)
 			{
-				if (this.teddyTimer < 540)
+				if (base.npc.ai[2] < 540f)
 				{
 					this.teddy1Event = true;
 				}
@@ -208,8 +227,8 @@ namespace Redemption.NPCs.Bosses
 				{
 					base.npc.velocity.Y = 0f;
 				}
-				this.teddyTimer++;
-				if (this.teddyTimer == 60)
+				base.npc.ai[2] += 1f;
+				if (base.npc.ai[2] == 60f)
 				{
 					string text = "The Keeper noticed the abandoned teddy you're holding...";
 					Color rarityPurple = Colors.RarityPurple;
@@ -219,7 +238,7 @@ namespace Redemption.NPCs.Bosses
 					Color rarityPurple3 = Colors.RarityPurple;
 					Main.NewText(text, r, g, rarityPurple3.B, false);
 				}
-				if (this.teddyTimer == 320)
+				if (base.npc.ai[2] == 320f)
 				{
 					string text2 = "She starts to remember something...";
 					Color rarityPurple4 = Colors.RarityPurple;
@@ -229,10 +248,11 @@ namespace Redemption.NPCs.Bosses
 					Color rarityPurple6 = Colors.RarityPurple;
 					Main.NewText(text2, r2, g2, rarityPurple6.B, false);
 				}
-				if (this.teddyTimer == 540)
+				if (base.npc.ai[2] == 540f)
 				{
 					this.teddy1Event = false;
 					this.peaceful = true;
+					base.npc.netUpdate = true;
 					string text3 = "Pain... Anger... Sadness... All those feelings were washed away...";
 					Color rarityPurple7 = Colors.RarityPurple;
 					byte r3 = rarityPurple7.R;
@@ -241,7 +261,7 @@ namespace Redemption.NPCs.Bosses
 					Color rarityPurple9 = Colors.RarityPurple;
 					Main.NewText(text3, r3, g3, rarityPurple9.B, false);
 				}
-				if (this.teddyTimer == 750)
+				if (base.npc.ai[2] == 750f)
 				{
 					string text4 = "She only feels... at peace...";
 					Color rarityPurple10 = Colors.RarityPurple;
@@ -251,7 +271,7 @@ namespace Redemption.NPCs.Bosses
 					Color rarityPurple12 = Colors.RarityPurple;
 					Main.NewText(text4, r4, g4, rarityPurple12.B, false);
 				}
-				if (this.teddyTimer >= 1000)
+				if (base.npc.ai[2] >= 1000f)
 				{
 					base.npc.alpha++;
 					if (Main.rand.Next(5) == 0)
@@ -274,6 +294,26 @@ namespace Redemption.NPCs.Bosses
 					Color rarityPurple15 = Colors.RarityPurple;
 					Main.NewText(text5, r5, g5, rarityPurple15.B, false);
 					Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("KeeperAcc"), 1, false, 0, false, false);
+					if (!RedeWorld.keeperSaved)
+					{
+						RedeWorld.redemptionPoints += 3;
+						CombatText.NewText(this.player.getRect(), Color.Gold, "+3", true, false);
+						for (int l = 0; l < 255; l++)
+						{
+							Player player2 = Main.player[l];
+							if (player2.active)
+							{
+								for (int m = 0; m < player2.inventory.Length; m++)
+								{
+									if (player2.inventory[m].type == base.mod.ItemType("RedemptionTeller"))
+									{
+										Main.NewText("<Chalice of Alignment> You've redeemed yourself, The Keeper may rest in undisturbed peace...", Color.DarkGoldenrod, false);
+									}
+								}
+							}
+						}
+					}
+					base.npc.netUpdate = true;
 					RedeWorld.keeperSaved = true;
 					if (Main.netMode == 2)
 					{
@@ -292,132 +332,147 @@ namespace Redemption.NPCs.Bosses
 				}
 				if (Main.rand.Next(400) == 0)
 				{
-					NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
+					int num2 = NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[num2].netUpdate = true;
 				}
-				if (!Main.expertMode && base.npc.life < 1200)
+				if (!Main.expertMode && base.npc.life < (int)((float)base.npc.lifeMax * 0.5f))
 				{
-					this.timer++;
-					if (this.timer == 20)
+					base.npc.ai[3] += 1f;
+					if (base.npc.ai[3] == 20f)
 					{
 						this.shriekStart = true;
 						string text6 = "*Shrieks of pain echo through the night*";
 						Color rarityPurple16 = Colors.RarityPurple;
 						byte r6 = rarityPurple16.R;
-						Color rarityPurple17 = Colors.RarityPurple;
-						byte g6 = rarityPurple17.G;
-						Color rarityPurple18 = Colors.RarityPurple;
-						Main.NewText(text6, r6, g6, rarityPurple18.B, false);
+						Color rarityPurple = Colors.RarityPurple;
+						byte g6 = rarityPurple.G;
+						rarityPurple = Colors.RarityPurple;
+						Main.NewText(text6, r6, g6, rarityPurple.B, false);
 						if (!Main.dedServ)
 						{
 							Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Shriek").WithVolume(0.7f).WithPitchVariance(0.1f), -1, -1);
 						}
 					}
-					if (this.timer == 40)
+					if (base.npc.ai[3] == 40f)
 					{
-						NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
+						int num3 = NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
+						Main.npc[num3].netUpdate = true;
 					}
-					if (this.timer == 45)
+					if (base.npc.ai[3] == 45f)
 					{
-						NPC.NewNPC((int)base.npc.position.X + 60, (int)base.npc.position.Y + 80, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
+						int num4 = NPC.NewNPC((int)base.npc.position.X + 60, (int)base.npc.position.Y + 80, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
+						Main.npc[num4].netUpdate = true;
 					}
-					if (this.timer == 50)
+					if (base.npc.ai[3] == 50f)
 					{
-						NPC.NewNPC((int)base.npc.position.X + 80, (int)base.npc.position.Y + 75, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
+						int num5 = NPC.NewNPC((int)base.npc.position.X + 80, (int)base.npc.position.Y + 75, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
+						Main.npc[num5].netUpdate = true;
 					}
-					if (this.timer == 55)
+					if (base.npc.ai[3] == 55f)
 					{
-						NPC.NewNPC((int)base.npc.position.X + 50, (int)base.npc.position.Y + 60, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
-						NPC.NewNPC((int)base.npc.position.X + 85, (int)base.npc.position.Y + 50, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
+						int num6 = NPC.NewNPC((int)base.npc.position.X + 50, (int)base.npc.position.Y + 60, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
+						Main.npc[num6].netUpdate = true;
+						int num7 = NPC.NewNPC((int)base.npc.position.X + 85, (int)base.npc.position.Y + 50, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
+						Main.npc[num7].netUpdate = true;
 					}
-					if (this.timer == 60)
+					if (base.npc.ai[3] == 60f)
 					{
-						NPC.NewNPC((int)base.npc.position.X + 65, (int)base.npc.position.Y + 65, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
-						NPC.NewNPC((int)base.npc.position.X + 45, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
+						int num8 = NPC.NewNPC((int)base.npc.position.X + 65, (int)base.npc.position.Y + 65, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
+						Main.npc[num8].netUpdate = true;
+						int num9 = NPC.NewNPC((int)base.npc.position.X + 45, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul4"), 0, 0f, 0f, 0f, 0f, 255);
+						Main.npc[num9].netUpdate = true;
 					}
-					if (this.timer >= 220)
+					if (base.npc.ai[3] >= 220f)
 					{
 						this.shriekStart = false;
 					}
 					if (Main.rand.Next(250) == 0)
 					{
-						NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 160, base.mod.NPCType("SkeletonMinion"), 0, 0f, 0f, 0f, 0f, 255);
+						int num10 = NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 160, base.mod.NPCType("SkeletonMinion"), 0, 0f, 0f, 0f, 0f, 255);
+						Main.npc[num10].netUpdate = true;
 					}
 				}
-				if (Main.expertMode && base.npc.life < 1200)
+				if (Main.expertMode && base.npc.life < (int)((float)base.npc.lifeMax * 0.5f))
 				{
-					this.timer++;
-					if (this.timer == 20)
+					base.npc.ai[3] += 1f;
+					if (base.npc.ai[3] == 20f)
 					{
 						this.shriekStart = true;
 						string text7 = "*Shrieks of pain echo through the night*";
-						Color rarityPurple19 = Colors.RarityPurple;
-						byte r7 = rarityPurple19.R;
-						Color rarityPurple20 = Colors.RarityPurple;
-						byte g7 = rarityPurple20.G;
-						Color rarityPurple21 = Colors.RarityPurple;
-						Main.NewText(text7, r7, g7, rarityPurple21.B, false);
+						Color rarityPurple = Colors.RarityPurple;
+						byte r7 = rarityPurple.R;
+						rarityPurple = Colors.RarityPurple;
+						byte g7 = rarityPurple.G;
+						rarityPurple = Colors.RarityPurple;
+						Main.NewText(text7, r7, g7, rarityPurple.B, false);
 						if (!Main.dedServ)
 						{
 							Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Shriek").WithVolume(0.7f).WithPitchVariance(0.1f), -1, -1);
 						}
 					}
-					if (this.timer == 40)
-					{
-						float num2 = 90f;
-						float num3 = 1.26f;
-						for (int l = 0; l < 1; l++)
-						{
-							Vector2 vector = base.npc.Center + num2 * Utils.ToRotationVector2((float)l * num3);
-							NPC.NewNPC((int)vector.X, (int)vector.Y, base.mod.NPCType("DarkSoul5"), 0, (float)base.npc.whoAmI, 0f, (float)l, 0f, 255);
-						}
-					}
-					if (this.timer == 60)
-					{
-						float num4 = 90f;
-						float num5 = 1.26f;
-						for (int m = 0; m < 1; m++)
-						{
-							Vector2 vector2 = base.npc.Center + num4 * Utils.ToRotationVector2((float)m * num5);
-							NPC.NewNPC((int)vector2.X, (int)vector2.Y, base.mod.NPCType("DarkSoul5"), 0, (float)base.npc.whoAmI, 0f, (float)m, 0f, 255);
-						}
-					}
-					if (this.timer == 80)
-					{
-						float num6 = 90f;
-						float num7 = 1.26f;
-						for (int n = 0; n < 1; n++)
-						{
-							Vector2 vector3 = base.npc.Center + num6 * Utils.ToRotationVector2((float)n * num7);
-							NPC.NewNPC((int)vector3.X, (int)vector3.Y, base.mod.NPCType("DarkSoul5"), 0, (float)base.npc.whoAmI, 0f, (float)n, 0f, 255);
-						}
-					}
-					if (this.timer == 100)
-					{
-						float num8 = 90f;
-						float num9 = 1.26f;
-						for (int num10 = 0; num10 < 1; num10++)
-						{
-							Vector2 vector4 = base.npc.Center + num8 * Utils.ToRotationVector2((float)num10 * num9);
-							NPC.NewNPC((int)vector4.X, (int)vector4.Y, base.mod.NPCType("DarkSoul5"), 0, (float)base.npc.whoAmI, 0f, (float)num10, 0f, 255);
-						}
-					}
-					if (this.timer == 120)
+					if (base.npc.ai[3] == 40f)
 					{
 						float num11 = 90f;
 						float num12 = 1.26f;
-						for (int num13 = 0; num13 < 1; num13++)
+						for (int n = 0; n < 1; n++)
 						{
-							Vector2 vector5 = base.npc.Center + num11 * Utils.ToRotationVector2((float)num13 * num12);
-							NPC.NewNPC((int)vector5.X, (int)vector5.Y, base.mod.NPCType("DarkSoul5"), 0, (float)base.npc.whoAmI, 0f, (float)num13, 0f, 255);
+							Vector2 vector = base.npc.Center + num11 * Utils.ToRotationVector2((float)n * num12);
+							int num13 = NPC.NewNPC((int)vector.X, (int)vector.Y, base.mod.NPCType("DarkSoul5"), 0, (float)base.npc.whoAmI, 0f, (float)n, 0f, 255);
+							Main.npc[num13].netUpdate = true;
 						}
 					}
-					if (this.timer >= 220)
+					if (base.npc.ai[3] == 60f)
+					{
+						float num14 = 90f;
+						float num15 = 1.26f;
+						for (int num16 = 0; num16 < 1; num16++)
+						{
+							Vector2 vector2 = base.npc.Center + num14 * Utils.ToRotationVector2((float)num16 * num15);
+							int num17 = NPC.NewNPC((int)vector2.X, (int)vector2.Y, base.mod.NPCType("DarkSoul5"), 0, (float)base.npc.whoAmI, 0f, (float)num16, 0f, 255);
+							Main.npc[num17].netUpdate = true;
+						}
+					}
+					if (base.npc.ai[3] == 80f)
+					{
+						float num18 = 90f;
+						float num19 = 1.26f;
+						for (int num20 = 0; num20 < 1; num20++)
+						{
+							Vector2 vector3 = base.npc.Center + num18 * Utils.ToRotationVector2((float)num20 * num19);
+							int num21 = NPC.NewNPC((int)vector3.X, (int)vector3.Y, base.mod.NPCType("DarkSoul5"), 0, (float)base.npc.whoAmI, 0f, (float)num20, 0f, 255);
+							Main.npc[num21].netUpdate = true;
+						}
+					}
+					if (base.npc.ai[3] == 100f)
+					{
+						float num22 = 90f;
+						float num23 = 1.26f;
+						for (int num24 = 0; num24 < 1; num24++)
+						{
+							Vector2 vector4 = base.npc.Center + num22 * Utils.ToRotationVector2((float)num24 * num23);
+							int num25 = NPC.NewNPC((int)vector4.X, (int)vector4.Y, base.mod.NPCType("DarkSoul5"), 0, (float)base.npc.whoAmI, 0f, (float)num24, 0f, 255);
+							Main.npc[num25].netUpdate = true;
+						}
+					}
+					if (base.npc.ai[3] == 120f)
+					{
+						float num26 = 90f;
+						float num27 = 1.26f;
+						for (int num28 = 0; num28 < 1; num28++)
+						{
+							Vector2 vector5 = base.npc.Center + num26 * Utils.ToRotationVector2((float)num28 * num27);
+							int num29 = NPC.NewNPC((int)vector5.X, (int)vector5.Y, base.mod.NPCType("DarkSoul5"), 0, (float)base.npc.whoAmI, 0f, (float)num28, 0f, 255);
+							Main.npc[num29].netUpdate = true;
+						}
+					}
+					if (base.npc.ai[3] >= 220f)
 					{
 						this.shriekStart = false;
 					}
 					if (Main.rand.Next(400) == 0 && NPC.CountNPCS(base.mod.NPCType("BoneWorm")) <= 3)
 					{
-						NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 160, base.mod.NPCType("BoneWorm"), 0, 0f, 0f, 0f, 0f, 255);
+						int num30 = NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 160, base.mod.NPCType("BoneWorm"), 0, 0f, 0f, 0f, 0f, 255);
+						Main.npc[num30].netUpdate = true;
 					}
 				}
 			}
@@ -489,7 +544,8 @@ namespace Redemption.NPCs.Bosses
 			{
 				vector..ctor(0f, 5f);
 			}
-			Projectile.NewProjectile(base.npc.Center, vector, num, base.npc.damage, 2f, 255, 0f, 0f);
+			int num3 = Projectile.NewProjectile(base.npc.Center, vector, num, base.npc.damage / 2, 2f, 255, 0f, 0f);
+			Main.projectile[num3].netUpdate = true;
 			base.npc.ai[1] = 80f;
 		}
 
@@ -520,7 +576,7 @@ namespace Redemption.NPCs.Bosses
 				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
 				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, spriteEffects, 0f);
 			}
-			if (this.shriekStart)
+			if (this.shriekStart && !this.teddy1Event && !this.peaceful)
 			{
 				Vector2 vector;
 				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
@@ -554,8 +610,6 @@ namespace Redemption.NPCs.Bosses
 
 		private float speed;
 
-		public int timer;
-
 		private bool shriekStart;
 
 		private int shriekFrame;
@@ -563,8 +617,6 @@ namespace Redemption.NPCs.Bosses
 		private int shriekCounter;
 
 		private bool teddyEvent;
-
-		private int fightTimer;
 
 		private bool peaceful;
 
@@ -577,7 +629,5 @@ namespace Redemption.NPCs.Bosses
 		private int peaceCounter;
 
 		private bool teddy1Event;
-
-		private int teddyTimer;
 	}
 }

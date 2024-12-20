@@ -52,7 +52,7 @@ namespace Redemption.Tiles
 		{
 			x *= 16;
 			y *= 16;
-			Projectile.NewProjectile((float)x, (float)y, 0f, 0f, base.mod.ProjectileType("Mk3Microbot"), 100, 1.5f, Main.LocalPlayer.whoAmI, 0f, 0f);
+			Projectile.NewProjectile((float)x, (float)y, 0f, 0f, base.mod.ProjectileType("Mk3Microbot"), 60, 1.5f, Main.LocalPlayer.whoAmI, 0f, 0f);
 			Main.PlaySound(2, x, y, 53, 1f, 0f);
 			Main.LocalPlayer.AddBuff(base.mod.BuffType("Mk3MicrobotBuff"), 18000, true);
 		}

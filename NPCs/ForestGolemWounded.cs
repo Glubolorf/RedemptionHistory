@@ -33,6 +33,30 @@ namespace Redemption.NPCs
 			this.bannerItem = base.mod.ItemType("ForestGolemBanner");
 		}
 
+		public override void AI()
+		{
+			if (Main.raining)
+			{
+				this.regenTimer++;
+				if (this.regenTimer >= 70 && base.npc.life < base.npc.lifeMax)
+				{
+					base.npc.life++;
+					base.npc.HealEffect(1, true);
+					this.regenTimer = 0;
+				}
+			}
+			if (base.npc.wet && !base.npc.lavaWet)
+			{
+				this.regenTimer++;
+				if (this.regenTimer >= 60 && base.npc.life < base.npc.lifeMax)
+				{
+					base.npc.life++;
+					base.npc.HealEffect(1, true);
+					this.regenTimer = 0;
+				}
+			}
+		}
+
 		public override void HitEffect(int hitDirection, double damage)
 		{
 			if (base.npc.life <= 0)
@@ -56,5 +80,7 @@ namespace Redemption.NPCs
 			}
 			Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/ForestGolemGoreWood"), 1f);
 		}
+
+		private int regenTimer;
 	}
 }

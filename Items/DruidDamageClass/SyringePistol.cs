@@ -20,7 +20,7 @@ namespace Redemption.Items.DruidDamageClass
 		{
 			base.item.shootSpeed = 22f;
 			base.item.crit = 84;
-			base.item.damage = 1200;
+			base.item.damage = 920;
 			base.item.knockBack = 5f;
 			base.item.useStyle = 5;
 			base.item.useAnimation = 30;

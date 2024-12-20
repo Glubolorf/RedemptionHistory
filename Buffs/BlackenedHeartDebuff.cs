@@ -1,4 +1,5 @@
 ﻿using System;
+using Redemption.NPCs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -19,6 +20,11 @@ namespace Redemption.Buffs
 			player.statLifeMax2 -= 400;
 			player.lifeRegen -= 400;
 			player.blind = true;
+		}
+
+		public override void Update(NPC npc, ref int buffIndex)
+		{
+			npc.GetGlobalNPC<RedeGlobalNPC>(base.mod).blackHeart = true;
 		}
 	}
 }

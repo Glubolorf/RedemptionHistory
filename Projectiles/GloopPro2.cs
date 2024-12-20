@@ -54,6 +54,11 @@ namespace Redemption.Projectiles
 			return true;
 		}
 
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		{
+			target.immune[base.projectile.owner] = 6;
+		}
+
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
 		{
 			Player player = Main.player[base.projectile.owner];

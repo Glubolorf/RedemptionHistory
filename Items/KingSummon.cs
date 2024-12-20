@@ -30,29 +30,41 @@ namespace Redemption.Items
 
 		public override bool CanUseItem(Player player)
 		{
-			return Main.dayTime && !NPC.AnyNPCs(base.mod.NPCType("KSEntrance")) && RedeWorld.downedTheKeeper && !NPC.AnyNPCs(base.mod.NPCType("KSEntranceClone"));
+			return Main.dayTime && !NPC.AnyNPCs(base.mod.NPCType("KSEntrance")) && RedeWorld.downedTheKeeper && !NPC.AnyNPCs(base.mod.NPCType("KSEntranceClone")) && !NPC.AnyNPCs(base.mod.NPCType("KSNope"));
 		}
 
 		public override bool UseItem(Player player)
 		{
+			Mod mod = ModLoader.GetMod("AAMod");
+			if (RedeWorld.KSRajahInteraction && NPC.AnyNPCs(mod.NPCType("Rajah")))
+			{
+				string text = "Nope. You deal with the oversized rabbit.";
+				Color rarityCyan = Colors.RarityCyan;
+				byte r = rarityCyan.R;
+				Color rarityCyan2 = Colors.RarityCyan;
+				byte g = rarityCyan2.G;
+				Color rarityCyan3 = Colors.RarityCyan;
+				Main.NewText(text, r, g, rarityCyan3.B, false);
+				return false;
+			}
 			if (RedeWorld.girusTalk3)
 			{
-				Main.NewText("King Slayer III emerges... ?", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B, false);
-				int num = NPC.NewNPC((int)(player.position.X + (float)Main.rand.Next(100, 200)), (int)(player.position.Y - 0f), base.mod.NPCType("KSEntranceClone"), 0, 0f, 0f, 0f, 0f, 255);
-				if (Main.netMode == 2 && num < 200)
-				{
-					NetMessage.SendData(23, -1, -1, null, num, 0f, 0f, 0f, 0, 0, 0);
-				}
+				Main.NewText("The King Slayer III emerges... ?", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B, false);
+				Redemption.SpawnBoss(player, "KSEntranceClone", false, new Vector2(player.position.X + (float)Main.rand.Next(100, 200), player.position.Y - 80f), " ", false);
 				Main.PlaySound(15, player.position, 0);
 			}
 			else
 			{
-				Main.NewText("King Slayer III emerges!", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B, false);
-				int num2 = NPC.NewNPC((int)(player.position.X + (float)Main.rand.Next(100, 200)), (int)(player.position.Y - 0f), base.mod.NPCType("KSEntrance"), 0, 0f, 0f, 0f, 0f, 255);
-				if (Main.netMode == 2 && num2 < 200)
+				if (mod != null && NPC.AnyNPCs(mod.NPCType("Rajah")))
 				{
-					NetMessage.SendData(23, -1, -1, null, num2, 0f, 0f, 0f, 0, 0, 0);
+					Main.NewText("The King Slayer III emerges!", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B, false);
+					Redemption.SpawnBoss(player, "KSNope", false, new Vector2(player.position.X + (float)Main.rand.Next(100, 200), player.position.Y - 80f), " ", false);
+					Main.PlaySound(15, player.position, 0);
+					RedeWorld.KSRajahInteraction = true;
+					return true;
 				}
+				Main.NewText("The King Slayer III emerges!", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B, false);
+				Redemption.SpawnBoss(player, "KSEntrance", false, new Vector2(player.position.X + (float)Main.rand.Next(100, 200), player.position.Y - 80f), " ", false);
 				Main.PlaySound(15, player.position, 0);
 			}
 			return true;

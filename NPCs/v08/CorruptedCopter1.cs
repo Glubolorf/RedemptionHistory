@@ -95,7 +95,8 @@ namespace Redemption.NPCs.v08
 			if (Main.rand.Next(400) == 0)
 			{
 				Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-				Projectile.NewProjectile(new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 32f), new Vector2(0f, -20f), base.mod.ProjectileType("OmegaMissile"), 60, 3f, 255, 0f, 0f);
+				int num2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 32f), new Vector2(0f, -20f), base.mod.ProjectileType("OmegaMissile"), 60, 3f, 255, 0f, 0f);
+				Main.projectile[num2].netUpdate = true;
 			}
 			if (!this.minigunAttack)
 			{
@@ -111,23 +112,25 @@ namespace Redemption.NPCs.v08
 					{
 						if (base.npc.direction == -1)
 						{
-							float num2 = 9f;
+							float num3 = 9f;
 							Vector2 vector;
 							vector..ctor(base.npc.position.X + 156f, base.npc.position.Y + 82f);
-							int num3 = 55;
-							int num4 = 110;
-							float num5 = (float)Math.Atan2((double)(vector.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector.X - (this.player.position.X + (float)this.player.width * 0.5f)));
-							Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num5) * (double)num2 * -1.0), (float)(Math.Sin((double)num5) * (double)num2 * -1.0), num4, num3, 0f, 0, 0f, 0f);
+							int num4 = 55;
+							int num5 = 110;
+							float num6 = (float)Math.Atan2((double)(vector.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector.X - (this.player.position.X + (float)this.player.width * 0.5f)));
+							int num7 = Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num6) * (double)num3 * -1.0), (float)(Math.Sin((double)num6) * (double)num3 * -1.0), num5, num4, 0f, 0, 0f, 0f);
+							Main.projectile[num7].netUpdate = true;
 						}
 						else
 						{
-							float num6 = 9f;
+							float num8 = 9f;
 							Vector2 vector2;
 							vector2..ctor(base.npc.position.X + 28f, base.npc.position.Y + 82f);
-							int num7 = 55;
-							int num8 = 110;
-							float num9 = (float)Math.Atan2((double)(vector2.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector2.X - (this.player.position.X + (float)this.player.width * 0.5f)));
-							Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num9) * (double)num6 * -1.0), (float)(Math.Sin((double)num9) * (double)num6 * -1.0), num8, num7, 0f, 0, 0f, 0f);
+							int num9 = 55;
+							int num10 = 110;
+							float num11 = (float)Math.Atan2((double)(vector2.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector2.X - (this.player.position.X + (float)this.player.width * 0.5f)));
+							int num12 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num11) * (double)num8 * -1.0), (float)(Math.Sin((double)num11) * (double)num8 * -1.0), num10, num9, 0f, 0, 0f, 0f);
+							Main.projectile[num12].netUpdate = true;
 						}
 					}
 					if (this.spamTimer >= 3)

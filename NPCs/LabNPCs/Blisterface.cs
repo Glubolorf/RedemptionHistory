@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -62,8 +63,46 @@ namespace Redemption.NPCs.LabNPCs
 
 		public override void NPCLoot()
 		{
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("Keycard2"), 1, false, 0, false, false);
-			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("RawXenium"), Main.rand.Next(42, 62), false, 0, false, false);
+			base.npc.TargetClosest(true);
+			Player player = Main.player[base.npc.target];
+			if (Main.netMode == 0)
+			{
+				if (!RedeWorld.labAccess4)
+				{
+					Item.NewItem((int)player.position.X, (int)player.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ZoneAccessPanel4"), 1, false, 0, false, false);
+				}
+				Item.NewItem((int)player.position.X, (int)player.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("Keycard2"), 1, false, 0, false, false);
+				return;
+			}
+			if (!RedeWorld.labAccess4)
+			{
+				Item.NewItem((int)player.position.X, (int)player.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ZoneAccessPanel4"), 1, false, 0, false, false);
+			}
+			Item.NewItem((int)player.position.X, (int)player.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("Keycard2"), 1, false, 0, false, false);
+		}
+
+		public override void SendExtraAI(BinaryWriter writer)
+		{
+			base.SendExtraAI(writer);
+			if (Main.netMode == 2 || Main.dedServ)
+			{
+				writer.Write(this.swimTimer);
+				writer.Write(this.spamTimer);
+				writer.Write(this.beginFight);
+				writer.Write(this.jumpAttack);
+			}
+		}
+
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			base.ReceiveExtraAI(reader);
+			if (Main.netMode == 1)
+			{
+				this.swimTimer = reader.ReadInt32();
+				this.spamTimer = reader.ReadInt32();
+				this.beginFight = reader.ReadBool();
+				this.jumpAttack = reader.ReadBool();
+			}
 		}
 
 		public override void AI()
@@ -80,8 +119,8 @@ namespace Redemption.NPCs.LabNPCs
 					base.npc.frame.Y = 0;
 				}
 			}
-			this.blisterTimer++;
-			if (this.blisterTimer == 1)
+			base.npc.ai[1] += 1f;
+			if (base.npc.ai[1] == 1f)
 			{
 				if (!Main.dedServ)
 				{
@@ -95,64 +134,71 @@ namespace Redemption.NPCs.LabNPCs
 					base.npc.netUpdate = true;
 				}
 			}
-			if (this.blisterTimer <= 120)
+			if (base.npc.ai[1] <= 120f)
 			{
 				base.npc.aiStyle = -1;
 				base.npc.velocity.X = 0f;
 				base.npc.velocity.Y = 0f;
 				base.npc.alpha -= 4;
 				base.npc.dontTakeDamage = true;
+				base.npc.netUpdate = true;
 			}
-			if (this.blisterTimer > 120)
+			if (base.npc.ai[1] > 120f)
 			{
 				base.npc.aiStyle = 16;
 				this.beginFight = true;
 				base.npc.dontTakeDamage = false;
+				base.npc.netUpdate = true;
 			}
 			if (this.beginFight)
 			{
-				this.fightTimer++;
+				base.npc.ai[2] += 1f;
 				if (base.npc.life > 15000)
 				{
-					if (this.fightTimer == 320)
+					if (base.npc.ai[2] >= 320f)
 					{
 						this.jumpAttack = true;
+						base.npc.netUpdate = true;
 					}
 				}
-				else if (this.fightTimer == 170)
+				else if (base.npc.ai[2] >= 170f)
 				{
 					this.jumpAttack = true;
+					base.npc.netUpdate = true;
 				}
 				if (!this.jumpAttack)
 				{
 					base.npc.noTileCollide = false;
 					if (Main.rand.Next(75) == 0)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 34f, base.npc.position.Y + 22f), new Vector2(0f, 0f), base.mod.ProjectileType("BlisterBubblePro1"), 50, 3f, 255, 0f, 0f);
+						int num = Projectile.NewProjectile(new Vector2(base.npc.position.X + 34f, base.npc.position.Y + 22f), new Vector2(0f, 0f), base.mod.ProjectileType("BlisterBubblePro1"), 50, 3f, 255, 0f, 0f);
+						Main.projectile[num].netUpdate = true;
 					}
 					if (Main.rand.Next(75) == 0)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 72f, base.npc.position.Y + 18f), new Vector2(0f, 0f), base.mod.ProjectileType("BlisterBubblePro1"), 50, 3f, 255, 0f, 0f);
+						int num2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 72f, base.npc.position.Y + 18f), new Vector2(0f, 0f), base.mod.ProjectileType("BlisterBubblePro1"), 50, 3f, 255, 0f, 0f);
+						Main.projectile[num2].netUpdate = true;
 					}
 					if (Main.rand.Next(75) == 0)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 52f, base.npc.position.Y + 32f), new Vector2(0f, 0f), base.mod.ProjectileType("BlisterBubblePro1"), 50, 3f, 255, 0f, 0f);
+						int num3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 52f, base.npc.position.Y + 32f), new Vector2(0f, 0f), base.mod.ProjectileType("BlisterBubblePro1"), 50, 3f, 255, 0f, 0f);
+						Main.projectile[num3].netUpdate = true;
 					}
 					if (NPC.CountNPCS(base.mod.NPCType("Blisterling2")) <= 6 && Main.rand.Next(250) == 0)
 					{
-						NPC.NewNPC((int)base.npc.position.X + 66, (int)base.npc.position.Y + 36, base.mod.NPCType("Blisterling2"), 0, 0f, 0f, 0f, 0f, 255);
+						int num4 = NPC.NewNPC((int)base.npc.position.X + 66, (int)base.npc.position.Y + 36, base.mod.NPCType("Blisterling2"), 0, 0f, 0f, 0f, 0f, 255);
+						Main.npc[num4].netUpdate = true;
+						return;
 					}
 				}
-				if (this.jumpAttack)
+				else
 				{
-					this.jumpTimer++;
+					base.npc.ai[3] += 1f;
 					base.npc.noTileCollide = true;
 					base.npc.velocity.X = 0f;
-					if (this.jumpTimer == 1)
+					if (base.npc.ai[3] == 1f)
 					{
-						Vector2 vector2;
-						vector2..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
-						Math.Atan2((double)(vector2.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector2.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
+						new Vector2(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
 						base.npc.velocity.X = 0f;
 						base.npc.velocity.Y = -15f;
 						base.npc.ai[0] %= 6.2831855f;
@@ -160,15 +206,15 @@ namespace Redemption.NPCs.LabNPCs
 						Color color = default(Color);
 						Rectangle rectangle;
 						rectangle..ctor((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
-						int num = 30;
-						for (int i = 1; i <= num; i++)
+						int num5 = 30;
+						for (int i = 1; i <= num5; i++)
 						{
-							int num2 = Dust.NewDust(base.npc.position, rectangle.Width, rectangle.Height, 273, 0f, 0f, 100, color, 2.5f);
-							Main.dust[num2].noGravity = false;
+							int num6 = Dust.NewDust(base.npc.position, rectangle.Width, rectangle.Height, 273, 0f, 0f, 100, color, 2.5f);
+							Main.dust[num6].noGravity = false;
 						}
 						return;
 					}
-					if (this.jumpTimer >= 50 && this.jumpTimer < 70)
+					if (base.npc.ai[3] >= 50f && base.npc.ai[3] < 70f)
 					{
 						this.spamTimer++;
 						if (this.spamTimer == 1)
@@ -179,25 +225,30 @@ namespace Redemption.NPCs.LabNPCs
 						{
 							if (base.npc.direction == -1)
 							{
-								Projectile.NewProjectile(new Vector2(base.npc.position.X + 78f, base.npc.position.Y + 34f), new Vector2((float)(-6 + Main.rand.Next(-6, 0)), (float)(-2 + Main.rand.Next(0, 4))), base.mod.ProjectileType("BlisterBubblePro2"), 50, 3f, 255, 0f, 0f);
+								int num7 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 78f, base.npc.position.Y + 34f), new Vector2((float)(-6 + Main.rand.Next(-6, 0)), (float)(-2 + Main.rand.Next(0, 4))), base.mod.ProjectileType("BlisterBubblePro2"), 50, 3f, 255, 0f, 0f);
+								Main.projectile[num7].netUpdate = true;
 							}
 							else
 							{
-								Projectile.NewProjectile(new Vector2(base.npc.position.X + 24f, base.npc.position.Y + 34f), new Vector2((float)(6 + Main.rand.Next(0, 6)), (float)(-2 + Main.rand.Next(0, 4))), base.mod.ProjectileType("BlisterBubblePro2"), 50, 3f, 255, 0f, 0f);
+								int num8 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 24f, base.npc.position.Y + 34f), new Vector2((float)(6 + Main.rand.Next(0, 6)), (float)(-2 + Main.rand.Next(0, 4))), base.mod.ProjectileType("BlisterBubblePro2"), 50, 3f, 255, 0f, 0f);
+								Main.projectile[num8].netUpdate = true;
 							}
 							this.spamTimer = 0;
+							base.npc.netUpdate = true;
 						}
 					}
-					if (this.jumpTimer >= 68)
+					if (base.npc.ai[3] >= 68f)
 					{
 						NPC npc2 = base.npc;
 						npc2.velocity.Y = npc2.velocity.Y + 0.15f;
+						base.npc.netUpdate = true;
 					}
-					if (this.jumpTimer >= 180 && base.npc.wet)
+					if (base.npc.ai[3] >= 180f && base.npc.wet)
 					{
-						this.fightTimer = 0;
+						base.npc.ai[2] = 0f;
 						this.jumpAttack = false;
-						this.jumpTimer = 0;
+						base.npc.ai[3] = 0f;
+						base.npc.netUpdate = true;
 					}
 				}
 			}
@@ -226,17 +277,11 @@ namespace Redemption.NPCs.LabNPCs
 			return this.beginFight;
 		}
 
-		private int blisterTimer;
-
 		private bool beginFight;
-
-		private int fightTimer;
 
 		private int swimTimer;
 
 		private bool jumpAttack;
-
-		private int jumpTimer;
 
 		private int spamTimer;
 	}

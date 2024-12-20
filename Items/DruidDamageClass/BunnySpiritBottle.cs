@@ -11,7 +11,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Spirit Bunny in a Bottle");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nReleases a spirit bunny\nGets buffed from soul-related armoury");
+			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\nReleases a spirit bunny\nGets buffed from soul-related armoury");
 		}
 
 		public override void SafeSetDefaults()
@@ -44,6 +44,10 @@ namespace Redemption.Items.DruidDamageClass
 			{
 				base.item.damage = 14;
 			}
+			else if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).shadeSet)
+			{
+				base.item.damage = 350;
+			}
 			else
 			{
 				base.item.damage = 7;
@@ -58,6 +62,10 @@ namespace Redemption.Items.DruidDamageClass
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).wanderingSoulSet)
 				{
 					return 1.45f;
+				}
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).shadeSet)
+				{
+					return 1.75f;
 				}
 				return 1.15f;
 			}

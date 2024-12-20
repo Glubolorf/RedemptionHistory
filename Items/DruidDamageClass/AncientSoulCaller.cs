@@ -11,7 +11,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Ancient Soul Caller");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nSummons a swarm of Soul Skulls\nGets buffed from soul-related armoury");
+			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\nSummons a swarm of Soul Skulls\nGets buffed from soul-related armoury");
 		}
 
 		public override void SafeSetDefaults()
@@ -67,6 +67,10 @@ namespace Redemption.Items.DruidDamageClass
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).wanderingSoulSet)
 				{
 					return 1.45f;
+				}
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).shadeSet)
+				{
+					return 1.75f;
 				}
 				return 1.15f;
 			}

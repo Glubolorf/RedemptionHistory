@@ -20,8 +20,8 @@ namespace Redemption.Items.Weapons
 			base.item.mana = 2;
 			base.item.width = 40;
 			base.item.height = 40;
-			base.item.useTime = 22;
-			base.item.useAnimation = 22;
+			base.item.useTime = 28;
+			base.item.useAnimation = 28;
 			base.item.useStyle = 1;
 			base.item.knockBack = 4f;
 			base.item.value = Item.buyPrice(0, 1, 2, 0);

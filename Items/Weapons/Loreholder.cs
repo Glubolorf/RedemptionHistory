@@ -66,7 +66,7 @@ namespace Redemption.Items.Weapons
 				{
 					Main.NewText("<Loreholder> An exceptionally rare slime native to Ithon. It may look harmless, but the acid it is composed of can dissolve iron in less than a minute", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
-				if (target.type == base.mod.NPCType("BloodWormHead") || target.type == base.mod.NPCType("BloodWormBody") || target.type == base.mod.NPCType("BloodWormTail"))
+				if (target.type == base.mod.NPCType("BloodWormHead") || target.type == base.mod.NPCType("BloodWormBody") || target.type == base.mod.NPCType("BloodWormTail") || target.type == base.mod.NPCType("BloodDiggerHead") || target.type == base.mod.NPCType("BloodDiggerBody") || target.type == base.mod.NPCType("BloodDiggerTail"))
 				{
 					Main.NewText("<Loreholder> Annoying worms that leech on creatures, consuming their blood.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
@@ -268,7 +268,7 @@ namespace Redemption.Items.Weapons
 				}
 				if (target.type == base.mod.NPCType("SkeleDruid"))
 				{
-					Main.NewText("<Loreholder> A skeleton wearing druid clothing and carrying a seed bag. They will use the seed bag to shoot homing spore clouds at you.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+					Main.NewText("<Loreholder> A skeleton wearing druid clothing and carrying a Seedbag. They will use the Seedbag to shoot homing spore clouds at you.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
 				if (target.type == base.mod.NPCType("Skelemies"))
 				{
@@ -502,9 +502,41 @@ namespace Redemption.Items.Weapons
 				{
 					Main.NewText("<Loreholder> A fist of the MACE Project. Smashing.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
-				if (target.type == base.mod.NPCType("PatientZero"))
+				if (target.type == base.mod.NPCType("BloodBoiledSkeleton"))
 				{
-					Main.NewText("<Loreholder> What in tarnation was that!? Oh right, this was the first case of Xenomite Infection.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+					Main.NewText("<Loreholder> A bigass skeleton covered in boiling blood and flesh. When killed, they will explode... But I guess you already figured that out...", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+				}
+				if (target.type == base.mod.NPCType("BobTheBlob"))
+				{
+					Main.NewText("<Loreholder> Bob the Blob is a blob that bobbed and blobbed.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+				}
+				if (target.type == base.mod.NPCType("CleaverDagger"))
+				{
+					Main.NewText("<Loreholder> One of Vlitch Cleaver's daggers that circle around it. They can reflect projectiles.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+				}
+				if (target.type == base.mod.NPCType("CorruptedCopter1") || target.type == base.mod.NPCType("CorruptedDrone1"))
+				{
+					Main.NewText("<Loreholder> Nyoooooom!", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+				}
+				if (target.type == base.mod.NPCType("DecayedGhoul") || target.type == base.mod.NPCType("GreenPigron") || target.type == base.mod.NPCType("InfectedGrub") || target.type == base.mod.NPCType("InfectedSnowFlinx") || target.type == base.mod.NPCType("InfectedSwarmer") || target.type == base.mod.NPCType("RadioactiveSlime") || target.type == base.mod.NPCType("RadiumDigger2Head") || target.type == base.mod.NPCType("RadiumDigger2Body") || target.type == base.mod.NPCType("RadiumDigger2Tail") || target.type == base.mod.NPCType("RadiumRampager") || target.type == base.mod.NPCType("SneezyInfectedFlinx") || target.type == base.mod.NPCType("SpikyRadioactiveSlime") || target.type == base.mod.NPCType("XenomiteBeast"))
+				{
+					Main.NewText("<Loreholder> An infected varient of an enemy.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+				}
+				if (target.type == base.mod.NPCType("NuclearSlime"))
+				{
+					Main.NewText("<Loreholder> WAIT NO THAT SLIME HAS A BOMB!", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+				}
+				if (target.type == base.mod.NPCType("OmegaPilotDroid"))
+				{
+					Main.NewText("<Loreholder> A pilot. He seemed to be angry with you for destroying his copter.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+				}
+				if (target.type == base.mod.NPCType("StarWyvernHead") || target.type == base.mod.NPCType("StarWyvernCollar") || target.type == base.mod.NPCType("StarWyvernNeck") || target.type == base.mod.NPCType("StarWyvernBody") || target.type == base.mod.NPCType("StarWyvernLeg") || target.type == base.mod.NPCType("StarWyvernTail1") || target.type == base.mod.NPCType("StarWyvernTail2") || target.type == base.mod.NPCType("StarWyvernTail3"))
+				{
+					Main.NewText("<Loreholder> A fully grown Star Serpent, and Nebuleus's pet.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+				}
+				if (target.type == base.mod.NPCType("Nebuleus") || target.type == base.mod.NPCType("BigNebuleus"))
+				{
+					Main.NewText("<Loreholder> ... I don't know... I just don't know. I can't see her past at all.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
 				}
 			}
 		}

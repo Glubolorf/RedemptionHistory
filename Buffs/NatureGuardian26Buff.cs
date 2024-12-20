@@ -23,9 +23,9 @@ namespace Redemption.Buffs
 			RedePlayer modPlayer2 = player.GetModPlayer<RedePlayer>(base.mod);
 			if (player.ownedProjectileCounts[base.mod.ProjectileType("NatureGuardian26")] > 0)
 			{
-				modPlayer2.natureGuardian24 = true;
+				modPlayer2.natureGuardian26 = true;
 			}
-			if (!modPlayer2.natureGuardian24 || !modPlayer.iceShield)
+			if (!modPlayer2.natureGuardian26 || !modPlayer.iceShield)
 			{
 				player.DelBuff(buffIndex);
 				buffIndex--;

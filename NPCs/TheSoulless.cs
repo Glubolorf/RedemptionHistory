@@ -11,7 +11,7 @@ namespace Redemption.NPCs
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("The Soulless");
-			Main.npcFrameCount[base.npc.type] = 5;
+			Main.npcFrameCount[base.npc.type] = 28;
 		}
 
 		public override void SetDefaults()
@@ -27,7 +27,6 @@ namespace Redemption.NPCs
 			base.npc.value = 0f;
 			base.npc.knockBackResist = 0f;
 			base.npc.aiStyle = 0;
-			this.animationType = 34;
 			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/Soulless");
 		}
 
@@ -44,9 +43,25 @@ namespace Redemption.NPCs
 			Main.NewText("Ka senkar’ned Nyht il olv Ii’s Syht, Lite’nin ka Lyht exum ka Fryht, Eui ka Myht ut ka Holy Knight.", Color.DarkGray.R, Color.DarkGray.G, Color.DarkGray.B, false);
 		}
 
+		public override void AI()
+		{
+			base.npc.frameCounter += 1.0;
+			if (base.npc.frameCounter >= 2.0)
+			{
+				base.npc.frameCounter = 0.0;
+				NPC npc = base.npc;
+				npc.frame.Y = npc.frame.Y + 78;
+				if (base.npc.frame.Y > 2106)
+				{
+					base.npc.frameCounter = 0.0;
+					base.npc.frame.Y = 0;
+				}
+			}
+		}
+
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.Cavern.Chance * 0.0003f;
+			return SpawnCondition.Cavern.Chance * ((!RedeWorld.downedPatientZero) ? 0.0003f : 0f);
 		}
 	}
 }

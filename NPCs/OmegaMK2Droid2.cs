@@ -82,13 +82,15 @@ namespace Redemption.NPCs
 				if (base.npc.life > 7000 && this.timer >= 50)
 				{
 					Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 30f), new Vector2(10f, -4f), base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+					int num = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 30f), new Vector2(10f, -4f), base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+					Main.projectile[num].netUpdate = true;
 					this.timer = 0;
 				}
 				if (base.npc.life <= 7000 && this.timer >= 30)
 				{
 					Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 30f), new Vector2(10f, -4f), base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+					int num2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 30f), new Vector2(10f, -4f), base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+					Main.projectile[num2].netUpdate = true;
 					this.timer = 0;
 				}
 			}
@@ -97,13 +99,15 @@ namespace Redemption.NPCs
 				if (base.npc.life > 3500 && this.timer >= 50)
 				{
 					Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 30f), new Vector2(10f, -4f), base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+					int num3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 30f), new Vector2(10f, -4f), base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+					Main.projectile[num3].netUpdate = true;
 					this.timer = 0;
 				}
 				if (base.npc.life <= 3500 && this.timer >= 30)
 				{
 					Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 30f), new Vector2(10f, -4f), base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+					int num4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 30f), new Vector2(10f, -4f), base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+					Main.projectile[num4].netUpdate = true;
 					this.timer = 0;
 				}
 			}
@@ -112,8 +116,8 @@ namespace Redemption.NPCs
 			{
 				for (int i = 0; i < 50; i++)
 				{
-					int num = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 235, 0f, 0f, 100, default(Color), 1.5f);
-					Main.dust[num].velocity *= 1.9f;
+					int num5 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 235, 0f, 0f, 100, default(Color), 1.5f);
+					Main.dust[num5].velocity *= 1.9f;
 				}
 			}
 		}

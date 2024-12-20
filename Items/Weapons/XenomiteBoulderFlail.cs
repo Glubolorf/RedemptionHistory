@@ -23,7 +23,7 @@ namespace Redemption.Items.Weapons
 			base.item.useAnimation = 50;
 			base.item.useTime = 50;
 			base.item.knockBack = 7.5f;
-			base.item.damage = 85;
+			base.item.damage = 70;
 			base.item.scale = 1f;
 			base.item.noUseGraphic = true;
 			base.item.shoot = base.mod.ProjectileType("XenomiteFlailHead");

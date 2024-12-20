@@ -91,6 +91,12 @@ namespace Redemption.NPCs.v08
 			return false;
 		}
 
+		public override bool CheckActive()
+		{
+			NPC npc = Main.npc[(int)base.npc.ai[1]];
+			return !npc.active;
+		}
+
 		public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
 		{
 			return new bool?(false);

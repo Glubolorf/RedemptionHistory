@@ -69,40 +69,44 @@ namespace Redemption.NPCs
 				int num3 = base.mod.ProjectileType("SnowyBall2");
 				Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 12, 1f, 0f);
 				float num4 = (float)Math.Atan2((double)(vector.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector.X - (player.position.X + (float)player.width * 0.5f)));
-				Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num4) * (double)num * -1.0), (float)(Math.Sin((double)num4) * (double)num * -1.0), num3, num2, 0f, 0, 0f, 0f);
+				int num5 = Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num4) * (double)num * -1.0), (float)(Math.Sin((double)num4) * (double)num * -1.0), num3, num2, 0f, 0, 0f, 0f);
+				Main.projectile[num5].netUpdate = true;
 			}
 			if (this.timer == 130)
 			{
-				float num5 = 10f;
+				float num6 = 10f;
 				Vector2 vector2;
 				vector2..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-				int num6 = 35;
-				int num7 = base.mod.ProjectileType("SnowyBall2");
+				int num7 = 35;
+				int num8 = base.mod.ProjectileType("SnowyBall2");
 				Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 12, 1f, 0f);
-				float num8 = (float)Math.Atan2((double)(vector2.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector2.X - (player.position.X + (float)player.width * 0.5f)));
-				Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num8) * (double)num5 * -1.0), (float)(Math.Sin((double)num8) * (double)num5 * -1.0), num7, num6, 0f, 0, 0f, 0f);
+				float num9 = (float)Math.Atan2((double)(vector2.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector2.X - (player.position.X + (float)player.width * 0.5f)));
+				int num10 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num9) * (double)num6 * -1.0), (float)(Math.Sin((double)num9) * (double)num6 * -1.0), num8, num7, 0f, 0, 0f, 0f);
+				Main.projectile[num10].netUpdate = true;
 			}
 			if (this.timer == 140)
 			{
-				float num9 = 12f;
+				float num11 = 12f;
 				Vector2 vector3;
 				vector3..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-				int num10 = 35;
-				int num11 = base.mod.ProjectileType("SnowyBall2");
+				int num12 = 35;
+				int num13 = base.mod.ProjectileType("SnowyBall2");
 				Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 12, 1f, 0f);
-				float num12 = (float)Math.Atan2((double)(vector3.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector3.X - (player.position.X + (float)player.width * 0.5f)));
-				Projectile.NewProjectile(vector3.X, vector3.Y, (float)(Math.Cos((double)num12) * (double)num9 * -1.0), (float)(Math.Sin((double)num12) * (double)num9 * -1.0), num11, num10, 0f, 0, 0f, 0f);
+				float num14 = (float)Math.Atan2((double)(vector3.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector3.X - (player.position.X + (float)player.width * 0.5f)));
+				int num15 = Projectile.NewProjectile(vector3.X, vector3.Y, (float)(Math.Cos((double)num14) * (double)num11 * -1.0), (float)(Math.Sin((double)num14) * (double)num11 * -1.0), num13, num12, 0f, 0, 0f, 0f);
+				Main.projectile[num15].netUpdate = true;
 			}
 			if (this.timer == 150)
 			{
-				float num13 = 14f;
+				float num16 = 14f;
 				Vector2 vector4;
 				vector4..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-				int num14 = 35;
-				int num15 = base.mod.ProjectileType("SnowyBall2");
+				int num17 = 35;
+				int num18 = base.mod.ProjectileType("SnowyBall2");
 				Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 12, 1f, 0f);
-				float num16 = (float)Math.Atan2((double)(vector4.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector4.X - (player.position.X + (float)player.width * 0.5f)));
-				Projectile.NewProjectile(vector4.X, vector4.Y, (float)(Math.Cos((double)num16) * (double)num13 * -1.0), (float)(Math.Sin((double)num16) * (double)num13 * -1.0), num15, num14, 0f, 0, 0f, 0f);
+				float num19 = (float)Math.Atan2((double)(vector4.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector4.X - (player.position.X + (float)player.width * 0.5f)));
+				int num20 = Projectile.NewProjectile(vector4.X, vector4.Y, (float)(Math.Cos((double)num19) * (double)num16 * -1.0), (float)(Math.Sin((double)num19) * (double)num16 * -1.0), num18, num17, 0f, 0, 0f, 0f);
+				Main.projectile[num20].netUpdate = true;
 			}
 			if (this.timer >= 160)
 			{
@@ -115,9 +119,9 @@ namespace Redemption.NPCs
 				Main.PlaySound(SoundID.Item8, base.npc.position);
 				for (int i = 0; i < 25; i++)
 				{
-					int num17 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 113, 0f, 0f, 100, default(Color), 2.5f);
-					Main.dust[num17].velocity *= 3f;
-					Main.dust[num17].noGravity = true;
+					int num21 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 113, 0f, 0f, 100, default(Color), 2.5f);
+					Main.dust[num21].velocity *= 3f;
+					Main.dust[num21].noGravity = true;
 				}
 				base.npc.position.X = base.npc.ai[2] * 16f - (float)(base.npc.width / 2) + 8f;
 				base.npc.position.Y = base.npc.ai[3] * 16f - (float)base.npc.height;
@@ -128,9 +132,9 @@ namespace Redemption.NPCs
 				Main.PlaySound(SoundID.Item8, base.npc.position);
 				for (int j = 0; j < 25; j++)
 				{
-					int num18 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 113, 0f, 0f, 100, default(Color), 2.5f);
-					Main.dust[num18].velocity *= 3f;
-					Main.dust[num18].noGravity = true;
+					int num22 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 113, 0f, 0f, 100, default(Color), 2.5f);
+					Main.dust[num22].velocity *= 3f;
+					Main.dust[num22].noGravity = true;
 				}
 			}
 			if (Math.Abs(base.npc.position.X - Main.player[base.npc.target].position.X) + Math.Abs(base.npc.position.Y - Main.player[base.npc.target].position.Y) > 2000f)
@@ -140,30 +144,30 @@ namespace Redemption.NPCs
 			if (base.npc.ai[0] >= 650f && Main.netMode != 1)
 			{
 				base.npc.ai[0] = 1f;
-				int num19 = (int)Main.player[base.npc.target].position.X / 16;
-				int num20 = (int)Main.player[base.npc.target].position.Y / 16;
-				int num21 = (int)base.npc.position.X / 16;
-				int num22 = (int)base.npc.position.Y / 16;
-				int num23 = 40;
-				int num24 = 0;
+				int num23 = (int)Main.player[base.npc.target].position.X / 16;
+				int num24 = (int)Main.player[base.npc.target].position.Y / 16;
+				int num25 = (int)base.npc.position.X / 16;
+				int num26 = (int)base.npc.position.Y / 16;
+				int num27 = 40;
+				int num28 = 0;
 				for (int k = 0; k < 100; k++)
 				{
-					num24++;
-					int num25 = Main.rand.Next(num19 - num23, num19 + num23);
-					int num26 = Main.rand.Next(num20 - num23, num20 + num23);
-					for (int l = num26; l < num20 + num23; l++)
+					num28++;
+					int num29 = Main.rand.Next(num23 - num27, num23 + num27);
+					int num30 = Main.rand.Next(num24 - num27, num24 + num27);
+					for (int l = num30; l < num24 + num27; l++)
 					{
-						if ((num25 < num19 - 12 || num25 > num19 + 12) && (l < num22 - 1 || l > num22 + 1 || num25 < num21 - 1 || num25 > num21 + 1) && Main.tile[num25, l].nactive())
+						if ((num29 < num23 - 12 || num29 > num23 + 12) && (l < num26 - 1 || l > num26 + 1 || num29 < num25 - 1 || num29 > num25 + 1) && Main.tile[num29, l].nactive())
 						{
 							bool flag = true;
-							if (Main.tile[num25, l - 1].lava())
+							if (Main.tile[num29, l - 1].lava())
 							{
 								flag = false;
 							}
-							if (flag && Main.tileSolid[(int)Main.tile[num25, l].type] && !Collision.SolidTiles(num25 - 1, num25 + 1, l - 4, l - 1))
+							if (flag && Main.tileSolid[(int)Main.tile[num29, l].type] && !Collision.SolidTiles(num29 - 1, num29 + 1, l - 4, l - 1))
 							{
 								base.npc.ai[1] = 20f;
-								base.npc.ai[2] = (float)num25;
+								base.npc.ai[2] = (float)num29;
 								base.npc.ai[3] = (float)l - 1f;
 								break;
 							}

@@ -62,7 +62,8 @@ namespace Redemption.NPCs
 			}
 			if (Main.rand.Next(50) == 0)
 			{
-				Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 188, 35, 3f, 255, 0f, 0f);
+				int num = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 188, 35, 3f, 255, 0f, 0f);
+				Main.projectile[num].netUpdate = true;
 			}
 		}
 

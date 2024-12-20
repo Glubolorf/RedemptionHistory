@@ -165,6 +165,24 @@ namespace Redemption.NPCs
 		{
 			name = "A Dark Slime";
 			potionType = 154;
+			if (!RedeWorld.downedDarkSlime)
+			{
+				CombatText.NewText(this.player.getRect(), Color.Gray, "+0", true, false);
+				for (int i = 0; i < 255; i++)
+				{
+					Player player = Main.player[i];
+					if (player.active)
+					{
+						for (int j = 0; j < player.inventory.Length; j++)
+						{
+							if (player.inventory[j].type == base.mod.ItemType("RedemptionTeller"))
+							{
+								Main.NewText("<Chalice of Alignment> Someone emerged from the slime!", Color.DarkGoldenrod, false);
+							}
+						}
+					}
+				}
+			}
 			RedeWorld.downedDarkSlime = true;
 			if (Main.netMode == 2)
 			{

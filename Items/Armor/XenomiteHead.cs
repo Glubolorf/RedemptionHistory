@@ -48,6 +48,7 @@ namespace Redemption.Items.Armor
 			player.buffImmune[base.mod.BuffType("XenomiteDebuff")] = true;
 			player.buffImmune[base.mod.BuffType("XenomiteDebuff2")] = true;
 			player.buffImmune[base.mod.BuffType("RadioactiveFalloutDebuff")] = true;
+			player.buffImmune[base.mod.BuffType("HeavyRadiationDebuff")] = true;
 		}
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)

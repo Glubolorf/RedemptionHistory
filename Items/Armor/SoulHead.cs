@@ -14,7 +14,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Lost Soul's Head");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n2% increased druidic damage\n2% damage reduction\n4% increased druidic critical strike chance");
+			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n2% increased druidic damage\n2% damage reduction\n4% increased druidic critical strike chance");
 		}
 
 		public override void SetDefaults()

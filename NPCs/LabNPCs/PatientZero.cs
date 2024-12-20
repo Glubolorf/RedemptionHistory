@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -20,9 +21,9 @@ namespace Redemption.NPCs.LabNPCs
 			base.npc.width = 114;
 			base.npc.height = 90;
 			base.npc.friendly = false;
-			base.npc.damage = 100;
-			base.npc.defense = 20;
-			base.npc.lifeMax = 650000;
+			base.npc.damage = 110;
+			base.npc.defense = 80;
+			base.npc.lifeMax = 340000;
 			base.npc.HitSound = SoundID.NPCHit13;
 			base.npc.DeathSound = SoundID.NPCDeath19;
 			base.npc.value = (float)Item.buyPrice(2, 0, 0, 0);
@@ -31,7 +32,7 @@ namespace Redemption.NPCs.LabNPCs
 			base.npc.alpha = 255;
 			base.npc.noGravity = true;
 			base.npc.boss = true;
-			base.npc.noTileCollide = true;
+			base.npc.noTileCollide = false;
 			base.npc.netAlways = true;
 			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/LabBossMusic2");
 			this.bossBag = base.mod.ItemType("PZBag");
@@ -52,7 +53,28 @@ namespace Redemption.NPCs.LabNPCs
 
 		public override void BossLoot(ref string name, ref int potionType)
 		{
+			base.npc.TargetClosest(true);
+			Player player = Main.player[base.npc.target];
 			potionType = 58;
+			if (!RedeWorld.downedPatientZero)
+			{
+				RedeWorld.redemptionPoints += 3;
+				CombatText.NewText(player.getRect(), Color.Gold, "+3", true, false);
+				for (int i = 0; i < 255; i++)
+				{
+					Player player2 = Main.player[i];
+					if (player2.active)
+					{
+						for (int j = 0; j < player2.inventory.Length; j++)
+						{
+							if (player2.inventory[j].type == base.mod.ItemType("RedemptionTeller"))
+							{
+								Main.NewText("<Chalice of Alignment> We did it! We stopped the Infection! High-five! ... Oh, right.", Color.DarkGoldenrod, false);
+							}
+						}
+					}
+				}
+			}
 			RedeWorld.downedPatientZero = true;
 			if (Main.netMode == 2)
 			{
@@ -62,6 +84,10 @@ namespace Redemption.NPCs.LabNPCs
 
 		public override void NPCLoot()
 		{
+			if (!RedeWorld.labAccess7)
+			{
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ZoneAccessPanel7"), 1, false, 0, false, false);
+			}
 			if (Main.rand.Next(10) == 0)
 			{
 				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("PZTrophy"), 1, false, 0, false, false);
@@ -90,6 +116,44 @@ namespace Redemption.NPCs.LabNPCs
 			}
 			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("MedicKit1"), 1, false, 0, false, false);
 			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("BluePrints"), 1, false, 0, false, false);
+		}
+
+		public override void SendExtraAI(BinaryWriter writer)
+		{
+			base.SendExtraAI(writer);
+			if (Main.netMode == 2 || Main.dedServ)
+			{
+				writer.Write(this.customAI[0]);
+				writer.Write(this.customAI[1]);
+				writer.Write(this.customAI[2]);
+				writer.Write(this.customAI[3]);
+				writer.Write(this.customAI[4]);
+				writer.Write(this.beginFight);
+				writer.Write(this.phase2Done);
+				writer.Write(this.phase2);
+				writer.Write(this.phase2Done);
+				writer.Write(this.phase3);
+				writer.Write(this.phase3Done);
+			}
+		}
+
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			base.ReceiveExtraAI(reader);
+			if (Main.netMode == 1)
+			{
+				this.customAI[0] = reader.ReadFloat();
+				this.customAI[1] = reader.ReadFloat();
+				this.customAI[2] = reader.ReadFloat();
+				this.customAI[3] = reader.ReadFloat();
+				this.customAI[4] = reader.ReadFloat();
+				this.beginFight = reader.ReadBool();
+				this.phase2Done = reader.ReadBool();
+				this.phase2 = reader.ReadBool();
+				this.phase2Done = reader.ReadBool();
+				this.phase3 = reader.ReadBool();
+				this.phase3Done = reader.ReadBool();
+			}
 		}
 
 		public override void AI()
@@ -180,8 +244,8 @@ namespace Redemption.NPCs.LabNPCs
 			{
 				base.npc.dontTakeDamage = true;
 			}
-			this.startTimer++;
-			if (this.startTimer == 1)
+			base.npc.ai[0] += 1f;
+			if (base.npc.ai[0] == 1f)
 			{
 				if (!Main.dedServ)
 				{
@@ -204,695 +268,804 @@ namespace Redemption.NPCs.LabNPCs
 			{
 				base.npc.alpha -= 4;
 			}
-			if (this.startTimer == 80)
+			if (base.npc.ai[0] == 80f)
 			{
 				Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
-				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth"), 0, 0f, 0f, 0f, 0f, 255);
+				int num2 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.npc[num2].netUpdate = true;
 			}
-			if (this.startTimer == 90)
+			if (base.npc.ai[0] == 90f)
 			{
 				Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
-				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth"), 0, 0f, 0f, 0f, 0f, 255);
+				int num3 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.npc[num3].netUpdate = true;
 			}
-			if (this.startTimer == 109)
+			if (base.npc.ai[0] == 109f)
 			{
 				Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
-				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth"), 0, 0f, 0f, 0f, 0f, 255);
+				int num4 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.npc[num4].netUpdate = true;
 			}
-			if (this.startTimer == 121)
+			if (base.npc.ai[0] == 121f)
 			{
 				Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
-				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth"), 0, 0f, 0f, 0f, 0f, 255);
+				int num5 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.npc[num5].netUpdate = true;
 			}
-			if (this.startTimer > 500)
+			if (base.npc.ai[0] > 500f)
 			{
 				this.beginFight = true;
+				base.npc.netUpdate = true;
 			}
-			if (this.startTimer > 500 && this.startTimer <= 580)
+			if (base.npc.ai[0] > 500f && base.npc.ai[0] <= 580f)
 			{
 				this.openEye = true;
+				base.npc.netUpdate = true;
 			}
-			if (this.startTimer > 580)
+			if (base.npc.ai[0] > 580f)
 			{
 				this.openEye = false;
 				this.lookAround = true;
+				base.npc.netUpdate = true;
 			}
 			if (this.beginFight)
 			{
-				this.fightTimer++;
-				if (this.fightTimer == 260)
+				base.npc.ai[1] += 1f;
+				if (base.npc.ai[1] == 260f)
 				{
 					this.lookAround = false;
-					this.attackLaser1 = true;
+					this.customAI[4] = 1f;
+					base.npc.netUpdate = true;
 				}
-				if (this.fightTimer == 520)
-				{
-					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
-					float num2 = 8f;
-					Vector2 vector2;
-					vector2..ctor(base.npc.Center.X, base.npc.Center.Y);
-					int num3 = 40;
-					int num4 = base.mod.ProjectileType("PatientBlast");
-					float num5 = (float)Math.Atan2((double)(vector2.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector2.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num5) * (double)num2 * -1.0), (float)(Math.Sin((double)num5) * (double)num2 * -1.0), num4, num3, 0f, 0, 0f, 0f);
-				}
-				if (this.fightTimer == 580)
+				if (base.npc.ai[1] == 520f)
 				{
 					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
 					float num6 = 8f;
+					Vector2 vector2;
+					vector2..ctor(base.npc.Center.X, base.npc.Center.Y);
+					int num7 = 50;
+					int num8 = base.mod.ProjectileType("PatientBlast");
+					float num9 = (float)Math.Atan2((double)(vector2.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector2.X - (player.position.X + (float)player.width * 0.5f)));
+					int num10 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num9) * (double)num6 * -1.0), (float)(Math.Sin((double)num9) * (double)num6 * -1.0), num8, num7, 0f, 0, 0f, 0f);
+					Main.projectile[num10].netUpdate = true;
+				}
+				if (base.npc.ai[1] == 580f)
+				{
+					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
+					float num11 = 8f;
 					Vector2 vector3;
 					vector3..ctor(base.npc.Center.X, base.npc.Center.Y);
-					int num7 = 40;
-					int num8 = base.mod.ProjectileType("PatientBlast");
-					float num9 = (float)Math.Atan2((double)(vector3.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector3.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector3.X, vector3.Y, (float)(Math.Cos((double)num9) * (double)num6 * -1.0), (float)(Math.Sin((double)num9) * (double)num6 * -1.0), num8, num7, 0f, 0, 0f, 0f);
+					int num12 = 50;
+					int num13 = base.mod.ProjectileType("PatientBlast");
+					float num14 = (float)Math.Atan2((double)(vector3.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector3.X - (player.position.X + (float)player.width * 0.5f)));
+					int num15 = Projectile.NewProjectile(vector3.X, vector3.Y, (float)(Math.Cos((double)num14) * (double)num11 * -1.0), (float)(Math.Sin((double)num14) * (double)num11 * -1.0), num13, num12, 0f, 0, 0f, 0f);
+					Main.projectile[num15].netUpdate = true;
 				}
-				if (this.fightTimer == 620)
+				if (base.npc.ai[1] == 620f)
 				{
 					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
-					float num10 = 8f;
+					float num16 = 8f;
 					Vector2 vector4;
 					vector4..ctor(base.npc.Center.X, base.npc.Center.Y);
-					int num11 = 40;
-					int num12 = base.mod.ProjectileType("PatientBlast");
-					float num13 = (float)Math.Atan2((double)(vector4.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector4.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector4.X, vector4.Y, (float)(Math.Cos((double)num13) * (double)num10 * -1.0), (float)(Math.Sin((double)num13) * (double)num10 * -1.0), num12, num11, 0f, 0, 0f, 0f);
+					int num17 = 50;
+					int num18 = base.mod.ProjectileType("PatientBlast");
+					float num19 = (float)Math.Atan2((double)(vector4.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector4.X - (player.position.X + (float)player.width * 0.5f)));
+					int num20 = Projectile.NewProjectile(vector4.X, vector4.Y, (float)(Math.Cos((double)num19) * (double)num16 * -1.0), (float)(Math.Sin((double)num19) * (double)num16 * -1.0), num18, num17, 0f, 0, 0f, 0f);
+					Main.projectile[num20].netUpdate = true;
 				}
-				if (this.fightTimer == 660)
+				if (base.npc.ai[1] == 660f)
 				{
 					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
-					float num14 = 8f;
+					float num21 = 8f;
 					Vector2 vector5;
 					vector5..ctor(base.npc.Center.X, base.npc.Center.Y);
-					int num15 = 40;
-					int num16 = base.mod.ProjectileType("PatientBlast");
-					float num17 = (float)Math.Atan2((double)(vector5.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector5.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector5.X, vector5.Y, (float)(Math.Cos((double)num17) * (double)num14 * -1.0), (float)(Math.Sin((double)num17) * (double)num14 * -1.0), num16, num15, 0f, 0, 0f, 0f);
+					int num22 = 50;
+					int num23 = base.mod.ProjectileType("PatientBlast");
+					float num24 = (float)Math.Atan2((double)(vector5.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector5.X - (player.position.X + (float)player.width * 0.5f)));
+					int num25 = Projectile.NewProjectile(vector5.X, vector5.Y, (float)(Math.Cos((double)num24) * (double)num21 * -1.0), (float)(Math.Sin((double)num24) * (double)num21 * -1.0), num23, num22, 0f, 0, 0f, 0f);
+					Main.projectile[num25].netUpdate = true;
 				}
-				if (this.fightTimer == 820)
+				if (base.npc.ai[1] == 820f)
 				{
 					this.lookAround = false;
-					this.attackLaser2 = true;
+					this.customAI[4] = 2f;
+					base.npc.netUpdate = true;
 				}
-				if (this.fightTimer == 1180)
-				{
-					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
-					float num18 = 8f;
-					Vector2 vector6;
-					vector6..ctor(base.npc.Center.X, base.npc.Center.Y);
-					int num19 = 40;
-					int num20 = base.mod.ProjectileType("PatientBlast");
-					float num21 = (float)Math.Atan2((double)(vector6.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector6.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector6.X, vector6.Y, (float)(Math.Cos((double)num21) * (double)num18 * -1.0), (float)(Math.Sin((double)num21) * (double)num18 * -1.0), num20, num19, 0f, 0, 0f, 0f);
-				}
-				if (this.fightTimer == 1240)
-				{
-					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
-					float num22 = 8f;
-					Vector2 vector7;
-					vector7..ctor(base.npc.Center.X, base.npc.Center.Y);
-					int num23 = 40;
-					int num24 = base.mod.ProjectileType("PatientBlast");
-					float num25 = (float)Math.Atan2((double)(vector7.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector7.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector7.X, vector7.Y, (float)(Math.Cos((double)num25) * (double)num22 * -1.0), (float)(Math.Sin((double)num25) * (double)num22 * -1.0), num24, num23, 0f, 0, 0f, 0f);
-				}
-				if (this.fightTimer == 1300)
+				if (base.npc.ai[1] == 1180f)
 				{
 					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
 					float num26 = 8f;
-					Vector2 vector8;
-					vector8..ctor(base.npc.Center.X, base.npc.Center.Y);
-					int num27 = 40;
+					Vector2 vector6;
+					vector6..ctor(base.npc.Center.X, base.npc.Center.Y);
+					int num27 = 50;
 					int num28 = base.mod.ProjectileType("PatientBlast");
-					float num29 = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)num29) * (double)num26 * -1.0), (float)(Math.Sin((double)num29) * (double)num26 * -1.0), num28, num27, 0f, 0, 0f, 0f);
+					float num29 = (float)Math.Atan2((double)(vector6.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector6.X - (player.position.X + (float)player.width * 0.5f)));
+					int num30 = Projectile.NewProjectile(vector6.X, vector6.Y, (float)(Math.Cos((double)num29) * (double)num26 * -1.0), (float)(Math.Sin((double)num29) * (double)num26 * -1.0), num28, num27, 0f, 0, 0f, 0f);
+					Main.projectile[num30].netUpdate = true;
 				}
-				if (this.fightTimer == 1360)
+				if (base.npc.ai[1] == 1240f)
 				{
 					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
-					float num30 = 8f;
+					float num31 = 8f;
+					Vector2 vector7;
+					vector7..ctor(base.npc.Center.X, base.npc.Center.Y);
+					int num32 = 50;
+					int num33 = base.mod.ProjectileType("PatientBlast");
+					float num34 = (float)Math.Atan2((double)(vector7.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector7.X - (player.position.X + (float)player.width * 0.5f)));
+					int num35 = Projectile.NewProjectile(vector7.X, vector7.Y, (float)(Math.Cos((double)num34) * (double)num31 * -1.0), (float)(Math.Sin((double)num34) * (double)num31 * -1.0), num33, num32, 0f, 0, 0f, 0f);
+					Main.projectile[num35].netUpdate = true;
+				}
+				if (base.npc.ai[1] == 1300f)
+				{
+					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
+					float num36 = 8f;
+					Vector2 vector8;
+					vector8..ctor(base.npc.Center.X, base.npc.Center.Y);
+					int num37 = 50;
+					int num38 = base.mod.ProjectileType("PatientBlast");
+					float num39 = (float)Math.Atan2((double)(vector8.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector8.X - (player.position.X + (float)player.width * 0.5f)));
+					int num40 = Projectile.NewProjectile(vector8.X, vector8.Y, (float)(Math.Cos((double)num39) * (double)num36 * -1.0), (float)(Math.Sin((double)num39) * (double)num36 * -1.0), num38, num37, 0f, 0, 0f, 0f);
+					Main.projectile[num40].netUpdate = true;
+				}
+				if (base.npc.ai[1] == 1360f)
+				{
+					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
+					float num41 = 8f;
 					Vector2 vector9;
 					vector9..ctor(base.npc.Center.X, base.npc.Center.Y);
-					int num31 = 40;
-					int num32 = base.mod.ProjectileType("PatientBlast");
-					float num33 = (float)Math.Atan2((double)(vector9.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector9.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)num33) * (double)num30 * -1.0), (float)(Math.Sin((double)num33) * (double)num30 * -1.0), num32, num31, 0f, 0, 0f, 0f);
+					int num42 = 50;
+					int num43 = base.mod.ProjectileType("PatientBlast");
+					float num44 = (float)Math.Atan2((double)(vector9.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector9.X - (player.position.X + (float)player.width * 0.5f)));
+					int num45 = Projectile.NewProjectile(vector9.X, vector9.Y, (float)(Math.Cos((double)num44) * (double)num41 * -1.0), (float)(Math.Sin((double)num44) * (double)num41 * -1.0), num43, num42, 0f, 0, 0f, 0f);
+					Main.projectile[num45].netUpdate = true;
 				}
-				if (this.fightTimer >= 1480)
+				if (base.npc.ai[1] >= 1480f)
 				{
-					this.fightTimer = 180;
+					base.npc.ai[1] = 180f;
+					base.npc.netUpdate = true;
 				}
 				if (NPC.CountNPCS(base.mod.NPCType("HiveGrowth2")) <= 1 && Main.rand.Next(300) == 0)
 				{
 					Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
-					NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth2"), 0, 0f, 0f, 0f, 0f, 255);
+					int num46 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth2"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[num46].netUpdate = true;
 				}
 			}
-			if (base.npc.life <= 550000 && !this.phase2Done && !this.laserBeam)
+			if (base.npc.life < (int)((float)base.npc.lifeMax * 0.6f) && !this.phase2Done && !this.laserBeam)
 			{
 				this.phase2 = true;
+				base.npc.netUpdate = true;
 			}
 			if (this.phase2)
 			{
-				this.fightTimer = 0;
+				base.npc.ai[1] = 0f;
 				this.beginFight = false;
-				this.fightTimer2++;
-				if (this.fightTimer2 == 60)
+				base.npc.ai[2] += 1f;
+				if (base.npc.ai[2] == 60f)
 				{
 					this.blink = true;
 					this.lookAround = false;
 					Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
-					NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth"), 0, 0f, 0f, 0f, 0f, 255);
+					int num47 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[num47].netUpdate = true;
 				}
-				if (this.fightTimer2 == 80)
+				if (base.npc.ai[2] == 80f)
 				{
 					Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
-					NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth"), 0, 0f, 0f, 0f, 0f, 255);
+					int num48 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[num48].netUpdate = true;
 				}
-				if (this.fightTimer2 == 95)
+				if (base.npc.ai[2] == 95f)
 				{
 					this.blink = false;
 					this.lookAround = true;
 					Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
-					NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth"), 0, 0f, 0f, 0f, 0f, 255);
+					int num49 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[num49].netUpdate = true;
 				}
-				if (this.fightTimer2 == 110)
+				if (base.npc.ai[2] == 110f)
 				{
 					Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
-					NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth"), 0, 0f, 0f, 0f, 0f, 255);
+					int num50 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[num50].netUpdate = true;
 				}
-				if (this.fightTimer2 == 600)
+				if (base.npc.ai[2] == 600f)
 				{
 					this.lookAround = false;
-					this.attackLaser3 = true;
+					this.customAI[4] = 3f;
+					base.npc.netUpdate = true;
 				}
-				if (this.fightTimer2 == 1350)
+				if (base.npc.ai[2] == 1350f)
 				{
 					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
-					float num34 = 8f;
+					float num51 = 8f;
 					Vector2 vector10;
 					vector10..ctor(base.npc.Center.X, base.npc.Center.Y);
-					int num35 = 40;
-					int num36 = base.mod.ProjectileType("PatientBlast");
-					float num37 = (float)Math.Atan2((double)(vector10.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector10.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)num37) * (double)num34 * -1.0), (float)(Math.Sin((double)num37) * (double)num34 * -1.0), num36, num35, 0f, 0, 0f, 0f);
-					Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)num37) * (double)num34 * -1.0) + -1f, (float)(Math.Sin((double)num37) * (double)num34 * -1.0) + -1f, num36, num35, 0f, 0, 0f, 0f);
-					Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)num37) * (double)num34 * -1.0) + 1f, (float)(Math.Sin((double)num37) * (double)num34 * -1.0) + 1f, num36, num35, 0f, 0, 0f, 0f);
+					int num52 = 50;
+					int num53 = base.mod.ProjectileType("PatientBlast");
+					float num54 = (float)Math.Atan2((double)(vector10.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector10.X - (player.position.X + (float)player.width * 0.5f)));
+					int num55 = Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)num54) * (double)num51 * -1.0), (float)(Math.Sin((double)num54) * (double)num51 * -1.0), num53, num52, 0f, 0, 0f, 0f);
+					int num56 = Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)num54) * (double)num51 * -1.0) + -1f, (float)(Math.Sin((double)num54) * (double)num51 * -1.0) + -1f, num53, num52, 0f, 0, 0f, 0f);
+					int num57 = Projectile.NewProjectile(vector10.X, vector10.Y, (float)(Math.Cos((double)num54) * (double)num51 * -1.0) + 1f, (float)(Math.Sin((double)num54) * (double)num51 * -1.0) + 1f, num53, num52, 0f, 0, 0f, 0f);
+					Main.projectile[num55].netUpdate = true;
+					Main.projectile[num56].netUpdate = true;
+					Main.projectile[num57].netUpdate = true;
 				}
-				if (this.fightTimer2 == 1450)
-				{
-					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
-					float num38 = 8f;
-					Vector2 vector11;
-					vector11..ctor(base.npc.Center.X, base.npc.Center.Y);
-					int num39 = 40;
-					int num40 = base.mod.ProjectileType("PatientBlast");
-					float num41 = (float)Math.Atan2((double)(vector11.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector11.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector11.X, vector11.Y, (float)(Math.Cos((double)num41) * (double)num38 * -1.0), (float)(Math.Sin((double)num41) * (double)num38 * -1.0), num40, num39, 0f, 0, 0f, 0f);
-					Projectile.NewProjectile(vector11.X, vector11.Y, (float)(Math.Cos((double)num41) * (double)num38 * -1.0) + -1f, (float)(Math.Sin((double)num41) * (double)num38 * -1.0) + -1f, num40, num39, 0f, 0, 0f, 0f);
-					Projectile.NewProjectile(vector11.X, vector11.Y, (float)(Math.Cos((double)num41) * (double)num38 * -1.0) + 1f, (float)(Math.Sin((double)num41) * (double)num38 * -1.0) + 1f, num40, num39, 0f, 0, 0f, 0f);
-				}
-				if (this.fightTimer2 == 1550)
-				{
-					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
-					float num42 = 8f;
-					Vector2 vector12;
-					vector12..ctor(base.npc.Center.X, base.npc.Center.Y);
-					int num43 = 40;
-					int num44 = base.mod.ProjectileType("PatientBlast");
-					float num45 = (float)Math.Atan2((double)(vector12.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector12.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector12.X, vector12.Y, (float)(Math.Cos((double)num45) * (double)num42 * -1.0), (float)(Math.Sin((double)num45) * (double)num42 * -1.0), num44, num43, 0f, 0, 0f, 0f);
-					Projectile.NewProjectile(vector12.X, vector12.Y, (float)(Math.Cos((double)num45) * (double)num42 * -1.0) + -1f, (float)(Math.Sin((double)num45) * (double)num42 * -1.0) + -1f, num44, num43, 0f, 0, 0f, 0f);
-					Projectile.NewProjectile(vector12.X, vector12.Y, (float)(Math.Cos((double)num45) * (double)num42 * -1.0) + 1f, (float)(Math.Sin((double)num45) * (double)num42 * -1.0) + 1f, num44, num43, 0f, 0, 0f, 0f);
-				}
-				if (this.fightTimer2 == 1800)
-				{
-					this.lookAround = false;
-					this.attackLaser1 = true;
-				}
-				if (this.fightTimer2 == 1920)
-				{
-					this.lookAround = false;
-					this.attackLaser2 = true;
-				}
-				if (this.fightTimer2 == 2300)
-				{
-					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
-					float num46 = 8f;
-					Vector2 vector13;
-					vector13..ctor(base.npc.Center.X, base.npc.Center.Y);
-					int num47 = 40;
-					int num48 = base.mod.ProjectileType("PatientBlast");
-					float num49 = (float)Math.Atan2((double)(vector13.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector13.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector13.X, vector13.Y, (float)(Math.Cos((double)num49) * (double)num46 * -1.0), (float)(Math.Sin((double)num49) * (double)num46 * -1.0), num48, num47, 0f, 0, 0f, 0f);
-					Projectile.NewProjectile(vector13.X, vector13.Y, (float)(Math.Cos((double)num49) * (double)num46 * -1.0) + -1f, (float)(Math.Sin((double)num49) * (double)num46 * -1.0) + -1f, num48, num47, 0f, 0, 0f, 0f);
-					Projectile.NewProjectile(vector13.X, vector13.Y, (float)(Math.Cos((double)num49) * (double)num46 * -1.0) + 1f, (float)(Math.Sin((double)num49) * (double)num46 * -1.0) + 1f, num48, num47, 0f, 0, 0f, 0f);
-				}
-				if (this.fightTimer2 == 2360)
-				{
-					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
-					float num50 = 8f;
-					Vector2 vector14;
-					vector14..ctor(base.npc.Center.X, base.npc.Center.Y);
-					int num51 = 40;
-					int num52 = base.mod.ProjectileType("PatientBlast");
-					float num53 = (float)Math.Atan2((double)(vector14.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector14.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector14.X, vector14.Y, (float)(Math.Cos((double)num53) * (double)num50 * -1.0), (float)(Math.Sin((double)num53) * (double)num50 * -1.0), num52, num51, 0f, 0, 0f, 0f);
-					Projectile.NewProjectile(vector14.X, vector14.Y, (float)(Math.Cos((double)num53) * (double)num50 * -1.0) + -1f, (float)(Math.Sin((double)num53) * (double)num50 * -1.0) + -1f, num52, num51, 0f, 0, 0f, 0f);
-					Projectile.NewProjectile(vector14.X, vector14.Y, (float)(Math.Cos((double)num53) * (double)num50 * -1.0) + 1f, (float)(Math.Sin((double)num53) * (double)num50 * -1.0) + 1f, num52, num51, 0f, 0, 0f, 0f);
-				}
-				if (this.fightTimer2 == 2420)
-				{
-					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
-					float num54 = 8f;
-					Vector2 vector15;
-					vector15..ctor(base.npc.Center.X, base.npc.Center.Y);
-					int num55 = 40;
-					int num56 = base.mod.ProjectileType("PatientBlast");
-					float num57 = (float)Math.Atan2((double)(vector15.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector15.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector15.X, vector15.Y, (float)(Math.Cos((double)num57) * (double)num54 * -1.0), (float)(Math.Sin((double)num57) * (double)num54 * -1.0), num56, num55, 0f, 0, 0f, 0f);
-					Projectile.NewProjectile(vector15.X, vector15.Y, (float)(Math.Cos((double)num57) * (double)num54 * -1.0) + -1f, (float)(Math.Sin((double)num57) * (double)num54 * -1.0) + -1f, num56, num55, 0f, 0, 0f, 0f);
-					Projectile.NewProjectile(vector15.X, vector15.Y, (float)(Math.Cos((double)num57) * (double)num54 * -1.0) + 1f, (float)(Math.Sin((double)num57) * (double)num54 * -1.0) + 1f, num56, num55, 0f, 0, 0f, 0f);
-				}
-				if (this.fightTimer2 >= 2550)
-				{
-					this.fightTimer2 = 500;
-				}
-				if (NPC.CountNPCS(base.mod.NPCType("HiveGrowth2")) <= 1 && Main.rand.Next(300) == 0)
-				{
-					Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
-					NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth2"), 0, 0f, 0f, 0f, 0f, 255);
-				}
-			}
-			if (base.npc.life <= 350000 && !this.phase3Done && !this.laserBeam)
-			{
-				this.phase3 = true;
-				this.phase2Done = true;
-			}
-			if (this.phase3)
-			{
-				this.fightTimer = 0;
-				this.fightTimer2 = 0;
-				this.phase2Done = true;
-				this.phase2 = false;
-				this.fightTimer3++;
-				if (this.fightTimer3 == 35)
-				{
-					this.blink = true;
-					this.lookAround = false;
-					Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
-					NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth"), 0, 0f, 0f, 0f, 0f, 255);
-				}
-				if (this.fightTimer3 == 60)
-				{
-					this.blink = true;
-					this.lookAround = false;
-					Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
-					NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth"), 0, 0f, 0f, 0f, 0f, 255);
-				}
-				if (this.fightTimer3 == 80)
-				{
-					Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
-					NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth"), 0, 0f, 0f, 0f, 0f, 255);
-				}
-				if (this.fightTimer3 == 95)
-				{
-					this.blink = false;
-					this.lookAround = true;
-					Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
-					NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth"), 0, 0f, 0f, 0f, 0f, 255);
-				}
-				if (this.fightTimer3 == 110)
-				{
-					Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
-					NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth"), 0, 0f, 0f, 0f, 0f, 255);
-				}
-				if (this.fightTimer3 == 700)
-				{
-					this.lookAround = false;
-					this.attackLaser4 = true;
-				}
-				if (this.fightTimer3 == 1290)
+				if (base.npc.ai[2] == 1450f)
 				{
 					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
 					float num58 = 8f;
-					Vector2 vector16;
-					vector16..ctor(base.npc.Center.X, base.npc.Center.Y);
-					int num59 = 40;
+					Vector2 vector11;
+					vector11..ctor(base.npc.Center.X, base.npc.Center.Y);
+					int num59 = 50;
 					int num60 = base.mod.ProjectileType("PatientBlast");
-					float num61 = (float)Math.Atan2((double)(vector16.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector16.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector16.X, vector16.Y, (float)(Math.Cos((double)num61) * (double)num58 * -1.0), (float)(Math.Sin((double)num61) * (double)num58 * -1.0), num60, num59, 0f, 0, 0f, 0f);
+					float num61 = (float)Math.Atan2((double)(vector11.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector11.X - (player.position.X + (float)player.width * 0.5f)));
+					int num62 = Projectile.NewProjectile(vector11.X, vector11.Y, (float)(Math.Cos((double)num61) * (double)num58 * -1.0), (float)(Math.Sin((double)num61) * (double)num58 * -1.0), num60, num59, 0f, 0, 0f, 0f);
+					int num63 = Projectile.NewProjectile(vector11.X, vector11.Y, (float)(Math.Cos((double)num61) * (double)num58 * -1.0) + -1f, (float)(Math.Sin((double)num61) * (double)num58 * -1.0) + -1f, num60, num59, 0f, 0, 0f, 0f);
+					int num64 = Projectile.NewProjectile(vector11.X, vector11.Y, (float)(Math.Cos((double)num61) * (double)num58 * -1.0) + 1f, (float)(Math.Sin((double)num61) * (double)num58 * -1.0) + 1f, num60, num59, 0f, 0, 0f, 0f);
+					Main.projectile[num62].netUpdate = true;
+					Main.projectile[num63].netUpdate = true;
+					Main.projectile[num64].netUpdate = true;
 				}
-				if (this.fightTimer3 == 1340)
+				if (base.npc.ai[2] == 1550f)
 				{
 					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
-					float num62 = 8f;
-					Vector2 vector17;
-					vector17..ctor(base.npc.Center.X, base.npc.Center.Y);
-					int num63 = 40;
-					int num64 = base.mod.ProjectileType("PatientBlast");
-					float num65 = (float)Math.Atan2((double)(vector17.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector17.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector17.X, vector17.Y, (float)(Math.Cos((double)num65) * (double)num62 * -1.0), (float)(Math.Sin((double)num65) * (double)num62 * -1.0), num64, num63, 0f, 0, 0f, 0f);
+					float num65 = 8f;
+					Vector2 vector12;
+					vector12..ctor(base.npc.Center.X, base.npc.Center.Y);
+					int num66 = 50;
+					int num67 = base.mod.ProjectileType("PatientBlast");
+					float num68 = (float)Math.Atan2((double)(vector12.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector12.X - (player.position.X + (float)player.width * 0.5f)));
+					int num69 = Projectile.NewProjectile(vector12.X, vector12.Y, (float)(Math.Cos((double)num68) * (double)num65 * -1.0), (float)(Math.Sin((double)num68) * (double)num65 * -1.0), num67, num66, 0f, 0, 0f, 0f);
+					int num70 = Projectile.NewProjectile(vector12.X, vector12.Y, (float)(Math.Cos((double)num68) * (double)num65 * -1.0) + -1f, (float)(Math.Sin((double)num68) * (double)num65 * -1.0) + -1f, num67, num66, 0f, 0, 0f, 0f);
+					int num71 = Projectile.NewProjectile(vector12.X, vector12.Y, (float)(Math.Cos((double)num68) * (double)num65 * -1.0) + 1f, (float)(Math.Sin((double)num68) * (double)num65 * -1.0) + 1f, num67, num66, 0f, 0, 0f, 0f);
+					Main.projectile[num69].netUpdate = true;
+					Main.projectile[num70].netUpdate = true;
+					Main.projectile[num71].netUpdate = true;
 				}
-				if (this.fightTimer3 == 1380)
-				{
-					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
-					float num66 = 8f;
-					Vector2 vector18;
-					vector18..ctor(base.npc.Center.X, base.npc.Center.Y);
-					int num67 = 40;
-					int num68 = base.mod.ProjectileType("PatientBlast");
-					float num69 = (float)Math.Atan2((double)(vector18.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector18.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector18.X, vector18.Y, (float)(Math.Cos((double)num69) * (double)num66 * -1.0), (float)(Math.Sin((double)num69) * (double)num66 * -1.0), num68, num67, 0f, 0, 0f, 0f);
-				}
-				if (this.fightTimer3 == 1410)
-				{
-					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
-					float num70 = 8f;
-					Vector2 vector19;
-					vector19..ctor(base.npc.Center.X, base.npc.Center.Y);
-					int num71 = 40;
-					int num72 = base.mod.ProjectileType("PatientBlast");
-					float num73 = (float)Math.Atan2((double)(vector19.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector19.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector19.X, vector19.Y, (float)(Math.Cos((double)num73) * (double)num70 * -1.0), (float)(Math.Sin((double)num73) * (double)num70 * -1.0), num72, num71, 0f, 0, 0f, 0f);
-				}
-				if (this.fightTimer3 == 1430)
-				{
-					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
-					float num74 = 8f;
-					Vector2 vector20;
-					vector20..ctor(base.npc.Center.X, base.npc.Center.Y);
-					int num75 = 40;
-					int num76 = base.mod.ProjectileType("PatientBlast");
-					float num77 = (float)Math.Atan2((double)(vector20.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector20.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector20.X, vector20.Y, (float)(Math.Cos((double)num77) * (double)num74 * -1.0), (float)(Math.Sin((double)num77) * (double)num74 * -1.0), num76, num75, 0f, 0, 0f, 0f);
-				}
-				if (this.fightTimer3 == 1600)
+				if (base.npc.ai[2] == 1800f)
 				{
 					this.lookAround = false;
-					this.attackLaser2 = true;
+					this.customAI[4] = 1f;
+					base.npc.netUpdate = true;
 				}
-				if (this.fightTimer3 == 1790)
+				if (base.npc.ai[2] == 1920f)
 				{
 					this.lookAround = false;
-					this.attackLaser1 = true;
+					this.customAI[4] = 2f;
+					base.npc.netUpdate = true;
 				}
-				if (this.fightTimer3 == 1980)
-				{
-					this.lookAround = false;
-					this.attackLaser2 = true;
-				}
-				if (this.fightTimer3 == 2300)
+				if (base.npc.ai[2] == 2300f)
 				{
 					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
-					float num78 = 8f;
-					Vector2 vector21;
-					vector21..ctor(base.npc.Center.X, base.npc.Center.Y);
-					int num79 = 40;
-					int num80 = base.mod.ProjectileType("PatientBlast");
-					float num81 = (float)Math.Atan2((double)(vector21.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector21.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector21.X, vector21.Y, (float)(Math.Cos((double)num81) * (double)num78 * -1.0), (float)(Math.Sin((double)num81) * (double)num78 * -1.0), num80, num79, 0f, 0, 0f, 0f);
+					float num72 = 8f;
+					Vector2 vector13;
+					vector13..ctor(base.npc.Center.X, base.npc.Center.Y);
+					int num73 = 50;
+					int num74 = base.mod.ProjectileType("PatientBlast");
+					float num75 = (float)Math.Atan2((double)(vector13.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector13.X - (player.position.X + (float)player.width * 0.5f)));
+					int num76 = Projectile.NewProjectile(vector13.X, vector13.Y, (float)(Math.Cos((double)num75) * (double)num72 * -1.0), (float)(Math.Sin((double)num75) * (double)num72 * -1.0), num74, num73, 0f, 0, 0f, 0f);
+					int num77 = Projectile.NewProjectile(vector13.X, vector13.Y, (float)(Math.Cos((double)num75) * (double)num72 * -1.0) + -1f, (float)(Math.Sin((double)num75) * (double)num72 * -1.0) + -1f, num74, num73, 0f, 0, 0f, 0f);
+					int num78 = Projectile.NewProjectile(vector13.X, vector13.Y, (float)(Math.Cos((double)num75) * (double)num72 * -1.0) + 1f, (float)(Math.Sin((double)num75) * (double)num72 * -1.0) + 1f, num74, num73, 0f, 0, 0f, 0f);
+					Main.projectile[num76].netUpdate = true;
+					Main.projectile[num77].netUpdate = true;
+					Main.projectile[num78].netUpdate = true;
 				}
-				if (this.fightTimer3 == 2400)
+				if (base.npc.ai[2] == 2360f)
 				{
 					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
-					float num82 = 8f;
-					Vector2 vector22;
-					vector22..ctor(base.npc.Center.X, base.npc.Center.Y);
-					int num83 = 40;
-					int num84 = base.mod.ProjectileType("PatientBlast");
-					float num85 = (float)Math.Atan2((double)(vector22.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector22.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector22.X, vector22.Y, (float)(Math.Cos((double)num85) * (double)num82 * -1.0), (float)(Math.Sin((double)num85) * (double)num82 * -1.0), num84, num83, 0f, 0, 0f, 0f);
+					float num79 = 8f;
+					Vector2 vector14;
+					vector14..ctor(base.npc.Center.X, base.npc.Center.Y);
+					int num80 = 50;
+					int num81 = base.mod.ProjectileType("PatientBlast");
+					float num82 = (float)Math.Atan2((double)(vector14.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector14.X - (player.position.X + (float)player.width * 0.5f)));
+					int num83 = Projectile.NewProjectile(vector14.X, vector14.Y, (float)(Math.Cos((double)num82) * (double)num79 * -1.0), (float)(Math.Sin((double)num82) * (double)num79 * -1.0), num81, num80, 0f, 0, 0f, 0f);
+					int num84 = Projectile.NewProjectile(vector14.X, vector14.Y, (float)(Math.Cos((double)num82) * (double)num79 * -1.0) + -1f, (float)(Math.Sin((double)num82) * (double)num79 * -1.0) + -1f, num81, num80, 0f, 0, 0f, 0f);
+					int num85 = Projectile.NewProjectile(vector14.X, vector14.Y, (float)(Math.Cos((double)num82) * (double)num79 * -1.0) + 1f, (float)(Math.Sin((double)num82) * (double)num79 * -1.0) + 1f, num81, num80, 0f, 0, 0f, 0f);
+					Main.projectile[num83].netUpdate = true;
+					Main.projectile[num84].netUpdate = true;
+					Main.projectile[num85].netUpdate = true;
 				}
-				if (this.fightTimer3 == 2500)
+				if (base.npc.ai[2] == 2420f)
 				{
 					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
 					float num86 = 8f;
-					Vector2 vector23;
-					vector23..ctor(base.npc.Center.X, base.npc.Center.Y);
-					int num87 = 40;
+					Vector2 vector15;
+					vector15..ctor(base.npc.Center.X, base.npc.Center.Y);
+					int num87 = 50;
 					int num88 = base.mod.ProjectileType("PatientBlast");
-					float num89 = (float)Math.Atan2((double)(vector23.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector23.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector23.X, vector23.Y, (float)(Math.Cos((double)num89) * (double)num86 * -1.0), (float)(Math.Sin((double)num89) * (double)num86 * -1.0), num88, num87, 0f, 0, 0f, 0f);
+					float num89 = (float)Math.Atan2((double)(vector15.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector15.X - (player.position.X + (float)player.width * 0.5f)));
+					int num90 = Projectile.NewProjectile(vector15.X, vector15.Y, (float)(Math.Cos((double)num89) * (double)num86 * -1.0), (float)(Math.Sin((double)num89) * (double)num86 * -1.0), num88, num87, 0f, 0, 0f, 0f);
+					int num91 = Projectile.NewProjectile(vector15.X, vector15.Y, (float)(Math.Cos((double)num89) * (double)num86 * -1.0) + -1f, (float)(Math.Sin((double)num89) * (double)num86 * -1.0) + -1f, num88, num87, 0f, 0, 0f, 0f);
+					int num92 = Projectile.NewProjectile(vector15.X, vector15.Y, (float)(Math.Cos((double)num89) * (double)num86 * -1.0) + 1f, (float)(Math.Sin((double)num89) * (double)num86 * -1.0) + 1f, num88, num87, 0f, 0, 0f, 0f);
+					Main.projectile[num90].netUpdate = true;
+					Main.projectile[num91].netUpdate = true;
+					Main.projectile[num92].netUpdate = true;
 				}
-				if (this.fightTimer3 >= 2650)
+				if (base.npc.ai[2] >= 2550f)
 				{
-					this.fightTimer3 = 500;
+					base.npc.ai[2] = 500f;
+					base.npc.netUpdate = true;
 				}
 				if (NPC.CountNPCS(base.mod.NPCType("HiveGrowth2")) <= 1 && Main.rand.Next(300) == 0)
 				{
 					Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
-					NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth2"), 0, 0f, 0f, 0f, 0f, 255);
+					int num93 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth2"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[num93].netUpdate = true;
 				}
 			}
-			if (this.attackLaser1)
+			if (base.npc.life < (int)((float)base.npc.lifeMax * 0.3f) && !this.phase3Done && !this.laserBeam)
+			{
+				this.phase3 = true;
+				this.phase2Done = true;
+				base.npc.netUpdate = true;
+			}
+			if (this.phase3)
+			{
+				base.npc.ai[1] = 0f;
+				base.npc.ai[2] = 0f;
+				this.phase2Done = true;
+				this.phase2 = false;
+				base.npc.ai[3] += 1f;
+				if (base.npc.ai[3] == 35f)
+				{
+					this.blink = true;
+					this.lookAround = false;
+					Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
+					int num94 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[num94].netUpdate = true;
+				}
+				if (base.npc.ai[3] == 60f)
+				{
+					this.blink = true;
+					this.lookAround = false;
+					Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
+					int num95 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[num95].netUpdate = true;
+				}
+				if (base.npc.ai[3] == 80f)
+				{
+					Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
+					int num96 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[num96].netUpdate = true;
+				}
+				if (base.npc.ai[3] == 95f)
+				{
+					this.blink = false;
+					this.lookAround = true;
+					Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
+					int num97 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[num97].netUpdate = true;
+				}
+				if (base.npc.ai[3] == 110f)
+				{
+					Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
+					int num98 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[num98].netUpdate = true;
+				}
+				if (base.npc.ai[3] == 700f)
+				{
+					this.lookAround = false;
+					this.customAI[4] = 4f;
+					base.npc.netUpdate = true;
+				}
+				if (base.npc.ai[3] == 1290f)
+				{
+					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
+					float num99 = 8f;
+					Vector2 vector16;
+					vector16..ctor(base.npc.Center.X, base.npc.Center.Y);
+					int num100 = 50;
+					int num101 = base.mod.ProjectileType("PatientBlast");
+					float num102 = (float)Math.Atan2((double)(vector16.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector16.X - (player.position.X + (float)player.width * 0.5f)));
+					int num103 = Projectile.NewProjectile(vector16.X, vector16.Y, (float)(Math.Cos((double)num102) * (double)num99 * -1.0), (float)(Math.Sin((double)num102) * (double)num99 * -1.0), num101, num100, 0f, 0, 0f, 0f);
+					Main.projectile[num103].netUpdate = true;
+				}
+				if (base.npc.ai[3] == 1340f)
+				{
+					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
+					float num104 = 8f;
+					Vector2 vector17;
+					vector17..ctor(base.npc.Center.X, base.npc.Center.Y);
+					int num105 = 50;
+					int num106 = base.mod.ProjectileType("PatientBlast");
+					float num107 = (float)Math.Atan2((double)(vector17.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector17.X - (player.position.X + (float)player.width * 0.5f)));
+					int num108 = Projectile.NewProjectile(vector17.X, vector17.Y, (float)(Math.Cos((double)num107) * (double)num104 * -1.0), (float)(Math.Sin((double)num107) * (double)num104 * -1.0), num106, num105, 0f, 0, 0f, 0f);
+					Main.projectile[num108].netUpdate = true;
+				}
+				if (base.npc.ai[3] == 1380f)
+				{
+					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
+					float num109 = 8f;
+					Vector2 vector18;
+					vector18..ctor(base.npc.Center.X, base.npc.Center.Y);
+					int num110 = 50;
+					int num111 = base.mod.ProjectileType("PatientBlast");
+					float num112 = (float)Math.Atan2((double)(vector18.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector18.X - (player.position.X + (float)player.width * 0.5f)));
+					int num113 = Projectile.NewProjectile(vector18.X, vector18.Y, (float)(Math.Cos((double)num112) * (double)num109 * -1.0), (float)(Math.Sin((double)num112) * (double)num109 * -1.0), num111, num110, 0f, 0, 0f, 0f);
+					Main.projectile[num113].netUpdate = true;
+				}
+				if (base.npc.ai[3] == 1410f)
+				{
+					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
+					float num114 = 8f;
+					Vector2 vector19;
+					vector19..ctor(base.npc.Center.X, base.npc.Center.Y);
+					int num115 = 50;
+					int num116 = base.mod.ProjectileType("PatientBlast");
+					float num117 = (float)Math.Atan2((double)(vector19.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector19.X - (player.position.X + (float)player.width * 0.5f)));
+					int num118 = Projectile.NewProjectile(vector19.X, vector19.Y, (float)(Math.Cos((double)num117) * (double)num114 * -1.0), (float)(Math.Sin((double)num117) * (double)num114 * -1.0), num116, num115, 0f, 0, 0f, 0f);
+					Main.projectile[num118].netUpdate = true;
+				}
+				if (base.npc.ai[3] == 1430f)
+				{
+					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
+					float num119 = 8f;
+					Vector2 vector20;
+					vector20..ctor(base.npc.Center.X, base.npc.Center.Y);
+					int num120 = 50;
+					int num121 = base.mod.ProjectileType("PatientBlast");
+					float num122 = (float)Math.Atan2((double)(vector20.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector20.X - (player.position.X + (float)player.width * 0.5f)));
+					int num123 = Projectile.NewProjectile(vector20.X, vector20.Y, (float)(Math.Cos((double)num122) * (double)num119 * -1.0), (float)(Math.Sin((double)num122) * (double)num119 * -1.0), num121, num120, 0f, 0, 0f, 0f);
+					Main.projectile[num123].netUpdate = true;
+				}
+				if (base.npc.ai[3] == 1600f)
+				{
+					this.lookAround = false;
+					this.customAI[4] = 2f;
+					base.npc.netUpdate = true;
+				}
+				if (base.npc.ai[3] == 1790f)
+				{
+					this.lookAround = false;
+					this.customAI[4] = 1f;
+					base.npc.netUpdate = true;
+				}
+				if (base.npc.ai[3] == 1980f)
+				{
+					this.lookAround = false;
+					this.customAI[4] = 2f;
+					base.npc.netUpdate = true;
+				}
+				if (base.npc.ai[3] == 2300f)
+				{
+					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
+					float num124 = 8f;
+					Vector2 vector21;
+					vector21..ctor(base.npc.Center.X, base.npc.Center.Y);
+					int num125 = 50;
+					int num126 = base.mod.ProjectileType("PatientBlast");
+					float num127 = (float)Math.Atan2((double)(vector21.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector21.X - (player.position.X + (float)player.width * 0.5f)));
+					int num128 = Projectile.NewProjectile(vector21.X, vector21.Y, (float)(Math.Cos((double)num127) * (double)num124 * -1.0), (float)(Math.Sin((double)num127) * (double)num124 * -1.0), num126, num125, 0f, 0, 0f, 0f);
+					Main.projectile[num128].netUpdate = true;
+				}
+				if (base.npc.ai[3] == 2400f)
+				{
+					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
+					float num129 = 8f;
+					Vector2 vector22;
+					vector22..ctor(base.npc.Center.X, base.npc.Center.Y);
+					int num130 = 50;
+					int num131 = base.mod.ProjectileType("PatientBlast");
+					float num132 = (float)Math.Atan2((double)(vector22.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector22.X - (player.position.X + (float)player.width * 0.5f)));
+					int num133 = Projectile.NewProjectile(vector22.X, vector22.Y, (float)(Math.Cos((double)num132) * (double)num129 * -1.0), (float)(Math.Sin((double)num132) * (double)num129 * -1.0), num131, num130, 0f, 0, 0f, 0f);
+					Main.projectile[num133].netUpdate = true;
+				}
+				if (base.npc.ai[3] == 2500f)
+				{
+					Main.PlaySound(SoundID.Item61, (int)base.npc.position.X, (int)base.npc.position.Y);
+					float num134 = 8f;
+					Vector2 vector23;
+					vector23..ctor(base.npc.Center.X, base.npc.Center.Y);
+					int num135 = 50;
+					int num136 = base.mod.ProjectileType("PatientBlast");
+					float num137 = (float)Math.Atan2((double)(vector23.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector23.X - (player.position.X + (float)player.width * 0.5f)));
+					int num138 = Projectile.NewProjectile(vector23.X, vector23.Y, (float)(Math.Cos((double)num137) * (double)num134 * -1.0), (float)(Math.Sin((double)num137) * (double)num134 * -1.0), num136, num135, 0f, 0, 0f, 0f);
+					Main.projectile[num138].netUpdate = true;
+				}
+				if (base.npc.ai[3] >= 2650f)
+				{
+					base.npc.ai[3] = 500f;
+					base.npc.netUpdate = true;
+				}
+				if (NPC.CountNPCS(base.mod.NPCType("HiveGrowth2")) <= 1 && Main.rand.Next(300) == 0)
+				{
+					Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
+					int num139 = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("HiveGrowth2"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[num139].netUpdate = true;
+				}
+			}
+			if (this.customAI[4] == 1f)
 			{
 				this.laserBeam = true;
 				this.lookAround = false;
-				this.attackLaser1Timer++;
-				if (this.attackLaser1Timer >= 0 && this.attackLaser1Timer < 83)
+				this.customAI[0] += 1f;
+				if (this.customAI[0] >= 0f && this.customAI[0] < 83f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(20f, 0f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-20f, 0f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(0f, 20f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(0f, -20f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
+					int num140 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(20f, 0f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
+					int num141 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-20f, 0f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
+					int num142 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(0f, 20f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
+					int num143 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(0f, -20f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
+					Main.projectile[num140].netUpdate = true;
+					Main.projectile[num141].netUpdate = true;
+					Main.projectile[num142].netUpdate = true;
+					Main.projectile[num143].netUpdate = true;
 				}
-				if (this.attackLaser1Timer == 2 && !Main.dedServ)
+				if (this.customAI[0] == 2f && !Main.dedServ)
 				{
 					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/MegaLaser1").WithVolume(0.9f).WithPitchVariance(0f), (int)base.npc.position.X, (int)base.npc.position.Y);
 				}
-				if (this.attackLaser1Timer >= 87 && this.attackLaser1Timer < 170)
+				if (this.customAI[0] >= 87f && this.customAI[0] < 170f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(20f, 0f), base.mod.ProjectileType("PatientLaser"), 40, 0f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-20f, 0f), base.mod.ProjectileType("PatientLaser"), 40, 0f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(0f, 20f), base.mod.ProjectileType("PatientLaser"), 40, 0f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(0f, -20f), base.mod.ProjectileType("PatientLaser"), 40, 0f, 255, 0f, 0f);
+					int num144 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(20f, 0f), base.mod.ProjectileType("PatientLaser"), 50, 0f, 255, 0f, 0f);
+					int num145 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-20f, 0f), base.mod.ProjectileType("PatientLaser"), 50, 0f, 255, 0f, 0f);
+					int num146 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(0f, 20f), base.mod.ProjectileType("PatientLaser"), 50, 0f, 255, 0f, 0f);
+					int num147 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(0f, -20f), base.mod.ProjectileType("PatientLaser"), 50, 0f, 255, 0f, 0f);
+					Main.projectile[num144].netUpdate = true;
+					Main.projectile[num145].netUpdate = true;
+					Main.projectile[num146].netUpdate = true;
+					Main.projectile[num147].netUpdate = true;
 				}
-				if (this.attackLaser1Timer >= 190)
+				if (this.customAI[0] >= 190f)
 				{
-					this.attackLaser1 = false;
+					this.customAI[4] = 0f;
 					this.laserBeam = false;
-					this.attackLaser1Timer = 0;
+					this.customAI[0] = 0f;
 					this.lookAround = true;
+					base.npc.netUpdate = true;
 				}
 			}
-			if (this.attackLaser2)
+			if (this.customAI[4] == 2f)
 			{
 				this.laserBeam = true;
 				this.lookAround = false;
-				this.attackLaser2Timer++;
-				if (this.attackLaser2Timer >= 0 && this.attackLaser2Timer < 83)
+				this.customAI[1] += 1f;
+				if (this.customAI[1] >= 0f && this.customAI[1] < 83f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(10f, 10f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-10f, 10f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-10f, -10f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(10f, -10f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
+					int num148 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(10f, 10f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
+					int num149 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-10f, 10f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
+					int num150 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-10f, -10f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
+					int num151 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(10f, -10f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
+					Main.projectile[num148].netUpdate = true;
+					Main.projectile[num149].netUpdate = true;
+					Main.projectile[num150].netUpdate = true;
+					Main.projectile[num151].netUpdate = true;
 				}
-				if (this.attackLaser2Timer == 2 && !Main.dedServ)
+				if (this.customAI[1] == 2f && !Main.dedServ)
 				{
 					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/MegaLaser1").WithVolume(0.9f).WithPitchVariance(0f), (int)base.npc.position.X, (int)base.npc.position.Y);
 				}
-				if (this.attackLaser2Timer >= 87 && this.attackLaser2Timer < 170)
+				if (this.customAI[1] >= 87f && this.customAI[1] < 170f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(10f, 10f), base.mod.ProjectileType("PatientLaser"), 40, 0f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-10f, 10f), base.mod.ProjectileType("PatientLaser"), 40, 0f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(10f, -10f), base.mod.ProjectileType("PatientLaser"), 40, 0f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-10f, -10f), base.mod.ProjectileType("PatientLaser"), 40, 0f, 255, 0f, 0f);
+					int num152 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(10f, 10f), base.mod.ProjectileType("PatientLaser"), 50, 0f, 255, 0f, 0f);
+					int num153 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-10f, 10f), base.mod.ProjectileType("PatientLaser"), 50, 0f, 255, 0f, 0f);
+					int num154 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(10f, -10f), base.mod.ProjectileType("PatientLaser"), 50, 0f, 255, 0f, 0f);
+					int num155 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-10f, -10f), base.mod.ProjectileType("PatientLaser"), 50, 0f, 255, 0f, 0f);
+					Main.projectile[num152].netUpdate = true;
+					Main.projectile[num153].netUpdate = true;
+					Main.projectile[num154].netUpdate = true;
+					Main.projectile[num155].netUpdate = true;
 				}
-				if (this.attackLaser2Timer >= 190)
+				if (this.customAI[1] >= 190f)
 				{
-					this.attackLaser2 = false;
+					this.customAI[4] = 0f;
 					this.laserBeam = false;
-					this.attackLaser2Timer = 0;
+					this.customAI[1] = 0f;
 					this.lookAround = true;
+					base.npc.netUpdate = true;
 				}
 			}
-			if (this.attackLaser3)
+			if (this.customAI[4] == 3f)
 			{
 				this.laserBeam = true;
 				this.lookAround = false;
-				this.attackLaser3Timer++;
-				if (this.attackLaser3Timer >= 0 && this.attackLaser3Timer < 83)
+				this.customAI[2] += 1f;
+				if (this.customAI[2] >= 0f && this.customAI[2] < 83f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(0f, -10f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
+					int num156 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(0f, -10f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
+					Main.projectile[num156].netUpdate = true;
 				}
-				if (this.attackLaser3Timer == 2 && !Main.dedServ)
+				if (this.customAI[2] == 2f && !Main.dedServ)
 				{
 					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/MegaLaser1").WithVolume(0.5f).WithPitchVariance(0f), (int)base.npc.position.X, (int)base.npc.position.Y);
 				}
-				if (this.attackLaser3Timer >= 87 && this.attackLaser3Timer < 170)
+				if (this.customAI[2] >= 87f && this.customAI[2] < 170f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(0f, -10f), base.mod.ProjectileType("PatientLaser"), 40, 0f, 255, 0f, 0f);
+					int num157 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(0f, -10f), base.mod.ProjectileType("PatientLaser"), 50, 0f, 255, 0f, 0f);
+					Main.projectile[num157].netUpdate = true;
 				}
-				if (this.attackLaser3Timer >= 60 && this.attackLaser3Timer < 143)
+				if (this.customAI[2] >= 60f && this.customAI[2] < 143f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(5f, -5f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
+					int num158 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(5f, -5f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
+					Main.projectile[num158].netUpdate = true;
 				}
-				if (this.attackLaser3Timer == 62 && !Main.dedServ)
+				if (this.customAI[2] == 62f && !Main.dedServ)
 				{
 					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/MegaLaser1").WithVolume(0.5f).WithPitchVariance(0f), (int)base.npc.position.X, (int)base.npc.position.Y);
 				}
-				if (this.attackLaser3Timer >= 147 && this.attackLaser3Timer < 230)
+				if (this.customAI[2] >= 147f && this.customAI[2] < 230f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(5f, -5f), base.mod.ProjectileType("PatientLaser"), 40, 0f, 255, 0f, 0f);
+					int num159 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(5f, -5f), base.mod.ProjectileType("PatientLaser"), 50, 0f, 255, 0f, 0f);
+					Main.projectile[num159].netUpdate = true;
 				}
-				if (this.attackLaser3Timer >= 120 && this.attackLaser3Timer < 203)
+				if (this.customAI[2] >= 120f && this.customAI[2] < 203f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(10f, 0f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
+					int num160 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(10f, 0f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
+					Main.projectile[num160].netUpdate = true;
 				}
-				if (this.attackLaser3Timer == 122 && !Main.dedServ)
+				if (this.customAI[2] == 122f && !Main.dedServ)
 				{
 					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/MegaLaser1").WithVolume(0.5f).WithPitchVariance(0f), (int)base.npc.position.X, (int)base.npc.position.Y);
 				}
-				if (this.attackLaser3Timer >= 207 && this.attackLaser3Timer < 290)
+				if (this.customAI[2] >= 207f && this.customAI[2] < 290f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(10f, 0f), base.mod.ProjectileType("PatientLaser"), 40, 0f, 255, 0f, 0f);
+					int num161 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(10f, 0f), base.mod.ProjectileType("PatientLaser"), 50, 0f, 255, 0f, 0f);
+					Main.projectile[num161].netUpdate = true;
 				}
-				if (this.attackLaser3Timer >= 180 && this.attackLaser3Timer < 263)
+				if (this.customAI[2] >= 180f && this.customAI[2] < 263f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(5f, 5f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
+					int num162 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(5f, 5f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
+					Main.projectile[num162].netUpdate = true;
 				}
-				if (this.attackLaser3Timer == 182 && !Main.dedServ)
+				if (this.customAI[2] == 182f && !Main.dedServ)
 				{
 					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/MegaLaser1").WithVolume(0.5f).WithPitchVariance(0f), (int)base.npc.position.X, (int)base.npc.position.Y);
 				}
-				if (this.attackLaser3Timer >= 267 && this.attackLaser3Timer < 350)
+				if (this.customAI[2] >= 267f && this.customAI[2] < 350f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(5f, 5f), base.mod.ProjectileType("PatientLaser"), 40, 0f, 255, 0f, 0f);
+					int num163 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(5f, 5f), base.mod.ProjectileType("PatientLaser"), 50, 0f, 255, 0f, 0f);
+					Main.projectile[num163].netUpdate = true;
 				}
-				if (this.attackLaser3Timer >= 240 && this.attackLaser3Timer < 323)
+				if (this.customAI[2] >= 240f && this.customAI[2] < 323f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(0f, 10f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
+					int num164 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(0f, 10f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
+					Main.projectile[num164].netUpdate = true;
 				}
-				if (this.attackLaser3Timer == 242 && !Main.dedServ)
+				if (this.customAI[2] == 242f && !Main.dedServ)
 				{
 					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/MegaLaser1").WithVolume(0.5f).WithPitchVariance(0f), (int)base.npc.position.X, (int)base.npc.position.Y);
 				}
-				if (this.attackLaser3Timer >= 327 && this.attackLaser3Timer < 410)
+				if (this.customAI[2] >= 327f && this.customAI[2] < 410f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(0f, 10f), base.mod.ProjectileType("PatientLaser"), 40, 0f, 255, 0f, 0f);
+					int num165 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(0f, 10f), base.mod.ProjectileType("PatientLaser"), 50, 0f, 255, 0f, 0f);
+					Main.projectile[num165].netUpdate = true;
 				}
-				if (this.attackLaser3Timer >= 300 && this.attackLaser3Timer < 383)
+				if (this.customAI[2] >= 300f && this.customAI[2] < 383f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-5f, 5f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
+					int num166 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-5f, 5f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
+					Main.projectile[num166].netUpdate = true;
 				}
-				if (this.attackLaser3Timer == 302 && !Main.dedServ)
+				if (this.customAI[2] == 302f && !Main.dedServ)
 				{
 					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/MegaLaser1").WithVolume(0.5f).WithPitchVariance(0f), (int)base.npc.position.X, (int)base.npc.position.Y);
 				}
-				if (this.attackLaser3Timer >= 387 && this.attackLaser3Timer < 470)
+				if (this.customAI[2] >= 387f && this.customAI[2] < 470f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-5f, 5f), base.mod.ProjectileType("PatientLaser"), 40, 0f, 255, 0f, 0f);
+					int num167 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-5f, 5f), base.mod.ProjectileType("PatientLaser"), 50, 0f, 255, 0f, 0f);
+					Main.projectile[num167].netUpdate = true;
 				}
-				if (this.attackLaser3Timer >= 360 && this.attackLaser3Timer < 443)
+				if (this.customAI[2] >= 360f && this.customAI[2] < 443f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-10f, 0f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
+					int num168 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-10f, 0f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
+					Main.projectile[num168].netUpdate = true;
 				}
-				if (this.attackLaser3Timer == 362 && !Main.dedServ)
+				if (this.customAI[2] == 362f && !Main.dedServ)
 				{
 					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/MegaLaser1").WithVolume(0.5f).WithPitchVariance(0f), (int)base.npc.position.X, (int)base.npc.position.Y);
 				}
-				if (this.attackLaser3Timer >= 447 && this.attackLaser3Timer < 530)
+				if (this.customAI[2] >= 447f && this.customAI[2] < 530f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-10f, 0f), base.mod.ProjectileType("PatientLaser"), 40, 0f, 255, 0f, 0f);
+					int num169 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-10f, 0f), base.mod.ProjectileType("PatientLaser"), 50, 0f, 255, 0f, 0f);
+					Main.projectile[num169].netUpdate = true;
 				}
-				if (this.attackLaser3Timer >= 420 && this.attackLaser3Timer < 503)
+				if (this.customAI[2] >= 420f && this.customAI[2] < 503f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-5f, -5f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
+					int num170 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-5f, -5f), base.mod.ProjectileType("PatientLaser2"), 0, 0f, 255, 0f, 0f);
+					Main.projectile[num170].netUpdate = true;
 				}
-				if (this.attackLaser3Timer == 422 && !Main.dedServ)
+				if (this.customAI[2] == 422f && !Main.dedServ)
 				{
 					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/MegaLaser1").WithVolume(0.5f).WithPitchVariance(0f), (int)base.npc.position.X, (int)base.npc.position.Y);
 				}
-				if (this.attackLaser3Timer >= 507 && this.attackLaser3Timer < 590)
+				if (this.customAI[2] >= 507f && this.customAI[2] < 590f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-5f, -5f), base.mod.ProjectileType("PatientLaser"), 40, 0f, 255, 0f, 0f);
+					int num171 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-5f, -5f), base.mod.ProjectileType("PatientLaser"), 50, 0f, 255, 0f, 0f);
+					Main.projectile[num171].netUpdate = true;
 				}
-				if (this.attackLaser3Timer >= 650)
+				if (this.customAI[2] >= 650f)
 				{
-					this.attackLaser3 = false;
+					this.customAI[4] = 0f;
 					this.laserBeam = false;
-					this.attackLaser3Timer = 0;
+					this.customAI[2] = 0f;
 					this.lookAround = true;
+					base.npc.netUpdate = true;
 				}
 			}
-			if (this.attackLaser4)
+			if (this.customAI[4] == 4f)
 			{
 				this.laserBeam = true;
 				this.lookAround = false;
-				this.attackLaser4Timer++;
-				if (this.attackLaser4Timer >= 0 && this.attackLaser4Timer < 83)
+				this.customAI[3] += 1f;
+				if (this.customAI[3] >= 0f && this.customAI[3] < 83f)
 				{
-					int num90 = 4;
-					for (int j = 0; j < num90; j++)
+					int num172 = 4;
+					for (int j = 0; j < num172; j++)
 					{
-						int num91 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("PatientLaser2"), 40, 0f, 255, 0f, 0f);
-						Main.projectile[num91].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)j / (float)num90 * 6.28f);
+						int num173 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("PatientLaser2"), 50, 0f, 255, 0f, 0f);
+						Main.projectile[num173].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)j / (float)num172 * 6.28f);
+						Main.projectile[num173].netUpdate = true;
 					}
 				}
-				if (this.attackLaser4Timer == 2 && !Main.dedServ)
+				if (this.customAI[3] == 2f && !Main.dedServ)
 				{
 					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/MegaLaser1").WithVolume(0.9f).WithPitchVariance(0f), (int)base.npc.position.X, (int)base.npc.position.Y);
 				}
-				if (this.attackLaser4Timer >= 87 && this.attackLaser4Timer < 140)
+				if (this.customAI[3] >= 87f && this.customAI[3] < 140f)
 				{
-					int num92 = 4;
-					for (int k = 0; k < num92; k++)
+					int num174 = 4;
+					for (int k = 0; k < num174; k++)
 					{
-						int num93 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("PatientLaser"), 40, 0f, 255, 0f, 0f);
-						Main.projectile[num93].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)k / (float)num92 * 6.28f);
+						int num175 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("PatientLaser"), 50, 0f, 255, 0f, 0f);
+						Main.projectile[num175].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)k / (float)num174 * 6.28f);
+						Main.projectile[num175].netUpdate = true;
 					}
 				}
-				if (this.attackLaser4Timer >= 100 && this.attackLaser4Timer < 163)
+				if (this.customAI[3] >= 100f && this.customAI[3] < 163f)
 				{
-					int num94 = 6;
-					for (int l = 0; l < num94; l++)
+					int num176 = 6;
+					for (int l = 0; l < num176; l++)
 					{
-						int num95 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("PatientLaser2"), 40, 0f, 255, 0f, 0f);
-						Main.projectile[num95].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)l / (float)num94 * 6.28f);
+						int num177 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("PatientLaser2"), 50, 0f, 255, 0f, 0f);
+						Main.projectile[num177].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)l / (float)num176 * 6.28f);
+						Main.projectile[num177].netUpdate = true;
 					}
 				}
-				if (this.attackLaser4Timer == 102 && !Main.dedServ)
+				if (this.customAI[3] == 102f && !Main.dedServ)
 				{
 					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/MegaLaser1").WithVolume(0.9f).WithPitchVariance(0f), (int)base.npc.position.X, (int)base.npc.position.Y);
 				}
-				if (this.attackLaser4Timer >= 167 && this.attackLaser4Timer < 200)
+				if (this.customAI[3] >= 167f && this.customAI[3] < 200f)
 				{
-					int num96 = 6;
-					for (int m = 0; m < num96; m++)
+					int num178 = 6;
+					for (int m = 0; m < num178; m++)
 					{
-						int num97 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("PatientLaser"), 40, 0f, 255, 0f, 0f);
-						Main.projectile[num97].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)m / (float)num96 * 6.28f);
+						int num179 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("PatientLaser"), 50, 0f, 255, 0f, 0f);
+						Main.projectile[num179].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)m / (float)num178 * 6.28f);
+						Main.projectile[num179].netUpdate = true;
 					}
 				}
-				if (this.attackLaser4Timer >= 200 && this.attackLaser4Timer < 243)
+				if (this.customAI[3] >= 200f && this.customAI[3] < 243f)
 				{
-					int num98 = 8;
-					for (int n = 0; n < num98; n++)
+					int num180 = 8;
+					for (int n = 0; n < num180; n++)
 					{
-						int num99 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("PatientLaser2"), 40, 0f, 255, 0f, 0f);
-						Main.projectile[num99].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)n / (float)num98 * 6.28f);
+						int num181 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("PatientLaser2"), 50, 0f, 255, 0f, 0f);
+						Main.projectile[num181].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)n / (float)num180 * 6.28f);
+						Main.projectile[num181].netUpdate = true;
 					}
 				}
-				if (this.attackLaser4Timer == 202 && !Main.dedServ)
+				if (this.customAI[3] == 202f && !Main.dedServ)
 				{
 					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/MegaLaser1").WithVolume(0.9f).WithPitchVariance(0f), (int)base.npc.position.X, (int)base.npc.position.Y);
 				}
-				if (this.attackLaser4Timer >= 247 && this.attackLaser4Timer < 267)
+				if (this.customAI[3] >= 247f && this.customAI[3] < 267f)
 				{
-					int num100 = 8;
-					for (int num101 = 0; num101 < num100; num101++)
+					int num182 = 8;
+					for (int num183 = 0; num183 < num182; num183++)
 					{
-						int num102 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("PatientLaser"), 40, 0f, 255, 0f, 0f);
-						Main.projectile[num102].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)num101 / (float)num100 * 6.28f);
+						int num184 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("PatientLaser"), 50, 0f, 255, 0f, 0f);
+						Main.projectile[num184].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(10f, 0f), (float)num183 / (float)num182 * 6.28f);
+						Main.projectile[num184].netUpdate = true;
 					}
 				}
-				if (this.attackLaser4Timer >= 340)
+				if (this.customAI[3] >= 340f)
 				{
-					this.attackLaser4 = false;
+					this.customAI[4] = 0f;
 					this.laserBeam = false;
-					this.attackLaser4Timer = 0;
+					this.customAI[3] = 0f;
 					this.lookAround = true;
+					base.npc.netUpdate = true;
 				}
 			}
 		}
@@ -967,13 +1140,7 @@ namespace Redemption.NPCs.LabNPCs
 			return false;
 		}
 
-		private int startTimer;
-
 		private bool beginFight;
-
-		private int fightTimer;
-
-		private int spamTimer;
 
 		private bool openEye;
 
@@ -999,33 +1166,13 @@ namespace Redemption.NPCs.LabNPCs
 
 		private int laserCounter;
 
-		private bool attackLaser1;
-
-		private int attackLaser1Timer;
-
-		private bool attackLaser2;
-
-		private int attackLaser2Timer;
-
 		private bool phase2Done;
 
 		private bool phase2;
 
-		private int fightTimer2;
-
-		private bool attackLaser3;
-
-		private int attackLaser3Timer;
-
 		private bool phase3;
 
-		private int fightTimer3;
-
 		private bool phase3Done;
-
-		private bool attackLaser4;
-
-		private int attackLaser4Timer;
 
 		private bool sludgyThing;
 
@@ -1038,5 +1185,7 @@ namespace Redemption.NPCs.LabNPCs
 		private int sludgeFrame;
 
 		private int sludgeCounter;
+
+		public float[] customAI = new float[5];
 	}
 }

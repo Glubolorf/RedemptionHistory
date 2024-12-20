@@ -16,7 +16,7 @@ namespace Redemption.Projectiles
 			this.aiType = 261;
 			base.projectile.width = 32;
 			base.projectile.height = 34;
-			base.projectile.magic = false;
+			base.projectile.magic = true;
 			base.projectile.penetrate = -1;
 			base.projectile.hostile = false;
 			base.projectile.friendly = true;

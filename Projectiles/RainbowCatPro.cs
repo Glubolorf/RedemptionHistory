@@ -49,7 +49,7 @@ namespace Redemption.Projectiles
 					base.projectile.frame = 7;
 				}
 			}
-			if (base.projectile.localAI[0] > 21f)
+			if (base.projectile.localAI[0] > 21f && Main.myPlayer == base.projectile.owner)
 			{
 				if (Main.rand.Next(3) == 0)
 				{

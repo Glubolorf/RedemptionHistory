@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -57,6 +58,32 @@ namespace Redemption.NPCs.LabNPCs
 			}
 		}
 
+		public override void NPCLoot()
+		{
+			if (!RedeWorld.labAccess3)
+			{
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ZoneAccessPanel3"), 1, false, 0, false, false);
+			}
+		}
+
+		public override void SendExtraAI(BinaryWriter writer)
+		{
+			base.SendExtraAI(writer);
+			if (Main.netMode == 2 || Main.dedServ)
+			{
+				writer.Write(this.beginFight);
+			}
+		}
+
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			base.ReceiveExtraAI(reader);
+			if (Main.netMode == 1)
+			{
+				this.beginFight = reader.ReadBool();
+			}
+		}
+
 		public override void AI()
 		{
 			base.npc.frameCounter += 1.0;
@@ -73,8 +100,8 @@ namespace Redemption.NPCs.LabNPCs
 			}
 			base.npc.TargetClosest(true);
 			Player player = Main.player[base.npc.target];
-			this.behemothTimer++;
-			if (this.behemothTimer == 1)
+			base.npc.ai[0] += 1f;
+			if (base.npc.ai[0] == 1f)
 			{
 				if (!Main.dedServ)
 				{
@@ -88,103 +115,120 @@ namespace Redemption.NPCs.LabNPCs
 					base.npc.netUpdate = true;
 				}
 			}
-			if (this.behemothTimer <= 120)
+			if (base.npc.ai[0] <= 120f)
 			{
 				base.npc.alpha -= 4;
 				base.npc.dontTakeDamage = true;
+				base.npc.netUpdate = true;
 			}
-			if (this.behemothTimer > 120)
+			if (base.npc.ai[0] > 120f)
 			{
 				this.beginFight = true;
 				base.npc.dontTakeDamage = false;
+				base.npc.netUpdate = true;
 			}
 			if (this.beginFight)
 			{
 				if (NPC.CountNPCS(base.mod.NPCType("SludgyBoi2")) <= 2 && Main.rand.Next(350) == 0)
 				{
 					Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
-					NPC.NewNPC((int)base.npc.position.X + 58, (int)base.npc.position.Y + 96, base.mod.NPCType("SludgyBoi2"), 0, 0f, 0f, 0f, 0f, 255);
+					int num = NPC.NewNPC((int)base.npc.position.X + 58, (int)base.npc.position.Y + 96, base.mod.NPCType("SludgyBoi2"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[num].netUpdate = true;
 				}
 				if (NPC.CountNPCS(base.mod.NPCType("WalterInfected")) <= 2 && Main.rand.Next(350) == 0)
 				{
 					Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
-					NPC.NewNPC((int)base.npc.position.X + 58, (int)base.npc.position.Y + 96, base.mod.NPCType("WalterInfected"), 0, 0f, 0f, 0f, 0f, 255);
+					int num2 = NPC.NewNPC((int)base.npc.position.X + 58, (int)base.npc.position.Y + 96, base.mod.NPCType("WalterInfected"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[num2].netUpdate = true;
 				}
 				if (NPC.CountNPCS(base.mod.NPCType("SludgyBlob")) <= 3 && Main.rand.Next(155) == 0)
 				{
-					NPC.NewNPC((int)base.npc.position.X + 58, (int)base.npc.position.Y + 96, base.mod.NPCType("SludgyBlob"), 0, 0f, 0f, 0f, 0f, 255);
+					int num3 = NPC.NewNPC((int)base.npc.position.X + 58, (int)base.npc.position.Y + 96, base.mod.NPCType("SludgyBlob"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[num3].netUpdate = true;
 				}
-				this.fightTimer++;
-				if (this.fightTimer == 50)
+				base.npc.ai[1] += 1f;
+				if (base.npc.ai[1] == 50f)
 				{
 					Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
 				}
-				if (this.fightTimer >= 150 && this.fightTimer < 200)
+				if (base.npc.ai[1] >= 150f && base.npc.ai[1] < 200f)
 				{
-					this.spamTimer++;
-					if (this.spamTimer == 1)
+					base.npc.ai[2] += 1f;
+					if (base.npc.ai[2] == 1f)
 					{
 						Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
 					}
-					if (this.spamTimer == 3)
+					if (base.npc.ai[2] == 3f)
 					{
 						for (int i = 0; i < 10; i++)
 						{
-							int num = Dust.NewDust(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 88f), 4, 4, base.mod.DustType("SludgeSpoonDust"), base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 20, default(Color), 4f);
-							Main.dust[num].velocity *= 1.9f;
+							int num4 = Dust.NewDust(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 88f), 4, 4, base.mod.DustType("SludgeSpoonDust"), base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 20, default(Color), 4f);
+							Main.dust[num4].velocity *= 1.9f;
 						}
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2((float)(-6 + Main.rand.Next(-18, 0)), (float)(-2 + Main.rand.Next(0, 4))), base.mod.ProjectileType("GloopBallPro1"), 40, 3f, 255, 0f, 0f);
+						int num5 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2((float)(-6 + Main.rand.Next(-18, 0)), (float)(-2 + Main.rand.Next(0, 4))), base.mod.ProjectileType("GloopBallPro1"), 40, 3f, 255, 0f, 0f);
+						Main.projectile[num5].netUpdate = true;
 					}
-					if (this.spamTimer >= 4)
+					if (base.npc.ai[2] >= 4f)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2((float)(-6 + Main.rand.Next(-16, 0)), (float)(-2 + Main.rand.Next(0, 8))), base.mod.ProjectileType("GreenGloopPro2"), 40, 3f, 255, 0f, 0f);
-						this.spamTimer = 2;
+						int num6 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2((float)(-6 + Main.rand.Next(-16, 0)), (float)(-2 + Main.rand.Next(0, 8))), base.mod.ProjectileType("GreenGloopPro2"), 40, 3f, 255, 0f, 0f);
+						Main.projectile[num6].netUpdate = true;
+						base.npc.ai[2] = 2f;
 					}
 				}
-				if (this.fightTimer == 350)
+				if (base.npc.ai[1] == 350f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, 0f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, 2f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, -2f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
+					int num7 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, 0f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
+					int num8 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, 2f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
+					int num9 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, -2f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
+					Main.projectile[num7].netUpdate = true;
+					Main.projectile[num8].netUpdate = true;
+					Main.projectile[num9].netUpdate = true;
 				}
-				if (this.fightTimer == 410)
+				if (base.npc.ai[1] == 410f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, 1f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, -1f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
+					int num10 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, 1f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
+					int num11 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, -1f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
+					Main.projectile[num10].netUpdate = true;
+					Main.projectile[num11].netUpdate = true;
 				}
-				if (this.fightTimer == 470)
+				if (base.npc.ai[1] == 470f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, 0f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, 2f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, -2f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
+					int num12 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, 0f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
+					int num13 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, 2f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
+					int num14 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 58f, base.npc.position.Y + 96f), new Vector2(-5f, -2f), base.mod.ProjectileType("GreenGasPro2"), 40, 3f, 255, 0f, 0f);
+					Main.projectile[num12].netUpdate = true;
+					Main.projectile[num13].netUpdate = true;
+					Main.projectile[num14].netUpdate = true;
 				}
-				if (this.fightTimer >= 580 && this.fightTimer <= 600)
+				if (base.npc.ai[1] >= 580f && base.npc.ai[1] <= 600f)
 				{
-					this.spamTimer++;
-					if (this.spamTimer == 1)
+					base.npc.ai[2] += 1f;
+					if (base.npc.ai[2] == 1f)
 					{
 						Main.PlaySound(SoundID.NPCDeath13, (int)base.npc.position.X, (int)base.npc.position.Y);
 					}
-					if (this.spamTimer >= 4)
+					if (base.npc.ai[2] >= 4f)
 					{
 						for (int j = 0; j < 10; j++)
 						{
-							int num2 = Dust.NewDust(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 88f), 4, 4, base.mod.DustType("SludgeSpoonDust"), base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 20, default(Color), 4f);
-							Main.dust[num2].velocity *= 1.9f;
+							int num15 = Dust.NewDust(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 88f), 4, 4, base.mod.DustType("SludgeSpoonDust"), base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 20, default(Color), 4f);
+							Main.dust[num15].velocity *= 1.9f;
 						}
-						float num3 = 8f;
+						float num16 = 8f;
 						Vector2 vector2;
 						vector2..ctor(base.npc.position.X + 58f, base.npc.position.Y + 96f);
-						int num4 = 40;
-						int num5 = base.mod.ProjectileType("GreenGloopPro3");
-						float num6 = (float)Math.Atan2((double)(vector2.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector2.X - (player.position.X + (float)player.width * 0.5f)));
-						Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num6) * (double)num3 * -1.0), (float)(Math.Sin((double)num6) * (double)num3 * -1.0), num5, num4, 0f, 0, 0f, 0f);
-						this.spamTimer = 2;
+						int num17 = 40;
+						int num18 = base.mod.ProjectileType("GreenGloopPro3");
+						float num19 = (float)Math.Atan2((double)(vector2.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector2.X - (player.position.X + (float)player.width * 0.5f)));
+						int num20 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num19) * (double)num16 * -1.0), (float)(Math.Sin((double)num19) * (double)num16 * -1.0), num18, num17, 0f, 0, 0f, 0f);
+						Main.projectile[num20].netUpdate = true;
+						base.npc.ai[2] = 2f;
 					}
 				}
-				if (this.fightTimer >= 660)
+				if (base.npc.ai[1] >= 660f)
 				{
-					this.fightTimer = 0;
+					base.npc.ai[1] = 0f;
+					base.npc.netUpdate = true;
 				}
 			}
 		}
@@ -212,12 +256,6 @@ namespace Redemption.NPCs.LabNPCs
 			return this.beginFight;
 		}
 
-		private int behemothTimer;
-
 		private bool beginFight;
-
-		private int fightTimer;
-
-		private int spamTimer;
 	}
 }

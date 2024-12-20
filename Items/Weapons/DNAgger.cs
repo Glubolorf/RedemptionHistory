@@ -16,13 +16,13 @@ namespace Redemption.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 140;
+			base.item.damage = 110;
 			base.item.width = 64;
 			base.item.height = 64;
 			base.item.value = 30000;
 			base.item.useStyle = 1;
-			base.item.useAnimation = 6;
-			base.item.useTime = 6;
+			base.item.useAnimation = 8;
+			base.item.useTime = 8;
 			base.item.rare = 11;
 			base.item.UseSound = SoundID.Item71;
 			base.item.knockBack = 6f;

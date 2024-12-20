@@ -16,7 +16,7 @@ namespace Redemption.Items.Weapons
 		{
 			base.item.width = 26;
 			base.item.height = 28;
-			base.item.damage = 75;
+			base.item.damage = 60;
 			base.item.maxStack = 999;
 			base.item.value = 100;
 			base.item.rare = 4;

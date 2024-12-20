@@ -20,8 +20,8 @@ namespace Redemption.Items.Weapons
 			base.item.ranged = true;
 			base.item.width = 80;
 			base.item.height = 52;
-			base.item.useTime = 26;
-			base.item.useAnimation = 26;
+			base.item.useTime = 33;
+			base.item.useAnimation = 33;
 			base.item.useStyle = 5;
 			base.item.knockBack = 8f;
 			base.item.UseSound = SoundID.Item89;

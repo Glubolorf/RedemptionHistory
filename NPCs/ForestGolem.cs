@@ -74,13 +74,35 @@ namespace Redemption.NPCs
 					this.change = true;
 				}
 			}
+			if (Main.raining)
+			{
+				this.regenTimer++;
+				if (this.regenTimer >= 40 && base.npc.life < base.npc.lifeMax)
+				{
+					base.npc.life++;
+					base.npc.HealEffect(1, true);
+					this.regenTimer = 0;
+				}
+			}
+			if (base.npc.wet && !base.npc.lavaWet)
+			{
+				this.regenTimer++;
+				if (this.regenTimer >= 30 && base.npc.life < base.npc.lifeMax)
+				{
+					base.npc.life++;
+					base.npc.HealEffect(1, true);
+					this.regenTimer = 0;
+				}
+			}
 		}
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.OverworldNight.Chance * ((Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == 2) ? 0.05f : 0f);
+			return SpawnCondition.OverworldNight.Chance * ((Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == 2 && !RedeWorld.downedPatientZero) ? 0.04f : 0f);
 		}
 
 		private bool change;
+
+		private int regenTimer;
 	}
 }

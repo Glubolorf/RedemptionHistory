@@ -95,13 +95,14 @@ namespace Redemption.NPCs.LabNPCs
 					{
 						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Zap1").WithVolume(0.8f).WithPitchVariance(0f), -1, -1);
 					}
-					Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("EyeFlashPro"), 40, 3f, 255, 0f, 0f);
-					Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("EyeFlashProH"), 40, 3f, 255, 0f, 0f);
+					int num = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("EyeFlashPro"), 40, 3f, 255, 0f, 0f);
+					int num2 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("EyeFlashProH"), 40, 3f, 255, 0f, 0f);
+					Main.projectile[num].netUpdate = true;
+					Main.projectile[num2].netUpdate = true;
 				}
 				if (this.attackTimer > 90)
 				{
 					this.targeted = false;
-					this.zapzop = false;
 					this.attackTimer = 0;
 					this.smashTimer = 0;
 					this.startTimer = 140;
@@ -169,8 +170,6 @@ namespace Redemption.NPCs.LabNPCs
 		private int startTimer;
 
 		private int attackTimer;
-
-		private bool zapzop;
 
 		private int smashTimer;
 	}

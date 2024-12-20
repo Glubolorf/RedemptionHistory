@@ -13,6 +13,7 @@ namespace Redemption.Tiles
 			Main.tileSpelunker[(int)base.Type] = false;
 			Main.tileMergeDirt[(int)base.Type] = true;
 			Main.tileBlockLight[(int)base.Type] = true;
+			Main.tileMerge[(int)base.Type][base.mod.TileType("StarliteGemOreTile")] = true;
 			this.drop = base.mod.ItemType("DeadRock");
 			this.minPick = 180;
 			this.mineResist = 2.5f;
@@ -29,6 +30,67 @@ namespace Redemption.Tiles
 			{
 				localPlayer.AddBuff(base.mod.BuffType("RadioactiveFalloutDebuff"), Main.rand.Next(10, 20), true);
 			}
+		}
+
+		public override void RandomUpdate(int i, int j)
+		{
+			if (Main.rand.Next(8) == 0)
+			{
+				bool flag = this.StarliteGemSpawn(i, j);
+				if (!flag)
+				{
+					flag = this.SpawnRocks(i, j);
+				}
+				if (!flag)
+				{
+					flag = this.SpawnBigXeno(i, j);
+				}
+			}
+		}
+
+		private bool SpawnBigXeno(int i, int j)
+		{
+			if (Main.tile[i, j - 1].type == 0 && Main.tile[i + 1, j - 1].type == 0 && Main.tile[i, j - 2].type == 0 && Main.tile[i + 1, j - 2].type == 0 && Main.tile[i + 3, j].type == 0 && Main.tile[i + 3, j - 1].type == 0 && Main.tile[i + 3, j - 2].type == 0 && Main.tile[i + 3, j - 3].type == 0 && Main.rand.Next(50) == 0)
+			{
+				WorldGen.PlaceTile(i, j - 1, base.mod.TileType("XenomiteCrystalBigTile"), true, false, -1, 0);
+				return true;
+			}
+			return false;
+		}
+
+		private bool StarliteGemSpawn(int i, int j)
+		{
+			if (Main.tile[i, j - 1].type == 0 && Main.tile[i, j].active() && Main.rand.Next(4) == 0)
+			{
+				WorldGen.PlaceTile(i, j - 1, base.mod.TileType("StarliteGemTile"), true, false, -1, 0);
+				return true;
+			}
+			return false;
+		}
+
+		private bool SpawnRocks(int i, int j)
+		{
+			if (Main.tile[i, j - 1].type == 0 && Main.tile[i, j - 2].type == 0 && Main.rand.Next(6) == 0)
+			{
+				WorldGen.PlaceTile(i, j - 1, base.mod.TileType("DeadRockStalagmitesTile"), true, false, -1, 0);
+				return true;
+			}
+			if (Main.tile[i, j + 1].type == 0 && Main.tile[i, j + 2].type == 0 && Main.rand.Next(4) == 0)
+			{
+				WorldGen.PlaceTile(i, j + 1, base.mod.TileType("DeadRockStalacmitesTile"), true, false, -1, 0);
+				return true;
+			}
+			if (Main.tile[i, j - 1].type == 0 && Main.rand.Next(6) == 0)
+			{
+				WorldGen.PlaceTile(i, j - 1, base.mod.TileType("DeadRockStalagmites2Tile"), true, false, -1, 0);
+				return true;
+			}
+			if (Main.tile[i, j + 1].type == 0 && Main.rand.Next(4) == 0)
+			{
+				WorldGen.PlaceTile(i, j + 1, base.mod.TileType("DeadRockStalacmites2Tile"), true, false, -1, 0);
+				return true;
+			}
+			return false;
 		}
 
 		public override int SaplingGrowthType(ref int style)

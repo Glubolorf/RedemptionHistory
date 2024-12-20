@@ -71,17 +71,23 @@ namespace Redemption.NPCs
 				this.fistStart = true;
 				base.npc.aiStyle = 0;
 				base.npc.velocity.X = 0f;
+				if (this.fistTimer == 1 && !Config.NoCombatText)
+				{
+					CombatText.NewText(base.npc.getRect(), Color.Red, "Rocket Fist!", true, true);
+				}
 				if (this.fistTimer == 25)
 				{
 					if (base.npc.direction == -1)
 					{
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 29f, base.npc.position.Y + 21f), new Vector2(-6f, 0f), base.mod.ProjectileType("OmegaARocketFist"), 50, 3f, 255, 0f, 0f);
+						int num2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 29f, base.npc.position.Y + 21f), new Vector2(-6f, 0f), base.mod.ProjectileType("OmegaARocketFist"), 50, 3f, 255, 0f, 0f);
+						Main.projectile[num2].netUpdate = true;
 					}
 					else
 					{
 						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 11f, base.npc.position.Y + 21f), new Vector2(6f, 0f), base.mod.ProjectileType("OmegaARocketFist"), 50, 3f, 255, 0f, 0f);
+						int num3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 11f, base.npc.position.Y + 21f), new Vector2(6f, 0f), base.mod.ProjectileType("OmegaARocketFist"), 50, 3f, 255, 0f, 0f);
+						Main.projectile[num3].netUpdate = true;
 					}
 				}
 				if (this.fistTimer >= 40)
@@ -98,9 +104,9 @@ namespace Redemption.NPCs
 				Main.PlaySound(SoundID.Item8, base.npc.position);
 				for (int i = 0; i < 25; i++)
 				{
-					int num2 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 235, 0f, 0f, 100, default(Color), 2.5f);
-					Main.dust[num2].velocity *= 3f;
-					Main.dust[num2].noGravity = true;
+					int num4 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 235, 0f, 0f, 100, default(Color), 2.5f);
+					Main.dust[num4].velocity *= 3f;
+					Main.dust[num4].noGravity = true;
 				}
 				base.npc.position.X = base.npc.ai[2] * 16f - (float)(base.npc.width / 2) + 8f;
 				base.npc.position.Y = base.npc.ai[3] * 16f - (float)base.npc.height;
@@ -111,9 +117,9 @@ namespace Redemption.NPCs
 				Main.PlaySound(SoundID.Item8, base.npc.position);
 				for (int j = 0; j < 25; j++)
 				{
-					int num3 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 235, 0f, 0f, 100, default(Color), 2.5f);
-					Main.dust[num3].velocity *= 3f;
-					Main.dust[num3].noGravity = true;
+					int num5 = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 235, 0f, 0f, 100, default(Color), 2.5f);
+					Main.dust[num5].velocity *= 3f;
+					Main.dust[num5].noGravity = true;
 				}
 			}
 			if (Math.Abs(base.npc.position.X - Main.player[base.npc.target].position.X) + Math.Abs(base.npc.position.Y - Main.player[base.npc.target].position.Y) > 2000f)
@@ -123,30 +129,30 @@ namespace Redemption.NPCs
 			if (base.npc.ai[0] >= 650f && Main.netMode != 1)
 			{
 				base.npc.ai[0] = 1f;
-				int num4 = (int)Main.player[base.npc.target].position.X / 16;
-				int num5 = (int)Main.player[base.npc.target].position.Y / 16;
-				int num6 = (int)base.npc.position.X / 16;
-				int num7 = (int)base.npc.position.Y / 16;
-				int num8 = 40;
-				int num9 = 0;
+				int num6 = (int)Main.player[base.npc.target].position.X / 16;
+				int num7 = (int)Main.player[base.npc.target].position.Y / 16;
+				int num8 = (int)base.npc.position.X / 16;
+				int num9 = (int)base.npc.position.Y / 16;
+				int num10 = 40;
+				int num11 = 0;
 				for (int k = 0; k < 100; k++)
 				{
-					num9++;
-					int num10 = Main.rand.Next(num4 - num8, num4 + num8);
-					int num11 = Main.rand.Next(num5 - num8, num5 + num8);
-					for (int l = num11; l < num5 + num8; l++)
+					num11++;
+					int num12 = Main.rand.Next(num6 - num10, num6 + num10);
+					int num13 = Main.rand.Next(num7 - num10, num7 + num10);
+					for (int l = num13; l < num7 + num10; l++)
 					{
-						if ((num10 < num4 - 12 || num10 > num4 + 12) && (l < num7 - 1 || l > num7 + 1 || num10 < num6 - 1 || num10 > num6 + 1) && Main.tile[num10, l].nactive())
+						if ((num12 < num6 - 12 || num12 > num6 + 12) && (l < num9 - 1 || l > num9 + 1 || num12 < num8 - 1 || num12 > num8 + 1) && Main.tile[num12, l].nactive())
 						{
 							bool flag = true;
-							if (Main.tile[num10, l - 1].lava())
+							if (Main.tile[num12, l - 1].lava())
 							{
 								flag = false;
 							}
-							if (flag && Main.tileSolid[(int)Main.tile[num10, l].type] && !Collision.SolidTiles(num10 - 1, num10 + 1, l - 4, l - 1))
+							if (flag && Main.tileSolid[(int)Main.tile[num12, l].type] && !Collision.SolidTiles(num12 - 1, num12 + 1, l - 4, l - 1))
 							{
 								base.npc.ai[1] = 20f;
-								base.npc.ai[2] = (float)num10;
+								base.npc.ai[2] = (float)num12;
 								base.npc.ai[3] = (float)l - 1f;
 								break;
 							}

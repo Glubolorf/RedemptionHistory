@@ -45,6 +45,10 @@ namespace Redemption.Items
 			{
 				player.QuickSpawnItem(base.mod.ItemType("TheInfectedEye"), 1);
 			}
+			if (Main.rand.Next(3) == 0)
+			{
+				player.QuickSpawnItem(base.mod.ItemType("InfectousJavelin"), 1);
+			}
 			player.QuickSpawnItem(base.mod.ItemType("AntiCrystallizer"), 1);
 			player.QuickSpawnItem(base.mod.ItemType("AntiXenomiteApplier"), Main.rand.Next(2, 6));
 		}

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -16,7 +17,7 @@ namespace Redemption.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 246;
+			base.item.damage = 230;
 			base.item.melee = true;
 			base.item.width = 88;
 			base.item.height = 88;
@@ -25,12 +26,22 @@ namespace Redemption.Items.Weapons
 			base.item.useStyle = 1;
 			base.item.knockBack = 6f;
 			base.item.value = Item.sellPrice(2, 50, 0, 0);
-			base.item.rare = 11;
 			base.item.UseSound = SoundID.Item71;
 			base.item.autoReuse = true;
 			base.item.useTurn = true;
 			base.item.shoot = base.mod.ProjectileType("BleedingSunPro1");
 			base.item.shootSpeed = 15f;
+		}
+
+		public override void ModifyTooltips(List<TooltipLine> list)
+		{
+			foreach (TooltipLine tooltipLine in list)
+			{
+				if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+				{
+					tooltipLine.overrideColor = new Color?(new Color(0, 255, 200));
+				}
+			}
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -104,12 +115,13 @@ namespace Redemption.Items.Weapons
 		public override void AddRecipes()
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(1826, 1);
+			modRecipe.AddIngredient(base.mod.ItemType("Firebreak"), 1);
 			modRecipe.AddIngredient(base.mod.ItemType("ForgottenGreatsword"), 1);
 			modRecipe.AddIngredient(base.mod.ItemType("ForgottenSword"), 1);
+			modRecipe.AddIngredient(null, "ShinkiteBlood", 20);
 			modRecipe.AddIngredient(3467, 20);
-			modRecipe.AddIngredient(178, 8);
 			modRecipe.AddIngredient(base.mod.ItemType("DarkShard"), 5);
+			modRecipe.AddIngredient(base.mod.ItemType("LargeLostSoul"), 2);
 			modRecipe.AddTile(412);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();

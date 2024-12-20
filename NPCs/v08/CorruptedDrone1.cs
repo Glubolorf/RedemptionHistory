@@ -126,17 +126,19 @@ namespace Redemption.NPCs.v08
 							int num4 = 55;
 							int num5 = 110;
 							float num6 = (float)Math.Atan2((double)(vector.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector.X - (this.player.position.X + (float)this.player.width * 0.5f)));
-							Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num6) * (double)num3 * -1.0), (float)(Math.Sin((double)num6) * (double)num3 * -1.0), num5, num4, 0f, 0, 0f, 0f);
+							int num7 = Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num6) * (double)num3 * -1.0), (float)(Math.Sin((double)num6) * (double)num3 * -1.0), num5, num4, 0f, 0, 0f, 0f);
+							Main.projectile[num7].netUpdate = true;
 						}
 						else
 						{
-							float num7 = 9f;
+							float num8 = 9f;
 							Vector2 vector2;
 							vector2..ctor(base.npc.position.X + 16f, base.npc.position.Y + 56f);
-							int num8 = 55;
-							int num9 = 110;
-							float num10 = (float)Math.Atan2((double)(vector2.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector2.X - (this.player.position.X + (float)this.player.width * 0.5f)));
-							Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num10) * (double)num7 * -1.0), (float)(Math.Sin((double)num10) * (double)num7 * -1.0), num9, num8, 0f, 0, 0f, 0f);
+							int num9 = 55;
+							int num10 = 110;
+							float num11 = (float)Math.Atan2((double)(vector2.Y - (this.player.position.Y + (float)this.player.height * 0.5f)), (double)(vector2.X - (this.player.position.X + (float)this.player.width * 0.5f)));
+							int num12 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num11) * (double)num8 * -1.0), (float)(Math.Sin((double)num11) * (double)num8 * -1.0), num10, num9, 0f, 0, 0f, 0f);
+							Main.projectile[num12].netUpdate = true;
 						}
 					}
 					if (this.spamTimer >= 3)

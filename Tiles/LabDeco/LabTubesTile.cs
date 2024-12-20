@@ -25,7 +25,7 @@ namespace Redemption.Tiles.LabDeco
 			TileObjectData.newTile.UsesCustomCanPlace = true;
 			TileObjectData.newTile.CoordinateWidth = 16;
 			TileObjectData.newTile.CoordinatePadding = 2;
-			TileObjectData.newTile.AnchorBottom = new AnchorData(11, TileObjectData.newTile.Width, 0);
+			TileObjectData.newTile.AnchorBottom = new AnchorData(15, TileObjectData.newTile.Width, 0);
 			TileObjectData.addTile((int)base.Type);
 			this.dustType = 226;
 			this.minPick = 300;

@@ -9,7 +9,7 @@ namespace Redemption.Items.Placeable
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Botanist Station");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nUsed to combine seed bags");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nUsed to combine Seedbags");
 		}
 
 		public override void SetDefaults()

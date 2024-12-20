@@ -29,7 +29,7 @@ namespace Redemption.Items.Weapons
 		public override void SetDefaults()
 		{
 			base.item.CloneDefaults(3368);
-			base.item.damage = 250;
+			base.item.damage = 190;
 			base.item.rare = 0;
 			base.item.width = 78;
 			base.item.height = 78;

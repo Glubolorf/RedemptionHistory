@@ -94,7 +94,8 @@ namespace Redemption.NPCs
 
 		public override bool CheckActive()
 		{
-			return !Main.npc[(int)base.npc.ai[3]].active;
+			NPC npc = Main.npc[(int)base.npc.ai[1]];
+			return !npc.active;
 		}
 
 		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)

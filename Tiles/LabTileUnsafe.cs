@@ -30,7 +30,7 @@ namespace Redemption.Tiles
 				localPlayer.AddBuff(base.mod.BuffType("RadioactiveFalloutDebuff"), Main.rand.Next(10, 20), true);
 				localPlayer.enemySpawns = false;
 			}
-			if (num <= 3 && !RedeWorld.labSafe)
+			if (num <= 1 && !RedeWorld.labSafe)
 			{
 				localPlayer.AddBuff(base.mod.BuffType("XenomiteSkullDebuff"), Main.rand.Next(10, 20), true);
 			}

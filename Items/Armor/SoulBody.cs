@@ -14,7 +14,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Lost Soul's Chestplate");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n2% increased druidic damage\n4% increased druidic critical strike chance\n2% damage reduction\nSpirits shoot faster");
+			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n2% increased druidic damage\n4% increased druidic critical strike chance\n2% damage reduction\nSpirits shoot faster");
 		}
 
 		public override void SetDefaults()

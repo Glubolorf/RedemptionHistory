@@ -43,7 +43,7 @@ namespace Redemption.Items.Weapons
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
 		{
-			int num = 12 + Main.rand.Next(6);
+			int num = 12 + Main.rand.Next(2);
 			for (int i = 0; i < num; i++)
 			{
 				Vector2 vector = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(40f));

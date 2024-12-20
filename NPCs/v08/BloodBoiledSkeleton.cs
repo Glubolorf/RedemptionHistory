@@ -54,13 +54,16 @@ namespace Redemption.NPCs.v08
 				}
 				Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("BBBone3"), 40, 3f, 255, 0f, 0f);
 			}
-			if (Main.rand.Next(5) == 0)
+			if (Main.netMode != 1)
 			{
-				Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("BBBone1"), 40, 3f, 255, 0f, 0f);
-			}
-			if (Main.rand.Next(5) == 0)
-			{
-				Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("BBBone2"), 40, 3f, 255, 0f, 0f);
+				if (Main.rand.Next(5) == 0)
+				{
+					Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("BBBone1"), 40, 3f, 255, 0f, 0f);
+				}
+				if (Main.rand.Next(5) == 0)
+				{
+					Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("BBBone2"), 40, 3f, 255, 0f, 0f);
+				}
 			}
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
 		}
@@ -99,7 +102,8 @@ namespace Redemption.NPCs.v08
 			}
 			if (Main.rand.Next(300) == 0 && NPC.CountNPCS(base.mod.NPCType("GrandLarva")) <= 1)
 			{
-				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("GrandLarva"), 0, 0f, 0f, 0f, 0f, 255);
+				int num = NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("GrandLarva"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.npc[num].netUpdate = true;
 			}
 		}
 

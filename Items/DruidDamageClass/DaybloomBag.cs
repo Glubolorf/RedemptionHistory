@@ -10,7 +10,7 @@ namespace Redemption.Items.DruidDamageClass
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Daybloom Seed Bag");
+			base.DisplayName.SetDefault("Daybloom Seedbag");
 			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nThrows a seed that grows into a Daybloom\nDeals more damage at daytime");
 		}
 
@@ -34,6 +34,15 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.shootSpeed = 18f;
 		}
 
+		public override float UseTimeMultiplier(Player player)
+		{
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterSeedbags)
+			{
+				return 1.15f;
+			}
+			return 1f;
+		}
+
 		public override bool CanUseItem(Player player)
 		{
 			if (Main.dayTime)
@@ -43,16 +52,6 @@ namespace Redemption.Items.DruidDamageClass
 			else
 			{
 				base.item.damage = 4;
-			}
-			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterSeedbags)
-			{
-				base.item.useTime = 31;
-				base.item.useAnimation = 31;
-			}
-			else
-			{
-				base.item.useTime = 36;
-				base.item.useAnimation = 36;
 			}
 			return true;
 		}

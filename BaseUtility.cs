@@ -657,6 +657,11 @@ namespace Redemption
 			return false;
 		}
 
+		public static Color ColorAlpha(Color color, int alpha)
+		{
+			return color * (1f - (float)alpha / 255f);
+		}
+
 		public static Color ColorBrightness(Color color, int factor)
 		{
 			int num = Math.Max(0, Math.Min(255, (int)color.R + factor));

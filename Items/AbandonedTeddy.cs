@@ -9,7 +9,7 @@ namespace Redemption.Items
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Abandoned Teddy");
-			base.Tooltip.SetDefault("'How did it get here?'");
+			base.Tooltip.SetDefault("'How did it get here?'\nLet the Keeper's spirit rest");
 		}
 
 		public override void SetDefaults()

@@ -10,7 +10,7 @@ namespace Redemption.Items.DruidDamageClass
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Seed Bag");
+			base.DisplayName.SetDefault("Seedbag");
 			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nThrows a slow-falling seed that grow into a pollinating flower");
 		}
 
@@ -34,19 +34,13 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.shootSpeed = 15f;
 		}
 
-		public override bool CanUseItem(Player player)
+		public override float UseTimeMultiplier(Player player)
 		{
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterSeedbags)
 			{
-				base.item.useTime = 23;
-				base.item.useAnimation = 23;
+				return 1.15f;
 			}
-			else
-			{
-				base.item.useTime = 28;
-				base.item.useAnimation = 28;
-			}
-			return true;
+			return 1f;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

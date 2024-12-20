@@ -11,12 +11,12 @@ namespace Redemption.Items.Weapons
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Tesla Cannon");
-			base.Tooltip.SetDefault("Fires Lightning Bolts");
+			base.Tooltip.SetDefault("Fires Lightning Bolts\nIf the lightning hurts you, craft the older version of this weapon");
 		}
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 175;
+			base.item.damage = 100;
 			base.item.useTime = 12;
 			base.item.useAnimation = 12;
 			base.item.autoReuse = true;
@@ -40,6 +40,14 @@ namespace Redemption.Items.Weapons
 			Vector2 vector2 = Vector2.Normalize(vector) * base.item.shootSpeed;
 			Projectile.NewProjectile(player.Center.X, player.Center.Y, vector2.X, vector2.Y, type, damage, 0.5f, player.whoAmI, Utils.ToRotation(vector), num);
 			return false;
+		}
+
+		public override void AddRecipes()
+		{
+			ModRecipe modRecipe = new ModRecipe(base.mod);
+			modRecipe.AddIngredient(null, "TeslaCannon2", 1);
+			modRecipe.SetResult(this, 1);
+			modRecipe.AddRecipe();
 		}
 
 		public override Vector2? HoldoutOffset()

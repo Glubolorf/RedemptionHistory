@@ -21,17 +21,17 @@ namespace Redemption.NPCs.Bosses
 
 		public override void AI()
 		{
-			this.timer++;
-			if (this.timer == 540)
+			base.projectile.localAI[1] += 1f;
+			if (base.projectile.localAI[1] == 540f)
 			{
 				Main.NewText("Hm? Something took down that good-for-nothing robotic blade I corrupted a few decades ago?", new Color(238, 77, 58), false);
 				Redemption.GirusSilence = true;
 			}
-			if (this.timer == 700)
+			if (base.projectile.localAI[1] == 700f)
 			{
 				Main.NewText("Haha, knew it was such a weak being!", new Color(238, 77, 58), false);
 			}
-			if (this.timer == 1200)
+			if (base.projectile.localAI[1] == 1200f)
 			{
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).omegaPower)
 				{
@@ -42,15 +42,15 @@ namespace Redemption.NPCs.Bosses
 					Main.NewText("You, little organic thing! Gongratulations, you defeated the weakest of the 'Overlords'!", new Color(238, 77, 58), false);
 				}
 			}
-			if (this.timer == 1600)
+			if (base.projectile.localAI[1] == 1600f)
 			{
 				Main.NewText("All of them are a bunch of useless, good for nothing minions of mine who do my bidding!", new Color(238, 77, 58), false);
 			}
-			if (this.timer == 1900)
+			if (base.projectile.localAI[1] == 1900f)
 			{
 				Main.NewText("Let's see if you have what it takes to take them all down... Hehehehe...", new Color(238, 77, 58), false);
 			}
-			if (this.timer == 2100)
+			if (base.projectile.localAI[1] == 2100f)
 			{
 				base.projectile.Kill();
 			}
@@ -65,7 +65,5 @@ namespace Redemption.NPCs.Bosses
 			}
 			Redemption.GirusSilence = false;
 		}
-
-		public int timer;
 	}
 }

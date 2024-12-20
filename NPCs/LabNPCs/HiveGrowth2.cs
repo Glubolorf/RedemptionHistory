@@ -17,7 +17,7 @@ namespace Redemption.NPCs.LabNPCs
 		public override void SetDefaults()
 		{
 			base.npc.aiStyle = -1;
-			base.npc.lifeMax = 20000;
+			base.npc.lifeMax = 10000;
 			base.npc.damage = 70;
 			base.npc.defense = 0;
 			base.npc.knockBackResist = 0f;

@@ -215,12 +215,26 @@ namespace Redemption.NPCs
 				shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 				nextSlot++;
 			}
+			if (Main.hardMode && NPC.downedMoonlord)
+			{
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType<LargeLostSoul>(), false);
+				shop.item[nextSlot].shopCustomPrice = new int?(16);
+				shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
+				nextSlot++;
+			}
 			if (RedeWorld.keeperSaved)
 			{
 				shop.item[nextSlot].SetDefaults(base.mod.ItemType<DarkShard>(), false);
 				shop.item[nextSlot].shopCustomPrice = new int?(4);
 				shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 				nextSlot++;
+				if (Main.expertMode)
+				{
+					shop.item[nextSlot].SetDefaults(base.mod.ItemType<HeartEmblem>(), false);
+					shop.item[nextSlot].shopCustomPrice = new int?(30);
+					shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
+					nextSlot++;
+				}
 			}
 		}
 

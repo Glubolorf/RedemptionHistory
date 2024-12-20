@@ -28,24 +28,39 @@ namespace Redemption.Items.Cores
 		{
 			DruidDamagePlayer druidDamagePlayer = DruidDamagePlayer.ModPlayer(player);
 			druidDamagePlayer.druidDamage += 0.05f;
-			if ((Main.dayTime && player.ZoneOverworldHeight) || player.ZoneSkyHeight)
+			if (player.ZoneOverworldHeight || player.ZoneSkyHeight)
 			{
-				player.lifeRegen += 5;
-				player.statLifeMax2 += 50;
-			}
-			if (!Main.dayTime)
-			{
-				druidDamagePlayer.druidDamage *= 0.95f;
-				player.magicDamage *= 0.95f;
-				player.meleeDamage *= 0.95f;
-				player.minionDamage *= 0.95f;
-				player.rangedDamage *= 0.95f;
-				player.thrownDamage *= 0.95f;
-				player.statDefense -= 4;
+				if (Main.dayTime)
+				{
+					player.lifeRegen += 3;
+					player.statLifeMax2 += 50;
+				}
+				else
+				{
+					druidDamagePlayer.druidDamage *= 0.95f;
+					player.magicDamage *= 0.95f;
+					player.meleeDamage *= 0.95f;
+					player.minionDamage *= 0.95f;
+					player.rangedDamage *= 0.95f;
+					player.thrownDamage *= 0.95f;
+					player.statDefense -= 4;
+				}
+				if (Main.raining)
+				{
+					druidDamagePlayer.druidDamage *= 1.05f;
+					player.magicDamage *= 1.05f;
+					player.meleeDamage *= 1.05f;
+					player.minionDamage *= 1.05f;
+					player.rangedDamage *= 1.05f;
+					player.thrownDamage *= 1.05f;
+					player.statDefense += 4;
+					player.statLifeMax2 += 50;
+					player.lifeRegen += 2;
+				}
 			}
 			if (player.wet)
 			{
-				player.lifeRegen += 15;
+				player.lifeRegen += 6;
 			}
 			if (player.ZoneCrimson)
 			{
@@ -54,18 +69,6 @@ namespace Redemption.Items.Cores
 			if (player.ZoneCorrupt)
 			{
 				player.bleed = true;
-			}
-			if (Main.raining)
-			{
-				druidDamagePlayer.druidDamage *= 1.05f;
-				player.magicDamage *= 1.05f;
-				player.meleeDamage *= 1.05f;
-				player.minionDamage *= 1.05f;
-				player.rangedDamage *= 1.05f;
-				player.thrownDamage *= 1.05f;
-				player.statDefense += 4;
-				player.statLifeMax2 += 50;
-				player.lifeRegen += 5;
 			}
 		}
 

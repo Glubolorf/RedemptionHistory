@@ -137,16 +137,22 @@ namespace Redemption.NPCs.Varients
 				this.attackTimer++;
 				base.npc.aiStyle = 0;
 				base.npc.velocity.X = 0f;
+				if (this.attackTimer == 1 && !Config.NoCombatText)
+				{
+					CombatText.NewText(base.npc.getRect(), Color.Purple, "Slice! Thrust!", true, true);
+				}
 				if (this.attackTimer == 6)
 				{
 					if (base.npc.direction == -1)
 					{
-						Projectile.NewProjectile(base.npc.position.X + -14f, base.npc.position.Y + 4f, 0f, 0f, base.mod.ProjectileType("DamagePro2"), 20, 3f, 255, 0f, 0f);
+						int num12 = Projectile.NewProjectile(base.npc.position.X + -14f, base.npc.position.Y + 4f, 0f, 0f, base.mod.ProjectileType("DamagePro2"), 20, 3f, 255, 0f, 0f);
+						Main.projectile[num12].netUpdate = true;
 						Main.PlaySound(SoundID.Item1, (int)base.npc.position.X, (int)base.npc.position.Y);
 					}
 					else
 					{
-						Projectile.NewProjectile(base.npc.position.X + 48f, base.npc.position.Y + 4f, 0f, 0f, base.mod.ProjectileType("DamagePro2"), 20, 3f, 255, 0f, 0f);
+						int num13 = Projectile.NewProjectile(base.npc.position.X + 48f, base.npc.position.Y + 4f, 0f, 0f, base.mod.ProjectileType("DamagePro2"), 20, 3f, 255, 0f, 0f);
+						Main.projectile[num13].netUpdate = true;
 						Main.PlaySound(SoundID.Item1, (int)base.npc.position.X, (int)base.npc.position.Y);
 					}
 				}
@@ -154,12 +160,14 @@ namespace Redemption.NPCs.Varients
 				{
 					if (base.npc.direction == -1)
 					{
-						Projectile.NewProjectile(base.npc.position.X + -14f, base.npc.position.Y + 28f, 0f, 0f, base.mod.ProjectileType("DamagePro1"), 20, 3f, 255, 0f, 0f);
+						int num14 = Projectile.NewProjectile(base.npc.position.X + -14f, base.npc.position.Y + 28f, 0f, 0f, base.mod.ProjectileType("DamagePro1"), 20, 3f, 255, 0f, 0f);
+						Main.projectile[num14].netUpdate = true;
 						Main.PlaySound(SoundID.Item19, (int)base.npc.position.X, (int)base.npc.position.Y);
 					}
 					else
 					{
-						Projectile.NewProjectile(base.npc.position.X + 48f, base.npc.position.Y + 28f, 0f, 0f, base.mod.ProjectileType("DamagePro1"), 20, 3f, 255, 0f, 0f);
+						int num15 = Projectile.NewProjectile(base.npc.position.X + 48f, base.npc.position.Y + 28f, 0f, 0f, base.mod.ProjectileType("DamagePro1"), 20, 3f, 255, 0f, 0f);
+						Main.projectile[num15].netUpdate = true;
 						Main.PlaySound(SoundID.Item19, (int)base.npc.position.X, (int)base.npc.position.Y);
 					}
 				}

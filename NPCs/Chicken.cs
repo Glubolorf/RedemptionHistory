@@ -31,6 +31,7 @@ namespace Redemption.NPCs
 			base.npc.dontTakeDamageFromHostiles = false;
 			this.banner = base.npc.type;
 			this.bannerItem = base.mod.ItemType("ChickenBanner");
+			base.npc.catchItem = (short)base.mod.ItemType("ChickenItem");
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -99,6 +100,10 @@ namespace Redemption.NPCs
 			{
 				base.npc.velocity.X = 0f;
 				this.peckTimer++;
+				if (this.peckTimer == 1 && !Config.NoCombatText)
+				{
+					CombatText.NewText(base.npc.getRect(), Color.LightGoldenrodYellow, "Peck Peck", true, true);
+				}
 				if (this.peckTimer >= 30)
 				{
 					this.peckPeck = false;

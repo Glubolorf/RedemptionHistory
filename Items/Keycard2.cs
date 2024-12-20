@@ -21,7 +21,7 @@ namespace Redemption.Items
 				Main.glowMaskTexture = array;
 			}
 			base.DisplayName.SetDefault("Keycard");
-			base.Tooltip.SetDefault("'Unlocks a special Lab Chest'");
+			base.Tooltip.SetDefault("'Unlocks a special Lab Chest'\nOnly one is needed");
 		}
 
 		public override void SetDefaults()

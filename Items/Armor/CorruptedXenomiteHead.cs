@@ -22,7 +22,7 @@ namespace Redemption.Items.Armor
 			base.item.height = 24;
 			base.item.value = Item.sellPrice(0, 35, 0, 0);
 			base.item.rare = 10;
-			base.item.defense = 22;
+			base.item.defense = 14;
 		}
 
 		public override void UpdateEquip(Player player)
@@ -47,7 +47,7 @@ namespace Redemption.Items.Armor
 			player.setBonus = "+200 max mana, greatly increased movement speed, and increased mana regen.";
 			player.AddBuff(11, 2, true);
 			player.statManaMax2 += 200;
-			player.moveSpeed += 4f;
+			player.moveSpeed += 8f;
 			player.manaRegen += 10;
 		}
 

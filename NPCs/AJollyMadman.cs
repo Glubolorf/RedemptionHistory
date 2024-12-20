@@ -87,9 +87,14 @@ namespace Redemption.NPCs
 			if (this.specialAttack)
 			{
 				this.attackTimer++;
+				if (this.attackTimer == 5 && !Config.NoCombatText)
+				{
+					CombatText.NewText(base.npc.getRect(), Color.DarkGray, "Hollow Slash!", true, true);
+				}
 				if (this.attackTimer == 5)
 				{
-					NPC.NewNPC((int)base.npc.position.X + 22, (int)base.npc.position.Y + 55, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
+					int num = NPC.NewNPC((int)base.npc.position.X + 22, (int)base.npc.position.Y + 55, base.mod.NPCType("DarkSoul3"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[num].netUpdate = true;
 					Main.PlaySound(SoundID.Item71, (int)base.npc.position.X, (int)base.npc.position.Y);
 				}
 				if (this.attackTimer >= 30)

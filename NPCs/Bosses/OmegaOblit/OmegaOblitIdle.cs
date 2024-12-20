@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -20,9 +21,9 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 		{
 			base.npc.aiStyle = -1;
 			this.aiType = 0;
-			base.npc.lifeMax = 95500;
+			base.npc.lifeMax = 115500;
 			base.npc.damage = 280;
-			base.npc.defense = 50;
+			base.npc.defense = 80;
 			base.npc.knockBackResist = 0f;
 			base.npc.width = 112;
 			base.npc.height = 178;
@@ -55,6 +56,26 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 			base.npc.lifeMax = (int)((float)base.npc.lifeMax * 0.5f * bossLifeScale);
 			base.npc.damage = (int)((float)base.npc.damage * 0.2f);
 			base.npc.defense = base.npc.defense + numPlayers;
+		}
+
+		public override void SendExtraAI(BinaryWriter writer)
+		{
+			base.SendExtraAI(writer);
+			if (Main.netMode == 2 || Main.dedServ)
+			{
+				writer.Write(this.customAI[0]);
+				writer.Write(this.customAI[1]);
+			}
+		}
+
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			base.ReceiveExtraAI(reader);
+			if (Main.netMode == 1)
+			{
+				this.customAI[0] = reader.ReadFloat();
+				this.customAI[1] = reader.ReadFloat();
+			}
 		}
 
 		public override void AI()
@@ -161,13 +182,13 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 					this.laser2Frame = 0;
 				}
 			}
-			if (this.attackMode == 0)
+			if (this.customAI[0] == 0f)
 			{
-				this.aiCounter++;
+				base.npc.ai[0] += 1f;
 				base.npc.dontTakeDamage = true;
 				this.idleStart = true;
 			}
-			if (this.attackMode == 1)
+			if (this.customAI[0] == 1f)
 			{
 				if (Main.rand.Next(250) == 0)
 				{
@@ -177,325 +198,375 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 						Main.dust[num].velocity *= 1.9f;
 					}
 					Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 32f), new Vector2(0f, -20f), base.mod.ProjectileType("OmegaMissile"), 60, 3f, 255, 0f, 0f);
+					int num2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 32f), new Vector2(0f, -20f), base.mod.ProjectileType("OmegaMissile"), 60, 3f, 255, 0f, 0f);
+					Main.projectile[num2].netUpdate = true;
 				}
-				this.chargeTimer++;
+				base.npc.ai[1] += 1f;
 				if (base.npc.life <= 71625)
 				{
-					if (this.chargeTimer == 300)
+					if (base.npc.ai[1] == 300f)
 					{
 						this.idleStart = false;
 						this.charging = true;
 						Vector2 vector;
 						vector..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
-						float num2 = (float)Math.Atan2((double)(vector.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
-						base.npc.velocity.X = (float)(Math.Cos((double)num2) * 26.0) * -1f;
-						base.npc.velocity.Y = (float)(Math.Sin((double)num2) * 26.0) * -1f;
+						float num3 = (float)Math.Atan2((double)(vector.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
+						base.npc.velocity.X = (float)(Math.Cos((double)num3) * 26.0) * -1f;
+						base.npc.velocity.Y = (float)(Math.Sin((double)num3) * 26.0) * -1f;
 						base.npc.ai[0] %= 6.2831855f;
 						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
 						Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 20, 1f, 0f);
 						Color color = default(Color);
 						Rectangle rectangle;
 						rectangle..ctor((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
-						int num3 = 30;
-						for (int j = 1; j <= num3; j++)
+						int num4 = 30;
+						for (int j = 1; j <= num4; j++)
 						{
-							int num4 = Dust.NewDust(base.npc.position, rectangle.Width, rectangle.Height, 235, 0f, 0f, 100, color, 2.5f);
-							Main.dust[num4].noGravity = false;
+							int num5 = Dust.NewDust(base.npc.position, rectangle.Width, rectangle.Height, 235, 0f, 0f, 100, color, 2.5f);
+							Main.dust[num5].noGravity = false;
 						}
+						base.npc.netUpdate = true;
 						return;
 					}
-					if (this.chargeTimer == 330)
+					if (base.npc.ai[1] == 330f)
 					{
 						this.charging = false;
 						this.charging2 = true;
 						Vector2 vector2;
 						vector2..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
-						float num5 = (float)Math.Atan2((double)(vector2.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector2.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
-						base.npc.velocity.X = (float)(Math.Cos((double)num5) * 26.0) * -1f;
-						base.npc.velocity.Y = (float)(Math.Sin((double)num5) * 26.0) * -1f;
+						float num6 = (float)Math.Atan2((double)(vector2.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector2.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
+						base.npc.velocity.X = (float)(Math.Cos((double)num6) * 26.0) * -1f;
+						base.npc.velocity.Y = (float)(Math.Sin((double)num6) * 26.0) * -1f;
 						base.npc.ai[0] %= 6.2831855f;
 						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
 						Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 20, 1f, 0f);
 						Color color2 = default(Color);
 						Rectangle rectangle2;
 						rectangle2..ctor((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
-						int num6 = 30;
-						for (int k = 1; k <= num6; k++)
+						int num7 = 30;
+						for (int k = 1; k <= num7; k++)
 						{
-							int num7 = Dust.NewDust(base.npc.position, rectangle2.Width, rectangle2.Height, 235, 0f, 0f, 100, color2, 2.5f);
-							Main.dust[num7].noGravity = false;
+							int num8 = Dust.NewDust(base.npc.position, rectangle2.Width, rectangle2.Height, 235, 0f, 0f, 100, color2, 2.5f);
+							Main.dust[num8].noGravity = false;
 						}
+						base.npc.netUpdate = true;
 						return;
 					}
 				}
 				if (base.npc.life > 71625)
 				{
-					if (this.chargeTimer == 300)
+					if (base.npc.ai[1] == 300f)
 					{
 						this.idleStart = false;
 						this.charging = true;
 						Vector2 vector3;
 						vector3..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
-						float num8 = (float)Math.Atan2((double)(vector3.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector3.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
-						base.npc.velocity.X = (float)(Math.Cos((double)num8) * 24.0) * -1f;
-						base.npc.velocity.Y = (float)(Math.Sin((double)num8) * 24.0) * -1f;
+						float num9 = (float)Math.Atan2((double)(vector3.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector3.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
+						base.npc.velocity.X = (float)(Math.Cos((double)num9) * 24.0) * -1f;
+						base.npc.velocity.Y = (float)(Math.Sin((double)num9) * 24.0) * -1f;
 						base.npc.ai[0] %= 6.2831855f;
 						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
 						Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 20, 1f, 0f);
 						Color color3 = default(Color);
 						Rectangle rectangle3;
 						rectangle3..ctor((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
-						int num9 = 30;
-						for (int l = 1; l <= num9; l++)
+						int num10 = 30;
+						for (int l = 1; l <= num10; l++)
 						{
-							int num10 = Dust.NewDust(base.npc.position, rectangle3.Width, rectangle3.Height, 235, 0f, 0f, 100, color3, 2.5f);
-							Main.dust[num10].noGravity = false;
+							int num11 = Dust.NewDust(base.npc.position, rectangle3.Width, rectangle3.Height, 235, 0f, 0f, 100, color3, 2.5f);
+							Main.dust[num11].noGravity = false;
 						}
+						base.npc.netUpdate = true;
 						return;
 					}
-					if (this.chargeTimer == 330)
+					if (base.npc.ai[1] == 330f)
 					{
 						this.charging = false;
 						this.charging2 = true;
 						Vector2 vector4;
 						vector4..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
-						float num11 = (float)Math.Atan2((double)(vector4.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector4.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
-						base.npc.velocity.X = (float)(Math.Cos((double)num11) * 24.0) * -1f;
-						base.npc.velocity.Y = (float)(Math.Sin((double)num11) * 24.0) * -1f;
+						float num12 = (float)Math.Atan2((double)(vector4.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector4.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
+						base.npc.velocity.X = (float)(Math.Cos((double)num12) * 24.0) * -1f;
+						base.npc.velocity.Y = (float)(Math.Sin((double)num12) * 24.0) * -1f;
 						base.npc.ai[0] %= 6.2831855f;
 						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
 						Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 20, 1f, 0f);
 						Color color4 = default(Color);
 						Rectangle rectangle4;
 						rectangle4..ctor((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
-						int num12 = 30;
-						for (int m = 1; m <= num12; m++)
+						int num13 = 30;
+						for (int m = 1; m <= num13; m++)
 						{
-							int num13 = Dust.NewDust(base.npc.position, rectangle4.Width, rectangle4.Height, 235, 0f, 0f, 100, color4, 2.5f);
-							Main.dust[num13].noGravity = false;
+							int num14 = Dust.NewDust(base.npc.position, rectangle4.Width, rectangle4.Height, 235, 0f, 0f, 100, color4, 2.5f);
+							Main.dust[num14].noGravity = false;
 						}
+						base.npc.netUpdate = true;
 						return;
 					}
 				}
-				if (this.chargeTimer >= 360)
+				if (base.npc.ai[1] >= 360f)
 				{
-					this.attackMode = 2;
+					this.customAI[0] = 2f;
 					this.charging2 = false;
+					base.npc.netUpdate = true;
 				}
-				if (this.attackMode == 2)
+			}
+			if (this.customAI[0] == 2f)
+			{
+				if (Main.rand.Next(300) == 0)
 				{
-					if (Main.rand.Next(300) == 0)
+					for (int n = 0; n < 20; n++)
 					{
-						for (int n = 0; n < 20; n++)
-						{
-							int num14 = Dust.NewDust(new Vector2(base.npc.position.X + 48f, base.npc.position.Y + 26f), 6, 6, 235, 0f, 0f, 100, default(Color), 1.2f);
-							Main.dust[num14].velocity *= 1.9f;
-						}
-						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 32f), new Vector2(0f, -20f), base.mod.ProjectileType("OmegaMissile"), 70, 3f, 255, 0f, 0f);
+						int num15 = Dust.NewDust(new Vector2(base.npc.position.X + 48f, base.npc.position.Y + 26f), 6, 6, 235, 0f, 0f, 100, default(Color), 1.2f);
+						Main.dust[num15].velocity *= 1.9f;
 					}
-					this.plasmaTimer++;
-					if (base.npc.life > 71625)
+					Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
+					int num16 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 32f), new Vector2(0f, -20f), base.mod.ProjectileType("OmegaMissile"), 70, 3f, 255, 0f, 0f);
+					Main.projectile[num16].netUpdate = true;
+				}
+				this.customAI[1] += 1f;
+				if (base.npc.life > 71625)
+				{
+					if (this.customAI[1] <= 89f)
 					{
-						if (this.plasmaTimer <= 89)
-						{
-							this.idleStart = true;
-						}
-						if (this.plasmaTimer >= 90 && this.plasmaTimer <= 209)
-						{
-							this.shooting = true;
-							this.idleStart = false;
-						}
-						if (this.plasmaTimer == 145)
-						{
-							Main.PlaySound(SoundID.Item92, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(4f, 0f), base.mod.ProjectileType("OmegaPlasmaBall"), 50, 3f, 255, 0f, 0f);
-						}
-						if (this.plasmaTimer == 150)
-						{
-							Main.PlaySound(SoundID.Item92, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(8f, 0f), base.mod.ProjectileType("OmegaPlasmaBall"), 50, 3f, 255, 0f, 0f);
-						}
-						if (this.plasmaTimer == 155)
-						{
-							Main.PlaySound(SoundID.Item92, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(12f, 0f), base.mod.ProjectileType("OmegaPlasmaBall"), 50, 3f, 255, 0f, 0f);
-						}
-						if (this.plasmaTimer >= 210)
-						{
-							this.shooting = false;
-							this.idleStart = true;
-							this.attackMode = 1;
-						}
-						if (this.plasmaTimer == 210)
-						{
-							this.chargeTimer = Main.rand.Next(-200, 100);
-							this.plasmaTimer = 0;
-							this.shootCounter = 0;
-							this.shootFrame = 0;
-						}
+						this.idleStart = true;
 					}
-					if (base.npc.life <= 71625 && base.npc.life > 55000)
+					if (this.customAI[1] >= 90f && this.customAI[1] <= 209f)
 					{
-						if (this.plasmaTimer <= 69)
-						{
-							this.idleStart = true;
-						}
-						if (this.plasmaTimer >= 70 && this.plasmaTimer <= 189)
-						{
-							this.shooting = true;
-							this.idleStart = false;
-						}
-						if (this.plasmaTimer == 125)
-						{
-							Main.PlaySound(SoundID.Item92, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(8f, 0f), base.mod.ProjectileType("OmegaPlasmaBall"), 50, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(6f, 3f), base.mod.ProjectileType("OmegaPlasmaBall"), 50, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(6f, -3f), base.mod.ProjectileType("OmegaPlasmaBall"), 50, 3f, 255, 0f, 0f);
-						}
-						if (this.plasmaTimer == 122)
-						{
-							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(8f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
-						}
-						if (this.plasmaTimer == 126)
-						{
-							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(10f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
-						}
-						if (this.plasmaTimer == 130)
-						{
-							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(12f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
-						}
-						if (this.plasmaTimer == 134)
-						{
-							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(14f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
-						}
-						if (this.plasmaTimer == 138)
-						{
-							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(16f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
-						}
-						if (this.plasmaTimer == 135)
-						{
-							Main.PlaySound(SoundID.Item92, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(8f, 0f), base.mod.ProjectileType("OmegaPlasmaBall"), 50, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(6f, 3f), base.mod.ProjectileType("OmegaPlasmaBall"), 50, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(6f, -3f), base.mod.ProjectileType("OmegaPlasmaBall"), 50, 3f, 255, 0f, 0f);
-						}
-						if (this.plasmaTimer >= 190)
-						{
-							this.shooting = false;
-							this.idleStart = true;
-							this.attackMode = 1;
-						}
-						if (this.plasmaTimer == 190)
-						{
-							this.chargeTimer = Main.rand.Next(-150, 150);
-							this.plasmaTimer = 0;
-							this.shootCounter = 0;
-							this.shootFrame = 0;
-						}
+						this.shooting = true;
+						this.idleStart = false;
 					}
-					if (base.npc.life <= 55000)
+					if (this.customAI[1] == 145f)
 					{
-						if (this.plasmaTimer <= 69)
-						{
-							this.idleStart = true;
-						}
-						if (this.plasmaTimer >= 70 && this.plasmaTimer <= 189)
-						{
-							this.shooting = true;
-							this.idleStart = false;
-						}
-						if (this.plasmaTimer == 125)
-						{
-							Main.PlaySound(SoundID.Item92, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(0f, 0f), base.mod.ProjectileType("OmegaPlasmaBall"), 50, 3f, 255, 0f, 0f);
-						}
-						if (this.plasmaTimer == 122)
-						{
-							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(4f, 4f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(6f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(4f, -4f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
-						}
-						if (this.plasmaTimer == 124)
-						{
-							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(7f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
-						}
-						if (this.plasmaTimer == 126)
-						{
-							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(6f, 4f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(8f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(6f, -4f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
-						}
-						if (this.plasmaTimer == 128)
-						{
-							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(9f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
-						}
-						if (this.plasmaTimer == 130)
-						{
-							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(8f, 4f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(10f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(8f, -4f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(0f, 0f), base.mod.ProjectileType("OmegaPlasmaBall"), 50, 3f, 255, 0f, 0f);
-						}
-						if (this.plasmaTimer == 132)
-						{
-							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(11f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
-						}
-						if (this.plasmaTimer == 134)
-						{
-							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(10f, 4f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(12f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(10f, -4f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
-						}
-						if (this.plasmaTimer == 136)
-						{
-							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(13f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
-						}
-						if (this.plasmaTimer == 138)
-						{
-							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(12f, 4f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(14f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(12f, -4f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
-						}
-						if (this.plasmaTimer == 135)
-						{
-							Main.PlaySound(SoundID.Item92, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(0f, 0f), base.mod.ProjectileType("OmegaPlasmaBall"), 50, 3f, 255, 0f, 0f);
-						}
-						if (this.plasmaTimer >= 190)
-						{
-							this.shooting = false;
-							this.idleStart = true;
-							this.attackMode = 1;
-						}
-						if (this.plasmaTimer == 190)
-						{
-							this.chargeTimer = Main.rand.Next(-50, 150);
-							this.plasmaTimer = 0;
-							this.shootCounter = 0;
-							this.shootFrame = 0;
-						}
+						Main.PlaySound(SoundID.Item92, (int)base.npc.position.X, (int)base.npc.position.Y);
+						int num17 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(4f, 0f), base.mod.ProjectileType("OmegaPlasmaBall"), 50, 3f, 255, 0f, 0f);
+						Main.projectile[num17].netUpdate = true;
 					}
+					if (this.customAI[1] == 150f)
+					{
+						Main.PlaySound(SoundID.Item92, (int)base.npc.position.X, (int)base.npc.position.Y);
+						int num18 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(8f, 0f), base.mod.ProjectileType("OmegaPlasmaBall"), 50, 3f, 255, 0f, 0f);
+						Main.projectile[num18].netUpdate = true;
+					}
+					if (this.customAI[1] == 155f)
+					{
+						Main.PlaySound(SoundID.Item92, (int)base.npc.position.X, (int)base.npc.position.Y);
+						int num19 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(12f, 0f), base.mod.ProjectileType("OmegaPlasmaBall"), 50, 3f, 255, 0f, 0f);
+						Main.projectile[num19].netUpdate = true;
+					}
+					if (this.customAI[1] >= 210f)
+					{
+						this.shooting = false;
+						this.idleStart = true;
+						this.customAI[0] = 1f;
+						base.npc.netUpdate = true;
+					}
+					if (this.customAI[1] == 210f)
+					{
+						base.npc.ai[1] = (float)Main.rand.Next(-200, 100);
+						this.customAI[1] = 0f;
+						this.shootCounter = 0;
+						this.shootFrame = 0;
+						base.npc.netUpdate = true;
+					}
+				}
+				if (base.npc.life <= 71625 && base.npc.life > 55000)
+				{
+					if (this.customAI[1] <= 69f)
+					{
+						this.idleStart = true;
+					}
+					if (this.customAI[1] >= 70f && this.customAI[1] <= 189f)
+					{
+						this.shooting = true;
+						this.idleStart = false;
+					}
+					if (this.customAI[1] == 125f)
+					{
+						Main.PlaySound(SoundID.Item92, (int)base.npc.position.X, (int)base.npc.position.Y);
+						int num20 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(8f, 0f), base.mod.ProjectileType("OmegaPlasmaBall"), 50, 3f, 255, 0f, 0f);
+						int num21 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(6f, 3f), base.mod.ProjectileType("OmegaPlasmaBall"), 50, 3f, 255, 0f, 0f);
+						int num22 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(6f, -3f), base.mod.ProjectileType("OmegaPlasmaBall"), 50, 3f, 255, 0f, 0f);
+						Main.projectile[num20].netUpdate = true;
+						Main.projectile[num21].netUpdate = true;
+						Main.projectile[num22].netUpdate = true;
+					}
+					if (this.customAI[1] == 122f)
+					{
+						Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
+						int num23 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(8f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+						Main.projectile[num23].netUpdate = true;
+					}
+					if (this.customAI[1] == 126f)
+					{
+						Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
+						int num24 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(10f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+						Main.projectile[num24].netUpdate = true;
+					}
+					if (this.customAI[1] == 130f)
+					{
+						Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
+						int num25 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(12f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+						Main.projectile[num25].netUpdate = true;
+					}
+					if (this.customAI[1] == 134f)
+					{
+						Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
+						int num26 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(14f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+						Main.projectile[num26].netUpdate = true;
+					}
+					if (this.customAI[1] == 138f)
+					{
+						Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
+						int num27 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(16f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+						Main.projectile[num27].netUpdate = true;
+					}
+					if (this.customAI[1] == 135f)
+					{
+						Main.PlaySound(SoundID.Item92, (int)base.npc.position.X, (int)base.npc.position.Y);
+						int num28 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(8f, 0f), base.mod.ProjectileType("OmegaPlasmaBall"), 50, 3f, 255, 0f, 0f);
+						int num29 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(6f, 3f), base.mod.ProjectileType("OmegaPlasmaBall"), 50, 3f, 255, 0f, 0f);
+						int num30 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(6f, -3f), base.mod.ProjectileType("OmegaPlasmaBall"), 50, 3f, 255, 0f, 0f);
+						Main.projectile[num28].netUpdate = true;
+						Main.projectile[num29].netUpdate = true;
+						Main.projectile[num30].netUpdate = true;
+					}
+					if (this.customAI[1] >= 190f)
+					{
+						this.shooting = false;
+						this.idleStart = true;
+						this.customAI[0] = 1f;
+						base.npc.netUpdate = true;
+					}
+					if (this.customAI[1] == 190f)
+					{
+						base.npc.ai[1] = (float)Main.rand.Next(-150, 150);
+						this.customAI[1] = 0f;
+						this.shootCounter = 0;
+						this.shootFrame = 0;
+						base.npc.netUpdate = true;
+					}
+				}
+			}
+			if (base.npc.life <= 55000)
+			{
+				if (this.customAI[1] <= 69f)
+				{
+					this.idleStart = true;
+				}
+				if (this.customAI[1] >= 70f && this.customAI[1] <= 189f)
+				{
+					this.shooting = true;
+					this.idleStart = false;
+				}
+				if (this.customAI[1] == 125f)
+				{
+					Main.PlaySound(SoundID.Item92, (int)base.npc.position.X, (int)base.npc.position.Y);
+					int num31 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(0f, 0f), base.mod.ProjectileType("OmegaPlasmaBall"), 50, 3f, 255, 0f, 0f);
+					Main.projectile[num31].netUpdate = true;
+				}
+				if (this.customAI[1] == 122f)
+				{
+					Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
+					int num32 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(4f, 4f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+					int num33 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(6f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+					int num34 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(4f, -4f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+					Main.projectile[num32].netUpdate = true;
+					Main.projectile[num33].netUpdate = true;
+					Main.projectile[num34].netUpdate = true;
+				}
+				if (this.customAI[1] == 124f)
+				{
+					Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
+					int num35 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(7f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+					Main.projectile[num35].netUpdate = true;
+				}
+				if (this.customAI[1] == 126f)
+				{
+					Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
+					int num36 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(6f, 4f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+					int num37 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(8f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+					int num38 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(6f, -4f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+					Main.projectile[num36].netUpdate = true;
+					Main.projectile[num37].netUpdate = true;
+					Main.projectile[num38].netUpdate = true;
+				}
+				if (this.customAI[1] == 128f)
+				{
+					Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
+					int num39 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(9f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+					Main.projectile[num39].netUpdate = true;
+				}
+				if (this.customAI[1] == 130f)
+				{
+					Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
+					int num40 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(8f, 4f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+					int num41 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(10f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+					int num42 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(8f, -4f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+					int num43 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(0f, 0f), base.mod.ProjectileType("OmegaPlasmaBall"), 50, 3f, 255, 0f, 0f);
+					Main.projectile[num40].netUpdate = true;
+					Main.projectile[num41].netUpdate = true;
+					Main.projectile[num42].netUpdate = true;
+					Main.projectile[num43].netUpdate = true;
+				}
+				if (this.customAI[1] == 132f)
+				{
+					Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
+					int num44 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(11f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+					Main.projectile[num44].netUpdate = true;
+				}
+				if (this.customAI[1] == 134f)
+				{
+					Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
+					int num45 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(10f, 4f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+					int num46 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(12f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+					int num47 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(10f, -4f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+					Main.projectile[num45].netUpdate = true;
+					Main.projectile[num46].netUpdate = true;
+					Main.projectile[num47].netUpdate = true;
+				}
+				if (this.customAI[1] == 136f)
+				{
+					Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
+					int num48 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(13f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+					Main.projectile[num48].netUpdate = true;
+				}
+				if (this.customAI[1] == 138f)
+				{
+					Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
+					int num49 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(12f, 4f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+					int num50 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(14f, 0f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+					int num51 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(12f, -4f), base.mod.ProjectileType("OmegaBlast"), 50, 3f, 255, 0f, 0f);
+					Main.projectile[num49].netUpdate = true;
+					Main.projectile[num50].netUpdate = true;
+					Main.projectile[num51].netUpdate = true;
+				}
+				if (this.customAI[1] == 135f)
+				{
+					Main.PlaySound(SoundID.Item92, (int)base.npc.position.X, (int)base.npc.position.Y);
+					int num52 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(0f, 0f), base.mod.ProjectileType("OmegaPlasmaBall"), 50, 3f, 255, 0f, 0f);
+					Main.projectile[num52].netUpdate = true;
+				}
+				if (this.customAI[1] >= 190f)
+				{
+					this.shooting = false;
+					this.idleStart = true;
+					this.customAI[0] = 1f;
+					base.npc.netUpdate = true;
+				}
+				if (this.customAI[1] == 190f)
+				{
+					base.npc.ai[1] = (float)Main.rand.Next(-50, 150);
+					this.customAI[1] = 0f;
+					this.shootCounter = 0;
+					this.shootFrame = 0;
+					base.npc.netUpdate = true;
 				}
 			}
 			if (base.npc.life <= 50000 && !this.missileDone1)
 			{
 				this.missileLaunch1 = true;
+				base.npc.netUpdate = true;
 			}
 			if (this.missileLaunch1)
 			{
@@ -503,321 +574,272 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 				this.charging = false;
 				this.charging2 = false;
 				this.idleStart = true;
-				this.chargeTimer = 0;
-				this.plasmaTimer = 0;
+				base.npc.ai[1] = 0f;
+				this.customAI[1] = 0f;
 				this.shootCounter = 0;
 				this.shootFrame = 0;
-				this.missileTimer1++;
-				if (this.missileTimer1 == 30)
+				base.npc.ai[2] += 1f;
+				if (base.npc.ai[2] == 30f)
 				{
-					string text = "MISSILE BARRAGE INITIATED...";
-					Color rarityRed = Colors.RarityRed;
-					byte r = rarityRed.R;
-					Color rarityRed2 = Colors.RarityRed;
-					byte g = rarityRed2.G;
-					Color rarityRed3 = Colors.RarityRed;
-					Main.NewText(text, r, g, rarityRed3.B, false);
-					NPC.NewNPC((int)base.npc.position.X, (int)base.npc.position.Y, base.mod.NPCType("OmegaMK2Droid1"), 0, 0f, 0f, 0f, 0f, 255);
-					NPC.NewNPC((int)base.npc.position.X, (int)base.npc.position.Y, base.mod.NPCType("OmegaMK2Droid2"), 0, 0f, 0f, 0f, 0f, 255);
+					CombatText.NewText(base.npc.getRect(), Colors.RarityRed, "MISSILE BARRAGE INITIATED...", true, false);
+					int num53 = NPC.NewNPC((int)base.npc.position.X, (int)base.npc.position.Y, base.mod.NPCType("OmegaMK2Droid1"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[num53].netUpdate = true;
+					int num54 = NPC.NewNPC((int)base.npc.position.X, (int)base.npc.position.Y, base.mod.NPCType("OmegaMK2Droid2"), 0, 0f, 0f, 0f, 0f, 255);
+					Main.npc[num54].netUpdate = true;
 				}
-				if (this.missileTimer1 == 120)
+				if (base.npc.ai[2] == 120f)
 				{
-					string text2 = "LAUNCHING IN 5 SECONDS...";
-					Color rarityRed4 = Colors.RarityRed;
-					byte r2 = rarityRed4.R;
-					Color rarityRed5 = Colors.RarityRed;
-					byte g2 = rarityRed5.G;
-					rarityRed5 = Colors.RarityRed;
-					Main.NewText(text2, r2, g2, rarityRed5.B, false);
+					CombatText.NewText(base.npc.getRect(), Colors.RarityRed, "LAUNCHING IN 5 SECONDS...", true, false);
 					Main.PlaySound(SoundID.Item47, (int)base.npc.position.X, (int)base.npc.position.Y);
+					base.npc.netUpdate = true;
 				}
-				if (this.missileTimer1 == 180)
+				if (base.npc.ai[2] == 180f)
 				{
 					Main.PlaySound(SoundID.Item47, (int)base.npc.position.X, (int)base.npc.position.Y);
 				}
-				if (this.missileTimer1 == 240)
+				if (base.npc.ai[2] == 240f)
 				{
 					Main.PlaySound(SoundID.Item47, (int)base.npc.position.X, (int)base.npc.position.Y);
 				}
-				if (this.missileTimer1 == 300)
+				if (base.npc.ai[2] == 300f)
 				{
 					Main.PlaySound(SoundID.Item47, (int)base.npc.position.X, (int)base.npc.position.Y);
 				}
-				if (this.missileTimer1 == 360)
+				if (base.npc.ai[2] == 360f)
 				{
-					string text3 = "LAUNCHING MISSILE BARRAGE...";
-					Color rarityRed5 = Colors.RarityRed;
-					byte r3 = rarityRed5.R;
-					rarityRed5 = Colors.RarityRed;
-					byte g3 = rarityRed5.G;
-					rarityRed5 = Colors.RarityRed;
-					Main.NewText(text3, r3, g3, rarityRed5.B, false);
+					CombatText.NewText(base.npc.getRect(), Colors.RarityRed, "LAUNCHING MISSILE BARRAGE...", true, false);
 					Main.PlaySound(SoundID.Item47, (int)base.npc.position.X, (int)base.npc.position.Y);
+					base.npc.netUpdate = true;
 				}
-				if (this.missileTimer1 == 420)
+				if (base.npc.ai[2] == 420f)
 				{
-					for (int num15 = 0; num15 < 20; num15++)
+					for (int num55 = 0; num55 < 20; num55++)
 					{
-						int num16 = Dust.NewDust(new Vector2(base.npc.position.X + 48f, base.npc.position.Y + 26f), 6, 6, 235, 0f, 0f, 100, default(Color), 1.2f);
-						Main.dust[num16].velocity *= 1.9f;
+						int num56 = Dust.NewDust(new Vector2(base.npc.position.X + 48f, base.npc.position.Y + 26f), 6, 6, 235, 0f, 0f, 100, default(Color), 1.2f);
+						Main.dust[num56].velocity *= 1.9f;
 					}
 					Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 32f), new Vector2(0f, -20f), base.mod.ProjectileType("OmegaMissile"), 60, 3f, 255, 0f, 0f);
+					int num57 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 32f), new Vector2(0f, -20f), base.mod.ProjectileType("OmegaMissile"), 60, 3f, 255, 0f, 0f);
+					Main.projectile[num57].netUpdate = true;
 				}
-				if (this.missileTimer1 == 422)
+				if (base.npc.ai[2] == 422f)
 				{
-					for (int num17 = 0; num17 < 20; num17++)
+					for (int num58 = 0; num58 < 20; num58++)
 					{
-						int num18 = Dust.NewDust(new Vector2(base.npc.position.X + 48f, base.npc.position.Y + 26f), 6, 6, 235, 0f, 0f, 100, default(Color), 1.2f);
-						Main.dust[num18].velocity *= 1.9f;
+						int num59 = Dust.NewDust(new Vector2(base.npc.position.X + 48f, base.npc.position.Y + 26f), 6, 6, 235, 0f, 0f, 100, default(Color), 1.2f);
+						Main.dust[num59].velocity *= 1.9f;
 					}
 					Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 32f), new Vector2(5f, -20f), base.mod.ProjectileType("OmegaMissile"), 60, 3f, 255, 0f, 0f);
+					int num60 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 32f), new Vector2(5f, -20f), base.mod.ProjectileType("OmegaMissile"), 60, 3f, 255, 0f, 0f);
+					Main.projectile[num60].netUpdate = true;
 				}
-				if (this.missileTimer1 == 425)
+				if (base.npc.ai[2] == 425f)
 				{
-					for (int num19 = 0; num19 < 20; num19++)
+					for (int num61 = 0; num61 < 20; num61++)
 					{
-						int num20 = Dust.NewDust(new Vector2(base.npc.position.X + 48f, base.npc.position.Y + 26f), 6, 6, 235, 0f, 0f, 100, default(Color), 1.2f);
-						Main.dust[num20].velocity *= 1.9f;
+						int num62 = Dust.NewDust(new Vector2(base.npc.position.X + 48f, base.npc.position.Y + 26f), 6, 6, 235, 0f, 0f, 100, default(Color), 1.2f);
+						Main.dust[num62].velocity *= 1.9f;
 					}
 					Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 32f), new Vector2(-5f, -20f), base.mod.ProjectileType("OmegaMissile"), 60, 3f, 255, 0f, 0f);
+					int num63 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 32f), new Vector2(-5f, -20f), base.mod.ProjectileType("OmegaMissile"), 60, 3f, 255, 0f, 0f);
+					Main.projectile[num63].netUpdate = true;
 				}
-				if (this.missileTimer1 == 426)
+				if (base.npc.ai[2] == 426f)
 				{
-					for (int num21 = 0; num21 < 20; num21++)
+					for (int num64 = 0; num64 < 20; num64++)
 					{
-						int num22 = Dust.NewDust(new Vector2(base.npc.position.X + 48f, base.npc.position.Y + 26f), 6, 6, 235, 0f, 0f, 100, default(Color), 1.2f);
-						Main.dust[num22].velocity *= 1.9f;
+						int num65 = Dust.NewDust(new Vector2(base.npc.position.X + 48f, base.npc.position.Y + 26f), 6, 6, 235, 0f, 0f, 100, default(Color), 1.2f);
+						Main.dust[num65].velocity *= 1.9f;
 					}
 					Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 32f), new Vector2(-2f, -20f), base.mod.ProjectileType("OmegaMissile"), 60, 3f, 255, 0f, 0f);
+					int num66 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 32f), new Vector2(-2f, -20f), base.mod.ProjectileType("OmegaMissile"), 60, 3f, 255, 0f, 0f);
+					Main.projectile[num66].netUpdate = true;
 				}
-				if (this.missileTimer1 == 428)
+				if (base.npc.ai[2] == 428f)
 				{
-					for (int num23 = 0; num23 < 20; num23++)
+					for (int num67 = 0; num67 < 20; num67++)
 					{
-						int num24 = Dust.NewDust(new Vector2(base.npc.position.X + 48f, base.npc.position.Y + 26f), 6, 6, 235, 0f, 0f, 100, default(Color), 1.2f);
-						Main.dust[num24].velocity *= 1.9f;
+						int num68 = Dust.NewDust(new Vector2(base.npc.position.X + 48f, base.npc.position.Y + 26f), 6, 6, 235, 0f, 0f, 100, default(Color), 1.2f);
+						Main.dust[num68].velocity *= 1.9f;
 					}
 					Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 32f), new Vector2(7f, -20f), base.mod.ProjectileType("OmegaMissile"), 60, 3f, 255, 0f, 0f);
+					int num69 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 32f), new Vector2(7f, -20f), base.mod.ProjectileType("OmegaMissile"), 60, 3f, 255, 0f, 0f);
+					Main.projectile[num69].netUpdate = true;
 				}
-				if (this.missileTimer1 == 431)
+				if (base.npc.ai[2] == 431f)
 				{
-					for (int num25 = 0; num25 < 20; num25++)
+					for (int num70 = 0; num70 < 20; num70++)
 					{
-						int num26 = Dust.NewDust(new Vector2(base.npc.position.X + 48f, base.npc.position.Y + 26f), 6, 6, 235, 0f, 0f, 100, default(Color), 1.2f);
-						Main.dust[num26].velocity *= 1.9f;
+						int num71 = Dust.NewDust(new Vector2(base.npc.position.X + 48f, base.npc.position.Y + 26f), 6, 6, 235, 0f, 0f, 100, default(Color), 1.2f);
+						Main.dust[num71].velocity *= 1.9f;
 					}
 					Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 32f), new Vector2(1f, -20f), base.mod.ProjectileType("OmegaMissile"), 60, 3f, 255, 0f, 0f);
+					int num72 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 32f), new Vector2(1f, -20f), base.mod.ProjectileType("OmegaMissile"), 60, 3f, 255, 0f, 0f);
+					Main.projectile[num72].netUpdate = true;
 				}
-				if (this.missileTimer1 == 432)
+				if (base.npc.ai[2] == 432f)
 				{
-					for (int num27 = 0; num27 < 20; num27++)
+					for (int num73 = 0; num73 < 20; num73++)
 					{
-						int num28 = Dust.NewDust(new Vector2(base.npc.position.X + 48f, base.npc.position.Y + 26f), 6, 6, 235, 0f, 0f, 100, default(Color), 1.2f);
-						Main.dust[num28].velocity *= 1.9f;
+						int num74 = Dust.NewDust(new Vector2(base.npc.position.X + 48f, base.npc.position.Y + 26f), 6, 6, 235, 0f, 0f, 100, default(Color), 1.2f);
+						Main.dust[num74].velocity *= 1.9f;
 					}
 					Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 32f), new Vector2(-8f, -20f), base.mod.ProjectileType("OmegaMissile"), 60, 3f, 255, 0f, 0f);
+					int num75 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 32f), new Vector2(-8f, -20f), base.mod.ProjectileType("OmegaMissile"), 60, 3f, 255, 0f, 0f);
+					Main.projectile[num75].netUpdate = true;
 				}
-				if (this.missileTimer1 == 435)
+				if (base.npc.ai[2] == 435f)
 				{
-					for (int num29 = 0; num29 < 20; num29++)
+					for (int num76 = 0; num76 < 20; num76++)
 					{
-						int num30 = Dust.NewDust(new Vector2(base.npc.position.X + 48f, base.npc.position.Y + 26f), 6, 6, 235, 0f, 0f, 100, default(Color), 1.2f);
-						Main.dust[num30].velocity *= 1.9f;
+						int num77 = Dust.NewDust(new Vector2(base.npc.position.X + 48f, base.npc.position.Y + 26f), 6, 6, 235, 0f, 0f, 100, default(Color), 1.2f);
+						Main.dust[num77].velocity *= 1.9f;
 					}
 					Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 32f), new Vector2(6f, -20f), base.mod.ProjectileType("OmegaMissile"), 60, 3f, 255, 0f, 0f);
+					int num78 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 32f), new Vector2(6f, -20f), base.mod.ProjectileType("OmegaMissile"), 60, 3f, 255, 0f, 0f);
+					Main.projectile[num78].netUpdate = true;
 				}
-				if (this.missileTimer1 == 436)
+				if (base.npc.ai[2] == 436f)
 				{
-					for (int num31 = 0; num31 < 20; num31++)
+					for (int num79 = 0; num79 < 20; num79++)
 					{
-						int num32 = Dust.NewDust(new Vector2(base.npc.position.X + 48f, base.npc.position.Y + 26f), 6, 6, 235, 0f, 0f, 100, default(Color), 1.2f);
-						Main.dust[num32].velocity *= 1.9f;
+						int num80 = Dust.NewDust(new Vector2(base.npc.position.X + 48f, base.npc.position.Y + 26f), 6, 6, 235, 0f, 0f, 100, default(Color), 1.2f);
+						Main.dust[num80].velocity *= 1.9f;
 					}
 					Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 32f), new Vector2(2f, -20f), base.mod.ProjectileType("OmegaMissile"), 60, 3f, 255, 0f, 0f);
+					int num81 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 32f), new Vector2(2f, -20f), base.mod.ProjectileType("OmegaMissile"), 60, 3f, 255, 0f, 0f);
+					Main.projectile[num81].netUpdate = true;
 				}
-				if (this.missileTimer1 == 440)
+				if (base.npc.ai[2] == 440f)
 				{
-					for (int num33 = 0; num33 < 20; num33++)
+					for (int num82 = 0; num82 < 20; num82++)
 					{
-						int num34 = Dust.NewDust(new Vector2(base.npc.position.X + 48f, base.npc.position.Y + 26f), 6, 6, 235, 0f, 0f, 100, default(Color), 1.2f);
-						Main.dust[num34].velocity *= 1.9f;
+						int num83 = Dust.NewDust(new Vector2(base.npc.position.X + 48f, base.npc.position.Y + 26f), 6, 6, 235, 0f, 0f, 100, default(Color), 1.2f);
+						Main.dust[num83].velocity *= 1.9f;
 					}
 					Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 32f), new Vector2(0f, -20f), base.mod.ProjectileType("OmegaMissile"), 60, 3f, 255, 0f, 0f);
+					int num84 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 54f, base.npc.position.Y + 32f), new Vector2(0f, -20f), base.mod.ProjectileType("OmegaMissile"), 60, 3f, 255, 0f, 0f);
+					Main.projectile[num84].netUpdate = true;
 				}
-				if (this.missileTimer1 == 500)
+				if (base.npc.ai[2] == 500f)
 				{
-					this.chargeTimer = Main.rand.Next(-50, 150);
-					this.plasmaTimer = 0;
+					base.npc.ai[1] = (float)Main.rand.Next(-50, 150);
+					this.customAI[1] = 0f;
 					this.shootCounter = 0;
 					this.shootFrame = 0;
 					this.missileDone1 = true;
 					this.missileLaunch1 = false;
+					base.npc.netUpdate = true;
 				}
 			}
 			if (base.npc.life <= 10000 && !this.laserDone1)
 			{
 				this.laser1 = true;
+				base.npc.netUpdate = true;
 			}
 			if (this.laser1)
 			{
 				this.shooting = false;
 				this.charging = false;
 				this.charging2 = false;
-				this.chargeTimer = 0;
-				this.plasmaTimer = 0;
+				base.npc.ai[1] = 0f;
+				this.customAI[1] = 0f;
 				this.shootCounter = 0;
 				this.shootFrame = 0;
-				this.laserTimer1++;
-				if (this.laserTimer1 < 60)
+				base.npc.ai[3] += 1f;
+				if (base.npc.ai[3] < 60f)
 				{
 					this.idleStart = true;
 				}
-				if (this.laserTimer1 == 10)
+				if (base.npc.ai[3] == 10f)
 				{
-					string text4 = "CHANNELLING OMEGA WAVE...";
-					Color rarityRed5 = Colors.RarityRed;
-					byte r4 = rarityRed5.R;
-					rarityRed5 = Colors.RarityRed;
-					byte g4 = rarityRed5.G;
-					rarityRed5 = Colors.RarityRed;
-					Main.NewText(text4, r4, g4, rarityRed5.B, false);
+					CombatText.NewText(base.npc.getRect(), Colors.RarityRed, "CHANNELLING OMEGA WAVE...", true, false);
+					base.npc.netUpdate = true;
 				}
-				if (this.laserTimer1 == 60)
+				if (base.npc.ai[3] == 60f)
 				{
-					string text5 = "10 SECONDS REMAINING...";
-					Color rarityRed5 = Colors.RarityRed;
-					byte r5 = rarityRed5.R;
-					rarityRed5 = Colors.RarityRed;
-					byte g5 = rarityRed5.G;
-					rarityRed5 = Colors.RarityRed;
-					Main.NewText(text5, r5, g5, rarityRed5.B, false);
+					CombatText.NewText(base.npc.getRect(), Colors.RarityRed, "10 SECONDS REMAINING...", true, false);
 				}
-				if (this.laserTimer1 == 120)
+				if (base.npc.ai[3] == 120f)
 				{
-					string text6 = "9 SECONDS REMAINING...";
-					Color rarityRed5 = Colors.RarityRed;
-					byte r6 = rarityRed5.R;
-					rarityRed5 = Colors.RarityRed;
-					byte g6 = rarityRed5.G;
-					rarityRed5 = Colors.RarityRed;
-					Main.NewText(text6, r6, g6, rarityRed5.B, false);
+					CombatText.NewText(base.npc.getRect(), Colors.RarityRed, "9 SECONDS REMAINING...", true, false);
 				}
-				if (this.laserTimer1 == 180)
+				if (base.npc.ai[3] == 180f)
 				{
-					string text7 = "8 SECONDS REMAINING...";
-					Color rarityRed5 = Colors.RarityRed;
-					byte r7 = rarityRed5.R;
-					rarityRed5 = Colors.RarityRed;
-					byte g7 = rarityRed5.G;
-					rarityRed5 = Colors.RarityRed;
-					Main.NewText(text7, r7, g7, rarityRed5.B, false);
+					CombatText.NewText(base.npc.getRect(), Colors.RarityRed, "8 SECONDS REMAINING...", true, false);
 				}
-				if (this.laserTimer1 == 240)
+				if (base.npc.ai[3] == 240f)
 				{
-					string text8 = "7 SECONDS REMAINING...";
-					Color rarityRed5 = Colors.RarityRed;
-					byte r8 = rarityRed5.R;
-					rarityRed5 = Colors.RarityRed;
-					byte g8 = rarityRed5.G;
-					rarityRed5 = Colors.RarityRed;
-					Main.NewText(text8, r8, g8, rarityRed5.B, false);
+					CombatText.NewText(base.npc.getRect(), Colors.RarityRed, "7 SECONDS REMAINING...", true, false);
 				}
-				if (this.laserTimer1 == 300)
+				if (base.npc.ai[3] == 300f)
 				{
-					string text9 = "6 SECONDS REMAINING...";
-					Color rarityRed5 = Colors.RarityRed;
-					byte r9 = rarityRed5.R;
-					rarityRed5 = Colors.RarityRed;
-					byte g9 = rarityRed5.G;
-					rarityRed5 = Colors.RarityRed;
-					Main.NewText(text9, r9, g9, rarityRed5.B, false);
+					CombatText.NewText(base.npc.getRect(), Colors.RarityRed, "6 SECONDS REMAINING...", true, false);
 				}
-				if (this.laserTimer1 == 360)
+				if (base.npc.ai[3] == 360f)
 				{
-					string text10 = "5 SECONDS REMAINING...";
-					Color rarityRed5 = Colors.RarityRed;
-					byte r10 = rarityRed5.R;
-					rarityRed5 = Colors.RarityRed;
-					byte g10 = rarityRed5.G;
-					rarityRed5 = Colors.RarityRed;
-					Main.NewText(text10, r10, g10, rarityRed5.B, false);
+					CombatText.NewText(base.npc.getRect(), Colors.RarityRed, "5 SECONDS REMAINING...", true, false);
 				}
-				if (this.laserTimer1 == 420)
+				if (base.npc.ai[3] == 420f)
 				{
-					string text11 = "4 SECONDS REMAINING...";
-					Color rarityRed5 = Colors.RarityRed;
-					byte r11 = rarityRed5.R;
-					rarityRed5 = Colors.RarityRed;
-					byte g11 = rarityRed5.G;
-					rarityRed5 = Colors.RarityRed;
-					Main.NewText(text11, r11, g11, rarityRed5.B, false);
+					CombatText.NewText(base.npc.getRect(), Colors.RarityRed, "4 SECONDS REMAINING...", true, false);
 				}
-				if (this.laserTimer1 == 480)
+				if (base.npc.ai[3] == 480f)
 				{
-					string text12 = "3 SECONDS REMAINING...";
-					Color rarityRed5 = Colors.RarityRed;
-					byte r12 = rarityRed5.R;
-					rarityRed5 = Colors.RarityRed;
-					byte g12 = rarityRed5.G;
-					rarityRed5 = Colors.RarityRed;
-					Main.NewText(text12, r12, g12, rarityRed5.B, false);
+					CombatText.NewText(base.npc.getRect(), Colors.RarityRed, "3 SECONDS REMAINING...", true, false);
 				}
-				if (this.laserTimer1 == 540)
+				if (base.npc.ai[3] == 540f)
 				{
-					string text13 = "GOODBYE TARGET...";
-					Color rarityRed5 = Colors.RarityRed;
-					byte r13 = rarityRed5.R;
-					rarityRed5 = Colors.RarityRed;
-					byte g13 = rarityRed5.G;
-					rarityRed5 = Colors.RarityRed;
-					Main.NewText(text13, r13, g13, rarityRed5.B, false);
+					CombatText.NewText(base.npc.getRect(), Colors.RarityRed, "GOODBYE TARGET...", true, false);
+					base.npc.netUpdate = true;
 				}
-				if (this.laserTimer1 >= 660 && this.laserTimer1 < 940)
+				if (base.npc.ai[3] >= 660f && base.npc.ai[3] < 940f)
 				{
 					this.idleStart = false;
 					this.laserFiring1 = true;
 				}
-				if (this.laserTimer1 == 650 && !Main.dedServ)
+				if (base.npc.ai[3] == 650f && !Main.dedServ)
 				{
 					Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/MegaLaser1").WithVolume(0.9f).WithPitchVariance(0f), -1, -1);
 				}
-				if (this.laserTimer1 >= 735 && this.laserTimer1 <= 925)
+				if (base.npc.ai[3] >= 735f && base.npc.ai[3] <= 925f)
 				{
 					this.laserSpamTimer++;
 					if (this.laserSpamTimer >= 2)
 					{
 						Main.PlaySound(SoundID.Item33, (int)base.npc.position.X, (int)base.npc.position.Y);
 						Dust.NewDust(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), 4, 4, 235, 0f, 0f, 0, default(Color), 1f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(20f, 0f), base.mod.ProjectileType("OmegaWave"), 200, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(10f, 10f), base.mod.ProjectileType("OmegaWave"), 200, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(10f, -10f), base.mod.ProjectileType("OmegaWave"), 200, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(-10f, 10f), base.mod.ProjectileType("OmegaWave"), 200, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(-10f, -10f), base.mod.ProjectileType("OmegaWave"), 200, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(-20f, 0f), base.mod.ProjectileType("OmegaWave"), 200, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(0f, 20f), base.mod.ProjectileType("OmegaWave"), 200, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(0f, -20f), base.mod.ProjectileType("OmegaWave"), 200, 3f, 255, 0f, 0f);
+						if (Main.netMode != 1)
+						{
+							int num85 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(20f, 0f), base.mod.ProjectileType("OmegaWave"), 200, 3f, 255, 0f, 0f);
+							int num86 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(10f, 10f), base.mod.ProjectileType("OmegaWave"), 200, 3f, 255, 0f, 0f);
+							int num87 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(10f, -10f), base.mod.ProjectileType("OmegaWave"), 200, 3f, 255, 0f, 0f);
+							int num88 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(-10f, 10f), base.mod.ProjectileType("OmegaWave"), 200, 3f, 255, 0f, 0f);
+							int num89 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(-10f, -10f), base.mod.ProjectileType("OmegaWave"), 200, 3f, 255, 0f, 0f);
+							int num90 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(-20f, 0f), base.mod.ProjectileType("OmegaWave"), 200, 3f, 255, 0f, 0f);
+							int num91 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(0f, 20f), base.mod.ProjectileType("OmegaWave"), 200, 3f, 255, 0f, 0f);
+							int num92 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 30f, base.npc.position.Y + 62f), new Vector2(0f, -20f), base.mod.ProjectileType("OmegaWave"), 200, 3f, 255, 0f, 0f);
+							Main.projectile[num85].netUpdate = true;
+							Main.projectile[num86].netUpdate = true;
+							Main.projectile[num87].netUpdate = true;
+							Main.projectile[num88].netUpdate = true;
+							Main.projectile[num89].netUpdate = true;
+							Main.projectile[num90].netUpdate = true;
+							Main.projectile[num91].netUpdate = true;
+							Main.projectile[num92].netUpdate = true;
+						}
 						this.laserSpamTimer = 0;
 					}
 				}
-				if (this.laserTimer1 >= 940 && this.laserTimer1 < 970)
+				if (base.npc.ai[3] >= 940f && base.npc.ai[3] < 970f)
 				{
 					this.laserFiring1 = false;
 					this.laserFiring2 = true;
 				}
-				if (this.laserTimer1 >= 970)
+				if (base.npc.ai[3] >= 970f)
 				{
-					this.chargeTimer = Main.rand.Next(-50, 150);
-					this.plasmaTimer = 0;
+					base.npc.ai[1] = (float)Main.rand.Next(-50, 150);
+					this.customAI[1] = 0f;
 					this.shootCounter = 0;
 					this.shootFrame = 0;
 					this.laserFiring1 = false;
@@ -825,47 +847,31 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 					this.idleStart = true;
 					this.laserDone1 = true;
 					this.laser1 = false;
-					string text14 = "CHEATER DETECTED...";
-					Color rarityRed5 = Colors.RarityRed;
-					byte r14 = rarityRed5.R;
-					rarityRed5 = Colors.RarityRed;
-					byte g14 = rarityRed5.G;
-					rarityRed5 = Colors.RarityRed;
-					Main.NewText(text14, r14, g14, rarityRed5.B, false);
+					CombatText.NewText(base.npc.getRect(), Colors.RarityRed, "CHEATER DETECTED...", true, false);
+					base.npc.netUpdate = true;
 				}
 			}
-			if (this.aiCounter == 1)
+			if (base.npc.ai[0] == 1f)
 			{
-				for (int num35 = 0; num35 < 100; num35++)
+				for (int num93 = 0; num93 < 100; num93++)
 				{
-					int num36 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 235, 0f, 0f, 100, default(Color), 1.5f);
-					Main.dust[num36].velocity *= 1.9f;
+					int num94 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 235, 0f, 0f, 100, default(Color), 1.5f);
+					Main.dust[num94].velocity *= 1.9f;
 				}
 			}
-			if (this.aiCounter == 60)
+			if (base.npc.ai[0] == 60f)
 			{
-				string text15 = "TARGET FOUND...";
-				Color rarityRed5 = Colors.RarityRed;
-				byte r15 = rarityRed5.R;
-				rarityRed5 = Colors.RarityRed;
-				byte g15 = rarityRed5.G;
-				rarityRed5 = Colors.RarityRed;
-				Main.NewText(text15, r15, g15, rarityRed5.B, false);
+				CombatText.NewText(base.npc.getRect(), Colors.RarityRed, "TARGET FOUND...", true, false);
 			}
-			if (this.aiCounter == 120)
+			if (base.npc.ai[0] == 120f)
 			{
-				string text16 = "PREPARE FOR OBLITERATION...";
-				Color rarityRed5 = Colors.RarityRed;
-				byte r16 = rarityRed5.R;
-				rarityRed5 = Colors.RarityRed;
-				byte g16 = rarityRed5.G;
-				rarityRed5 = Colors.RarityRed;
-				Main.NewText(text16, r16, g16, rarityRed5.B, false);
+				CombatText.NewText(base.npc.getRect(), Colors.RarityRed, "PREPARE FOR OBLITERATION...", true, false);
 			}
-			if (this.aiCounter == 260)
+			if (base.npc.ai[0] == 260f)
 			{
-				this.attackMode = 1;
+				this.customAI[0] = 1f;
 				base.npc.dontTakeDamage = false;
+				base.npc.netUpdate = true;
 			}
 		}
 
@@ -923,7 +929,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 			Texture2D texture5 = base.mod.GetTexture("NPCs/Bosses/OmegaOblit/OmegaOblitLaser1");
 			Texture2D texture6 = base.mod.GetTexture("NPCs/Bosses/OmegaOblit/OmegaOblitLaser2");
 			int spriteDirection = base.npc.spriteDirection;
-			if (!this.charging || !this.charging2 || !this.shooting || !this.idleStart || !this.laserFiring1 || !this.laserFiring2)
+			if (!this.charging && !this.charging2 && !this.shooting && !this.idleStart && !this.laserFiring1 && !this.laserFiring2)
 			{
 				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == 1) ? 0 : 1, 0f);
 			}
@@ -989,13 +995,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 					this.deadTimer++;
 					if (this.deadTimer == 2)
 					{
-						string text = "TARGET OBLITERATED... RETURNING TO GIRUS...";
-						Color rarityRed = Colors.RarityRed;
-						byte r = rarityRed.R;
-						Color rarityRed2 = Colors.RarityRed;
-						byte g = rarityRed2.G;
-						Color rarityRed3 = Colors.RarityRed;
-						Main.NewText(text, r, g, rarityRed3.B, false);
+						CombatText.NewText(base.npc.getRect(), Colors.RarityRed, "TARGET OBLITERATED... RETURNING TO GIRUS...", true, false);
 					}
 					base.npc.velocity = new Vector2(0f, -10f);
 					if (base.npc.timeLeft > 10)
@@ -1021,11 +1021,7 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 
 		private float speed;
 
-		public int timer;
-
-		public bool DirRight;
-
-		public bool DirLeft;
+		public float[] customAI = new float[2];
 
 		private bool start;
 
@@ -1041,19 +1037,11 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 
 		private int shootCounter;
 
-		private int aiCounter;
-
-		private int attackMode;
-
 		private bool idleStart;
 
 		private int idleFrame;
 
 		private int idleCounter;
-
-		private int chargeTimer;
-
-		private int chargeTimer2;
 
 		private bool charging2;
 
@@ -1063,27 +1051,15 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 
 		private int deadTimer;
 
-		private int plasmaTimer;
-
 		private bool phase2;
 
-		private int plasmaTimer2;
-
-		private int attackMode2;
-
-		private int phaseTimer1;
-
 		private bool missileLaunch1;
-
-		private int missileTimer1;
 
 		private bool missileDone1;
 
 		private bool laser1;
 
 		private bool laserDone1;
-
-		private int laserTimer1;
 
 		private bool laserFiring1;
 

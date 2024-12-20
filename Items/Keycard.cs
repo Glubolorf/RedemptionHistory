@@ -8,7 +8,7 @@ namespace Redemption.Items
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Keycard");
-			base.Tooltip.SetDefault("'Unlocks Lab Chests'");
+			base.Tooltip.SetDefault("'Unlocks Lab Chests'\nOnly one is needed");
 		}
 
 		public override void SetDefaults()

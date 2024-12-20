@@ -9,8 +9,10 @@ using Redemption.Items.Armor.Costumes;
 using Redemption.Items.Cores;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.Events;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.Utilities;
 
 namespace Redemption
 {
@@ -19,6 +21,7 @@ namespace Redemption
 		public override void Initialize()
 		{
 			this.medKit = false;
+			this.galaxyHeart = false;
 		}
 
 		public override TagCompound Save()
@@ -27,6 +30,10 @@ namespace Redemption
 			if (this.medKit)
 			{
 				list.Add("medicKit");
+			}
+			if (this.galaxyHeart)
+			{
+				list.Add("galaxyHeart");
 			}
 			TagCompound tagCompound = new TagCompound();
 			tagCompound.Add("boost", list);
@@ -37,6 +44,7 @@ namespace Redemption
 		{
 			IList<string> list = tag.GetList<string>("boost");
 			this.medKit = list.Contains("medicKit");
+			this.galaxyHeart = list.Contains("galaxyHeart");
 		}
 
 		public override void LoadLegacy(BinaryReader reader)
@@ -44,7 +52,9 @@ namespace Redemption
 			int num = reader.ReadInt32();
 			if (num == 0)
 			{
-				this.medKit = reader.ReadByte()[0];
+				BitsByte bitsByte = reader.ReadByte();
+				this.medKit = bitsByte[0];
+				this.galaxyHeart = bitsByte[1];
 				return;
 			}
 			ErrorLogger.Log("Redemption: Unknown loadVersion: " + num);
@@ -52,24 +62,58 @@ namespace Redemption
 
 		public override void PostUpdateMiscEffects()
 		{
-			base.player.statLifeMax2 += (this.medKit ? 50 : 0);
+			base.player.statLifeMax2 += (this.medKit ? 50 : 0) + (this.galaxyHeart ? 50 : 0);
 			if (Main.netMode != 2 && base.player.whoAmI == Main.myPlayer)
 			{
-				Texture2D texture = base.mod.GetTexture("ExtraTextures/HeartMed");
-				Texture2D texture2 = base.mod.GetTexture("ExtraTextures/HeartOriginal");
-				int num = this.medKit ? 1 : 0;
-				if (num == 1)
+				Texture2D texture = base.mod.GetTexture("ExtraTextures/Rain2");
+				Texture2D texture2 = base.mod.GetTexture("ExtraTextures/RainOriginal");
+				Texture2D texture3 = base.mod.GetTexture("ExtraTextures/HeartMed");
+				Texture2D texture4 = base.mod.GetTexture("ExtraTextures/HeartGal");
+				Texture2D texture5 = base.mod.GetTexture("ExtraTextures/HeartOriginal");
+				int num = (this.medKit ? 1 : 0) + (this.galaxyHeart ? 1 : 0);
+				if (num == 2)
 				{
-					Main.heart2Texture = texture;
-					return;
+					Main.heart2Texture = texture4;
 				}
-				Main.heart2Texture = texture2;
+				else if (num == 1)
+				{
+					Main.heart2Texture = texture3;
+				}
+				else
+				{
+					Main.heart2Texture = texture5;
+				}
+				if (Main.bloodMoon)
+				{
+					Main.rainTexture = texture2;
+				}
+				else if (Main.raining && this.ZoneXeno)
+				{
+					Main.rainTexture = texture;
+				}
+				else
+				{
+					Main.rainTexture = texture2;
+				}
 			}
+			if (Main.raining && this.ZoneXeno && (base.player.ZoneOverworldHeight || base.player.ZoneSkyHeight))
+			{
+				base.player.AddBuff(base.mod.BuffType("HeavyRadiationDebuff"), 2, true);
+			}
+		}
+
+		public override void UpdateBiomeVisuals()
+		{
+			bool flag = NPC.AnyNPCs(base.mod.NPCType("Nebuleus"));
+			base.player.ManageSpecialBiomeVisuals("Redemption:Nebuleus", flag, default(Vector2));
+			bool flag2 = NPC.AnyNPCs(base.mod.NPCType("BigNebuleus"));
+			base.player.ManageSpecialBiomeVisuals("Redemption:BigNebuleus", flag2, default(Vector2));
+			base.player.ManageSpecialBiomeVisuals("Redemption:XenoSky", this.ZoneXeno, base.player.Center);
 		}
 
 		public override void UpdateBiomes()
 		{
-			this.ZoneXeno = (RedeWorld.xenoBiome > 75 || RedeWorld.xenoBiome2 > 75);
+			this.ZoneXeno = (RedeWorld.xenoBiome > 75);
 			this.ZoneLab = (RedeWorld.labBiome > 200);
 		}
 
@@ -195,6 +239,7 @@ namespace Redemption
 			this.natureGuardian24 = false;
 			this.natureGuardian25 = false;
 			this.natureGuardian26 = false;
+			this.natureGuardian27 = false;
 			this.hazmatAccessoryPrevious = this.hazmatAccessory;
 			this.hazmatAccessory = (this.hazmatHideVanity = (this.hazmatForceVanity = (this.hazmatPower = false)));
 			this.skeletonFriendly = false;
@@ -236,6 +281,19 @@ namespace Redemption
 			this.lavaCubeMinion = false;
 			this.sandDust = false;
 			this.badtime = false;
+			this.nebPet = false;
+			this.eaglecrestMinion = false;
+			this.chickenSwarmerMinion = false;
+			this.spiritChicken2 = false;
+			this.HEVAccessoryPrevious = this.HEVAccessory;
+			this.HEVAccessory = (this.HEVHideVanity = (this.HEVForceVanity = (this.HEVPower = false)));
+			this.ancientMirror = false;
+			this.ancientStoneMinion = false;
+			this.powerSurgeSet = false;
+			this.bloodShinkiteSet = false;
+			this.cursedShinkiteSet = false;
+			this.smallShadeSet = false;
+			this.shadeSet = false;
 		}
 
 		public override void UpdateDead()
@@ -278,7 +336,7 @@ namespace Redemption
 				base.player.lifeRegenTime = 0;
 				base.player.lifeRegen -= 20;
 			}
-			if (this.ZoneLab && base.player.wet && !this.hazmatPower && !this.labWaterImmune && !base.player.lavaWet && !base.player.honeyWet)
+			if ((this.ZoneLab || this.ZoneXeno) && base.player.wet && !this.hazmatPower && !this.labWaterImmune && !base.player.lavaWet && !base.player.honeyWet)
 			{
 				if (base.player.lifeRegen > 10)
 				{
@@ -379,6 +437,15 @@ namespace Redemption
 					this.hazmatForceVanity = true;
 				}
 			}
+			for (int l = 13; l < 18 + base.player.extraAccessorySlots; l++)
+			{
+				Item item4 = base.player.armor[l];
+				if (item4.type == base.mod.ItemType<HEVSuit>())
+				{
+					this.HEVHideVanity = false;
+					this.HEVForceVanity = true;
+				}
+			}
 		}
 
 		public override void UpdateEquips(ref bool wallSpeedBuff, ref bool tileSpeedBuff, ref bool tileRangeBuff)
@@ -394,6 +461,10 @@ namespace Redemption
 			if (this.hazmatAccessory)
 			{
 				base.player.AddBuff(base.mod.BuffType<HazmatSuitBuff>(), 60, true);
+			}
+			if (this.HEVAccessory)
+			{
+				base.player.AddBuff(base.mod.BuffType<HEVSuitBuff>(), 60, true);
 			}
 		}
 
@@ -416,6 +487,12 @@ namespace Redemption
 				base.player.legs = base.mod.GetEquipSlot("HazmatLegs", 2);
 				base.player.body = base.mod.GetEquipSlot("HazmatBody", 1);
 				base.player.head = base.mod.GetEquipSlot("HazmatHead", 0);
+			}
+			if ((this.HEVPower || this.HEVForceVanity) && !this.HEVHideVanity)
+			{
+				base.player.legs = base.mod.GetEquipSlot("HEVLegs", 2);
+				base.player.body = base.mod.GetEquipSlot("HEVBody", 1);
+				base.player.head = base.mod.GetEquipSlot("HEVHead", 0);
 			}
 		}
 
@@ -495,6 +572,24 @@ namespace Redemption
 			{
 				base.player.AddBuff(base.mod.BuffType("EldritchRootBuff"), 180, true);
 			}
+			if (this.powerSurgeSet && Main.rand.Next(10) == 0)
+			{
+				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 1f, -3f, base.mod.ProjectileType("EnergyOrb1"), 200, 0f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 0f, -1f, base.mod.ProjectileType("EnergyOrb1"), 200, 0f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 2f, -5f, base.mod.ProjectileType("EnergyOrb1"), 200, 0f, Main.myPlayer, 0f, 0f);
+			}
+			if (this.bloodShinkiteSet && Main.rand.Next(4) == 0)
+			{
+				Projectile.NewProjectile(target.Center.X, target.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)Main.rand.Next(-11, 0), base.mod.ProjectileType("BloodOrbPro3"), 0, 0f, Main.myPlayer, 0f, 0f);
+			}
+			if (this.cursedShinkiteSet && Main.rand.Next(6) == 0)
+			{
+				Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, 0f, base.mod.ProjectileType("CursedExp"), 100, 0f, Main.myPlayer, 0f, 0f);
+			}
+			if (this.smallShadeSet)
+			{
+				target.AddBuff(base.mod.BuffType("BlackenedHeartDebuff"), 300, false);
+			}
 		}
 
 		public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
@@ -519,6 +614,24 @@ namespace Redemption
 			if (this.eldritchRoot && target.life <= 0)
 			{
 				base.player.AddBuff(base.mod.BuffType("EldritchRootBuff"), 180, true);
+			}
+			if (this.powerSurgeSet && Main.rand.Next(10) == 0)
+			{
+				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 1f, -3f, base.mod.ProjectileType("EnergyOrb1"), 200, 0f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 0f, -1f, base.mod.ProjectileType("EnergyOrb1"), 200, 0f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 2f, -5f, base.mod.ProjectileType("EnergyOrb1"), 200, 0f, Main.myPlayer, 0f, 0f);
+			}
+			if (this.bloodShinkiteSet && Main.rand.Next(4) == 0)
+			{
+				Projectile.NewProjectile(target.Center.X, target.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("BloodOrbPro3"), 0, 0f, Main.myPlayer, 0f, 0f);
+			}
+			if (this.cursedShinkiteSet && Main.rand.Next(6) == 0)
+			{
+				Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, 0f, base.mod.ProjectileType("CursedExp"), 100, 0f, Main.myPlayer, 0f, 0f);
+			}
+			if (this.smallShadeSet)
+			{
+				target.AddBuff(base.mod.BuffType("BlackenedHeartDebuff"), 300, false);
 			}
 		}
 
@@ -588,7 +701,157 @@ namespace Redemption
 			{
 				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got infected");
 			}
+			if (damageSource.SourceNPCIndex >= 0 && Main.npc[damageSource.SourceNPCIndex].type == base.mod.NPCType("AJollyMadman"))
+			{
+				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " became hollow");
+			}
+			if (damageSource.SourceNPCIndex >= 0 && Main.npc[damageSource.SourceNPCIndex].type == base.mod.NPCType("Blobble"))
+			{
+				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got blobble'd!");
+			}
+			if (damageSource.SourceNPCIndex >= 0 && Main.npc[damageSource.SourceNPCIndex].type == base.mod.NPCType("ChickenCultist"))
+			{
+				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got pecked to death");
+			}
+			if (damageSource.SourceNPCIndex >= 0 && Main.npc[damageSource.SourceNPCIndex].type == base.mod.NPCType("ChickenMan"))
+			{
+				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got pecked to death");
+			}
+			if (damageSource.SourceNPCIndex >= 0 && Main.npc[damageSource.SourceNPCIndex].type == base.mod.NPCType("ShieldedChickenMan"))
+			{
+				damageSource = PlayerDeathReason.ByCustomReason(base.player.name + " got pecked to death");
+			}
 			return true;
+		}
+
+		public override void PostUpdate()
+		{
+			if (base.player.ZoneSandstorm && this.ZoneXeno)
+			{
+				RedePlayer.EmitDust();
+			}
+		}
+
+		public static void EmitDust()
+		{
+			if (Main.gamePaused)
+			{
+				return;
+			}
+			int sandTiles = Main.sandTiles;
+			Player player = Main.player[Main.myPlayer];
+			bool flag = Sandstorm.Happening && player.ZoneSandstorm && (Main.bgStyle == 2 || Main.bgStyle == 5) && Main.bgDelay < 50;
+			Sandstorm.HandleEffectAndSky(flag && Main.UseStormEffects);
+			if (sandTiles < 100 || (double)player.position.Y > Main.worldSurface * 16.0 || player.ZoneBeach)
+			{
+				return;
+			}
+			int num = 1;
+			if (!flag)
+			{
+				return;
+			}
+			if (Main.rand.Next(num) != 0)
+			{
+				return;
+			}
+			int num2 = Math.Sign(Main.windSpeed);
+			float num3 = Math.Abs(Main.windSpeed);
+			if (num3 < 0.01f)
+			{
+				return;
+			}
+			float num4 = (float)num2 * MathHelper.Lerp(0.9f, 1f, num3);
+			float num5 = 2000f / (float)sandTiles;
+			float num6 = 3f / num5;
+			num6 = MathHelper.Clamp(num6, 0.77f, 1f);
+			int num7 = (int)num5;
+			float num8 = (float)Main.screenWidth / (float)Main.maxScreenW;
+			int num9 = (int)(1000f * num8);
+			float num10 = 20f * Sandstorm.Severity;
+			float num11 = (float)num9 * (Main.gfxQuality * 0.5f + 0.5f) + (float)num9 * 0.1f - (float)Dust.SandStormCount;
+			if (num11 <= 0f)
+			{
+				return;
+			}
+			float num12 = (float)Main.screenWidth + 1000f;
+			float num13 = (float)Main.screenHeight;
+			Vector2 vector = Main.screenPosition + player.velocity;
+			WeightedRandom<Color> weightedRandom = new WeightedRandom<Color>();
+			weightedRandom.Add(new Color(200, 160, 20, 180), (double)(Main.screenTileCounts[53] + Main.screenTileCounts[396] + Main.screenTileCounts[397]));
+			weightedRandom.Add(new Color(103, 98, 122, 180), (double)(Main.screenTileCounts[112] + Main.screenTileCounts[400] + Main.screenTileCounts[398]));
+			weightedRandom.Add(new Color(135, 43, 34, 180), (double)(Main.screenTileCounts[234] + Main.screenTileCounts[401] + Main.screenTileCounts[399]));
+			weightedRandom.Add(new Color(213, 196, 197, 180), (double)(Main.screenTileCounts[116] + Main.screenTileCounts[403] + Main.screenTileCounts[402]));
+			float num14 = MathHelper.Lerp(0.2f, 0.35f, Sandstorm.Severity);
+			float num15 = MathHelper.Lerp(0.5f, 0.7f, Sandstorm.Severity);
+			float num16 = (num6 - 0.77f) / 0.23000002f;
+			int num17 = (int)MathHelper.Lerp(1f, 10f, num16);
+			int num18 = 0;
+			while ((float)num18 < num10)
+			{
+				if (Main.rand.Next(num7 / 4) == 0)
+				{
+					Vector2 vector2;
+					vector2..ctor(Utils.NextFloat(Main.rand) * num12 - 500f, Utils.NextFloat(Main.rand) * -50f);
+					if (Main.rand.Next(3) == 0 && num2 == 1)
+					{
+						vector2.X = (float)(Main.rand.Next(500) - 500);
+					}
+					else if (Main.rand.Next(3) == 0 && num2 == -1)
+					{
+						vector2.X = (float)(Main.rand.Next(500) + Main.screenWidth);
+					}
+					if (vector2.X < 0f || vector2.X > (float)Main.screenWidth)
+					{
+						vector2.Y += Utils.NextFloat(Main.rand) * num13 * 0.9f;
+					}
+					vector2 += vector;
+					int num19 = (int)vector2.X / 16;
+					int num20 = (int)vector2.Y / 16;
+					if (Main.tile[num19, num20] != null && Main.tile[num19, num20].wall == 0)
+					{
+						for (int i = 0; i < 1; i++)
+						{
+							Dust dust = Main.dust[Dust.NewDust(vector2, 10, 10, 256, 0f, 0f, 0, default(Color), 1f)];
+							dust.velocity.Y = 2f + Utils.NextFloat(Main.rand) * 0.2f;
+							Dust dust2 = dust;
+							dust2.velocity.Y = dust2.velocity.Y * dust.scale;
+							Dust dust3 = dust;
+							dust3.velocity.Y = dust3.velocity.Y * 0.35f;
+							dust.velocity.X = num4 * 5f + Utils.NextFloat(Main.rand) * 1f;
+							Dust dust4 = dust;
+							dust4.velocity.X = dust4.velocity.X + num4 * num15 * 20f;
+							dust.fadeIn += num15 * 0.2f;
+							dust.velocity *= 1f + num14 * 0.5f;
+							dust.color = weightedRandom;
+							dust.velocity *= 1f + num14;
+							dust.velocity *= num6;
+							dust.scale = 0.9f;
+							num11 -= 1f;
+							if (num11 <= 0f)
+							{
+								break;
+							}
+							if (Main.rand.Next(num17) != 0)
+							{
+								i--;
+								vector2 += Utils.RandomVector2(Main.rand, -10f, 10f) + dust.velocity * -1.1f;
+								num19 = (int)vector2.X / 16;
+								num20 = (int)vector2.Y / 16;
+								if (WorldGen.InWorld(num19, num20, 10) && Main.tile[num19, num20] != null)
+								{
+									ushort wall = Main.tile[num19, num20].wall;
+								}
+							}
+						}
+						if (num11 <= 0f)
+						{
+							return;
+						}
+					}
+				}
+				num18++;
+			}
 		}
 
 		public override void CatchFish(Item fishingRod, Item bait, int power, int liquidType, int poolSize, int worldLayer, int questFish, ref int caughtType, ref bool junk)
@@ -666,6 +929,20 @@ namespace Redemption
 			if (this.xeniumDischarge && Main.rand.Next(4) == 0)
 			{
 				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 0f, 0f, base.mod.ProjectileType("XeniumDischarge"), 0, 0f, Main.myPlayer, 0f, 0f);
+			}
+			if (this.spiritChicken2)
+			{
+				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("EtherealChickenPro"), 300, 1f, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("EtherealChickenPro"), 300, 1f, Main.myPlayer, 0f, 0f);
+			}
+			if (this.shadeSet && Main.rand.Next(3) == 0)
+			{
+				int num = 16;
+				for (int i = 0; i < num; i++)
+				{
+					int num2 = Projectile.NewProjectile(base.player.Center.X, base.player.Center.Y, 0f, 0f, base.mod.ProjectileType("CriesOfGriefPro3"), 400, 0f, Main.myPlayer, 0f, 0f);
+					Main.projectile[num2].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(8f, 0f), (float)i / (float)num * 6.28f);
+				}
 			}
 		}
 
@@ -825,6 +1102,8 @@ namespace Redemption
 
 		public bool natureGuardian26;
 
+		public bool natureGuardian27;
+
 		public bool ZoneLab;
 
 		public bool hazmatAccessoryPrevious;
@@ -916,5 +1195,39 @@ namespace Redemption
 		public bool sandDust;
 
 		public bool badtime;
+
+		public bool nebPet;
+
+		public bool eaglecrestMinion;
+
+		public bool chickenSwarmerMinion;
+
+		public bool galaxyHeart;
+
+		public bool spiritChicken2;
+
+		public bool HEVAccessoryPrevious;
+
+		public bool HEVAccessory;
+
+		public bool HEVHideVanity;
+
+		public bool HEVForceVanity;
+
+		public bool HEVPower;
+
+		public bool ancientMirror;
+
+		public bool ancientStoneMinion;
+
+		public bool powerSurgeSet;
+
+		public bool bloodShinkiteSet;
+
+		public bool cursedShinkiteSet;
+
+		public bool smallShadeSet;
+
+		public bool shadeSet;
 	}
 }

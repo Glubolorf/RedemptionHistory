@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -34,7 +35,7 @@ namespace Redemption.Items
 
 		public override bool UseItem(Player player)
 		{
-			NPC.SpawnOnPlayer(player.whoAmI, base.mod.NPCType("KingChicken"));
+			Redemption.SpawnBoss(player, "KingChicken", true, new Vector2(player.position.X + (float)Main.rand.Next(200, 300), player.position.Y - 50f), "The Mighty King Chicken", false);
 			Main.PlaySound(15, player.position, 0);
 			return true;
 		}

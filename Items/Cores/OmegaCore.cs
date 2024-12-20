@@ -56,7 +56,7 @@ namespace Redemption.Items.Cores
 			{
 				for (int i = 0; i < 1; i++)
 				{
-					if (Main.rand.Next(20) == 0)
+					if (Main.rand.Next(50) == 0)
 					{
 						Projectile.NewProjectile(new Vector2(player.position.X + Utils.NextFloat(Main.rand, (float)player.width), player.position.Y + Utils.NextFloat(Main.rand, (float)player.height)), new Vector2(0f, 0f), base.mod.ProjectileType("RedSludge"), 10, 0f, Main.myPlayer, 0f, 0f);
 					}

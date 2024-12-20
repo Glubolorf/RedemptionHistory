@@ -85,17 +85,20 @@ namespace Redemption.NPCs
 				this.attackTimer++;
 				base.npc.aiStyle = 0;
 				base.npc.velocity.X = 0f;
-				if (this.attackTimer == 60)
+				if (this.attackTimer == 60 && !Config.NoCombatText)
 				{
+					CombatText.NewText(base.npc.getRect(), Color.White, "HARR!", true, true);
 					if (base.npc.direction == -1)
 					{
 						Main.PlaySound(SoundID.Item7, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2((float)(-6 + Main.rand.Next(-6, 0)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("BarrelPro"), 40, 3f, 255, 0f, 0f);
+						int num = Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2((float)(-6 + Main.rand.Next(-6, 0)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("BarrelPro"), 40, 3f, 255, 0f, 0f);
+						Main.projectile[num].netUpdate = true;
 					}
 					else
 					{
 						Main.PlaySound(SoundID.Item7, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 44f), new Vector2((float)(6 + Main.rand.Next(0, 6)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("BarrelPro"), 40, 3f, 255, 0f, 0f);
+						int num2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 44f), new Vector2((float)(6 + Main.rand.Next(0, 6)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("BarrelPro"), 40, 3f, 255, 0f, 0f);
+						Main.projectile[num2].netUpdate = true;
 					}
 				}
 				if (this.attackTimer >= 120)

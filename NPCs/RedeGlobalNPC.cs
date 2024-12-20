@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
+using Redemption.ChickenArmy;
 using Redemption.Projectiles;
+using Redemption.Projectiles.v08;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -29,6 +32,9 @@ namespace Redemption.NPCs
 			this.vendetta = false;
 			this.sandDust = false;
 			this.badtime = false;
+			this.bloodCrystalStab = false;
+			this.cursedCrystalStab = false;
+			this.blackHeart = false;
 		}
 
 		public override void UpdateLifeRegen(NPC npc, ref int damage)
@@ -146,6 +152,60 @@ namespace Redemption.NPCs
 				}
 				npc.defense -= 99;
 			}
+			if (this.bloodCrystalStab)
+			{
+				if (npc.lifeRegen > 0)
+				{
+					npc.lifeRegen = 0;
+				}
+				int num2 = 0;
+				for (int j = 0; j < 1000; j++)
+				{
+					Projectile projectile2 = Main.projectile[j];
+					if (projectile2.active && projectile2.type == base.mod.ProjectileType<BloodBookPro1>() && projectile2.ai[0] == 1f && projectile2.ai[1] == (float)npc.whoAmI)
+					{
+						num2++;
+					}
+				}
+				npc.lifeRegen -= num2 * 10 * 20;
+				if (damage < num2 * 10)
+				{
+					damage = num2 * 10;
+				}
+			}
+			if (this.cursedCrystalStab)
+			{
+				if (npc.lifeRegen > 0)
+				{
+					npc.lifeRegen = 0;
+				}
+				int num3 = 0;
+				for (int k = 0; k < 1000; k++)
+				{
+					Projectile projectile3 = Main.projectile[k];
+					if (projectile3.active && projectile3.type == base.mod.ProjectileType<CursedBookPro1>() && projectile3.ai[0] == 1f && projectile3.ai[1] == (float)npc.whoAmI)
+					{
+						num3++;
+					}
+				}
+				npc.lifeRegen -= num3 * 11 * 20;
+				if (damage < num3 * 10)
+				{
+					damage = num3 * 10;
+				}
+			}
+			if (this.blackHeart)
+			{
+				if (npc.lifeRegen > 0)
+				{
+					npc.lifeRegen = 0;
+				}
+				npc.lifeRegen -= 400;
+				if (damage < 2)
+				{
+					damage = 2;
+				}
+			}
 		}
 
 		public override void ModifyHitPlayer(NPC npc, Player target, ref int damage, ref bool crit)
@@ -215,6 +275,39 @@ namespace Redemption.NPCs
 					Main.dust[num4].scale *= 0.5f;
 				}
 			}
+			if (this.blackHeart && Main.rand.Next(3) < 3)
+			{
+				int num5 = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, base.mod.DustType("VoidFlame"), npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default(Color), 1f);
+				Main.dust[num5].noGravity = true;
+				Main.dust[num5].velocity *= 1.8f;
+				Dust dust5 = Main.dust[num5];
+				dust5.velocity.Y = dust5.velocity.Y - 0.5f;
+				if (Main.rand.Next(4) == 0)
+				{
+					Main.dust[num5].noGravity = false;
+					Main.dust[num5].scale *= 0.5f;
+				}
+			}
+		}
+
+		public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
+		{
+			if (ChickWorld.chickArmy)
+			{
+				if (RedeWorld.downedPatientZero)
+				{
+					spawnRate = 15;
+					maxSpawns = 12;
+				}
+				else
+				{
+					spawnRate = 25;
+				}
+			}
+			if (NPC.AnyNPCs(base.mod.NPCType("Nebuleus")) || NPC.AnyNPCs(base.mod.NPCType("BigNebuleus")))
+			{
+				maxSpawns = 0;
+			}
 		}
 
 		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
@@ -222,28 +315,120 @@ namespace Redemption.NPCs
 			Player player = Main.player[Main.myPlayer];
 			if (spawnInfo.player.GetModPlayer<RedePlayer>(base.mod).ZoneXeno)
 			{
-				pool.Clear();
-				if (Main.hardMode)
+				int[] array = new int[]
 				{
-					if (player.ZoneRockLayerHeight)
+					base.mod.TileType("RadioactiveIceTile"),
+					147
+				};
+				int[] array2 = new int[]
+				{
+					base.mod.TileType("RadioactiveSandTile"),
+					base.mod.TileType("RadioactiveSandstoneTile"),
+					base.mod.TileType("HardenedRadioactiveSandTile")
+				};
+				if (player.ZoneRockLayerHeight)
+				{
+					pool.Clear();
+					if (Main.hardMode)
 					{
 						pool.Add(base.mod.NPCType("HazmatSkeleton"), 0.1f);
 						pool.Add(base.mod.NPCType("XenomiteGolem"), 0.1f);
 						pool.Add(base.mod.NPCType("XenomiteGargantuan"), 0.03f);
 						pool.Add(base.mod.NPCType("RadiumDiggerHead"), 0.01f);
-						pool.Add(base.mod.NPCType("XenonRoller"), 0.1f);
+						pool.Add(base.mod.NPCType("XenonRoller"), 0.08f);
 						pool.Add(base.mod.NPCType("SludgyBoi"), 0.1f);
-						pool.Add(base.mod.NPCType("BobTheBlob"), 0.002f);
+						pool.Add(base.mod.NPCType("BobTheBlob"), 0.0004f);
+						pool.Add(base.mod.NPCType("InfectedGiantBat"), 0.06f);
+						pool.Add(base.mod.NPCType("InfectedDiggerHead"), 0.01f);
+						if (Enumerable.Contains<int>(array, (int)Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type))
+						{
+							pool.Add(base.mod.NPCType("GreenPigron"), 0.01f);
+							pool.Add(base.mod.NPCType("InfectedSnowFlinx"), 0.05f);
+							pool.Add(base.mod.NPCType("SneezyInfectedFlinx"), 0.05f);
+						}
+						if (Enumerable.Contains<int>(array2, (int)Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type))
+						{
+							pool.Add(base.mod.NPCType("DecayedGhoul"), 0.15f);
+						}
 					}
-					else if (player.ZoneOverworldHeight && !Main.dayTime)
+					else
+					{
+						pool.Add(base.mod.NPCType("InfectedCaveBat"), 0.08f);
+						pool.Add(base.mod.NPCType("InfectedGiantWormHead"), 0.01f);
+					}
+					if (Enumerable.Contains<int>(array, (int)Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type))
+					{
+						pool.Add(base.mod.NPCType("SpikyRadioactiveSlime"), 0.06f);
+					}
+					pool.Add(base.mod.NPCType("RadiumBeast"), 0.01f);
+				}
+				else if (player.ZoneOverworldHeight && !Main.dayTime)
+				{
+					pool.Clear();
+					if (Main.hardMode)
 					{
 						pool.Add(base.mod.NPCType("HazmatZombie"), 0.1f);
 						pool.Add(base.mod.NPCType("XenomiteGolem"), 0.1f);
 						pool.Add(base.mod.NPCType("XenomiteGargantuan"), 0.03f);
-						pool.Add(base.mod.NPCType("XenonRoller"), 0.1f);
 						pool.Add(base.mod.NPCType("SludgyBoi"), 0.1f);
-						pool.Add(base.mod.NPCType("BobTheBlob"), 0.002f);
+						pool.Add(base.mod.NPCType("BobTheBlob"), 0.0004f);
+						if (Enumerable.Contains<int>(array, (int)Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type))
+						{
+							pool.Add(base.mod.NPCType("InfectedSnowFlinx"), 0.05f);
+							pool.Add(base.mod.NPCType("SneezyInfectedFlinx"), 0.05f);
+						}
+						if (Enumerable.Contains<int>(array2, (int)Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type))
+						{
+							if (Main.raining)
+							{
+								pool.Add(base.mod.NPCType("RadiumRampager"), 0.1f);
+								pool.Add(base.mod.NPCType("RadiumDigger2Head"), 0.01f);
+							}
+							pool.Add(base.mod.NPCType("DecayedGhoul"), 0.14f);
+							pool.Add(base.mod.NPCType("InfectedSwarmer"), 0.08f);
+							pool.Add(base.mod.NPCType("XenonRoller"), 0.07f);
+						}
 					}
+					else
+					{
+						pool.Add(base.mod.NPCType("InfectedZombie"), 0.1f);
+						pool.Add(base.mod.NPCType("InfectedDemonEye"), 0.1f);
+					}
+					pool.Add(base.mod.NPCType("RadiumBeast"), 0.01f);
+					pool.Add(base.mod.NPCType("RogueTBot"), 0.06f);
+					pool.Add(base.mod.NPCType("XenomiteBeast"), 0.02f);
+				}
+				else if (player.ZoneOverworldHeight && Main.dayTime)
+				{
+					pool.Clear();
+					if (Main.hardMode)
+					{
+						pool.Add(base.mod.NPCType("BobTheBlob"), 0.0004f);
+						if (Enumerable.Contains<int>(array, (int)Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type))
+						{
+							pool.Add(base.mod.NPCType("InfectedSnowFlinx"), 0.05f);
+							pool.Add(base.mod.NPCType("SneezyInfectedFlinx"), 0.05f);
+						}
+						if (Enumerable.Contains<int>(array2, (int)Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type))
+						{
+							if (Main.raining)
+							{
+								pool.Add(base.mod.NPCType("RadiumRampager"), 0.1f);
+								pool.Add(base.mod.NPCType("RadiumDigger2Head"), 0.01f);
+							}
+							pool.Add(base.mod.NPCType("DecayedGhoul"), 0.12f);
+							pool.Add(base.mod.NPCType("InfectedSwarmer"), 0.05f);
+							pool.Add(base.mod.NPCType("XenonRoller"), 0.06f);
+						}
+					}
+					pool.Add(base.mod.NPCType("XenomiteBeast"), 0.02f);
+					pool.Add(base.mod.NPCType("RadiumBeast"), 0.01f);
+					pool.Add(base.mod.NPCType("RadioactiveSlime"), 0.06f);
+					pool.Add(base.mod.NPCType("NuclearSlime"), 0.002f);
+				}
+				else if (player.ZoneDirtLayerHeight)
+				{
+					pool.Clear();
 				}
 			}
 			if (spawnInfo.player.GetModPlayer<RedePlayer>(base.mod).ZoneLab)
@@ -258,6 +443,49 @@ namespace Redemption.NPCs
 					pool.Add(base.mod.NPCType("InfectionHive"), 0.05f);
 					pool.Add(base.mod.NPCType("SludgyBoi2"), 0.1f);
 					pool.Add(base.mod.NPCType("WalterInfected"), 0.1f);
+				}
+			}
+			if (ChickWorld.chickArmy)
+			{
+				pool.Clear();
+				if (RedeWorld.downedPatientZero)
+				{
+					pool.Add(base.mod.NPCType("GreatChickenWarrior"), 20f);
+					pool.Add(base.mod.NPCType("ChickenMan"), 30f);
+					pool.Add(base.mod.NPCType("ShieldedChickenMan"), 30f);
+					pool.Add(base.mod.NPCType("ChickenCavalry"), 27f);
+					pool.Add(base.mod.NPCType("Chicken"), 30f);
+					if (!NPC.AnyNPCs(base.mod.NPCType("TrojanChicken")) && ChickWorld.ChickPoints2 >= 5 && ChickWorld.ChickPoints2 <= 150 && !NPC.AnyNPCs(base.mod.NPCType("RoosterKing")))
+					{
+						pool.Add(base.mod.NPCType("TrojanChicken"), 10f);
+					}
+					if (ChickWorld.ChickPoints2 >= 15)
+					{
+						pool.Add(base.mod.NPCType("ChickenBallista"), 10f);
+					}
+					if (ChickWorld.ChickPoints2 >= 30)
+					{
+						pool.Add(base.mod.NPCType("ChickmanChickromancer"), 15f);
+						pool.Add(base.mod.NPCType("ChickmanArchmage"), 15f);
+					}
+					pool.Add(base.mod.NPCType("BomberChicken"), 20f);
+					if (ChickWorld.ChickPoints2 >= 175 && !NPC.AnyNPCs(base.mod.NPCType("RoosterKing")))
+					{
+						pool.Add(base.mod.NPCType("RoosterKing"), 90f);
+						return;
+					}
+				}
+				else
+				{
+					pool.Add(base.mod.NPCType("GreatChickenWarrior"), 20f);
+					pool.Add(base.mod.NPCType("ChickenMan"), 30f);
+					pool.Add(base.mod.NPCType("ShieldedChickenMan"), 30f);
+					pool.Add(base.mod.NPCType("ChickenCavalry"), 27f);
+					pool.Add(base.mod.NPCType("Chicken"), 30f);
+					if (!NPC.AnyNPCs(base.mod.NPCType("TrojanChicken")) && ChickWorld.ChickPoints2 >= 25)
+					{
+						pool.Add(base.mod.NPCType("TrojanChicken"), 10f);
+					}
 				}
 			}
 		}
@@ -281,5 +509,11 @@ namespace Redemption.NPCs
 		public bool sandDust;
 
 		public bool badtime;
+
+		public bool bloodCrystalStab;
+
+		public bool cursedCrystalStab;
+
+		public bool blackHeart;
 	}
 }

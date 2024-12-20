@@ -84,17 +84,23 @@ namespace Redemption.NPCs
 				this.attackTimer++;
 				base.npc.aiStyle = 0;
 				base.npc.velocity.X = 0f;
+				if (this.attackTimer == 1 && !Config.NoCombatText)
+				{
+					CombatText.NewText(base.npc.getRect(), Color.Gold, "Redemptive Sparks!", true, true);
+				}
 				if (this.attackTimer == 21)
 				{
 					if (base.npc.direction == -1)
 					{
 						Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 2f, base.npc.position.Y + 12f), new Vector2(-6f, 1f), base.mod.ProjectileType("RedeSparkPro2"), 10, 3f, 255, 0f, 0f);
+						int num2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 2f, base.npc.position.Y + 12f), new Vector2(-6f, 1f), base.mod.ProjectileType("RedeSparkPro2"), 10, 3f, 255, 0f, 0f);
+						Main.projectile[num2].netUpdate = true;
 					}
 					else
 					{
 						Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 2f, base.npc.position.Y + 12f), new Vector2(6f, 1f), base.mod.ProjectileType("RedeSparkPro2"), 10, 3f, 255, 0f, 0f);
+						int num3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 2f, base.npc.position.Y + 12f), new Vector2(6f, 1f), base.mod.ProjectileType("RedeSparkPro2"), 10, 3f, 255, 0f, 0f);
+						Main.projectile[num3].netUpdate = true;
 					}
 				}
 				if (this.attackTimer == 24)
@@ -102,12 +108,14 @@ namespace Redemption.NPCs
 					if (base.npc.direction == -1)
 					{
 						Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 26f), new Vector2(-6f, 0f), base.mod.ProjectileType("RedeSparkPro2"), 10, 3f, 255, 0f, 0f);
+						int num4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 26f), new Vector2(-6f, 0f), base.mod.ProjectileType("RedeSparkPro2"), 10, 3f, 255, 0f, 0f);
+						Main.projectile[num4].netUpdate = true;
 					}
 					else
 					{
 						Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 26f), new Vector2(6f, 0f), base.mod.ProjectileType("RedeSparkPro2"), 10, 3f, 255, 0f, 0f);
+						int num5 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 4f, base.npc.position.Y + 26f), new Vector2(6f, 0f), base.mod.ProjectileType("RedeSparkPro2"), 10, 3f, 255, 0f, 0f);
+						Main.projectile[num5].netUpdate = true;
 					}
 				}
 				if (this.attackTimer == 27)
@@ -115,12 +123,14 @@ namespace Redemption.NPCs
 					if (base.npc.direction == -1)
 					{
 						Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 0f, base.npc.position.Y + 44f), new Vector2(-6f, -1f), base.mod.ProjectileType("RedeSparkPro2"), 10, 3f, 255, 0f, 0f);
+						int num6 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 0f, base.npc.position.Y + 44f), new Vector2(-6f, -1f), base.mod.ProjectileType("RedeSparkPro2"), 10, 3f, 255, 0f, 0f);
+						Main.projectile[num6].netUpdate = true;
 					}
 					else
 					{
 						Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 0f, base.npc.position.Y + 44f), new Vector2(6f, -1f), base.mod.ProjectileType("RedeSparkPro2"), 10, 3f, 255, 0f, 0f);
+						int num7 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 0f, base.npc.position.Y + 44f), new Vector2(6f, -1f), base.mod.ProjectileType("RedeSparkPro2"), 10, 3f, 255, 0f, 0f);
+						Main.projectile[num7].netUpdate = true;
 					}
 				}
 				if (this.attackTimer >= 42)

@@ -14,7 +14,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Wandering Soul's Head");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n6% increased druidic damage\n3% damage reduction\n4% increased druidic critical strike chance\nIncreased night vision");
+			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n6% increased druidic damage\n3% damage reduction\n4% increased druidic critical strike chance\nIncreased night vision");
 		}
 
 		public override void SetDefaults()

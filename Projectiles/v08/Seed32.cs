@@ -16,7 +16,7 @@ namespace Redemption.Projectiles.v08
 		{
 			base.projectile.width = 8;
 			base.projectile.height = 8;
-			base.projectile.penetrate = -1;
+			base.projectile.penetrate = 1;
 			base.projectile.hostile = false;
 			base.projectile.friendly = true;
 			base.projectile.tileCollide = true;
@@ -46,12 +46,6 @@ namespace Redemption.Projectiles.v08
 		{
 			Collision.HitTiles(base.projectile.position, oldVelocity, base.projectile.width, base.projectile.height);
 			Main.PlaySound(0, (int)base.projectile.position.X, (int)base.projectile.position.Y, 1, 1f, 0f);
-			int num = 8;
-			for (int i = 0; i < num; i++)
-			{
-				int num2 = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, base.mod.ProjectileType("BloodrootRoot"), base.projectile.damage, 3f, Main.myPlayer, 0f, 0f);
-				Main.projectile[num2].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(12f, 0f), (float)i / (float)num * 6.28f);
-			}
 			return true;
 		}
 
@@ -69,10 +63,16 @@ namespace Redemption.Projectiles.v08
 
 		public override void Kill(int timeLeft)
 		{
-			for (int i = 0; i < 5; i++)
+			int num = 8;
+			for (int i = 0; i < num; i++)
 			{
-				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 5, 0f, 0f, 100, default(Color), 1.2f);
-				Main.dust[num].velocity *= 1.8f;
+				int num2 = Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, 0f, 0f, base.mod.ProjectileType("BloodrootRoot"), base.projectile.damage, 3f, Main.myPlayer, 0f, 0f);
+				Main.projectile[num2].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(12f, 0f), (float)i / (float)num * 6.28f);
+			}
+			for (int j = 0; j < 5; j++)
+			{
+				int num3 = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 5, 0f, 0f, 100, default(Color), 1.2f);
+				Main.dust[num3].velocity *= 1.8f;
 			}
 		}
 	}

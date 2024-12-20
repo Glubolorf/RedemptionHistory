@@ -275,6 +275,11 @@ namespace Redemption.NPCs
 				shop.item[nextSlot].SetDefaults(base.mod.ItemType("GathicCryoCrystal"), false);
 				nextSlot++;
 			}
+			if (RedeWorld.downedEaglecrestGolem)
+			{
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("GolemEye"), false);
+				nextSlot++;
+			}
 		}
 
 		public override void TownNPCAttackStrength(ref int damage, ref float knockback)

@@ -27,7 +27,7 @@ namespace Redemption.NPCs.v08
 			base.npc.value = 2000f;
 			base.npc.knockBackResist = 0f;
 			base.npc.aiStyle = 1;
-			this.aiType = 183;
+			this.aiType = 85;
 			this.animationType = 302;
 		}
 

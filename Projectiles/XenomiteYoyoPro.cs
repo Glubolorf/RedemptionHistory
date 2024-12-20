@@ -46,6 +46,10 @@ namespace Redemption.Projectiles
 			{
 				Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, base.mod.DustType("XenoDust"), base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 0, default(Color), 1f);
 			}
+			if (Main.myPlayer == base.projectile.owner && Main.rand.Next(20) == 0)
+			{
+				Projectile.NewProjectile(base.projectile.Center.X, base.projectile.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), base.mod.ProjectileType("XenoYoyoShard"), base.projectile.damage / 2, base.projectile.knockBack, Main.myPlayer, 0f, 0f);
+			}
 		}
 
 		public static short customGlowMask;

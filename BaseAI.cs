@@ -802,6 +802,86 @@ namespace Redemption
 			return vector;
 		}
 
+		public static void AILightningBolt(Projectile projectile, ref float[] ai, float changeAngleAt = 40f)
+		{
+			int num = projectile.frameCounter;
+			projectile.frameCounter = num + 1;
+			if (projectile.velocity == Vector2.Zero)
+			{
+				if (projectile.frameCounter >= projectile.extraUpdates * 2)
+				{
+					projectile.frameCounter = 0;
+					bool flag = true;
+					for (int i = 1; i < projectile.oldPos.Length; i = num + 1)
+					{
+						if (projectile.oldPos[i] != projectile.oldPos[0])
+						{
+							flag = false;
+						}
+						num = i;
+					}
+					if (flag)
+					{
+						projectile.Kill();
+						return;
+					}
+				}
+			}
+			else if (projectile.frameCounter >= projectile.extraUpdates * 2)
+			{
+				projectile.frameCounter = 0;
+				float num2 = projectile.velocity.Length();
+				UnifiedRandom unifiedRandom = new UnifiedRandom((int)projectile.ai[1]);
+				int num3 = 0;
+				Vector2 vector = -Vector2.UnitY;
+				Vector2 vector2;
+				do
+				{
+					int num4 = unifiedRandom.Next();
+					projectile.ai[1] = (float)num4;
+					num4 %= 100;
+					float num5 = (float)num4 / 100f * 6.2831855f;
+					vector2 = Utils.ToRotationVector2(num5);
+					if (vector2.Y > 0f)
+					{
+						vector2.Y *= -1f;
+					}
+					bool flag2 = false;
+					if (vector2.Y > -0.02f)
+					{
+						flag2 = true;
+					}
+					if (vector2.X * (float)(projectile.extraUpdates + 1) * 2f * num2 + projectile.localAI[0] > changeAngleAt)
+					{
+						flag2 = true;
+					}
+					if (vector2.X * (float)(projectile.extraUpdates + 1) * 2f * num2 + projectile.localAI[0] < -changeAngleAt)
+					{
+						flag2 = true;
+					}
+					if (!flag2)
+					{
+						goto IL_1B9;
+					}
+					num = num3;
+					num3 = num + 1;
+				}
+				while (num < 100);
+				projectile.velocity = Vector2.Zero;
+				projectile.localAI[1] = 1f;
+				goto IL_1BD;
+				IL_1B9:
+				vector = vector2;
+				IL_1BD:
+				if (projectile.velocity != Vector2.Zero)
+				{
+					projectile.localAI[0] += vector.X * (float)(projectile.extraUpdates + 1) * 2f * num2;
+					projectile.velocity = Utils.RotatedBy(vector, (double)(projectile.ai[0] + 1.5707964f), default(Vector2)) * num2;
+					projectile.rotation = Utils.ToRotation(projectile.velocity) + 1.5707964f;
+				}
+			}
+		}
+
 		public static void AIProjWorm(Projectile p, ref float[] ai, int[] wormTypes, int wormLength, float velScalar = 1f, float velScalarIdle = 1f, float velocityMax = 30f, float velocityMaxIdle = 15f)
 		{
 			int[] array = new int[(wormTypes.Length == 1) ? 1 : wormLength];
@@ -2027,6 +2107,153 @@ namespace Redemption
 				}
 			}
 			return flag;
+		}
+
+		public static void AIShadowflameGhost(NPC npc, ref float[] ai, bool speedupOverTime = false, float distanceBeforeTakeoff = 660f, float velIntervalX = 0.3f, float velMaxX = 7f, float velIntervalY = 0.2f, float velMaxY = 4f, float velScalarY = 4f, float velScalarYMax = 15f, float velIntervalXTurn = 0.4f, float velIntervalYTurn = 0.4f, float velIntervalScalar = 0.95f, float velIntervalMaxTurn = 5f)
+		{
+			int num;
+			for (int i = 0; i < 200; i = num + 1)
+			{
+				if (i != npc.whoAmI && Main.npc[i].active && Main.npc[i].type == npc.type)
+				{
+					Vector2 vector = Main.npc[i].Center - npc.Center;
+					if (vector.Length() < 50f)
+					{
+						vector.Normalize();
+						if (vector.X == 0f && vector.Y == 0f)
+						{
+							if (i > npc.whoAmI)
+							{
+								vector.X = 1f;
+							}
+							else
+							{
+								vector.X = -1f;
+							}
+						}
+						vector *= 0.4f;
+						npc.velocity -= vector;
+						Main.npc[i].velocity += vector;
+					}
+				}
+				num = i;
+			}
+			if (speedupOverTime)
+			{
+				float num2 = 120f;
+				if (npc.localAI[0] < num2)
+				{
+					if (npc.localAI[0] == 0f)
+					{
+						Main.PlaySound(SoundID.Item8, npc.Center);
+						npc.TargetClosest(true);
+						if (npc.direction > 0)
+						{
+							npc.velocity.X = npc.velocity.X + 2f;
+						}
+						else
+						{
+							npc.velocity.X = npc.velocity.X - 2f;
+						}
+						for (int j = 0; j < 20; j = num + 1)
+						{
+							num = j;
+						}
+					}
+					npc.localAI[0] += 1f;
+					float num3 = 1f - npc.localAI[0] / num2;
+					float num4 = num3 * 20f;
+					int num5 = 0;
+					while ((float)num5 < num4)
+					{
+						num = num5;
+						num5 = num + 1;
+					}
+				}
+			}
+			if (npc.ai[0] == 0f)
+			{
+				npc.TargetClosest(true);
+				npc.ai[0] = 1f;
+				npc.ai[1] = (float)npc.direction;
+				return;
+			}
+			if (npc.ai[0] == 1f)
+			{
+				npc.TargetClosest(true);
+				npc.velocity.X = npc.velocity.X + npc.ai[1] * velIntervalX;
+				if (npc.velocity.X > velMaxX)
+				{
+					npc.velocity.X = velMaxX;
+				}
+				else if (npc.velocity.X < -velMaxX)
+				{
+					npc.velocity.X = -velMaxX;
+				}
+				float num6 = Main.player[npc.target].Center.Y - npc.Center.Y;
+				if (Math.Abs(num6) > velMaxY)
+				{
+					velScalarY = velScalarYMax;
+				}
+				if (num6 > velMaxY)
+				{
+					num6 = velMaxY;
+				}
+				else if (num6 < -velMaxY)
+				{
+					num6 = -velMaxY;
+				}
+				npc.velocity.Y = (npc.velocity.Y * (velScalarY - 1f) + num6) / velScalarY;
+				if ((npc.ai[1] > 0f && Main.player[npc.target].Center.X - npc.Center.X < -distanceBeforeTakeoff) || (npc.ai[1] < 0f && Main.player[npc.target].Center.X - npc.Center.X > distanceBeforeTakeoff))
+				{
+					npc.ai[0] = 2f;
+					npc.ai[1] = 0f;
+					if (npc.Center.Y + 20f > Main.player[npc.target].Center.Y)
+					{
+						npc.ai[1] = -1f;
+						return;
+					}
+					npc.ai[1] = 1f;
+					return;
+				}
+			}
+			else if (npc.ai[0] == 2f)
+			{
+				npc.velocity.Y = npc.velocity.Y + npc.ai[1] * velIntervalYTurn;
+				if (npc.velocity.Length() > velIntervalMaxTurn)
+				{
+					npc.velocity *= velIntervalScalar;
+				}
+				if (npc.velocity.X > -1f && npc.velocity.X < 1f)
+				{
+					npc.TargetClosest(true);
+					npc.ai[0] = 3f;
+					npc.ai[1] = (float)npc.direction;
+					return;
+				}
+			}
+			else if (npc.ai[0] == 3f)
+			{
+				npc.velocity.X = npc.velocity.X + npc.ai[1] * velIntervalXTurn;
+				if (npc.Center.Y > Main.player[npc.target].Center.Y)
+				{
+					npc.velocity.Y = npc.velocity.Y - velIntervalY;
+				}
+				else
+				{
+					npc.velocity.Y = npc.velocity.Y + velIntervalY;
+				}
+				if (npc.velocity.Length() > velIntervalMaxTurn)
+				{
+					npc.velocity *= velIntervalScalar;
+				}
+				if (npc.velocity.Y > -1f && npc.velocity.Y < 1f)
+				{
+					npc.TargetClosest(true);
+					npc.ai[0] = 0f;
+					npc.ai[1] = (float)npc.direction;
+				}
+			}
 		}
 
 		public static void AISpaceOctopus(NPC npc, ref float[] ai, float moveSpeed = 0.15f, float velMax = 5f, float hoverDistance = 250f, float shootProjInterval = 70f, Action<NPC, Vector2> FireProj = null)
@@ -4203,6 +4430,9 @@ namespace Redemption
 		public static void AIWorm(NPC npc, ref bool isDigging, int[] wormTypes, float partDistanceAddon = 0f, float maxSpeed = 8f, float gravityResist = 0.07f, bool fly = false, bool split = false, bool ignoreTiles = false, bool spawnTileDust = true, bool soundEffects = true, bool rotateAverage = false, Action<NPC, int, bool> onChangeType = null)
 		{
 			bool flag = wormTypes.Length == 1;
+			bool flag2 = npc.type == wormTypes[0];
+			bool flag3 = npc.type == wormTypes[wormTypes.Length - 1];
+			bool flag4 = !flag2 && !flag3;
 			int num = wormTypes.Length;
 			if (split)
 			{
@@ -4212,39 +4442,51 @@ namespace Redemption
 			{
 				npc.realLife = (int)npc.ai[3];
 			}
+			if (npc.ai[0] == -1f)
+			{
+				npc.ai[0] = (float)npc.whoAmI;
+			}
 			if (npc.target < 0 || npc.target == 255 || Main.player[npc.target].dead)
 			{
 				npc.TargetClosest(true);
 			}
-			if (Main.player[npc.target].dead && npc.timeLeft > 300)
+			if (flag2)
 			{
-				npc.timeLeft = 300;
+				if ((npc.target < 0 || npc.target == 255 || Main.player[npc.target].dead) && npc.timeLeft > 300)
+				{
+					npc.timeLeft = 300;
+				}
+			}
+			else
+			{
+				npc.timeLeft = 50;
 			}
 			if (Main.netMode != 1)
 			{
 				if (!flag)
 				{
-					if (fly && npc.type == wormTypes[0] && npc.ai[0] == 0f)
+					if (fly && flag2 && npc.ai[0] == 0f)
 					{
 						npc.ai[3] = (float)npc.whoAmI;
 						npc.realLife = npc.whoAmI;
 						int num2 = npc.whoAmI;
 						for (int i = 1; i < num - 1; i++)
 						{
-							int num3 = (i == num) ? wormTypes[wormTypes.Length - 1] : wormTypes[i];
-							int num4 = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, num3, npc.whoAmI, 0f, 0f, 0f, 0f, 255);
-							Main.npc[num4].ai[3] = (float)npc.whoAmI;
-							Main.npc[num4].realLife = npc.whoAmI;
-							Main.npc[num4].ai[1] = (float)num2;
-							Main.npc[num2].ai[0] = (float)num4;
-							NetMessage.SendData(23, -1, -1, NetworkText.FromLiteral(""), num4, 0f, 0f, 0f, 0, 0, 0);
-							num2 = num4;
+							int num3 = wormTypes[i];
+							float num4 = 0f;
+							float num5 = (float)num2;
+							float num6 = 0f;
+							float num7 = npc.ai[3];
+							int num8 = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, num3, npc.whoAmI, num4, num5, num6, num7, 255);
+							Main.npc[num2].ai[0] = (float)num8;
+							Main.npc[num2].netUpdate = true;
+							num2 = num8;
 						}
 						npc.netUpdate = true;
 					}
-					else if ((npc.type == wormTypes[0] || (npc.type != wormTypes[0] && npc.type != wormTypes[wormTypes.Length - 1])) && npc.ai[0] == 0f)
+					else if ((flag2 || flag4) && npc.ai[0] == 0f)
 					{
-						if (npc.type == wormTypes[0])
+						if (flag2)
 						{
 							if (!split)
 							{
@@ -4252,24 +4494,28 @@ namespace Redemption
 								npc.realLife = npc.whoAmI;
 							}
 							npc.ai[2] = (float)(num - 1);
-							int num5 = (wormTypes.Length <= 2) ? wormTypes[wormTypes.Length - 1] : wormTypes[1];
-							npc.ai[0] = (float)NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, num5, npc.whoAmI, 0f, 0f, 0f, 0f, 255);
 						}
-						else if (npc.type != wormTypes[0] && npc.type != wormTypes[wormTypes.Length - 1] && npc.ai[2] > 0f)
+						float num9 = 0f;
+						float num10 = (float)npc.whoAmI;
+						float num11 = npc.ai[2] - 1f;
+						float num12 = npc.ai[3];
+						if (split)
 						{
-							npc.ai[0] = (float)NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, wormTypes[num - (int)npc.ai[2]], npc.whoAmI, 0f, 0f, 0f, 0f, 255);
+							npc.ai[3] = 0f;
+						}
+						if (flag2)
+						{
+							npc.ai[0] = (float)NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, wormTypes[1], npc.whoAmI, num9, num10, num11, num12, 255);
+						}
+						else if (flag4 && npc.ai[2] > 0f)
+						{
+							npc.ai[0] = (float)NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, wormTypes[num - (int)npc.ai[2]], npc.whoAmI, num9, num10, num11, num12, 255);
 						}
 						else
 						{
-							npc.ai[0] = (float)NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, wormTypes[wormTypes.Length - 1], npc.whoAmI, 0f, 0f, 0f, 0f, 255);
+							npc.ai[0] = (float)NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, wormTypes[wormTypes.Length - 1], npc.whoAmI, num9, num10, num11, num12, 255);
 						}
-						if (!split)
-						{
-							Main.npc[(int)npc.ai[0]].ai[3] = npc.ai[3];
-							Main.npc[(int)npc.ai[0]].realLife = npc.realLife;
-						}
-						Main.npc[(int)npc.ai[0]].ai[1] = (float)npc.whoAmI;
-						Main.npc[(int)npc.ai[0]].ai[2] = npc.ai[2] - 1f;
+						Main.npc[(int)npc.ai[0]].netUpdate = true;
 						npc.netUpdate = true;
 					}
 				}
@@ -4293,16 +4539,16 @@ namespace Redemption
 						npc.HitEffect(0, 10.0);
 						npc.active = false;
 					}
-					if (npc.type != wormTypes[0] && npc.type != wormTypes[wormTypes.Length - 1] && !Main.npc[(int)npc.ai[1]].active)
+					if (flag4 && !Main.npc[(int)npc.ai[1]].active)
 					{
 						int type = npc.type;
 						npc.type = wormTypes[0];
 						int whoAmI = npc.whoAmI;
-						float num6 = (float)npc.life / (float)npc.lifeMax;
-						float num7 = npc.ai[0];
+						float num13 = (float)npc.life / (float)npc.lifeMax;
+						float num14 = npc.ai[0];
 						npc.SetDefaults(npc.type, -1f);
-						npc.life = (int)((float)npc.lifeMax * num6);
-						npc.ai[0] = num7;
+						npc.life = (int)((float)npc.lifeMax * num13);
+						npc.ai[0] = num14;
 						npc.TargetClosest(true);
 						npc.netUpdate = true;
 						npc.whoAmI = whoAmI;
@@ -4311,16 +4557,16 @@ namespace Redemption
 							onChangeType(npc, type, true);
 						}
 					}
-					else if (npc.type != wormTypes[0] && npc.type != wormTypes[wormTypes.Length - 1] && !Main.npc[(int)npc.ai[0]].active)
+					else if (flag4 && !Main.npc[(int)npc.ai[0]].active)
 					{
 						int type2 = npc.type;
 						npc.type = wormTypes[wormTypes.Length - 1];
 						int whoAmI2 = npc.whoAmI;
-						float num8 = (float)npc.life / (float)npc.lifeMax;
-						float num9 = npc.ai[1];
+						float num15 = (float)npc.life / (float)npc.lifeMax;
+						float num16 = npc.ai[1];
 						npc.SetDefaults(npc.type, -1f);
-						npc.life = (int)((float)npc.lifeMax * num8);
-						npc.ai[1] = num9;
+						npc.life = (int)((float)npc.lifeMax * num15);
+						npc.ai[1] = num16;
 						npc.TargetClosest(true);
 						npc.netUpdate = true;
 						npc.whoAmI = whoAmI2;
@@ -4350,46 +4596,47 @@ namespace Redemption
 					NetMessage.SendData(28, -1, -1, NetworkText.FromLiteral(""), npc.whoAmI, 1f, 0f, 0f, -1, 0, 0);
 				}
 			}
-			int num10 = (int)(npc.position.X / 16f) - 1;
-			int num11 = (int)(npc.Center.X / 16f) + 2;
-			int num12 = (int)(npc.position.Y / 16f) - 1;
-			int num13 = (int)(npc.Center.Y / 16f) + 2;
-			if (num10 < 0)
+			int num17 = (int)(npc.position.X / 16f) - 1;
+			int num18 = (int)(npc.Center.X / 16f) + 2;
+			int num19 = (int)(npc.position.Y / 16f) - 1;
+			int num20 = (int)(npc.Center.Y / 16f) + 2;
+			if (num17 < 0)
 			{
-				num10 = 0;
+				num17 = 0;
 			}
-			if (num11 > Main.maxTilesX)
+			if (num18 > Main.maxTilesX)
 			{
-				num11 = Main.maxTilesX;
+				num18 = Main.maxTilesX;
 			}
-			if (num12 < 0)
+			if (num19 < 0)
 			{
-				num12 = 0;
+				num19 = 0;
 			}
-			if (num13 > Main.maxTilesY)
+			if (num20 > Main.maxTilesY)
 			{
-				num13 = Main.maxTilesY;
+				num20 = Main.maxTilesY;
 			}
-			bool flag2 = false;
+			bool flag5 = false;
 			if (fly || ignoreTiles)
 			{
-				flag2 = true;
+				flag5 = true;
 			}
-			if (!flag2 || spawnTileDust)
+			if (!flag5 || spawnTileDust)
 			{
-				for (int j = num10; j < num11; j++)
+				for (int j = num17; j < num18; j++)
 				{
-					for (int k = num12; k < num13; k++)
+					for (int k = num19; k < num20; k++)
 					{
-						if (Main.tile[j, k] != null && ((Main.tile[j, k].nactive() && (Main.tileSolid[(int)Main.tile[j, k].type] || (Main.tileSolidTop[(int)Main.tile[j, k].type] && Main.tile[j, k].frameY == 0))) || Main.tile[j, k].liquid > 64))
+						Tile tileSafely = BaseWorldGen.GetTileSafely(j, k);
+						if (tileSafely != null && ((tileSafely.nactive() && (Main.tileSolid[(int)tileSafely.type] || (Main.tileSolidTop[(int)tileSafely.type] && tileSafely.frameY == 0))) || tileSafely.liquid > 64))
 						{
 							Vector2 vector;
 							vector.X = (float)(j * 16);
 							vector.Y = (float)(k * 16);
 							if (npc.position.X + (float)npc.width > vector.X && npc.position.X < vector.X + 16f && npc.position.Y + (float)npc.height > vector.Y && npc.position.Y < vector.Y + 16f)
 							{
-								flag2 = true;
-								if (spawnTileDust && Main.rand.Next(100) == 0 && Main.tile[j, k].nactive())
+								flag5 = true;
+								if (spawnTileDust && Main.rand.Next(100) == 0 && tileSafely.nactive())
 								{
 									WorldGen.KillTile(j, k, true, true, false);
 								}
@@ -4398,28 +4645,28 @@ namespace Redemption
 					}
 				}
 			}
-			if (!flag2 && npc.type == wormTypes[0])
+			if (!flag5 && npc.type == wormTypes[0])
 			{
 				Rectangle rectangle;
 				rectangle..ctor((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height);
-				int num14 = 1000;
-				bool flag3 = true;
+				int num21 = 1000;
+				bool flag6 = true;
 				for (int l = 0; l < 255; l++)
 				{
 					if (Main.player[l].active)
 					{
 						Rectangle rectangle2;
-						rectangle2..ctor((int)Main.player[l].position.X - num14, (int)Main.player[l].position.Y - num14, num14 * 2, num14 * 2);
+						rectangle2..ctor((int)Main.player[l].position.X - num21, (int)Main.player[l].position.Y - num21, num21 * 2, num21 * 2);
 						if (rectangle.Intersects(rectangle2))
 						{
-							flag3 = false;
+							flag6 = false;
 							break;
 						}
 					}
 				}
-				if (flag3)
+				if (flag6)
 				{
-					flag2 = true;
+					flag5 = true;
 				}
 			}
 			if (fly)
@@ -4434,30 +4681,30 @@ namespace Redemption
 				}
 			}
 			Vector2 center = npc.Center;
-			float num15 = Main.player[npc.target].Center.X;
-			float num16 = Main.player[npc.target].Center.Y;
-			num15 = (float)((int)(num15 / 16f) * 16);
-			num16 = (float)((int)(num16 / 16f) * 16);
+			float num22 = Main.player[npc.target].Center.X;
+			float num23 = Main.player[npc.target].Center.Y;
+			num22 = (float)((int)(num22 / 16f) * 16);
+			num23 = (float)((int)(num23 / 16f) * 16);
 			center.X = (float)((int)(center.X / 16f) * 16);
 			center.Y = (float)((int)(center.Y / 16f) * 16);
-			num15 -= center.X;
-			num16 -= center.Y;
-			float num17 = (float)Math.Sqrt((double)(num15 * num15 + num16 * num16));
-			isDigging = flag2;
+			num22 -= center.X;
+			num23 -= center.Y;
+			float num24 = (float)Math.Sqrt((double)(num22 * num22 + num23 * num23));
+			isDigging = flag5;
 			if (npc.ai[1] > 0f && npc.ai[1] < (float)Main.npc.Length)
 			{
 				try
 				{
 					center = npc.Center;
-					num15 = Main.npc[(int)npc.ai[1]].Center.X - center.X;
-					num16 = Main.npc[(int)npc.ai[1]].Center.Y - center.Y;
+					num22 = Main.npc[(int)npc.ai[1]].Center.X - center.X;
+					num23 = Main.npc[(int)npc.ai[1]].Center.Y - center.Y;
 				}
 				catch
 				{
 				}
 				if (!rotateAverage || npc.type == wormTypes[0])
 				{
-					npc.rotation = (float)Math.Atan2((double)num16, (double)num15) + 1.57f;
+					npc.rotation = (float)Math.Atan2((double)num23, (double)num22) + 1.57f;
 				}
 				else
 				{
@@ -4465,21 +4712,21 @@ namespace Redemption
 					Vector2 endPos = BaseUtility.RotateVector(npc2.Center, npc2.Center + new Vector2(0f, 30f), npc2.rotation);
 					npc.rotation = BaseUtility.RotationTo(npc.Center, endPos) + 1.57f;
 				}
-				num17 = (float)Math.Sqrt((double)(num15 * num15 + num16 * num16));
-				num17 = (num17 - (float)npc.width - partDistanceAddon) / num17;
-				num15 *= num17;
-				num16 *= num17;
+				num24 = (float)Math.Sqrt((double)(num22 * num22 + num23 * num23));
+				num24 = (num24 - (float)npc.width - partDistanceAddon) / num24;
+				num22 *= num24;
+				num23 *= num24;
 				npc.velocity = default(Vector2);
-				npc.position.X = npc.position.X + num15;
-				npc.position.Y = npc.position.Y + num16;
+				npc.position.X = npc.position.X + num22;
+				npc.position.Y = npc.position.Y + num23;
 				if (fly)
 				{
-					if (num15 < 0f)
+					if (num22 < 0f)
 					{
 						npc.spriteDirection = 1;
 						return;
 					}
-					if (num15 > 0f)
+					if (num22 > 0f)
 					{
 						npc.spriteDirection = -1;
 						return;
@@ -4488,7 +4735,7 @@ namespace Redemption
 			}
 			else
 			{
-				if (!flag2)
+				if (!flag5)
 				{
 					npc.TargetClosest(true);
 					npc.velocity.Y = npc.velocity.Y + 0.11f;
@@ -4509,11 +4756,11 @@ namespace Redemption
 					}
 					else if (npc.velocity.Y == maxSpeed)
 					{
-						if (npc.velocity.X < num15)
+						if (npc.velocity.X < num22)
 						{
 							npc.velocity.X = npc.velocity.X + gravityResist;
 						}
-						else if (npc.velocity.X > num15)
+						else if (npc.velocity.X > num22)
 						{
 							npc.velocity.X = npc.velocity.X - gravityResist;
 						}
@@ -4534,30 +4781,30 @@ namespace Redemption
 				{
 					if (soundEffects && npc.soundDelay == 0)
 					{
-						float num18 = num17 / 40f;
-						if (num18 < 10f)
+						float num25 = num24 / 40f;
+						if (num25 < 10f)
 						{
-							num18 = 10f;
+							num25 = 10f;
 						}
-						if (num18 > 20f)
+						if (num25 > 20f)
 						{
-							num18 = 20f;
+							num25 = 20f;
 						}
-						npc.soundDelay = (int)num18;
+						npc.soundDelay = (int)num25;
 						Main.PlaySound(15, (int)npc.position.X, (int)npc.position.Y, 1, 1f, 0f);
 					}
-					num17 = (float)Math.Sqrt((double)(num15 * num15 + num16 * num16));
-					float num19 = Math.Abs(num15);
-					float num20 = Math.Abs(num16);
-					float num21 = maxSpeed / num17;
-					num15 *= num21;
-					num16 *= num21;
-					bool flag4 = false;
+					num24 = (float)Math.Sqrt((double)(num22 * num22 + num23 * num23));
+					float num26 = Math.Abs(num22);
+					float num27 = Math.Abs(num23);
+					float num28 = maxSpeed / num24;
+					num22 *= num28;
+					num23 *= num28;
+					bool flag7 = false;
 					if (fly)
 					{
-						if (((npc.velocity.X > 0f && num15 < 0f) || (npc.velocity.X < 0f && num15 > 0f) || (npc.velocity.Y > 0f && num16 < 0f) || (npc.velocity.Y < 0f && num16 > 0f)) && Math.Abs(npc.velocity.X) + Math.Abs(npc.velocity.Y) > gravityResist / 2f && num17 < 300f)
+						if (((npc.velocity.X > 0f && num22 < 0f) || (npc.velocity.X < 0f && num22 > 0f) || (npc.velocity.Y > 0f && num23 < 0f) || (npc.velocity.Y < 0f && num23 > 0f)) && Math.Abs(npc.velocity.X) + Math.Abs(npc.velocity.Y) > gravityResist / 2f && num24 < 300f)
 						{
-							flag4 = true;
+							flag7 = true;
 							if (Math.Abs(npc.velocity.X) + Math.Abs(npc.velocity.Y) < maxSpeed)
 							{
 								npc.velocity *= 1.1f;
@@ -4565,7 +4812,7 @@ namespace Redemption
 						}
 						if (npc.position.Y > Main.player[npc.target].position.Y || (double)(Main.player[npc.target].position.Y / 16f) > Main.worldSurface || Main.player[npc.target].dead)
 						{
-							flag4 = true;
+							flag7 = true;
 							if (Math.Abs(npc.velocity.X) < maxSpeed / 2f)
 							{
 								if (npc.velocity.X == 0f)
@@ -4580,27 +4827,27 @@ namespace Redemption
 							}
 						}
 					}
-					if (!flag4)
+					if (!flag7)
 					{
-						if ((npc.velocity.X > 0f && num15 > 0f) || (npc.velocity.X < 0f && num15 < 0f) || (npc.velocity.Y > 0f && num16 > 0f) || (npc.velocity.Y < 0f && num16 < 0f))
+						if ((npc.velocity.X > 0f && num22 > 0f) || (npc.velocity.X < 0f && num22 < 0f) || (npc.velocity.Y > 0f && num23 > 0f) || (npc.velocity.Y < 0f && num23 < 0f))
 						{
-							if (npc.velocity.X < num15)
+							if (npc.velocity.X < num22)
 							{
 								npc.velocity.X = npc.velocity.X + gravityResist;
 							}
-							else if (npc.velocity.X > num15)
+							else if (npc.velocity.X > num22)
 							{
 								npc.velocity.X = npc.velocity.X - gravityResist;
 							}
-							if (npc.velocity.Y < num16)
+							if (npc.velocity.Y < num23)
 							{
 								npc.velocity.Y = npc.velocity.Y + gravityResist;
 							}
-							else if (npc.velocity.Y > num16)
+							else if (npc.velocity.Y > num23)
 							{
 								npc.velocity.Y = npc.velocity.Y - gravityResist;
 							}
-							if ((double)Math.Abs(num16) < (double)maxSpeed * 0.2 && ((npc.velocity.X > 0f && num15 < 0f) || (npc.velocity.X < 0f && num15 > 0f)))
+							if ((double)Math.Abs(num23) < (double)maxSpeed * 0.2 && ((npc.velocity.X > 0f && num22 < 0f) || (npc.velocity.X < 0f && num22 > 0f)))
 							{
 								if (npc.velocity.Y > 0f)
 								{
@@ -4611,7 +4858,7 @@ namespace Redemption
 									npc.velocity.Y = npc.velocity.Y - gravityResist * 2f;
 								}
 							}
-							if ((double)Math.Abs(num15) < (double)maxSpeed * 0.2 && ((npc.velocity.Y > 0f && num16 < 0f) || (npc.velocity.Y < 0f && num16 > 0f)))
+							if ((double)Math.Abs(num22) < (double)maxSpeed * 0.2 && ((npc.velocity.Y > 0f && num23 < 0f) || (npc.velocity.Y < 0f && num23 > 0f)))
 							{
 								if (npc.velocity.X > 0f)
 								{
@@ -4623,13 +4870,13 @@ namespace Redemption
 								}
 							}
 						}
-						else if (num19 > num20)
+						else if (num26 > num27)
 						{
-							if (npc.velocity.X < num15)
+							if (npc.velocity.X < num22)
 							{
 								npc.velocity.X = npc.velocity.X + gravityResist * 1.1f;
 							}
-							else if (npc.velocity.X > num15)
+							else if (npc.velocity.X > num22)
 							{
 								npc.velocity.X = npc.velocity.X - gravityResist * 1.1f;
 							}
@@ -4647,11 +4894,11 @@ namespace Redemption
 						}
 						else
 						{
-							if (npc.velocity.Y < num16)
+							if (npc.velocity.Y < num23)
 							{
 								npc.velocity.Y = npc.velocity.Y + gravityResist * 1.1f;
 							}
-							else if (npc.velocity.Y > num16)
+							else if (npc.velocity.Y > num23)
 							{
 								npc.velocity.Y = npc.velocity.Y - gravityResist * 1.1f;
 							}
@@ -4681,7 +4928,7 @@ namespace Redemption
 				}
 				if (npc.type == wormTypes[0])
 				{
-					if (flag2)
+					if (flag5)
 					{
 						if (npc.localAI[0] != 1f)
 						{
@@ -5179,7 +5426,7 @@ namespace Redemption
 			}
 		}
 
-		public static void AISlime(NPC npc, ref float[] ai, bool fleeWhenDay = false, int jumpTime = 200, float jumpVelX = 2f, float jumpVelY = 6f, float jumpVelHighX = 3f, float jumpVelHighY = 8f)
+		public static void AISlime(NPC npc, ref float[] ai, bool fleeWhenDay = false, int jumpTime = 200, float jumpVelX = 2f, float jumpVelY = -6f, float jumpVelHighX = 3f, float jumpVelHighY = -8f)
 		{
 			bool flag = false;
 			if ((fleeWhenDay && !Main.dayTime) || npc.life != npc.lifeMax || (double)npc.position.Y > Main.worldSurface * 16.0)
@@ -5290,6 +5537,10 @@ namespace Redemption
 
 		public static void WalkupHalfBricks(Entity codable, ref float gfxOffY, ref float stepSpeed)
 		{
+			if (codable == null)
+			{
+				return;
+			}
 			if (codable.velocity.Y >= 0f)
 			{
 				int num = 0;
@@ -6369,6 +6620,7 @@ namespace Redemption
 				}
 			}
 			projectile.netUpdate2 = true;
+			Main.projectile[num] = projectile;
 			return num;
 		}
 

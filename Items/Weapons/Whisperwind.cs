@@ -60,7 +60,7 @@ namespace Redemption.Items.Weapons
 			Vector2 vector = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(3f));
 			speedX = vector.X;
 			speedY = vector.Y;
-			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, 206, damage, knockBack, player.whoAmI, 0f, 0f);
+			Projectile.NewProjectile(position.X, position.Y, speedX, speedY, 206, damage / 5, knockBack, player.whoAmI, 0f, 0f);
 			return true;
 		}
 

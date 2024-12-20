@@ -33,19 +33,13 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.shootSpeed = 17f;
 		}
 
-		public override bool CanUseItem(Player player)
+		public override float UseTimeMultiplier(Player player)
 		{
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterSeedbags)
 			{
-				base.item.useTime = 23;
-				base.item.useAnimation = 23;
+				return 1.15f;
 			}
-			else
-			{
-				base.item.useTime = 28;
-				base.item.useAnimation = 28;
-			}
-			return true;
+			return 1f;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

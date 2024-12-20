@@ -234,7 +234,7 @@ namespace Redemption
 					if (tile != null && tile.active() && (int)tile.type == type && (addTile == null || addTile(tile)) && (num5 == -1f || Vector2.Distance(vector, new Vector2((float)i, (float)j)) < num5))
 					{
 						num5 = Vector2.Distance(vector, new Vector2((float)i, (float)j));
-						if (type == 21 || TileObjectData.GetTileData((int)tile.type, 0, 0).Width > 1 || TileObjectData.GetTileData((int)tile.type, 0, 0).Height > 1)
+						if (type == 21 || (TileObjectData.GetTileData((int)tile.type, 0, 0) != null && (TileObjectData.GetTileData((int)tile.type, 0, 0).Width > 1 || TileObjectData.GetTileData((int)tile.type, 0, 0).Height > 1)))
 						{
 							int num6 = i;
 							int num7 = j;

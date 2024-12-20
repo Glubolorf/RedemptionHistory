@@ -11,7 +11,8 @@ namespace Redemption.Tiles
 		{
 			Main.tileSolid[(int)base.Type] = true;
 			Main.tileMergeDirt[(int)base.Type] = true;
-			Main.tileSpelunker[(int)base.Type] = false;
+			Main.tileMerge[(int)base.Type][59] = true;
+			Main.tileSpelunker[(int)base.Type] = true;
 			Main.tileBlockLight[(int)base.Type] = true;
 			this.dustType = 3;
 			this.drop = base.mod.ItemType("PlantMatter");

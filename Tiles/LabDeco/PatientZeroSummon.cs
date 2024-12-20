@@ -42,7 +42,7 @@ namespace Redemption.Tiles.LabDeco
 
 		public override void RightClick(int i, int j)
 		{
-			if (Main.netMode != 1)
+			if (Main.netMode == 0)
 			{
 				if (Main.tile[i, j].frameY >= 36)
 				{
@@ -88,8 +88,38 @@ namespace Redemption.Tiles.LabDeco
 					if (Main.netMode == 2)
 					{
 						NetMessage.SendData(23, -1, -1, null, num3, 0f, 0f, 0f, 0, 0, 0);
+						return;
 					}
 				}
+			}
+			else if (Main.tile[i, j].frameY >= 36)
+			{
+				if (!NPC.AnyNPCs(base.mod.NPCType("PatientZero")) && RedeWorld.downedStage2Scientist && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface && RedeWorld.downedMACE)
+				{
+					ModPacket packet = base.mod.GetPacket(256);
+					packet.Write(6);
+					Utils.WriteVector2(packet, new Vector2((float)(i * 16), (float)(j * 16 - 1)));
+					packet.Send(-1, -1);
+					return;
+				}
+			}
+			else if (Main.tile[i, j].frameY >= 18)
+			{
+				if (!NPC.AnyNPCs(base.mod.NPCType("PatientZero")) && RedeWorld.downedStage2Scientist && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface && RedeWorld.downedMACE)
+				{
+					ModPacket packet2 = base.mod.GetPacket(256);
+					packet2.Write(6);
+					Utils.WriteVector2(packet2, new Vector2((float)(i * 16), (float)(j * 16)));
+					packet2.Send(-1, -1);
+					return;
+				}
+			}
+			else if (!NPC.AnyNPCs(base.mod.NPCType("PatientZero")) && RedeWorld.downedStage2Scientist && RedeWorld.downedStage3Scientist && RedeWorld.downedIBehemoth && RedeWorld.downedBlisterface && RedeWorld.downedMACE)
+			{
+				ModPacket packet3 = base.mod.GetPacket(256);
+				packet3.Write(6);
+				Utils.WriteVector2(packet3, new Vector2((float)(i * 16), (float)(j * 16 + 1)));
+				packet3.Send(-1, -1);
 			}
 		}
 

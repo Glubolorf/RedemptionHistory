@@ -31,7 +31,7 @@ namespace Redemption.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 125;
+			base.item.damage = 90;
 			base.item.melee = true;
 			base.item.width = 78;
 			base.item.height = 78;
@@ -73,7 +73,7 @@ namespace Redemption.Items.Weapons
 			while ((float)num3 < num)
 			{
 				Vector2 vector = Utils.RotatedBy(new Vector2(speedX, speedY), (double)MathHelper.Lerp(-num2, num2, (float)num3 / (num - 1f)), default(Vector2)) * 0.4f;
-				Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, type, damage / 2, knockBack, player.whoAmI, 0f, 0f);
 				num3++;
 			}
 			return false;

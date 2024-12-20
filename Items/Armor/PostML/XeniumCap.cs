@@ -45,7 +45,7 @@ namespace Redemption.Items.Armor.PostML
 
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "Grants immunity to the Infection, Radioactive Fallout, and the abandoned lab's water\n50% increased minion damage while above 75% max life\n25% decreased minion damage while below 25% max life";
+			player.setBonus = "Grants immunity to the Infection, Radioactive Fallout, and infected waters\n50% increased minion damage while above 75% max life\n25% decreased minion damage while below 25% max life";
 			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
 			if ((float)player.statLife <= (float)player.statLifeMax2 * 0.75f)
 			{
@@ -58,6 +58,7 @@ namespace Redemption.Items.Armor.PostML
 			player.buffImmune[base.mod.BuffType("XenomiteDebuff")] = true;
 			player.buffImmune[base.mod.BuffType("XenomiteDebuff2")] = true;
 			player.buffImmune[base.mod.BuffType("RadioactiveFalloutDebuff")] = true;
+			player.buffImmune[base.mod.BuffType("HeavyRadiationDebuff")] = true;
 			redePlayer.labWaterImmune = true;
 		}
 

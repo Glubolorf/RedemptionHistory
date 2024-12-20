@@ -4,6 +4,10 @@ using Terraria.ModLoader;
 
 namespace Redemption.Items
 {
+	[AutoloadEquip(new EquipType[]
+	{
+		12
+	})]
 	public class GasMask : ModItem
 	{
 		public override void SetStaticDefaults()
@@ -24,6 +28,11 @@ namespace Redemption.Items
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			player.buffImmune[base.mod.BuffType("RadioactiveFalloutDebuff")] = true;
+		}
+
+		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)
+		{
+			drawAltHair = true;
 		}
 	}
 }

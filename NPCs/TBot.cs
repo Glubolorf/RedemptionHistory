@@ -12,7 +12,7 @@ namespace Redemption.NPCs
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Friendy T-Bot");
+			base.DisplayName.SetDefault("Friendly T-Bot");
 			Main.npcFrameCount[base.npc.type] = 26;
 		}
 
@@ -121,11 +121,11 @@ namespace Redemption.NPCs
 			{
 				return "You destroyed a thing that shouldn't even be able to be killed, as Cthulhu is an entity you humans cannot overwhelm. Neither can I, it'd crash my system... Oh wait, that was Cthulhu's brother.";
 			}
-			if (RedeWorld.downedVlitch1 || (RedeWorld.downedVlitch2 && Main.rand.Next(9) == 0))
+			if ((RedeWorld.downedVlitch1 || RedeWorld.downedVlitch2) && Main.rand.Next(9) == 0)
 			{
 				return "You defeated a Vlitch Overlord?! Oh this can't be good...";
 			}
-			if (RedeWorld.downedVlitch1 || (RedeWorld.downedVlitch2 && Main.rand.Next(9) == 0))
+			if ((RedeWorld.downedVlitch1 || RedeWorld.downedVlitch2) && Main.rand.Next(9) == 0)
 			{
 				return "Why am i concerned about the Overlords? Well, let's say I've had a close encounter with their leader. Not someone you'd like to mess with.";
 			}
@@ -140,7 +140,7 @@ namespace Redemption.NPCs
 			switch (Main.rand.Next(9))
 			{
 			case 0:
-				return "Have you seen a boy with glasses? I've lost him, and i need to find him.";
+				return "I'm not sure how I got here, but for the time being I'll stay in this building you've made.";
 			case 1:
 				return "I hope you are protecting me, as I am utterly defenceless...";
 			case 2:
@@ -148,7 +148,7 @@ namespace Redemption.NPCs
 			case 3:
 				return "Why do I have a limitless supply of robot parts? I dunno, maybe I craft them using the coins I've smelted?";
 			case 4:
-				return "I once painted a painting. Some guy from the corner of the room said 'Oh my god...' to himself.";
+				return "I once painted a painting. Then some old guy from the corner of the room said 'Oh my god' to himself.";
 			case 5:
 				return "The wasteland? It used to be a good place to live, but someone pressed the nuke button and initiated Mutual Nuclear Destruction. Only us androids survived the nuclear annihilation. That's where I'm from, too.";
 			case 6:
@@ -229,10 +229,51 @@ namespace Redemption.NPCs
 			{
 				shop.item[nextSlot].SetDefaults(base.mod.ItemType("HazmatSuit"), false);
 				nextSlot++;
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("TerraBombaPart1"), false);
+				nextSlot++;
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("TerraBombaPart2"), false);
+				nextSlot++;
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("TerraBombaPart3"), false);
+				nextSlot++;
 			}
 			if (RedeWorld.tbotLabAccess)
 			{
 				shop.item[nextSlot].SetDefaults(base.mod.ItemType("TeslaCannon"), false);
+				nextSlot++;
+			}
+			if (RedeWorld.downedStage2Scientist && !RedeWorld.labAccess1)
+			{
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("ZoneAccessPanel1"), false);
+				nextSlot++;
+			}
+			if (RedeWorld.downedStage3Scientist && !RedeWorld.labAccess2)
+			{
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("ZoneAccessPanel2"), false);
+				nextSlot++;
+			}
+			if (RedeWorld.downedIBehemoth && !RedeWorld.labAccess3)
+			{
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("ZoneAccessPanel3"), false);
+				nextSlot++;
+			}
+			if (RedeWorld.downedBlisterface && !RedeWorld.labAccess4)
+			{
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("ZoneAccessPanel4"), false);
+				nextSlot++;
+			}
+			if (RedeWorld.tbotLabAccess && !RedeWorld.labAccess5)
+			{
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("ZoneAccessPanel5"), false);
+				nextSlot++;
+			}
+			if (RedeWorld.downedMACE && !RedeWorld.labAccess6)
+			{
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("ZoneAccessPanel6"), false);
+				nextSlot++;
+			}
+			if (RedeWorld.downedPatientZero && !RedeWorld.labAccess7)
+			{
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("ZoneAccessPanel7"), false);
 				nextSlot++;
 			}
 		}

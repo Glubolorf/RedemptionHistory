@@ -35,6 +35,11 @@ namespace Redemption.NPCs
 			return SpawnCondition.OverworldDay.Chance * (RedeWorld.downedKingChicken ? 0.04f : 0f);
 		}
 
+		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+		{
+			return !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).chickenPower;
+		}
+
 		public override void HitEffect(int hitDirection, double damage)
 		{
 			if (base.npc.life <= 0)

@@ -11,7 +11,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Spirit Wyvern in a Bottle");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nReleases a stationary spirit wyvern at cursor point\nGets buffed from soul-related armoury");
+			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\nReleases a stationary spirit wyvern at cursor point\nGets buffed from soul-related armoury");
 		}
 
 		public override void SafeSetDefaults()
@@ -47,6 +47,10 @@ namespace Redemption.Items.DruidDamageClass
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).wanderingSoulSet)
 				{
 					return 1.45f;
+				}
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).shadeSet)
+				{
+					return 1.65f;
 				}
 				return 1.15f;
 			}

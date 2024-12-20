@@ -93,6 +93,12 @@ namespace Redemption.NPCs
 			return new bool?(false);
 		}
 
+		public override bool CheckActive()
+		{
+			NPC npc = Main.npc[(int)base.npc.ai[1]];
+			return !npc.active;
+		}
+
 		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
 		{
 			if (Main.rand.Next(2) == 0 || (Main.expertMode && Main.rand.Next(0) == 0))

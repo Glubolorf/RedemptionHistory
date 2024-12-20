@@ -87,7 +87,8 @@ namespace Redemption.NPCs.LabNPCs
 			float num = base.npc.Distance(Main.player[base.npc.target].Center);
 			if (num <= 300f && Main.rand.Next(200) == 0)
 			{
-				NPC.NewNPC((int)base.npc.position.X + 28, (int)base.npc.position.Y + 8, base.mod.NPCType("SludgyBlob"), 0, 0f, 0f, 0f, 0f, 255);
+				int num2 = NPC.NewNPC((int)base.npc.position.X + 28, (int)base.npc.position.Y + 8, base.mod.NPCType("SludgyBlob"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.npc[num2].netUpdate = true;
 			}
 		}
 	}

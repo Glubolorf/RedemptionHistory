@@ -19,7 +19,7 @@ namespace Redemption.Projectiles
 			base.projectile.height = 12;
 			base.projectile.penetrate = -1;
 			base.projectile.hostile = false;
-			base.projectile.thrown = true;
+			base.projectile.melee = true;
 			base.projectile.friendly = true;
 			base.projectile.tileCollide = true;
 			base.projectile.ignoreWater = true;

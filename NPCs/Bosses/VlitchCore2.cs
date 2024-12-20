@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -68,40 +69,44 @@ namespace Redemption.NPCs.Bosses
 			{
 				Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, base.mod.DustType("VlitchFlame"), 0f, 0f, 0, default(Color), 1f);
 			}
-			this.specialAttack1++;
-			if (this.specialAttack1 == 80)
+			base.npc.ai[1] += 1f;
+			if (base.npc.ai[1] == 80f)
 			{
-				Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(0f, -8f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(0f, 8f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-8f, 0f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(8f, 0f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+				int num = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(0f, -8f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+				num = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(0f, 8f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+				num = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-8f, 0f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+				num = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(8f, 0f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+				Main.projectile[num].netUpdate = true;
 			}
-			if (this.specialAttack1 == 160)
+			if (base.npc.ai[1] == 160f)
 			{
-				Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(6f, 6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(6f, -6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-6f, 6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-6f, -6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-				this.specialAttack1 = 0;
+				int num2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(6f, 6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+				num2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(6f, -6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+				num2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-6f, 6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+				num2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-6f, -6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+				Main.projectile[num2].netUpdate = true;
+				base.npc.ai[1] = 0f;
 			}
 			if (base.npc.life < 8000)
 			{
-				this.specialAttack1 = 0;
-				this.specialAttack2++;
-				if (this.specialAttack2 == 40)
+				base.npc.ai[1] = 0f;
+				base.npc.ai[2] += 1f;
+				if (base.npc.ai[2] == 40f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(0f, -8f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(0f, 8f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-8f, 0f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(8f, 0f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+					int num3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(0f, -8f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+					num3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(0f, 8f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+					num3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-8f, 0f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+					num3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(8f, 0f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+					Main.projectile[num3].netUpdate = true;
 				}
-				if (this.specialAttack2 == 80)
+				if (base.npc.ai[2] == 80f)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(6f, 6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(6f, -6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-6f, 6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-					Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-6f, -6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
-					this.specialAttack2 = 0;
+					int num4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(6f, 6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+					num4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(6f, -6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+					num4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-6f, 6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+					num4 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 70f, base.npc.position.Y + 62f), new Vector2(-6f, -6f), base.mod.ProjectileType("VlitchLaserPro"), 60, 3f, 255, 0f, 0f);
+					Main.projectile[num4].netUpdate = true;
+					base.npc.ai[2] = 0f;
 				}
 			}
 		}
@@ -128,10 +133,16 @@ namespace Redemption.NPCs.Bosses
 			}
 		}
 
+		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
+		{
+			Texture2D texture2D = Main.npcTexture[base.npc.type];
+			Texture2D texture = base.mod.GetTexture("NPCs/Bosses/VlitchCore_Glow");
+			SpriteEffects spriteEffects = (base.npc.spriteDirection == -1) ? 0 : 1;
+			spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+			spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, spriteEffects, 0f);
+			return false;
+		}
+
 		private Player player;
-
-		public int specialAttack1;
-
-		public int specialAttack2;
 	}
 }

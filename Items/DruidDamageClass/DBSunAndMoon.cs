@@ -10,7 +10,7 @@ namespace Redemption.Items.DruidDamageClass
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Duality Seed Bag - Sun and Moon");
+			base.DisplayName.SetDefault("Duality Seedbag - Sun and Moon");
 			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nTosses a seed that unleashes the power of Daybloom and Moonglow with great power");
 		}
 
@@ -34,19 +34,13 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.shootSpeed = 18f;
 		}
 
-		public override bool CanUseItem(Player player)
+		public override float UseTimeMultiplier(Player player)
 		{
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterSeedbags)
 			{
-				base.item.useTime = 35;
-				base.item.useAnimation = 35;
+				return 1.15f;
 			}
-			else
-			{
-				base.item.useTime = 40;
-				base.item.useAnimation = 40;
-			}
-			return true;
+			return 1f;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

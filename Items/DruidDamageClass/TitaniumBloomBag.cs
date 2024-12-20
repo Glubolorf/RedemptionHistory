@@ -10,7 +10,7 @@ namespace Redemption.Items.DruidDamageClass
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Titanium Bloom Seed Bag");
+			base.DisplayName.SetDefault("Titanium Bloom Seedbag");
 			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nThrows a seed that grows into a sparkling Titanium Bloom");
 		}
 
@@ -34,19 +34,13 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.shootSpeed = 18f;
 		}
 
-		public override bool CanUseItem(Player player)
+		public override float UseTimeMultiplier(Player player)
 		{
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterSeedbags)
 			{
-				base.item.useTime = 41;
-				base.item.useAnimation = 41;
+				return 1.15f;
 			}
-			else
-			{
-				base.item.useTime = 46;
-				base.item.useAnimation = 46;
-			}
-			return true;
+			return 1f;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

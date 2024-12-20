@@ -70,6 +70,10 @@ namespace Redemption.NPCs.Varients
 			{
 				base.npc.velocity.X = 0f;
 				this.peckTimer++;
+				if (this.peckTimer == 1 && !Config.NoCombatText)
+				{
+					CombatText.NewText(base.npc.getRect(), Color.LightGoldenrodYellow, "Peck Peck", true, true);
+				}
 				if (this.peckTimer >= 30)
 				{
 					this.peckPeck = false;

@@ -88,6 +88,10 @@ namespace Redemption.NPCs
 				this.attackStart = true;
 				base.npc.aiStyle = 0;
 				base.npc.velocity.X = 0f;
+				if (this.attackTimer == 1 && !Config.NoCombatText)
+				{
+					CombatText.NewText(base.npc.getRect(), Color.Red, "Slice!", true, true);
+				}
 				if (this.attackTimer == 20)
 				{
 					Main.PlaySound(SoundID.Item71, (int)base.npc.position.X, (int)base.npc.position.Y);
@@ -97,7 +101,8 @@ namespace Redemption.NPCs
 					int num3 = 50;
 					int num4 = base.mod.ProjectileType("OmegaWave3");
 					float num5 = (float)Math.Atan2((double)(vector.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num5) * (double)num2 * -1.0), (float)(Math.Sin((double)num5) * (double)num2 * -1.0), num4, num3, 0f, 0, 0f, 0f);
+					int num6 = Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num5) * (double)num2 * -1.0), (float)(Math.Sin((double)num5) * (double)num2 * -1.0), num4, num3, 0f, 0, 0f, 0f);
+					Main.projectile[num6].netUpdate = true;
 				}
 				if (this.attackTimer >= 50)
 				{

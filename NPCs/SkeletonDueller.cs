@@ -11,7 +11,7 @@ namespace Redemption.NPCs
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Skeleton Dueller");
+			base.DisplayName.SetDefault("Skeleton Duelist");
 			Main.npcFrameCount[base.npc.type] = Main.npcFrameCount[271];
 		}
 
@@ -82,16 +82,22 @@ namespace Redemption.NPCs
 				this.attackTimer++;
 				base.npc.aiStyle = 0;
 				base.npc.velocity.X = 0f;
+				if (this.attackTimer == 1 && !Config.NoCombatText)
+				{
+					CombatText.NewText(base.npc.getRect(), Color.Gray, "Slice! Stab!", true, true);
+				}
 				if (this.attackTimer == 6)
 				{
 					if (base.npc.direction == -1)
 					{
-						Projectile.NewProjectile(base.npc.position.X + -14f, base.npc.position.Y + 4f, 0f, 0f, base.mod.ProjectileType("DamagePro2"), 5, 3f, 255, 0f, 0f);
+						int num3 = Projectile.NewProjectile(base.npc.position.X + -14f, base.npc.position.Y + 4f, 0f, 0f, base.mod.ProjectileType("DamagePro2"), 5, 3f, 255, 0f, 0f);
+						Main.projectile[num3].netUpdate = true;
 						Main.PlaySound(SoundID.Item1, (int)base.npc.position.X, (int)base.npc.position.Y);
 					}
 					else
 					{
-						Projectile.NewProjectile(base.npc.position.X + 48f, base.npc.position.Y + 4f, 0f, 0f, base.mod.ProjectileType("DamagePro2"), 5, 3f, 255, 0f, 0f);
+						int num4 = Projectile.NewProjectile(base.npc.position.X + 48f, base.npc.position.Y + 4f, 0f, 0f, base.mod.ProjectileType("DamagePro2"), 5, 3f, 255, 0f, 0f);
+						Main.projectile[num4].netUpdate = true;
 						Main.PlaySound(SoundID.Item1, (int)base.npc.position.X, (int)base.npc.position.Y);
 					}
 				}
@@ -99,12 +105,14 @@ namespace Redemption.NPCs
 				{
 					if (base.npc.direction == -1)
 					{
-						Projectile.NewProjectile(base.npc.position.X + -14f, base.npc.position.Y + 28f, 0f, 0f, base.mod.ProjectileType("DamagePro1"), 5, 3f, 255, 0f, 0f);
+						int num5 = Projectile.NewProjectile(base.npc.position.X + -14f, base.npc.position.Y + 28f, 0f, 0f, base.mod.ProjectileType("DamagePro1"), 5, 3f, 255, 0f, 0f);
+						Main.projectile[num5].netUpdate = true;
 						Main.PlaySound(SoundID.Item19, (int)base.npc.position.X, (int)base.npc.position.Y);
 					}
 					else
 					{
-						Projectile.NewProjectile(base.npc.position.X + 48f, base.npc.position.Y + 28f, 0f, 0f, base.mod.ProjectileType("DamagePro1"), 5, 3f, 255, 0f, 0f);
+						int num6 = Projectile.NewProjectile(base.npc.position.X + 48f, base.npc.position.Y + 28f, 0f, 0f, base.mod.ProjectileType("DamagePro1"), 5, 3f, 255, 0f, 0f);
+						Main.projectile[num6].netUpdate = true;
 						Main.PlaySound(SoundID.Item19, (int)base.npc.position.X, (int)base.npc.position.Y);
 					}
 				}

@@ -29,7 +29,7 @@ namespace Redemption.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 177;
+			base.item.damage = 168;
 			base.item.ranged = true;
 			base.item.width = 40;
 			base.item.height = 70;
@@ -62,7 +62,7 @@ namespace Redemption.Items.Weapons
 			while ((float)num3 < num)
 			{
 				Vector2 vector = Utils.RotatedBy(new Vector2(speedX, speedY), (double)MathHelper.Lerp(-num2, num2, (float)num3 / (num - 1f)), default(Vector2)) * 0.2f;
-				Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, base.mod.ProjectileType("XeniumLaser"), 100, knockBack, player.whoAmI, 0f, 0f);
+				Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, base.mod.ProjectileType("XeniumLaser"), damage / 2, knockBack, player.whoAmI, 0f, 0f);
 				num3++;
 			}
 			return true;

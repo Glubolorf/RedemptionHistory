@@ -10,7 +10,7 @@ namespace Redemption.Items.DruidDamageClass
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Duality Seed Bag - Common Ground");
+			base.DisplayName.SetDefault("Duality Seedbag - Common Ground");
 			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nTosses an seed that forms a big cluster of thorns with the tips being empowered deathweeds");
 		}
 
@@ -34,19 +34,13 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.shootSpeed = 18f;
 		}
 
-		public override bool CanUseItem(Player player)
+		public override float UseTimeMultiplier(Player player)
 		{
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterSeedbags)
 			{
-				base.item.useTime = 37;
-				base.item.useAnimation = 37;
+				return 1.15f;
 			}
-			else
-			{
-				base.item.useTime = 42;
-				base.item.useAnimation = 42;
-			}
-			return true;
+			return 1f;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

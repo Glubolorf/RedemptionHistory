@@ -10,7 +10,7 @@ namespace Redemption.Items.DruidDamageClass
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Vilethorn Seed Bag");
+			base.DisplayName.SetDefault("Vilethorn Seedbag");
 			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nThrows a seed that grows into a spikey Vilethorn Bush");
 		}
 
@@ -34,19 +34,13 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.shootSpeed = 18f;
 		}
 
-		public override bool CanUseItem(Player player)
+		public override float UseTimeMultiplier(Player player)
 		{
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterSeedbags)
 			{
-				base.item.useTime = 30;
-				base.item.useAnimation = 30;
+				return 1.15f;
 			}
-			else
-			{
-				base.item.useTime = 35;
-				base.item.useAnimation = 35;
-			}
-			return true;
+			return 1f;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

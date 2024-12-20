@@ -81,7 +81,8 @@ namespace Redemption.NPCs
 				base.npc.defense = 0;
 				if (Main.rand.Next(25) == 0)
 				{
-					Projectile.NewProjectile(base.npc.position.X + 24f, base.npc.position.Y + 18f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("FireSparkle"), 5, 3f, 255, 0f, 0f);
+					int num = Projectile.NewProjectile(base.npc.position.X + 24f, base.npc.position.Y + 18f, (float)(-8 + Main.rand.Next(0, 17)), (float)(-3 + Main.rand.Next(-11, 0)), base.mod.ProjectileType("FireSparkle"), 5, 3f, 255, 0f, 0f);
+					Main.projectile[num].netUpdate = true;
 				}
 			}
 		}

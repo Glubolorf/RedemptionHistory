@@ -10,7 +10,6 @@ namespace Redemption.Tiles
 	{
 		public override void SetDefaults()
 		{
-			Main.tileSolidTop[(int)base.Type] = true;
 			Main.tileFrameImportant[(int)base.Type] = true;
 			Main.tileNoAttach[(int)base.Type] = true;
 			Main.tileTable[(int)base.Type] = true;

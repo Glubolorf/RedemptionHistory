@@ -10,7 +10,7 @@ namespace Redemption.Items.DruidDamageClass
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Duality Seed Bag - Liquid Flames");
+			base.DisplayName.SetDefault("Duality Seedbag - Liquid Flames");
 			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nTosses a fused seed of waterleaf and fireblossom with greater power than they are individually");
 		}
 
@@ -34,19 +34,13 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.shootSpeed = 18f;
 		}
 
-		public override bool CanUseItem(Player player)
+		public override float UseTimeMultiplier(Player player)
 		{
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterSeedbags)
 			{
-				base.item.useTime = 33;
-				base.item.useAnimation = 33;
+				return 1.15f;
 			}
-			else
-			{
-				base.item.useTime = 38;
-				base.item.useAnimation = 38;
-			}
-			return true;
+			return 1f;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

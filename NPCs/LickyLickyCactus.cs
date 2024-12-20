@@ -46,7 +46,8 @@ namespace Redemption.NPCs
 			this.timer++;
 			if (this.timer >= 250)
 			{
-				Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 44f), new Vector2(0f, 0f), base.mod.ProjectileType("PollenCloud8"), 8, 3f, 255, 0f, 0f);
+				int num = Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 44f), new Vector2(0f, 0f), base.mod.ProjectileType("PollenCloud8"), 8, 3f, 255, 0f, 0f);
+				Main.projectile[num].netUpdate = true;
 				this.timer = 0;
 			}
 		}

@@ -16,7 +16,7 @@ namespace Redemption.Projectiles
 		{
 			base.projectile.width = 26;
 			base.projectile.height = 24;
-			base.projectile.penetrate = -1;
+			base.projectile.penetrate = 1;
 			base.projectile.hostile = false;
 			base.projectile.friendly = true;
 			base.projectile.tileCollide = true;
@@ -35,7 +35,6 @@ namespace Redemption.Projectiles
 			if (base.projectile.localAI[0] > 40f)
 			{
 				Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 31, base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 0, default(Color), 1f);
-				Projectile.NewProjectile(base.projectile.Top, base.projectile.velocity, base.mod.ProjectileType("Plant7"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 				base.projectile.Kill();
 			}
 		}
@@ -61,6 +60,7 @@ namespace Redemption.Projectiles
 
 		public override void Kill(int timeLeft)
 		{
+			Projectile.NewProjectile(base.projectile.Top, base.projectile.velocity, base.mod.ProjectileType("Plant7"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 			for (int i = 0; i < 5; i++)
 			{
 				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 27, 0f, 0f, 100, default(Color), 1.2f);

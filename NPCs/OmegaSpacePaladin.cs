@@ -78,11 +78,13 @@ namespace Redemption.NPCs
 					{
 						if (base.npc.direction == -1)
 						{
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 26f, base.npc.position.Y + 54f), new Vector2(-6f, 0f), 302, 40, 3f, 255, 0f, 0f);
+							int num2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 26f, base.npc.position.Y + 54f), new Vector2(-6f, 0f), 302, 40, 3f, 255, 0f, 0f);
+							Main.projectile[num2].netUpdate = true;
 						}
 						else
 						{
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 62f, base.npc.position.Y + 54f), new Vector2(6f, 0f), 302, 40, 3f, 255, 0f, 0f);
+							int num3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 62f, base.npc.position.Y + 54f), new Vector2(6f, 0f), 302, 40, 3f, 255, 0f, 0f);
+							Main.projectile[num3].netUpdate = true;
 						}
 					}
 					if (this.spamTimer >= 3)

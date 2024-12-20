@@ -36,6 +36,11 @@ namespace Redemption.Tiles.LabDeco
 			base.AddMapEntry(new Color(180, 180, 185), null);
 		}
 
+		public override void KillMultiTile(int i, int j, int frameX, int frameY)
+		{
+			Item.NewItem(i * 16, j * 16, 32, 16, base.mod.ItemType("LabDoor1"), 1, false, 0, false, false);
+		}
+
 		public override bool CanExplode(int i, int j)
 		{
 			return false;

@@ -62,14 +62,17 @@ namespace Redemption.NPCs
 
 		public override void NPCLoot()
 		{
-			Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 28f), new Vector2(0f, -6f), 435, 15, 3f, 255, 0f, 0f);
-			Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 28f), new Vector2(0f, 6f), 435, 15, 3f, 255, 0f, 0f);
-			Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 28f), new Vector2(-6f, 0f), 435, 15, 3f, 255, 0f, 0f);
-			Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 28f), new Vector2(6f, 0f), 435, 15, 3f, 255, 0f, 0f);
-			Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 28f), new Vector2(4f, 4f), 435, 15, 3f, 255, 0f, 0f);
-			Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 28f), new Vector2(4f, -4f), 435, 15, 3f, 255, 0f, 0f);
-			Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 28f), new Vector2(-4f, 4f), 435, 15, 3f, 255, 0f, 0f);
-			Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 28f), new Vector2(-4f, -4f), 435, 15, 3f, 255, 0f, 0f);
+			if (Main.netMode != 1)
+			{
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 28f), new Vector2(0f, -6f), 435, 15, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 28f), new Vector2(0f, 6f), 435, 15, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 28f), new Vector2(-6f, 0f), 435, 15, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 28f), new Vector2(6f, 0f), 435, 15, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 28f), new Vector2(4f, 4f), 435, 15, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 28f), new Vector2(4f, -4f), 435, 15, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 28f), new Vector2(-4f, 4f), 435, 15, 3f, 255, 0f, 0f);
+				Projectile.NewProjectile(new Vector2(base.npc.position.X + 44f, base.npc.position.Y + 28f), new Vector2(-4f, -4f), 435, 15, 3f, 255, 0f, 0f);
+			}
 		}
 
 		public override void AI()
@@ -108,11 +111,13 @@ namespace Redemption.NPCs
 			}
 			if (Main.rand.Next(50) == 0)
 			{
-				Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 357, 15, 3f, 255, 0f, 0f);
+				int num = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 357, 15, 3f, 255, 0f, 0f);
+				Main.projectile[num].netUpdate = true;
 			}
 			if (Main.rand.Next(50) == 0)
 			{
-				Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 435, 15, 3f, 255, 0f, 0f);
+				int num2 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, (float)(-8 + Main.rand.Next(0, 17)), (float)(-8 + Main.rand.Next(0, 17)), 435, 15, 3f, 255, 0f, 0f);
+				Main.projectile[num2].netUpdate = true;
 			}
 		}
 

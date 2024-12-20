@@ -10,7 +10,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Magnetic Soulbound");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nRelease a bond of souls\nGets buffed from soul-related armoury");
+			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\nRelease a bond of souls\nGets buffed from soul-related armoury");
 		}
 
 		public override void SafeSetDefaults()
@@ -40,6 +40,12 @@ namespace Redemption.Items.DruidDamageClass
 				base.item.damage = 21;
 				base.item.autoReuse = true;
 				base.item.shootSpeed = 16f;
+			}
+			else if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).shadeSet)
+			{
+				base.item.damage = 400;
+				base.item.autoReuse = true;
+				base.item.shootSpeed = 18f;
 			}
 			else
 			{

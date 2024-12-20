@@ -37,11 +37,7 @@ namespace Redemption.Items
 
 		public override bool UseItem(Player player)
 		{
-			int num = NPC.NewNPC((int)(player.position.X + (float)Main.rand.Next(-700, -600)), (int)(player.position.Y - 0f), base.mod.NPCType("CorruptedCopter1"), 0, 0f, 0f, 0f, 0f, 255);
-			if (Main.netMode == 2 && num < 200)
-			{
-				NetMessage.SendData(23, -1, -1, null, num, 0f, 0f, 0f, 0, 0, 0);
-			}
+			Redemption.SpawnBoss(player, "CorruptedCopter1", false, 0, 0, "", false);
 			return true;
 		}
 

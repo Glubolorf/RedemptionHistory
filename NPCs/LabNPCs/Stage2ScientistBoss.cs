@@ -58,6 +58,14 @@ namespace Redemption.NPCs.LabNPCs
 			}
 		}
 
+		public override void NPCLoot()
+		{
+			if (!RedeWorld.labAccess1)
+			{
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ZoneAccessPanel1"), 1, false, 0, false, false);
+			}
+		}
+
 		public override void AI()
 		{
 			if (this.sludgeAttack)
@@ -73,8 +81,8 @@ namespace Redemption.NPCs.LabNPCs
 					this.throwFrame = 0;
 				}
 			}
-			this.spawnTimer++;
-			if (this.spawnTimer == 1 && Main.netMode != 1)
+			base.npc.ai[0] += 1f;
+			if (base.npc.ai[0] == 1f && Main.netMode != 1)
 			{
 				Vector2 vector;
 				vector..ctor(-30f, -15f);
@@ -92,26 +100,28 @@ namespace Redemption.NPCs.LabNPCs
 			}
 			if (this.sludgeAttack)
 			{
-				this.throwTimer++;
+				base.npc.ai[1] += 1f;
 				base.npc.aiStyle = 0;
 				base.npc.velocity.X = 0f;
-				if (this.throwTimer == 20)
+				if (base.npc.ai[1] == 20f)
 				{
 					if (base.npc.direction == -1)
 					{
 						Main.PlaySound(SoundID.Item7, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 42f, base.npc.position.Y + 24f), new Vector2((float)(-6 + Main.rand.Next(-6, 0)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("GloopBallPro1"), 40, 3f, 255, 0f, 0f);
+						int num2 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 42f, base.npc.position.Y + 24f), new Vector2((float)(-6 + Main.rand.Next(-6, 0)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("GloopBallPro1"), 40, 3f, 255, 0f, 0f);
+						Main.projectile[num2].netUpdate = true;
 					}
 					else
 					{
 						Main.PlaySound(SoundID.Item7, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 12f, base.npc.position.Y + 24f), new Vector2((float)(6 + Main.rand.Next(0, 6)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("GloopBallPro1"), 40, 3f, 255, 0f, 0f);
+						int num3 = Projectile.NewProjectile(new Vector2(base.npc.position.X + 12f, base.npc.position.Y + 24f), new Vector2((float)(6 + Main.rand.Next(0, 6)), (float)(-4 + Main.rand.Next(-4, 0))), base.mod.ProjectileType("GloopBallPro1"), 40, 3f, 255, 0f, 0f);
+						Main.projectile[num3].netUpdate = true;
 					}
 				}
-				if (this.throwTimer >= 30)
+				if (base.npc.ai[1] >= 30f)
 				{
 					this.sludgeAttack = false;
-					this.throwTimer = 0;
+					base.npc.ai[1] = 0f;
 					this.throwCounter = 0;
 					this.throwFrame = 0;
 				}
@@ -143,9 +153,5 @@ namespace Redemption.NPCs.LabNPCs
 		private int throwFrame;
 
 		private int throwCounter;
-
-		private int throwTimer;
-
-		private int spawnTimer;
 	}
 }

@@ -9,11 +9,14 @@ namespace Redemption.Items.Placeable
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Mk-3 Microbot Factory");
-			base.Tooltip.SetDefault("Right-clicking will construct a Mk-3 Microbot\nTakes up 2 minion slots");
+			base.Tooltip.SetDefault("Right-clicking will construct a Mk-3 Microbot\nShoots strong rapid-fire lasers that pierce\nTakes up 2 minion slots");
 		}
 
 		public override void SetDefaults()
 		{
+			base.item.damage = 60;
+			base.item.noMelee = true;
+			base.item.summon = true;
 			base.item.width = 60;
 			base.item.height = 42;
 			base.item.maxStack = 1;

@@ -108,6 +108,7 @@ namespace Redemption.NPCs.LabNPCs
 			if (this.timer >= 1600)
 			{
 				RedeWorld.tbotLabAccess = true;
+				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ZoneAccessPanel5"), 1, false, 0, false, false);
 				if (Main.netMode == 2)
 				{
 					NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);

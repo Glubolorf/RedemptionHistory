@@ -9,7 +9,7 @@ namespace Redemption.Items
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Leather Pouch");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nUsed to craft Seed Bags");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nUsed to craft Seedbags");
 		}
 
 		public override void SetDefaults()

@@ -117,8 +117,16 @@ namespace Redemption.NPCs
 				base.npc.velocity.X = 0f;
 				base.npc.velocity.Y = 0f;
 				this.attackTimer++;
+				if (this.attackTimer == 1 && !Config.NoCombatText)
+				{
+					CombatText.NewText(base.npc.getRect(), Colors.RarityCyan, "Charging...", true, true);
+				}
 				if (this.attackTimer == 30)
 				{
+					if (Config.NoCombatText)
+					{
+						CombatText.NewText(base.npc.getRect(), Colors.RarityCyan, "Burst!", true, true);
+					}
 					if (base.npc.direction == -1)
 					{
 						Main.PlaySound(SoundID.Item91, (int)base.npc.position.X, (int)base.npc.position.Y);
@@ -127,6 +135,7 @@ namespace Redemption.NPCs
 						{
 							int num3 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, 462, 30, 0f, 255, 0f, 0f);
 							Main.projectile[num3].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(8f, 0f), (float)j / (float)num2 * 6.28f);
+							Main.projectile[num3].netUpdate = true;
 						}
 					}
 					else
@@ -137,6 +146,7 @@ namespace Redemption.NPCs
 						{
 							int num5 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, 462, 30, 0f, 255, 0f, 0f);
 							Main.projectile[num5].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(8f, 0f), (float)k / (float)num4 * 6.28f);
+							Main.projectile[num5].netUpdate = true;
 						}
 					}
 				}
@@ -150,6 +160,7 @@ namespace Redemption.NPCs
 						{
 							int num7 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, 462, 30, 0f, 255, 0f, 0f);
 							Main.projectile[num7].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(4f, 0f), (float)l / (float)num6 * 6.28f);
+							Main.projectile[num7].netUpdate = true;
 						}
 					}
 					else
@@ -160,6 +171,7 @@ namespace Redemption.NPCs
 						{
 							int num9 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, 462, 30, 0f, 255, 0f, 0f);
 							Main.projectile[num9].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(4f, 0f), (float)m / (float)num8 * 6.28f);
+							Main.projectile[num9].netUpdate = true;
 						}
 					}
 				}

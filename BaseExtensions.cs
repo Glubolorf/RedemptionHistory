@@ -168,6 +168,11 @@ namespace Redemption
 			return w.ReadInt16();
 		}
 
+		public static ushort ReadUShort(this BinaryReader w)
+		{
+			return w.ReadUInt16();
+		}
+
 		public static float ReadFloat(this BinaryReader w)
 		{
 			return w.ReadSingle();

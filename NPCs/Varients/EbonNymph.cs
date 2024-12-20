@@ -86,6 +86,10 @@ namespace Redemption.NPCs.Varients
 					this.slashTimer++;
 					base.npc.aiStyle = 0;
 					base.npc.velocity.X = 0f;
+					if (this.slashTimer == 1 && !Config.NoCombatText)
+					{
+						CombatText.NewText(base.npc.getRect(), Colors.RarityPurple, "Slash!", true, true);
+					}
 					if (this.slashTimer == 15)
 					{
 						if (base.npc.direction == -1)
@@ -97,18 +101,20 @@ namespace Redemption.NPCs.Varients
 							int num3 = 11;
 							int num4 = base.mod.ProjectileType("ForestSicklePro2");
 							float num5 = (float)Math.Atan2((double)(vector.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector.X - (player.position.X + (float)player.width * 0.5f)));
-							Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num5) * (double)num2 * -1.0), (float)(Math.Sin((double)num5) * (double)num2 * -1.0), num4, num3, 0f, 0, 0f, 0f);
+							int num6 = Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num5) * (double)num2 * -1.0), (float)(Math.Sin((double)num5) * (double)num2 * -1.0), num4, num3, 0f, 0, 0f, 0f);
+							Main.projectile[num6].netUpdate = true;
 						}
 						else
 						{
 							Main.PlaySound(SoundID.Item71, (int)base.npc.position.X, (int)base.npc.position.Y);
-							float num6 = 11f;
+							float num7 = 11f;
 							Vector2 vector2;
 							vector2..ctor(base.npc.position.X + 14f, base.npc.position.Y + 44f);
-							int num7 = 9;
-							int num8 = base.mod.ProjectileType("ForestSicklePro2");
-							float num9 = (float)Math.Atan2((double)(vector2.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector2.X - (player.position.X + (float)player.width * 0.5f)));
-							Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num9) * (double)num6 * -1.0), (float)(Math.Sin((double)num9) * (double)num6 * -1.0), num8, num7, 0f, 0, 0f, 0f);
+							int num8 = 9;
+							int num9 = base.mod.ProjectileType("ForestSicklePro2");
+							float num10 = (float)Math.Atan2((double)(vector2.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector2.X - (player.position.X + (float)player.width * 0.5f)));
+							int num11 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num10) * (double)num7 * -1.0), (float)(Math.Sin((double)num10) * (double)num7 * -1.0), num9, num8, 0f, 0, 0f, 0f);
+							Main.projectile[num11].netUpdate = true;
 						}
 					}
 					if (this.slashTimer >= 25)
@@ -117,13 +123,32 @@ namespace Redemption.NPCs.Varients
 						this.slashTimer = 0;
 						this.slashCounter = 0;
 						this.slashFrame = 0;
-						return;
 					}
 				}
 			}
 			else
 			{
 				this.hop = true;
+			}
+			if (Main.raining)
+			{
+				this.regenTimer++;
+				if (this.regenTimer >= 40 && base.npc.life < base.npc.lifeMax)
+				{
+					base.npc.life++;
+					base.npc.HealEffect(1, true);
+					this.regenTimer = 0;
+				}
+			}
+			if (base.npc.wet && !base.npc.lavaWet)
+			{
+				this.regenTimer++;
+				if (this.regenTimer >= 30 && base.npc.life < base.npc.lifeMax)
+				{
+					base.npc.life++;
+					base.npc.HealEffect(1, true);
+					this.regenTimer = 0;
+				}
 			}
 		}
 
@@ -195,5 +220,7 @@ namespace Redemption.NPCs.Varients
 		private int slashTimer;
 
 		private int slashCounter;
+
+		private int regenTimer;
 	}
 }

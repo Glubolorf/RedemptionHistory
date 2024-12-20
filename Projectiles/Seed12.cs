@@ -16,7 +16,7 @@ namespace Redemption.Projectiles
 		{
 			base.projectile.width = 32;
 			base.projectile.height = 32;
-			base.projectile.penetrate = -1;
+			base.projectile.penetrate = 1;
 			base.projectile.hostile = false;
 			base.projectile.friendly = true;
 			base.projectile.tileCollide = true;
@@ -64,6 +64,7 @@ namespace Redemption.Projectiles
 
 		public override void Kill(int timeLeft)
 		{
+			Projectile.NewProjectile(base.projectile.Top, base.projectile.velocity, base.mod.ProjectileType("Plant12"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 			for (int i = 0; i < 5; i++)
 			{
 				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 89, 0f, 0f, 100, default(Color), 1.2f);

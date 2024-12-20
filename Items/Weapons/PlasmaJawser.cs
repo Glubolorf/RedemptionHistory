@@ -29,7 +29,7 @@ namespace Redemption.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 180;
+			base.item.damage = 120;
 			base.item.useTime = 20;
 			base.item.useAnimation = 20;
 			base.item.channel = true;
@@ -58,7 +58,7 @@ namespace Redemption.Items.Weapons
 		{
 			if (player.altFunctionUse == 2)
 			{
-				base.item.damage = 250;
+				base.item.damage = 200;
 				base.item.useTime = 50;
 				base.item.UseSound = SoundID.Item125;
 				base.item.useAnimation = 50;
@@ -69,7 +69,7 @@ namespace Redemption.Items.Weapons
 			}
 			else
 			{
-				base.item.damage = 180;
+				base.item.damage = 120;
 				base.item.useTime = 20;
 				base.item.useAnimation = 20;
 				base.item.channel = true;

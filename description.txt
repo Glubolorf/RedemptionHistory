@@ -3,22 +3,28 @@
 Please remember to update the mod when necessary.
 
 Adds:
-- 109 Buffs
-- 13 Walls
-- 180 Tiles
-- 194 NPCs (Including bosses & minibosses)
-- 9 Bosses
-- 9 Minibosses
-- 832 Items
+- 1 Mount
+- 124 Buffs
+- 19 Walls
+- 217 Tiles
+- 261 NPCs (Including bosses & minibosses)
+- 11 Bosses
+- 10 Minibosses
+- 974 Items
 
 Latest Major Update:
-- Balanced literally everything lol
-- Abandoned Lab structure, post-mechs and post-moonlord
-- Redone King Slayer III
+- Nebuleus boss
+- New bosses & minibosses
+- Abandoned Lab is beatable with multiplayer
+- Chicken Invasion
+- Wasteland Overhaul
 - Stuff
 For more, look at the mod's homepage
 
+Thank you Pluto for making the Nebuleus backgrounds
+
 Main Features (So far):
+- Chicken Invasion!
 - Abandoned Lab (Larger than the Jungle Temple)
 - Space Boss (King Slayer III)
 - Druid Class!

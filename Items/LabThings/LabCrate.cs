@@ -35,7 +35,7 @@ namespace Redemption.Items.LabThings
 		{
 			if (NPC.downedMoonlord)
 			{
-				int num = Main.rand.Next(20);
+				int num = Main.rand.Next(23);
 				if (num == 0)
 				{
 					player.QuickSpawnItem(base.mod.ItemType("GasMask"), 1);
@@ -115,6 +115,18 @@ namespace Redemption.Items.LabThings
 				if (num == 19)
 				{
 					player.QuickSpawnItem(base.mod.ItemType("FloppyDisk5_3"), 1);
+				}
+				if (num == 20)
+				{
+					player.QuickSpawnItem(base.mod.ItemType("TerraBombaPart1"), 1);
+				}
+				if (num == 21)
+				{
+					player.QuickSpawnItem(base.mod.ItemType("TerraBombaPart2"), 1);
+				}
+				if (num == 22)
+				{
+					player.QuickSpawnItem(base.mod.ItemType("TerraBombaPart3"), 1);
 				}
 				int num2 = Main.rand.Next(5);
 				if (num2 == 0)

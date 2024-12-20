@@ -26,7 +26,6 @@ namespace Redemption.Projectiles
 		public override void AI()
 		{
 			base.projectile.velocity.Y = 0f;
-			base.projectile.velocity.X = 0f;
 		}
 	}
 }

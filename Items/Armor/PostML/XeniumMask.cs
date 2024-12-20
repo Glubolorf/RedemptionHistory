@@ -22,7 +22,7 @@ namespace Redemption.Items.Armor.PostML
 			base.item.height = 18;
 			base.item.value = Item.sellPrice(0, 9, 50, 0);
 			base.item.rare = 11;
-			base.item.defense = 11;
+			base.item.defense = 8;
 		}
 
 		public override void UpdateEquip(Player player)
@@ -46,7 +46,7 @@ namespace Redemption.Items.Armor.PostML
 
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "Grants immunity to the Infection, Radioactive Fallout, and the abandoned lab's water\n+100 max mana\nIncreased pickup range for mana stars\nThe lower your life is, the higher your magic crit chance";
+			player.setBonus = "Grants immunity to the Infection, Radioactive Fallout, and infected waters\n+100 max mana\nIncreased pickup range for mana stars\nThe lower your life is, the higher your magic crit chance";
 			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
 			player.statManaMax2 += 100;
 			player.manaMagnet = true;
@@ -69,6 +69,7 @@ namespace Redemption.Items.Armor.PostML
 			player.buffImmune[base.mod.BuffType("XenomiteDebuff")] = true;
 			player.buffImmune[base.mod.BuffType("XenomiteDebuff2")] = true;
 			player.buffImmune[base.mod.BuffType("RadioactiveFalloutDebuff")] = true;
+			player.buffImmune[base.mod.BuffType("HeavyRadiationDebuff")] = true;
 			redePlayer.labWaterImmune = true;
 		}
 

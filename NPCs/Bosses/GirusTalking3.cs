@@ -21,21 +21,21 @@ namespace Redemption.NPCs.Bosses
 
 		public override void AI()
 		{
-			this.timer++;
-			if (this.timer == 600)
+			base.projectile.localAI[1] += 1f;
+			if (base.projectile.localAI[1] == 600f)
 			{
 				Main.NewText("My prototype failed... What's the matter? Are you not satisfied?", new Color(238, 77, 58), false);
 				Redemption.GirusSilence = true;
 			}
-			if (this.timer == 1000)
+			if (base.projectile.localAI[1] == 1000f)
 			{
 				Main.NewText("I'm certainly not! They were all useless! All of the 'Overlords'!", new Color(238, 77, 58), false);
 			}
-			if (this.timer == 1400)
+			if (base.projectile.localAI[1] == 1400f)
 			{
 				Main.NewText("But... Maybe the next one won't be as bad...", new Color(238, 77, 58), false);
 			}
-			if (this.timer == 1900)
+			if (base.projectile.localAI[1] == 1900f)
 			{
 				if (RedeWorld.downedSlayer)
 				{
@@ -50,11 +50,11 @@ namespace Redemption.NPCs.Bosses
 					Main.NewText("I don't believe you've met him...", new Color(238, 77, 58), false);
 				}
 			}
-			if (this.timer == 2500)
+			if (base.projectile.localAI[1] == 2500f)
 			{
 				Main.NewText("Now he's joined my side, and ready to fight a worthy opponent!", new Color(238, 77, 58), false);
 			}
-			if (this.timer == 3000)
+			if (base.projectile.localAI[1] == 3000f)
 			{
 				Main.NewText("Hehehehe...", new Color(238, 77, 58), false);
 				base.projectile.Kill();
@@ -70,7 +70,5 @@ namespace Redemption.NPCs.Bosses
 			}
 			Redemption.GirusSilence = false;
 		}
-
-		public int timer;
 	}
 }

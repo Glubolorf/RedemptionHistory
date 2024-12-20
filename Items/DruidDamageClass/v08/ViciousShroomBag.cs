@@ -10,7 +10,7 @@ namespace Redemption.Items.DruidDamageClass.v08
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Ichor Shroom Seed Bag");
+			base.DisplayName.SetDefault("Ichor Shroom Seedbag");
 			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nThrows a capsule that grows a spore-releasing Ichor Shroom\nThe spores inflict Ichor for a long duration");
 		}
 
@@ -34,19 +34,13 @@ namespace Redemption.Items.DruidDamageClass.v08
 			base.item.shootSpeed = 18f;
 		}
 
-		public override bool CanUseItem(Player player)
+		public override float UseTimeMultiplier(Player player)
 		{
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterSeedbags)
 			{
-				base.item.useTime = 27;
-				base.item.useAnimation = 27;
+				return 1.15f;
 			}
-			else
-			{
-				base.item.useTime = 32;
-				base.item.useAnimation = 32;
-			}
-			return true;
+			return 1f;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

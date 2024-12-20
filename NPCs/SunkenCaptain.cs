@@ -51,7 +51,26 @@ namespace Redemption.NPCs
 
 		public override void BossLoot(ref string name, ref int potionType)
 		{
+			Player player = Main.player[base.npc.target];
 			potionType = base.mod.ItemType("AncientGoldCoin");
+			if (!RedeWorld.downedSunkenCaptain)
+			{
+				CombatText.NewText(player.getRect(), Color.Gray, "+0", true, false);
+				for (int i = 0; i < 255; i++)
+				{
+					Player player2 = Main.player[i];
+					if (player2.active)
+					{
+						for (int j = 0; j < player2.inventory.Length; j++)
+						{
+							if (player2.inventory[j].type == base.mod.ItemType("RedemptionTeller"))
+							{
+								Main.NewText("<Chalice of Alignment> That was spooky. I hate ghosts.", Color.DarkGoldenrod, false);
+							}
+						}
+					}
+				}
+			}
 			RedeWorld.downedSunkenCaptain = true;
 			if (Main.netMode == 2)
 			{
@@ -106,25 +125,27 @@ namespace Redemption.NPCs
 			}
 			if (Main.rand.Next(250) == 0 && this.sunkenTimer > 120 && NPC.CountNPCS(base.mod.NPCType("SunkenDeckhand")) <= 4)
 			{
-				NPC.NewNPC((int)(base.npc.position.X + Utils.NextFloat(Main.rand, (float)base.npc.width)), (int)(base.npc.position.Y + Utils.NextFloat(Main.rand, (float)base.npc.width)), base.mod.NPCType("SunkenDeckhand"), 0, 0f, 0f, 0f, 0f, 255);
+				int num2 = NPC.NewNPC((int)(base.npc.position.X + Utils.NextFloat(Main.rand, (float)base.npc.width)), (int)(base.npc.position.Y + Utils.NextFloat(Main.rand, (float)base.npc.width)), base.mod.NPCType("SunkenDeckhand"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.npc[num2].netUpdate = true;
 			}
 			if (Main.rand.Next(250) == 0 && this.sunkenTimer > 120 && NPC.CountNPCS(base.mod.NPCType("SunkenParrot")) <= 2)
 			{
-				NPC.NewNPC((int)(base.npc.position.X + Utils.NextFloat(Main.rand, (float)base.npc.width)), (int)(base.npc.position.Y + Utils.NextFloat(Main.rand, (float)base.npc.width)), base.mod.NPCType("SunkenParrot"), 0, 0f, 0f, 0f, 0f, 255);
+				int num3 = NPC.NewNPC((int)(base.npc.position.X + Utils.NextFloat(Main.rand, (float)base.npc.width)), (int)(base.npc.position.Y + Utils.NextFloat(Main.rand, (float)base.npc.width)), base.mod.NPCType("SunkenParrot"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.npc[num3].netUpdate = true;
 			}
-			if (Main.rand.Next(80) == 0)
+			if (Main.rand.Next(80) == 0 && Main.netMode != 1)
 			{
 				Projectile.NewProjectile(new Vector2(base.npc.position.X + 26f, base.npc.position.Y + 42f), new Vector2(2f, 0f), base.mod.ProjectileType("Fog1"), 0, 0f, 255, 0f, 0f);
 			}
-			if (Main.rand.Next(80) == 0)
+			if (Main.rand.Next(80) == 0 && Main.netMode != 1)
 			{
 				Projectile.NewProjectile(new Vector2(base.npc.position.X + 26f, base.npc.position.Y + 42f), new Vector2(-2f, 0f), base.mod.ProjectileType("Fog2"), 0, 0f, 255, 0f, 0f);
 			}
-			if (Main.rand.Next(80) == 0)
+			if (Main.rand.Next(80) == 0 && Main.netMode != 1)
 			{
 				Projectile.NewProjectile(new Vector2(base.npc.position.X + 26f, base.npc.position.Y + 24f), new Vector2(2f, 0f), base.mod.ProjectileType("Fog3"), 0, 0f, 255, 0f, 0f);
 			}
-			if (Main.rand.Next(80) == 0)
+			if (Main.rand.Next(80) == 0 && Main.netMode != 1)
 			{
 				Projectile.NewProjectile(new Vector2(base.npc.position.X + 26f, base.npc.position.Y + 24f), new Vector2(-2f, 0f), base.mod.ProjectileType("Fog4"), 0, 0f, 255, 0f, 0f);
 			}

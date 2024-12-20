@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -27,6 +29,17 @@ namespace Redemption.Items
 			base.item.useAnimation = 17;
 			base.item.useTime = 17;
 			base.item.consumable = true;
+		}
+
+		public override void ModifyTooltips(List<TooltipLine> list)
+		{
+			foreach (TooltipLine tooltipLine in list)
+			{
+				if (tooltipLine.mod == "Terraria" && tooltipLine.Name == "ItemName")
+				{
+					tooltipLine.overrideColor = new Color?(RedeColor.SoullessColour);
+				}
+			}
 		}
 
 		public override bool UseItem(Player player)

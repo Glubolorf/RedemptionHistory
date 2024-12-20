@@ -36,6 +36,7 @@ namespace Redemption.Projectiles
 			base.projectile.hostile = false;
 			base.projectile.friendly = true;
 			base.projectile.ignoreWater = true;
+			base.projectile.tileCollide = false;
 			base.projectile.alpha = 150;
 			base.projectile.timeLeft = 200;
 			base.projectile.extraUpdates = 1;
@@ -49,9 +50,11 @@ namespace Redemption.Projectiles
 			int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y + 2f), base.projectile.width + 2, base.projectile.height + 2, 21, base.projectile.velocity.X * 0.2f, base.projectile.velocity.Y * 0.2f, 20, default(Color), 1f);
 			Main.dust[num].noGravity = true;
 			base.projectile.localAI[0] += 1f;
-			if (Main.rand.Next(80) == 0)
+			if (Main.myPlayer == base.projectile.owner && Main.rand.Next(80) == 0)
 			{
-				Projectile.NewProjectile(base.projectile.Center, base.projectile.velocity, base.mod.ProjectileType("TheTrueViolin"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				int num2 = Projectile.NewProjectile(base.projectile.Center, base.projectile.velocity, base.mod.ProjectileType("TheTrueViolin"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				Main.projectile[num2].usesLocalNPCImmunity = true;
+				Main.projectile[num2].localNPCHitCooldown = 3;
 			}
 		}
 

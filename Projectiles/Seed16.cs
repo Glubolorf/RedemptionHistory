@@ -50,7 +50,6 @@ namespace Redemption.Projectiles
 		{
 			Collision.HitTiles(base.projectile.position, oldVelocity, base.projectile.width, base.projectile.height);
 			Main.PlaySound(0, (int)base.projectile.position.X, (int)base.projectile.position.Y, 1, 1f, 0f);
-			Projectile.NewProjectile(base.projectile.Top, base.projectile.velocity, base.mod.ProjectileType("Plant16"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 			return true;
 		}
 
@@ -68,6 +67,7 @@ namespace Redemption.Projectiles
 
 		public override void Kill(int timeLeft)
 		{
+			Projectile.NewProjectile(base.projectile.Top, base.projectile.velocity, base.mod.ProjectileType("Plant16"), base.projectile.damage, 0f, base.projectile.owner, 0f, 1f);
 			for (int i = 0; i < 2; i++)
 			{
 				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 93, 0f, 0f, 100, default(Color), 1.2f);

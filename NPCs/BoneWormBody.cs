@@ -100,5 +100,11 @@ namespace Redemption.NPCs
 		{
 			return !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).skeletonFriendly;
 		}
+
+		public override bool CheckActive()
+		{
+			NPC npc = Main.npc[(int)base.npc.ai[1]];
+			return !npc.active;
+		}
 	}
 }

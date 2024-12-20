@@ -13,7 +13,7 @@ namespace Redemption.Items.Armor.PostML
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Xenium Visor");
-			base.Tooltip.SetDefault("25% increased ranged damage and critical strike chance\n25% chance to not consume ammo\n");
+			base.Tooltip.SetDefault("25% increased ranged damage and critical strike chance\n25% chance to not consume ammo");
 		}
 
 		public override void SetDefaults()
@@ -22,7 +22,7 @@ namespace Redemption.Items.Armor.PostML
 			base.item.height = 24;
 			base.item.value = Item.sellPrice(0, 9, 50, 0);
 			base.item.rare = 11;
-			base.item.defense = 18;
+			base.item.defense = 12;
 		}
 
 		public override void UpdateEquip(Player player)
@@ -45,7 +45,7 @@ namespace Redemption.Items.Armor.PostML
 
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "Grants immunity to the Infection, Radioactive Fallout, and the abandoned lab's water\n100% increased ranged critical strike chance while at full health";
+			player.setBonus = "Grants immunity to the Infection, Radioactive Fallout, and infected waters\n100% increased ranged critical strike chance while at full health";
 			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
 			if (player.statLife >= player.statLifeMax2)
 			{
@@ -54,6 +54,7 @@ namespace Redemption.Items.Armor.PostML
 			player.buffImmune[base.mod.BuffType("XenomiteDebuff")] = true;
 			player.buffImmune[base.mod.BuffType("XenomiteDebuff2")] = true;
 			player.buffImmune[base.mod.BuffType("RadioactiveFalloutDebuff")] = true;
+			player.buffImmune[base.mod.BuffType("HeavyRadiationDebuff")] = true;
 			redePlayer.labWaterImmune = true;
 		}
 

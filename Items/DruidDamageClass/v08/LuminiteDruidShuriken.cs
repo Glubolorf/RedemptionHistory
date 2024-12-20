@@ -18,7 +18,7 @@ namespace Redemption.Items.DruidDamageClass.v08
 		{
 			base.item.shootSpeed = 26f;
 			base.item.crit = 4;
-			base.item.damage = 178;
+			base.item.damage = 245;
 			base.item.knockBack = 5f;
 			base.item.useStyle = 1;
 			base.item.useAnimation = 9;

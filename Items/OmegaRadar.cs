@@ -38,12 +38,7 @@ namespace Redemption.Items
 
 		public override bool UseItem(Player player)
 		{
-			Main.NewText("Omega Obliterator has awoken!", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B, false);
-			int num = NPC.NewNPC((int)(player.position.X + (float)Main.rand.Next(-700, -600)), (int)(player.position.Y - 0f), base.mod.NPCType("OmegaOblitIdle"), 0, 0f, 0f, 0f, 0f, 255);
-			if (Main.netMode == 2 && num < 200)
-			{
-				NetMessage.SendData(23, -1, -1, null, num, 0f, 0f, 0f, 0, 0, 0);
-			}
+			Redemption.SpawnBoss(player, "OmegaOblitIdle", true, new Vector2(player.position.X + (float)Main.rand.Next(-700, -600), player.position.Y - 0f), "Omega Obliterator", false);
 			Main.PlaySound(15, player.position, 0);
 			return true;
 		}

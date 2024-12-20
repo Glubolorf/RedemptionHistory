@@ -31,7 +31,7 @@ namespace Redemption.Tiles.LabDeco
 			TileObjectData.newTile.AnchorBottom = new AnchorData(11, TileObjectData.newTile.Width, 0);
 			TileObjectData.addTile((int)base.Type);
 			this.dustType = 226;
-			this.minPick = 300;
+			this.minPick = 200;
 			this.mineResist = 3f;
 			this.disableSmartCursor = true;
 			ModTranslation modTranslation = base.CreateMapEntryName(null);

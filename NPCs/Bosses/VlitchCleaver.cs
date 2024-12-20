@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -89,6 +90,25 @@ namespace Redemption.NPCs.Bosses
 		public override void BossLoot(ref string name, ref int potionType)
 		{
 			potionType = 499;
+			if (!RedeWorld.downedVlitch1)
+			{
+				RedeWorld.redemptionPoints++;
+				CombatText.NewText(this.player.getRect(), Color.Gold, "+1", true, false);
+				for (int i = 0; i < 255; i++)
+				{
+					Player player = Main.player[i];
+					if (player.active)
+					{
+						for (int j = 0; j < player.inventory.Length; j++)
+						{
+							if (player.inventory[j].type == base.mod.ItemType("RedemptionTeller"))
+							{
+								Main.NewText("<Chalice of Alignment> The first Vlitch Overlord is gone, only... 2 more to go? Maybe?", Color.DarkGoldenrod, false);
+							}
+						}
+					}
+				}
+			}
 			RedeWorld.downedVlitch1 = true;
 			if (Main.netMode == 2)
 			{
@@ -106,8 +126,45 @@ namespace Redemption.NPCs.Bosses
 			base.npc.damage = (int)((float)base.npc.damage * 0.6f);
 		}
 
+		public override void SendExtraAI(BinaryWriter writer)
+		{
+			base.SendExtraAI(writer);
+			if (Main.netMode == 2 || Main.dedServ)
+			{
+				writer.Write(this.customAI[0]);
+				writer.Write(this.customAI[1]);
+				writer.Write(this.customAI[2]);
+				writer.Write(this.customAI[3]);
+			}
+		}
+
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			base.ReceiveExtraAI(reader);
+			if (Main.netMode == 1)
+			{
+				this.customAI[0] = reader.ReadFloat();
+				this.customAI[1] = reader.ReadFloat();
+				this.customAI[2] = reader.ReadFloat();
+				this.customAI[3] = reader.ReadFloat();
+			}
+		}
+
 		public override void AI()
 		{
+			if (Config.classicRedeVC)
+			{
+				this.oldCounter++;
+				if (this.oldCounter > 10)
+				{
+					this.oldFrame++;
+					this.oldCounter = 0;
+				}
+				if (this.oldFrame >= 5)
+				{
+					this.oldFrame = 0;
+				}
+			}
 			if (Main.dayTime)
 			{
 				base.npc.timeLeft = 0;
@@ -129,24 +186,65 @@ namespace Redemption.NPCs.Bosses
 			}
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).omegaPower)
 			{
-				this.omegaTimer++;
-				if (this.omegaTimer == 600)
+				this.customAI[3] += 1f;
+				if (this.customAI[3] == 600f)
 				{
 					Main.NewText("Wait... Why aren't my minions targetting you?", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
 				}
-				if (this.omegaTimer == 800)
+				if (this.customAI[3] == 800f)
 				{
 					Main.NewText("Oh, because you got that damn exoskeleton on...", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
 				}
-				if (this.omegaTimer == 1300)
+				if (this.customAI[3] == 1300f)
 				{
 					this.takeAction = true;
+					base.npc.netUpdate = true;
 				}
 			}
-			this.shootTimer++;
-			if ((double)base.npc.life > (double)base.npc.lifeMax * 0.55)
+			if (base.npc.life < (int)((float)base.npc.lifeMax * 0.85f) && !this.cloneSummoned1)
 			{
-				if (this.shootTimer == 100 || this.shootTimer == 120 || this.shootTimer == 140)
+				if (!Config.NoCombatText)
+				{
+					CombatText.NewText(base.npc.getRect(), Color.IndianRed, "Phantom Cleaver!", true, false);
+				}
+				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("CleaverClone1"), 0, 0f, 0f, 0f, 0f, 255);
+				this.cloneSummoned1 = true;
+				base.npc.netUpdate = true;
+			}
+			if (base.npc.life < (int)((float)base.npc.lifeMax * 0.55f) && !this.cloneSummoned2)
+			{
+				if (!Config.NoCombatText)
+				{
+					CombatText.NewText(base.npc.getRect(), Color.IndianRed, "Phantom Cleaver!", true, false);
+				}
+				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("CleaverClone1"), 0, 0f, 0f, 0f, 0f, 255);
+				this.cloneSummoned2 = true;
+				base.npc.netUpdate = true;
+			}
+			if (base.npc.life < (int)((float)base.npc.lifeMax * 0.35f) && !this.cloneSummoned3)
+			{
+				if (!Config.NoCombatText)
+				{
+					CombatText.NewText(base.npc.getRect(), Color.IndianRed, "Phantom Cleaver!", true, false);
+				}
+				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("CleaverClone1"), 0, 0f, 0f, 0f, 0f, 255);
+				this.cloneSummoned3 = true;
+				base.npc.netUpdate = true;
+			}
+			if (base.npc.life < (int)((float)base.npc.lifeMax * 0.25f) && !this.cloneSummoned4)
+			{
+				if (!Config.NoCombatText)
+				{
+					CombatText.NewText(base.npc.getRect(), Color.IndianRed, "Phantom Cleaver!", true, false);
+				}
+				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("CleaverClone1"), 0, 0f, 0f, 0f, 0f, 255);
+				this.cloneSummoned4 = true;
+				base.npc.netUpdate = true;
+			}
+			this.customAI[0] += 1f;
+			if (base.npc.life > (int)((float)base.npc.lifeMax * 0.55f))
+			{
+				if (this.customAI[0] == 100f || this.customAI[0] == 120f || this.customAI[0] == 140f)
 				{
 					float num = 10f;
 					Vector2 vector;
@@ -155,128 +253,145 @@ namespace Redemption.NPCs.Bosses
 					int num3 = base.mod.ProjectileType("OmegaBlast");
 					Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 33, 1f, 0f);
 					float num4 = (float)Math.Atan2((double)(vector.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num4) * (double)num * -1.0), (float)(Math.Sin((double)num4) * (double)num * -1.0), num3, num2, 0f, 0, 0f, 0f);
+					int num5 = Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num4) * (double)num * -1.0), (float)(Math.Sin((double)num4) * (double)num * -1.0), num3, num2, 0f, 0, 0f, 0f);
+					Main.projectile[num5].netUpdate = true;
 				}
-				if (this.shootTimer == 320)
+				if (this.customAI[0] == 320f)
 				{
 					Main.PlaySound(SoundID.Item73, (int)base.npc.position.X, (int)base.npc.position.Y);
-					int num5 = 8;
-					for (int i = 0; i < num5; i++)
+					int num6 = 8;
+					for (int i = 0; i < num6; i++)
 					{
-						int num6 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
-						Main.projectile[num6].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)num5 * 6.28f);
+						int num7 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+						Main.projectile[num7].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)num6 * 6.28f);
+						Main.projectile[num7].netUpdate = true;
 					}
 				}
-				if (this.shootTimer == 400 || this.shootTimer == 460 || this.shootTimer == 520)
+				if (this.customAI[0] == 400f || this.customAI[0] == 460f || this.customAI[0] == 520f)
 				{
-					float num7 = 10f;
+					float num8 = 10f;
 					Vector2 vector2;
 					vector2..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num8 = 40;
-					int num9 = base.mod.ProjectileType("OmegaBlast");
+					int num9 = 40;
+					int num10 = base.mod.ProjectileType("OmegaBlast");
 					Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 33, 1f, 0f);
-					float num10 = (float)Math.Atan2((double)(vector2.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector2.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num10) * (double)num7 * -1.0), (float)(Math.Sin((double)num10) * (double)num7 * -1.0), num9, num8, 0f, 0, 0f, 0f);
-					Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num10) * (double)num7 * -1.0) + 1f, (float)(Math.Sin((double)num10) * (double)num7 * -1.0) + 1f, num9, num8, 0f, 0, 0f, 0f);
-					Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num10) * (double)num7 * -1.0) + -1f, (float)(Math.Sin((double)num10) * (double)num7 * -1.0) + -1f, num9, num8, 0f, 0, 0f, 0f);
+					float num11 = (float)Math.Atan2((double)(vector2.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector2.X - (player.position.X + (float)player.width * 0.5f)));
+					int num12 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num11) * (double)num8 * -1.0), (float)(Math.Sin((double)num11) * (double)num8 * -1.0), num10, num9, 0f, 0, 0f, 0f);
+					int num13 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num11) * (double)num8 * -1.0) + 1f, (float)(Math.Sin((double)num11) * (double)num8 * -1.0) + 1f, num10, num9, 0f, 0, 0f, 0f);
+					int num14 = Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num11) * (double)num8 * -1.0) + -1f, (float)(Math.Sin((double)num11) * (double)num8 * -1.0) + -1f, num10, num9, 0f, 0, 0f, 0f);
+					Main.projectile[num12].netUpdate = true;
+					Main.projectile[num13].netUpdate = true;
+					Main.projectile[num14].netUpdate = true;
 				}
-				if (this.shootTimer >= 700)
+				if (this.customAI[0] >= 700f)
 				{
 					Main.PlaySound(SoundID.Item73, (int)base.npc.position.X, (int)base.npc.position.Y);
-					int num11 = 16;
-					for (int j = 0; j < num11; j++)
+					int num15 = 16;
+					for (int j = 0; j < num15; j++)
 					{
-						int num12 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
-						Main.projectile[num12].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)j / (float)num11 * 6.28f);
+						int num16 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+						Main.projectile[num16].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)j / (float)num15 * 6.28f);
+						Main.projectile[num16].netUpdate = true;
 					}
-					this.shootTimer = 0;
+					this.customAI[0] = 0f;
+					base.npc.netUpdate = true;
 				}
 			}
-			if ((double)base.npc.life <= (double)base.npc.lifeMax * 0.55)
+			if (base.npc.life <= (int)((float)base.npc.lifeMax * 0.55f))
 			{
-				if (this.shootTimer == 100 || this.shootTimer == 110 || this.shootTimer == 120 || this.shootTimer == 130 || this.shootTimer == 140)
+				if (this.customAI[0] == 100f || this.customAI[0] == 110f || this.customAI[0] == 120f || this.customAI[0] == 130f || this.customAI[0] == 140f)
 				{
-					float num13 = 13f;
+					float num17 = 13f;
 					Vector2 vector3;
 					vector3..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num14 = 40;
-					int num15 = base.mod.ProjectileType("OmegaBlast");
+					int num18 = 40;
+					int num19 = base.mod.ProjectileType("OmegaBlast");
 					Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 33, 1f, 0f);
-					float num16 = (float)Math.Atan2((double)(vector3.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector3.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector3.X, vector3.Y, (float)(Math.Cos((double)num16) * (double)num13 * -1.0), (float)(Math.Sin((double)num16) * (double)num13 * -1.0), num15, num14, 0f, 0, 0f, 0f);
+					float num20 = (float)Math.Atan2((double)(vector3.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector3.X - (player.position.X + (float)player.width * 0.5f)));
+					int num21 = Projectile.NewProjectile(vector3.X, vector3.Y, (float)(Math.Cos((double)num20) * (double)num17 * -1.0), (float)(Math.Sin((double)num20) * (double)num17 * -1.0), num19, num18, 0f, 0, 0f, 0f);
+					Main.projectile[num21].netUpdate = true;
 				}
-				if (this.shootTimer == 320)
+				if (this.customAI[0] == 320f)
 				{
 					Main.PlaySound(SoundID.Item73, (int)base.npc.position.X, (int)base.npc.position.Y);
-					int num17 = 8;
-					for (int k = 0; k < num17; k++)
+					int num22 = 8;
+					for (int k = 0; k < num22; k++)
 					{
-						int num18 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
-						Main.projectile[num18].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(8f, 0f), (float)k / (float)num17 * 6.28f);
+						int num23 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+						Main.projectile[num23].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(8f, 0f), (float)k / (float)num22 * 6.28f);
+						Main.projectile[num23].netUpdate = true;
 					}
 				}
-				if (this.shootTimer == 380)
+				if (this.customAI[0] == 380f)
 				{
 					Main.PlaySound(SoundID.Item73, (int)base.npc.position.X, (int)base.npc.position.Y);
-					int num19 = 8;
-					for (int l = 0; l < num19; l++)
+					int num24 = 8;
+					for (int l = 0; l < num24; l++)
 					{
-						int num20 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
-						Main.projectile[num20].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(8f, 0f), (float)l / (float)num19 * 6.28f);
+						int num25 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+						Main.projectile[num25].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(8f, 0f), (float)l / (float)num24 * 6.28f);
+						Main.projectile[num25].netUpdate = true;
 					}
 				}
-				if (this.shootTimer == 400 || this.shootTimer == 430 || this.shootTimer == 460 || this.shootTimer == 490 || this.shootTimer == 510)
+				if (this.customAI[0] == 400f || this.customAI[0] == 430f || this.customAI[0] == 460f || this.customAI[0] == 490f || this.customAI[0] == 510f)
 				{
-					float num21 = 13f;
+					float num26 = 13f;
 					Vector2 vector4;
 					vector4..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-					int num22 = 40;
-					int num23 = base.mod.ProjectileType("OmegaBlast");
+					int num27 = 40;
+					int num28 = base.mod.ProjectileType("OmegaBlast");
 					Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 33, 1f, 0f);
-					float num24 = (float)Math.Atan2((double)(vector4.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector4.X - (player.position.X + (float)player.width * 0.5f)));
-					Projectile.NewProjectile(vector4.X, vector4.Y, (float)(Math.Cos((double)num24) * (double)num21 * -1.0), (float)(Math.Sin((double)num24) * (double)num21 * -1.0), num23, num22, 0f, 0, 0f, 0f);
-					Projectile.NewProjectile(vector4.X, vector4.Y, (float)(Math.Cos((double)num24) * (double)num21 * -1.0) + 1f, (float)(Math.Sin((double)num24) * (double)num21 * -1.0) + 1f, num23, num22, 0f, 0, 0f, 0f);
-					Projectile.NewProjectile(vector4.X, vector4.Y, (float)(Math.Cos((double)num24) * (double)num21 * -1.0) + -1f, (float)(Math.Sin((double)num24) * (double)num21 * -1.0) + -1f, num23, num22, 0f, 0, 0f, 0f);
+					float num29 = (float)Math.Atan2((double)(vector4.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector4.X - (player.position.X + (float)player.width * 0.5f)));
+					int num30 = Projectile.NewProjectile(vector4.X, vector4.Y, (float)(Math.Cos((double)num29) * (double)num26 * -1.0), (float)(Math.Sin((double)num29) * (double)num26 * -1.0), num28, num27, 0f, 0, 0f, 0f);
+					int num31 = Projectile.NewProjectile(vector4.X, vector4.Y, (float)(Math.Cos((double)num29) * (double)num26 * -1.0) + 1f, (float)(Math.Sin((double)num29) * (double)num26 * -1.0) + 1f, num28, num27, 0f, 0, 0f, 0f);
+					int num32 = Projectile.NewProjectile(vector4.X, vector4.Y, (float)(Math.Cos((double)num29) * (double)num26 * -1.0) + -1f, (float)(Math.Sin((double)num29) * (double)num26 * -1.0) + -1f, num28, num27, 0f, 0, 0f, 0f);
+					Main.projectile[num30].netUpdate = true;
+					Main.projectile[num31].netUpdate = true;
+					Main.projectile[num32].netUpdate = true;
 				}
-				if (this.shootTimer >= 700)
+				if (this.customAI[0] >= 700f)
 				{
 					Main.PlaySound(SoundID.Item73, (int)base.npc.position.X, (int)base.npc.position.Y);
-					int num25 = 16;
-					for (int m = 0; m < num25; m++)
+					int num33 = 16;
+					for (int m = 0; m < num33; m++)
 					{
-						int num26 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
-						Main.projectile[num26].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(9f, 0f), (float)m / (float)num25 * 6.28f);
+						int num34 = Projectile.NewProjectile(base.npc.Center.X, base.npc.Center.Y, 0f, 0f, base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+						Main.projectile[num34].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(9f, 0f), (float)m / (float)num33 * 6.28f);
+						Main.projectile[num34].netUpdate = true;
 					}
-					this.shootTimer = 0;
+					this.customAI[0] = 0f;
 				}
 			}
-			if ((double)base.npc.life > (double)base.npc.lifeMax * 0.55)
+			if (base.npc.life > (int)((float)base.npc.lifeMax * 0.55f))
 			{
 				base.npc.ai[1] += 1f;
 			}
-			if (base.npc.ai[1] % 200f == 80f && NPC.CountNPCS(base.mod.NPCType("CorruptedProbe")) <= 3)
+			if (base.npc.ai[1] % 200f == 80f && NPC.CountNPCS(base.mod.NPCType("CorruptedProbe")) <= 1)
 			{
-				NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 120, base.mod.NPCType("CorruptedProbe"), 0, 0f, 0f, 0f, 0f, 255);
+				int num35 = NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 120, base.mod.NPCType("CorruptedProbe"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.npc[num35].netUpdate = true;
 			}
-			if ((double)base.npc.life <= (double)base.npc.lifeMax * 0.55)
+			if (base.npc.life <= (int)((float)base.npc.lifeMax * 0.55f))
 			{
 				base.npc.ai[2] += 1f;
 			}
 			if (base.npc.ai[2] >= 250f)
 			{
-				float num27 = 10f;
+				float num36 = 10f;
 				Vector2 vector5;
 				vector5..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-				int num28 = 100;
-				int num29 = base.mod.ProjectileType("VlitchCleaverPro");
+				int num37 = 100;
+				int num38 = base.mod.ProjectileType("VlitchCleaverPro");
 				Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 33, 1f, 0f);
-				float num30 = (float)Math.Atan2((double)(vector5.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector5.X - (player.position.X + (float)player.width * 0.5f)));
-				Projectile.NewProjectile(vector5.X, vector5.Y, (float)(Math.Cos((double)num30) * (double)num27 * -1.0), (float)(Math.Sin((double)num30) * (double)num27 * -1.0), num29, num28, 0f, 0, 0f, 0f);
+				float num39 = (float)Math.Atan2((double)(vector5.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector5.X - (player.position.X + (float)player.width * 0.5f)));
+				int num40 = Projectile.NewProjectile(vector5.X, vector5.Y, (float)(Math.Cos((double)num39) * (double)num36 * -1.0), (float)(Math.Sin((double)num39) * (double)num36 * -1.0), num38, num37, 0f, 0, 0f, 0f);
+				Main.projectile[num40].netUpdate = true;
 				base.npc.ai[2] = 0f;
 			}
-			if (base.npc.ai[2] % 200f == 80f && NPC.CountNPCS(base.mod.NPCType("CorruptedBlade")) <= 3)
+			if (base.npc.ai[2] % 200f == 80f && NPC.CountNPCS(base.mod.NPCType("CorruptedBlade")) <= 2)
 			{
-				NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 120, base.mod.NPCType("CorruptedBlade"), 0, 0f, 0f, 0f, 0f, 255);
+				int num41 = NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 120, base.mod.NPCType("CorruptedBlade"), 0, 0f, 0f, 0f, 0f, 255);
+				Main.npc[num41].netUpdate = true;
 			}
 			if (base.npc.life <= 2000)
 			{
@@ -284,57 +399,61 @@ namespace Redemption.NPCs.Bosses
 			}
 			if (base.npc.ai[3] >= 100f)
 			{
-				float num31 = 10f;
+				float num42 = 10f;
 				Vector2 vector6;
 				vector6..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-				int num32 = 100;
-				int num33 = base.mod.ProjectileType("VlitchCleaverPro");
+				int num43 = 100;
+				int num44 = base.mod.ProjectileType("VlitchCleaverPro");
 				Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 33, 1f, 0f);
-				float num34 = (float)Math.Atan2((double)(vector6.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector6.X - (player.position.X + (float)player.width * 0.5f)));
-				Projectile.NewProjectile(vector6.X, vector6.Y, (float)(Math.Cos((double)num34) * (double)num31 * -1.0), (float)(Math.Sin((double)num34) * (double)num31 * -1.0), num33, num32, 0f, 0, 0f, 0f);
+				float num45 = (float)Math.Atan2((double)(vector6.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector6.X - (player.position.X + (float)player.width * 0.5f)));
+				int num46 = Projectile.NewProjectile(vector6.X, vector6.Y, (float)(Math.Cos((double)num45) * (double)num42 * -1.0), (float)(Math.Sin((double)num45) * (double)num42 * -1.0), num44, num43, 0f, 0, 0f, 0f);
+				Main.projectile[num46].netUpdate = true;
 				base.npc.ai[3] = 0f;
 			}
-			if ((double)base.npc.life <= (double)base.npc.lifeMax * 0.55)
+			if (base.npc.life <= (int)((float)base.npc.lifeMax * 0.55f))
 			{
 				this.takeAction = true;
 			}
 			if (this.takeAction)
 			{
-				this.timer++;
-				if (this.timer == 1)
+				this.customAI[1] += 1f;
+				if (this.customAI[1] == 1f)
 				{
 					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).omegaPower)
 					{
 						Main.NewText("No matter, I guess I'll take action...", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
+						base.npc.netUpdate = true;
 					}
 					else
 					{
 						Main.NewText("Guess its time to take action...", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
+						base.npc.netUpdate = true;
 					}
-					float num35 = 150f;
-					float num36 = 1.26f;
+					float num47 = 150f;
+					float num48 = 1.26f;
 					for (int n = 0; n < 10; n++)
 					{
-						Vector2 vector7 = base.npc.Center + num35 * Utils.ToRotationVector2((float)n * num36);
-						NPC.NewNPC((int)vector7.X, (int)vector7.Y, base.mod.NPCType("CleaverDagger"), 0, (float)base.npc.whoAmI, 0f, (float)n, 0f, 255);
+						Vector2 vector7 = base.npc.Center + num47 * Utils.ToRotationVector2((float)n * num48);
+						int num49 = NPC.NewNPC((int)vector7.X, (int)vector7.Y, base.mod.NPCType("CleaverDagger"), 0, (float)base.npc.whoAmI, 0f, (float)n, 0f, 255);
+						Main.npc[num49].netUpdate = true;
 					}
 				}
-				this.timer2++;
-				if (this.timer2 <= 120 && !this.player.dead)
+				this.customAI[2] += 1f;
+				if (this.customAI[2] <= 120f && !this.player.dead)
 				{
 					NPC npc2 = base.npc;
 					npc2.velocity.Y = npc2.velocity.Y * 0.2f;
 				}
-				if (this.timer2 >= 120)
+				if (this.customAI[2] >= 120f)
 				{
 					if (!this.player.dead)
 					{
 						NPC npc3 = base.npc;
 						npc3.velocity.Y = npc3.velocity.Y * -0.2f;
 					}
-					if (this.timer2 == 240)
+					if (this.customAI[2] == 240f)
 					{
-						this.timer2 = 0;
+						this.customAI[2] = 0f;
 					}
 				}
 				base.npc.aiStyle = 5;
@@ -366,26 +485,46 @@ namespace Redemption.NPCs.Bosses
 			}
 		}
 
-		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
+		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
-			SpriteEffects spriteEffects = 0;
-			if (base.npc.spriteDirection == 1)
+			Texture2D texture2D = Main.npcTexture[base.npc.type];
+			Texture2D texture = base.mod.GetTexture("NPCs/Bosses/VlitchCleaver_Glow");
+			Texture2D texture2 = base.mod.GetTexture("NPCs/Bosses/VlitchCleaver_OLD");
+			Texture2D texture3 = base.mod.GetTexture("NPCs/Bosses/VlitchCleaver_Glow_OLD");
+			SpriteEffects spriteEffects = (base.npc.spriteDirection == -1) ? 0 : 1;
+			if (Config.classicRedeVC)
 			{
-				spriteEffects = 1;
+				Vector2 vector;
+				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
+				int num = texture2.Height / 5;
+				int num2 = num * this.oldFrame;
+				Main.spriteBatch.Draw(texture2, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture2.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture2.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Main.spriteBatch.Draw(texture3, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture2.Width, num)), base.npc.GetAlpha(Color.White), base.npc.rotation, new Vector2((float)texture2.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
 			}
-			spriteBatch.Draw(base.mod.GetTexture("NPCs/Bosses/VlitchCleaver_Glow"), new Vector2(base.npc.Center.X - Main.screenPosition.X, base.npc.Center.Y - Main.screenPosition.Y), new Rectangle?(base.npc.frame), Color.White, base.npc.rotation, new Vector2((float)base.npc.width * 0.5f, (float)base.npc.height * 0.5f), 1f, spriteEffects, 0f);
+			else
+			{
+				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, spriteEffects, 0f);
+			}
+			return false;
 		}
 
 		private Player player;
 
-		public int timer;
-
-		public int timer2;
-
-		private int omegaTimer;
+		public float[] customAI = new float[4];
 
 		private bool takeAction;
 
-		private int shootTimer;
+		private bool cloneSummoned1;
+
+		private bool cloneSummoned2;
+
+		private bool cloneSummoned3;
+
+		private bool cloneSummoned4;
+
+		private int oldFrame;
+
+		private int oldCounter;
 	}
 }

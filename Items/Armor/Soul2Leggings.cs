@@ -14,7 +14,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Wandering Soul's Leggings");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n2% increased druidic damage\n3% damage reduction\nDecreased falling speed\nIncreased movement speed");
+			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\n2% increased druidic damage\n3% damage reduction\nDecreased falling speed\nIncreased movement speed");
 		}
 
 		public override void SetDefaults()

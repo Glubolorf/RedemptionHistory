@@ -258,6 +258,16 @@ namespace Redemption
 			list.Insert(first ? num : (num + 1), layer);
 		}
 
+		public static Rectangle GetAdvancedFrame(int currentFrame, int frameOffsetX, int frameWidth, int frameHeight, int pixelSpaceX = 0, int pixelSpaceY = 2)
+		{
+			int num = currentFrame / frameOffsetX;
+			currentFrame -= num * frameOffsetX;
+			pixelSpaceY *= currentFrame;
+			int num2 = (frameOffsetX == 0) ? 0 : (num * (frameWidth + pixelSpaceX));
+			int num3 = frameHeight * currentFrame + pixelSpaceY;
+			return new Rectangle(num2, num3, frameWidth, frameHeight);
+		}
+
 		public static Rectangle GetFrame(int currentFrame, int frameWidth, int frameHeight, int pixelSpaceX = 0, int pixelSpaceY = 2)
 		{
 			pixelSpaceY *= currentFrame;
@@ -1574,7 +1584,130 @@ namespace Redemption
 			}
 		}
 
+		public static void DrawVectorChain(object sb, Texture2D[] textures, int shader, Vector2[] chain, float Jump = 0f, Color? overrideColor = null, float scale = 1f, bool drawEndsUnder = false, Func<Texture2D, Vector2, Vector2, Vector2, Rectangle, Color, float, float, int, bool> OnDrawTex = null)
+		{
+			if (Jump <= 0f)
+			{
+				Jump = ((float)textures[1].Height - 2f) * scale;
+			}
+			float length = 0f;
+			for (int i = 0; i < chain.Length - 1; i++)
+			{
+				length += Vector2.Distance(chain[i], chain[i + 1]);
+			}
+			Vector2 start = chain[0];
+			Vector2 end = chain[chain.Length - 1];
+			Vector2 vector = end - start;
+			vector.Normalize();
+			float Way = 0f;
+			float rotation = BaseUtility.RotationTo(chain[0], chain[1]) - 1.57f;
+			int num = 0;
+			int maxTextures = textures.Length - 2;
+			int num2 = 0;
+			Vector2 vector2 = chain[0];
+			while (Way < length)
+			{
+				Action action = delegate()
+				{
+					if (textures[0] != null && Way == 0f)
+					{
+						float num5 = (float)textures[0].Width;
+						float num6 = (float)textures[0].Height;
+						Vector2 vector6 = new Vector2(num5 / 2f, num6 / 2f) * scale;
+						Vector2 vector7 = start - Main.screenPosition + vector6;
+						Color color2 = (overrideColor != null) ? overrideColor.Value : BaseDrawing.GetLightColor(start + vector6);
+						if (OnDrawTex == null || OnDrawTex.Invoke(textures[0], start + vector6, vector7 - vector6, vector6, new Rectangle(0, 0, (int)num5, (int)num6), color2, rotation, scale, -1))
+						{
+							if (sb is List<DrawData>)
+							{
+								DrawData item2;
+								item2..ctor(textures[0], vector7 - vector6, new Rectangle?(new Rectangle(0, 0, (int)num5, (int)num6)), color2, rotation, vector6, scale, 0, 0);
+								item2.shader = shader;
+								((List<DrawData>)sb).Add(item2);
+							}
+							else if (sb is SpriteBatch)
+							{
+								((SpriteBatch)sb).Draw(textures[0], vector7 - vector6, new Rectangle?(new Rectangle(0, 0, (int)num5, (int)num6)), color2, rotation, vector6, scale, 0, 0f);
+							}
+						}
+					}
+					if (textures[maxTextures + 1] != null && Way + Jump >= length)
+					{
+						float num7 = (float)textures[maxTextures + 1].Width;
+						float num8 = (float)textures[maxTextures + 1].Height;
+						Vector2 vector8 = new Vector2(num7 / 2f, num8 / 2f) * scale;
+						Vector2 vector9 = end - Main.screenPosition + vector8;
+						Color color3 = (overrideColor != null) ? overrideColor.Value : BaseDrawing.GetLightColor(end + vector8);
+						if (OnDrawTex != null && !OnDrawTex.Invoke(textures[maxTextures + 1], end + vector8, vector9 - vector8, vector8, new Rectangle(0, 0, (int)num7, (int)num8), color3, rotation, scale, -2))
+						{
+							return;
+						}
+						if (sb is List<DrawData>)
+						{
+							DrawData item3;
+							item3..ctor(textures[maxTextures + 1], vector9 - vector8, new Rectangle?(new Rectangle(0, 0, (int)num7, (int)num8)), color3, rotation, vector8, scale, 0, 0);
+							item3.shader = shader;
+							((List<DrawData>)sb).Add(item3);
+							return;
+						}
+						if (sb is SpriteBatch)
+						{
+							((SpriteBatch)sb).Draw(textures[maxTextures + 1], vector9 - vector8, new Rectangle?(new Rectangle(0, 0, (int)num7, (int)num8)), color3, rotation, vector8, scale, 0, 0f);
+						}
+					}
+				};
+				float num3 = (float)textures[1].Width;
+				float num4 = (float)textures[1].Height;
+				Vector2 vector3 = new Vector2(num3 / 2f, num4 / 2f) * scale;
+				Vector2 vector4 = BaseUtility.MultiLerpVector(Way / length, chain) + vector3;
+				Vector2 vector5 = BaseUtility.MultiLerpVector(Math.Max(length - 1f, Way + 1f) / length, chain) + vector3;
+				if (vector4 != vector5)
+				{
+					rotation = BaseUtility.RotationTo(vector4, vector5) - 1.57f;
+				}
+				if (BaseDrawing.InDrawZone(vector4, false))
+				{
+					vector4 -= Main.screenPosition;
+					if ((Way == 0f || Way + Jump >= length) && drawEndsUnder)
+					{
+						action();
+					}
+					Color color = (overrideColor != null) ? overrideColor.Value : BaseDrawing.GetLightColor(start + vector * Way + vector3);
+					num++;
+					if (num >= maxTextures)
+					{
+						num = 0;
+					}
+					if (OnDrawTex == null || OnDrawTex.Invoke(textures[num + 1], start + vector * Way + vector3, vector4 - vector3, vector3, new Rectangle(0, 0, (int)num3, (int)num4), color, rotation, scale, num2))
+					{
+						if (sb is List<DrawData>)
+						{
+							DrawData item;
+							item..ctor(textures[num + 1], vector4 - vector3, new Rectangle?(new Rectangle(0, 0, (int)num3, (int)num4)), color, rotation, vector3, scale, 0, 0);
+							item.shader = shader;
+							((List<DrawData>)sb).Add(item);
+						}
+						else if (sb is SpriteBatch)
+						{
+							((SpriteBatch)sb).Draw(textures[num + 1], vector4 - vector3, new Rectangle?(new Rectangle(0, 0, (int)num3, (int)num4)), color, rotation, vector3, scale, 0, 0f);
+						}
+					}
+					num2++;
+					if ((Way == 0f || Way + Jump >= length) && !drawEndsUnder)
+					{
+						action();
+					}
+				}
+				Way += Jump;
+			}
+		}
+
 		public static void DrawTexture(object sb, Texture2D texture, int shader, Entity codable, Color? overrideColor = null, bool drawCentered = false, Vector2 overrideOrigin = default(Vector2))
+		{
+			BaseDrawing.DrawTexture(sb, texture, shader, codable, 1, overrideColor, drawCentered, overrideOrigin);
+		}
+
+		public static void DrawTexture(object sb, Texture2D texture, int shader, Entity codable, int framecountX, Color? overrideColor = null, bool drawCentered = false, Vector2 overrideOrigin = default(Vector2))
 		{
 			Color value = (overrideColor != null) ? overrideColor.Value : ((codable is Item) ? ((Item)codable).GetAlpha(BaseDrawing.GetLightColor(codable.Center)) : ((codable is NPC) ? BaseDrawing.GetNPCColor((NPC)codable, new Vector2?(codable.Center), false, 0f) : ((codable is Projectile) ? ((Projectile)codable).GetAlpha(BaseDrawing.GetLightColor(codable.Center)) : BaseDrawing.GetLightColor(codable.Center))));
 			int framecount = (codable is Item) ? 1 : ((codable is NPC) ? Main.npcFrameCount[((NPC)codable).type] : 1);
@@ -1583,17 +1716,22 @@ namespace Redemption
 			float rotation = (codable is Item) ? 0f : ((codable is NPC) ? ((NPC)codable).rotation : ((Projectile)codable).rotation);
 			int direction = (codable is Item) ? 1 : ((codable is NPC) ? ((NPC)codable).spriteDirection : ((Projectile)codable).spriteDirection);
 			float num = (codable is NPC) ? ((NPC)codable).gfxOffY : 0f;
-			BaseDrawing.DrawTexture(sb, texture, shader, codable.position + new Vector2(0f, num), codable.width, codable.height, scale, rotation, direction, framecount, frame, new Color?(value), drawCentered, overrideOrigin);
+			BaseDrawing.DrawTexture(sb, texture, shader, codable.position + new Vector2(0f, num), codable.width, codable.height, scale, rotation, direction, framecount, framecountX, frame, new Color?(value), drawCentered, overrideOrigin);
 		}
 
 		public static void DrawTexture(object sb, Texture2D texture, int shader, Vector2 position, int width, int height, float scale, float rotation, int direction, int framecount, Rectangle frame, Color? overrideColor = null, bool drawCentered = false, Vector2 overrideOrigin = default(Vector2))
 		{
-			Vector2 vector = (overrideOrigin != default(Vector2)) ? overrideOrigin : new Vector2((float)(texture.Width / 2), (float)(texture.Height / framecount / 2));
+			BaseDrawing.DrawTexture(sb, texture, shader, position, width, height, scale, rotation, direction, framecount, 1, frame, overrideColor, drawCentered, overrideOrigin);
+		}
+
+		public static void DrawTexture(object sb, Texture2D texture, int shader, Vector2 position, int width, int height, float scale, float rotation, int direction, int framecount, int framecountX, Rectangle frame, Color? overrideColor = null, bool drawCentered = false, Vector2 overrideOrigin = default(Vector2))
+		{
+			Vector2 vector = (overrideOrigin != default(Vector2)) ? overrideOrigin : new Vector2((float)(frame.Width / framecountX / 2), (float)(texture.Height / framecount / 2));
 			Color color = (overrideColor != null) ? overrideColor.Value : BaseDrawing.GetLightColor(position + new Vector2((float)width * 0.5f, (float)height * 0.5f));
 			if (sb is List<DrawData>)
 			{
 				DrawData item;
-				item..ctor(texture, BaseDrawing.GetDrawPosition(position, vector, width, height, texture.Width, texture.Height, framecount, scale, drawCentered), new Rectangle?(frame), color, rotation, vector, scale, (direction == 1) ? 1 : 0, 0);
+				item..ctor(texture, BaseDrawing.GetDrawPosition(position, vector, width, height, texture.Width, texture.Height, frame, framecount, framecountX, scale, drawCentered), new Rectangle?(frame), color, rotation, vector, scale, (direction == 1) ? 1 : 0, 0);
 				item.shader = shader;
 				((List<DrawData>)sb).Add(item);
 				return;
@@ -1607,7 +1745,7 @@ namespace Redemption
 					((SpriteBatch)sb).Begin(1, BlendState.AlphaBlend);
 					GameShaders.Armor.ApplySecondary(shader, Main.player[Main.myPlayer], null);
 				}
-				((SpriteBatch)sb).Draw(texture, BaseDrawing.GetDrawPosition(position, vector, width, height, texture.Width, texture.Height, framecount, scale, drawCentered), new Rectangle?(frame), color, rotation, vector, scale, (direction == 1) ? 1 : 0, 0f);
+				((SpriteBatch)sb).Draw(texture, BaseDrawing.GetDrawPosition(position, vector, width, height, texture.Width, texture.Height, frame, framecount, framecountX, scale, drawCentered), new Rectangle?(frame), color, rotation, vector, scale, (direction == 1) ? 1 : 0, 0f);
 				if (flag)
 				{
 					((SpriteBatch)sb).End();
@@ -1956,17 +2094,22 @@ namespace Redemption
 			return new Vector2((float)(x * 16 - (int)Main.screenPosition.X) - ((float)width - 16f) / 2f, (float)(y * 16 - (int)Main.screenPosition.Y)) + drawOffset;
 		}
 
-		public static Vector2 GetDrawPosition(Vector2 position, Vector2 origin, int width, int height, int texWidth, int texHeight, int framecount, float scale, bool drawCentered = false)
+		public static Vector2 GetDrawPosition(Vector2 position, Vector2 origin, int width, int height, int texWidth, int texHeight, Rectangle frame, int framecount, float scale, bool drawCentered = false)
+		{
+			return BaseDrawing.GetDrawPosition(position, origin, width, height, texWidth, texHeight, frame, framecount, 1, scale, drawCentered);
+		}
+
+		public static Vector2 GetDrawPosition(Vector2 position, Vector2 origin, int width, int height, int texWidth, int texHeight, Rectangle frame, int framecount, int framecountX, float scale, bool drawCentered = false)
 		{
 			Vector2 vector;
 			vector..ctor((float)((int)Main.screenPosition.X), (float)((int)Main.screenPosition.Y));
 			if (drawCentered)
 			{
 				Vector2 vector2;
-				vector2..ctor((float)(texWidth / 2), (float)(texHeight / framecount / 2));
-				return position + new Vector2((float)width * 0.5f, (float)height * 0.5f) - vector2 * scale + origin * scale - vector;
+				vector2..ctor((float)(texWidth / framecountX / 2), (float)(texHeight / framecount / 2));
+				return position + new Vector2((float)(width / 2), (float)(height / 2)) - vector2 * scale + origin * scale - vector;
 			}
-			return position - vector + new Vector2((float)width * 0.5f, (float)height) - new Vector2((float)texWidth * scale / 2f, (float)texHeight * scale / (float)framecount) + origin * scale + new Vector2(0f, 5f);
+			return position - vector + new Vector2((float)(width / 2), (float)height) - new Vector2((float)(texWidth / framecountX / 2), (float)(texHeight / framecount)) * scale + origin * scale + new Vector2(0f, 5f);
 		}
 
 		public static void DrawPlayerTexture(object sb, Texture2D texture, int shader, Player drawPlayer, Vector2 ediPos, int locationType, float offsetX = 0f, float offsetY = 0f, Color? overrideColor = null, Rectangle? frameRect = null, float scaleOverride = 0f)

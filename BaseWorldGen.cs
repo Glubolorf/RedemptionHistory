@@ -10,6 +10,20 @@ namespace Redemption
 {
 	public class BaseWorldGen
 	{
+		public static Tile GetTileSafely(Vector2 position)
+		{
+			return BaseWorldGen.GetTileSafely((int)(position.X / 16f), (int)(position.Y / 16f));
+		}
+
+		public static Tile GetTileSafely(int x, int y)
+		{
+			if (x < 0 || x > Main.maxTilesX || y < 0 || y > Main.maxTilesY)
+			{
+				return new Tile();
+			}
+			return Framing.GetTileSafely(x, y);
+		}
+
 		public static void GenOre(int tileType, int amountInWorld = -1, float oreStrength = 5f, int oreSteps = 5, int heightLimit = -1, bool mapDebug = false)
 		{
 			if (WorldGen.noTileActions)
@@ -36,53 +50,65 @@ namespace Redemption
 
 		public static int GetFirstTileFloor(int x, int startY, bool solid = true)
 		{
-			for (int i = startY; i < Main.maxTilesY; i++)
+			if (!WorldGen.InWorld(x, startY, 0))
 			{
-				Tile tile = Main.tile[x, i];
-				if (tile != null && tile.nactive() && (!solid || Main.tileSolid[(int)tile.type]))
+				return startY;
+			}
+			for (int i = startY; i < Main.maxTilesY - 10; i++)
+			{
+				Tile tileSafely = Framing.GetTileSafely(x, i);
+				if (tileSafely != null && tileSafely.nactive() && (!solid || Main.tileSolid[(int)tileSafely.type]))
 				{
 					return i;
 				}
 			}
-			return Main.maxTilesY;
+			return Main.maxTilesY - 10;
 		}
 
 		public static int GetFirstTileCeiling(int x, int startY, bool solid = true)
 		{
-			for (int i = startY; i > 0; i--)
+			if (!WorldGen.InWorld(x, startY, 0))
 			{
-				Tile tile = Main.tile[x, i];
-				if (tile != null && tile.nactive() && (!solid || Main.tileSolid[(int)tile.type]))
+				return startY;
+			}
+			for (int i = startY; i > 10; i--)
+			{
+				Tile tileSafely = Framing.GetTileSafely(x, i);
+				if (tileSafely != null && tileSafely.nactive() && (!solid || Main.tileSolid[(int)tileSafely.type]))
 				{
 					return i;
 				}
 			}
-			return 0;
+			return 10;
 		}
 
 		public static int GetFirstTileSide(int startX, int y, bool left, bool solid = true)
 		{
+			if (!WorldGen.InWorld(startX, y, 0))
+			{
+				return startX;
+			}
 			if (left)
 			{
-				for (int i = startX; i > 0; i--)
+				for (int i = startX; i > 10; i--)
 				{
-					Tile tile = Main.tile[i, y];
-					if (tile != null && tile.nactive() && (!solid || Main.tileSolid[(int)tile.type]))
+					Tile tileSafely = Framing.GetTileSafely(i, y);
+					if (tileSafely != null && tileSafely.nactive() && (!solid || Main.tileSolid[(int)tileSafely.type]))
 					{
 						return i;
 					}
 				}
-				return 0;
+				return 10;
 			}
-			for (int j = startX; j < Main.maxTilesX; j++)
+			for (int j = startX; j < Main.maxTilesX - 10; j++)
 			{
-				Tile tile2 = Main.tile[j, y];
-				if (tile2 != null && tile2.nactive() && (!solid || Main.tileSolid[(int)tile2.type]))
+				Tile tileSafely2 = Framing.GetTileSafely(j, y);
+				if (tileSafely2 != null && tileSafely2.nactive() && (!solid || Main.tileSolid[(int)tileSafely2.type]))
 				{
 					return j;
 				}
 			}
-			return Main.maxTilesX;
+			return Main.maxTilesX - 10;
 		}
 
 		public static int GetBelowFloatingIslandY()
@@ -97,7 +123,7 @@ namespace Redemption
 			{
 				return 1;
 			}
-			if (Main.maxTilesX == 6300)
+			if (Main.maxTilesX == 6400)
 			{
 				return 2;
 			}
@@ -136,7 +162,7 @@ namespace Redemption
 				for (int j = num3; j <= num4; j++)
 				{
 					double num6 = (double)Vector2.Distance(new Vector2((float)i * 16f + 8f, (float)j * 16f + 8f), position);
-					if (num6 < (double)num5 && Main.tile[i, j] != null && Main.tile[i, j].active())
+					if (WorldGen.InWorld(i, j, 0) && num6 < (double)num5 && Main.tile[i, j] != null && Main.tile[i, j].active())
 					{
 						int type = (int)Main.tile[i, j].type;
 						int num7 = 0;
@@ -168,6 +194,14 @@ namespace Redemption
 
 		public static void GenerateLiquid(int x, int y, int liquidType, bool updateFlow = true, int liquidHeight = 255, bool sync = true)
 		{
+			if (!WorldGen.InWorld(x, y, 0))
+			{
+				return;
+			}
+			if (Main.tile[x, y] == null)
+			{
+				Main.tile[x, y] = new Tile();
+			}
 			liquidHeight = (int)MathHelper.Clamp((float)liquidHeight, 0f, 255f);
 			Main.tile[x, y].liquid = (byte)liquidHeight;
 			if (liquidType == 0)
@@ -215,126 +249,129 @@ namespace Redemption
 		{
 			try
 			{
-				if (Main.tile[x, y] == null)
+				if (WorldGen.InWorld(x, y, 0))
 				{
-					Main.tile[x, y] = new Tile();
-				}
-				TileObjectData tileObjectData = (tile <= -1) ? null : TileObjectData.GetTileData(tile, tileStyle, 0);
-				int num = (tileObjectData == null) ? 1 : tileObjectData.Width;
-				int num2 = (tileObjectData == null) ? 1 : tileObjectData.Height;
-				int num3 = (tile == -1 || tileObjectData == null) ? 1 : tileObjectData.Width;
-				int num4 = (tile == -1 || tileObjectData == null) ? 1 : tileObjectData.Height;
-				byte b = Main.tile[x, y].slope();
-				bool flag = Main.tile[x, y].halfBrick();
-				if (tile != -1)
-				{
-					WorldGen.destroyObject = true;
-					if (num > 1 || num2 > 1)
+					if (Main.tile[x, y] == null)
 					{
-						Vector2 vector = BaseTile.FindTopLeft(x, y);
-						for (int i = 0; i < num; i++)
-						{
-							for (int j = 0; j < num2; j++)
-							{
-								int num5 = (int)vector.X + i;
-								int num6 = (int)vector.Y + j;
-								if (i == 0 && j == 0 && Main.tile[num5, num6].type == 21)
-								{
-									BaseWorldGen.KillChestAndItems(num5, num6);
-								}
-								Main.tile[x, y].type = 0;
-								Main.tile[x, y].active(false);
-								if (!silent)
-								{
-									WorldGen.KillTile(x, y, false, false, true);
-								}
-								if (removeLiquid)
-								{
-									BaseWorldGen.GenerateLiquid(num5, num6, 0, true, 0, false);
-								}
-							}
-						}
-						for (int k = 0; k < num; k++)
-						{
-							for (int l = 0; l < num2; l++)
-							{
-								int num7 = (int)vector.X + k;
-								int num8 = (int)vector.Y + l;
-								WorldGen.SquareTileFrame(num7, num8, true);
-								WorldGen.SquareWallFrame(num7, num8, true);
-							}
-						}
+						Main.tile[x, y] = new Tile();
 					}
-					else if (!silent)
+					TileObjectData tileObjectData = (tile <= -1) ? null : TileObjectData.GetTileData(tile, tileStyle, 0);
+					int num = (tileObjectData == null) ? 1 : tileObjectData.Width;
+					int num2 = (tileObjectData == null) ? 1 : tileObjectData.Height;
+					int num3 = (tile == -1 || tileObjectData == null) ? 1 : tileObjectData.Width;
+					int num4 = (tile == -1 || tileObjectData == null) ? 1 : tileObjectData.Height;
+					byte b = Main.tile[x, y].slope();
+					bool flag = Main.tile[x, y].halfBrick();
+					if (tile != -1)
 					{
-						WorldGen.KillTile(x, y, false, false, true);
-					}
-					WorldGen.destroyObject = false;
-					if (active)
-					{
-						if (num3 <= 1 && num4 <= 1 && !Main.tileFrameImportant[tile])
+						WorldGen.destroyObject = true;
+						if (num > 1 || num2 > 1)
 						{
-							Main.tile[x, y].type = (ushort)tile;
-							Main.tile[x, y].active(true);
-							if (slope == -2 && flag)
+							Vector2 vector = BaseTile.FindTopLeft(x, y);
+							for (int i = 0; i < num; i++)
 							{
-								Main.tile[x, y].halfBrick(true);
-							}
-							else if (slope == -1)
-							{
-								Main.tile[x, y].halfBrick(true);
-							}
-							else
-							{
-								Main.tile[x, y].slope((slope == -2) ? b : ((byte)slope));
-							}
-							WorldGen.SquareTileFrame(x, y, true);
-						}
-						else
-						{
-							WorldGen.destroyObject = true;
-							if (!silent)
-							{
-								for (int m = 0; m < num3; m++)
+								for (int j = 0; j < num2; j++)
 								{
-									for (int n = 0; n < num4; n++)
+									int num5 = (int)vector.X + i;
+									int num6 = (int)vector.Y + j;
+									if (i == 0 && j == 0 && Main.tile[num5, num6].type == 21)
 									{
-										WorldGen.KillTile(x + m, y + n, false, false, true);
+										BaseWorldGen.KillChestAndItems(num5, num6);
+									}
+									Main.tile[x, y].type = 0;
+									Main.tile[x, y].active(false);
+									if (!silent)
+									{
+										WorldGen.KillTile(x, y, false, false, true);
+									}
+									if (removeLiquid)
+									{
+										BaseWorldGen.GenerateLiquid(num5, num6, 0, true, 0, false);
 									}
 								}
 							}
-							WorldGen.destroyObject = false;
-							int num9 = (tile == 10) ? y : (y + num2);
-							WorldGen.PlaceTile(x, num9, tile, true, true, -1, tileStyle);
-							for (int num10 = 0; num10 < num3; num10++)
+							for (int k = 0; k < num; k++)
 							{
-								for (int num11 = 0; num11 < num4; num11++)
+								for (int l = 0; l < num2; l++)
 								{
-									WorldGen.SquareTileFrame(x + num10, y + num11, true);
+									int num7 = (int)vector.X + k;
+									int num8 = (int)vector.Y + l;
+									WorldGen.SquareTileFrame(num7, num8, true);
+									WorldGen.SquareWallFrame(num7, num8, true);
 								}
 							}
 						}
+						else if (!silent)
+						{
+							WorldGen.KillTile(x, y, false, false, true);
+						}
+						WorldGen.destroyObject = false;
+						if (active)
+						{
+							if (num3 <= 1 && num4 <= 1 && !Main.tileFrameImportant[tile])
+							{
+								Main.tile[x, y].type = (ushort)tile;
+								Main.tile[x, y].active(true);
+								if (slope == -2 && flag)
+								{
+									Main.tile[x, y].halfBrick(true);
+								}
+								else if (slope == -1)
+								{
+									Main.tile[x, y].halfBrick(true);
+								}
+								else
+								{
+									Main.tile[x, y].slope((slope == -2) ? b : ((byte)slope));
+								}
+								WorldGen.SquareTileFrame(x, y, true);
+							}
+							else
+							{
+								WorldGen.destroyObject = true;
+								if (!silent)
+								{
+									for (int m = 0; m < num3; m++)
+									{
+										for (int n = 0; n < num4; n++)
+										{
+											WorldGen.KillTile(x + m, y + n, false, false, true);
+										}
+									}
+								}
+								WorldGen.destroyObject = false;
+								int num9 = (tile == 10) ? y : (y + num2);
+								WorldGen.PlaceTile(x, num9, tile, true, true, -1, tileStyle);
+								for (int num10 = 0; num10 < num3; num10++)
+								{
+									for (int num11 = 0; num11 < num4; num11++)
+									{
+										WorldGen.SquareTileFrame(x + num10, y + num11, true);
+									}
+								}
+							}
+						}
+						else
+						{
+							Main.tile[x, y].active(false);
+						}
 					}
-					else
+					if (wall != -1)
 					{
-						Main.tile[x, y].active(false);
+						if (wall == -2)
+						{
+							wall = 0;
+						}
+						Main.tile[x, y].wall = 0;
+						WorldGen.PlaceWall(x, y, wall, true);
 					}
-				}
-				if (wall != -1)
-				{
-					if (wall == -2)
+					if (sync && Main.netMode != 0)
 					{
-						wall = 0;
+						int num12 = num3 + Math.Max(0, num - 1);
+						int num13 = num4 + Math.Max(0, num2 - 1);
+						int num14 = (num12 > num13) ? num12 : num13;
+						NetMessage.SendTileSquare(-1, x + (int)((float)num14 * 0.5f), y + (int)((float)num14 * 0.5f), num14 + 1, 0);
 					}
-					Main.tile[x, y].wall = 0;
-					WorldGen.PlaceWall(x, y, wall, true);
-				}
-				if (sync && Main.netMode != 0)
-				{
-					int num12 = num3 + Math.Max(0, num - 1);
-					int num13 = num4 + Math.Max(0, num2 - 1);
-					int num14 = (num12 > num13) ? num12 : num13;
-					NetMessage.SendTileSquare(-1, x + (int)((float)num14 * 0.5f), y + (int)((float)num14 * 0.5f), num14 + 1, 0);
 				}
 			}
 			catch (Exception ex)

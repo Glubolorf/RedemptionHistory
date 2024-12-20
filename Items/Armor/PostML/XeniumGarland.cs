@@ -23,7 +23,7 @@ namespace Redemption.Items.Armor.PostML
 			base.item.height = 18;
 			base.item.value = Item.sellPrice(0, 9, 50, 0);
 			base.item.rare = 11;
-			base.item.defense = 14;
+			base.item.defense = 10;
 		}
 
 		public override void UpdateEquip(Player player)
@@ -49,12 +49,13 @@ namespace Redemption.Items.Armor.PostML
 
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = "Grants immunity to the Infection, Radioactive Fallout, and the abandoned lab's water\nAutomatically consumes mana potions when needed";
+			player.setBonus = "Grants immunity to the Infection, Radioactive Fallout, and infected waters\nAutomatically consumes mana potions when needed";
 			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
 			player.manaFlower = true;
 			player.buffImmune[base.mod.BuffType("XenomiteDebuff")] = true;
 			player.buffImmune[base.mod.BuffType("XenomiteDebuff2")] = true;
 			player.buffImmune[base.mod.BuffType("RadioactiveFalloutDebuff")] = true;
+			player.buffImmune[base.mod.BuffType("HeavyRadiationDebuff")] = true;
 			redePlayer.labWaterImmune = true;
 		}
 

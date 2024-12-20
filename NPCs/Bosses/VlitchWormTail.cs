@@ -118,15 +118,19 @@ namespace Redemption.NPCs.Bosses
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Texture2D texture2D = Main.npcTexture[base.npc.type];
+			Texture2D texture = base.mod.GetTexture("NPCs/Bosses/VlitchWormTail_Glow");
+			SpriteEffects spriteEffects = (base.npc.spriteDirection == -1) ? 0 : 1;
 			Vector2 vector;
 			vector..ctor((float)texture2D.Width * 0.5f, (float)texture2D.Height * 0.5f);
 			Main.spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, null, drawColor, base.npc.rotation, vector, base.npc.scale, 0, 0f);
+			spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, spriteEffects, 0f);
 			return false;
 		}
 
 		public override bool CheckActive()
 		{
-			return !Main.npc[(int)base.npc.ai[3]].active;
+			NPC npc = Main.npc[(int)base.npc.ai[1]];
+			return !npc.active;
 		}
 
 		public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)

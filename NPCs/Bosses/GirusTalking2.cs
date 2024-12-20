@@ -21,17 +21,17 @@ namespace Redemption.NPCs.Bosses
 
 		public override void AI()
 		{
-			this.timer++;
-			if (this.timer == 580)
+			base.projectile.localAI[1] += 1f;
+			if (base.projectile.localAI[1] == 580f)
 			{
 				Main.NewText("Come on, Vlitch Gigipede, I had at least a shred of hope in you...", new Color(238, 77, 58), false);
 				Redemption.GirusSilence = true;
 			}
-			if (this.timer == 800)
+			if (base.projectile.localAI[1] == 800f)
 			{
 				Main.NewText("Oh whatever, he was a just a big edgy worm, a useless minion!", new Color(238, 77, 58), false);
 			}
-			if (this.timer == 1200)
+			if (base.projectile.localAI[1] == 1200f)
 			{
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).omegaPower)
 				{
@@ -42,7 +42,7 @@ namespace Redemption.NPCs.Bosses
 					Main.NewText("Little organic thing! I'm interested in you, keep going and see how far you get...", new Color(238, 77, 58), false);
 				}
 			}
-			if (this.timer == 1600)
+			if (base.projectile.localAI[1] == 1600f)
 			{
 				Main.NewText("Good luck.", new Color(238, 77, 58), false);
 				base.projectile.Kill();
@@ -58,7 +58,5 @@ namespace Redemption.NPCs.Bosses
 			}
 			Redemption.GirusSilence = false;
 		}
-
-		public int timer;
 	}
 }

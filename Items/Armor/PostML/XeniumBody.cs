@@ -22,7 +22,7 @@ namespace Redemption.Items.Armor.PostML
 			base.item.height = 24;
 			base.item.value = Item.sellPrice(0, 10, 0, 0);
 			base.item.rare = 11;
-			base.item.defense = 36;
+			base.item.defense = 35;
 		}
 
 		public override void UpdateEquip(Player player)

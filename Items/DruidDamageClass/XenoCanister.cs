@@ -46,19 +46,13 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.glowMask = XenoCanister.customGlowMask;
 		}
 
-		public override bool CanUseItem(Player player)
+		public override float UseTimeMultiplier(Player player)
 		{
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterSeedbags)
 			{
-				base.item.useTime = 21;
-				base.item.useAnimation = 21;
+				return 1.15f;
 			}
-			else
-			{
-				base.item.useTime = 25;
-				base.item.useAnimation = 25;
-			}
-			return true;
+			return 1f;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

@@ -16,12 +16,12 @@ namespace Redemption.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 20;
+			base.item.damage = 15;
 			base.item.melee = true;
 			base.item.width = 52;
 			base.item.height = 52;
-			base.item.useTime = 9;
-			base.item.useAnimation = 9;
+			base.item.useTime = 30;
+			base.item.useAnimation = 30;
 			base.item.useStyle = 1;
 			base.item.knockBack = 4f;
 			base.item.value = Item.buyPrice(0, 0, 6, 9);

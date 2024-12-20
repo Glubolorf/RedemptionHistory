@@ -17,7 +17,6 @@ namespace Redemption.Buffs
 		public override void Update(Player player, ref int buffIndex)
 		{
 			player.statLifeMax2 += 200;
-			player.lifeSteal += 1f;
 			player.blind = true;
 		}
 	}

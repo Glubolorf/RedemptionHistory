@@ -16,7 +16,7 @@ namespace Redemption.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 300;
+			base.item.damage = 100;
 			base.item.melee = true;
 			base.item.width = 100;
 			base.item.height = 100;
@@ -57,7 +57,7 @@ namespace Redemption.Items.Weapons
 		{
 			if (player.altFunctionUse <= 1)
 			{
-				Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, -6f, base.mod.ProjectileType("HolyFirePro1"), 600, knockBack, Main.myPlayer, 0f, 0f);
+				Projectile.NewProjectile(target.Center.X, target.Center.Y, 0f, -6f, base.mod.ProjectileType("HolyFirePro1"), damage * 3, knockBack, Main.myPlayer, 0f, 0f);
 			}
 		}
 
@@ -69,7 +69,7 @@ namespace Redemption.Items.Weapons
 				int num = 20;
 				for (int i = 0; i < num; i++)
 				{
-					int num2 = Projectile.NewProjectile(position.X, position.Y, 0f, 0f, base.mod.ProjectileType("HolyFirePro1"), 600, knockBack, Main.myPlayer, 0f, 0f);
+					int num2 = Projectile.NewProjectile(position.X, position.Y, 0f, 0f, base.mod.ProjectileType("HolyFirePro1"), damage * 3, knockBack, Main.myPlayer, 0f, 0f);
 					Main.projectile[num2].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)num * 6.28f);
 				}
 				return false;

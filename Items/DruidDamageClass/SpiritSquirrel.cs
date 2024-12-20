@@ -11,7 +11,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Spirit Squirrel in a Bottle");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nReleases a spirit squirrel that runs on the ground\nGets buffed from soul-related armoury");
+			base.Tooltip.SetDefault("[c/bdffff:---Druid Class---]\nReleases a spirit squirrel that runs on the ground\nGets buffed from soul-related armoury");
 		}
 
 		public override void SafeSetDefaults()
@@ -39,6 +39,10 @@ namespace Redemption.Items.DruidDamageClass
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).wanderingSoulSet)
 			{
 				base.item.damage = 22;
+			}
+			else if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).shadeSet)
+			{
+				base.item.damage = 260;
 			}
 			else
 			{

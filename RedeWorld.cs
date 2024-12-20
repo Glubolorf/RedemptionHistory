@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Microsoft.Xna.Framework;
+using Redemption.NPCs;
+using Redemption.NPCs.v08;
+using Redemption.Tiles.Wasteland;
 using Terraria;
 using Terraria.GameContent.Generation;
+using Terraria.Graphics.Effects;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -15,15 +20,15 @@ namespace Redemption
 	{
 		public override void TileCountsAvailable(int[] tileCounts)
 		{
-			RedeWorld.xenoBiome = tileCounts[base.mod.TileType("DeadRockTile")];
-			RedeWorld.xenoBiome2 = tileCounts[base.mod.TileType("DeadGrassTile")];
+			Main.sandTiles = Main.sandTiles + tileCounts[base.mod.TileType<RadioactiveSandTile>()] + tileCounts[base.mod.TileType<HardenedRadioactiveSandTile>()] + tileCounts[base.mod.TileType<RadioactiveSandstoneTile>()];
+			Main.snowTiles += tileCounts[base.mod.TileType<RadioactiveIceTile>()];
+			RedeWorld.xenoBiome = tileCounts[base.mod.TileType("DeadRockTile")] + tileCounts[base.mod.TileType("DeadGrassTile")] + tileCounts[base.mod.TileType("RadioactiveSandTile")] + tileCounts[base.mod.TileType("RadioactiveSandstoneTile")] + tileCounts[base.mod.TileType("RadioactiveIceTile")];
 			RedeWorld.labBiome = tileCounts[base.mod.TileType("LabTileUnsafe")];
 		}
 
 		public override void ResetNearbyTileEffects()
 		{
 			RedeWorld.xenoBiome = 0;
-			RedeWorld.xenoBiome2 = 0;
 			RedeWorld.labBiome = 0;
 		}
 
@@ -166,202 +171,6 @@ namespace Redemption
 					WorldGen.OreRunner(WorldGen.genRand.Next(0, Main.maxTilesX), WorldGen.genRand.Next((int)Main.rockLayer, Main.maxTilesY - 200), (double)WorldGen.genRand.Next(90, 130), WorldGen.genRand.Next(90, 170), (ushort)base.mod.TileType("DeadRockTile"));
 				}
 			}
-			if (RedeWorld.downedBlisterface && !RedeWorld.labAccess4)
-			{
-				RedeWorld.labAccess4 = true;
-				string text7 = "Mods.Redemption.Lasers4";
-				Color cyan2 = Color.Cyan;
-				if (Main.netMode == 2)
-				{
-					NetMessage.BroadcastChatMessage(NetworkText.FromKey(text7, new object[0]), cyan2, -1);
-				}
-				else if (Main.netMode == 0)
-				{
-					Main.NewText(Language.GetTextValue(text7), cyan2, false);
-				}
-				Mod inst = Redemption.inst;
-				Dictionary<Color, int> dictionary = new Dictionary<Color, int>();
-				dictionary[new Color(220, 255, 255)] = inst.TileType("DeactivatedLaserTile");
-				dictionary[new Color(255, 0, 0)] = inst.TileType("DeactivatedLaserV2Tile");
-				dictionary[new Color(150, 150, 150)] = -2;
-				dictionary[Color.Black] = -1;
-				TexGen texGenerator = BaseWorldGenTex.GetTexGenerator(inst.GetTexture("WorldGeneration/LabAccess4"), dictionary, null, null, null, null);
-				Point point;
-				point..ctor((int)((float)Main.maxTilesX * 0.6f), (int)((float)Main.maxTilesY * 0.65f));
-				texGenerator.Generate(point.X, point.Y, true, true);
-				if (Main.netMode == 2)
-				{
-					NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
-				}
-			}
-			if (RedeWorld.downedStage2Scientist && !RedeWorld.labAccess1)
-			{
-				RedeWorld.labAccess1 = true;
-				string text8 = "Mods.Redemption.Lasers1";
-				Color cyan3 = Color.Cyan;
-				if (Main.netMode == 2)
-				{
-					NetMessage.BroadcastChatMessage(NetworkText.FromKey(text8, new object[0]), cyan3, -1);
-				}
-				else if (Main.netMode == 0)
-				{
-					Main.NewText(Language.GetTextValue(text8), cyan3, false);
-				}
-				Mod inst2 = Redemption.inst;
-				Dictionary<Color, int> dictionary2 = new Dictionary<Color, int>();
-				dictionary2[new Color(220, 255, 255)] = inst2.TileType("DeactivatedLaserTile");
-				dictionary2[new Color(255, 0, 0)] = inst2.TileType("DeactivatedLaserV2Tile");
-				dictionary2[new Color(150, 150, 150)] = -2;
-				dictionary2[Color.Black] = -1;
-				TexGen texGenerator2 = BaseWorldGenTex.GetTexGenerator(inst2.GetTexture("WorldGeneration/LabAccess1"), dictionary2, null, null, null, null);
-				Point point2;
-				point2..ctor((int)((float)Main.maxTilesX * 0.6f), (int)((float)Main.maxTilesY * 0.65f));
-				texGenerator2.Generate(point2.X, point2.Y, true, true);
-				if (Main.netMode == 2)
-				{
-					NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
-				}
-			}
-			if (RedeWorld.downedStage3Scientist && !RedeWorld.labAccess2)
-			{
-				RedeWorld.labAccess2 = true;
-				string text9 = "Mods.Redemption.Lasers2";
-				Color cyan4 = Color.Cyan;
-				if (Main.netMode == 2)
-				{
-					NetMessage.BroadcastChatMessage(NetworkText.FromKey(text9, new object[0]), cyan4, -1);
-				}
-				else if (Main.netMode == 0)
-				{
-					Main.NewText(Language.GetTextValue(text9), cyan4, false);
-				}
-				Mod inst3 = Redemption.inst;
-				Dictionary<Color, int> dictionary3 = new Dictionary<Color, int>();
-				dictionary3[new Color(220, 255, 255)] = inst3.TileType("DeactivatedLaserTile");
-				dictionary3[new Color(255, 0, 0)] = inst3.TileType("DeactivatedLaserV2Tile");
-				dictionary3[new Color(150, 150, 150)] = -2;
-				dictionary3[Color.Black] = -1;
-				TexGen texGenerator3 = BaseWorldGenTex.GetTexGenerator(inst3.GetTexture("WorldGeneration/LabAccess2"), dictionary3, null, null, null, null);
-				Point point3;
-				point3..ctor((int)((float)Main.maxTilesX * 0.6f), (int)((float)Main.maxTilesY * 0.65f));
-				texGenerator3.Generate(point3.X, point3.Y, true, true);
-				if (Main.netMode == 2)
-				{
-					NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
-				}
-			}
-			if (RedeWorld.downedIBehemoth && !RedeWorld.labAccess3)
-			{
-				RedeWorld.labAccess3 = true;
-				string text10 = "Mods.Redemption.Lasers3";
-				Color cyan5 = Color.Cyan;
-				if (Main.netMode == 2)
-				{
-					NetMessage.BroadcastChatMessage(NetworkText.FromKey(text10, new object[0]), cyan5, -1);
-				}
-				else if (Main.netMode == 0)
-				{
-					Main.NewText(Language.GetTextValue(text10), cyan5, false);
-				}
-				Mod inst4 = Redemption.inst;
-				Dictionary<Color, int> dictionary4 = new Dictionary<Color, int>();
-				dictionary4[new Color(220, 255, 255)] = inst4.TileType("DeactivatedLaserTile");
-				dictionary4[new Color(255, 0, 0)] = inst4.TileType("DeactivatedLaserV2Tile");
-				dictionary4[new Color(150, 150, 150)] = -2;
-				dictionary4[Color.Black] = -1;
-				TexGen texGenerator4 = BaseWorldGenTex.GetTexGenerator(inst4.GetTexture("WorldGeneration/LabAccess3"), dictionary4, null, null, null, null);
-				Point point4;
-				point4..ctor((int)((float)Main.maxTilesX * 0.6f), (int)((float)Main.maxTilesY * 0.65f));
-				texGenerator4.Generate(point4.X, point4.Y, true, true);
-				if (Main.netMode == 2)
-				{
-					NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
-				}
-			}
-			if (RedeWorld.downedMACE && !RedeWorld.labAccess6)
-			{
-				RedeWorld.labAccess6 = true;
-				string text11 = "Mods.Redemption.Lasers6";
-				Color cyan6 = Color.Cyan;
-				if (Main.netMode == 2)
-				{
-					NetMessage.BroadcastChatMessage(NetworkText.FromKey(text11, new object[0]), cyan6, -1);
-				}
-				else if (Main.netMode == 0)
-				{
-					Main.NewText(Language.GetTextValue(text11), cyan6, false);
-				}
-				Mod inst5 = Redemption.inst;
-				Dictionary<Color, int> dictionary5 = new Dictionary<Color, int>();
-				dictionary5[new Color(220, 255, 255)] = inst5.TileType("DeactivatedLaserTile");
-				dictionary5[new Color(255, 0, 0)] = inst5.TileType("DeactivatedLaserV2Tile");
-				dictionary5[new Color(150, 150, 150)] = -2;
-				dictionary5[Color.Black] = -1;
-				TexGen texGenerator5 = BaseWorldGenTex.GetTexGenerator(inst5.GetTexture("WorldGeneration/LabAccess6"), dictionary5, null, null, null, null);
-				Point point5;
-				point5..ctor((int)((float)Main.maxTilesX * 0.6f), (int)((float)Main.maxTilesY * 0.65f));
-				texGenerator5.Generate(point5.X, point5.Y, true, true);
-				if (Main.netMode == 2)
-				{
-					NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
-				}
-			}
-			if (RedeWorld.tbotLabAccess && !RedeWorld.labAccess5)
-			{
-				RedeWorld.labAccess5 = true;
-				string text12 = "Mods.Redemption.Lasers5";
-				Color cyan7 = Color.Cyan;
-				if (Main.netMode == 2)
-				{
-					NetMessage.BroadcastChatMessage(NetworkText.FromKey(text12, new object[0]), cyan7, -1);
-				}
-				else if (Main.netMode == 0)
-				{
-					Main.NewText(Language.GetTextValue(text12), cyan7, false);
-				}
-				Mod inst6 = Redemption.inst;
-				Dictionary<Color, int> dictionary6 = new Dictionary<Color, int>();
-				dictionary6[new Color(220, 255, 255)] = inst6.TileType("DeactivatedLaserTile");
-				dictionary6[new Color(255, 0, 0)] = inst6.TileType("DeactivatedLaserV2Tile");
-				dictionary6[new Color(150, 150, 150)] = -2;
-				dictionary6[Color.Black] = -1;
-				TexGen texGenerator6 = BaseWorldGenTex.GetTexGenerator(inst6.GetTexture("WorldGeneration/LabAccess5"), dictionary6, null, null, null, null);
-				Point point6;
-				point6..ctor((int)((float)Main.maxTilesX * 0.6f), (int)((float)Main.maxTilesY * 0.65f));
-				texGenerator6.Generate(point6.X, point6.Y, true, true);
-				if (Main.netMode == 2)
-				{
-					NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
-				}
-			}
-			if (RedeWorld.downedPatientZero && !RedeWorld.labAccess7)
-			{
-				RedeWorld.labAccess7 = true;
-				string text13 = "Mods.Redemption.Lasers7";
-				Color cyan8 = Color.Cyan;
-				if (Main.netMode == 2)
-				{
-					NetMessage.BroadcastChatMessage(NetworkText.FromKey(text13, new object[0]), cyan8, -1);
-				}
-				else if (Main.netMode == 0)
-				{
-					Main.NewText(Language.GetTextValue(text13), cyan8, false);
-				}
-				Mod inst7 = Redemption.inst;
-				Dictionary<Color, int> dictionary7 = new Dictionary<Color, int>();
-				dictionary7[new Color(220, 255, 255)] = inst7.TileType("DeactivatedLaserTile");
-				dictionary7[new Color(255, 0, 0)] = inst7.TileType("DeactivatedLaserV2Tile");
-				dictionary7[new Color(150, 150, 150)] = -2;
-				dictionary7[Color.Black] = -1;
-				TexGen texGenerator7 = BaseWorldGenTex.GetTexGenerator(inst7.GetTexture("WorldGeneration/LabAccess7"), dictionary7, null, null, null, null);
-				Point point7;
-				point7..ctor((int)((float)Main.maxTilesX * 0.6f), (int)((float)Main.maxTilesY * 0.65f));
-				texGenerator7.Generate(point7.X, point7.Y, true, true);
-				if (Main.netMode == 2)
-				{
-					NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
-				}
-			}
 			if (RedeWorld.downedPatientZero && !RedeWorld.patientZeroMessages)
 			{
 				RedeWorld.patientZeroMessages = true;
@@ -369,17 +178,76 @@ namespace Redemption
 				{
 					NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
 				}
-				string text14 = "Mods.Redemption.PatientZeroMessage1";
+				string text7 = "Mods.Redemption.PatientZeroMessage1";
+				string text8 = "Mods.Redemption.PatientZeroMessage2";
+				string text9 = "Mods.Redemption.PatientZeroMessage3";
+				string text10 = "Mods.Redemption.PatientZeroMessage4";
+				string text11 = "Mods.Redemption.PatientZeroMessage5";
 				Color gold = Color.Gold;
 				if (Main.netMode == 2)
 				{
-					NetMessage.BroadcastChatMessage(NetworkText.FromKey(text14, new object[0]), gold, -1);
-					return;
+					NetMessage.BroadcastChatMessage(NetworkText.FromKey(text7, new object[0]), gold, -1);
 				}
-				if (Main.netMode == 0)
+				else if (Main.netMode == 0)
 				{
-					Main.NewText(Language.GetTextValue(text14), gold, false);
+					Main.NewText(Language.GetTextValue(text7), gold, false);
 				}
+				Color darkRed = Color.DarkRed;
+				if (Main.netMode == 2)
+				{
+					NetMessage.BroadcastChatMessage(NetworkText.FromKey(text8, new object[0]), darkRed, -1);
+				}
+				else if (Main.netMode == 0)
+				{
+					Main.NewText(Language.GetTextValue(text8), darkRed, false);
+				}
+				Color hotPink = Color.HotPink;
+				if (Main.netMode == 2)
+				{
+					NetMessage.BroadcastChatMessage(NetworkText.FromKey(text9, new object[0]), hotPink, -1);
+				}
+				else if (Main.netMode == 0)
+				{
+					Main.NewText(Language.GetTextValue(text9), hotPink, false);
+				}
+				Color forestGreen = Color.ForestGreen;
+				if (Main.netMode == 2)
+				{
+					NetMessage.BroadcastChatMessage(NetworkText.FromKey(text10, new object[0]), forestGreen, -1);
+				}
+				else if (Main.netMode == 0)
+				{
+					Main.NewText(Language.GetTextValue(text10), forestGreen, false);
+				}
+				Color orange2 = Color.Orange;
+				if (Main.netMode == 2)
+				{
+					NetMessage.BroadcastChatMessage(NetworkText.FromKey(text11, new object[0]), orange2, -1);
+				}
+				else if (Main.netMode == 0)
+				{
+					Main.NewText(Language.GetTextValue(text11), orange2, false);
+				}
+				int maxTilesX = Main.maxTilesX;
+				int maxTilesY = Main.maxTilesY;
+				for (int m = 0; m < (int)((double)(maxTilesX * maxTilesY) * 0.00015); m++)
+				{
+					int num7 = WorldGen.genRand.Next(0, maxTilesX);
+					int num8 = WorldGen.genRand.Next(maxTilesY - 200, maxTilesY);
+					if (Main.tile[num7, num8].type == 57)
+					{
+						WorldGen.TileRunner(num7, num8, (double)WorldGen.genRand.Next(3, 8), WorldGen.genRand.Next(3, 8), (int)((ushort)base.mod.TileType("ShinkiteTile")), false, 0f, 0f, false, true);
+					}
+				}
+			}
+			Player player = Main.player[Main.myPlayer];
+			if (NPC.AnyNPCs(base.mod.NPCType<TheSoulless>()) || NPC.AnyNPCs(base.mod.NPCType<TheSoulless2>()))
+			{
+				if (!Filters.Scene["MoonLordShake"].IsActive())
+				{
+					Filters.Scene.Activate("MoonLordShake", player.position, new object[0]);
+				}
+				Filters.Scene["MoonLordShake"].GetShader().UseIntensity(1f);
 			}
 		}
 
@@ -387,6 +255,7 @@ namespace Redemption
 		{
 			int num = tasks.FindIndex((GenPass genpass) => genpass.Name.Equals("Shinies"));
 			int num2 = tasks.FindIndex((GenPass genpass) => genpass.Name.Equals("Final Cleanup"));
+			int num3 = tasks.FindIndex((GenPass genpass) => genpass.Name.Equals("SunkenSea"));
 			if (num != -1)
 			{
 				tasks.Insert(num + 1, new PassLegacy("Redemption Mod Ores", delegate(GenerationProgress progress)
@@ -404,11 +273,22 @@ namespace Redemption
 					{
 						int maxTilesX = Main.maxTilesX;
 						int maxTilesY = Main.maxTilesY;
-						int num3 = WorldGen.genRand.Next(0, maxTilesX);
-						int num4 = WorldGen.genRand.Next((int)((float)maxTilesY * 0.05f), (int)((double)maxTilesY * 0.3));
-						if (Main.tile[num3, num4].type == 0)
+						int num4 = WorldGen.genRand.Next(0, maxTilesX);
+						int num5 = WorldGen.genRand.Next((int)((float)maxTilesY * 0.05f), (int)((double)maxTilesY * 0.3));
+						if (Main.tile[num4, num5].type == 0)
 						{
-							WorldGen.OreRunner(num3, num4, (double)WorldGen.genRand.Next(3, 5), WorldGen.genRand.Next(4, 6), (ushort)base.mod.TileType("PlantMatterTile"));
+							WorldGen.OreRunner(num4, num5, (double)WorldGen.genRand.Next(3, 5), WorldGen.genRand.Next(4, 6), (ushort)base.mod.TileType("PlantMatterTile"));
+						}
+					}
+					for (int j = 0; j < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 7E-05); j++)
+					{
+						int maxTilesX2 = Main.maxTilesX;
+						int maxTilesY2 = Main.maxTilesY;
+						int num6 = WorldGen.genRand.Next(0, maxTilesX2);
+						int num7 = WorldGen.genRand.Next((int)((float)maxTilesY2 * 0.05f), (int)((double)maxTilesY2 * 0.5));
+						if (Main.tile[num6, num7].type == 59)
+						{
+							WorldGen.OreRunner(num6, num7, (double)WorldGen.genRand.Next(3, 5), WorldGen.genRand.Next(4, 8), (ushort)base.mod.TileType("PlantMatterTile"));
 						}
 					}
 				}));
@@ -421,6 +301,38 @@ namespace Redemption
 			{
 				this.AncientHouseFurn();
 			}));
+			if (Enumerable.Contains<string>(ModLoader.GetLoadedMods(), "CalamityMod"))
+			{
+				tasks.Insert(num3 + 5, new PassLegacy("Clearing Space for ???", delegate(GenerationProgress progress)
+				{
+					this.HeroHallClear();
+				}));
+				tasks.Insert(num3 + 6, new PassLegacy("???", delegate(GenerationProgress progress)
+				{
+					this.HeroHall();
+				}));
+				tasks.Insert(num3 + 7, new PassLegacy("??? Furniture", delegate(GenerationProgress progress)
+				{
+					this.HeroHallStuff();
+				}));
+				tasks.Insert(num3 + 8, new PassLegacy("Clearing Space for Lab", delegate(GenerationProgress progress)
+				{
+					this.LabClear();
+				}));
+				tasks.Insert(num3 + 9, new PassLegacy("Clearing Liquids for Lab", delegate(GenerationProgress progress)
+				{
+					this.PreLab();
+				}));
+				tasks.Insert(num3 + 10, new PassLegacy("Abandoned Lab", delegate(GenerationProgress progress)
+				{
+					this.Lab();
+				}));
+				tasks.Insert(num3 + 11, new PassLegacy("Furnishing Lab", delegate(GenerationProgress progress)
+				{
+					this.LabChests();
+				}));
+				return;
+			}
 			tasks.Insert(num2 + 4, new PassLegacy("Clearing Space for ???", delegate(GenerationProgress progress)
 			{
 				this.HeroHallClear();
@@ -1011,7 +923,10 @@ namespace Redemption
 				base.mod.ItemType("FloppyDisk5"),
 				base.mod.ItemType("FloppyDisk5_1"),
 				base.mod.ItemType("FloppyDisk5_2"),
-				base.mod.ItemType("FloppyDisk5_3")
+				base.mod.ItemType("FloppyDisk5_3"),
+				base.mod.ItemType("TerraBombaPart1"),
+				base.mod.ItemType("TerraBombaPart2"),
+				base.mod.ItemType("TerraBombaPart3")
 			};
 			for (int num23 = 0; num23 < 1000; num23++)
 			{
@@ -1045,6 +960,31 @@ namespace Redemption
 							int num28 = Main.rand.Next(array10.Length);
 							chest10.item[0].SetDefaults(array10[num28], false);
 							break;
+						}
+					}
+				}
+			}
+			for (int num29 = 1; num29 < 2; num29++)
+			{
+				int[] array11 = new int[]
+				{
+					base.mod.ItemType("RawXenium")
+				};
+				int num30 = 0;
+				for (int num31 = 0; num31 < 1000; num31++)
+				{
+					Chest chest11 = Main.chest[num31];
+					if (chest11 != null && (int)Main.tile[chest11.x, chest11.y].type == base.mod.TileType("LabChestTileLocked2"))
+					{
+						for (int num32 = 0; num32 < 40; num32++)
+						{
+							if (chest11.item[num32].type == 0)
+							{
+								chest11.item[num32].SetDefaults(array11[num30], false);
+								chest11.item[num32].stack = Main.rand.Next(42, 62);
+								num30 = (num30 + 1) % array11.Length;
+								break;
+							}
 						}
 					}
 				}
@@ -1092,6 +1032,16 @@ namespace Redemption
 			RedeWorld.downedMACE = false;
 			RedeWorld.tbotLabAccess = false;
 			RedeWorld.downedPatientZero = false;
+			RedeWorld.patientZeroMessages = false;
+			RedeWorld.downedNebuleus = false;
+			RedeWorld.deathByNeb = false;
+			RedeWorld.downedEaglecrestGolem = false;
+			RedeWorld.downedChickenInvPZ = false;
+			RedeWorld.downedChickenInv = false;
+			RedeWorld.downedEaglecrestGolemPZ = false;
+			RedeWorld.downedThorn = false;
+			RedeWorld.downedThornPZ = false;
+			RedeWorld.redemptionPoints = 0;
 		}
 
 		public override TagCompound Save()
@@ -1118,6 +1068,8 @@ namespace Redemption
 			bool flag19 = false;
 			bool flag20 = false;
 			bool flag21 = false;
+			bool flag22 = false;
+			bool flag23 = false;
 			if (RedeWorld.downedKingChicken)
 			{
 				list.Add("KingChicken");
@@ -1254,13 +1206,17 @@ namespace Redemption
 			{
 				flag19 = true;
 			}
-			if (RedeWorld.keeperSaved)
+			if (RedeWorld.patientZeroMessages)
 			{
 				flag20 = true;
 			}
-			if (RedeWorld.tbotLabAccess)
+			if (RedeWorld.keeperSaved)
 			{
 				flag21 = true;
+			}
+			if (RedeWorld.tbotLabAccess)
+			{
+				flag22 = true;
 			}
 			if (RedeWorld.downedIBehemoth)
 			{
@@ -1273,6 +1229,30 @@ namespace Redemption
 			if (RedeWorld.downedPatientZero)
 			{
 				list.Add("PatientZero");
+			}
+			if (RedeWorld.downedNebuleus)
+			{
+				list.Add("Nebuleus");
+			}
+			if (RedeWorld.deathByNeb)
+			{
+				flag23 = true;
+			}
+			if (RedeWorld.downedEaglecrestGolem)
+			{
+				list.Add("EaglecrestGolem");
+			}
+			if (RedeWorld.downedEaglecrestGolemPZ)
+			{
+				list.Add("EaglecrestGolemPZ");
+			}
+			if (RedeWorld.downedThorn)
+			{
+				list.Add("Thorn");
+			}
+			if (RedeWorld.downedThornPZ)
+			{
+				list.Add("ThornPZ");
 			}
 			TagCompound tagCompound = new TagCompound();
 			tagCompound.Add("downed", list);
@@ -1295,8 +1275,13 @@ namespace Redemption
 			tagCompound.Add("labA5", flag17);
 			tagCompound.Add("labA6", flag18);
 			tagCompound.Add("labA7", flag19);
-			tagCompound.Add("tbotLabLasers", flag21);
-			tagCompound.Add("keeperS", flag20);
+			tagCompound.Add("pzMessage", flag20);
+			tagCompound.Add("tbotLabLasers", flag22);
+			tagCompound.Add("keeperS", flag21);
+			tagCompound.Add("deathNeb", flag23);
+			tagCompound.Add("downedChickenInv", RedeWorld.downedChickenInv);
+			tagCompound.Add("downedChickenInvPZ", RedeWorld.downedChickenInvPZ);
+			tagCompound.Add("redePoints", RedeWorld.redemptionPoints);
 			return tagCompound;
 		}
 
@@ -1337,11 +1322,21 @@ namespace Redemption
 			RedeWorld.labAccess5 = tag.GetBool("labA5");
 			RedeWorld.labAccess6 = tag.GetBool("labA6");
 			RedeWorld.labAccess7 = tag.GetBool("labA7");
+			RedeWorld.patientZeroMessages = tag.GetBool("pzMessage");
 			RedeWorld.keeperSaved = tag.GetBool("keeperS");
 			RedeWorld.tbotLabAccess = tag.GetBool("tbotLabLasers");
 			RedeWorld.downedIBehemoth = list.Contains("IrradiatedBehemoth");
 			RedeWorld.downedMACE = list.Contains("MACEProjectHead");
 			RedeWorld.downedPatientZero = list.Contains("PatientZero");
+			RedeWorld.downedNebuleus = list.Contains("Nebuleus");
+			RedeWorld.deathByNeb = tag.GetBool("deathNeb");
+			RedeWorld.downedEaglecrestGolem = list.Contains("EaglecrestGolem");
+			RedeWorld.downedChickenInv = tag.GetBool("downedChickenInv");
+			RedeWorld.downedChickenInvPZ = tag.GetBool("downedChickenInvPZ");
+			RedeWorld.downedEaglecrestGolemPZ = list.Contains("EaglecrestGolemPZ");
+			RedeWorld.downedThorn = list.Contains("Thorn");
+			RedeWorld.downedThornPZ = list.Contains("ThornPZ");
+			RedeWorld.redemptionPoints = tag.GetInt("redePoints");
 		}
 
 		public override void LoadLegacy(BinaryReader reader)
@@ -1390,6 +1385,16 @@ namespace Redemption
 				RedeWorld.labAccess6 = bitsByte5[1];
 				RedeWorld.labAccess7 = bitsByte5[2];
 				RedeWorld.infectionBegin = bitsByte5[3];
+				RedeWorld.patientZeroMessages = bitsByte5[4];
+				RedeWorld.downedNebuleus = bitsByte5[5];
+				RedeWorld.deathByNeb = bitsByte5[6];
+				RedeWorld.downedEaglecrestGolem = bitsByte5[7];
+				BitsByte bitsByte6 = reader.ReadByte();
+				RedeWorld.downedChickenInv = bitsByte6[0];
+				RedeWorld.downedChickenInvPZ = bitsByte6[1];
+				RedeWorld.downedEaglecrestGolemPZ = bitsByte6[2];
+				RedeWorld.downedThorn = bitsByte6[3];
+				RedeWorld.downedThornPZ = bitsByte6[4];
 				return;
 			}
 			ErrorLogger.Log("Redemption: Unknown loadVersion: " + num);
@@ -1442,7 +1447,19 @@ namespace Redemption
 			bitsByte5[1] = RedeWorld.labAccess6;
 			bitsByte5[2] = RedeWorld.labAccess7;
 			bitsByte5[3] = RedeWorld.infectionBegin;
+			bitsByte5[4] = RedeWorld.patientZeroMessages;
+			bitsByte5[5] = RedeWorld.downedNebuleus;
+			bitsByte5[6] = RedeWorld.deathByNeb;
+			bitsByte5[7] = RedeWorld.downedEaglecrestGolem;
 			writer.Write(bitsByte5);
+			BitsByte bitsByte6 = default(BitsByte);
+			bitsByte6[0] = RedeWorld.downedChickenInv;
+			bitsByte6[1] = RedeWorld.downedChickenInvPZ;
+			bitsByte6[2] = RedeWorld.downedEaglecrestGolemPZ;
+			bitsByte6[3] = RedeWorld.downedThorn;
+			bitsByte6[4] = RedeWorld.downedThornPZ;
+			writer.Write(bitsByte6);
+			writer.Write(RedeWorld.redemptionPoints);
 		}
 
 		public override void NetReceive(BinaryReader reader)
@@ -1488,6 +1505,17 @@ namespace Redemption
 			RedeWorld.labAccess6 = bitsByte5[1];
 			RedeWorld.labAccess7 = bitsByte5[2];
 			RedeWorld.infectionBegin = bitsByte5[3];
+			RedeWorld.patientZeroMessages = bitsByte5[4];
+			RedeWorld.downedNebuleus = bitsByte5[5];
+			RedeWorld.deathByNeb = bitsByte5[6];
+			RedeWorld.downedEaglecrestGolem = bitsByte5[7];
+			BitsByte bitsByte6 = reader.ReadByte();
+			RedeWorld.downedChickenInv = bitsByte6[0];
+			RedeWorld.downedChickenInvPZ = bitsByte6[1];
+			RedeWorld.downedEaglecrestGolemPZ = bitsByte6[2];
+			RedeWorld.downedThorn = bitsByte6[3];
+			RedeWorld.downedThornPZ = bitsByte6[4];
+			RedeWorld.redemptionPoints = reader.ReadInt32();
 		}
 
 		private const int saveVersion = 0;
@@ -1510,8 +1538,6 @@ namespace Redemption
 
 		public static int xenoBiome;
 
-		public static int xenoBiome2;
-
 		public static int labBiome;
 
 		private int labSafeMessageTimer;
@@ -1533,6 +1559,10 @@ namespace Redemption
 		public static bool labAccess7;
 
 		public static bool patientZeroMessages;
+
+		public static bool KSRajahInteraction;
+
+		public static int redemptionPoints;
 
 		public static bool downedKingChicken;
 
@@ -1583,5 +1613,21 @@ namespace Redemption
 		public static bool tbotLabAccess;
 
 		public static bool downedPatientZero;
+
+		public static bool downedNebuleus;
+
+		public static bool deathByNeb;
+
+		public static bool downedEaglecrestGolem;
+
+		public static bool downedChickenInvPZ;
+
+		public static bool downedChickenInv;
+
+		public static bool downedEaglecrestGolemPZ;
+
+		public static bool downedThorn;
+
+		public static bool downedThornPZ;
 	}
 }

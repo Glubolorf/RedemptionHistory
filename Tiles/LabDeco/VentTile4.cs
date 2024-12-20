@@ -49,7 +49,19 @@ namespace Redemption.Tiles.LabDeco
 					if (Main.netMode == 2)
 					{
 						NetMessage.SendData(23, -1, -1, null, num2, 0f, 0f, 0f, 0, 0, 0);
+						return;
 					}
+				}
+			}
+			else
+			{
+				Player localPlayer2 = Main.LocalPlayer;
+				float num3 = Vector2.Distance(localPlayer2.Center / 16f, new Vector2((float)i + 0.5f, (float)j + 0.5f));
+				if (num3 <= 12f && num3 > 5f && Main.rand.Next(300) == 0 && NPC.CountNPCS(base.mod.NPCType("SludgyBoi2")) <= 4)
+				{
+					i *= 16;
+					j *= 16;
+					Projectile.NewProjectile((float)i, (float)j, 0f, 0f, base.mod.ProjectileType("SludgyBoi2SummonPro"), 0, 0f, 255, 0f, 0f);
 				}
 			}
 		}

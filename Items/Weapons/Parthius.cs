@@ -16,7 +16,7 @@ namespace Redemption.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 26;
+			base.item.damage = 20;
 			base.item.ranged = true;
 			base.item.width = 26;
 			base.item.height = 60;
@@ -44,7 +44,7 @@ namespace Redemption.Items.Weapons
 			Vector2 vector = Utils.RotatedByRandom(new Vector2(speedX, speedY), (double)MathHelper.ToRadians(2f));
 			speedX = vector.X;
 			speedY = vector.Y;
-			Projectile.NewProjectile(position.X, position.Y, speedX * 1.2f, speedY * 1.2f, base.mod.ProjectileType("GoldArrow"), 50, 5f, player.whoAmI, 0f, 0f);
+			Projectile.NewProjectile(position.X, position.Y, speedX * 1.2f, speedY * 1.2f, base.mod.ProjectileType("GoldArrow"), 25, 5f, player.whoAmI, 0f, 0f);
 			return true;
 		}
 

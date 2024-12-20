@@ -82,14 +82,38 @@ namespace Redemption.Projectiles
 					if (WorldGen.InWorld(k, l, 1) && (double)(Math.Abs(k - i) + Math.Abs(l - j)) < Math.Sqrt((double)(size * size + size * size)))
 					{
 						int type = (int)Main.tile[k, l].type;
-						ushort wall = Main.tile[k, l].wall;
-						if (type == base.mod.WallType("DeadRockWallTile"))
+						int wall = (int)Main.tile[k, l].wall;
+						if (wall == base.mod.WallType("DeadRockWallTile"))
 						{
-							Main.tile[k, l].wall = 2;
+							Main.tile[k, l].wall = 1;
 							WorldGen.SquareWallFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1, 0);
 						}
-						else if (type == base.mod.TileType("DeadRockTile"))
+						else if (wall == base.mod.WallType("RadioactiveSandstoneWallTile"))
+						{
+							Main.tile[k, l].wall = 187;
+							WorldGen.SquareWallFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1, 0);
+						}
+						else if (wall == base.mod.WallType("HardenedRadioactiveSandWallTile"))
+						{
+							Main.tile[k, l].wall = 216;
+							WorldGen.SquareWallFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1, 0);
+						}
+						else if (wall == base.mod.WallType("RadioactiveIceWallTile"))
+						{
+							Main.tile[k, l].wall = 71;
+							WorldGen.SquareWallFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1, 0);
+						}
+						else if (wall == base.mod.WallType("DeadGrassWallTile"))
+						{
+							Main.tile[k, l].wall = 63;
+							WorldGen.SquareWallFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1, 0);
+						}
+						if (type == base.mod.TileType("DeadRockTile"))
 						{
 							Main.tile[k, l].type = 1;
 							WorldGen.SquareTileFrame(k, l, true);
@@ -98,6 +122,30 @@ namespace Redemption.Projectiles
 						else if (type == base.mod.TileType("DeadGrassTile"))
 						{
 							Main.tile[k, l].type = 2;
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1, 0);
+						}
+						else if (type == base.mod.TileType("RadioactiveIceTile"))
+						{
+							Main.tile[k, l].type = 161;
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1, 0);
+						}
+						else if (type == base.mod.TileType("RadioactiveSandstoneTile"))
+						{
+							Main.tile[k, l].type = 396;
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1, 0);
+						}
+						else if (type == base.mod.TileType("RadioactiveSandTile"))
+						{
+							Main.tile[k, l].type = 53;
+							WorldGen.SquareTileFrame(k, l, true);
+							NetMessage.SendTileSquare(-1, k, l, 1, 0);
+						}
+						else if (type == base.mod.TileType("HardenedRadioactiveSandTile"))
+						{
+							Main.tile[k, l].type = 397;
 							WorldGen.SquareTileFrame(k, l, true);
 							NetMessage.SendTileSquare(-1, k, l, 1, 0);
 						}

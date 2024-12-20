@@ -9,7 +9,7 @@ namespace Redemption.Items.DruidDamageClass
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Eye Stalk Seed Bag");
+			base.DisplayName.SetDefault("Eye Stalk Seedbag");
 			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\n'Eye stalk with my little eye...'\nThrows a seed that grows into a creepy eye-covered plant\nThe eyes shed poisonous tears");
 		}
 
@@ -33,19 +33,13 @@ namespace Redemption.Items.DruidDamageClass
 			base.item.shootSpeed = 18f;
 		}
 
-		public override bool CanUseItem(Player player)
+		public override float UseTimeMultiplier(Player player)
 		{
 			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).fasterSeedbags)
 			{
-				base.item.useTime = 37;
-				base.item.useAnimation = 37;
+				return 1.15f;
 			}
-			else
-			{
-				base.item.useTime = 42;
-				base.item.useAnimation = 42;
-			}
-			return true;
+			return 1f;
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

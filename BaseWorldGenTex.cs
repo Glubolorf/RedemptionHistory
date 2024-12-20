@@ -7,7 +7,7 @@ namespace Redemption
 {
 	public class BaseWorldGenTex
 	{
-		public static TexGen GetTexGenerator(Texture2D tileTex, Dictionary<Color, int> colorToTile, Texture2D wallTex = null, Dictionary<Color, int> colorToWall = null, Texture2D liquidTex = null, Texture2D wireTex = null)
+		public static TexGen GetTexGenerator(Texture2D tileTex, Dictionary<Color, int> colorToTile, Texture2D wallTex = null, Dictionary<Color, int> colorToWall = null, Texture2D liquidTex = null, Texture2D slopeTex = null)
 		{
 			if (BaseWorldGenTex.colorToLiquid == null)
 			{
@@ -15,6 +15,13 @@ namespace Redemption
 				BaseWorldGenTex.colorToLiquid[new Color(0, 0, 255)] = 0;
 				BaseWorldGenTex.colorToLiquid[new Color(255, 0, 0)] = 1;
 				BaseWorldGenTex.colorToLiquid[new Color(255, 255, 0)] = 2;
+				BaseWorldGenTex.colorToSlope = new Dictionary<Color, int>();
+				BaseWorldGenTex.colorToSlope[new Color(255, 0, 0)] = 1;
+				BaseWorldGenTex.colorToSlope[new Color(0, 255, 0)] = 2;
+				BaseWorldGenTex.colorToSlope[new Color(0, 0, 255)] = 3;
+				BaseWorldGenTex.colorToSlope[new Color(255, 255, 0)] = 4;
+				BaseWorldGenTex.colorToSlope[new Color(255, 255, 255)] = -1;
+				BaseWorldGenTex.colorToSlope[new Color(0, 0, 0)] = -2;
 			}
 			Color[] array = new Color[tileTex.Width * tileTex.Height];
 			tileTex.GetData<Color>(0, new Rectangle?(tileTex.Bounds), array, 0, tileTex.Width * tileTex.Height);
@@ -28,6 +35,11 @@ namespace Redemption
 			{
 				liquidTex.GetData<Color>(0, new Rectangle?(liquidTex.Bounds), array3, 0, liquidTex.Width * liquidTex.Height);
 			}
+			Color[] array4 = (slopeTex != null) ? new Color[slopeTex.Width * slopeTex.Height] : null;
+			if (array4 != null)
+			{
+				slopeTex.GetData<Color>(0, new Rectangle?(slopeTex.Bounds), array4, 0, slopeTex.Width * slopeTex.Height);
+			}
 			int num = 0;
 			int num2 = 0;
 			TexGen texGen = new TexGen(tileTex.Width, tileTex.Height);
@@ -36,10 +48,12 @@ namespace Redemption
 				Color key = array[i];
 				Color key2 = (wallTex == null) ? Color.Black : array2[i];
 				Color key3 = (liquidTex == null) ? Color.Black : array3[i];
+				Color key4 = (slopeTex == null) ? Color.Black : array4[i];
 				int id = colorToTile.ContainsKey(key) ? colorToTile[key] : -1;
 				int wid = (colorToWall != null && colorToWall.ContainsKey(key2)) ? colorToWall[key2] : -1;
 				int num3 = (BaseWorldGenTex.colorToLiquid != null && BaseWorldGenTex.colorToLiquid.ContainsKey(key3)) ? BaseWorldGenTex.colorToLiquid[key3] : -1;
-				texGen.tileGen[num, num2] = new TileInfo(id, 0, wid, num3, (num3 == -1) ? 0 : 255, -2, -1);
+				int sl = (BaseWorldGenTex.colorToSlope != null && BaseWorldGenTex.colorToSlope.ContainsKey(key4)) ? BaseWorldGenTex.colorToSlope[key4] : -1;
+				texGen.tileGen[num, num2] = new TileInfo(id, 0, wid, num3, (num3 == -1) ? 0 : 255, sl, -1);
 				num++;
 				if (num >= tileTex.Width)
 				{
@@ -55,5 +69,7 @@ namespace Redemption
 		}
 
 		public static Dictionary<Color, int> colorToLiquid;
+
+		public static Dictionary<Color, int> colorToSlope;
 	}
 }

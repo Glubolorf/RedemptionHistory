@@ -78,11 +78,13 @@ namespace Redemption.NPCs.v08
 			{
 				if (base.npc.direction == -1)
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-10f, 0f), base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+					int num = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(-10f, 0f), base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+					Main.projectile[num].netUpdate = true;
 				}
 				else
 				{
-					Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(10f, 0f), base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+					int num2 = Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(10f, 0f), base.mod.ProjectileType("OmegaBlast"), 40, 3f, 255, 0f, 0f);
+					Main.projectile[num2].netUpdate = true;
 				}
 				this.timer = 0;
 			}
@@ -91,8 +93,8 @@ namespace Redemption.NPCs.v08
 			{
 				for (int i = 0; i < 20; i++)
 				{
-					int num = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 235, 0f, 0f, 100, default(Color), 1.5f);
-					Main.dust[num].velocity *= 1.9f;
+					int num3 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 235, 0f, 0f, 100, default(Color), 1.5f);
+					Main.dust[num3].velocity *= 1.9f;
 				}
 			}
 		}

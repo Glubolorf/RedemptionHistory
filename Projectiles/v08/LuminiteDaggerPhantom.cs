@@ -56,18 +56,28 @@ namespace Redemption.Projectiles.v08
 				base.projectile.Kill();
 			}
 			Vector2 vector = Vector2.Zero;
-			float num = 3000f;
+			int num = (int)base.projectile.ai[0];
+			Vector2 vector2;
+			vector2..ctor(base.projectile.position.X + (float)base.projectile.width * 0.5f, base.projectile.position.Y + (float)base.projectile.height * 0.5f);
+			float num2 = Main.player[num].Center.X - vector2.X;
+			float num3 = Main.player[num].Center.Y - vector2.Y;
+			float num4 = (float)Math.Sqrt((double)(num2 * num2 + num3 * num3));
+			if (num4 < 50f && base.projectile.position.X < Main.player[num].position.X + (float)Main.player[num].width && base.projectile.position.X + (float)base.projectile.width > Main.player[num].position.X && base.projectile.position.Y < Main.player[num].position.Y + (float)Main.player[num].height && base.projectile.position.Y + (float)base.projectile.height > Main.player[num].position.Y)
+			{
+				base.projectile.Kill();
+			}
+			float num5 = 3000f;
 			bool flag = false;
 			for (int i = 0; i < 200; i++)
 			{
 				if (Main.player[i].active)
 				{
-					Vector2 vector2 = Main.player[i].Center - base.projectile.Center;
-					float num2 = (float)Math.Sqrt((double)(vector2.X * vector2.X + vector2.Y * vector2.Y));
-					if (num2 < num)
+					Vector2 vector3 = Main.player[i].Center - base.projectile.Center;
+					float num6 = (float)Math.Sqrt((double)(vector3.X * vector3.X + vector3.Y * vector3.Y));
+					if (num6 < num5)
 					{
-						vector = vector2;
-						num = num2;
+						vector = vector3;
+						num5 = num6;
 						flag = true;
 					}
 				}

@@ -417,6 +417,10 @@ namespace Redemption
 
 		public const int TIME_MIDNIGHT = 16200;
 
+		public const int TIME_FULLDAY = 54000;
+
+		public const int TIME_FULLNIGHT = 32400;
+
 		public const int INVASION_GOBLIN = 1;
 
 		public const int INVASION_FROSTLEGION = 2;

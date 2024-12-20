@@ -27,6 +27,7 @@ namespace Redemption.NPCs
 			base.npc.aiStyle = 7;
 			this.aiType = 46;
 			this.animationType = 219;
+			base.npc.dontTakeDamageFromHostiles = false;
 			this.banner = base.npc.type;
 			this.bannerItem = base.mod.ItemType("TreeBugBanner");
 		}

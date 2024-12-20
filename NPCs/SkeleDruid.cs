@@ -56,23 +56,31 @@ namespace Redemption.NPCs
 				base.npc.TargetClosest(true);
 			}
 			base.npc.netUpdate = true;
-			base.npc.ai[0] += 1f;
-			if (base.npc.ai[0] >= 245f)
+			if (!Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).skeletonFriendly)
 			{
-				float num = 4f;
-				Vector2 vector;
-				vector..ctor(base.npc.position.X + (float)base.npc.width / 2.8f, base.npc.position.Y + (float)base.npc.height / 2.8f);
-				int num2 = 4;
-				int num3 = base.mod.ProjectileType("GloomShroomSpore1");
-				float num4 = (float)Math.Atan2((double)(vector.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector.X - (player.position.X + (float)player.width * 0.5f)));
-				Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num4) * (double)num * -1.0), (float)(Math.Sin((double)num4) * (double)num * -1.0), num3, num2, 0f, 0, 0f, 0f);
-				base.npc.ai[0] = 0f;
+				base.npc.ai[0] += 1f;
+				if (base.npc.ai[0] >= 245f)
+				{
+					float num = 4f;
+					Vector2 vector;
+					vector..ctor(base.npc.position.X + (float)base.npc.width / 2.8f, base.npc.position.Y + (float)base.npc.height / 2.8f);
+					int num2 = 4;
+					int num3 = base.mod.ProjectileType("GloomShroomSpore1");
+					float num4 = (float)Math.Atan2((double)(vector.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector.X - (player.position.X + (float)player.width * 0.5f)));
+					Projectile.NewProjectile(vector.X, vector.Y, (float)(Math.Cos((double)num4) * (double)num * -1.0), (float)(Math.Sin((double)num4) * (double)num * -1.0), num3, num2, 0f, 0, 0f, 0f);
+					base.npc.ai[0] = 0f;
+				}
 			}
 		}
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
 			return SpawnCondition.Dungeon.Chance * 0.06f;
+		}
+
+		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+		{
+			return !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).skeletonFriendly;
 		}
 	}
 }

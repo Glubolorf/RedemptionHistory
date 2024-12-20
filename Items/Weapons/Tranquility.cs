@@ -47,7 +47,7 @@ namespace Redemption.Items.Weapons
 				speedX = vector.X;
 				speedY = vector.Y;
 				Projectile.NewProjectile(position.X, position.Y, speedX, speedY, base.mod.ProjectileType("ShootingStarArrow"), 10, 2f, player.whoAmI, 0f, 0f);
-				return true;
+				return false;
 			}
 			return true;
 		}

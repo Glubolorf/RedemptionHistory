@@ -93,7 +93,21 @@ namespace Redemption.NPCs
 
 		public override string GetChat()
 		{
-			if (RedeWorld.downedSlayer && Main.rand.Next(15) == 0)
+			for (int i = 0; i < 255; i++)
+			{
+				Player player = Main.player[i];
+				if (player.active)
+				{
+					for (int j = 0; j < player.inventory.Length; j++)
+					{
+						if (player.inventory[j].type == base.mod.ItemType("AnglonicMysticBlossom") && Main.rand.Next(10) == 0)
+						{
+							return "Woah, are you holding an Anglonic Mystic Blossom? Did you know they can live forever?";
+						}
+					}
+				}
+			}
+			if (RedeWorld.downedSlayer && Main.rand.Next(10) == 0)
 			{
 				return "Have you seen a robot-lookin' person anywhere? I want revenge. He's got a red visor and wears black armour... No? Okay.";
 			}
@@ -235,9 +249,7 @@ namespace Redemption.NPCs
 
 		public override void SetupShop(Chest shop, ref int nextSlot)
 		{
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LivingWood"), false);
-			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LivingLeaf"), false);
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("LivingTwig"), false);
 			nextSlot++;
 			shop.item[nextSlot].SetDefaults(259, false);
 			nextSlot++;
@@ -247,21 +259,8 @@ namespace Redemption.NPCs
 			nextSlot++;
 			shop.item[nextSlot].SetDefaults(base.mod.ItemType("AncientNovicesStaff"), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("NoblesSwordIron"), false);
+			shop.item[nextSlot].SetDefaults(base.mod.ItemType("NoblesSword"), false);
 			nextSlot++;
-			shop.item[nextSlot].SetDefaults(base.mod.ItemType("NoblesSwordLead"), false);
-			nextSlot++;
-			if (NPC.downedSlimeKing)
-			{
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("NoblesSwordSilver"), false);
-				nextSlot++;
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("NoblesSwordTungsten"), false);
-				nextSlot++;
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("NoblesSwordGold"), false);
-				nextSlot++;
-				shop.item[nextSlot].SetDefaults(base.mod.ItemType("NoblesSwordPlatinum"), false);
-				nextSlot++;
-			}
 			shop.item[nextSlot].SetDefaults(base.mod.ItemType("IronfurAmulet"), false);
 			nextSlot++;
 			shop.item[nextSlot].SetDefaults(base.mod.ItemType("Archcloth"), false);
@@ -293,7 +292,7 @@ namespace Redemption.NPCs
 		public override void DrawTownAttackSwing(ref Texture2D item, ref int itemSize, ref float scale, ref Vector2 offset)
 		{
 			scale = 1f;
-			item = Main.itemTexture[base.mod.ItemType<NoblesSwordPlatinum>()];
+			item = Main.itemTexture[base.mod.ItemType<NoblesSword>()];
 			itemSize = 36;
 		}
 

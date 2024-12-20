@@ -33,7 +33,14 @@ namespace Redemption.NPCs.Bosses
 			}
 			if (this.timer == 1200)
 			{
-				Main.NewText("You, little organic thing! Gongratulations, you defeated the weakest of the 'Overlords'!", new Color(238, 77, 58), false);
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).omegaPower)
+				{
+					Main.NewText("You, little android! Gongratulations, you defeated the weakest of the 'Overlords'!", new Color(238, 77, 58), false);
+				}
+				else
+				{
+					Main.NewText("You, little organic thing! Gongratulations, you defeated the weakest of the 'Overlords'!", new Color(238, 77, 58), false);
+				}
 			}
 			if (this.timer == 1600)
 			{
@@ -52,6 +59,10 @@ namespace Redemption.NPCs.Bosses
 		public override void Kill(int timeleft)
 		{
 			RedeWorld.girusTalk1 = true;
+			if (Main.netMode == 2)
+			{
+				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
+			}
 			Redemption.GirusSilence = false;
 		}
 

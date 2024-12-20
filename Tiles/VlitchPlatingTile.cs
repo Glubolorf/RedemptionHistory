@@ -11,6 +11,7 @@ namespace Redemption.Tiles
 		{
 			Main.tileSolid[(int)base.Type] = true;
 			Main.tileMergeDirt[(int)base.Type] = true;
+			Main.tileBlockLight[(int)base.Type] = true;
 			this.dustType = base.mod.DustType("VlitchFlame");
 			this.drop = base.mod.ItemType("VlitchPlating");
 			this.minPick = 150;

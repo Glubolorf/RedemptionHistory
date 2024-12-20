@@ -19,7 +19,7 @@ namespace Redemption.NPCs
 			base.npc.width = 50;
 			base.npc.height = 118;
 			base.npc.friendly = false;
-			base.npc.damage = 150;
+			base.npc.damage = 100;
 			base.npc.defense = 75;
 			base.npc.lifeMax = 4000;
 			base.npc.HitSound = SoundID.NPCHit4;
@@ -58,7 +58,7 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.OverworldNightMonster.Chance * ((Main.hardMode && NPC.downedPlantBoss) ? 0.004f : 0f);
+			return SpawnCondition.OverworldNightMonster.Chance * ((Main.hardMode && NPC.downedPlantBoss && !RedeWorld.downedVlitch3) ? 0.004f : 0f);
 		}
 	}
 }

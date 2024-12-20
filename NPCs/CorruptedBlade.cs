@@ -52,6 +52,31 @@ namespace Redemption.NPCs
 			{
 				Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, base.mod.DustType("VlitchFlame"), 0f, 0f, 0, default(Color), 1f);
 			}
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).omegaPower)
+			{
+				this.flyAwayTimer++;
+				if (this.flyAwayTimer >= 600)
+				{
+					NPC npc = base.npc;
+					npc.velocity.Y = npc.velocity.Y + -1f;
+					if (base.npc.timeLeft > 10)
+					{
+						base.npc.timeLeft = 10;
+						return;
+					}
+				}
+			}
+			else
+			{
+				this.flyAwayTimer = 0;
+			}
 		}
+
+		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+		{
+			return !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).omegaPower;
+		}
+
+		private int flyAwayTimer;
 	}
 }

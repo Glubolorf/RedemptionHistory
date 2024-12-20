@@ -1,4 +1,5 @@
 ﻿using System;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -20,6 +21,33 @@ namespace Redemption.Items
 			base.item.maxStack = 99;
 			base.item.value = 3000;
 			base.item.rare = 4;
+			base.item.UseSound = SoundID.Item3;
+			base.item.useStyle = 2;
+			base.item.useTurn = true;
+			base.item.useAnimation = 17;
+			base.item.useTime = 17;
+			base.item.consumable = true;
+		}
+
+		public override bool UseItem(Player player)
+		{
+			int num = Main.rand.Next(2);
+			if (num == 0)
+			{
+				base.item.buffType = base.mod.BuffType("BlackenedHeartBuff");
+				base.item.buffTime = 18000;
+			}
+			if (num == 1)
+			{
+				base.item.buffType = base.mod.BuffType("BlackenedHeartDebuff");
+				base.item.buffTime = 18000;
+			}
+			return true;
+		}
+
+		public override bool CanUseItem(Player player)
+		{
+			return !player.HasBuff(base.mod.BuffType("BlackenedHeartBuff")) && !player.HasBuff(base.mod.BuffType("BlackenedHeartDebuff"));
 		}
 	}
 }

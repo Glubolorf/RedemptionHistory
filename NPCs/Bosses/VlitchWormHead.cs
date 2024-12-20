@@ -85,6 +85,10 @@ namespace Redemption.NPCs.Bosses
 		{
 			potionType = 499;
 			RedeWorld.downedVlitch2 = true;
+			if (Main.netMode == 2)
+			{
+				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
+			}
 			if (!RedeWorld.girusTalk2 && !NPC.AnyNPCs(base.mod.NPCType("VlitchCleaver")) && !NPC.AnyNPCs(base.mod.NPCType("OmegaOblitDamaged")))
 			{
 				Projectile.NewProjectile(new Vector2(base.npc.position.X, base.npc.position.Y), new Vector2(0f, 0f), base.mod.ProjectileType("GirusTalking2"), 0, 0f, 255, 0f, 0f);
@@ -119,13 +123,41 @@ namespace Redemption.NPCs.Bosses
 			{
 				base.npc.dontTakeDamage = false;
 			}
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).omegaPower)
+			{
+				this.omegaTimer++;
+				if (this.omegaTimer == 600)
+				{
+					Main.NewText("The probes aren't attacking you!?", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
+				}
+				if (this.omegaTimer == 800)
+				{
+					Main.NewText("No matter... The corrupted worms are smart enough.", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
+				}
+			}
+			if (base.npc.life > 0 && !NPC.AnyNPCs(base.mod.NPCType("VlitchWormTail")))
+			{
+				this.tailTimer++;
+				if (this.tailTimer == 60)
+				{
+					Main.NewText("Huh? My tail despawned!?", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
+				}
+				if (this.tailTimer == 230)
+				{
+					Main.NewText("How am I suppose to summon my minions without my tail!?", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
+				}
+				if (this.tailTimer == 530)
+				{
+					Main.NewText("DAMN IT! STOP FLYING AWAY! YOU'RE BUGGING ME OUT!", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
+				}
+			}
 			this.timerVlitch1++;
 			if (this.timerVlitch1 == 120)
 			{
 				Main.NewText("[DEPLOYING CORE]", Color.Red.R, Color.Red.G, Color.Red.B, false);
 				NPC.NewNPC((int)base.npc.Center.X, (int)base.npc.Center.Y, base.mod.NPCType("VlitchCore1"), 0, 0f, 0f, 0f, 0f, 255);
 			}
-			if (base.npc.life < 50000)
+			if (base.npc.life < 75000)
 			{
 				this.timerVlitch2++;
 				if (this.timerVlitch2 == 60)
@@ -462,5 +494,9 @@ namespace Redemption.NPCs.Bosses
 		public int timerVlitch2;
 
 		public int timerVlitch3;
+
+		private int omegaTimer;
+
+		private int tailTimer;
 	}
 }

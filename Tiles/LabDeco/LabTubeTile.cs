@@ -11,8 +11,9 @@ namespace Redemption.Tiles.LabDeco
 		{
 			Main.tileSolid[(int)base.Type] = true;
 			Main.tileMergeDirt[(int)base.Type] = false;
+			Main.tileLighted[(int)base.Type] = true;
 			this.dustType = 226;
-			this.minPick = 300;
+			this.minPick = 500;
 			this.mineResist = 3f;
 			this.soundType = 21;
 			base.CreateMapEntryName(null);
@@ -31,6 +32,13 @@ namespace Redemption.Tiles.LabDeco
 		public override void NumDust(int i, int j, bool fail, ref int num)
 		{
 			num = (fail ? 1 : 3);
+		}
+
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+		{
+			r = 0f;
+			g = 0.2f;
+			b = 0f;
 		}
 
 		public override bool CanExplode(int i, int j)

@@ -16,7 +16,7 @@ namespace Redemption.Projectiles
 		{
 			base.projectile.width = 14;
 			base.projectile.height = 14;
-			base.projectile.magic = false;
+			base.projectile.melee = true;
 			base.projectile.penetrate = 1;
 			base.projectile.hostile = false;
 			base.projectile.friendly = true;

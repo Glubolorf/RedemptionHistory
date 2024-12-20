@@ -28,6 +28,7 @@ namespace Redemption.NPCs
 			base.npc.npcSlots = 0f;
 			this.aiType = 46;
 			this.animationType = 46;
+			base.npc.dontTakeDamageFromHostiles = false;
 			this.banner = base.npc.type;
 			this.bannerItem = base.mod.ItemType("ChickenBanner");
 		}
@@ -90,15 +91,15 @@ namespace Redemption.NPCs
 					int num = Main.rand.Next(3);
 					if (num == 0 && !Main.dedServ)
 					{
-						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck1").WithVolume(0.7f).WithPitchVariance(0.1f), -1, -1);
+						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck1").WithVolume(0.5f).WithPitchVariance(0.1f), base.npc.position);
 					}
 					if (num == 1 && !Main.dedServ)
 					{
-						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck2").WithVolume(0.7f).WithPitchVariance(0.1f), -1, -1);
+						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck2").WithVolume(0.5f).WithPitchVariance(0.1f), base.npc.position);
 					}
 					if (num == 2 && !Main.dedServ)
 					{
-						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck3").WithVolume(0.7f).WithPitchVariance(0.1f), -1, -1);
+						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck3").WithVolume(0.5f).WithPitchVariance(0.1f), base.npc.position);
 					}
 				}
 				if (this.cluckTimer >= 2)

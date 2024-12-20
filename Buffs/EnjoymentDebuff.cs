@@ -10,7 +10,7 @@ namespace Redemption.Buffs
 		public override void SetDefaults()
 		{
 			base.DisplayName.SetDefault("Enjoyment");
-			base.Description.SetDefault("\"Stats greatly decreased due to radioactivity\"");
+			base.Description.SetDefault("\"You are enjoying this a little too much\"");
 			Main.debuff[base.Type] = true;
 			Main.buffNoSave[base.Type] = true;
 			Main.pvpBuff[base.Type] = true;

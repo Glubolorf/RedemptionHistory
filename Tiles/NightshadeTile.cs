@@ -80,9 +80,9 @@ namespace Redemption.Tiles
 			int num = (int)(Main.tile[i, j].frameX / 18);
 			if (num == 2)
 			{
-				r = 0.8f;
-				g = 0.2f;
-				b = 0.8f;
+				r = 0.1f;
+				g = 0f;
+				b = 0.2f;
 			}
 			if (num < 2)
 			{

@@ -47,43 +47,35 @@ namespace Redemption.Projectiles
 			base.projectile.localAI[0] += 1f;
 			if (base.projectile.localAI[0] == 10f)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 22f), base.projectile.velocity, base.mod.ProjectileType("XenoShard"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 22f), new Vector2(0f, -8f), base.mod.ProjectileType("XenoShard"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			}
 			if (base.projectile.localAI[0] == 20f)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 22f), base.projectile.velocity, base.mod.ProjectileType("XenoShard"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 22f), new Vector2(6f, -6f), base.mod.ProjectileType("XenoShard"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			}
 			if (base.projectile.localAI[0] == 30f)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 22f), base.projectile.velocity, base.mod.ProjectileType("XenoShard"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 22f), new Vector2(8f, 0f), base.mod.ProjectileType("XenoShard"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			}
 			if (base.projectile.localAI[0] == 50f)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 22f), base.projectile.velocity, base.mod.ProjectileType("XenoShard"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 22f), new Vector2(6f, 6f), base.mod.ProjectileType("XenoShard"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			}
 			if (base.projectile.localAI[0] == 60f)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 22f), base.projectile.velocity, base.mod.ProjectileType("XenoShard"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 22f), new Vector2(0f, 8f), base.mod.ProjectileType("XenoShard"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			}
 			if (base.projectile.localAI[0] == 70f)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 22f), base.projectile.velocity, base.mod.ProjectileType("XenoShard"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 22f), new Vector2(-6f, 6f), base.mod.ProjectileType("XenoShard"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			}
 			if (base.projectile.localAI[0] == 90f)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 22f), base.projectile.velocity, base.mod.ProjectileType("XenoShard"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 22f), new Vector2(-8f, 0f), base.mod.ProjectileType("XenoShard"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			}
 			if (base.projectile.localAI[0] == 100f)
 			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 22f), base.projectile.velocity, base.mod.ProjectileType("XenoShard"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
-			}
-			if (base.projectile.localAI[0] == 110f)
-			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 22f), base.projectile.velocity, base.mod.ProjectileType("XenoShard"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
-			}
-			if (base.projectile.localAI[0] == 130f)
-			{
-				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 22f), base.projectile.velocity, base.mod.ProjectileType("XenoShard"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
+				Projectile.NewProjectile(new Vector2(base.projectile.position.X + 26f, base.projectile.position.Y + 22f), new Vector2(-6f, -6f), base.mod.ProjectileType("XenoShard"), base.projectile.damage, base.projectile.knockBack, base.projectile.owner, 0f, 1f);
 			}
 			if (base.projectile.localAI[0] > 170f)
 			{

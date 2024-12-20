@@ -10,6 +10,7 @@ namespace Redemption.Items.Weapons
 	{
 		public override void SetStaticDefaults()
 		{
+			base.DisplayName.SetDefault("Egg Staff");
 			base.Tooltip.SetDefault("Summons a Combat Chicken to fight for you.");
 		}
 

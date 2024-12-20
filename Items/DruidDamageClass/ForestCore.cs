@@ -24,8 +24,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void AddRecipes()
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "LivingWood", 2);
-			modRecipe.AddIngredient(null, "LivingLeaf", 2);
+			modRecipe.AddIngredient(null, "LivingTwig", 4);
 			modRecipe.AddIngredient(520, 1);
 			modRecipe.AddTile(null, "DruidicAltarTile");
 			modRecipe.SetResult(this, 1);

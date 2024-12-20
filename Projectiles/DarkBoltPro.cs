@@ -21,14 +21,14 @@ namespace Redemption.Projectiles
 			base.projectile.friendly = true;
 			base.projectile.tileCollide = true;
 			base.projectile.ignoreWater = false;
-			base.projectile.alpha = 100;
+			base.projectile.alpha = 255;
 			base.projectile.timeLeft = 200;
 		}
 
 		public override void AI()
 		{
 			base.projectile.rotation += 0.09f;
-			int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 27, 0f, 0f, 100, default(Color), 1.2f);
+			int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 27, 0f, 0f, 100, default(Color), 2.5f);
 			Main.dust[num].noGravity = true;
 		}
 

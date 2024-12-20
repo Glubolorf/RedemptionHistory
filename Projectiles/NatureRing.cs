@@ -48,6 +48,10 @@ namespace Redemption.Projectiles
 					}
 				}
 			}
+			if (player.dead)
+			{
+				base.projectile.Kill();
+			}
 		}
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)

@@ -49,10 +49,5 @@ namespace Redemption.NPCs
 				NPC.NewNPC((int)base.npc.position.X + 20, (int)base.npc.position.Y + 30, base.mod.NPCType("LostSoul2"), 0, 0f, 0f, 0f, 0f, 255);
 			}
 		}
-
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
-		{
-			return SpawnCondition.OverworldNightMonster.Chance * (RedeWorld.downedTheKeeper ? 0.03f : 0f);
-		}
 	}
 }

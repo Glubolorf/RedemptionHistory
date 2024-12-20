@@ -51,5 +51,10 @@ namespace Redemption.NPCs
 		{
 			return SpawnCondition.Cavern.Chance * 0.002f;
 		}
+
+		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+		{
+			return !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).skeletonFriendly;
+		}
 	}
 }

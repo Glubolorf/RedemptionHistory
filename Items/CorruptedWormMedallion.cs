@@ -37,7 +37,18 @@ namespace Redemption.Items
 		{
 			NPC.SpawnOnPlayer(player.whoAmI, base.mod.NPCType("VlitchWormHead"));
 			Main.PlaySound(15, player.position, 0);
-			Main.NewText("You fool, no weapon can pierce through me...", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).omegaPower)
+			{
+				Main.NewText("Why does this puny android summon me?", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
+			}
+			else if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).chickenPower)
+			{
+				Main.NewText("Pah, a PUNY chicken challenges ME!?", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
+			}
+			else
+			{
+				Main.NewText("You fool, no weapon can pierce through me...", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
+			}
 			return true;
 		}
 

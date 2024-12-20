@@ -23,7 +23,7 @@ namespace Redemption.Items.DruidDamageClass
 				Main.glowMaskTexture = array;
 			}
 			base.DisplayName.SetDefault("Moonflare Stave");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nShoots Moonflare Sparkles\nRight-clicking will summon a Moonflare [c/94c2ff:(Requires 200 Mana)]\n[c/71ee8d:-Guardian Info-]\n[c/a0db98:Type:] Offensive\n[c/98dbc3:Special Ability:] Triple-Shot/Stream-Shot\n[c/98c1db:Buffs:] 10% druidic damage, faster staves & spirits, improved sight");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nShoots Moonflare Sparkles\nRight-clicking will summon a Moonflare [c/94c2ff:(Requires 200 Mana)]\n[c/71ee8d:-Guardian Info-]\n[c/a0db98:Type:] Offensive\n[c/98dbc3:Special Ability:] Triple-Shot/Stream-Shot\n[c/98c1db:Buffs:] Druidic Enhancement, Improved Sight");
 		}
 
 		public override void SafeSetDefaults()
@@ -65,7 +65,14 @@ namespace Redemption.Items.DruidDamageClass
 			{
 				base.item.mana = 200;
 				base.item.buffType = base.mod.BuffType("NatureGuardian6Buff");
-				base.item.buffTime = 36000;
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).longerGuardians)
+				{
+					base.item.buffTime = 3600;
+				}
+				else
+				{
+					base.item.buffTime = 1800;
+				}
 				base.item.shoot = base.mod.ProjectileType("NatureGuardian6");
 				base.item.shootSpeed = 0f;
 				return !player.HasBuff(base.mod.BuffType("NatureGuardian2Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardianBuff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian3Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian4Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian5Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian6Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian7Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian8Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian9Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian10Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian11Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian12Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian13Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian14Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian15Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian16Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian17Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian18Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian19Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian20Buff")) && !player.HasBuff(base.mod.BuffType("NatureGuardian21Buff"));

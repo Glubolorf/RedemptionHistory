@@ -100,10 +100,6 @@ namespace Redemption.Projectiles
 			{
 				modPlayer.natureGuardian5 = false;
 			}
-			if (modPlayer.natureGuardian5)
-			{
-				base.projectile.timeLeft = 2;
-			}
 		}
 
 		private float Magnitude(Vector2 mag)

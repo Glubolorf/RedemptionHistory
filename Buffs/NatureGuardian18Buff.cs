@@ -36,9 +36,7 @@ namespace Redemption.Buffs
 			{
 				player.DelBuff(buffIndex);
 				buffIndex--;
-				return;
 			}
-			player.buffTime[buffIndex] = 36000;
 		}
 	}
 }

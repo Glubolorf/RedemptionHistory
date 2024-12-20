@@ -12,6 +12,7 @@ namespace Redemption.Tiles
 			Main.tileSolid[(int)base.Type] = true;
 			Main.tileBouncy[(int)base.Type] = true;
 			Main.tileMergeDirt[(int)base.Type] = true;
+			Main.tileBlockLight[(int)base.Type] = true;
 			this.dustType = base.mod.DustType("SludgeSpoonDust");
 			this.minPick = 200;
 			this.mineResist = 2f;
@@ -31,7 +32,7 @@ namespace Redemption.Tiles
 
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
 		{
-			if (Main.rand.Next(4) == 0)
+			if (Main.rand.Next(6) == 0)
 			{
 				i *= 16;
 				j *= 16;

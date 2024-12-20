@@ -21,6 +21,7 @@ namespace Redemption.Items.Weapons
 			base.item.shootSpeed *= 1.25f;
 			base.item.useTime = 6;
 			base.item.value = Item.sellPrice(0, 20, 0, 0);
+			base.item.rare = 11;
 			base.item.useAnimation = 6;
 			base.item.damage = (int)((double)base.item.damage * 2.0);
 		}

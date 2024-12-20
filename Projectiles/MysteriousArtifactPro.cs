@@ -16,7 +16,7 @@ namespace Redemption.Projectiles
 		{
 			base.projectile.CloneDefaults(272);
 			this.aiType = 272;
-			base.projectile.width = 24;
+			base.projectile.width = 34;
 			base.projectile.height = 34;
 			base.projectile.melee = true;
 			base.projectile.penetrate = -1;

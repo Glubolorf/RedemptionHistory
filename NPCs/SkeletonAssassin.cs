@@ -49,7 +49,7 @@ namespace Redemption.NPCs
 				}
 			}
 			float num = base.npc.Distance(Main.player[base.npc.target].Center);
-			if (num <= 80f && Main.rand.Next(20) == 0 && !this.stabAttack)
+			if (num <= 80f && !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).skeletonFriendly && Main.rand.Next(20) == 0 && !this.stabAttack)
 			{
 				this.stabAttack = true;
 			}
@@ -131,6 +131,11 @@ namespace Redemption.NPCs
 				Main.spriteBatch.Draw(texture, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
 			}
 			return false;
+		}
+
+		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+		{
+			return !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).skeletonFriendly;
 		}
 
 		private bool stabAttack;

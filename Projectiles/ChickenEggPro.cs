@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles
@@ -19,7 +20,7 @@ namespace Redemption.Projectiles
 			base.projectile.friendly = true;
 			base.projectile.penetrate = 1;
 			base.projectile.hostile = false;
-			base.projectile.magic = false;
+			base.projectile.thrown = true;
 			base.projectile.tileCollide = true;
 			base.projectile.ignoreWater = true;
 		}
@@ -36,21 +37,50 @@ namespace Redemption.Projectiles
 			}
 		}
 
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		{
+			if ((target.type == base.mod.NPCType("KingChicken") || target.type == base.mod.NPCType("KingChickenT")) && target.life <= 0)
+			{
+				string text = "*cluck cluck* What, You egg? *cluck cluck*";
+				Color rarityOrange = Colors.RarityOrange;
+				byte r = rarityOrange.R;
+				Color rarityOrange2 = Colors.RarityOrange;
+				byte g = rarityOrange2.G;
+				Color rarityOrange3 = Colors.RarityOrange;
+				Main.NewText(text, r, g, rarityOrange3.B, false);
+			}
+			if (target.type == base.mod.NPCType("VlitchCleaver") && target.life <= 0)
+			{
+				Main.NewText("Excuse me what?", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
+			}
+			if ((target.type == base.mod.NPCType("VlitchWormHead") || target.type == base.mod.NPCType("VlitchWormBody") || target.type == base.mod.NPCType("VlitchWormTail")) && target.life <= 0)
+			{
+				Main.NewText("SLAIN... BY AN EGG!?", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
+			}
+		}
+
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
 			Collision.HitTiles(base.projectile.position, oldVelocity, base.projectile.width, base.projectile.height);
 			Main.PlaySound(0, (int)base.projectile.position.X, (int)base.projectile.position.Y, 1, 1f, 0f);
-			if (Main.rand.Next(4) == 0)
+			if (Main.netMode != 1)
 			{
-				NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, base.mod.NPCType("Chicken"), 0, 0f, 0f, 0f, 0f, 255);
-			}
-			if (Main.rand.Next(100) == 0)
-			{
-				NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, base.mod.NPCType("ChickenGold"), 0, 0f, 0f, 0f, 0f, 255);
-			}
-			if (Main.rand.Next(999) == 0)
-			{
-				NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, base.mod.NPCType("RainbowChicken"), 0, 0f, 0f, 0f, 0f, 255);
+				if (Main.rand.Next(4) == 0)
+				{
+					int num = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, base.mod.NPCType("Chicken"), 0, 0f, 0f, 0f, 0f, 255);
+					if (Main.netMode == 2)
+					{
+						NetMessage.SendData(23, -1, -1, null, num, 0f, 0f, 0f, 0, 0, 0);
+					}
+				}
+				if (Main.rand.Next(999) == 0)
+				{
+					int num2 = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, base.mod.NPCType("RainbowChicken"), 0, 0f, 0f, 0f, 0f, 255);
+					if (Main.netMode == 2)
+					{
+						NetMessage.SendData(23, -1, -1, null, num2, 0f, 0f, 0f, 0, 0, 0);
+					}
+				}
 			}
 			return true;
 		}

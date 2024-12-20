@@ -82,6 +82,10 @@ namespace Redemption.NPCs.Bosses.OmegaOblit
 		{
 			potionType = 3544;
 			RedeWorld.downedVlitch3 = true;
+			if (Main.netMode == 2)
+			{
+				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
+			}
 			if (!RedeWorld.girusTalk3 && !NPC.AnyNPCs(base.mod.NPCType("VlitchWormHead")) && !NPC.AnyNPCs(base.mod.NPCType("VlitchCleaver")))
 			{
 				Projectile.NewProjectile(new Vector2(base.npc.position.X, base.npc.position.Y), new Vector2(0f, 0f), base.mod.ProjectileType("GirusTalking3"), 0, 0f, 255, 0f, 0f);

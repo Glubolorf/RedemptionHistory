@@ -9,7 +9,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Large Seed Pouch");
-			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nSeed Bags that throw only one seed will throw 2-3 seeds instead");
+			base.Tooltip.SetDefault("[c/91dc16:---Druid Class---]\nHas a chance to throw an extra seed");
 		}
 
 		public override void SetDefaults()
@@ -56,7 +56,7 @@ namespace Redemption.Items.DruidDamageClass
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			RedePlayer redePlayer = (RedePlayer)player.GetModPlayer(base.mod, "RedePlayer");
-			redePlayer.moreSeeds = true;
+			redePlayer.extraSeed = true;
 		}
 	}
 }

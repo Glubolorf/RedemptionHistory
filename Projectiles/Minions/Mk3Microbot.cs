@@ -22,7 +22,7 @@ namespace Redemption.Projectiles.Minions
 			base.projectile.height = 30;
 			base.projectile.friendly = true;
 			base.projectile.minion = true;
-			base.projectile.minionSlots = 1f;
+			base.projectile.minionSlots = 2f;
 			base.projectile.penetrate = -1;
 			base.projectile.timeLeft = 18000;
 			base.projectile.tileCollide = false;

@@ -54,9 +54,33 @@ namespace Redemption.NPCs
 			Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/ForestGolemGoreWood"), 1f);
 		}
 
+		public override void AI()
+		{
+			if (!this.change)
+			{
+				int num = Main.rand.Next(5);
+				if (num == 0)
+				{
+					base.npc.SetDefaults(base.mod.NPCType("ForestGolemBlooming"), -1f);
+					this.change = true;
+				}
+				if (num == 1)
+				{
+					base.npc.SetDefaults(base.mod.NPCType("ForestGolemWounded"), -1f);
+					this.change = true;
+				}
+				if (num >= 2)
+				{
+					this.change = true;
+				}
+			}
+		}
+
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
 			return SpawnCondition.OverworldNight.Chance * ((Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type == 2) ? 0.05f : 0f);
 		}
+
+		private bool change;
 	}
 }

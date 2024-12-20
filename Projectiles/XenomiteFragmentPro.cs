@@ -15,7 +15,7 @@ namespace Redemption.Projectiles
 		public override void SetDefaults()
 		{
 			base.projectile.width = 26;
-			base.projectile.height = 76;
+			base.projectile.height = 26;
 			base.projectile.magic = false;
 			base.projectile.penetrate = 1;
 			base.projectile.hostile = true;
@@ -40,11 +40,28 @@ namespace Redemption.Projectiles
 			}
 		}
 
+		public override void Kill(int timeLeft)
+		{
+			for (int i = 0; i < 5; i++)
+			{
+				int num = Dust.NewDust(base.projectile.position, base.projectile.width, base.projectile.height, 74, 0f, 0f, 100, default(Color), 3.5f);
+				Main.dust[num].velocity *= 3f;
+				Main.dust[num].noGravity = true;
+			}
+		}
+
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
 			Collision.HitTiles(base.projectile.position, oldVelocity, base.projectile.width, base.projectile.height);
 			Main.PlaySound(0, (int)base.projectile.position.X, (int)base.projectile.position.Y, 1, 1f, 0f);
-			NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, base.mod.NPCType("XenomiteFragment"), 0, 0f, 0f, 0f, 0f, 255);
+			if (Main.netMode != 1)
+			{
+				int num = NPC.NewNPC((int)base.projectile.Center.X, (int)base.projectile.Center.Y, base.mod.NPCType("XenomiteFragment"), 0, 0f, 0f, 0f, 0f, 255);
+				if (Main.netMode == 2)
+				{
+					NetMessage.SendData(23, -1, -1, null, num, 0f, 0f, 0f, 0, 0, 0);
+				}
+			}
 			return true;
 		}
 	}

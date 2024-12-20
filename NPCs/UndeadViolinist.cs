@@ -21,7 +21,7 @@ namespace Redemption.NPCs
 			base.npc.friendly = false;
 			base.npc.damage = 55;
 			base.npc.defense = 25;
-			base.npc.lifeMax = 280;
+			base.npc.lifeMax = 480;
 			base.npc.HitSound = SoundID.NPCHit1;
 			base.npc.DeathSound = SoundID.NPCDeath1;
 			base.npc.value = 100f;
@@ -52,7 +52,7 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.SolarEclipse.Chance * 0.03f;
+			return SpawnCondition.SolarEclipse.Chance * (NPC.downedPlantBoss ? 0.03f : 0f);
 		}
 	}
 }

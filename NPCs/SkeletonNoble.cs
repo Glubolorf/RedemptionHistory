@@ -54,6 +54,50 @@ namespace Redemption.NPCs
 
 		public override void AI()
 		{
+			if (!this.change)
+			{
+				int num = Main.rand.Next(5);
+				if (num == 0)
+				{
+					if (NPC.downedBoss1)
+					{
+						base.npc.SetDefaults(base.mod.NPCType("SkeletonNobleArmoured"), -1f);
+						this.change = true;
+					}
+					else
+					{
+						this.change = true;
+					}
+				}
+				if (num == 1)
+				{
+					if (NPC.downedBoss1)
+					{
+						base.npc.SetDefaults(base.mod.NPCType("SkeletonNobleArmoured3"), -1f);
+						this.change = true;
+					}
+					else
+					{
+						this.change = true;
+					}
+				}
+				if (num == 2)
+				{
+					if (NPC.downedBoss3)
+					{
+						base.npc.SetDefaults(base.mod.NPCType("SkeletonNobleArmoured2"), -1f);
+						this.change = true;
+					}
+					else
+					{
+						this.change = true;
+					}
+				}
+				if (num >= 3)
+				{
+					this.change = true;
+				}
+			}
 			if (this.slashAttack)
 			{
 				this.slashCounter++;
@@ -67,8 +111,8 @@ namespace Redemption.NPCs
 					this.slashFrame = 0;
 				}
 			}
-			float num = base.npc.Distance(Main.player[base.npc.target].Center);
-			if (num <= 80f && Main.rand.Next(20) == 0 && !this.slashAttack)
+			float num2 = base.npc.Distance(Main.player[base.npc.target].Center);
+			if (num2 <= 80f && !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).skeletonFriendly && Main.rand.Next(20) == 0 && !this.slashAttack)
 			{
 				this.slashAttack = true;
 			}
@@ -129,6 +173,11 @@ namespace Redemption.NPCs
 			return false;
 		}
 
+		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+		{
+			return !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).skeletonFriendly;
+		}
+
 		private bool slashAttack;
 
 		private int slashFrame;
@@ -136,5 +185,7 @@ namespace Redemption.NPCs
 		private int slashCounter;
 
 		private int slashTimer;
+
+		private bool change;
 	}
 }

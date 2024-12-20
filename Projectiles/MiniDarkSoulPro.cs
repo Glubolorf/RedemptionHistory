@@ -19,6 +19,7 @@ namespace Redemption.Projectiles
 			base.projectile.width = 10;
 			base.projectile.height = 12;
 			base.projectile.alpha = 255;
+			base.projectile.minion = true;
 			base.projectile.friendly = true;
 			base.projectile.tileCollide = true;
 			base.projectile.ignoreWater = true;

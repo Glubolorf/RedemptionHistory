@@ -20,6 +20,7 @@ namespace Redemption.Projectiles
 			base.projectile.hostile = false;
 			base.projectile.friendly = true;
 			base.projectile.alpha = 60;
+			base.projectile.magic = true;
 			base.projectile.tileCollide = true;
 			base.projectile.ignoreWater = true;
 			base.projectile.timeLeft = 180;

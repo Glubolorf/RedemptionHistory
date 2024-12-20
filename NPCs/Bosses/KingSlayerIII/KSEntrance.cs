@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -13,7 +14,7 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("King Slayer III");
-			Main.npcFrameCount[base.npc.type] = 13;
+			Main.npcFrameCount[base.npc.type] = 12;
 		}
 
 		public override void SetDefaults()
@@ -21,11 +22,11 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 			base.npc.width = 64;
 			base.npc.height = 112;
 			base.npc.friendly = false;
-			base.npc.damage = 60;
+			base.npc.damage = 80;
 			base.npc.defense = 35;
 			base.npc.lifeMax = 42000;
 			base.npc.HitSound = SoundID.NPCHit4;
-			base.npc.value = (float)Item.buyPrice(0, 30, 0, 0);
+			base.npc.value = (float)Item.buyPrice(0, 20, 0, 0);
 			base.npc.knockBackResist = 0f;
 			base.npc.buffImmune[20] = true;
 			base.npc.buffImmune[31] = true;
@@ -35,6 +36,7 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 			base.npc.buffImmune[base.mod.BuffType("EnjoymentDebuff")] = true;
 			base.npc.lavaImmune = true;
 			base.npc.boss = true;
+			base.npc.aiStyle = 0;
 			base.npc.netAlways = true;
 			this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossSlayer");
 			base.npc.noGravity = true;
@@ -51,6 +53,10 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 		{
 			potionType = 499;
 			RedeWorld.downedSlayer = true;
+			if (Main.netMode == 2)
+			{
+				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
+			}
 			Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 0f), base.mod.ProjectileType("KSExitPro"), 0, 0f, 255, 0f, 0f);
 		}
 
@@ -93,12 +99,32 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
 		{
-			base.npc.lifeMax = (int)((float)base.npc.lifeMax * 0.6f * bossLifeScale);
+			base.npc.lifeMax = (int)((float)base.npc.lifeMax * 0.55f * bossLifeScale);
 			base.npc.damage = (int)((float)base.npc.damage * 0.6f);
 		}
 
-		public override void FindFrame(int frameHeight)
+		public override void SendExtraAI(BinaryWriter writer)
 		{
+			base.SendExtraAI(writer);
+			if (Main.netMode == 2 || Main.dedServ)
+			{
+				writer.Write(this.customAI[0]);
+				writer.Write(this.customAI[1]);
+				writer.Write(this.customAI[2]);
+				writer.Write(this.customAI[3]);
+			}
+		}
+
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			base.ReceiveExtraAI(reader);
+			if (Main.netMode == 1)
+			{
+				this.customAI[0] = reader.ReadFloat();
+				this.customAI[1] = reader.ReadFloat();
+				this.customAI[2] = reader.ReadFloat();
+				this.customAI[3] = reader.ReadFloat();
+			}
 		}
 
 		public override void AI()
@@ -106,13 +132,22 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 			Player player = Main.player[base.npc.target];
 			this.Target();
 			this.DespawnHandler();
-			Vector2.Distance(base.npc.Center, player.Center);
+			if (!this.chargeAttack && !this.chargeAttackR)
+			{
+				if (player.Center.X > base.npc.Center.X)
+				{
+					this.Move(new Vector2(-250f, 0f));
+				}
+				else
+				{
+					this.Move(new Vector2(250f, 0f));
+				}
+			}
 			if (this.attackMode == 0)
 			{
-				base.npc.aiStyle = -1;
+				base.npc.aiStyle = 0;
 				this.aiType = 0;
 				base.npc.dontTakeDamage = true;
-				base.npc.netUpdate = true;
 			}
 			if (this.idle1)
 			{
@@ -122,14 +157,14 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 					this.idle1Frame++;
 					this.idle1Counter = 0;
 				}
-				if (this.idle1Frame >= 5)
+				if (this.idle1Frame >= 4)
 				{
 					this.idle1Frame = 0;
 				}
 			}
 			if (!this.start)
 			{
-				if (base.npc.frame.Y < 1800)
+				if (base.npc.frame.Y < 1650)
 				{
 					base.npc.frameCounter += 1.0;
 				}
@@ -148,9 +183,22 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 					this.idle2Frame++;
 					this.idle2Counter = 0;
 				}
-				if (this.idle2Frame >= 5)
+				if (this.idle2Frame >= 4)
 				{
 					this.idle2Frame = 0;
+				}
+			}
+			if (this.idle2R)
+			{
+				this.idle2RCounter++;
+				if (this.idle2RCounter > 3)
+				{
+					this.idle2RFrame++;
+					this.idle2RCounter = 0;
+				}
+				if (this.idle2RFrame >= 4)
+				{
+					this.idle2RFrame = 0;
 				}
 			}
 			if (this.blinkGun)
@@ -161,7 +209,7 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 					this.gunblinkFrame++;
 					this.blinkGunCounter = 0;
 				}
-				if (this.gunblinkFrame >= 6)
+				if (this.gunblinkFrame >= 4)
 				{
 					this.gunblinkFrame = 0;
 				}
@@ -192,6 +240,19 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 					this.chargeFrame = 0;
 				}
 			}
+			if (this.chargeAttackR)
+			{
+				this.chargeRCounter++;
+				if (this.chargeRCounter > 3)
+				{
+					this.chargeRFrame++;
+					this.chargeRCounter = 0;
+				}
+				if (this.chargeRFrame >= 2)
+				{
+					this.chargeRFrame = 0;
+				}
+			}
 			if (this.fistRocket)
 			{
 				this.rocketCounter++;
@@ -200,9 +261,22 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 					this.rocketFrame++;
 					this.rocketCounter = 0;
 				}
-				if (this.rocketFrame >= 13)
+				if (this.rocketFrame >= 12)
 				{
 					this.rocketFrame = 0;
+				}
+			}
+			if (this.fistRocketR)
+			{
+				this.rocketRCounter++;
+				if (this.rocketRCounter > 3)
+				{
+					this.rocketRFrame++;
+					this.rocketRCounter = 0;
+				}
+				if (this.rocketRFrame >= 12)
+				{
+					this.rocketRFrame = 0;
 				}
 			}
 			if (this.fistRocketDone)
@@ -218,7 +292,12 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 					this.rocketDoneFrame = 0;
 				}
 			}
-			if (this.aiCounter == 39)
+			float num = base.npc.Distance(Main.player[base.npc.target].Center);
+			if (num >= 1200f && !this.teleport)
+			{
+				this.teleport = true;
+			}
+			if (this.customAI[0] == 39f)
 			{
 				this.idle1 = true;
 				this.start = true;
@@ -226,823 +305,1363 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 			}
 			if (RedeWorld.downedSlayer)
 			{
-				if (this.aiCounter == 60)
+				if (this.customAI[0] == 60f)
 				{
 					string text = "So you've come back for more?";
 					Color rarityCyan = Colors.RarityCyan;
 					byte r = rarityCyan.R;
-					Color rarityCyan2 = Colors.RarityCyan;
-					byte g = rarityCyan2.G;
-					Color rarityCyan3 = Colors.RarityCyan;
-					Main.NewText(text, r, g, rarityCyan3.B, false);
+					rarityCyan = Colors.RarityCyan;
+					byte g = rarityCyan.G;
+					rarityCyan = Colors.RarityCyan;
+					Main.NewText(text, r, g, rarityCyan.B, false);
 				}
-				if (this.aiCounter == 220)
+				if (this.customAI[0] == 220f)
 				{
 					string text2 = "Interesting...";
-					Color rarityCyan4 = Colors.RarityCyan;
-					byte r2 = rarityCyan4.R;
-					Color rarityCyan5 = Colors.RarityCyan;
-					byte g2 = rarityCyan5.G;
-					Color rarityCyan6 = Colors.RarityCyan;
-					Main.NewText(text2, r2, g2, rarityCyan6.B, false);
+					Color rarityCyan = Colors.RarityCyan;
+					byte r2 = rarityCyan.R;
+					rarityCyan = Colors.RarityCyan;
+					byte g2 = rarityCyan.G;
+					rarityCyan = Colors.RarityCyan;
+					Main.NewText(text2, r2, g2, rarityCyan.B, false);
 				}
-				if (this.aiCounter == 400)
+				if (this.customAI[0] == 400f)
 				{
 					string text3 = "However, I still won't go easy on you...";
-					Color rarityCyan7 = Colors.RarityCyan;
-					byte r3 = rarityCyan7.R;
-					Color rarityCyan8 = Colors.RarityCyan;
-					byte g3 = rarityCyan8.G;
-					Color rarityCyan9 = Colors.RarityCyan;
-					Main.NewText(text3, r3, g3, rarityCyan9.B, false);
+					Color rarityCyan = Colors.RarityCyan;
+					byte r3 = rarityCyan.R;
+					rarityCyan = Colors.RarityCyan;
+					byte g3 = rarityCyan.G;
+					rarityCyan = Colors.RarityCyan;
+					Main.NewText(text3, r3, g3, rarityCyan.B, false);
 					this.idle1 = false;
 					this.blinkGun = true;
 					base.npc.netUpdate = true;
 				}
-				if (this.aiCounter == 418)
+				if (this.customAI[0] == 418f)
 				{
 					this.blinkGun = false;
 					this.idle2 = true;
 					base.npc.netUpdate = true;
 				}
-				if (this.aiCounter == 500)
+				if (this.customAI[0] == 500f)
 				{
-					base.npc.netUpdate = true;
 					this.fightBegin = true;
 					this.attackMode = 1;
 					base.npc.dontTakeDamage = false;
-					NPC npc2 = base.npc;
-					npc2.velocity.X = npc2.velocity.X * 0.98f;
-					NPC npc3 = base.npc;
-					npc3.velocity.Y = npc3.velocity.Y * 0.98f;
-					this.aiCounter = 0;
-					Vector2 vector;
-					vector..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
-					float num = (float)Math.Atan2((double)(vector.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
-					base.npc.velocity.X = (float)(Math.Cos((double)num) * 12.0) * -1f;
-					base.npc.velocity.Y = (float)(Math.Sin((double)num) * 12.0) * -1f;
-					base.npc.ai[0] %= 6.2831855f;
-					new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
-					Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 20, 1f, 0f);
-					Color color = default(Color);
-					Rectangle rectangle;
-					rectangle..ctor((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
-					int num2 = 30;
-					for (int i = 1; i <= num2; i++)
-					{
-						int num3 = Dust.NewDust(base.npc.position, rectangle.Width, rectangle.Height, 226, 0f, 0f, 100, color, 2.5f);
-						Main.dust[num3].noGravity = false;
-					}
-					return;
+					this.customAI[0] = 0f;
 				}
 			}
-			if (this.aiCounter == 0 && !this.shieldUp)
+			if (this.customAI[0] == 0f && !this.shieldUp)
 			{
 				base.npc.dontTakeDamage = false;
-				base.npc.netUpdate = true;
 			}
 			if (!RedeWorld.downedSlayer)
 			{
 				if (RedeWorld.deathBySlayer)
 				{
-					if (this.aiCounter == 60)
+					if (this.customAI[0] == 60f)
 					{
 						string text4 = "Ready for a rematch?";
-						Color rarityCyan10 = Colors.RarityCyan;
-						byte r4 = rarityCyan10.R;
-						Color rarityCyan11 = Colors.RarityCyan;
-						byte g4 = rarityCyan11.G;
-						Color rarityCyan12 = Colors.RarityCyan;
-						Main.NewText(text4, r4, g4, rarityCyan12.B, false);
+						Color rarityCyan = Colors.RarityCyan;
+						byte r4 = rarityCyan.R;
+						rarityCyan = Colors.RarityCyan;
+						byte g4 = rarityCyan.G;
+						rarityCyan = Colors.RarityCyan;
+						Main.NewText(text4, r4, g4, rarityCyan.B, false);
 					}
-					if (this.aiCounter == 180)
+					if (this.customAI[0] == 180f)
 					{
 						base.npc.netUpdate = true;
 						this.idle1 = false;
 						this.blinkGun = true;
 					}
-					if (this.aiCounter == 198)
+					if (this.customAI[0] == 198f)
 					{
 						this.blinkGun = false;
 						this.idle2 = true;
 						base.npc.netUpdate = true;
 					}
-					if (this.aiCounter == 300)
+					if (this.customAI[0] == 300f)
 					{
 						base.npc.netUpdate = true;
 						this.fightBegin = true;
 						this.attackMode = 1;
 						base.npc.dontTakeDamage = false;
-						NPC npc4 = base.npc;
-						npc4.velocity.X = npc4.velocity.X * 0.98f;
-						NPC npc5 = base.npc;
-						npc5.velocity.Y = npc5.velocity.Y * 0.98f;
-						this.aiCounter = 0;
-						Vector2 vector2;
-						vector2..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
-						float num4 = (float)Math.Atan2((double)(vector2.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector2.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
-						base.npc.velocity.X = (float)(Math.Cos((double)num4) * 12.0) * -1f;
-						base.npc.velocity.Y = (float)(Math.Sin((double)num4) * 12.0) * -1f;
-						base.npc.ai[0] %= 6.2831855f;
-						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
-						Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 20, 1f, 0f);
-						Color color2 = default(Color);
-						Rectangle rectangle2;
-						rectangle2..ctor((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
-						int num5 = 30;
-						for (int j = 1; j <= num5; j++)
-						{
-							int num6 = Dust.NewDust(base.npc.position, rectangle2.Width, rectangle2.Height, 226, 0f, 0f, 100, color2, 2.5f);
-							Main.dust[num6].noGravity = false;
-						}
-						return;
+						this.customAI[0] = 0f;
 					}
 				}
 				if (!RedeWorld.deathBySlayer)
 				{
-					if (this.aiCounter == 60)
+					if (this.customAI[0] == 60f)
 					{
 						string text5 = "Well what do we have here?";
-						Color rarityCyan13 = Colors.RarityCyan;
-						byte r5 = rarityCyan13.R;
-						Color rarityCyan14 = Colors.RarityCyan;
-						byte g5 = rarityCyan14.G;
-						Color rarityCyan15 = Colors.RarityCyan;
-						Main.NewText(text5, r5, g5, rarityCyan15.B, false);
+						Color rarityCyan = Colors.RarityCyan;
+						byte r5 = rarityCyan.R;
+						rarityCyan = Colors.RarityCyan;
+						byte g5 = rarityCyan.G;
+						rarityCyan = Colors.RarityCyan;
+						Main.NewText(text5, r5, g5, rarityCyan.B, false);
 					}
-					if (this.aiCounter == 220)
+					if (this.customAI[0] == 220f)
 					{
 						string text6 = "I was ordered to kill a ravaging Undead known as the Keeper...";
-						Color rarityCyan16 = Colors.RarityCyan;
-						byte r6 = rarityCyan16.R;
-						Color rarityCyan17 = Colors.RarityCyan;
-						byte g6 = rarityCyan17.G;
-						Color rarityCyan18 = Colors.RarityCyan;
-						Main.NewText(text6, r6, g6, rarityCyan18.B, false);
+						Color rarityCyan = Colors.RarityCyan;
+						byte r6 = rarityCyan.R;
+						rarityCyan = Colors.RarityCyan;
+						byte g6 = rarityCyan.G;
+						rarityCyan = Colors.RarityCyan;
+						Main.NewText(text6, r6, g6, rarityCyan.B, false);
 					}
-					if (this.aiCounter == 400)
+					if (this.customAI[0] == 400f)
 					{
-						string text7 = "However, you killed it before I arrived...";
-						Color rarityCyan19 = Colors.RarityCyan;
-						byte r7 = rarityCyan19.R;
-						Color rarityCyan20 = Colors.RarityCyan;
-						byte g7 = rarityCyan20.G;
-						Color rarityCyan21 = Colors.RarityCyan;
-						Main.NewText(text7, r7, g7, rarityCyan21.B, false);
+						if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).chickenPower)
+						{
+							string text7 = "However, y- ... Wait...";
+							Color rarityCyan = Colors.RarityCyan;
+							byte r7 = rarityCyan.R;
+							rarityCyan = Colors.RarityCyan;
+							byte g7 = rarityCyan.G;
+							rarityCyan = Colors.RarityCyan;
+							Main.NewText(text7, r7, g7, rarityCyan.B, false);
+						}
+						else
+						{
+							string text8 = "However, you killed it before I arrived...";
+							Color rarityCyan = Colors.RarityCyan;
+							byte r8 = rarityCyan.R;
+							rarityCyan = Colors.RarityCyan;
+							byte g8 = rarityCyan.G;
+							rarityCyan = Colors.RarityCyan;
+							Main.NewText(text8, r8, g8, rarityCyan.B, false);
+						}
 					}
-					if (this.aiCounter == 680)
+					if (this.customAI[0] == 680f)
 					{
-						string text8 = "You stole my kill... You know what? I don't care if I'm a member of the Heroes! You're dead!";
-						Color rarityCyan22 = Colors.RarityCyan;
-						byte r8 = rarityCyan22.R;
-						Color rarityCyan23 = Colors.RarityCyan;
-						byte g8 = rarityCyan23.G;
-						Color rarityCyan24 = Colors.RarityCyan;
-						Main.NewText(text8, r8, g8, rarityCyan24.B, false);
+						if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).chickenPower)
+						{
+							string text9 = "A chicken stole my kill... ? Well, it doesn't matter! You're dead!";
+							Color rarityCyan = Colors.RarityCyan;
+							byte r9 = rarityCyan.R;
+							rarityCyan = Colors.RarityCyan;
+							byte g9 = rarityCyan.G;
+							rarityCyan = Colors.RarityCyan;
+							Main.NewText(text9, r9, g9, rarityCyan.B, false);
+						}
+						else
+						{
+							string text10 = "You stole my kill... You know what? I don't care if I'm a member of the Heroes! You're dead!";
+							Color rarityCyan = Colors.RarityCyan;
+							byte r10 = rarityCyan.R;
+							rarityCyan = Colors.RarityCyan;
+							byte g10 = rarityCyan.G;
+							rarityCyan = Colors.RarityCyan;
+							Main.NewText(text10, r10, g10, rarityCyan.B, false);
+						}
 						this.idle1 = false;
 						this.blinkGun = true;
 						base.npc.netUpdate = true;
 					}
-					if (this.aiCounter == 698)
+					if (this.customAI[0] == 698f)
 					{
 						this.blinkGun = false;
 						this.idle2 = true;
 						base.npc.netUpdate = true;
 					}
-					if (this.aiCounter == 900)
+					if (this.customAI[0] == 900f)
 					{
 						base.npc.netUpdate = true;
 						this.fightBegin = true;
 						RedeWorld.deathBySlayer = true;
+						if (Main.netMode == 2)
+						{
+							NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
+						}
 						this.attackMode = 1;
 						base.npc.dontTakeDamage = false;
-						NPC npc6 = base.npc;
-						npc6.velocity.X = npc6.velocity.X * 0.98f;
-						NPC npc7 = base.npc;
-						npc7.velocity.Y = npc7.velocity.Y * 0.98f;
-						this.aiCounter = 0;
-						Vector2 vector3;
-						vector3..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
-						float num7 = (float)Math.Atan2((double)(vector3.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector3.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
-						base.npc.velocity.X = (float)(Math.Cos((double)num7) * 12.0) * -1f;
-						base.npc.velocity.Y = (float)(Math.Sin((double)num7) * 12.0) * -1f;
-						base.npc.ai[0] %= 6.2831855f;
-						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
-						Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 20, 1f, 0f);
-						Color color3 = default(Color);
-						Rectangle rectangle3;
-						rectangle3..ctor((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
-						int num8 = 30;
-						for (int k = 1; k <= num8; k++)
-						{
-							int num9 = Dust.NewDust(base.npc.position, rectangle3.Width, rectangle3.Height, 226, 0f, 0f, 100, color3, 2.5f);
-							Main.dust[num9].noGravity = false;
-						}
-						return;
+						this.customAI[0] = 0f;
 					}
 				}
 			}
 			if (this.attackMode == 0)
 			{
-				this.aiCounter++;
+				this.customAI[0] += 1f;
 			}
 			if (this.fightBegin)
 			{
-				base.npc.noTileCollide = false;
-				base.npc.noGravity = false;
+				base.npc.noTileCollide = true;
+				base.npc.noGravity = true;
 			}
 			if (this.attackMode == 1)
 			{
-				base.npc.netUpdate = true;
-				base.npc.aiStyle = 3;
-				this.aiType = 425;
-				this.timer1++;
-				if (this.timer1 <= 300)
+				if (!this.shieldEvent1 && !this.shieldEvent2 && !this.shieldEvent3 && !this.shieldEvent4)
 				{
-					this.lightningOrbTimer++;
-					if (this.lightningOrbTimer == 120)
+					this.customAI[1] += 1f;
+					if (this.customAI[1] == 120f)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 0f), 465, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(0f, 0f), 465, 30, 3f, 255, 0f, 0f);
+					}
+					if (this.customAI[1] >= 300f && this.customAI[1] < 700f)
+					{
+						this.pewPew1Timer++;
+						if (this.pewPew1Timer == 40 || this.pewPew1Timer == 80 || this.pewPew1Timer == 120)
+						{
+							if (base.npc.direction == -1)
+							{
+								Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 462, 30, 3f, 255, 0f, 0f);
+							}
+							else
+							{
+								Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 462, 30, 3f, 255, 0f, 0f);
+							}
+						}
+						if (this.pewPew1Timer >= 120)
+						{
+							if (base.npc.direction == -1)
+							{
+								Main.PlaySound(SoundID.Item91, (int)base.npc.position.X, (int)base.npc.position.Y);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-8f, 4f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-8f, -4f), 435, 30, 3f, 255, 0f, 0f);
+							}
+							else
+							{
+								Main.PlaySound(SoundID.Item91, (int)base.npc.position.X, (int)base.npc.position.Y);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(8f, 4f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(8f, -4f), 435, 30, 3f, 255, 0f, 0f);
+							}
+							this.pewPew1Timer = 0;
+						}
+					}
+					if (this.customAI[1] == 800f)
+					{
+						this.idle2 = false;
+						this.chargeAttack = true;
+						Vector2 vector;
+						vector..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
+						float num2 = (float)Math.Atan2((double)(vector.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
+						base.npc.velocity.X = (float)(Math.Cos((double)num2) * 40.0) * -1f;
+						base.npc.velocity.Y = (float)(Math.Sin((double)num2) * 10.0) * -1f;
+						base.npc.ai[0] %= 6.2831855f;
+						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
+						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
+						Color color = default(Color);
+						Rectangle rectangle;
+						rectangle..ctor((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
+						int num3 = 10;
+						for (int i = 1; i <= num3; i++)
+						{
+							int num4 = Dust.NewDust(base.npc.position, rectangle.Width, rectangle.Height, 31, 0f, 0f, 100, color, 2.5f);
+							Main.dust[num4].noGravity = false;
+						}
+						return;
+					}
+					if (this.customAI[1] == 830f)
+					{
+						this.idle2 = true;
+						this.chargeAttack = false;
+					}
+					if (this.customAI[1] == 900f)
+					{
+						this.idle2 = false;
+						this.chargeAttack = true;
+						Vector2 vector2;
+						vector2..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
+						float num5 = (float)Math.Atan2((double)(vector2.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector2.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
+						base.npc.velocity.X = (float)(Math.Cos((double)num5) * 40.0) * -1f;
+						base.npc.velocity.Y = (float)(Math.Sin((double)num5) * 10.0) * -1f;
+						base.npc.ai[0] %= 6.2831855f;
+						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
+						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
+						Color color2 = default(Color);
+						Rectangle rectangle2;
+						rectangle2..ctor((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
+						int num6 = 10;
+						for (int j = 1; j <= num6; j++)
+						{
+							int num7 = Dust.NewDust(base.npc.position, rectangle2.Width, rectangle2.Height, 31, 0f, 0f, 100, color2, 2.5f);
+							Main.dust[num7].noGravity = false;
+						}
+						return;
+					}
+					if (this.customAI[1] == 930f)
+					{
+						this.idle2 = true;
+						this.chargeAttack = false;
+					}
+					if (this.customAI[1] >= 1000f)
+					{
+						this.customAI[1] = 0f;
 					}
 				}
-				if (this.timer1 >= 300 && this.timer1 < 700)
+				if (this.shieldEvent1 && !this.shieldEvent2 && !this.shieldEvent3 && !this.shieldEvent4)
 				{
-					this.lightningOrbTimer = 0;
-					this.pewPew1Timer++;
-					this.pewPew2Timer++;
-					if (base.npc.life <= 38000 && base.npc.life > 30000 && this.pewPew1Timer >= 30)
+					this.customAI[1] += 1f;
+					if (this.customAI[1] == 120f)
 					{
-						if (base.npc.direction == -1)
-						{
-							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 462, 35, 3f, 255, 0f, 0f);
-						}
-						else
-						{
-							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 462, 35, 3f, 255, 0f, 0f);
-						}
-						this.pewPew1Timer = 0;
+						Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(0f, 0f), 465, 30, 3f, 255, 0f, 0f);
 					}
-					if (base.npc.life > 38000 && this.pewPew1Timer >= 40)
+					if (this.customAI[1] >= 300f && this.customAI[1] < 700f)
 					{
-						if (base.npc.direction == -1)
+						this.pewPew1Timer++;
+						if (this.pewPew1Timer == 30 || this.pewPew1Timer == 60 || this.pewPew1Timer == 90)
 						{
-							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 462, 35, 3f, 255, 0f, 0f);
+							if (base.npc.direction == -1)
+							{
+								Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 462, 30, 3f, 255, 0f, 0f);
+							}
+							else
+							{
+								Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 462, 30, 3f, 255, 0f, 0f);
+							}
 						}
-						else
+						if (this.pewPew1Timer >= 90)
 						{
-							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 462, 35, 3f, 255, 0f, 0f);
+							if (base.npc.direction == -1)
+							{
+								Main.PlaySound(SoundID.Item91, (int)base.npc.position.X, (int)base.npc.position.Y);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-8f, 4f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-8f, -4f), 435, 30, 3f, 255, 0f, 0f);
+							}
+							else
+							{
+								Main.PlaySound(SoundID.Item91, (int)base.npc.position.X, (int)base.npc.position.Y);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(8f, 4f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(8f, -4f), 435, 30, 3f, 255, 0f, 0f);
+							}
+							this.pewPew1Timer = 0;
 						}
-						this.pewPew1Timer = 0;
 					}
-					if (base.npc.life <= 30000 && this.pewPew1Timer >= 20)
+					if (this.customAI[1] >= 700f && this.customAI[1] < 800f)
 					{
-						if (base.npc.direction == -1)
+						this.pewPew1Timer++;
+						if (this.pewPew1Timer >= 15)
 						{
-							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 462, 35, 3f, 255, 0f, 0f);
+							if (base.npc.direction == -1)
+							{
+								Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 462, 30, 3f, 255, 0f, 0f);
+							}
+							else
+							{
+								Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 462, 30, 3f, 255, 0f, 0f);
+							}
+							this.pewPew1Timer = 0;
 						}
-						else
-						{
-							Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 462, 35, 3f, 255, 0f, 0f);
-						}
-						this.pewPew1Timer = 0;
 					}
-					if (base.npc.life <= 38000 && base.npc.life > 30000 && this.pewPew2Timer >= 70 && this.timer1 < 600)
+					if (this.customAI[1] == 860f)
 					{
-						if (base.npc.direction == -1)
+						this.idle2 = false;
+						this.chargeAttack = true;
+						Vector2 vector3;
+						vector3..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
+						float num8 = (float)Math.Atan2((double)(vector3.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector3.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
+						base.npc.velocity.X = (float)(Math.Cos((double)num8) * 50.0) * -1f;
+						base.npc.velocity.Y = (float)(Math.Sin((double)num8) * 10.0) * -1f;
+						base.npc.ai[0] %= 6.2831855f;
+						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
+						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
+						Color color3 = default(Color);
+						Rectangle rectangle3;
+						rectangle3..ctor((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
+						int num9 = 10;
+						for (int k = 1; k <= num9; k++)
 						{
-							Main.PlaySound(SoundID.Item91, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-8f, 4f), 435, 30, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 435, 30, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-8f, -4f), 435, 30, 3f, 255, 0f, 0f);
+							int num10 = Dust.NewDust(base.npc.position, rectangle3.Width, rectangle3.Height, 31, 0f, 0f, 100, color3, 2.5f);
+							Main.dust[num10].noGravity = false;
 						}
-						else
-						{
-							Main.PlaySound(SoundID.Item91, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(8f, 4f), 435, 30, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 435, 30, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(8f, -4f), 435, 30, 3f, 255, 0f, 0f);
-						}
-						this.pewPew2Timer = 0;
+						return;
 					}
-					if (base.npc.life <= 30000 && this.pewPew2Timer >= 50 && this.timer1 < 600)
+					if (this.customAI[1] == 830f)
 					{
-						if (base.npc.direction == -1)
-						{
-							Main.PlaySound(SoundID.Item91, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-8f, 4f), 435, 30, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-9f, 2f), 435, 30, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 435, 30, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-9f, -2f), 435, 30, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-8f, -4f), 435, 30, 3f, 255, 0f, 0f);
-						}
-						else
-						{
-							Main.PlaySound(SoundID.Item91, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(8f, 4f), 435, 30, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(9f, 2f), 435, 30, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 435, 30, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(9f, -2f), 435, 30, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(8f, -4f), 435, 30, 3f, 255, 0f, 0f);
-						}
-						this.pewPew2Timer = 0;
+						this.idle2 = true;
+						this.chargeAttack = false;
 					}
-					if (base.npc.life > 38000 && this.pewPew2Timer >= 100 && this.timer1 < 600)
+					if (this.customAI[1] == 900f)
 					{
-						if (base.npc.direction == -1)
+						this.idle2 = false;
+						this.chargeAttack = true;
+						Vector2 vector4;
+						vector4..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
+						float num11 = (float)Math.Atan2((double)(vector4.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector4.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
+						base.npc.velocity.X = (float)(Math.Cos((double)num11) * 50.0) * -1f;
+						base.npc.velocity.Y = (float)(Math.Sin((double)num11) * 10.0) * -1f;
+						base.npc.ai[0] %= 6.2831855f;
+						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
+						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
+						Color color4 = default(Color);
+						Rectangle rectangle4;
+						rectangle4..ctor((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
+						int num12 = 10;
+						for (int l = 1; l <= num12; l++)
 						{
-							Main.PlaySound(SoundID.Item91, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-8f, 4f), 435, 30, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 435, 30, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-8f, -4f), 435, 30, 3f, 255, 0f, 0f);
+							int num13 = Dust.NewDust(base.npc.position, rectangle4.Width, rectangle4.Height, 31, 0f, 0f, 100, color4, 2.5f);
+							Main.dust[num13].noGravity = false;
 						}
-						else
-						{
-							Main.PlaySound(SoundID.Item91, (int)base.npc.position.X, (int)base.npc.position.Y);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(8f, 4f), 435, 30, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 435, 30, 3f, 255, 0f, 0f);
-							Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(8f, -4f), 435, 30, 3f, 255, 0f, 0f);
-						}
-						this.pewPew2Timer = 0;
+						return;
+					}
+					if (this.customAI[1] == 930f)
+					{
+						this.idle2 = true;
+						this.chargeAttack = false;
+					}
+					if (this.customAI[1] >= 980f)
+					{
+						this.customAI[1] = 0f;
 					}
 				}
-				if (this.timer1 >= 600)
+				if (this.shieldEvent2 && !this.shieldEvent3 && !this.shieldEvent4)
 				{
-					if (base.npc.life <= 38000 && base.npc.life > 30000)
+					this.customAI[1] += 1f;
+					if (this.customAI[1] == 120f)
 					{
+						Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(0f, 0f), 465, 30, 3f, 255, 0f, 0f);
+					}
+					if (this.customAI[1] >= 300f && this.customAI[1] < 700f)
+					{
+						this.pewPew1Timer++;
+						if (this.pewPew1Timer == 20 || this.pewPew1Timer == 40 || this.pewPew1Timer == 60)
+						{
+							if (base.npc.direction == -1)
+							{
+								Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 462, 30, 3f, 255, 0f, 0f);
+							}
+							else
+							{
+								Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 462, 30, 3f, 255, 0f, 0f);
+							}
+						}
+						if (this.pewPew1Timer >= 90)
+						{
+							if (base.npc.direction == -1)
+							{
+								Main.PlaySound(SoundID.Item91, (int)base.npc.position.X, (int)base.npc.position.Y);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-8f, 4f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-9f, 2f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-9f, -2f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-8f, -4f), 435, 30, 3f, 255, 0f, 0f);
+							}
+							else
+							{
+								Main.PlaySound(SoundID.Item91, (int)base.npc.position.X, (int)base.npc.position.Y);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(8f, 4f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(9f, 2f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(9f, -2f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(8f, -4f), 435, 30, 3f, 255, 0f, 0f);
+							}
+							this.pewPew1Timer = 0;
+						}
+					}
+					if (this.customAI[1] >= 700f && this.customAI[1] < 760f)
+					{
+						this.pewPew1Timer++;
 						if (this.pewPew1Timer >= 10)
 						{
 							if (base.npc.direction == -1)
 							{
 								Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 462, 35, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 462, 30, 3f, 255, 0f, 0f);
 							}
 							else
 							{
 								Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 462, 35, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 462, 30, 3f, 255, 0f, 0f);
 							}
 							this.pewPew1Timer = 0;
 						}
-						if (this.timer1 >= 650)
+					}
+					if (this.customAI[1] == 820f)
+					{
+						this.rocketEvent = true;
+					}
+					if (this.customAI[1] == 900f)
+					{
+						this.idle2 = false;
+						this.chargeAttack = true;
+						Vector2 vector5;
+						vector5..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
+						float num14 = (float)Math.Atan2((double)(vector5.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector5.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
+						base.npc.velocity.X = (float)(Math.Cos((double)num14) * 60.0) * -1f;
+						base.npc.velocity.Y = (float)(Math.Sin((double)num14) * 10.0) * -1f;
+						base.npc.ai[0] %= 6.2831855f;
+						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
+						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
+						Color color5 = default(Color);
+						Rectangle rectangle5;
+						rectangle5..ctor((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
+						int num15 = 10;
+						for (int m = 1; m <= num15; m++)
 						{
-							this.timer1 = 0;
+							int num16 = Dust.NewDust(base.npc.position, rectangle5.Width, rectangle5.Height, 31, 0f, 0f, 100, color5, 2.5f);
+							Main.dust[num16].noGravity = false;
+						}
+						return;
+					}
+					if (this.customAI[1] == 930f)
+					{
+						this.idle2 = true;
+						this.chargeAttack = false;
+					}
+					if (this.customAI[1] == 1000f)
+					{
+						this.idle2 = false;
+						this.chargeAttack = true;
+						Vector2 vector6;
+						vector6..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
+						float num17 = (float)Math.Atan2((double)(vector6.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector6.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
+						base.npc.velocity.X = (float)(Math.Cos((double)num17) * 60.0) * -1f;
+						base.npc.velocity.Y = (float)(Math.Sin((double)num17) * 10.0) * -1f;
+						base.npc.ai[0] %= 6.2831855f;
+						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
+						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
+						Color color6 = default(Color);
+						Rectangle rectangle6;
+						rectangle6..ctor((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
+						int num18 = 10;
+						for (int n = 1; n <= num18; n++)
+						{
+							int num19 = Dust.NewDust(base.npc.position, rectangle6.Width, rectangle6.Height, 31, 0f, 0f, 100, color6, 2.5f);
+							Main.dust[num19].noGravity = false;
+						}
+						return;
+					}
+					if (this.customAI[1] == 1030f)
+					{
+						this.idle2 = true;
+						this.chargeAttack = false;
+					}
+					if (this.customAI[1] == 1100f)
+					{
+						this.idle2 = false;
+						this.chargeAttack = true;
+						Vector2 vector7;
+						vector7..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
+						float num20 = (float)Math.Atan2((double)(vector7.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector7.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
+						base.npc.velocity.X = (float)(Math.Cos((double)num20) * 60.0) * -1f;
+						base.npc.velocity.Y = (float)(Math.Sin((double)num20) * 10.0) * -1f;
+						base.npc.ai[0] %= 6.2831855f;
+						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
+						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
+						Color color7 = default(Color);
+						Rectangle rectangle7;
+						rectangle7..ctor((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
+						int num21 = 10;
+						for (int num22 = 1; num22 <= num21; num22++)
+						{
+							int num23 = Dust.NewDust(base.npc.position, rectangle7.Width, rectangle7.Height, 31, 0f, 0f, 100, color7, 2.5f);
+							Main.dust[num23].noGravity = false;
+						}
+						return;
+					}
+					if (this.customAI[1] == 1130f)
+					{
+						this.idle2 = true;
+						this.chargeAttack = false;
+					}
+					if (this.customAI[1] >= 1260f)
+					{
+						this.customAI[1] = 0f;
+					}
+				}
+				if (this.shieldEvent3 && !this.shieldEvent4)
+				{
+					this.customAI[1] += 1f;
+					if (this.customAI[1] == 120f)
+					{
+						Projectile.NewProjectile(new Vector2(base.npc.Center.X, base.npc.Center.Y), new Vector2(0f, 0f), 465, 30, 3f, 255, 0f, 0f);
+					}
+					if (this.customAI[1] >= 300f && this.customAI[1] < 700f)
+					{
+						this.pewPew1Timer++;
+						if (this.pewPew1Timer == 20 || this.pewPew1Timer == 40 || this.pewPew1Timer == 60)
+						{
+							if (base.npc.direction == -1)
+							{
+								Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 462, 30, 3f, 255, 0f, 0f);
+							}
+							else
+							{
+								Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 462, 30, 3f, 255, 0f, 0f);
+							}
+						}
+						if (this.pewPew1Timer >= 90)
+						{
+							if (base.npc.direction == -1)
+							{
+								Main.PlaySound(SoundID.Item91, (int)base.npc.position.X, (int)base.npc.position.Y);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-8f, 4f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-9f, 2f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-9f, -2f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-8f, -4f), 435, 30, 3f, 255, 0f, 0f);
+							}
+							else
+							{
+								Main.PlaySound(SoundID.Item91, (int)base.npc.position.X, (int)base.npc.position.Y);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(8f, 4f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(9f, 2f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(9f, -2f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(8f, -4f), 435, 30, 3f, 255, 0f, 0f);
+							}
+							this.pewPew1Timer = 0;
 						}
 					}
-					if (base.npc.life <= 30000)
+					if (this.customAI[1] >= 700f && this.customAI[1] < 740f)
 					{
+						this.pewPew1Timer++;
 						if (this.pewPew1Timer >= 8)
 						{
 							if (base.npc.direction == -1)
 							{
 								Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 462, 35, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 462, 30, 3f, 255, 0f, 0f);
 							}
 							else
 							{
 								Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
-								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 462, 35, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 462, 30, 3f, 255, 0f, 0f);
 							}
 							this.pewPew1Timer = 0;
 						}
-						if (this.timer1 >= 700)
+					}
+					if (this.customAI[1] == 760f)
+					{
+						this.rocketEvent = true;
+					}
+					if (this.customAI[1] == 800f)
+					{
+						this.rocketEvent = true;
+					}
+					if (this.customAI[1] == 900f)
+					{
+						this.idle2 = false;
+						this.chargeAttack = true;
+						Vector2 vector8;
+						vector8..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
+						float num24 = (float)Math.Atan2((double)(vector8.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector8.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
+						base.npc.velocity.X = (float)(Math.Cos((double)num24) * 60.0) * -1f;
+						base.npc.velocity.Y = (float)(Math.Sin((double)num24) * 10.0) * -1f;
+						base.npc.ai[0] %= 6.2831855f;
+						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
+						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
+						Color color8 = default(Color);
+						Rectangle rectangle8;
+						rectangle8..ctor((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
+						int num25 = 10;
+						for (int num26 = 1; num26 <= num25; num26++)
 						{
-							this.timer1 = 0;
+							int num27 = Dust.NewDust(base.npc.position, rectangle8.Width, rectangle8.Height, 31, 0f, 0f, 100, color8, 2.5f);
+							Main.dust[num27].noGravity = false;
+						}
+						return;
+					}
+					if (this.customAI[1] == 930f)
+					{
+						this.idle2 = true;
+						this.chargeAttack = false;
+					}
+					if (this.customAI[1] == 940f)
+					{
+						this.rocketEvent = true;
+					}
+					if (this.customAI[1] == 1000f)
+					{
+						this.idle2 = false;
+						this.chargeAttack = true;
+						Vector2 vector9;
+						vector9..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
+						float num28 = (float)Math.Atan2((double)(vector9.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector9.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
+						base.npc.velocity.X = (float)(Math.Cos((double)num28) * 60.0) * -1f;
+						base.npc.velocity.Y = (float)(Math.Sin((double)num28) * 10.0) * -1f;
+						base.npc.ai[0] %= 6.2831855f;
+						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
+						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
+						Color color9 = default(Color);
+						Rectangle rectangle9;
+						rectangle9..ctor((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
+						int num29 = 10;
+						for (int num30 = 1; num30 <= num29; num30++)
+						{
+							int num31 = Dust.NewDust(base.npc.position, rectangle9.Width, rectangle9.Height, 31, 0f, 0f, 100, color9, 2.5f);
+							Main.dust[num31].noGravity = false;
+						}
+						return;
+					}
+					if (this.customAI[1] == 1030f)
+					{
+						this.idle2 = true;
+						this.chargeAttack = false;
+					}
+					if (this.customAI[1] == 1040f)
+					{
+						this.rocketEvent = true;
+					}
+					if (this.customAI[1] == 1100f)
+					{
+						this.idle2 = false;
+						this.chargeAttack = true;
+						Vector2 vector10;
+						vector10..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
+						float num32 = (float)Math.Atan2((double)(vector10.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector10.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
+						base.npc.velocity.X = (float)(Math.Cos((double)num32) * 60.0) * -1f;
+						base.npc.velocity.Y = (float)(Math.Sin((double)num32) * 10.0) * -1f;
+						base.npc.ai[0] %= 6.2831855f;
+						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
+						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
+						Color color10 = default(Color);
+						Rectangle rectangle10;
+						rectangle10..ctor((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
+						int num33 = 10;
+						for (int num34 = 1; num34 <= num33; num34++)
+						{
+							int num35 = Dust.NewDust(base.npc.position, rectangle10.Width, rectangle10.Height, 31, 0f, 0f, 100, color10, 2.5f);
+							Main.dust[num35].noGravity = false;
+						}
+						return;
+					}
+					if (this.customAI[1] == 1130f)
+					{
+						this.idle2 = true;
+						this.chargeAttack = false;
+					}
+					if (this.customAI[1] >= 1260f)
+					{
+						this.customAI[1] = 0f;
+					}
+				}
+				if (this.shieldEvent4)
+				{
+					this.customAI[1] += 1f;
+					if (this.customAI[1] == 10f)
+					{
+						this.idle2R = false;
+						this.chargeAttackR = true;
+						Vector2 vector11;
+						vector11..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
+						float num36 = (float)Math.Atan2((double)(vector11.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector11.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
+						base.npc.velocity.X = (float)(Math.Cos((double)num36) * 60.0) * -1f;
+						base.npc.velocity.Y = (float)(Math.Sin((double)num36) * 10.0) * -1f;
+						base.npc.ai[0] %= 6.2831855f;
+						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
+						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
+						Color color11 = default(Color);
+						Rectangle rectangle11;
+						rectangle11..ctor((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
+						int num37 = 10;
+						for (int num38 = 1; num38 <= num37; num38++)
+						{
+							int num39 = Dust.NewDust(base.npc.position, rectangle11.Width, rectangle11.Height, 235, 0f, 0f, 100, color11, 1.5f);
+							Main.dust[num39].noGravity = false;
+						}
+						return;
+					}
+					if (this.customAI[1] == 30f)
+					{
+						this.idle2R = true;
+						this.chargeAttackR = false;
+					}
+					if (this.customAI[1] == 35f)
+					{
+						this.teleport = true;
+					}
+					if (this.customAI[1] == 45f)
+					{
+						this.idle2R = false;
+						this.chargeAttackR = true;
+						Vector2 vector12;
+						vector12..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
+						float num40 = (float)Math.Atan2((double)(vector12.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector12.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
+						base.npc.velocity.X = (float)(Math.Cos((double)num40) * 60.0) * -1f;
+						base.npc.velocity.Y = (float)(Math.Sin((double)num40) * 10.0) * -1f;
+						base.npc.ai[0] %= 6.2831855f;
+						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
+						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
+						Color color12 = default(Color);
+						Rectangle rectangle12;
+						rectangle12..ctor((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
+						int num41 = 10;
+						for (int num42 = 1; num42 <= num41; num42++)
+						{
+							int num43 = Dust.NewDust(base.npc.position, rectangle12.Width, rectangle12.Height, 235, 0f, 0f, 100, color12, 1.5f);
+							Main.dust[num43].noGravity = false;
+						}
+						return;
+					}
+					if (this.customAI[1] == 65f)
+					{
+						this.idle2R = true;
+						this.chargeAttackR = false;
+					}
+					if (this.customAI[1] == 70f)
+					{
+						this.teleport = true;
+					}
+					if (this.customAI[1] == 80f)
+					{
+						this.idle2R = false;
+						this.chargeAttackR = true;
+						Vector2 vector13;
+						vector13..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
+						float num44 = (float)Math.Atan2((double)(vector13.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector13.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
+						base.npc.velocity.X = (float)(Math.Cos((double)num44) * 60.0) * -1f;
+						base.npc.velocity.Y = (float)(Math.Sin((double)num44) * 10.0) * -1f;
+						base.npc.ai[0] %= 6.2831855f;
+						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
+						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
+						Color color13 = default(Color);
+						Rectangle rectangle13;
+						rectangle13..ctor((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
+						int num45 = 10;
+						for (int num46 = 1; num46 <= num45; num46++)
+						{
+							int num47 = Dust.NewDust(base.npc.position, rectangle13.Width, rectangle13.Height, 235, 0f, 0f, 100, color13, 1.5f);
+							Main.dust[num47].noGravity = false;
+						}
+						return;
+					}
+					if (this.customAI[1] == 100f)
+					{
+						this.idle2R = true;
+						this.chargeAttackR = false;
+					}
+					if (this.customAI[1] == 105f)
+					{
+						this.teleport = true;
+					}
+					if (this.customAI[1] == 115f)
+					{
+						this.idle2R = false;
+						this.chargeAttackR = true;
+						Vector2 vector14;
+						vector14..ctor(base.npc.position.X + (float)base.npc.width * 0.5f, base.npc.position.Y + (float)base.npc.height * 0.5f);
+						float num48 = (float)Math.Atan2((double)(vector14.Y - (Main.player[base.npc.target].position.Y + (float)Main.player[base.npc.target].height * 0.5f)), (double)(vector14.X - (Main.player[base.npc.target].position.X + (float)Main.player[base.npc.target].width * 0.5f)));
+						base.npc.velocity.X = (float)(Math.Cos((double)num48) * 60.0) * -1f;
+						base.npc.velocity.Y = (float)(Math.Sin((double)num48) * 10.0) * -1f;
+						base.npc.ai[0] %= 6.2831855f;
+						new Vector2((float)Math.Cos((double)base.npc.ai[0]), (float)Math.Sin((double)base.npc.ai[0]));
+						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
+						Color color14 = default(Color);
+						Rectangle rectangle14;
+						rectangle14..ctor((int)base.npc.position.X, (int)(base.npc.position.Y + (float)((base.npc.height - base.npc.width) / 2)), base.npc.width, base.npc.width);
+						int num49 = 10;
+						for (int num50 = 1; num50 <= num49; num50++)
+						{
+							int num51 = Dust.NewDust(base.npc.position, rectangle14.Width, rectangle14.Height, 235, 0f, 0f, 100, color14, 1.5f);
+							Main.dust[num51].noGravity = false;
+						}
+						return;
+					}
+					if (this.customAI[1] == 135f)
+					{
+						this.idle2R = true;
+						this.chargeAttackR = false;
+					}
+					if (this.customAI[1] >= 180f && this.customAI[1] < 480f)
+					{
+						this.pewPew1Timer++;
+						if (this.pewPew1Timer == 20 || this.pewPew1Timer == 40 || this.pewPew1Timer == 60 || this.pewPew1Timer == 80)
+						{
+							if (base.npc.direction == -1)
+							{
+								Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 462, 30, 3f, 255, 0f, 0f);
+							}
+							else
+							{
+								Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 462, 30, 3f, 255, 0f, 0f);
+							}
+						}
+						if (this.pewPew1Timer >= 100)
+						{
+							if (base.npc.direction == -1)
+							{
+								Main.PlaySound(SoundID.Item91, (int)base.npc.position.X, (int)base.npc.position.Y);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-8f, 4f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-9f, 2f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-9f, -2f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-8f, -4f), 435, 30, 3f, 255, 0f, 0f);
+							}
+							else
+							{
+								Main.PlaySound(SoundID.Item91, (int)base.npc.position.X, (int)base.npc.position.Y);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(8f, 4f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(9f, 2f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(9f, -2f), 435, 30, 3f, 255, 0f, 0f);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(8f, -4f), 435, 30, 3f, 255, 0f, 0f);
+							}
+							this.pewPew1Timer = 0;
 						}
 					}
-					if (base.npc.life > 38000)
+					if (this.customAI[1] >= 480f && this.customAI[1] < 560f)
 					{
-						this.timer1 = 0;
+						this.pewPew1Timer++;
+						if (this.pewPew1Timer >= 6)
+						{
+							if (base.npc.direction == -1)
+							{
+								Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(-10f, 0f), 462, 30, 3f, 255, 0f, 0f);
+							}
+							else
+							{
+								Main.PlaySound(SoundID.Item125, (int)base.npc.position.X, (int)base.npc.position.Y);
+								Projectile.NewProjectile(new Vector2(base.npc.position.X + 16f, base.npc.position.Y + 54f), new Vector2(10f, 0f), 462, 30, 3f, 255, 0f, 0f);
+							}
+							this.pewPew1Timer = 0;
+						}
+					}
+					if (this.customAI[1] == 590f)
+					{
+						this.rocketEvent = true;
+					}
+					if (this.customAI[1] == 628f)
+					{
+						this.rocketEvent = true;
+					}
+					if (this.customAI[1] == 666f)
+					{
+						this.rocketEvent = true;
+					}
+					if (this.customAI[1] == 704f)
+					{
+						this.rocketEvent = true;
+					}
+					if (this.customAI[1] >= 742f)
+					{
+						this.customAI[1] = 0f;
 					}
 				}
 			}
 			if (base.npc.life <= 38000 && !this.shieldEvent1)
 			{
-				base.npc.netUpdate = true;
 				this.attackMode = 2;
-				this.shieldTimer1++;
-				if (this.shieldTimer1 <= 300)
+				this.customAI[2] += 1f;
+				this.chargeAttack = false;
+				if (this.customAI[2] == 5f)
+				{
+					string text11 = "What a nuisance. Minions, take him down.";
+					Color rarityCyan = Colors.RarityCyan;
+					byte r11 = rarityCyan.R;
+					rarityCyan = Colors.RarityCyan;
+					byte g11 = rarityCyan.G;
+					rarityCyan = Colors.RarityCyan;
+					Main.NewText(text11, r11, g11, rarityCyan.B, false);
+				}
+				if (this.customAI[2] < 500f)
 				{
 					this.shieldUp = true;
 					this.idle2 = false;
-					base.npc.netUpdate = true;
 					base.npc.dontTakeDamage = true;
-					if (this.shieldTimer1 == 60)
+					if (this.customAI[2] == 260f)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 465, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 465, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
 					}
-					if (this.shieldTimer1 == 120)
+					if (this.customAI[2] == 320f)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 465, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 465, 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
 					}
 				}
-				if (this.shieldTimer1 >= 300)
+				if (this.customAI[2] >= 500f && !NPC.AnyNPCs(base.mod.NPCType("SpaceKeeper")))
 				{
-					this.shieldTimer1 = 0;
+					string text12 = "I never needed them anyway.";
+					Color rarityCyan = Colors.RarityCyan;
+					byte r12 = rarityCyan.R;
+					rarityCyan = Colors.RarityCyan;
+					byte g12 = rarityCyan.G;
+					rarityCyan = Colors.RarityCyan;
+					Main.NewText(text12, r12, g12, rarityCyan.B, false);
+					this.customAI[2] = 0f;
 					this.shieldEvent1 = true;
-					this.timer1 = 0;
+					this.customAI[1] = 0f;
 					this.attackMode = 1;
 					this.shieldUp = false;
 					this.idle2 = true;
-					base.npc.netUpdate = true;
 				}
 			}
 			if (base.npc.life <= 30000 && !this.shieldEvent2)
 			{
-				base.npc.netUpdate = true;
 				this.attackMode = 2;
-				this.shieldTimer2++;
-				if (this.shieldTimer2 == 1)
+				this.customAI[2] += 1f;
+				this.chargeAttack = false;
+				if (this.customAI[2] == 5f)
 				{
-					string text9 = "Alright, you are really starting to piss me off!";
-					Color rarityCyan25 = Colors.RarityCyan;
-					byte r9 = rarityCyan25.R;
-					Color rarityCyan26 = Colors.RarityCyan;
-					byte g9 = rarityCyan26.G;
-					Color rarityCyan27 = Colors.RarityCyan;
-					Main.NewText(text9, r9, g9, rarityCyan27.B, false);
+					string text13 = "Alright, you are really starting to piss me off!";
+					Color rarityCyan = Colors.RarityCyan;
+					byte r13 = rarityCyan.R;
+					rarityCyan = Colors.RarityCyan;
+					byte g13 = rarityCyan.G;
+					rarityCyan = Colors.RarityCyan;
+					Main.NewText(text13, r13, g13, rarityCyan.B, false);
 				}
-				if (this.shieldTimer2 < 570)
+				if (this.customAI[2] < 570f)
 				{
 					this.shieldUp = true;
 					this.idle2 = false;
 					base.npc.dontTakeDamage = true;
-					base.npc.netUpdate = true;
 				}
-				if (this.shieldTimer2 >= 120 && this.shieldTimer2 < 570)
+				if (this.customAI[2] == 180f)
 				{
-					if (this.shieldTimer2 == 180)
-					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 465, 30, 3f, 255, 0f, 0f);
-					}
-					if (this.shieldTimer2 == 240)
-					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 465, 30, 3f, 255, 0f, 0f);
-					}
-					if (this.shieldTimer2 == 300)
-					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 465, 30, 3f, 255, 0f, 0f);
-					}
-					if (this.shieldTimer2 == 360)
-					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 465, 30, 3f, 255, 0f, 0f);
-					}
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
 				}
-				if (this.shieldTimer2 >= 570)
+				if (this.customAI[2] == 240f)
 				{
-					this.shieldTimer2 = 0;
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+				}
+				if (this.customAI[2] == 300f)
+				{
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+				}
+				if (this.customAI[2] == 360f)
+				{
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+				}
+				if (this.customAI[2] >= 570f && !NPC.AnyNPCs(base.mod.NPCType("SpaceKeeper")))
+				{
+					this.customAI[2] = 0f;
 					this.shieldEvent2 = true;
-					this.timer1 = 0;
+					this.customAI[1] = 0f;
 					this.attackMode = 1;
 					this.shieldUp = false;
-					base.npc.netUpdate = true;
 					this.idle2 = true;
 				}
 			}
 			if (base.npc.life <= 24000 && !this.shieldEvent3)
 			{
-				base.npc.netUpdate = true;
 				this.attackMode = 2;
-				this.shieldTimer3++;
-				if (this.shieldTimer3 < 480)
+				this.customAI[2] += 1f;
+				this.chargeAttack = false;
+				if (this.customAI[2] < 570f)
 				{
 					this.shieldUp = true;
 					this.idle2 = false;
-					base.npc.netUpdate = true;
 					base.npc.dontTakeDamage = true;
-					if (this.shieldTimer3 == 30)
-					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, -6f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 6f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-6f, 0f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(6f, 0f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 435, 30, 3f, 255, 0f, 0f);
-					}
-					if (this.shieldTimer3 == 150)
-					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, -6f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 6f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-6f, 0f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(6f, 0f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 435, 30, 3f, 255, 0f, 0f);
-					}
-					if (this.shieldTimer3 == 60)
-					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 465, 30, 3f, 255, 0f, 0f);
-					}
-					if (this.shieldTimer3 == 120)
-					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 465, 30, 3f, 255, 0f, 0f);
-					}
-					if (this.shieldTimer3 == 180)
-					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 465, 30, 3f, 255, 0f, 0f);
-					}
-					if (this.shieldTimer3 == 240)
-					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 465, 30, 3f, 255, 0f, 0f);
-					}
 				}
-				if (this.shieldTimer3 >= 480)
+				if (this.customAI[2] == 30f)
 				{
-					this.shieldTimer3 = 0;
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, -6f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 6f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-6f, 0f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(6f, 0f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 435, 30, 3f, 255, 0f, 0f);
+				}
+				if (this.customAI[2] == 150f)
+				{
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, -6f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 6f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-6f, 0f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(6f, 0f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 435, 30, 3f, 255, 0f, 0f);
+				}
+				if (this.customAI[2] == 60f)
+				{
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+				}
+				if (this.customAI[2] == 120f)
+				{
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+				}
+				if (this.customAI[2] == 180f)
+				{
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+				}
+				if (this.customAI[2] == 240f)
+				{
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+				}
+				if (this.customAI[2] >= 480f && !NPC.AnyNPCs(base.mod.NPCType("SpaceKeeper")))
+				{
+					this.customAI[2] = 0f;
 					this.shieldEvent3 = true;
-					this.timer1 = 0;
+					this.customAI[1] = 0f;
 					this.attackMode = 1;
 					this.shieldUp = false;
 					this.idle2 = true;
-					base.npc.netUpdate = true;
 				}
 			}
-			if (base.npc.life <= 22000 && !this.rocketEvent1)
+			if (base.npc.life <= 10000 && !this.shieldEvent4)
 			{
 				this.attackMode = 2;
-				this.idle2 = false;
-				this.fistRocket = true;
-				this.fistTimer++;
-				if (this.fistTimer == 21)
-				{
-					if (base.npc.direction == -1)
-					{
-						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(-10f, 0f), base.mod.ProjectileType("KSFist"), 50, 3f, 255, 0f, 0f);
-					}
-					else
-					{
-						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(10f, 0f), base.mod.ProjectileType("KSFist"), 50, 3f, 255, 0f, 0f);
-					}
-				}
-				if (this.fistTimer >= 39 && this.fistTimer < 51)
-				{
-					this.fistRocket = false;
-					this.fistRocketDone = true;
-				}
-				if (this.fistTimer >= 51)
-				{
-					this.fistRocket = false;
-					this.fistRocketDone = false;
-					this.fistTimer = 0;
-					this.rocketEvent1 = true;
-					this.attackMode = 1;
-					this.idle2 = true;
-				}
-			}
-			if (base.npc.life <= 20000 && !this.rocketEvent2)
-			{
-				this.attackMode = 2;
-				this.idle2 = false;
-				this.fistRocket = true;
-				this.fistTimer++;
-				if (this.fistTimer == 21)
-				{
-					if (base.npc.direction == -1)
-					{
-						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(-10f, 0f), base.mod.ProjectileType("KSFist"), 50, 3f, 255, 0f, 0f);
-					}
-					else
-					{
-						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(10f, 0f), base.mod.ProjectileType("KSFist"), 50, 3f, 255, 0f, 0f);
-					}
-				}
-				if (this.fistTimer >= 39 && this.fistTimer < 51)
-				{
-					this.fistRocket = false;
-					this.fistRocketDone = true;
-				}
-				if (this.fistTimer >= 51)
-				{
-					this.fistRocket = false;
-					this.fistRocketDone = false;
-					this.fistTimer = 0;
-					this.rocketEvent2 = true;
-					this.attackMode = 1;
-					this.idle2 = true;
-				}
-			}
-			if (base.npc.life <= 17500 && !this.rocketEvent3)
-			{
-				this.attackMode = 2;
-				this.idle2 = false;
-				this.fistRocket = true;
-				this.fistTimer++;
-				if (this.fistTimer == 21)
-				{
-					if (base.npc.direction == -1)
-					{
-						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(-10f, 0f), base.mod.ProjectileType("KSFist"), 50, 3f, 255, 0f, 0f);
-					}
-					else
-					{
-						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(10f, 0f), base.mod.ProjectileType("KSFist"), 50, 3f, 255, 0f, 0f);
-					}
-				}
-				if (this.fistTimer >= 39 && this.fistTimer < 51)
-				{
-					this.fistRocket = false;
-					this.fistRocketDone = true;
-				}
-				if (this.fistTimer >= 51)
-				{
-					this.fistRocket = false;
-					this.fistRocketDone = false;
-					this.fistTimer = 0;
-					this.rocketEvent3 = true;
-					this.attackMode = 1;
-					this.idle2 = true;
-				}
-			}
-			if (base.npc.life <= 16500 && !this.rocketEvent4)
-			{
-				this.attackMode = 2;
-				this.idle2 = false;
-				this.fistRocket = true;
-				this.fistTimer++;
-				if (this.fistTimer == 21)
-				{
-					if (base.npc.direction == -1)
-					{
-						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(-10f, 0f), base.mod.ProjectileType("KSFist"), 50, 3f, 255, 0f, 0f);
-					}
-					else
-					{
-						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(10f, 0f), base.mod.ProjectileType("KSFist"), 50, 3f, 255, 0f, 0f);
-					}
-				}
-				if (this.fistTimer >= 39 && this.fistTimer < 51)
-				{
-					this.fistRocket = false;
-					this.fistRocketDone = true;
-				}
-				if (this.fistTimer >= 51)
-				{
-					this.fistRocket = false;
-					this.fistRocketDone = false;
-					this.fistTimer = 0;
-					this.rocketEvent4 = true;
-					this.attackMode = 1;
-					this.idle2 = true;
-				}
-			}
-			if (base.npc.life <= 15500 && !this.rocketEvent5)
-			{
-				this.attackMode = 2;
-				this.idle2 = false;
-				this.fistRocket = true;
-				this.fistTimer++;
-				if (this.fistTimer == 21)
-				{
-					if (base.npc.direction == -1)
-					{
-						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(-10f, 0f), base.mod.ProjectileType("KSFist"), 50, 3f, 255, 0f, 0f);
-					}
-					else
-					{
-						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(10f, 0f), base.mod.ProjectileType("KSFist"), 50, 3f, 255, 0f, 0f);
-					}
-				}
-				if (this.fistTimer >= 39 && this.fistTimer < 51)
-				{
-					this.fistRocket = false;
-					this.fistRocketDone = true;
-				}
-				if (this.fistTimer >= 51)
-				{
-					this.fistRocket = false;
-					this.fistRocketDone = false;
-					this.fistTimer = 0;
-					this.rocketEvent5 = true;
-					this.attackMode = 1;
-					this.idle2 = true;
-				}
-			}
-			if (base.npc.life <= 12000 && !this.shieldEvent4)
-			{
-				this.attackMode = 2;
-				this.shieldTimer4++;
-				if (this.shieldTimer4 < 480)
+				this.customAI[2] += 1f;
+				this.chargeAttack = false;
+				if (this.customAI[2] < 580f)
 				{
 					this.shieldUp = true;
 					this.idle2 = false;
 					base.npc.dontTakeDamage = true;
-					if (this.shieldTimer4 == 30)
+				}
+				if (this.customAI[2] == 5f)
+				{
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).omegaPower)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, -6f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 6f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-6f, 0f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(6f, 0f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 435, 30, 3f, 255, 0f, 0f);
+						string text14 = "How am I losing to a WEAK LITTLE ANDROID!?";
+						Color rarityCyan = Colors.RarityCyan;
+						byte r14 = rarityCyan.R;
+						rarityCyan = Colors.RarityCyan;
+						byte g14 = rarityCyan.G;
+						rarityCyan = Colors.RarityCyan;
+						Main.NewText(text14, r14, g14, rarityCyan.B, false);
 					}
-					if (this.shieldTimer4 == 60)
+					else if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).chickenPower)
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, -6f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 6f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-6f, 0f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(6f, 0f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 435, 30, 3f, 255, 0f, 0f);
+						string text15 = "The frick!? HOW AM I LOSING TO A CHICKEN!?";
+						Color rarityCyan = Colors.RarityCyan;
+						byte r15 = rarityCyan.R;
+						rarityCyan = Colors.RarityCyan;
+						byte g15 = rarityCyan.G;
+						rarityCyan = Colors.RarityCyan;
+						Main.NewText(text15, r15, g15, rarityCyan.B, false);
 					}
-					if (this.shieldTimer4 == 90)
+					else
 					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, -6f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 6f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-6f, 0f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(6f, 0f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 435, 30, 3f, 255, 0f, 0f);
-					}
-					if (this.shieldTimer4 == 120)
-					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, -6f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 6f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-6f, 0f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(6f, 0f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 435, 30, 3f, 255, 0f, 0f);
-					}
-					if (this.shieldTimer4 == 150)
-					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, -6f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 6f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-6f, 0f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(6f, 0f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 435, 30, 3f, 255, 0f, 0f);
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 435, 30, 3f, 255, 0f, 0f);
-					}
-					if (this.shieldTimer4 == 60)
-					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 465, 30, 3f, 255, 0f, 0f);
-					}
-					if (this.shieldTimer4 == 120)
-					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 465, 30, 3f, 255, 0f, 0f);
-					}
-					if (this.shieldTimer4 == 180)
-					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 465, 30, 3f, 255, 0f, 0f);
-					}
-					if (this.shieldTimer4 == 240)
-					{
-						Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 465, 30, 3f, 255, 0f, 0f);
+						string text16 = "How am I losing to a WEAK TERRARIAN!?";
+						Color rarityCyan = Colors.RarityCyan;
+						byte r16 = rarityCyan.R;
+						rarityCyan = Colors.RarityCyan;
+						byte g16 = rarityCyan.G;
+						rarityCyan = Colors.RarityCyan;
+						Main.NewText(text16, r16, g16, rarityCyan.B, false);
 					}
 				}
-				if (this.shieldTimer4 >= 480)
+				if (this.customAI[2] == 180f)
 				{
-					this.shieldTimer4 = 0;
-					this.shieldEvent4 = true;
-					this.timer1 = 0;
-					this.attackMode = 1;
-					this.shieldUp = false;
-					this.idle2 = true;
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, -6f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 6f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-6f, 0f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(6f, 0f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 435, 30, 3f, 255, 0f, 0f);
+				}
+				if (this.customAI[2] == 220f)
+				{
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, -6f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 6f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-6f, 0f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(6f, 0f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 435, 30, 3f, 255, 0f, 0f);
+				}
+				if (this.customAI[2] == 260f)
+				{
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, -6f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 6f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-6f, 0f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(6f, 0f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 435, 30, 3f, 255, 0f, 0f);
+				}
+				if (this.customAI[2] == 300f)
+				{
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, -6f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 6f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-6f, 0f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(6f, 0f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 435, 30, 3f, 255, 0f, 0f);
+				}
+				if (this.customAI[2] == 340f)
+				{
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, -6f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(0f, 6f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-6f, 0f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(6f, 0f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), 435, 30, 3f, 255, 0f, 0f);
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), 435, 30, 3f, 255, 0f, 0f);
+				}
+				if (this.customAI[2] == 180f)
+				{
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, 4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+				}
+				if (this.customAI[2] == 240f)
+				{
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, -4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+				}
+				if (this.customAI[2] == 300f)
+				{
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(4f, -4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+				}
+				if (this.customAI[2] == 360f)
+				{
+					Projectile.NewProjectile(new Vector2(base.npc.position.X + 32f, base.npc.position.Y + 56f), new Vector2(-4f, 4f), base.mod.ProjectileType("KSOrb1"), 30, 3f, 255, 0f, 0f);
+				}
+				if (this.customAI[2] >= 580f && !NPC.AnyNPCs(base.mod.NPCType("SpaceKeeper")))
+				{
+					this.musicChange = true;
+					this.customAI[3] += 1f;
+					if (this.customAI[3] == 5f)
+					{
+						string text17 = "No...";
+						Color rarityCyan = Colors.RarityCyan;
+						byte r17 = rarityCyan.R;
+						rarityCyan = Colors.RarityCyan;
+						byte g17 = rarityCyan.G;
+						rarityCyan = Colors.RarityCyan;
+						Main.NewText(text17, r17, g17, rarityCyan.B, false);
+					}
+					if (this.customAI[3] == 50f)
+					{
+						string text18 = "NO! HOW IS THIS HAPPENING!?";
+						Color rarityCyan = Colors.RarityCyan;
+						byte r18 = rarityCyan.R;
+						rarityCyan = Colors.RarityCyan;
+						byte g18 = rarityCyan.G;
+						rarityCyan = Colors.RarityCyan;
+						Main.NewText(text18, r18, g18, rarityCyan.B, false);
+					}
+					if (this.customAI[3] == 150f)
+					{
+						if (NPC.downedPlantBoss)
+						{
+							string text19 = "HOW ARE YOU WINNING!? THIS IS UNACCEPTABLE!";
+							Color rarityCyan = Colors.RarityCyan;
+							byte r19 = rarityCyan.R;
+							rarityCyan = Colors.RarityCyan;
+							byte g19 = rarityCyan.G;
+							rarityCyan = Colors.RarityCyan;
+							Main.NewText(text19, r19, g19, rarityCyan.B, false);
+						}
+						else
+						{
+							string text20 = "YOU HAVEN'T EVEN DEFEATED THAT DAMN PLANT YET, HOW ARE YOU DEFEATING ME!?";
+							Color rarityCyan = Colors.RarityCyan;
+							byte r20 = rarityCyan.R;
+							rarityCyan = Colors.RarityCyan;
+							byte g20 = rarityCyan.G;
+							rarityCyan = Colors.RarityCyan;
+							Main.NewText(text20, r20, g20, rarityCyan.B, false);
+						}
+					}
+					if (this.customAI[3] == 320f)
+					{
+						string text21 = "I'VE HAD ENOUGH OF YOU! LET'S FINISH THIS!";
+						Color rarityCyan = Colors.RarityCyan;
+						byte r21 = rarityCyan.R;
+						rarityCyan = Colors.RarityCyan;
+						byte g21 = rarityCyan.G;
+						rarityCyan = Colors.RarityCyan;
+						Main.NewText(text21, r21, g21, rarityCyan.B, false);
+					}
+					if (this.customAI[3] >= 500f)
+					{
+						for (int num52 = 0; num52 < 40; num52++)
+						{
+							int num53 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 235, 0f, 0f, 100, default(Color), 1.5f);
+							Main.dust[num53].velocity *= 2.9f;
+						}
+						Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
+						this.customAI[2] = 0f;
+						this.customAI[3] = 0f;
+						this.shieldEvent4 = true;
+						this.customAI[1] = 0f;
+						this.attackMode = 1;
+						this.shieldUp = false;
+						this.idle2R = true;
+						this.idle2 = false;
+					}
 				}
 			}
-			if (this.fightBegin)
+			if (this.musicChange)
 			{
-				if (base.npc.velocity.X == 0f && base.npc.velocity.Y == 0f)
+				this.music = base.mod.GetSoundSlot(51, "Sounds/Music/BossSlayer2");
+			}
+			if (this.rocketEvent)
+			{
+				if (this.shieldEvent4)
 				{
-					this.noMoveTimer++;
-					if (this.noMoveTimer >= 60)
+					if (this.fistTimer < 36)
 					{
-						this.teleport = true;
-						base.npc.netUpdate = true;
+						this.idle2R = false;
+						this.fistRocketR = true;
+					}
+					this.fistTimer++;
+					if (this.fistTimer == 18)
+					{
+						if (base.npc.direction == -1)
+						{
+							Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(-10f, 0f), base.mod.ProjectileType("KSFistR"), 35, 3f, 255, 0f, 0f);
+						}
+						else
+						{
+							Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(10f, 0f), base.mod.ProjectileType("KSFistR"), 35, 3f, 255, 0f, 0f);
+						}
+					}
+					if (this.fistTimer >= 36)
+					{
+						this.fistRocketR = false;
+						this.fistTimer = 0;
+						this.idle2R = true;
+						this.rocketEvent = false;
 					}
 				}
 				else
 				{
-					this.noMoveTimer = 0;
+					if (this.fistTimer < 36)
+					{
+						this.idle2 = false;
+						this.fistRocket = true;
+					}
+					this.fistTimer++;
+					if (this.fistTimer == 18)
+					{
+						if (base.npc.direction == -1)
+						{
+							Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(-10f, 0f), base.mod.ProjectileType("KSFist"), 35, 3f, 255, 0f, 0f);
+						}
+						else
+						{
+							Main.PlaySound(SoundID.Item74, (int)base.npc.position.X, (int)base.npc.position.Y);
+							Projectile.NewProjectile(new Vector2(base.npc.position.X + 46f, base.npc.position.Y + 52f), new Vector2(10f, 0f), base.mod.ProjectileType("KSFist"), 35, 3f, 255, 0f, 0f);
+						}
+					}
+					if (this.fistTimer >= 36)
+					{
+						this.fistRocket = false;
+						this.fistTimer = 0;
+						this.idle2 = true;
+						this.rocketEvent = false;
+					}
 				}
+			}
+			if (this.fightBegin)
+			{
 				if (base.npc.life <= 10000 && Main.rand.Next(500) == 0)
 				{
 					this.teleport = true;
@@ -1056,59 +1675,136 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 			}
 			if (this.teleport)
 			{
-				base.npc.netUpdate = true;
-				this.teleportTimer++;
-				if (this.teleportTimer == 2)
+				if (this.shieldEvent4)
 				{
-					for (int l = 0; l < 20; l++)
-					{
-						int num10 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 226, 0f, 0f, 100, default(Color), 1.2f);
-						Main.dust[num10].velocity *= 1.4f;
-					}
-				}
-				if (this.teleportTimer == 4 && Main.netMode != 1)
-				{
-					int num11 = Main.rand.Next(2);
-					if (num11 == 0)
-					{
-						Vector2 vector4;
-						vector4..ctor((float)Main.rand.Next(-400, -250), (float)Main.rand.Next(-300, -200));
-						base.npc.Center = Main.player[base.npc.target].Center + vector4;
-						base.npc.netUpdate = true;
-					}
-					if (num11 == 1)
-					{
-						Vector2 vector5;
-						vector5..ctor((float)Main.rand.Next(250, 400), (float)Main.rand.Next(-300, -200));
-						base.npc.Center = Main.player[base.npc.target].Center + vector5;
-						base.npc.netUpdate = true;
-					}
-				}
-				if (this.teleportTimer >= 6)
-				{
-					for (int m = 0; m < 20; m++)
-					{
-						int num12 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 226, 0f, 0f, 100, default(Color), 1.2f);
-						Main.dust[num12].velocity *= 1.4f;
-					}
-					this.teleport = false;
-					this.teleportTimer = 0;
 					base.npc.netUpdate = true;
+					this.teleportTimer++;
+					if (this.teleportTimer == 2)
+					{
+						for (int num54 = 0; num54 < 20; num54++)
+						{
+							int num55 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 235, 0f, 0f, 100, default(Color), 1.2f);
+							Main.dust[num55].velocity *= 1.4f;
+						}
+					}
+					if (this.teleportTimer == 4 && Main.netMode != 1)
+					{
+						int num56 = Main.rand.Next(2);
+						if (num56 == 0)
+						{
+							Vector2 vector15;
+							vector15..ctor((float)Main.rand.Next(-400, -250), (float)Main.rand.Next(-300, -200));
+							base.npc.Center = Main.player[base.npc.target].Center + vector15;
+							base.npc.netUpdate = true;
+						}
+						if (num56 == 1)
+						{
+							Vector2 vector16;
+							vector16..ctor((float)Main.rand.Next(250, 400), (float)Main.rand.Next(-300, -200));
+							base.npc.Center = Main.player[base.npc.target].Center + vector16;
+							base.npc.netUpdate = true;
+						}
+					}
+					if (this.teleportTimer >= 6)
+					{
+						for (int num57 = 0; num57 < 20; num57++)
+						{
+							int num58 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 235, 0f, 0f, 100, default(Color), 1.2f);
+							Main.dust[num58].velocity *= 1.4f;
+						}
+						this.teleport = false;
+						this.teleportTimer = 0;
+						base.npc.netUpdate = true;
+						return;
+					}
+				}
+				else
+				{
+					base.npc.netUpdate = true;
+					this.teleportTimer++;
+					if (this.teleportTimer == 2)
+					{
+						for (int num59 = 0; num59 < 20; num59++)
+						{
+							int num60 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 226, 0f, 0f, 100, default(Color), 1.2f);
+							Main.dust[num60].velocity *= 1.4f;
+						}
+					}
+					if (this.teleportTimer == 4 && Main.netMode != 1)
+					{
+						int num61 = Main.rand.Next(2);
+						if (num61 == 0)
+						{
+							Vector2 vector17;
+							vector17..ctor((float)Main.rand.Next(-400, -250), (float)Main.rand.Next(-300, -200));
+							base.npc.Center = Main.player[base.npc.target].Center + vector17;
+							base.npc.netUpdate = true;
+						}
+						if (num61 == 1)
+						{
+							Vector2 vector18;
+							vector18..ctor((float)Main.rand.Next(250, 400), (float)Main.rand.Next(-300, -200));
+							base.npc.Center = Main.player[base.npc.target].Center + vector18;
+							base.npc.netUpdate = true;
+						}
+					}
+					if (this.teleportTimer >= 6)
+					{
+						for (int num62 = 0; num62 < 20; num62++)
+						{
+							int num63 = Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 226, 0f, 0f, 100, default(Color), 1.2f);
+							Main.dust[num63].velocity *= 1.4f;
+						}
+						this.teleport = false;
+						this.teleportTimer = 0;
+						base.npc.netUpdate = true;
+					}
 				}
 			}
+		}
+
+		private void Move(Vector2 offset)
+		{
+			if (this.attackMode >= 1)
+			{
+				this.speed = 12f;
+			}
+			Vector2 vector = this.player.Center + offset;
+			Vector2 vector2 = vector - base.npc.Center;
+			float num = this.Magnitude(vector2);
+			if (num > this.speed)
+			{
+				vector2 *= this.speed / num;
+			}
+			float num2 = 10f;
+			vector2 = (base.npc.velocity * num2 + vector2) / (num2 + 1f);
+			num = this.Magnitude(vector2);
+			if (num > this.speed)
+			{
+				vector2 *= this.speed / num;
+			}
+			base.npc.velocity = vector2;
+		}
+
+		private float Magnitude(Vector2 mag)
+		{
+			return (float)Math.Sqrt((double)(mag.X * mag.X + mag.Y * mag.Y));
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			Texture2D texture2D = Main.npcTexture[base.npc.type];
 			Texture2D texture = base.mod.GetTexture("NPCs/Bosses/KingSlayerIII/KSCharge");
-			Texture2D texture2 = base.mod.GetTexture("NPCs/Bosses/KingSlayerIII/KSIdle1");
-			Texture2D texture3 = base.mod.GetTexture("NPCs/Bosses/KingSlayerIII/KSIdle2");
-			Texture2D texture4 = base.mod.GetTexture("NPCs/Bosses/KingSlayerIII/KSRocket1");
-			Texture2D texture5 = base.mod.GetTexture("NPCs/Bosses/KingSlayerIII/KSRocket2");
-			Texture2D texture6 = base.mod.GetTexture("NPCs/Bosses/KingSlayerIII/KSShield");
+			Texture2D texture2 = base.mod.GetTexture("NPCs/Bosses/KingSlayerIII/KSChargeR");
+			Texture2D texture3 = base.mod.GetTexture("NPCs/Bosses/KingSlayerIII/KSIdle1");
+			Texture2D texture4 = base.mod.GetTexture("NPCs/Bosses/KingSlayerIII/KSIdle2");
+			Texture2D texture5 = base.mod.GetTexture("NPCs/Bosses/KingSlayerIII/KSIdle2R");
+			Texture2D texture6 = base.mod.GetTexture("NPCs/Bosses/KingSlayerIII/KSRocket1");
+			Texture2D texture7 = base.mod.GetTexture("NPCs/Bosses/KingSlayerIII/KSRocket1R");
+			Texture2D texture8 = base.mod.GetTexture("NPCs/Bosses/KingSlayerIII/KSRocket2");
+			Texture2D texture9 = base.mod.GetTexture("NPCs/Bosses/KingSlayerIII/KSShield");
 			base.mod.GetTexture("NPCs/Bosses/KingSlayerIII/KSExit");
-			Texture2D texture7 = base.mod.GetTexture("NPCs/Bosses/KingSlayerIII/KSGunBlink");
+			Texture2D texture10 = base.mod.GetTexture("NPCs/Bosses/KingSlayerIII/KSGunBlink");
 			SpriteEffects spriteEffects = (base.npc.spriteDirection == -1) ? 0 : 1;
 			if (!this.start)
 			{
@@ -1118,57 +1814,81 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 			{
 				Vector2 vector;
 				vector..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num = texture7.Height / 6;
+				int num = texture10.Height / 4;
 				int num2 = num * this.gunblinkFrame;
-				Main.spriteBatch.Draw(texture7, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture7.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture7.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? 0 : 1, 0f);
+				Main.spriteBatch.Draw(texture10, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture10.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture10.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? 0 : 1, 0f);
 			}
 			if (this.idle1)
 			{
 				Vector2 vector2;
 				vector2..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num3 = texture2.Height / 5;
+				int num3 = texture3.Height / 4;
 				int num4 = num3 * this.idle1Frame;
-				Main.spriteBatch.Draw(texture2, vector2 - Main.screenPosition, new Rectangle?(new Rectangle(0, num4, texture2.Width, num3)), drawColor, base.npc.rotation, new Vector2((float)texture2.Width / 2f, (float)num3 / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? 0 : 1, 0f);
+				Main.spriteBatch.Draw(texture3, vector2 - Main.screenPosition, new Rectangle?(new Rectangle(0, num4, texture3.Width, num3)), drawColor, base.npc.rotation, new Vector2((float)texture3.Width / 2f, (float)num3 / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? 0 : 1, 0f);
 			}
 			if (this.idle2)
 			{
 				Vector2 vector3;
 				vector3..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num5 = texture3.Height / 5;
+				int num5 = texture4.Height / 4;
 				int num6 = num5 * this.idle2Frame;
-				Main.spriteBatch.Draw(texture3, vector3 - Main.screenPosition, new Rectangle?(new Rectangle(0, num6, texture3.Width, num5)), drawColor, base.npc.rotation, new Vector2((float)texture3.Width / 2f, (float)num5 / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? 0 : 1, 0f);
+				Main.spriteBatch.Draw(texture4, vector3 - Main.screenPosition, new Rectangle?(new Rectangle(0, num6, texture4.Width, num5)), drawColor, base.npc.rotation, new Vector2((float)texture4.Width / 2f, (float)num5 / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? 0 : 1, 0f);
 			}
-			if (this.shieldUp)
+			if (this.idle2R)
 			{
 				Vector2 vector4;
 				vector4..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num7 = texture6.Height / 7;
-				int num8 = num7 * this.shieldFrame;
-				Main.spriteBatch.Draw(texture6, vector4 - Main.screenPosition, new Rectangle?(new Rectangle(0, num8, texture6.Width, num7)), drawColor, base.npc.rotation, new Vector2((float)texture6.Width / 2f, (float)num7 / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? 0 : 1, 0f);
+				int num7 = texture5.Height / 4;
+				int num8 = num7 * this.idle2RFrame;
+				Main.spriteBatch.Draw(texture5, vector4 - Main.screenPosition, new Rectangle?(new Rectangle(0, num8, texture5.Width, num7)), drawColor, base.npc.rotation, new Vector2((float)texture5.Width / 2f, (float)num7 / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? 0 : 1, 0f);
 			}
-			if (this.chargeAttack)
+			if (this.shieldUp)
 			{
 				Vector2 vector5;
 				vector5..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num9 = texture.Height / 2;
-				int num10 = num9 * this.chargeFrame;
-				Main.spriteBatch.Draw(texture, vector5 - Main.screenPosition, new Rectangle?(new Rectangle(0, num10, texture.Width, num9)), drawColor, base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num9 / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? 0 : 1, 0f);
+				int num9 = texture9.Height / 7;
+				int num10 = num9 * this.shieldFrame;
+				Main.spriteBatch.Draw(texture9, vector5 - Main.screenPosition, new Rectangle?(new Rectangle(0, num10, texture9.Width, num9)), drawColor, base.npc.rotation, new Vector2((float)texture9.Width / 2f, (float)num9 / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? 0 : 1, 0f);
 			}
-			if (this.fistRocket)
+			if (this.chargeAttack)
 			{
 				Vector2 vector6;
 				vector6..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num11 = texture4.Height / 13;
-				int num12 = num11 * this.rocketFrame;
-				Main.spriteBatch.Draw(texture4, vector6 - Main.screenPosition, new Rectangle?(new Rectangle(0, num12, texture4.Width, num11)), drawColor, base.npc.rotation, new Vector2((float)texture4.Width / 2f, (float)num11 / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? 0 : 1, 0f);
+				int num11 = texture.Height / 2;
+				int num12 = num11 * this.chargeFrame;
+				Main.spriteBatch.Draw(texture, vector6 - Main.screenPosition, new Rectangle?(new Rectangle(0, num12, texture.Width, num11)), drawColor, base.npc.rotation, new Vector2((float)texture.Width / 2f, (float)num11 / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? 0 : 1, 0f);
 			}
-			if (this.fistRocketDone)
+			if (this.chargeAttackR)
 			{
 				Vector2 vector7;
 				vector7..ctor(base.npc.Center.X, base.npc.Center.Y);
-				int num13 = texture5.Height / 4;
-				int num14 = num13 * this.rocketDoneFrame;
-				Main.spriteBatch.Draw(texture5, vector7 - Main.screenPosition, new Rectangle?(new Rectangle(0, num14, texture5.Width, num13)), drawColor, base.npc.rotation, new Vector2((float)texture5.Width / 2f, (float)num13 / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? 0 : 1, 0f);
+				int num13 = texture2.Height / 2;
+				int num14 = num13 * this.chargeRFrame;
+				Main.spriteBatch.Draw(texture2, vector7 - Main.screenPosition, new Rectangle?(new Rectangle(0, num14, texture2.Width, num13)), drawColor, base.npc.rotation, new Vector2((float)texture2.Width / 2f, (float)num13 / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? 0 : 1, 0f);
+			}
+			if (this.fistRocket)
+			{
+				Vector2 vector8;
+				vector8..ctor(base.npc.Center.X, base.npc.Center.Y);
+				int num15 = texture6.Height / 12;
+				int num16 = num15 * this.rocketFrame;
+				Main.spriteBatch.Draw(texture6, vector8 - Main.screenPosition, new Rectangle?(new Rectangle(0, num16, texture6.Width, num15)), drawColor, base.npc.rotation, new Vector2((float)texture6.Width / 2f, (float)num15 / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? 0 : 1, 0f);
+			}
+			if (this.fistRocketR)
+			{
+				Vector2 vector9;
+				vector9..ctor(base.npc.Center.X, base.npc.Center.Y);
+				int num17 = texture7.Height / 12;
+				int num18 = num17 * this.rocketRFrame;
+				Main.spriteBatch.Draw(texture7, vector9 - Main.screenPosition, new Rectangle?(new Rectangle(0, num18, texture7.Width, num17)), drawColor, base.npc.rotation, new Vector2((float)texture7.Width / 2f, (float)num17 / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? 0 : 1, 0f);
+			}
+			if (this.fistRocketDone)
+			{
+				Vector2 vector10;
+				vector10..ctor(base.npc.Center.X, base.npc.Center.Y);
+				int num19 = texture8.Height / 4;
+				int num20 = num19 * this.rocketDoneFrame;
+				Main.spriteBatch.Draw(texture8, vector10 - Main.screenPosition, new Rectangle?(new Rectangle(0, num20, texture8.Width, num19)), drawColor, base.npc.rotation, new Vector2((float)texture8.Width / 2f, (float)num19 / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? 0 : 1, 0f);
 			}
 			return false;
 		}
@@ -1176,6 +1896,12 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 		private void Target()
 		{
 			this.player = Main.player[base.npc.target];
+		}
+
+		public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit)
+		{
+			damage *= 0.75;
+			return true;
 		}
 
 		private void DespawnHandler()
@@ -1186,6 +1912,155 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 				this.player = Main.player[base.npc.target];
 				if (!this.player.active || this.player.dead)
 				{
+					this.deadTimer++;
+					if (this.deadTimer == 2)
+					{
+						if (this.shieldEvent4)
+						{
+							int num = Main.rand.Next(4);
+							if (num == 0)
+							{
+								string text = "(Thank God)";
+								Color rarityRed = Colors.RarityRed;
+								byte r = rarityRed.R;
+								Color rarityRed2 = Colors.RarityRed;
+								byte g = rarityRed2.G;
+								Color rarityRed3 = Colors.RarityRed;
+								Main.NewText(text, r, g, rarityRed3.B, false);
+							}
+							if (num == 1)
+							{
+								string text2 = "HAH YES! Gotta be honest, you almost had me.";
+								Color rarityRed4 = Colors.RarityRed;
+								byte r2 = rarityRed4.R;
+								Color rarityRed5 = Colors.RarityRed;
+								byte g2 = rarityRed5.G;
+								Color rarityRed6 = Colors.RarityRed;
+								Main.NewText(text2, r2, g2, rarityRed6.B, false);
+							}
+							if (num == 2)
+							{
+								string text3 = "You were so close...";
+								Color rarityRed7 = Colors.RarityRed;
+								byte r3 = rarityRed7.R;
+								Color rarityRed8 = Colors.RarityRed;
+								byte g3 = rarityRed8.G;
+								Color rarityRed9 = Colors.RarityRed;
+								Main.NewText(text3, r3, g3, rarityRed9.B, false);
+							}
+							if (num == 3)
+							{
+								string text4 = "Congratulations... You actually made me worry for a second there!";
+								Color rarityRed10 = Colors.RarityRed;
+								byte r4 = rarityRed10.R;
+								Color rarityRed11 = Colors.RarityRed;
+								byte g4 = rarityRed11.G;
+								Color rarityRed12 = Colors.RarityRed;
+								Main.NewText(text4, r4, g4, rarityRed12.B, false);
+							}
+						}
+						else
+						{
+							if (!NPC.downedPlantBoss)
+							{
+								int num2 = Main.rand.Next(5);
+								if (num2 == 0)
+								{
+									string text5 = "Maybe try again when you're actually strong.";
+									Color rarityCyan = Colors.RarityCyan;
+									byte r5 = rarityCyan.R;
+									Color rarityCyan2 = Colors.RarityCyan;
+									byte g5 = rarityCyan2.G;
+									Color rarityCyan3 = Colors.RarityCyan;
+									Main.NewText(text5, r5, g5, rarityCyan3.B, false);
+								}
+								if (num2 == 1)
+								{
+									string text6 = "What a pushover...";
+									Color rarityCyan4 = Colors.RarityCyan;
+									byte r6 = rarityCyan4.R;
+									Color rarityCyan5 = Colors.RarityCyan;
+									byte g6 = rarityCyan5.G;
+									Color rarityCyan6 = Colors.RarityCyan;
+									Main.NewText(text6, r6, g6, rarityCyan6.B, false);
+								}
+								if (num2 == 2)
+								{
+									string text7 = "Y'know, you don't have to fight me right now... But it is fun beating you.";
+									Color rarityCyan7 = Colors.RarityCyan;
+									byte r7 = rarityCyan7.R;
+									Color rarityCyan8 = Colors.RarityCyan;
+									byte g7 = rarityCyan8.G;
+									Color rarityCyan9 = Colors.RarityCyan;
+									Main.NewText(text7, r7, g7, rarityCyan9.B, false);
+								}
+								if (num2 == 3)
+								{
+									string text8 = "You should've just gave up when you had the chance.";
+									Color rarityCyan10 = Colors.RarityCyan;
+									byte r8 = rarityCyan10.R;
+									Color rarityCyan11 = Colors.RarityCyan;
+									byte g8 = rarityCyan11.G;
+									Color rarityCyan12 = Colors.RarityCyan;
+									Main.NewText(text8, r8, g8, rarityCyan12.B, false);
+								}
+								if (num2 == 4)
+								{
+									string text9 = "Why did you try to fight me when you're still so weak? I want an actual challenge y'know!";
+									Color rarityCyan13 = Colors.RarityCyan;
+									byte r9 = rarityCyan13.R;
+									Color rarityCyan14 = Colors.RarityCyan;
+									byte g9 = rarityCyan14.G;
+									Color rarityCyan15 = Colors.RarityCyan;
+									Main.NewText(text9, r9, g9, rarityCyan15.B, false);
+								}
+							}
+							if (NPC.downedPlantBoss)
+							{
+								int num3 = Main.rand.Next(4);
+								if (num3 == 0)
+								{
+									string text10 = "Are you seriously that weak!?";
+									Color rarityCyan16 = Colors.RarityCyan;
+									byte r10 = rarityCyan16.R;
+									Color rarityCyan17 = Colors.RarityCyan;
+									byte g10 = rarityCyan17.G;
+									Color rarityCyan18 = Colors.RarityCyan;
+									Main.NewText(text10, r10, g10, rarityCyan18.B, false);
+								}
+								if (num3 == 1)
+								{
+									string text11 = "Come on, you can do better than that!";
+									Color rarityCyan19 = Colors.RarityCyan;
+									byte r11 = rarityCyan19.R;
+									Color rarityCyan20 = Colors.RarityCyan;
+									byte g11 = rarityCyan20.G;
+									Color rarityCyan21 = Colors.RarityCyan;
+									Main.NewText(text11, r11, g11, rarityCyan21.B, false);
+								}
+								if (num3 == 2)
+								{
+									string text12 = "Hah.";
+									Color rarityCyan22 = Colors.RarityCyan;
+									byte r12 = rarityCyan22.R;
+									Color rarityCyan23 = Colors.RarityCyan;
+									byte g12 = rarityCyan23.G;
+									Color rarityCyan24 = Colors.RarityCyan;
+									Main.NewText(text12, r12, g12, rarityCyan24.B, false);
+								}
+								if (num3 == 3)
+								{
+									string text13 = "A useless attempt...";
+									Color rarityCyan25 = Colors.RarityCyan;
+									byte r13 = rarityCyan25.R;
+									Color rarityCyan26 = Colors.RarityCyan;
+									byte g13 = rarityCyan26.G;
+									Color rarityCyan27 = Colors.RarityCyan;
+									Main.NewText(text13, r13, g13, rarityCyan27.B, false);
+								}
+							}
+						}
+					}
 					base.npc.velocity = new Vector2(0f, -10f);
 					if (base.npc.timeLeft > 10)
 					{
@@ -1196,6 +2071,10 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 		}
 
 		private Player player;
+
+		private float speed;
+
+		public float[] customAI = new float[4];
 
 		public bool chargeAttack;
 
@@ -1211,23 +2090,7 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 
 		public bool blinkGun;
 
-		public int timer1;
-
-		public int timer2;
-
-		public int lightningOrbTimer;
-
 		public int pewPew1Timer;
-
-		public int pewPew2Timer;
-
-		public int shieldTimer1;
-
-		public int shieldTimer2;
-
-		public int shieldTimer3;
-
-		public int shieldTimer4;
 
 		public bool shieldEvent1;
 
@@ -1243,17 +2106,7 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 
 		public bool teleport;
 
-		public bool rocketEvent1;
-
-		public bool rocketEvent2;
-
-		public bool rocketEvent3;
-
-		public bool rocketEvent4;
-
-		public bool rocketEvent5;
-
-		public int noMoveTimer;
+		public bool rocketEvent;
 
 		private int idle1Counter;
 
@@ -1268,8 +2121,6 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 		private int rocketCounter;
 
 		private int rocketDoneCounter;
-
-		private int aiCounter;
 
 		private int idle1Frame;
 
@@ -1290,5 +2141,29 @@ namespace Redemption.NPCs.Bosses.KingSlayerIII
 		private bool start;
 
 		private bool fightBegin;
+
+		private int deadTimer;
+
+		private bool phase2;
+
+		private bool idle2R;
+
+		private int idle2RFrame;
+
+		private int idle2RCounter;
+
+		private bool chargeAttackR;
+
+		private int chargeRFrame;
+
+		private bool fistRocketR;
+
+		private int rocketRFrame;
+
+		private int chargeRCounter;
+
+		private int rocketRCounter;
+
+		private bool musicChange;
 	}
 }

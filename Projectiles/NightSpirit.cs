@@ -49,6 +49,18 @@ namespace Redemption.Projectiles
 			Main.dust[num].noGravity = true;
 			base.projectile.localAI[0] += 1f;
 			base.projectile.rotation = (float)Math.Atan2((double)base.projectile.velocity.Y, (double)base.projectile.velocity.X) + 1.57f;
+			if (base.projectile.localAI[0] == 1f)
+			{
+				int num2 = 62;
+				int num3 = 20;
+				for (int i = 0; i < num3; i++)
+				{
+					int num4 = Dust.NewDust(new Vector2(base.projectile.Center.X - 1f, base.projectile.Center.Y - 1f), 2, 2, num2, 0f, 0f, 100, Color.White, 1.6f);
+					Main.dust[num4].velocity = BaseUtility.RotateVector(default(Vector2), new Vector2(6f, 0f), (float)i / (float)num3 * 6.28f);
+					Main.dust[num4].noLight = false;
+					Main.dust[num4].noGravity = true;
+				}
+			}
 		}
 
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)

@@ -29,6 +29,7 @@ namespace Redemption.Projectiles
 			base.projectile.CloneDefaults(45);
 			this.aiType = 45;
 			base.projectile.alpha = 50;
+			base.projectile.melee = true;
 			base.projectile.tileCollide = false;
 			base.projectile.timeLeft = 80;
 			base.projectile.glowMask = SpectreScythe.customGlowMask;

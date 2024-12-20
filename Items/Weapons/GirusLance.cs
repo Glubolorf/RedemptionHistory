@@ -27,7 +27,7 @@ namespace Redemption.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 65;
+			base.item.damage = 40;
 			base.item.melee = true;
 			base.item.width = 102;
 			base.item.height = 100;
@@ -61,7 +61,7 @@ namespace Redemption.Items.Weapons
 			}
 			else
 			{
-				base.item.damage = 65;
+				base.item.damage = 40;
 				base.item.useStyle = 100;
 				base.item.shoot = base.mod.ProjectileType("GirusLancePro1");
 				base.item.shootSpeed = 0f;

@@ -35,7 +35,7 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.OverworldNightMonster.Chance * (Main.hardMode ? 0.04f : 0f);
+			return SpawnCondition.OverworldNightMonster.Chance * ((Main.hardMode && !RedeWorld.downedVlitch3) ? 0.04f : 0f);
 		}
 
 		public override void HitEffect(int hitDirection, double damage)
@@ -54,6 +54,23 @@ namespace Redemption.NPCs
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 226, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
 		}
 
+		public override void AI()
+		{
+			if (!this.change)
+			{
+				int num = Main.rand.Next(100);
+				if (num == 0)
+				{
+					base.npc.SetDefaults(base.mod.NPCType("Apidroid"), -1f);
+					this.change = true;
+				}
+				if (num >= 1)
+				{
+					this.change = true;
+				}
+			}
+		}
+
 		public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
 		{
 			SpriteEffects spriteEffects = 0;
@@ -63,5 +80,7 @@ namespace Redemption.NPCs
 			}
 			spriteBatch.Draw(base.mod.GetTexture("NPCs/Android_Glow"), new Vector2(base.npc.Center.X - Main.screenPosition.X, base.npc.Center.Y - Main.screenPosition.Y), new Rectangle?(base.npc.frame), Color.White, base.npc.rotation, new Vector2((float)base.npc.width * 0.5f, (float)base.npc.height * 0.5f), 1f, spriteEffects, 0f);
 		}
+
+		private bool change;
 	}
 }

@@ -49,6 +49,10 @@ namespace Redemption.NPCs
 				NPC.NewNPC((int)base.npc.position.X + 34, (int)base.npc.position.Y + 20, base.mod.NPCType("Newb"), 0, 0f, 0f, 0f, 0f, 255);
 			}
 			RedeWorld.foundNewb = true;
+			if (Main.netMode == 2)
+			{
+				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
+			}
 			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, 2, Main.rand.Next(2, 8), false, 0, false, false);
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 0, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 20, default(Color), 2.9f);
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 0, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 20, default(Color), 2.9f);

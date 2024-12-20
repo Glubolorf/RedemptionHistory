@@ -33,7 +33,14 @@ namespace Redemption.NPCs.Bosses
 			}
 			if (this.timer == 1200)
 			{
-				Main.NewText("Little organic thing! I'm interested in you, keep going and see how far you get...", new Color(238, 77, 58), false);
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).omegaPower)
+				{
+					Main.NewText("Little android! I'm interested in you, keep this up you may even become the latest Overlord!", new Color(238, 77, 58), false);
+				}
+				else
+				{
+					Main.NewText("Little organic thing! I'm interested in you, keep going and see how far you get...", new Color(238, 77, 58), false);
+				}
 			}
 			if (this.timer == 1600)
 			{
@@ -45,6 +52,10 @@ namespace Redemption.NPCs.Bosses
 		public override void Kill(int timeleft)
 		{
 			RedeWorld.girusTalk2 = true;
+			if (Main.netMode == 2)
+			{
+				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
+			}
 			Redemption.GirusSilence = false;
 		}
 

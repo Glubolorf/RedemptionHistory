@@ -43,7 +43,12 @@ namespace Redemption.Items
 
 		public override bool UseItem(Player player)
 		{
-			NPC.SpawnOnPlayer(player.whoAmI, base.mod.NPCType("XenomiteCrystal"));
+			Main.NewText("Xenomite Crystal has awoken!", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B, false);
+			int num = NPC.NewNPC((int)(player.position.X + (float)Main.rand.Next(250, 450)), (int)(player.position.Y - 0f), base.mod.NPCType("XenomiteCrystal"), 0, 0f, 0f, 0f, 0f, 255);
+			if (Main.netMode == 2 && num < 200)
+			{
+				NetMessage.SendData(23, -1, -1, null, num, 0f, 0f, 0f, 0, 0, 0);
+			}
 			Main.PlaySound(15, player.position, 0);
 			return true;
 		}

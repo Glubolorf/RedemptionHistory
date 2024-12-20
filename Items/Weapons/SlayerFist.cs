@@ -16,7 +16,7 @@ namespace Redemption.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 260;
+			base.item.damage = 220;
 			base.item.melee = true;
 			base.item.width = 24;
 			base.item.height = 24;

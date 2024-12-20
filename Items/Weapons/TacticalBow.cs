@@ -29,10 +29,10 @@ namespace Redemption.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 18;
+			base.item.damage = 7;
 			base.item.ranged = true;
 			base.item.width = 36;
-			base.item.height = 78;
+			base.item.height = 60;
 			base.item.useTime = 42;
 			base.item.useAnimation = 42;
 			base.item.useStyle = 5;
@@ -59,16 +59,27 @@ namespace Redemption.Items.Weapons
 			{
 				type = base.mod.ProjectileType("TacticalArrowPro");
 			}
-			float num = 5f;
-			float num2 = MathHelper.ToRadians(12f);
-			position += Vector2.Normalize(new Vector2(speedX, speedY)) * 45f;
-			int num3 = 0;
-			while ((float)num3 < num)
+			Vector2 vector = player.RotatedRelativePoint(player.MountedCenter, true);
+			float num = 0.31415927f;
+			int num2 = 6;
+			Vector2 vector2;
+			vector2..ctor(speedX, speedY);
+			vector2.Normalize();
+			vector2 *= 40f;
+			bool flag = Collision.CanHit(vector, 0, 0, vector + vector2, 0, 0);
+			for (int i = 0; i < num2; i++)
 			{
-				Vector2 vector = Utils.RotatedBy(new Vector2(speedX, speedY), (double)MathHelper.Lerp(-num2, num2, (float)num3 / (num - 1f)), default(Vector2)) * 0.2f;
-				Projectile.NewProjectile(position.X, position.Y, vector.X, vector.Y, type, damage, knockBack, player.whoAmI, 0f, 0f);
-				num3++;
+				float num3 = (float)i - ((float)num2 - 1f) / 2f;
+				Vector2 vector3 = Utils.RotatedBy(vector2, (double)(num * num3), default(Vector2));
+				if (!flag)
+				{
+					vector3 -= vector2;
+				}
+				int num4 = Projectile.NewProjectile(vector.X + vector3.X, vector.Y + vector3.Y, speedX, speedY, type, (int)((double)damage), knockBack, player.whoAmI, 0f, 0f);
+				Main.projectile[num4].noDropItem = true;
 			}
+			Main.rand.Next(-25, 26);
+			Main.rand.Next(-25, 26);
 			return false;
 		}
 

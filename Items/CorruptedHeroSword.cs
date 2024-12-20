@@ -33,14 +33,27 @@ namespace Redemption.Items
 
 		public override bool UseItem(Player player)
 		{
-			int num = NPC.NewNPC((int)(player.position.X + (float)Main.rand.Next(100, 200)), (int)(player.position.Y - 0f), base.mod.NPCType("VlitchCleaver"), 0, 0f, 0f, 0f, 0f, 255);
+			int num = NPC.NewNPC((int)(player.position.X + (float)Main.rand.Next(200, 300)), (int)(player.position.Y - 0f), base.mod.NPCType("VlitchCleaver"), 0, 0f, 0f, 0f, 0f, 255);
 			if (Main.netMode == 2 && num < 200)
 			{
 				NetMessage.SendData(23, -1, -1, null, num, 0f, 0f, 0f, 0, 0, 0);
 			}
 			Main.PlaySound(15, (int)player.position.X, (int)player.position.Y, 0, 1f, 0f);
-			Main.NewText("Vlitch Cleaver has awoken!", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B, false);
-			Main.NewText("Let's see how long you last...", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).omegaPower)
+			{
+				Main.NewText("Vlitch Cleaver has awoken!", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B, false);
+				Main.NewText("... An Omega Android challenges me? So be it, traitor!", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
+			}
+			else if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).chickenPower)
+			{
+				Main.NewText("Vlitch Cleaver has awoken!", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B, false);
+				Main.NewText("Let's se- wait... Is that a chicken!?", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
+			}
+			else
+			{
+				Main.NewText("Vlitch Cleaver has awoken!", Color.MediumPurple.R, Color.MediumPurple.G, Color.MediumPurple.B, false);
+				Main.NewText("Let's see how long you last...", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
+			}
 			return true;
 		}
 

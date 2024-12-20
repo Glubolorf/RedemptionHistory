@@ -55,6 +55,12 @@ namespace Redemption.NPCs.Bosses
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/XenomiteGore"), 1f);
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/XenomiteGore"), 1f);
 				Gore.NewGore(base.npc.position, base.npc.velocity, base.mod.GetGoreSlot("Gores/XenomiteGore"), 1f);
+				for (int i = 0; i < 35; i++)
+				{
+					int num = Dust.NewDust(base.npc.position, base.npc.width, base.npc.height, 74, 0f, 0f, 100, default(Color), 3.5f);
+					Main.dust[num].velocity *= 5f;
+					Main.dust[num].noGravity = true;
+				}
 			}
 		}
 
@@ -62,6 +68,10 @@ namespace Redemption.NPCs.Bosses
 		{
 			potionType = 188;
 			RedeWorld.downedXenomiteCrystal = true;
+			if (Main.netMode == 2)
+			{
+				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
+			}
 			Main.NewText("The Infection begins...", Color.ForestGreen.R, Color.ForestGreen.G, Color.ForestGreen.B, false);
 		}
 

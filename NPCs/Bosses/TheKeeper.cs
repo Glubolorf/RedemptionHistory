@@ -61,6 +61,10 @@ namespace Redemption.NPCs.Bosses
 		{
 			potionType = 188;
 			RedeWorld.downedTheKeeper = true;
+			if (Main.netMode == 2)
+			{
+				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
+			}
 		}
 
 		public override void NPCLoot()
@@ -133,6 +137,32 @@ namespace Redemption.NPCs.Bosses
 					this.shriekFrame = 1;
 				}
 			}
+			if (this.teddy1Event)
+			{
+				this.teddyCounter++;
+				if (this.teddyCounter > 15)
+				{
+					this.teddyFrame++;
+					this.teddyCounter = 0;
+				}
+				if (this.teddyFrame >= 3)
+				{
+					this.teddyFrame = 1;
+				}
+			}
+			if (this.peaceful)
+			{
+				this.peaceCounter++;
+				if (this.peaceCounter > 20)
+				{
+					this.peaceFrame++;
+					this.peaceCounter = 0;
+				}
+				if (this.peaceFrame >= 3)
+				{
+					this.peaceFrame = 1;
+				}
+			}
 			if (Main.dayTime)
 			{
 				NPC npc2 = base.npc;
@@ -140,117 +170,232 @@ namespace Redemption.NPCs.Bosses
 			}
 			this.Target();
 			this.DespawnHandler();
-			this.Move(new Vector2(240f, 0f));
-			base.npc.ai[1] -= 1f;
-			if (base.npc.ai[1] <= 0f)
+			this.fightTimer++;
+			if (this.fightTimer >= 160)
 			{
-				this.Shoot();
-			}
-			if (Main.rand.Next(1) == 0)
-			{
-				Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 5, 0f, 0f, 0, default(Color), 1f);
-			}
-			if (base.npc.life > 1200 && Main.rand.Next(600) == 0)
-			{
-				NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
-			}
-			if (!Main.expertMode && base.npc.life < 1200)
-			{
-				this.timer++;
-				if (this.timer == 20)
+				for (int i = 0; i < 255; i++)
 				{
-					this.shriekStart = true;
-					string text = "*Shrieks of pain echo through the night*";
+					Player player = Main.player[i];
+					if (player.active)
+					{
+						for (int j = 0; j < player.inventory.Length; j++)
+						{
+							if (player.inventory[j].type == base.mod.ItemType("AbandonedTeddy"))
+							{
+								this.teddyEvent = true;
+							}
+						}
+					}
+				}
+			}
+			if (this.teddyEvent)
+			{
+				if (this.teddyTimer < 540)
+				{
+					this.teddy1Event = true;
+				}
+				this.music = base.mod.GetSoundSlot(51, "Sounds/Music/silence");
+				base.npc.dontTakeDamage = true;
+				NPC npc3 = base.npc;
+				npc3.velocity.X = npc3.velocity.X - 0.7f;
+				NPC npc4 = base.npc;
+				npc4.velocity.Y = npc4.velocity.Y - 0.7f;
+				if (base.npc.velocity.X < 0f)
+				{
+					base.npc.velocity.X = 0f;
+				}
+				if (base.npc.velocity.Y < 0f)
+				{
+					base.npc.velocity.Y = 0f;
+				}
+				this.teddyTimer++;
+				if (this.teddyTimer == 60)
+				{
+					string text = "The Keeper noticed the abandoned teddy you're holding...";
 					Color rarityPurple = Colors.RarityPurple;
 					byte r = rarityPurple.R;
 					Color rarityPurple2 = Colors.RarityPurple;
 					byte g = rarityPurple2.G;
 					Color rarityPurple3 = Colors.RarityPurple;
 					Main.NewText(text, r, g, rarityPurple3.B, false);
-					if (!Main.dedServ)
-					{
-						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Shriek").WithVolume(0.7f).WithPitchVariance(0.1f), -1, -1);
-					}
 				}
-				if (this.timer == 40)
+				if (this.teddyTimer == 320)
 				{
-					NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
-				}
-				if (this.timer == 45)
-				{
-					NPC.NewNPC((int)base.npc.position.X + 60, (int)base.npc.position.Y + 80, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
-				}
-				if (this.timer == 50)
-				{
-					NPC.NewNPC((int)base.npc.position.X + 80, (int)base.npc.position.Y + 75, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
-				}
-				if (this.timer == 55)
-				{
-					NPC.NewNPC((int)base.npc.position.X + 50, (int)base.npc.position.Y + 60, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
-					NPC.NewNPC((int)base.npc.position.X + 85, (int)base.npc.position.Y + 50, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
-				}
-				if (this.timer == 60)
-				{
-					NPC.NewNPC((int)base.npc.position.X + 65, (int)base.npc.position.Y + 65, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
-					NPC.NewNPC((int)base.npc.position.X + 45, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
-				}
-				if (this.timer >= 220)
-				{
-					this.shriekStart = false;
-				}
-				if (Main.rand.Next(250) == 0)
-				{
-					NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 160, base.mod.NPCType("SkeletonMinion"), 0, 0f, 0f, 0f, 0f, 255);
-				}
-			}
-			if (Main.expertMode && base.npc.life < 1200)
-			{
-				this.timer++;
-				if (this.timer == 20)
-				{
-					this.shriekStart = true;
-					string text2 = "*Shrieks of pain echo through the night*";
+					string text2 = "She starts to remember something...";
 					Color rarityPurple4 = Colors.RarityPurple;
 					byte r2 = rarityPurple4.R;
 					Color rarityPurple5 = Colors.RarityPurple;
 					byte g2 = rarityPurple5.G;
 					Color rarityPurple6 = Colors.RarityPurple;
 					Main.NewText(text2, r2, g2, rarityPurple6.B, false);
-					if (!Main.dedServ)
+				}
+				if (this.teddyTimer == 540)
+				{
+					this.teddy1Event = false;
+					this.peaceful = true;
+					string text3 = "Pain... Anger... Sadness... All those feelings were washed away...";
+					Color rarityPurple7 = Colors.RarityPurple;
+					byte r3 = rarityPurple7.R;
+					Color rarityPurple8 = Colors.RarityPurple;
+					byte g3 = rarityPurple8.G;
+					Color rarityPurple9 = Colors.RarityPurple;
+					Main.NewText(text3, r3, g3, rarityPurple9.B, false);
+				}
+				if (this.teddyTimer == 750)
+				{
+					string text4 = "She only feels... at peace...";
+					Color rarityPurple10 = Colors.RarityPurple;
+					byte r4 = rarityPurple10.R;
+					Color rarityPurple11 = Colors.RarityPurple;
+					byte g4 = rarityPurple11.G;
+					Color rarityPurple12 = Colors.RarityPurple;
+					Main.NewText(text4, r4, g4, rarityPurple12.B, false);
+				}
+				if (this.teddyTimer >= 1000)
+				{
+					base.npc.alpha++;
+					if (Main.rand.Next(5) == 0)
 					{
-						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Shriek").WithVolume(0.7f).WithPitchVariance(0.1f), -1, -1);
+						Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 20, 0f, 0f, 0, default(Color), 1f);
 					}
 				}
-				if (this.timer == 40)
+				if (base.npc.alpha >= 255)
+				{
+					for (int k = 0; k < 50; k++)
+					{
+						int num = Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 20, 0f, 0f, 100, default(Color), 2.5f);
+						Main.dust[num].velocity *= 2.6f;
+					}
+					string text5 = "The Keeper's Spirit fades away...";
+					Color rarityPurple13 = Colors.RarityPurple;
+					byte r5 = rarityPurple13.R;
+					Color rarityPurple14 = Colors.RarityPurple;
+					byte g5 = rarityPurple14.G;
+					Color rarityPurple15 = Colors.RarityPurple;
+					Main.NewText(text5, r5, g5, rarityPurple15.B, false);
+					Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("KeeperAcc"), 1, false, 0, false, false);
+					RedeWorld.keeperSaved = true;
+					if (Main.netMode == 2)
+					{
+						NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
+					}
+					base.npc.active = false;
+				}
+			}
+			else
+			{
+				this.Move(new Vector2(240f, 0f));
+				base.npc.ai[1] -= 1f;
+				if (base.npc.ai[1] <= 0f)
+				{
+					this.Shoot();
+				}
+				if (base.npc.life > 1200 && Main.rand.Next(600) == 0)
 				{
 					NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
 				}
-				if (this.timer == 45)
+				if (!Main.expertMode && base.npc.life < 1200)
 				{
-					NPC.NewNPC((int)base.npc.position.X + 60, (int)base.npc.position.Y + 80, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+					this.timer++;
+					if (this.timer == 20)
+					{
+						this.shriekStart = true;
+						string text6 = "*Shrieks of pain echo through the night*";
+						Color rarityPurple16 = Colors.RarityPurple;
+						byte r6 = rarityPurple16.R;
+						Color rarityPurple17 = Colors.RarityPurple;
+						byte g6 = rarityPurple17.G;
+						Color rarityPurple18 = Colors.RarityPurple;
+						Main.NewText(text6, r6, g6, rarityPurple18.B, false);
+						if (!Main.dedServ)
+						{
+							Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Shriek").WithVolume(0.7f).WithPitchVariance(0.1f), -1, -1);
+						}
+					}
+					if (this.timer == 40)
+					{
+						NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+					}
+					if (this.timer == 45)
+					{
+						NPC.NewNPC((int)base.npc.position.X + 60, (int)base.npc.position.Y + 80, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+					}
+					if (this.timer == 50)
+					{
+						NPC.NewNPC((int)base.npc.position.X + 80, (int)base.npc.position.Y + 75, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+					}
+					if (this.timer == 55)
+					{
+						NPC.NewNPC((int)base.npc.position.X + 50, (int)base.npc.position.Y + 60, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+						NPC.NewNPC((int)base.npc.position.X + 85, (int)base.npc.position.Y + 50, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+					}
+					if (this.timer == 60)
+					{
+						NPC.NewNPC((int)base.npc.position.X + 65, (int)base.npc.position.Y + 65, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+						NPC.NewNPC((int)base.npc.position.X + 45, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+					}
+					if (this.timer >= 220)
+					{
+						this.shriekStart = false;
+					}
+					if (Main.rand.Next(250) == 0)
+					{
+						NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 160, base.mod.NPCType("SkeletonMinion"), 0, 0f, 0f, 0f, 0f, 255);
+					}
 				}
-				if (this.timer == 50)
+				if (Main.expertMode && base.npc.life < 1200)
 				{
-					NPC.NewNPC((int)base.npc.position.X + 80, (int)base.npc.position.Y + 75, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+					this.timer++;
+					if (this.timer == 20)
+					{
+						this.shriekStart = true;
+						string text7 = "*Shrieks of pain echo through the night*";
+						Color rarityPurple19 = Colors.RarityPurple;
+						byte r7 = rarityPurple19.R;
+						Color rarityPurple20 = Colors.RarityPurple;
+						byte g7 = rarityPurple20.G;
+						Color rarityPurple21 = Colors.RarityPurple;
+						Main.NewText(text7, r7, g7, rarityPurple21.B, false);
+						if (!Main.dedServ)
+						{
+							Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Shriek").WithVolume(0.7f).WithPitchVariance(0.1f), -1, -1);
+						}
+					}
+					if (this.timer == 40)
+					{
+						NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+					}
+					if (this.timer == 45)
+					{
+						NPC.NewNPC((int)base.npc.position.X + 60, (int)base.npc.position.Y + 80, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+					}
+					if (this.timer == 50)
+					{
+						NPC.NewNPC((int)base.npc.position.X + 80, (int)base.npc.position.Y + 75, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+					}
+					if (this.timer == 55)
+					{
+						NPC.NewNPC((int)base.npc.position.X + 50, (int)base.npc.position.Y + 60, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+						NPC.NewNPC((int)base.npc.position.X + 85, (int)base.npc.position.Y + 50, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+					}
+					if (this.timer == 60)
+					{
+						NPC.NewNPC((int)base.npc.position.X + 65, (int)base.npc.position.Y + 65, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+						NPC.NewNPC((int)base.npc.position.X + 45, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
+					}
+					if (this.timer >= 220)
+					{
+						this.shriekStart = false;
+					}
+					if (Main.rand.Next(400) == 0 && NPC.CountNPCS(base.mod.NPCType("BoneWorm")) <= 3)
+					{
+						NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 160, base.mod.NPCType("BoneWorm"), 0, 0f, 0f, 0f, 0f, 255);
+					}
 				}
-				if (this.timer == 55)
-				{
-					NPC.NewNPC((int)base.npc.position.X + 50, (int)base.npc.position.Y + 60, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
-					NPC.NewNPC((int)base.npc.position.X + 85, (int)base.npc.position.Y + 50, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
-				}
-				if (this.timer == 60)
-				{
-					NPC.NewNPC((int)base.npc.position.X + 65, (int)base.npc.position.Y + 65, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
-					NPC.NewNPC((int)base.npc.position.X + 45, (int)base.npc.position.Y + 70, base.mod.NPCType("DarkSoul2"), 0, 0f, 0f, 0f, 0f, 255);
-				}
-				if (this.timer >= 220)
-				{
-					this.shriekStart = false;
-				}
-				if (Main.rand.Next(400) == 0 && NPC.CountNPCS(base.mod.NPCType("BoneWorm")) <= 3)
-				{
-					NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 160, base.mod.NPCType("BoneWorm"), 0, 0f, 0f, 0f, 0f, 255);
-				}
+			}
+			if (Main.rand.Next(1) == 0)
+			{
+				Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, 5, 0f, 0f, 0, default(Color), 1f);
 			}
 		}
 
@@ -337,8 +482,12 @@ namespace Redemption.NPCs.Bosses
 			Texture2D texture = base.mod.GetTexture("NPCs/Bosses/TheKeeper_Glow");
 			Texture2D texture2 = base.mod.GetTexture("NPCs/Bosses/TheKeeperShriek");
 			Texture2D texture3 = base.mod.GetTexture("NPCs/Bosses/TheKeeperShriek_Glow");
+			Texture2D texture4 = base.mod.GetTexture("NPCs/Bosses/TheKeeperSpecial1");
+			Texture2D texture5 = base.mod.GetTexture("NPCs/Bosses/TheKeeperSpecial1_Glow");
+			Texture2D texture6 = base.mod.GetTexture("NPCs/Bosses/TheKeeperSpecial2");
+			Texture2D texture7 = base.mod.GetTexture("NPCs/Bosses/TheKeeperSpecial2_Glow");
 			SpriteEffects spriteEffects = (base.npc.spriteDirection == -1) ? 0 : 1;
-			if (!this.shriekStart)
+			if (!this.shriekStart && !this.teddy1Event && !this.peaceful)
 			{
 				spriteBatch.Draw(texture2D, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), drawColor, base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
 				spriteBatch.Draw(texture, base.npc.Center - Main.screenPosition, new Rectangle?(base.npc.frame), base.npc.GetAlpha(Color.White), base.npc.rotation, Utils.Size(base.npc.frame) / 2f, base.npc.scale, spriteEffects, 0f);
@@ -351,6 +500,24 @@ namespace Redemption.NPCs.Bosses
 				int num2 = num * this.shriekFrame;
 				Main.spriteBatch.Draw(texture2, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture2.Width, num)), drawColor, base.npc.rotation, new Vector2((float)texture2.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
 				Main.spriteBatch.Draw(texture3, vector - Main.screenPosition, new Rectangle?(new Rectangle(0, num2, texture2.Width, num)), base.npc.GetAlpha(Color.White), base.npc.rotation, new Vector2((float)texture2.Width / 2f, (float)num / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? 0 : 1, 0f);
+			}
+			if (this.teddy1Event)
+			{
+				Vector2 vector2;
+				vector2..ctor(base.npc.Center.X, base.npc.Center.Y);
+				int num3 = texture4.Height / 3;
+				int num4 = num3 * this.teddyFrame;
+				Main.spriteBatch.Draw(texture4, vector2 - Main.screenPosition, new Rectangle?(new Rectangle(0, num4, texture4.Width, num3)), drawColor, base.npc.rotation, new Vector2((float)texture4.Width / 2f, (float)num3 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Main.spriteBatch.Draw(texture5, vector2 - Main.screenPosition, new Rectangle?(new Rectangle(0, num4, texture5.Width, num3)), base.npc.GetAlpha(Color.White), base.npc.rotation, new Vector2((float)texture5.Width / 2f, (float)num3 / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? 0 : 1, 0f);
+			}
+			if (this.peaceful)
+			{
+				Vector2 vector3;
+				vector3..ctor(base.npc.Center.X, base.npc.Center.Y);
+				int num5 = texture6.Height / 3;
+				int num6 = num5 * this.peaceFrame;
+				Main.spriteBatch.Draw(texture6, vector3 - Main.screenPosition, new Rectangle?(new Rectangle(0, num6, texture6.Width, num5)), drawColor, base.npc.rotation, new Vector2((float)texture6.Width / 2f, (float)num5 / 2f), base.npc.scale, (base.npc.spriteDirection == -1) ? 0 : 1, 0f);
+				Main.spriteBatch.Draw(texture7, vector3 - Main.screenPosition, new Rectangle?(new Rectangle(0, num6, texture7.Width, num5)), base.npc.GetAlpha(Color.White), base.npc.rotation, new Vector2((float)texture7.Width / 2f, (float)num5 / 2f), base.npc.scale, (base.npc.spriteDirection == 1) ? 0 : 1, 0f);
 			}
 			return false;
 		}
@@ -366,5 +533,23 @@ namespace Redemption.NPCs.Bosses
 		private int shriekFrame;
 
 		private int shriekCounter;
+
+		private bool teddyEvent;
+
+		private int fightTimer;
+
+		private bool peaceful;
+
+		private int teddyFrame;
+
+		private int peaceFrame;
+
+		private int teddyCounter;
+
+		private int peaceCounter;
+
+		private bool teddy1Event;
+
+		private int teddyTimer;
 	}
 }

@@ -64,6 +64,10 @@ namespace Redemption.NPCs.Bosses
 		public override void Kill(int timeleft)
 		{
 			RedeWorld.girusTalk3 = true;
+			if (Main.netMode == 2)
+			{
+				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
+			}
 			Redemption.GirusSilence = false;
 		}
 

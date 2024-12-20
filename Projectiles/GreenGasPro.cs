@@ -17,6 +17,7 @@ namespace Redemption.Projectiles
 			base.projectile.penetrate = -1;
 			base.projectile.hostile = false;
 			base.projectile.friendly = true;
+			base.projectile.ranged = true;
 			base.projectile.ignoreWater = true;
 			base.projectile.tileCollide = false;
 			base.projectile.alpha = 200;

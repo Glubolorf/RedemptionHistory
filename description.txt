@@ -3,25 +3,18 @@
 Please remember to update the mod when necessary.
 
 Adds:
-- 50 Buffs
-- 9 Walls
-- 108 Tiles
-- 147 NPCs (Including bosses & minibosses)
-- 7 Bosses
-- 2 Minibosses
-- 677 Items
+- 73 Buffs
+- 10 Walls
+- 116 Tiles
+- 151 NPCs (Including bosses & minibosses)
+- 8 Bosses
+- 4 Minibosses
+- 689 Items
 
 Latest Update:
-- Nerfed Flak Cannon and requires Hallowed Bars now
-- Music Boxes!
-- Minibosses
-- Laboratory tiles and walls
-- Nerfed Corrupted and Vlitch weapons
-- Fixed crit on Druid projectiles
-- Removed the Empowered Buff
-- Added a bunch of weapons
-- 3rd Vlitch Overlord!
-- Nerfed King Slayer III's damage... A little.
+- Nature Guardians for Druid class
+- Fixes and balancing
+- I forgot the rest ._.
 For more, look at the mod's homepage
 
 Main Features (So far):
@@ -31,6 +24,7 @@ Main Features (So far):
 - Rare Weapons (1/500 Chance of dropping from certain enemies)
 - Epic Weapons (1/1000 Chance of dropping from certain enemies in Hardmode)
 - Wasteland Biome (After Infected Eye boss)
+- Nature Guardians
 - Ancient Stone Blocks
 - Many Fantasy Weapons (Old Rapier, Noble's Swords, Warden's Bows)
 - King Chicken Boss!!

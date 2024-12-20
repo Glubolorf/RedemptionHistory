@@ -8,7 +8,7 @@ namespace Redemption.Tiles
 	{
 		public override void RandomUpdate(int i, int j, int type)
 		{
-			if (type == 2 && !Main.dayTime && Main.tile[i, j - 1].type == 0 && Main.tile[i, j].active() && Main.rand.Next(100) == 0)
+			if (type == 2 && !Main.dayTime && Main.tile[i, j - 1].type == 0 && Main.tile[i, j].active() && Main.rand.Next(300) == 0)
 			{
 				WorldGen.PlaceTile(i, j - 1, base.mod.TileType("NightshadeTile"), true, false, -1, 0);
 			}

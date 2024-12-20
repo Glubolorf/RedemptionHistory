@@ -25,7 +25,7 @@ namespace Redemption.Items.Weapons
 			base.item.value = 1400;
 			base.item.rare = 1;
 			base.item.UseSound = SoundID.Item1;
-			base.item.autoReuse = true;
+			base.item.autoReuse = false;
 		}
 
 		public override void AddRecipes()

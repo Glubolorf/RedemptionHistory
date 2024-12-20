@@ -25,7 +25,7 @@ namespace Redemption.Items.Armor
 
 		public override bool DrawHead()
 		{
-			return true;
+			return false;
 		}
 
 		public override void DrawHair(ref bool drawHair, ref bool drawAltHair)

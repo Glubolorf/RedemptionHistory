@@ -28,6 +28,7 @@ namespace Redemption.NPCs
 			this.aiType = 46;
 			base.npc.npcSlots = 0f;
 			this.animationType = 46;
+			base.npc.dontTakeDamageFromHostiles = false;
 			this.banner = base.npc.type;
 			this.bannerItem = base.mod.ItemType("ChickenBanner");
 		}

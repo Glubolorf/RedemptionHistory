@@ -47,9 +47,28 @@ namespace Redemption.NPCs
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 268, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
 		}
 
+		public override void AI()
+		{
+			if (!this.change)
+			{
+				int num = Main.rand.Next(2);
+				if (num == 0)
+				{
+					base.npc.SetDefaults(base.mod.NPCType("StoneGolemAncient2"), -1f);
+					this.change = true;
+				}
+				if (num == 1)
+				{
+					this.change = true;
+				}
+			}
+		}
+
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.Cavern.Chance * 0.004f;
+			return SpawnCondition.Cavern.Chance * 0.005f;
 		}
+
+		private bool change;
 	}
 }

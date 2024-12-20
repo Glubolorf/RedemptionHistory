@@ -122,15 +122,15 @@ namespace Redemption.NPCs.Bosses
 					int num = Main.rand.Next(3);
 					if (num == 0 && !Main.dedServ)
 					{
-						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck1").WithVolume(0.7f).WithPitchVariance(0.1f), -1, -1);
+						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck1").WithVolume(0.5f).WithPitchVariance(0.1f), base.npc.position);
 					}
 					if (num == 1 && !Main.dedServ)
 					{
-						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck2").WithVolume(0.7f).WithPitchVariance(0.1f), -1, -1);
+						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck2").WithVolume(0.5f).WithPitchVariance(0.1f), base.npc.position);
 					}
 					if (num == 2 && !Main.dedServ)
 					{
-						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck3").WithVolume(0.7f).WithPitchVariance(0.1f), -1, -1);
+						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck3").WithVolume(0.5f).WithPitchVariance(0.1f), base.npc.position);
 					}
 				}
 				if (this.cluckTimer >= 2)

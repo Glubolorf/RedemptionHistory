@@ -166,6 +166,10 @@ namespace Redemption.NPCs
 			name = "A Dark Slime";
 			potionType = 154;
 			RedeWorld.downedDarkSlime = true;
+			if (Main.netMode == 2)
+			{
+				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
+			}
 		}
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)

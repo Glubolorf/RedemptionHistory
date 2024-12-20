@@ -9,7 +9,7 @@ namespace Redemption.Projectiles
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("King Slayer III");
-			Main.projFrames[base.projectile.type] = 11;
+			Main.projFrames[base.projectile.type] = 12;
 		}
 
 		public override void SetDefaults()
@@ -29,7 +29,7 @@ namespace Redemption.Projectiles
 			if (++base.projectile.frameCounter >= 3)
 			{
 				base.projectile.frameCounter = 0;
-				if (++base.projectile.frame >= 11)
+				if (++base.projectile.frame >= 12)
 				{
 					base.projectile.frame = 10;
 				}

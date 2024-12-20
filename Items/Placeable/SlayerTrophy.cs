@@ -8,7 +8,7 @@ namespace Redemption.Items.Placeable
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("King Slayer Trophy");
-			base.Tooltip.SetDefault("'A plastic replica of the Vortex Beater King Slayer III was using'");
+			base.Tooltip.SetDefault("'It's King Slayer III's broken rifle'");
 		}
 
 		public override void SetDefaults()

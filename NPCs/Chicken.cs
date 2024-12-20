@@ -28,6 +28,7 @@ namespace Redemption.NPCs
 			base.npc.aiStyle = 7;
 			this.aiType = 46;
 			this.animationType = 46;
+			base.npc.dontTakeDamageFromHostiles = false;
 			this.banner = base.npc.type;
 			this.bannerItem = base.mod.ItemType("ChickenBanner");
 		}
@@ -45,6 +46,38 @@ namespace Redemption.NPCs
 
 		public override void AI()
 		{
+			if (!this.change)
+			{
+				int num = Main.rand.Next(250);
+				if (num == 0)
+				{
+					base.npc.SetDefaults(base.mod.NPCType("ChickenGold"), -1f);
+					this.change = true;
+				}
+				if (num == 1)
+				{
+					base.npc.SetDefaults(base.mod.NPCType("VlitchChicken"), -1f);
+					this.change = true;
+				}
+				if (num >= 2)
+				{
+					int num2 = Main.rand.Next(5);
+					if (num2 == 0)
+					{
+						base.npc.SetDefaults(base.mod.NPCType("LeghornChicken"), -1f);
+						this.change = true;
+					}
+					if (num2 == 1)
+					{
+						base.npc.SetDefaults(base.mod.NPCType("RedChicken"), -1f);
+						this.change = true;
+					}
+					if (num2 >= 2)
+					{
+						this.change = true;
+					}
+				}
+			}
 			if (this.peckPeck)
 			{
 				this.peckCounter++;
@@ -83,18 +116,18 @@ namespace Redemption.NPCs
 				this.cluckTimer++;
 				if (this.cluckTimer == 1)
 				{
-					int num = Main.rand.Next(3);
-					if (num == 0 && !Main.dedServ)
+					int num3 = Main.rand.Next(3);
+					if (num3 == 0 && !Main.dedServ)
 					{
-						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck1").WithVolume(0.7f).WithPitchVariance(0.1f), -1, -1);
+						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck1").WithVolume(0.5f).WithPitchVariance(0.1f), base.npc.position);
 					}
-					if (num == 1 && !Main.dedServ)
+					if (num3 == 1 && !Main.dedServ)
 					{
-						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck2").WithVolume(0.7f).WithPitchVariance(0.1f), -1, -1);
+						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck2").WithVolume(0.5f).WithPitchVariance(0.1f), base.npc.position);
 					}
-					if (num == 2 && !Main.dedServ)
+					if (num3 == 2 && !Main.dedServ)
 					{
-						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck3").WithVolume(0.7f).WithPitchVariance(0.1f), -1, -1);
+						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck3").WithVolume(0.5f).WithPitchVariance(0.1f), base.npc.position);
 					}
 				}
 				if (this.cluckTimer >= 2)
@@ -150,5 +183,7 @@ namespace Redemption.NPCs
 		private bool cluckCluck;
 
 		private int cluckTimer;
+
+		private bool change;
 	}
 }

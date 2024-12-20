@@ -29,7 +29,7 @@ namespace Redemption.Items.Weapons
 
 		public override void SetDefaults()
 		{
-			base.item.damage = 66;
+			base.item.damage = 44;
 			base.item.melee = true;
 			base.item.width = 54;
 			base.item.height = 54;
@@ -40,7 +40,7 @@ namespace Redemption.Items.Weapons
 			base.item.value = Item.sellPrice(0, 7, 0, 0);
 			base.item.rare = 5;
 			base.item.UseSound = SoundID.Item1;
-			base.item.autoReuse = true;
+			base.item.autoReuse = false;
 			base.item.useTurn = true;
 			base.item.shoot = 0;
 			base.item.shootSpeed = 0f;

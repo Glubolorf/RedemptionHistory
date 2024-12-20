@@ -11,9 +11,10 @@ namespace Redemption.Tiles
 		{
 			Main.tileSolid[(int)base.Type] = true;
 			Main.tileMergeDirt[(int)base.Type] = true;
+			Main.tileBlockLight[(int)base.Type] = true;
 			this.dustType = 226;
 			this.drop = base.mod.ItemType("LabPlating");
-			this.minPick = 300;
+			this.minPick = 500;
 			this.mineResist = 3f;
 			this.soundType = 21;
 			base.CreateMapEntryName(null);
@@ -22,10 +23,15 @@ namespace Redemption.Tiles
 
 		public override void NearbyEffects(int i, int j, bool closer)
 		{
-			if (closer)
+			Player localPlayer = Main.LocalPlayer;
+			int num = (int)Vector2.Distance(localPlayer.Center / 16f, new Vector2((float)i, (float)j));
+			if (num <= 15)
 			{
-				Player localPlayer = Main.LocalPlayer;
 				localPlayer.AddBuff(base.mod.BuffType("RadioactiveFalloutDebuff"), Main.rand.Next(10, 20), true);
+			}
+			if (num <= 3 && !RedeWorld.labSafe)
+			{
+				localPlayer.AddBuff(base.mod.BuffType("XenomiteSkullDebuff"), Main.rand.Next(10, 20), true);
 			}
 		}
 
@@ -35,6 +41,16 @@ namespace Redemption.Tiles
 		}
 
 		public override bool CanExplode(int i, int j)
+		{
+			return false;
+		}
+
+		public override bool CanKillTile(int i, int j, ref bool blockDamaged)
+		{
+			return false;
+		}
+
+		public override bool Slope(int i, int j)
 		{
 			return false;
 		}

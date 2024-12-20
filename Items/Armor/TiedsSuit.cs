@@ -25,7 +25,7 @@ namespace Redemption.Items.Armor
 
 		public override void DrawHands(ref bool drawHands, ref bool drawArms)
 		{
-			drawHands = true;
+			drawHands = false;
 		}
 	}
 }

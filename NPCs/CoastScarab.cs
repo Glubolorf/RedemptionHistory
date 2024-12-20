@@ -27,6 +27,7 @@ namespace Redemption.NPCs
 			base.npc.aiStyle = 7;
 			this.aiType = 46;
 			this.animationType = 219;
+			base.npc.dontTakeDamageFromHostiles = false;
 			this.banner = base.npc.type;
 			this.bannerItem = base.mod.ItemType("CoastScarabBanner");
 		}
@@ -50,7 +51,7 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.Ocean.Chance * 1.7f;
+			return SpawnCondition.Ocean.Chance * 0.4f;
 		}
 
 		public override bool CanHitPlayer(Player target, ref int cooldownSlot)

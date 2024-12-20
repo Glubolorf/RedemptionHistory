@@ -87,7 +87,7 @@ namespace Redemption.NPCs
 				Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
 			}
 			Dust.NewDust(base.npc.position + base.npc.velocity, base.npc.width, base.npc.height, 5, base.npc.velocity.X * 0.5f, base.npc.velocity.Y * 0.5f, 0, default(Color), 1f);
-			if (Main.netMode != 1 && base.npc.life <= 0)
+			if (!RedeWorld.keeperSaved && Main.netMode != 1 && base.npc.life <= 0)
 			{
 				NPC.NewNPC((int)base.npc.position.X + 20, (int)base.npc.position.Y + 20, base.mod.NPCType("AAAA"), 0, 0f, 0f, 0f, 0f, 255);
 				Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/Shriek").WithVolume(0.9f).WithPitchVariance(0.1f), -1, -1);
@@ -118,6 +118,24 @@ namespace Redemption.NPCs
 
 		public override string GetChat()
 		{
+			for (int i = 0; i < 255; i++)
+			{
+				Player player = Main.player[i];
+				if (player.active)
+				{
+					for (int j = 0; j < player.inventory.Length; j++)
+					{
+						if (player.inventory[j].type == base.mod.ItemType("BlackenedHeart") && Main.rand.Next(3) == 0)
+						{
+							return "I wouldn't consume that Blackened Heart if I were you. Only bad things will come of it.";
+						}
+					}
+				}
+			}
+			if (RedeWorld.keeperSaved && Main.rand.Next(3) == 0)
+			{
+				return "You saved the Keeper? Thank you for that, I can't imagine the pain she was feeling. If you need Dark Shards, I'll sell them now for you.";
+			}
 			switch (Main.rand.Next(8))
 			{
 			case 0:
@@ -194,6 +212,13 @@ namespace Redemption.NPCs
 			{
 				shop.item[nextSlot].SetDefaults(base.mod.ItemType<LostSoul>(), false);
 				shop.item[nextSlot].shopCustomPrice = new int?(8);
+				shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
+				nextSlot++;
+			}
+			if (RedeWorld.keeperSaved)
+			{
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType<DarkShard>(), false);
+				shop.item[nextSlot].shopCustomPrice = new int?(4);
 				shop.item[nextSlot].shopSpecialCurrency = Redemption.FaceCustomCurrencyID;
 				nextSlot++;
 			}

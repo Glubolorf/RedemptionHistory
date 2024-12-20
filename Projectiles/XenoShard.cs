@@ -30,7 +30,7 @@ namespace Redemption.Projectiles
 		public override void AI()
 		{
 			base.projectile.localAI[0] += 1f;
-			base.projectile.rotation += 0.5f;
+			base.projectile.rotation = (float)Math.Atan2((double)base.projectile.velocity.Y, (double)base.projectile.velocity.X) + 1.57f;
 			if (base.projectile.localAI[0] == 0f)
 			{
 				this.AdjustMagnitude(ref base.projectile.velocity);
@@ -88,8 +88,11 @@ namespace Redemption.Projectiles
 
 		public override void Kill(int timeLeft)
 		{
-			Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, base.mod.DustType("XenoDust"), base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 0, default(Color), 1f);
-			Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, base.mod.DustType("XenoDust"), base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 0, default(Color), 1f);
+			for (int i = 0; i < 2; i++)
+			{
+				int num = Dust.NewDust(new Vector2(base.projectile.position.X, base.projectile.position.Y), base.projectile.width, base.projectile.height, 74, 0f, 0f, 100, default(Color), 1.2f);
+				Main.dust[num].velocity *= 1.9f;
+			}
 		}
 	}
 }

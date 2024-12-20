@@ -42,8 +42,7 @@ namespace Redemption.Items.Weapons
 		public override void AddRecipes()
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "LivingWood", 10);
-			modRecipe.AddIngredient(null, "LivingLeaf", 6);
+			modRecipe.AddIngredient(null, "LivingTwig", 16);
 			modRecipe.AddTile(304);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();

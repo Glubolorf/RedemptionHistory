@@ -19,6 +19,7 @@ namespace Redemption.Projectiles
 			base.projectile.aiStyle = -1;
 			base.projectile.friendly = true;
 			base.projectile.hostile = false;
+			base.projectile.magic = true;
 			base.projectile.penetrate = -1;
 			base.projectile.tileCollide = false;
 			base.projectile.timeLeft = 60;

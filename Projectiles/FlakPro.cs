@@ -20,6 +20,7 @@ namespace Redemption.Projectiles
 			base.projectile.width = 16;
 			base.projectile.height = 16;
 			base.projectile.penetrate = 1;
+			base.projectile.ranged = true;
 			base.projectile.hostile = false;
 			base.projectile.friendly = true;
 			base.projectile.ignoreWater = true;

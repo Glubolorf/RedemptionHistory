@@ -20,7 +20,7 @@ namespace Redemption.Projectiles
 			base.projectile.friendly = true;
 			base.projectile.penetrate = -1;
 			base.projectile.hostile = false;
-			base.projectile.magic = false;
+			base.projectile.thrown = true;
 			base.projectile.tileCollide = true;
 			base.projectile.ignoreWater = true;
 		}
@@ -49,7 +49,14 @@ namespace Redemption.Projectiles
 		{
 			Collision.HitTiles(base.projectile.position, oldVelocity, base.projectile.width, base.projectile.height);
 			Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/BAZINGA").WithVolume(0.9f).WithPitchVariance(0.1f), -1, -1);
-			NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, 398, 0, 0f, 0f, 0f, 0f, 255);
+			if (Main.netMode != 1)
+			{
+				int num = NPC.NewNPC((int)base.projectile.position.X, (int)base.projectile.position.Y, 398, 0, 0f, 0f, 0f, 0f, 255);
+				if (Main.netMode == 2)
+				{
+					NetMessage.SendData(23, -1, -1, null, num, 0f, 0f, 0f, 0, 0, 0);
+				}
+			}
 			return true;
 		}
 	}

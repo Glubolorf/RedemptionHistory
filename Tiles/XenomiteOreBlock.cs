@@ -12,7 +12,8 @@ namespace Redemption.Tiles
 			Main.tileSolid[(int)base.Type] = true;
 			Main.tileMergeDirt[(int)base.Type] = true;
 			Main.tileSpelunker[(int)base.Type] = true;
-			this.dustType = 80;
+			Main.tileBlockLight[(int)base.Type] = true;
+			this.dustType = base.mod.DustType("XenoDust");
 			this.drop = base.mod.ItemType("XenomiteShard");
 			this.minPick = 30;
 			this.mineResist = 1.5f;
@@ -24,9 +25,10 @@ namespace Redemption.Tiles
 
 		public override void NearbyEffects(int i, int j, bool closer)
 		{
-			if (closer)
+			Player localPlayer = Main.LocalPlayer;
+			int num = (int)Vector2.Distance(localPlayer.Center / 16f, new Vector2((float)i, (float)j));
+			if (num <= 2)
 			{
-				Player localPlayer = Main.LocalPlayer;
 				localPlayer.AddBuff(base.mod.BuffType("XenomiteDebuff"), Main.rand.Next(10, 20), true);
 			}
 		}

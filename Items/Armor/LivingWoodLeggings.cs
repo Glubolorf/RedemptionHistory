@@ -33,8 +33,7 @@ namespace Redemption.Items.Armor
 		public override void AddRecipes()
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
-			modRecipe.AddIngredient(null, "LivingWood", 20);
-			modRecipe.AddIngredient(null, "LivingLeaf", 10);
+			modRecipe.AddIngredient(null, "LivingTwig", 30);
 			modRecipe.AddTile(16);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();

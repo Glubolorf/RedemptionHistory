@@ -9,7 +9,7 @@ namespace Redemption.Walls
 	{
 		public override void SetDefaults()
 		{
-			Main.wallHouse[(int)base.Type] = true;
+			Main.wallHouse[(int)base.Type] = false;
 			this.drop = base.mod.ItemType("LabPlatingWall");
 			base.AddMapEntry(new Color(100, 100, 100), null);
 		}
@@ -17,6 +17,11 @@ namespace Redemption.Walls
 		public override bool CanExplode(int i, int j)
 		{
 			return false;
+		}
+
+		public override void KillWall(int i, int j, ref bool fail)
+		{
+			fail = true;
 		}
 	}
 }

@@ -22,6 +22,7 @@ namespace Redemption.Projectiles
 			base.projectile.tileCollide = false;
 			base.projectile.ownerHitCheck = true;
 			base.projectile.aiStyle = 19;
+			base.projectile.magic = true;
 			base.projectile.alpha = 10;
 			base.projectile.penetrate = -1;
 			base.projectile.timeLeft = 30;

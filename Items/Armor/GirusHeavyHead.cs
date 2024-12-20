@@ -13,7 +13,7 @@ namespace Redemption.Items.Armor
 		public override void SetStaticDefaults()
 		{
 			base.DisplayName.SetDefault("Girus Heavy Headgear");
-			base.Tooltip.SetDefault("6% increased melee\n6% increased melee crit");
+			base.Tooltip.SetDefault("6% increased melee damage\n6% increased melee crit");
 		}
 
 		public override void SetDefaults()

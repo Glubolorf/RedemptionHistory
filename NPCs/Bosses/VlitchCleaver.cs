@@ -23,7 +23,7 @@ namespace Redemption.NPCs.Bosses
 			base.npc.friendly = false;
 			base.npc.damage = 250;
 			base.npc.defense = 60;
-			base.npc.lifeMax = 40000;
+			base.npc.lifeMax = 35000;
 			base.npc.HitSound = SoundID.NPCHit4;
 			base.npc.DeathSound = SoundID.NPCDeath14;
 			base.npc.value = 600f;
@@ -90,6 +90,10 @@ namespace Redemption.NPCs.Bosses
 		{
 			potionType = 499;
 			RedeWorld.downedVlitch1 = true;
+			if (Main.netMode == 2)
+			{
+				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
+			}
 			if (!RedeWorld.girusTalk1 && !NPC.AnyNPCs(base.mod.NPCType("VlitchWormHead")) && !NPC.AnyNPCs(base.mod.NPCType("OmegaOblitDamaged")))
 			{
 				Projectile.NewProjectile(new Vector2(base.npc.position.X, base.npc.position.Y), new Vector2(0f, 0f), base.mod.ProjectileType("GirusTalking1"), 0, 0f, 255, 0f, 0f);
@@ -123,6 +127,22 @@ namespace Redemption.NPCs.Bosses
 			{
 				Dust.NewDust(new Vector2(base.npc.position.X, base.npc.position.Y), base.npc.width, base.npc.height, base.mod.DustType("VlitchFlame"), 0f, 0f, 0, default(Color), 1f);
 			}
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).omegaPower)
+			{
+				this.omegaTimer++;
+				if (this.omegaTimer == 600)
+				{
+					Main.NewText("Wait... Why aren't my minions targetting you?", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
+				}
+				if (this.omegaTimer == 800)
+				{
+					Main.NewText("Oh, because you got that damn exoskeleton on...", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
+				}
+				if (this.omegaTimer == 1300)
+				{
+					this.takeAction = true;
+				}
+			}
 			if (base.npc.life >= 20000)
 			{
 				base.npc.ai[1] += 1f;
@@ -131,7 +151,7 @@ namespace Redemption.NPCs.Bosses
 			{
 				NPC.NewNPC((int)base.npc.position.X + 70, (int)base.npc.position.Y + 120, base.mod.NPCType("CorruptedProbe"), 0, 0f, 0f, 0f, 0f, 255);
 			}
-			if (base.npc.life <= 20000)
+			if (base.npc.life <= 19500)
 			{
 				base.npc.ai[2] += 1f;
 			}
@@ -140,7 +160,7 @@ namespace Redemption.NPCs.Bosses
 				float num = 10f;
 				Vector2 vector;
 				vector..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-				int num2 = 999;
+				int num2 = 300;
 				int num3 = base.mod.ProjectileType("VlitchCleaverPro");
 				Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 33, 1f, 0f);
 				float num4 = (float)Math.Atan2((double)(vector.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector.X - (player.position.X + (float)player.width * 0.5f)));
@@ -160,19 +180,30 @@ namespace Redemption.NPCs.Bosses
 				float num5 = 10f;
 				Vector2 vector2;
 				vector2..ctor(base.npc.position.X + (float)(base.npc.width / 2), base.npc.position.Y + (float)(base.npc.height / 2));
-				int num6 = 999;
+				int num6 = 300;
 				int num7 = base.mod.ProjectileType("VlitchCleaverPro");
 				Main.PlaySound(2, (int)base.npc.position.X, (int)base.npc.position.Y, 33, 1f, 0f);
 				float num8 = (float)Math.Atan2((double)(vector2.Y - (player.position.Y + (float)player.height * 0.5f)), (double)(vector2.X - (player.position.X + (float)player.width * 0.5f)));
 				Projectile.NewProjectile(vector2.X, vector2.Y, (float)(Math.Cos((double)num8) * (double)num5 * -1.0), (float)(Math.Sin((double)num8) * (double)num5 * -1.0), num7, num6, 0f, 0, 0f, 0f);
 				base.npc.ai[3] = 0f;
 			}
-			if (base.npc.life <= 20500)
+			if (base.npc.life <= 19500)
+			{
+				this.takeAction = true;
+			}
+			if (this.takeAction)
 			{
 				this.timer++;
 				if (this.timer == 1)
 				{
-					Main.NewText("Guess its time to take action...", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
+					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).omegaPower)
+					{
+						Main.NewText("No matter, I guess I'll take action...", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
+					}
+					else
+					{
+						Main.NewText("Guess its time to take action...", Color.IndianRed.R, Color.IndianRed.G, Color.IndianRed.B, false);
+					}
 				}
 				this.timer2++;
 				if (this.timer2 <= 120 && this.player.active)
@@ -236,5 +267,9 @@ namespace Redemption.NPCs.Bosses
 		public int timer;
 
 		public int timer2;
+
+		private int omegaTimer;
+
+		private bool takeAction;
 	}
 }

@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Redemption.Projectiles
@@ -21,6 +22,20 @@ namespace Redemption.Projectiles
 			base.projectile.penetrate = -1;
 			base.projectile.melee = true;
 			base.projectile.aiStyle = 15;
+		}
+
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		{
+			if (target.type == base.mod.NPCType("TheKeeper") && target.life <= 0)
+			{
+				string text = "*Betrayal fills the Keeper's mind*";
+				Color rarityPurple = Colors.RarityPurple;
+				byte r = rarityPurple.R;
+				Color rarityPurple2 = Colors.RarityPurple;
+				byte g = rarityPurple2.G;
+				Color rarityPurple3 = Colors.RarityPurple;
+				Main.NewText(text, r, g, rarityPurple3.B, false);
+			}
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

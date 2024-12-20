@@ -26,6 +26,7 @@ namespace Redemption.NPCs
 			base.npc.npcSlots = 0f;
 			base.npc.aiStyle = 24;
 			this.aiType = 74;
+			base.npc.dontTakeDamageFromHostiles = false;
 			this.animationType = 355;
 			base.npc.catchItem = (short)base.mod.ItemType("FlyBait");
 		}

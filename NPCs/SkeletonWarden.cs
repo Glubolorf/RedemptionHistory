@@ -32,6 +32,18 @@ namespace Redemption.NPCs
 			this.bannerItem = base.mod.ItemType("SkeletonWardenBanner");
 		}
 
+		public override void AI()
+		{
+			if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).skeletonFriendly)
+			{
+				base.npc.aiStyle = 3;
+				this.aiType = 3;
+				return;
+			}
+			base.npc.aiStyle = 3;
+			this.aiType = 111;
+		}
+
 		public override void HitEffect(int hitDirection, double damage)
 		{
 			if (base.npc.life <= 0)
@@ -52,6 +64,11 @@ namespace Redemption.NPCs
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
 			return SpawnCondition.OverworldNightMonster.Chance * 0.07f;
+		}
+
+		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+		{
+			return !Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).skeletonFriendly;
 		}
 	}
 }

@@ -11,6 +11,7 @@ namespace Redemption.Tiles
 		{
 			Main.tileSolid[(int)base.Type] = true;
 			Main.tileMergeDirt[(int)base.Type] = true;
+			Main.tileBlockLight[(int)base.Type] = true;
 			this.dustType = 226;
 			this.drop = base.mod.ItemType("UltraVioletPlating");
 			this.minPick = 0;

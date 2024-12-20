@@ -27,5 +27,14 @@ namespace Redemption.Items
 		{
 			player.AddBuff(base.mod.BuffType("XenomiteDebuff"), Main.rand.Next(10, 20), true);
 		}
+
+		public override void AddRecipes()
+		{
+			ModRecipe modRecipe = new ModRecipe(base.mod);
+			modRecipe.AddIngredient(null, "Xenomite", 1);
+			modRecipe.AddTile(null, "XenoTank1");
+			modRecipe.SetResult(this, 4);
+			modRecipe.AddRecipe();
+		}
 	}
 }

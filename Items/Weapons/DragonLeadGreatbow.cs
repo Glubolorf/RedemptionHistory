@@ -39,7 +39,7 @@ namespace Redemption.Items.Weapons
 		{
 			ModRecipe modRecipe = new ModRecipe(base.mod);
 			modRecipe.AddIngredient(null, "DragonLeadBar", 10);
-			modRecipe.AddTile(16);
+			modRecipe.AddTile(77);
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
 		}

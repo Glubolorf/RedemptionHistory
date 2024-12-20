@@ -20,7 +20,7 @@ namespace Redemption.NPCs
 			base.npc.height = 56;
 			base.npc.damage = 80;
 			base.npc.friendly = false;
-			base.npc.defense = 75;
+			base.npc.defense = 45;
 			base.npc.lifeMax = 600;
 			base.npc.HitSound = SoundID.NPCHit4;
 			base.npc.DeathSound = SoundID.NPCDeath14;
@@ -52,7 +52,7 @@ namespace Redemption.NPCs
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.OverworldNightMonster.Chance * ((Main.hardMode && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3) ? 0.008f : 0f);
+			return SpawnCondition.OverworldNightMonster.Chance * ((Main.hardMode && NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && !RedeWorld.downedVlitch3) ? 0.011f : 0f);
 		}
 	}
 }

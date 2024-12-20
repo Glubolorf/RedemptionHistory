@@ -88,15 +88,15 @@ namespace Redemption.NPCs.Bosses
 					int num = Main.rand.Next(3);
 					if (num == 0 && !Main.dedServ)
 					{
-						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck1").WithVolume(0.7f).WithPitchVariance(0.1f), -1, -1);
+						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck1").WithVolume(0.5f).WithPitchVariance(0.1f), base.npc.position);
 					}
 					if (num == 1 && !Main.dedServ)
 					{
-						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck2").WithVolume(0.7f).WithPitchVariance(0.1f), -1, -1);
+						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck2").WithVolume(0.5f).WithPitchVariance(0.1f), base.npc.position);
 					}
 					if (num == 2 && !Main.dedServ)
 					{
-						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck3").WithVolume(0.7f).WithPitchVariance(0.1f), -1, -1);
+						Main.PlaySound(base.mod.GetLegacySoundSlot(50, "Sounds/Custom/ChickenCluck3").WithVolume(0.5f).WithPitchVariance(0.1f), base.npc.position);
 					}
 				}
 				if (this.cluckTimer >= 2)
@@ -221,8 +221,12 @@ namespace Redemption.NPCs.Bosses
 			byte g = rarityGreen2.G;
 			Color rarityGreen3 = Colors.RarityGreen;
 			Main.NewText(text, r, g, rarityGreen3.B, false);
-			potionType = base.mod.ItemType("ChickenEgg");
+			potionType = 0;
 			RedeWorld.downedKingChicken = true;
+			if (Main.netMode == 2)
+			{
+				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
+			}
 		}
 
 		public override void NPCLoot()
@@ -231,6 +235,7 @@ namespace Redemption.NPCs.Bosses
 			{
 				Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("KingChickenTrophy"), 1, false, 0, false, false);
 			}
+			Item.NewItem((int)base.npc.position.X, (int)base.npc.position.Y, base.npc.width, base.npc.height, base.mod.ItemType("ChickenEgg"), Main.rand.Next(4, 6), false, 0, false, false);
 			if (Main.expertMode)
 			{
 				base.npc.DropBossBags();

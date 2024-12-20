@@ -11,15 +11,10 @@ namespace Redemption.NPCs
 	{
 		public override void SetupShop(int type, Chest shop, ref int nextSlot)
 		{
-			if (type == 20)
+			if (type == 20 && Main.bloodMoon)
 			{
-				shop.item[nextSlot].SetDefaults(3093, false);
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType<CorpseFlowerBag>(), false);
 				nextSlot++;
-				if (Main.bloodMoon)
-				{
-					shop.item[nextSlot].SetDefaults(base.mod.ItemType<CorpseFlowerBag>(), false);
-					nextSlot++;
-				}
 			}
 			if (type == 19 && NPC.downedBoss2 && !Main.dayTime)
 			{
@@ -159,7 +154,7 @@ namespace Redemption.NPCs
 					}
 				}
 			}
-			if (npc.type == base.mod.NPCType("Chicken"))
+			if (npc.type == base.mod.NPCType("Chicken") || npc.type == base.mod.NPCType("RedChicken") || npc.type == base.mod.NPCType("LeghornChicken") || npc.type == base.mod.NPCType("VlitchChicken"))
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("ChickenEgg"), 1, false, 0, false, false);
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
@@ -219,8 +214,7 @@ namespace Redemption.NPCs
 			}
 			if (npc.type == base.mod.NPCType("ForestGolem"))
 			{
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("LivingWood"), Main.rand.Next(6, 14), false, 0, false, false);
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("LivingLeaf"), Main.rand.Next(2, 6), false, 0, false, false);
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("LivingTwig"), Main.rand.Next(8, 20), false, 0, false, false);
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 27, Main.rand.Next(1, 3), false, 0, false, false);
 				if (Main.rand.Next(40) == 0)
 				{
@@ -254,8 +248,7 @@ namespace Redemption.NPCs
 			}
 			if (npc.type == base.mod.NPCType("ForestGolemBlooming"))
 			{
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("LivingWood"), Main.rand.Next(8, 18), false, 0, false, false);
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("LivingLeaf"), Main.rand.Next(4, 8), false, 0, false, false);
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("LivingTwig"), Main.rand.Next(12, 26), false, 0, false, false);
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 27, Main.rand.Next(3, 5), false, 0, false, false);
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 313, 1, false, 0, false, false);
 				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
@@ -286,8 +279,7 @@ namespace Redemption.NPCs
 			}
 			if (npc.type == base.mod.NPCType("ForestGolemWounded"))
 			{
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("LivingWood"), Main.rand.Next(4, 8), false, 0, false, false);
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("LivingLeaf"), Main.rand.Next(2, 4), false, 0, false, false);
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("LivingTwig"), Main.rand.Next(6, 12), false, 0, false, false);
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 27, Main.rand.Next(1, 2), false, 0, false, false);
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 40, 2, false, 0, false, false);
 				if (Main.rand.Next(5) == 0)
@@ -324,7 +316,7 @@ namespace Redemption.NPCs
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 174, Main.rand.Next(2, 6), false, 0, false, false);
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 173, Main.rand.Next(2, 8), false, 0, false, false);
-				if (Main.rand.Next(5) == 0)
+				if (Main.rand.Next(16) == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("ForgottenGreatsword"), 1, false, 0, false, false);
 				}
@@ -433,6 +425,104 @@ namespace Redemption.NPCs
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("AncientBrassChunk"), Main.rand.Next(2, 4), false, 0, false, false);
 				}
 			}
+			if (npc.type == base.mod.NPCType("SkeletonNobleArmoured"))
+			{
+				if (Main.rand.Next(20) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("AncientBrassCleaver"), 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(50) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("AncientBrassArmour"), 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(50) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("AncientBrassHelm"), 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(50) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("AncientBrassLeggings"), 1, false, 0, false, false);
+				}
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				{
+					if (Main.rand.Next(400) == 0)
+					{
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("SwordSlicer"), 1, false, 0, false, false);
+					}
+				}
+				else if (Main.rand.Next(500) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("SwordSlicer"), 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(3) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("AncientBrassChunk"), Main.rand.Next(6, 14), false, 0, false, false);
+				}
+			}
+			if (npc.type == base.mod.NPCType("SkeletonNobleArmoured3"))
+			{
+				if (Main.rand.Next(50) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("IthonicCap"), 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(50) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("IthonicGreaves"), 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(50) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("IthonicTabard"), 1, false, 0, false, false);
+				}
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				{
+					if (Main.rand.Next(400) == 0)
+					{
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("SwordSlicer"), 1, false, 0, false, false);
+					}
+				}
+				else if (Main.rand.Next(500) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("SwordSlicer"), 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(3) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("KaniteOre"), Main.rand.Next(7, 15), false, 0, false, false);
+				}
+			}
+			if (npc.type == base.mod.NPCType("SkeletonNobleArmoured2"))
+			{
+				if (Main.rand.Next(20) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("PureIronSword"), 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(50) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("PureIronArmour"), 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(50) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("PureIronHelm"), 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(50) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("PureIronLeggings"), 1, false, 0, false, false);
+				}
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				{
+					if (Main.rand.Next(400) == 0)
+					{
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("SwordSlicer"), 1, false, 0, false, false);
+					}
+				}
+				else if (Main.rand.Next(500) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("SwordSlicer"), 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(3) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("GathicCryoCrystal"), Main.rand.Next(6, 14), false, 0, false, false);
+				}
+			}
 			if (npc.type == base.mod.NPCType("SkeletonWarden"))
 			{
 				if (Main.rand.Next(20) == 0)
@@ -473,62 +563,6 @@ namespace Redemption.NPCs
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("AncientBrassChunk"), Main.rand.Next(2, 4), false, 0, false, false);
 				}
 			}
-			if (npc.type == base.mod.NPCType("StoneGolem"))
-			{
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 3, Main.rand.Next(4, 12), false, 0, false, false);
-				if (Main.rand.Next(60) == 0)
-				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 3109, 1, false, 0, false, false);
-				}
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
-				{
-					if (Main.rand.Next(400) == 0)
-					{
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("VictorBattletome"), 1, false, 0, false, false);
-					}
-				}
-				else if (Main.rand.Next(500) == 0)
-				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("VictorBattletome"), 1, false, 0, false, false);
-				}
-			}
-			if (npc.type == base.mod.NPCType("StoneGolemWounded"))
-			{
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 3, Main.rand.Next(3, 10), false, 0, false, false);
-				if (Main.rand.Next(60) == 0)
-				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 3109, 1, false, 0, false, false);
-				}
-				if (Main.rand.Next(30) == 0)
-				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 1166, 1, false, 0, false, false);
-				}
-				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
-				{
-					if (Main.rand.Next(400) == 0)
-					{
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("VictorBattletome"), 1, false, 0, false, false);
-					}
-				}
-				else if (Main.rand.Next(500) == 0)
-				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("VictorBattletome"), 1, false, 0, false, false);
-				}
-				if (Main.hardMode)
-				{
-					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
-					{
-						if (Main.rand.Next(900) == 0)
-						{
-							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("Spellsong"), 1, false, 0, false, false);
-						}
-					}
-					else if (Main.rand.Next(1000) == 0)
-					{
-						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("Spellsong"), 1, false, 0, false, false);
-					}
-				}
-			}
 			if (npc.type == base.mod.NPCType("StoneGolemAncient1"))
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("AncientStone"), Main.rand.Next(4, 12), false, 0, false, false);
@@ -538,11 +572,22 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 3109, 1, false, 0, false, false);
 				}
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				{
+					if (Main.rand.Next(150) == 0)
+					{
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("VictorBattletome"), 1, false, 0, false, false);
+					}
+				}
+				else if (Main.rand.Next(200) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("VictorBattletome"), 1, false, 0, false, false);
+				}
 				if (Main.hardMode)
 				{
 					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
 					{
-						if (Main.rand.Next(200) == 0)
+						if (Main.rand.Next(150) == 0)
 						{
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("BlindJustice"), 1, false, 0, false, false);
 						}
@@ -562,11 +607,22 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 3109, 1, false, 0, false, false);
 				}
+				if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
+				{
+					if (Main.rand.Next(150) == 0)
+					{
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("VictorBattletome"), 1, false, 0, false, false);
+					}
+				}
+				else if (Main.rand.Next(200) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("VictorBattletome"), 1, false, 0, false, false);
+				}
 				if (Main.hardMode)
 				{
 					if (Main.LocalPlayer.GetModPlayer<RedePlayer>(base.mod).bloomingLuck)
 					{
-						if (Main.rand.Next(200) == 0)
+						if (Main.rand.Next(150) == 0)
 						{
 							Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("BlindJustice"), 1, false, 0, false, false);
 						}
@@ -761,16 +817,9 @@ namespace Redemption.NPCs
 					}
 				}
 			}
-			if (npc.type == base.mod.NPCType("ChickenCultist"))
+			if (npc.type == base.mod.NPCType("ChickenCultist") && Main.rand.Next(2) == 0)
 			{
-				if (Main.rand.Next(2) == 0)
-				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("ChickenEgg"), Main.rand.Next(1, 3), false, 0, false, false);
-				}
-				if (Main.rand.Next(4) == 0)
-				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("ChickenContract"), 1, false, 0, false, false);
-				}
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("ChickenEgg"), Main.rand.Next(1, 3), false, 0, false, false);
 			}
 			if (npc.type == base.mod.NPCType("StrangePortal"))
 			{
@@ -853,14 +902,17 @@ namespace Redemption.NPCs
 			}
 			if (npc.type == base.mod.NPCType("UndeadViolinist"))
 			{
-				int num6 = Main.rand.Next(2);
-				if (num6 == 0)
+				if (Main.rand.Next(18) == 0)
 				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("TheViolin"), 1, false, 0, false, false);
-				}
-				if (num6 == 1)
-				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("ViolinString"), 1, false, 0, false, false);
+					int num6 = Main.rand.Next(2);
+					if (num6 == 0)
+					{
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("TheViolin"), 1, false, 0, false, false);
+					}
+					if (num6 == 1)
+					{
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("ViolinString"), 1, false, 0, false, false);
+					}
 				}
 				if (Main.rand.Next(75) == 0)
 				{
@@ -979,13 +1031,16 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("NestoriWig"), 1, false, 0, false, false);
 				}
-				if (Main.rand.Next(50) == 0)
+				if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
 				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("TheViolin"), 1, false, 0, false, false);
-				}
-				if (Main.rand.Next(50) == 0)
-				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("ViolinString"), 1, false, 0, false, false);
+					if (Main.rand.Next(50) == 0)
+					{
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("TheViolin"), 1, false, 0, false, false);
+					}
+					if (Main.rand.Next(50) == 0)
+					{
+						Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("ViolinString"), 1, false, 0, false, false);
+					}
 				}
 				if (Main.rand.Next(50) == 0)
 				{
@@ -1000,7 +1055,7 @@ namespace Redemption.NPCs
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("MysteriousFlowerPetal"), 8, false, 0, false, false);
 				}
 			}
-			if (npc.type == base.mod.NPCType("Android"))
+			if (npc.type == base.mod.NPCType("Android") || npc.type == base.mod.NPCType("Apidroid"))
 			{
 				if (Main.rand.Next(20) == 0)
 				{
@@ -1018,6 +1073,26 @@ namespace Redemption.NPCs
 				if (Main.rand.Next(100) == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("AndroidHead"), 1, false, 0, false, false);
+				}
+			}
+			if (npc.type == base.mod.NPCType("OmegaAndroid"))
+			{
+				if (Main.rand.Next(10) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("GirusChip"), 1, false, 0, false, false);
+				}
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("CarbonMyofibre"), Main.rand.Next(1, 2), false, 0, false, false);
+				if (Main.rand.Next(5) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("VlitchBattery"), 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(3) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("CorruptedXenomite"), Main.rand.Next(1, 4), false, 0, false, false);
+				}
+				if (Main.rand.Next(2) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("VlitchScale"), Main.rand.Next(1, 3), false, 0, false, false);
 				}
 			}
 			if (npc.type == base.mod.NPCType("PrototypeSilver"))
@@ -1040,6 +1115,23 @@ namespace Redemption.NPCs
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("PrototypeSilverHead"), 1, false, 0, false, false);
 				}
 			}
+			if (npc.type == base.mod.NPCType("OmegaPrototype"))
+			{
+				if (Main.rand.Next(5) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("GirusChip"), 1, false, 0, false, false);
+				}
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("CarbonMyofibre"), Main.rand.Next(1, 4), false, 0, false, false);
+				if (Main.rand.Next(2) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("VlitchBattery"), 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(2) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("CorruptedXenomite"), Main.rand.Next(2, 6), false, 0, false, false);
+				}
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("VlitchScale"), Main.rand.Next(2, 5), false, 0, false, false);
+			}
 			if (npc.type == base.mod.NPCType("SpacePaladin"))
 			{
 				if (Main.rand.Next(10) == 0)
@@ -1056,6 +1148,14 @@ namespace Redemption.NPCs
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("Mk3Plating"), 1, false, 0, false, false);
 				}
 			}
+			if (npc.type == base.mod.NPCType("OmegaSpacePaladin"))
+			{
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("GirusChip"), 1, false, 0, false, false);
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("ArtificalMuscle"), Main.rand.Next(1, 2), false, 0, false, false);
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("VlitchBattery"), Main.rand.Next(1, 2), false, 0, false, false);
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("CorruptedXenomite"), Main.rand.Next(6, 16), false, 0, false, false);
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("VlitchScale"), Main.rand.Next(4, 12), false, 0, false, false);
+			}
 			if (npc.type == base.mod.NPCType("XenoChomper"))
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("XenomiteShard"), Main.rand.Next(1, 3), false, 0, false, false);
@@ -1071,6 +1171,10 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("InfectedGolemEgg"), 1, false, 0, false, false);
 				}
+				if (Main.rand.Next(200) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("SuspiciousXenomiteShard"), 1, false, 0, false, false);
+				}
 			}
 			if (npc.type == base.mod.NPCType("XenomiteGargantuan"))
 			{
@@ -1083,6 +1187,10 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("RadioactiveLauncher"), 1, false, 0, false, false);
 				}
+				if (Main.rand.Next(200) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("SuspiciousXenomiteShard"), 1, false, 0, false, false);
+				}
 			}
 			if (npc.type == base.mod.NPCType("XenonRoller"))
 			{
@@ -1091,16 +1199,12 @@ namespace Redemption.NPCs
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("XenomiteBoulderFlail"), 1, false, 0, false, false);
 				}
-			}
-			if (npc.type == base.mod.NPCType("SludgyBoi"))
-			{
-				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("XenomiteShard"), Main.rand.Next(2, 3), false, 0, false, false);
-				if (Main.rand.Next(20) == 0)
+				if (Main.rand.Next(200) == 0)
 				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("SludgeSpoon"), 1, false, 0, false, false);
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("SuspiciousXenomiteShard"), 1, false, 0, false, false);
 				}
 			}
-			if (npc.type == base.mod.NPCType("SludgyBoi2"))
+			if (npc.type == base.mod.NPCType("SludgyBoi"))
 			{
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("XenomiteShard"), Main.rand.Next(2, 3), false, 0, false, false);
 				if (Main.rand.Next(20) == 0)
@@ -1117,6 +1221,10 @@ namespace Redemption.NPCs
 				if (Main.rand.Next(15) == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("FrostyStaff"), 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(15) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("FrozenGrasp"), 1, false, 0, false, false);
 				}
 				if (Main.hardMode)
 				{
@@ -1146,6 +1254,10 @@ namespace Redemption.NPCs
 				}
 				if (Main.rand.Next(20) == 0)
 				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("HazmatSuit"), 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(20) == 0)
+				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("FoldedShotgun"), 1, false, 0, false, false);
 				}
 			}
@@ -1158,6 +1270,10 @@ namespace Redemption.NPCs
 				}
 				if (Main.rand.Next(20) == 0)
 				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("HazmatSuit"), 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(20) == 0)
+				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("FoldedShotgun"), 1, false, 0, false, false);
 				}
 			}
@@ -1167,6 +1283,10 @@ namespace Redemption.NPCs
 				if (Main.rand.Next(4) == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("RadiumHook"), 1, false, 0, false, false);
+				}
+				if (Main.rand.Next(200) == 0)
+				{
+					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("SuspiciousXenomiteShard"), 1, false, 0, false, false);
 				}
 			}
 			if (npc.type == base.mod.NPCType("LivingBlackGloop") && Main.rand.Next(0) == 0)
@@ -1653,10 +1773,7 @@ namespace Redemption.NPCs
 			}
 			if (npc.type == base.mod.NPCType("SkullDigger"))
 			{
-				if (Main.rand.Next(100) == 0)
-				{
-					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("AbandonedTeddy"), 1, false, 0, false, false);
-				}
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("AbandonedTeddy"), 1, false, 0, false, false);
 				if (Main.rand.Next(50) == 0)
 				{
 					Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("VictorBattletome"), 1, false, 0, false, false);
@@ -1693,6 +1810,10 @@ namespace Redemption.NPCs
 				}
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, 1278, 1, false, 0, false, false);
 				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("GhostCutlass"), 1, false, 0, false, false);
+			}
+			if (npc.type == base.mod.NPCType("WalterInfected") && Main.rand.Next(1000) == 0)
+			{
+				Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, base.mod.ItemType("Crowbar"), 1, false, 0, false, false);
 			}
 		}
 	}

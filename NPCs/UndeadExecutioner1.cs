@@ -50,9 +50,33 @@ namespace Redemption.NPCs
 			}
 		}
 
+		public override void AI()
+		{
+			if (!this.change)
+			{
+				int num = Main.rand.Next(3);
+				if (num == 0)
+				{
+					base.npc.SetDefaults(base.mod.NPCType("UndeadExecutioner2"), -1f);
+					this.change = true;
+				}
+				if (num == 1)
+				{
+					base.npc.SetDefaults(base.mod.NPCType("UndeadExecutioner3"), -1f);
+					this.change = true;
+				}
+				if (num == 2)
+				{
+					this.change = true;
+				}
+			}
+		}
+
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
 			return SpawnCondition.OverworldNightMonster.Chance * (RedeWorld.downedTheKeeper ? 0.04f : 0f);
 		}
+
+		private bool change;
 	}
 }

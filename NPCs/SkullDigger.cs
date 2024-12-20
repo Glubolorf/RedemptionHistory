@@ -7,6 +7,7 @@ using Terraria.ModLoader;
 
 namespace Redemption.NPCs
 {
+	[AutoloadBossHead]
 	public class SkullDigger : ModNPC
 	{
 		public override void SetStaticDefaults()
@@ -71,6 +72,10 @@ namespace Redemption.NPCs
 		{
 			potionType = base.mod.ItemType("DarkShard");
 			RedeWorld.downedSkullDigger = true;
+			if (Main.netMode == 2)
+			{
+				NetMessage.SendData(7, -1, -1, null, 0, 0f, 0f, 0f, 0, 0, 0);
+			}
 		}
 
 		public override void AI()

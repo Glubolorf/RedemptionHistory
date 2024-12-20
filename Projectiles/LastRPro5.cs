@@ -96,6 +96,14 @@ namespace Redemption.Projectiles
 			}
 		}
 
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		{
+			if (target.type == base.mod.NPCType("TheSoulless") && target.life <= 0)
+			{
+				Main.NewText("The darkened Night will lose its Sight, Leaving the Light command the Fright, And the Might to the Holy Knight.", Color.DarkGoldenrod.R, Color.DarkGoldenrod.G, Color.DarkGoldenrod.B, false);
+			}
+		}
+
 		public override void Kill(int timeLeft)
 		{
 			for (int i = 0; i < 5; i++)

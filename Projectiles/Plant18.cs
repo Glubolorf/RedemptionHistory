@@ -30,7 +30,7 @@ namespace Redemption.Projectiles
 			projectile.velocity.X = projectile.velocity.X * 0f;
 			Projectile projectile2 = base.projectile;
 			projectile2.velocity.Y = projectile2.velocity.Y + 1f;
-			if (base.projectile.localAI[0] > 1000f)
+			if (base.projectile.localAI[0] > 500f)
 			{
 				Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 3, base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 0, default(Color), 1f);
 				Dust.NewDust(base.projectile.position + base.projectile.velocity, base.projectile.width, base.projectile.height, 3, base.projectile.velocity.X * 0.5f, base.projectile.velocity.Y * 0.5f, 0, default(Color), 1f);

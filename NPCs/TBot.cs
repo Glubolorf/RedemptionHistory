@@ -58,7 +58,7 @@ namespace Redemption.NPCs
 
 		public override string TownNPCName()
 		{
-			switch (WorldGen.genRand.Next(6))
+			switch (WorldGen.genRand.Next(7))
 			{
 			case 0:
 				return "Tom";
@@ -70,6 +70,8 @@ namespace Redemption.NPCs
 				return "Timmy";
 			case 4:
 				return "Tied";
+			case 5:
+				return "Adam";
 			default:
 				return "Tommy";
 			}
@@ -130,6 +132,10 @@ namespace Redemption.NPCs
 			if (RedeWorld.downedSlayer && Main.rand.Next(9) == 0)
 			{
 				return "Oh King Slayer? He's bit of... well...";
+			}
+			if (RedeWorld.tbotLabAccess && Main.rand.Next(9) == 0)
+			{
+				return "Hey! I noticed you were exploring the lab. I was the one who deactivated the lasers. I found something in the lab that could be useful to you, it's a Tesla Cannon!";
 			}
 			switch (Main.rand.Next(9))
 			{
@@ -217,6 +223,16 @@ namespace Redemption.NPCs
 			if (RedeWorld.downedInfectedEye)
 			{
 				shop.item[nextSlot].SetDefaults(base.mod.ItemType("XenoEye"), false);
+				nextSlot++;
+			}
+			if (NPC.downedMoonlord)
+			{
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("HazmatSuit"), false);
+				nextSlot++;
+			}
+			if (RedeWorld.tbotLabAccess)
+			{
+				shop.item[nextSlot].SetDefaults(base.mod.ItemType("TeslaCannon"), false);
 				nextSlot++;
 			}
 		}

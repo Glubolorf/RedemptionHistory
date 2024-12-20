@@ -21,8 +21,8 @@ namespace Redemption.NPCs
 			base.npc.damage = 80;
 			base.npc.defense = 0;
 			base.npc.lifeMax = 1350;
-			base.npc.HitSound = SoundID.NPCHit1;
-			base.npc.DeathSound = SoundID.NPCDeath1;
+			base.npc.HitSound = SoundID.NPCHit13;
+			base.npc.DeathSound = SoundID.NPCDeath19;
 			base.npc.value = (float)Item.buyPrice(0, 0, 8, 0);
 			base.npc.knockBackResist = 0.7f;
 			base.npc.aiStyle = 3;

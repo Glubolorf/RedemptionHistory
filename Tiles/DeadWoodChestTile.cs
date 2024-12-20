@@ -16,6 +16,8 @@ namespace Redemption.Tiles
 			Main.tileContainer[(int)base.Type] = true;
 			Main.tileFrameImportant[(int)base.Type] = true;
 			Main.tileNoAttach[(int)base.Type] = true;
+			Main.tileShine2[(int)base.Type] = true;
+			Main.tileShine[(int)base.Type] = 1200;
 			Main.tileValue[(int)base.Type] = 500;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.Origin = new Point16(0, 1);
